@@ -6,7 +6,7 @@ The codebase currently has lots of dummy text in it. If you don't want to see po
 ## license
 This game's source code is licensed with the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html). All art assets are licensed with the [CC BY-SA 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 ## why
-Sometimes I make choices.
+Sometimes I make choices. They aren't always good ones.
 ## building
 ### requirements
 [UglifyJS](https://www.npmjs.com/package/uglify-js) is used to compile all the necessary JS files into one big baby (and also minify them). [Gulp](https://www.npmjs.com/package/gulp) is used to automate this building and to rebuild the **collisions.js** file. All of the raw art assets are stored in [Paint.NET](https://www.getpaint.net/)'s format.
