@@ -45,3 +45,13 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Bees
+# =========================
+.vscode
+node_modules
+styles
+todo.txt
+out.js
+out.min.js
+template.js
