@@ -214,7 +214,7 @@ pausemenu.farmmod = {
                 }
             }
         } else if(this.cursor.y == this.dy && this.cursor.y > pos.y) {
-            pos.y = Math.floor(this.actualIndexes.length / this.inventoryWidth);
+            pos.y = Math.floor(this.actualIndexes.length / (this.inventoryWidth + 1));
             pos.x = this.actualIndexes.length - (this.inventoryWidth * pos.y) - 1;
         }
 
