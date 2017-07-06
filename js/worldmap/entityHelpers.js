@@ -1,0 +1,44 @@
+function SwitchMap(name, x, y, row, column, newx, newy, map) {
+    return {
+        name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row,
+        interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map }); } ]
+    }
+};
+function EnterShop(name, x, y, shop) {
+    return { 
+        name: name, 
+        solid: false, pos: {x: x, y: y}, 
+        interact: [ function() { game.transition(game.currentInputHandler, worldmap.shop, shop); return true; } ]
+    };
+};
+function GetCommonEntity(name, x, y, sx, sy, dir, movement, interact, additional) {
+    var res = {
+        name: name, 
+        pos: {x: x, y: y}, solid: true, 
+        sx: sx, sy: sy, dir: dir,
+        movement: movement, interact: interact
+    };
+    return Object.assign(res, additional);
+};
+function GetSpeak(t) { return function() { worldmap.writeText(t); }  }
+function GetFight(arr) { return function() { combat.startBattle(arr); } }
+
+var commonInteractArrays = {
+    robo: [
+        function() {
+            var text = "";
+            switch(Math.floor(Math.random() * 5)) {
+                case 0: text = "beep beep you stupid fuck"; break;
+                case 1: text = "hey kid\n i'm a compyoota\n stop all the downloadin'"; break;
+                case 2: text = "yo it's time to die motherufcker"; break;
+                case 3: text = "beep beep beep beep beep"; break;
+                case 4: text = "TODO: give this robot a witty one-liner"; break;
+            }
+            worldmap.writeText(text);
+        },
+        function() { combat.startBattle(Math.random() < 0.2 ? ["robo", "robo"] : ["robo"]); }
+    ]
+};
+var commonMovementDatas = {
+    robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 },  { x: x, y: 8, dx: 0, dy: -1 } ] } }
+};

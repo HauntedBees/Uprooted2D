@@ -1,0 +1,277 @@
+combat.plant = {
+    activeCrop: null, actualIndexes: [],
+    cursor: {x: 0, y: 0}, isValid: true, 
+    inventoryWidth: 9, dy: 6, addHalf: true, 
+    layersToClean: ["menuA", "menuB", "menucursorA", "menucursorB", "menutext"],
+    setup: function() {
+        this.cursor = {x: 0, y: this.dy};
+        this.actualIndexes = [];
+        this.isValid = true;
+        for(var i = 0; i < player.inventory.length; i++) {
+            if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
+            this.actualIndexes.push(i);
+        }
+        this.drawAll();
+    },
+    clean: function() { gfx.clearSome(this.layersToClean); },
+    cancel: function() {
+        if(this.activeCrop === null) {
+            if(combat.numPlantTurns != player.getPlantingTurns()) {
+                if(player.canAttackAfterPlanting()) {
+                    game.transition(this, combat.menu);
+                } else {
+                    combat.endTurn(this);
+                }
+            } else {
+                game.transition(this, combat.menu);
+            }
+        } else {
+            this.activeCrop = null;
+            this.cursor = {x: 0, y: this.dy};
+            this.drawAll();
+        }
+        return true;
+    },
+    isValidPlantingLocation: function(px, py, diff) {
+        if(diff == 1) {
+            if(combat.grid[px][py] !== null) { return false; }
+            if(combat.grid[px + 1][py] !== null) { return false; }
+            if(combat.grid[px][py + 1] !== null) { return false; }
+            if(combat.grid[px + 1][py + 1] !== null) { return false; }
+            return this.isValidLocationForCrop(px, py) && this.isValidLocationForCrop(px + 1, py)
+                    && this.isValidLocationForCrop(px, py + 1) && this.isValidLocationForCrop(px + 1, py + 1);
+        } else {
+            if(combat.grid[px][py] !== null) { return false; }
+            return this.isValidLocationForCrop(px, py);
+        }
+    },
+    isValidLocationForCrop: function(x, y) {
+        var type = player.itemGrid[x][y];
+        if(type === null) { return this.activeCrop.type === "veg" || this.activeCrop.type === "tree"; }
+        var parent = (type.x !== undefined ? player.itemGrid[type.x][type.y] : type);
+        if(type === "_shooter") { 
+            if(["veg", "mush", "rice"].indexOf(this.activeCrop.type) < 0) { return false; }
+            return combat.getUsedShooterIndex(x, y) < 0;
+        }
+        if(type === "_modulator") { return this.activeCrop.type === "veg"; }
+        if(type === "_log") { return this.activeCrop.type === "mush"; }
+        if(type === "_coop") { return this.activeCrop.type === "egg"; }
+        if(type === "_paddy") { return this.activeCrop.type === "rice"; }
+        if(type === "_lake") { return this.activeCrop.type === "water" || this.activeCrop.type === "rod" || this.activeCrop.type === "spear"; }
+        if(type === "_hotspot" || parent === "_hotspot") { return this.activeCrop.type === "tech"; }
+        if(type.corner === "_cow") { return this.activeCrop.type === "food" || this.activeCrop.type === "veg"; }
+    },
+    
+    keyPress: function(key) {
+        var pos = { x: this.cursor.x, y: this.cursor.y };
+        var isEnter = false;
+        switch(key) {
+            case "w": pos.y--; break;
+            case "a": pos.x--; break;
+            case "s": pos.y++; break;
+            case "d": pos.x++; break;
+            case " ":
+            case "Enter": isEnter = true; break;
+            case "q": return this.cancel();
+        }
+        if(pos.y < 0 || pos.x < 0) { return false; }
+        if(isEnter) {
+            return this.click(pos);
+        } else {
+            return this.mouseMove(pos);
+        }
+    },
+    mouseMove: function(pos) {
+        if(pos.x < 0 || pos.y < 0) { return false; }
+        if(this.activeCrop === null) { 
+            if(pos.x >= this.inventoryWidth) { return false; }
+            var idx = (pos.y - this.dy) * this.inventoryWidth + pos.x;
+            if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
+            this.isValid = true;
+            this.cursor = { x: pos.x, y: pos.y };
+        } else {
+            var diff = this.activeCrop.size - 1;
+            if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
+            if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight - diff)) { return false; }
+            var px = pos.x - combat.dx, py = pos.y - combat.dy;
+            this.cursor = { x: pos.x, y: pos.y };
+            this.isValid = this.isValidPlantingLocation(px, py, diff);
+        }
+        this.drawAll();
+        return true;
+    },
+    click: function(pos) {
+        if(pos.x < 0 || pos.y < 0) { return false; }
+        if(this.activeCrop === null) {
+            pos.y = (pos.y - this.dy);
+            if(pos.x >= this.inventoryWidth) { return false; }
+            var idx = pos.y * this.inventoryWidth + pos.x;
+            if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
+            var actualIdx = this.actualIndexes[idx];
+            if(player.inventory[actualIdx][1] === 0) { return false; }
+            this.activeCrop = GetCrop(player.inventory[actualIdx][0]);
+            this.cursor = { x: combat.dx, y: combat.dy };
+            this.isValid = this.isValidPlantingLocation(0, 0, this.activeCrop.size - 1);
+        } else {
+            var diff = this.activeCrop.size - 1;
+            if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
+            if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight - diff)) { return false; }
+            var px = pos.x - combat.dx, py = pos.y - combat.dy;
+            var ppos = {x: px, y: py};
+            if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
+            if(diff == 1) {
+                combat.grid[px + 1][py] = ppos;
+                combat.grid[px][py + 1] = ppos;
+                combat.grid[px + 1][py + 1] = ppos;
+            }
+            if(player.itemGrid[px][py] === "_shooter") {
+                if(combat.getUsedShooterIndex(px, py) >= 0) { return false; }
+                combat.usedShooters.push({x: px, y: py});
+                this.launchSeeds();
+                return true;
+            } else if(player.itemGrid[px][py] === "_modulator") {
+                this.modulate();
+                return true;
+            } else if(this.activeCrop.type === "spear") {
+                this.throwSpear(px, py);
+                return true;
+            }
+            var newCrop = GetCrop(this.activeCrop.name);
+            if(player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") {
+                var cowIdx = combat.getCowIndex(px - 1, py - 1);
+                if(cowIdx >= 0) {
+                    combat.happyCows[cowIdx].feed += newCrop.power;
+                } else {
+                    combat.happyCows.push({ x: px - 1, y: py - 1, feed: newCrop.power });
+                }
+                combat.drawMainElements();
+            } else {
+                newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier());
+                combat.grid[px][py] = newCrop;
+            }
+            this.cursor = { x: 0, y: this.dy };
+            player.decreaseItem(this.activeCrop.name);
+            this.activeCrop = null;
+            combat.drawCrops();
+            if(--combat.numPlantTurns == 0) {
+                if(player.canAttackAfterPlanting()) {
+                    game.transition(this, combat.menu);
+                } else {
+                    combat.endTurn(this);
+                }
+                return true;
+            } else {
+                this.setup();
+            }
+        }
+        this.drawAll();
+        return true;
+    },
+    throwSpear: function(x, y) {
+        var success = (Math.random() * player.luck) < this.activeCrop.req;
+        player.decreaseItem(this.activeCrop.name);
+        if(!success) { return this.finishTurn("You chuck the spear, but do not catch any fish."); }
+        var crop = GetCrop(this.activeCrop.name);
+        crop.ready = true;
+        crop.activeTime = 0;
+        var fishNum = 0;
+        while(fishNum < 2 && Math.random() > (crop.catchLuck * player.luck)) { fishNum++; }
+        crop.power = 10 + fishNum * 10;
+        crop.type = "rod";
+        crop.fishNum = fishNum;
+        combat.grid[x][y] = crop;
+        this.finishTurn("You chuck the spear and catch a fish!");
+    },
+    launchSeeds: function() {
+        var newCrop = GetCrop(this.activeCrop.name);
+        var damage = Math.ceil(newCrop.power / 2);
+        player.decreaseItem(this.activeCrop.name);
+        var initLength = combat.enemies.length;
+        for(var i = combat.enemies.length - 1; i >= 0; i--) {
+            combat.damageEnemy(i, damage);
+        }
+        this.finishTurn("You load up the seed shooter and it fires rapidly, dealing " + damage + " damage" + (initLength > 1 ? " to everyone." : "."));
+    },
+    modulate: function() {
+        var newCrop = GetCrop(this.activeCrop.name);
+        var seasons = [];
+        for(var i = 0; i < 4; i++) {
+            if(newCrop.seasons[i] === 1) { seasons.push(i); }
+        }
+        if(seasons.length === 0) { seasons = [0, 1, 2, 3]; }
+        combat.season = seasons[Range(0, seasons.length)];
+        var displaySeason = "";
+        switch(combat.season) {
+            case 0: displaySeason = "Spring"; break;
+            case 1: displaySeason = "Summer"; break;
+            case 2: displaySeason = "Autumn"; break;
+            case 3: displaySeason = "Winter"; break;
+        }
+        this.finishTurn("You load some seeds into the modulator, changing the season to " + displaySeason + ".");
+    },
+    finishTurn: function(t) {
+        this.activeCrop = null;
+        game.transition(this, combat.inbetween, {
+            next: function() {
+                if(--combat.numPlantTurns == 0) {
+                    if(player.canAttackAfterPlanting()) {
+                        game.transition(this, combat.menu);
+                    } else {
+                        combat.endTurn(this);
+                    }
+                } else {
+                    game.transition(combat.inbetween, combat.plant);
+                }
+            },
+            text: t
+        });
+        combat.drawMainElements();
+        combat.drawCrops();
+    },
+    drawAll: function() {
+        gfx.clearSome(this.layersToClean);
+        var size = 0;
+        var cursorX = this.cursor.x, cursorY = this.cursor.y;
+        if(this.activeCrop === null) {
+            this.setText();
+            gfx.drawPlayer(6, 0, 4, 5.75, "menuA");
+        } else {
+            size = this.activeCrop.size - 1;
+            if(size == 1) {
+                gfx.drawPlayer(7, 0, cursorX + 0.5, cursorY + 0.25, "menucursorB");
+            } else {
+                gfx.drawPlayer(7, 0, cursorX, cursorY - 0.25, "menucursorB");
+            }
+        }
+        gfx.drawInfobox(16, 3, this.dy + 0.5);
+        gfx.drawInfobox(6, 3, this.dy + 0.5);
+        if(this.activeCrop === null) {
+            gfx.drawCursor(cursorX, cursorY + 0.5, size, size);
+        } else if(this.isValid) {
+            gfx.drawCursor(cursorX, cursorY, size, size);
+        } else {
+            gfx.drawCursor(cursorX, cursorY, size, size, "bcursor");
+        }
+        combat.drawBottom();
+        for(var i = 0; i < this.actualIndexes.length; i++) {
+            var actItem = player.inventory[this.actualIndexes[i]];
+            gfx.drawInventoryItem(actItem, i % this.inventoryWidth, this.dy + 0.5 + Math.floor(i / this.inventoryWidth), "menuA");
+        }
+    },
+    setText: function() {
+        var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
+        var item = player.inventory[this.actualIndexes[idx]];
+        var iteminfo = GetCrop(item[0]);
+        var str = iteminfo.displayname + " (" + item[1] + ")\n";
+        str += " Power: " + iteminfo.power + "\n";
+        if(iteminfo.time > 0) {
+            str += " Time: " + Math.ceil(iteminfo.time / player.getCropSpeedMultiplier()) + "\n";
+        }
+        if(iteminfo.respawn > 0) { str += " Regrowth: " + iteminfo.respawn + "\n"; }
+        if(iteminfo.seasons[0] > 0.5) { str += " SP"; }
+        if(iteminfo.seasons[1] > 0.5) { str += " SU"; }
+        if(iteminfo.seasons[2] > 0.5) { str += " AU"; }
+        if(iteminfo.seasons[3] > 0.5) { str += " WI"; }
+        gfx.drawWrappedText(str, 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 85);
+    }
+};
