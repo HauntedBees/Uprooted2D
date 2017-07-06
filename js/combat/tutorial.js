@@ -47,7 +47,7 @@ var tutorial = {
                 combat.enemies[0].health = 9999;
                 player.health = Math.max(5, player.health);
             } else {
-                combat.enemies[0].health = 1;
+                if(combat.enemies.length > 0) { combat.enemies[0].health = 1; }
             }
         } else {
             return this.currentInputHandler.keyPress(key);
