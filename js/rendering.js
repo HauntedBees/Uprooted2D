@@ -51,6 +51,10 @@ var gfx = {
     drawMapCharacter: function(sx, sy, pos, offset, dir) {
         gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["mapchar"], (sx + dir) * 16, sy * 20, 16, 20, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - 4, 16, 20);
     },
+    drawAnimCharacter: function(sx, sy, pos, offset, sheet) {
+        sheet = sheet || "mapchar";
+        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets[sheet], sx, sy, 16, 20, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - 4, 16, 20);
+    },
     drawCursor: function(x, y, w, h, cursorName) {
         cursorName = cursorName || "cursor";
         var layer = cursorName == "xcursor" ? "menucursorB" : "menucursorA";
@@ -141,7 +145,7 @@ var gfx = {
         }
     },
     drawMap: function(map, centerx, centery) {
-        var mapImg = gfx.spritesheets[map];
+        var mapImg = gfx.spritesheets["maps/" + map];
         var w = collisions[map][0].length;
         var h = collisions[map].length;
         var offset = {
@@ -155,6 +159,9 @@ var gfx = {
         var storeImg = gfx.spritesheets[store];
         gfx.drawImage(gfx.ctx["background"], storeImg, 0, 0, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
         return true;
+    },
+    drawDynamicSprite: function(layer, sheet, sx, sy, w, h, x, y) {
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * w, sy * h, w, h, x, y, w, h);
     },
     drawImage: function(ctx, image, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH) {
         ctx.drawImage(image, srcX * gfx.scale, srcY * gfx.scale, srcW * gfx.scale, srcH * gfx.scale, dstX * gfx.scale, dstY * gfx.scale, dstW * gfx.scale, dstH * gfx.scale);  
