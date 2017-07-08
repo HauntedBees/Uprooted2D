@@ -92,7 +92,8 @@ var worldmap = {
             layers[Math.round(e.pos.y)].push(e.anim.getFrame(e.pos, e.dir, e.moving));
         }
         var animDir = this.playerDir, moving = true;
-        if(input.keys["w"] !== undefined) { animDir = 0; }
+        if(input.mainKey !== undefined) { animDir = input.mainKey; }
+        else if(input.keys["w"] !== undefined) { animDir = 0; }
         else if(input.keys["a"] !== undefined) { animDir = 1; }
         else if(input.keys["s"] !== undefined) { animDir = 2; }
         else if(input.keys["d"] !== undefined) { animDir = 3; }

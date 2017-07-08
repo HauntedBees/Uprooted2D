@@ -8,7 +8,18 @@ var input = {
         if(game.currentInputHandler.mouseMove(p)) { return; }
     },
 
-    keys: {},
+    keys: {}, mainKey: undefined,
+    setMainKey: function(key) {
+        if(key === undefined) {
+            if(input.keys["w"] !== undefined) { input.mainKey = 0; }
+            else if(input.keys["a"] !== undefined) { input.mainKey = 1; }
+            else if(input.keys["s"] !== undefined) { input.mainKey = 2; }
+            else if(input.keys["d"] !== undefined) { input.mainKey = 3; }
+            else { input.mainKey = undefined; }
+        } else if(input.mainKey === undefined) {
+            input.mainKey = ["w", "a", "s", "d"].indexOf(key);
+        }
+    },
     clearAllKeys: function() {
         for(var key in input.keys) {
             clearInterval(input.keys[key]);
@@ -17,6 +28,7 @@ var input = {
     },
     keyDown: function(e) {
         if(["w", "a", "s", "d"].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
+            input.setMainKey(e.key);
             if(input.keys[e.key] !== undefined) { return; }
             input.keys[e.key] = setInterval(function() {
                 game.currentInputHandler.keyPress(e.key);
@@ -27,6 +39,7 @@ var input = {
         if(["w", "a", "s", "d"].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             clearInterval(input.keys[e.key]);
             input.keys[e.key] = undefined;
+            input.setMainKey();
         }
     },
     keyPress: function(e) {
