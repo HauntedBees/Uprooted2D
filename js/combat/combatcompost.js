@@ -51,10 +51,10 @@ combat.compost = {
         }
         if(this.healButtonSelected) {
             gfx.drawCursor(0, this.dy, this.healButtonWidth, 0);
-            gfx.drawPlayer(6, 0, 4, 5.75, "menucursorA");
+            combat.setPlayerAnim([[6, 0]]);
         } else if(this.attackButtonSelected) {
             gfx.drawCursor(0, this.dy + 1, this.attackButtonWidth, 0);
-            gfx.drawPlayer(2, 0, 4, 5.75, "menucursorA");
+            combat.setPlayerAnim([[2, 0]]);
         } else {
             var px = this.cursor.x - combat.dx; var py = this.cursor.y - combat.dy;
             var tile = combat.grid[px][py];
@@ -65,7 +65,7 @@ combat.compost = {
                     } else {
                         gfx.drawCursor(tile.x + combat.dx, tile.y + combat.dy, 1, 1, "bcursor");
                     }
-                    gfx.drawPlayer(7, 0, tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25, "menucursorB");
+                    combat.setPlayerAnim([[7, 0]], tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25, true);
                 } else {
                     if(this.isCompostable(tile)) {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1);
@@ -73,9 +73,9 @@ combat.compost = {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1, "bcursor");
                     }
                     if(tile.size === 2) {
-                        gfx.drawPlayer(7, 0, this.cursor.x + 0.5, this.cursor.y + 0.25, "menucursorB");
+                        combat.setPlayerAnim([[7, 0]], this.cursor.x + 0.5, this.cursor.y + 0.25, true);
                     } else {
-                        gfx.drawPlayer(7, 0, this.cursor.x, this.cursor.y - 0.25, "menucursorB");
+                        combat.setPlayerAnim([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
                     }
                 }
             } else {
@@ -89,10 +89,10 @@ combat.compost = {
                 }
                 if(cowIdx < 0) {
                     gfx.drawCursor(this.cursor.x, this.cursor.y, 0, 0, "bcursor");
-                    gfx.drawPlayer(7, 0, this.cursor.x, this.cursor.y - 0.25, "menucursorB");
+                    combat.setPlayerAnim([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
                 } else {
                     gfx.drawCursor(cowPos.x, cowPos.y, 1, 1);
-                    gfx.drawPlayer(7, 0, cowPos.x + 0.5, cowPos.y + 0.25, "menucursorB");
+                    combat.setPlayerAnim([[7, 0]], cowPos.x + 0.5, cowPos.y + 0.25, true);
                 }
             }
         }

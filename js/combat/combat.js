@@ -1,5 +1,6 @@
 var combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0,
+    playerAnimInfo: { animState: 0, anim: [[0, 0]], x: 4, y: 5.75 },
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0,
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
@@ -41,6 +42,7 @@ var combat = {
         }
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
         this.drawMainElements();
+        combat.charAnimIdx = setInterval(combat.drawCharacters, 50);
         this.startRound();
         this.menu.setup();
     },
@@ -62,16 +64,76 @@ var combat = {
             season -= dist[j];
         }
     },
-    drawMainElements: function() {
-        gfx.clearSome(["background", "characters"]);
-        var initx = 11 - this.enemies.length;
-        for(var i = 0; i < this.enemies.length; i++) { // enemies
-            if(this.enemies[i].isBig) {
-                gfx.drawBigCharacter(this.enemies[i].spriteidx, 0, initx + i, 5.75);
+    drawCharacters: function() {
+        gfx.clearSome(["characters", "menucursorC"]);
+        combat.animateEntity(combat.playerAnimInfo, 4, 5.75, true);
+        var initx = 11 - combat.enemies.length;
+        for(var i = 0; i < combat.enemies.length; i++) { // enemies
+            if(combat.enemies[i].isBig) {
+                gfx.drawBigCharacter(combat.enemies[i].spriteidx, 0, initx + i, 5.75);
             } else {
-                gfx.drawCharacter(this.enemies[i].spriteidx, 0, initx + i, 5.75);
+                if(combat.enemies[i].dead) {
+                    gfx.drawDitheredCharacter(combat.enemies[i].spriteidx, 1, initx + i, 5.75, (combat.enemies[i].deadFrame++));
+                } else if(combat.enemies[i].hit) {
+                    var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
+                    var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
+                    gfx.drawCharacter(combat.enemies[i].spriteidx, 1, initx + i + dx, 5.75 + dy);
+                } else if(combat.enemies[i].anim) {
+                    combat.animateEntity(combat.enemies[i], initx + i, 5.75);
+                } else {
+                    gfx.drawCharacter(combat.enemies[i].spriteidx, 0, initx + i, 5.75);
+                }
             }
         }
+    },
+    setPlayerAnim: function(anims, x, y, top) {
+        combat.playerAnimInfo.animState = 0;
+        combat.playerAnimInfo.anim = anims || [[0, 0]];
+        combat.playerAnimInfo.timePerFrame = anim.timePerFrame;
+        combat.playerAnimInfo.x = x || 4; 
+        combat.playerAnimInfo.y = y || 5.75; 
+        combat.playerAnimInfo.onTop = top; 
+    },
+    setAnim: function (idx, anim, fr) {
+        combat.enemies[idx].animState = 0;
+        combat.enemies[idx].timePerFrame = fr;
+        combat.enemies[idx].lastRan = +new Date();
+        combat.enemies[idx].anim = anim;
+        combat.drawCharacters();
+    },
+    animateEntity: function (e, x, y, isPlayer) {
+        var dt = (+new Date()) - e.lastRan;
+        if(dt >= e.timePerFrame) {
+            e.lastRan = +new Date();
+            e.animState = (e.animState + 1) % e.anim.length;
+        }
+        var animData = e.anim[e.animState];
+        if(isPlayer) {
+            if(combat.playerAnimInfo.hit) {
+                var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
+                var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
+                gfx.drawPlayer(0, 1, e.x + dx, e.y + dy);
+            } else {
+                gfx.drawPlayer(animData[0], animData[1], e.x, e.y, e.onTop ? "menucursorC" : "characters");
+            }
+        } else {
+            gfx.drawCharacter(animData[0], animData[1], x, y);
+        }
+    },
+    clearAnimsAndRemoveCorpses: function() {
+        combat.playerAnimInfo.hit = false;
+        for(var i = combat.enemies.length - 1; i >= 0; i--) {
+            combat.enemies[i].hit = false;
+            combat.enemies[i].animState = 0;
+            combat.enemies[i].anim = null;
+            if(combat.enemies[i].dead) {
+                combat.enemies.splice(i, 1);
+            }
+        }
+    },
+    drawMainElements: function() {
+        gfx.clearLayer("background");
+        this.drawCharacters();
         this.enemydx = 10 + Math.floor((5 - this.enemywidth) / 2);
         this.enemydy = this.dy + Math.floor((player.gridHeight - this.enemyheight) / 2);
         for(var x = 0; x < this.enemywidth; x++) { // enemy field
@@ -143,11 +205,16 @@ var combat = {
         }
         return -1;
     },
-    damagePlayer: function(damage) { player.health = Math.max(0, player.health - damage); },
+    damagePlayer: function(damage) {
+        player.health = Math.max(0, player.health - damage);
+        this.playerAnimInfo.hit = true;
+    },
     damageEnemy: function(enemyidx, damage) {
         this.enemies[enemyidx].health -= damage;
         if(this.enemies[enemyidx].health <= 0) {
             var e = this.enemies[enemyidx];
+            e.dead = true;
+            e.deadFrame = 0;
             this.expEarned += e.exp;
             for(var i = 0; i < e.drops.length; i++) {
                 var dropInfo = e.drops[i];
@@ -157,7 +224,8 @@ var combat = {
                     this.addDroppedSeedToItemsEarned(dropInfo.seed, Math.max(0, Range(dropInfo.min, dropInfo.max)));
                 }
             }
-            this.enemies.splice(enemyidx, 1);
+        } else {
+            this.enemies[enemyidx].hit = true;
         }
     },
     addDroppedSeedToItemsEarned: function(seed, amount) {
@@ -189,6 +257,7 @@ var combat = {
         } else {
             var postCombat = game.target.postBattle;
             worldmap.clearTarget();
+            clearInterval(combat.charAnimIdx);
             game.transition(combat.inbetween, worldmap, {
                 init: worldmap.pos,
                 map: worldmap.mapName,
@@ -199,7 +268,6 @@ var combat = {
     },
     fuckingDead: function() {
         var inn = inns[player.lastInn];
-        console.log(inn);
         player.health = player.maxhealth;
         game.transition(game.currentInputHandler, worldmap, {  init: { x: inn.x,  y: inn.y }, map: inn.map });
     },
@@ -261,7 +329,8 @@ var combat = {
             this.startRound();
             game.transition(caller, combat.menu);
         } else {
-            game.transition(caller, combat.enemyTurn, this.enemies[this.state - 1]);
+            var idx = this.state - 1;
+            game.transition(caller, combat.enemyTurn, { enemy: this.enemies[idx], idx: idx });
         }
     },
     drawBottom: function() {

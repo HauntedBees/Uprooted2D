@@ -234,13 +234,13 @@ combat.plant = {
         var cursorX = this.cursor.x, cursorY = this.cursor.y;
         if(this.activeCrop === null) {
             this.setText();
-            gfx.drawPlayer(6, 0, 4, 5.75, "menuA");
+            combat.setPlayerAnim([[6, 0]]);
         } else {
             size = this.activeCrop.size - 1;
             if(size == 1) {
-                gfx.drawPlayer(7, 0, cursorX + 0.5, cursorY + 0.25, "menucursorB");
+                combat.setPlayerAnim([[7, 0]], cursorX + 0.5, cursorY + 0.25, true);
             } else {
-                gfx.drawPlayer(7, 0, cursorX, cursorY - 0.25, "menucursorB");
+                combat.setPlayerAnim([[7, 0]], cursorX, cursorY - 0.25, true);
             }
         }
         gfx.drawInfobox(16, 3, this.dy + 0.5);

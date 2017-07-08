@@ -43,7 +43,7 @@ combat.menu = {
                 charPose = 5;
                 break;
         }
-        gfx.drawPlayer(charPose, 0, 4, 5.75, "menuA");
+        combat.setPlayerAnim([[charPose, 0]]);
         gfx.drawInfobox(11, 2.5, this.dy + 1.5);
         gfx.drawWrappedText(text, 4.5 * 16, 11 + ((1.5 + this.dy) * 16), 170);
         if(this.cursorY === 1) { this.highlightReadyCrops(); }

@@ -45,6 +45,16 @@ var gfx = {
         layer = layer || "characters";
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["charsheet"], sx * 16, sy * 20, 16, 20, x * 16, y * 16 - 4, 16, 20);
     },
+    drawDitheredCharacter: function(sx, sy, x, y, d, layer) {
+        if(d === 0) { return gfx.drawCharacter(sx, sy, x, y, layer); }
+        var ctx = gfx.ctx[(layer || "characters")];
+        var sheet = gfx.spritesheets["charsheet"];
+        var ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
+        for(var i = 0; i < 16; i++) {
+            if(!ditherAmounts[i]) { continue; }
+            gfx.drawImage(ctx, sheet, sx * 16 + i, sy * 20, 1, 20, x * 16 + i, y * 16 - 4, 1, 20);
+        }
+    },
     drawAnimCharacter: function(sx, sy, pos, offset, sheet, big) {
         sheet = sheet || "mapchar";
         var w = (big ? 32 : 16), h = (big ? 40 : 20);
@@ -148,15 +158,15 @@ var gfx = {
             y: Math.min(h - gfx.tileHeight, Math.max(centery - (gfx.tileHeight / 2), 0))
         };
         gfx.drawImage(gfx.ctx["background"], mapImg, offset.x * 16, offset.y * 16, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
+        //var midy = (centery - offset.y) * 16 + 12.25;
+        //gfx.drawImage(gfx.ctx["background"], gfx.spritesheets["maps/" + map + "_fg"], offset.x * 16, offset.y * 16, gfx.canvasWidth, midy, 0, 0, gfx.canvasWidth, midy);
+        //gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["maps/" + map + "_fg"], offset.x * 16, midy + offset.y * 16, gfx.canvasWidth, midy, 0, midy, gfx.canvasWidth, midy);
         return offset;
     },
     drawStore: function(store) {
         var storeImg = gfx.spritesheets[store];
         gfx.drawImage(gfx.ctx["background"], storeImg, 0, 0, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
         return true;
-    },
-    drawDynamicSprite: function(layer, sheet, sx, sy, w, h, x, y) {
-        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * w, sy * h, w, h, x, y, w, h);
     },
     drawImage: function(ctx, image, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH) {
         ctx.drawImage(image, srcX * gfx.scale, srcY * gfx.scale, srcW * gfx.scale, srcH * gfx.scale, dstX * gfx.scale, dstY * gfx.scale, dstW * gfx.scale, dstH * gfx.scale);  

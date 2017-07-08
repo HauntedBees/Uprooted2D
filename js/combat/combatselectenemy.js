@@ -14,7 +14,7 @@ combat.selectTarget = {
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
-        gfx.drawPlayer(2, 0, 4, 5.75, "menucursorA");
+        combat.setPlayerAnim([[2, 0]]);
         if(this.sicklePos.x >= 0) {
             var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
@@ -117,7 +117,7 @@ combat.selectTarget = {
         } else {
             var target = combat.enemies[this.cursorx];
             if(!criticalHit) { damage = Math.max(1, damage - target.def); }
-            damagetext += "You attack " + Capitalize(target.name) + " for like " + damage + " damage";
+            damagetext += "You attack " + target.name + " for like " + damage + " damage";
             if((target.health - damage) <= 0) {
                 damagetext += ", killing them instantly."
             } else { damagetext += "."; }
