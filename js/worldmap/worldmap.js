@@ -1,6 +1,7 @@
 var worldmap = {
     freeMovement: true,
     pos: {x: 0, y: 0}, playerDir: 2,
+    animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0,
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0,
@@ -46,6 +47,7 @@ var worldmap = {
         for(var i = 0; i < worldmap.entities.length; i++) {
             var e = worldmap.entities[i];
             if(e.movement === undefined) { continue; }
+            e.moving = true;
             var em = e.movement;
             var pointinfo = em.points[em.state];
             var newPos = {
@@ -86,19 +88,21 @@ var worldmap = {
         for(var y = 0; y < ymax; y++) { layers.push([]); }
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
-            if(e.pos.y < 0 || e.pos.y >= ymax) { continue; }
-            layers[Math.round(e.pos.y)].push(e);
+            if(!e.visible || e.pos.y < 0 || e.pos.y >= ymax) { continue; }
+            layers[Math.round(e.pos.y)].push(e.anim.getFrame(e.pos, e.dir, e.moving));
         }
-        layers[Math.round(this.pos.y)].push({sx: 0, sy: 0, pos: this.pos, dir: this.playerDir});
+        var animDir = this.playerDir, moving = true;
+        if(input.keys["w"] !== undefined) { animDir = 0; }
+        else if(input.keys["a"] !== undefined) { animDir = 1; }
+        else if(input.keys["s"] !== undefined) { animDir = 2; }
+        else if(input.keys["d"] !== undefined) { animDir = 3; }
+        else { moving = false; }
+        layers[Math.round(this.pos.y)].push(this.animData.getFrame(this.pos, animDir, moving));
         for(var y = 0; y < ymax; y++) {
             var funcs = layers[y];
             for(var i = 0; i < funcs.length; i++) {
                 var e = funcs[i];
-                if(e.big) {
-                    gfx.drawBigMapCharacter(e.sx, e.sy, e.pos, offset, e.dir);
-                } else {
-                    gfx.drawMapCharacter(e.sx, e.sy, e.pos, offset, e.dir);
-                }
+                gfx.drawAnimCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big);
             }
         }
     },
@@ -179,15 +183,13 @@ var worldmap = {
         if(!hasCollisions) {
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];
-                if(e.pos.x == newPos.x && e.pos.y == newPos.y) {
+                if(worldmap.isCollision(e, newPos)) {
                     hasCollisions = true;
                     break;
                 }
             }
         }
-        if(!hasCollisions) {
-            this.pos = pos;
-        }
+        if(!hasCollisions) { this.pos = pos; }
         if(isEnter) {
             switch(this.playerDir) {
                 case 0: newPos.y--; break;
@@ -197,7 +199,7 @@ var worldmap = {
             }
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];
-                if(e.solid && Math.round(e.pos.x) == newPos.x && Math.round(e.pos.y) == newPos.y && e.interact !== undefined) {
+                if(e.solid && worldmap.isCollision(e, newPos) && e.interact !== undefined) {
                     e.dir = this.invertDir(this.playerDir);
                     this.inDialogue = true;
                     clearInterval(this.fullAnimIdx);
@@ -228,5 +230,13 @@ var worldmap = {
             case 2: return 0;
             case 3: return 1;
         }
+    },
+    isCollision: function(e, newPos) {
+        if(e.pos.x == newPos.x && e.pos.y == newPos.y) { return true; }
+        return e.big && (
+            ((e.pos.x + 1) == newPos.x && e.pos.y == newPos.y)
+            || (e.pos.x == newPos.x && (e.pos.y + 1) == newPos.y)
+            || ((e.pos.x + 1) == newPos.x && (e.pos.y + 1) == newPos.y)
+        );
     }
 };

@@ -11,13 +11,21 @@ function EnterShop(name, x, y, shop) {
         interact: [ function() { game.transition(game.currentInputHandler, worldmap.shop, shop); return true; } ]
     };
 };
-function GetCommonEntity(name, x, y, sx, sy, dir, movement, interact, additional) {
+function GetInvisibleEntity(name, interact, additional) {
+    var res = { name: name, pos: {x: -1, y: -1}, solid: false, interact: interact };
+    return Object.assign(res, additional);
+};
+function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
+    var big = (additional !== undefined && additional.big);
     var res = {
-        name: name, 
+        name: name, visible: true, 
         pos: {x: x, y: y}, solid: true, 
-        sx: sx, sy: sy, dir: dir,
+        anim: new MapAnim((big ? "mapcharbig" : "mapchar"), firstx, 0, (big ? 32 : 16), (big ? 40 : 20), dir),
+        moving: false,
+        sx: firstx * (big ? 32 : 16), dir: dir,
         movement: movement, interact: interact
     };
+    if(big) { res.anim.big = true; }
     return Object.assign(res, additional);
 };
 function GetSpeak(t) { return function() { worldmap.writeText(t); }  }

@@ -1,13 +1,13 @@
 var mapentities = {
     "farmersmarket": [
         //EnterShop("ChickenCoop", 10, 6, "coop"),
-        EnterShop("UpgradeTest", 10, 5, "farmupgradeFull"),
-        GetCommonEntity("SexFuck6969", 6, 10, 0, 1, 3, undefined, undefined, { storageKey: "craig", postBattle: "PostInitialBattle" }),
+        //EnterShop("UpgradeTest", 10, 5, "farmupgradeFull"),
+        GetCommonEntity("SexFuck6969", 6, 10, 0, 3, undefined, undefined, { storageKey: "craig", postBattle: "PostInitialBattle" }),
         SwitchMap("ExitAreaSouth", 0, 12, true, false, 5, 8, "farmpath"),
-        GetCommonEntity("PostInitialBattle", -1, -1, undefined, undefined, undefined, undefined, [
+        GetInvisibleEntity("PostInitialBattle", [
             GetSpeak("oops I killed a man. i should go kick his boss's ass, too. also his boss's ass,"),
             GetSpeak("so on and so forth, all the way up to the top. I should head to my farm first to get supplies.") 
-        ], { solid: false, storageKey: "PostInitialBattle" }),
+        ], { storageKey: "PostInitialBattle" }),
         {
             name: "CutscenePrompt",
             pos: {x: 11, y: 7}, // 10
@@ -18,8 +18,9 @@ var mapentities = {
                 function() {
                     worldmap.waitForAnimation = true;
                     worldmap.importantEntities["craig"].dir = 0;
+                    worldmap.importantEntities["craig"].moving = true;
                     worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["craig"].pos.y -= 0.2;//0.025;
+                        worldmap.importantEntities["craig"].pos.y -= 0.025;//0.2;//0.025;
                         worldmap.refreshMap();
                         if(worldmap.importantEntities["craig"].pos.y <= 8.5) {
                             worldmap.finishAnimation();
@@ -30,7 +31,7 @@ var mapentities = {
                     worldmap.waitForAnimation = true;
                     worldmap.importantEntities["craig"].dir = 3;
                     worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["craig"].pos.x += 0.2;//0.025;
+                        worldmap.importantEntities["craig"].pos.x += 0.025;//0.2;//0.025;
                         worldmap.refreshMap();
                         if(worldmap.importantEntities["craig"].pos.x >= 10) {
                             worldmap.finishAnimation();
@@ -40,8 +41,17 @@ var mapentities = {
                 function() {
                     worldmap.importantEntities["craig"].dir = 0;
                     worldmap.refreshMap();
-                    worldmap.writeText("fucking sick dude");
+                    worldmap.writeText("fucking sick");
+                    worldmap.importantEntities["craig"].moving = false;
                 },
+                GetSpeak("can i get a fuckin uhhhh carrot"),
+                function() {
+                    worldmap.importantEntities["craig"].dir = 1;
+                    worldmap.refreshMap();
+                    worldmap.writeText("this carrot is dope as SHIT, you really are a mighty farmer");
+                },
+                GetSpeak("i'm gonna use this carrot data to create PROPRIETARY FOOD SUBSTITUTES"),
+                GetSpeak("oh no you are going to fight me now because of that i guess"),
                 function() {
                     worldmap.clearTarget();
                     game.target = worldmap.importantEntities["craig"];
@@ -57,14 +67,14 @@ var mapentities = {
     ],
     "farm": [
         SwitchMap("ExitAreaWest", 23, 0, false, true, 1, 11, "farmpath"),
-        GetCommonEntity("Robo1", 20, 8, 4, 0, 2, commonMovementDatas.robo(20), commonInteractArrays.robo), 
-        GetCommonEntity("Robo2", 17, 10, 4, 0, 2, commonMovementDatas.robo(17), commonInteractArrays.robo), 
-        GetCommonEntity("Robo3", 16, 12, 4, 0, 2, commonMovementDatas.robo(16), commonInteractArrays.robo), 
-        GetCommonEntity("Robo4", 13, 14, 4, 0, 2, commonMovementDatas.robo(13), commonInteractArrays.robo), 
-        GetCommonEntity("Robo5", 12, 11, 4, 0, 2, commonMovementDatas.robo(12, 1), commonInteractArrays.robo), 
-        GetCommonEntity("Robo6", 9, 15, 4, 0, 2, commonMovementDatas.robo(9, 1), commonInteractArrays.robo),
+        GetCommonEntity("Robo1", 20, 8, 4, 2, commonMovementDatas.robo(20), commonInteractArrays.robo), 
+        GetCommonEntity("Robo2", 17, 10, 4, 2, commonMovementDatas.robo(17), commonInteractArrays.robo), 
+        GetCommonEntity("Robo3", 16, 12, 4, 2, commonMovementDatas.robo(16), commonInteractArrays.robo), 
+        GetCommonEntity("Robo4", 13, 14, 4, 2, commonMovementDatas.robo(13), commonInteractArrays.robo), 
+        GetCommonEntity("Robo5", 12, 11, 4, 2, commonMovementDatas.robo(12, 1), commonInteractArrays.robo), 
+        GetCommonEntity("Robo6", 9, 15, 4, 2, commonMovementDatas.robo(9, 1), commonInteractArrays.robo),
         EnterShop("ChickenCoop", 18, 3, "coop"),
-        GetCommonEntity("Fucker", 10, 3, 0, 0, 2, undefined, [
+        GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, [
             GetSpeak("hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm."),
             GetSpeak("aLso bY \"rEsearch\" i mEan \"lOot aNd pIllage.\""),
             GetSpeak("oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies?"),

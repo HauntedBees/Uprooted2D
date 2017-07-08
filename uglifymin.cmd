@@ -4,6 +4,7 @@ uglifyjs ^
     js/gamedata/shops.js ^
     js/gamedata/spritedata.js ^
     js/gamedata/misc.js ^
+    js/animation/animController.js ^
     js/input.js ^
     js/combat/combat.js ^
     js/combat/combatmenu.js ^

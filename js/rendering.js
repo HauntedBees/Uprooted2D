@@ -45,15 +45,10 @@ var gfx = {
         layer = layer || "characters";
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["charsheet"], sx * 16, sy * 20, 16, 20, x * 16, y * 16 - 4, 16, 20);
     },
-    drawBigMapCharacter: function(sx, sy, pos, offset, dir) {
-        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["mapcharbig"], (sx + dir) * 32, sy * 40, 32, 40, (pos.x - offset.x) * 16 - 8, (pos.y - offset.y) * 16 - 24, 32, 40);
-    },
-    drawMapCharacter: function(sx, sy, pos, offset, dir) {
-        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["mapchar"], (sx + dir) * 16, sy * 20, 16, 20, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - 4, 16, 20);
-    },
-    drawAnimCharacter: function(sx, sy, pos, offset, sheet) {
+    drawAnimCharacter: function(sx, sy, pos, offset, sheet, big) {
         sheet = sheet || "mapchar";
-        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets[sheet], sx, sy, 16, 20, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - 4, 16, 20);
+        var w = (big ? 32 : 16), h = (big ? 40 : 20);
+        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - (big ? 8 : 4), w, h);
     },
     drawCursor: function(x, y, w, h, cursorName) {
         cursorName = cursorName || "cursor";

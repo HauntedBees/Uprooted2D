@@ -2,9 +2,6 @@ var input = {
     click: function(e) {
         var p = input.getMousePos(e);
         if(game.currentInputHandler.click(p)) { return; }
-        /*var arr = ["ginger", "spinach", "tomato", "garlic", "carrot", "bellpepper", "corn", "pineapple", "radish", "rhubarb", "asparagus", "beet", "leek"];
-        var idx = Math.floor(Math.random() * arr.length);
-        gfx.drawTileToGrid(arr[idx] + "1", p.x, p.y, 1);*/
     },
     moveMouse: function(e) {
         var p = input.getMousePos(e);
