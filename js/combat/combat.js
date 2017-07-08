@@ -1,8 +1,8 @@
 var combat = {
-    enemies: [], state: 0, season: 0, numPlantTurns: 0,
-    playerAnimInfo: { animState: 0, anim: [[0, 0]], x: 4, y: 5.75 },
+    enemies: [], state: 0, season: 0, numPlantTurns: 0, dt: 50, 
+    playerAnimInfo: { animState: 0, anim: [[0, 0]], x: 4, y: 5.75, throwables: [] },
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
-    grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0,
+    grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, throwables: [], 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     startBattle: function(enemies) {
         worldmap.clean();
@@ -10,6 +10,8 @@ var combat = {
         player.initGridDimensions();
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
         game.currentInputHandler = this.menu;
+        this.setPlayerAnim();
+        this.throwables = [];
         this.setSeason(enemies);
         this.enemies = [];
         this.expEarned = 0;
@@ -42,7 +44,7 @@ var combat = {
         }
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
         this.drawMainElements();
-        combat.charAnimIdx = setInterval(combat.drawCharacters, 50);
+        combat.charAnimIdx = setInterval(combat.drawCharacters, this.dt);
         this.startRound();
         this.menu.setup();
     },
@@ -85,6 +87,7 @@ var combat = {
                 }
             }
         }
+        combat.drawThrowables();
     },
     setPlayerAnim: function(anims, x, y, top) {
         combat.playerAnimInfo.animState = 0;
@@ -93,19 +96,51 @@ var combat = {
         combat.playerAnimInfo.x = x || 4; 
         combat.playerAnimInfo.y = y || 5.75; 
         combat.playerAnimInfo.onTop = top; 
+        combat.playerAnimInfo.lastThrownFrame = -1;
     },
-    setAnim: function (idx, anim, fr) {
+    setAnim: function (idx, anim, fr, throwables) {
         combat.enemies[idx].animState = 0;
         combat.enemies[idx].timePerFrame = fr;
         combat.enemies[idx].lastRan = +new Date();
         combat.enemies[idx].anim = anim;
+        combat.enemies[idx].throwables = throwables || [];
+        combat.enemies[idx].lastThrownFrame = -1;
         combat.drawCharacters();
+    },
+    drawThrowables: function() {
+        if(combat.throwables.length === 0) { return; }
+        for(var i = combat.throwables.length - 1; i >= 0; i--) {
+            var t = combat.throwables[i];
+            if(t.frame >= t.time) {
+                t.target.hit = true;
+                combat.throwables.splice(i, 1);
+                continue;
+            }
+            var radians = Math.PI * (t.dir < 0 ? (t.frame / t.time) : (1 - (t.frame / t.time)));
+            var x = t.c + (0.4 * t.c) * Math.cos(radians);
+            var y = t.y + t.b * Math.sin(-radians);
+            gfx.drawTileToGrid(t.obj, x, y, "characters");
+            if(t.frame > t.time) { continue; }
+            t.frame += combat.dt;
+        }
     },
     animateEntity: function (e, x, y, isPlayer) {
         var dt = (+new Date()) - e.lastRan;
         if(dt >= e.timePerFrame) {
-            e.lastRan = +new Date();
-            e.animState = (e.animState + 1) % e.anim.length;
+            if(e.anim[e.animState][2]) {
+                if(e.throwables.length > 0) {
+                    e.lastRan = +new Date();
+                    e.animState = 0;
+                    e.lastThrownFrame = -1;
+                } else if(e.lastThrownFrame < 0) {
+                    if(!isPlayer) {
+                        combat.playerAnimInfo.hit = true;
+                    }
+                }
+            } else {
+                e.lastRan = +new Date();
+                e.animState = (e.animState + 1) % e.anim.length;
+            }
         }
         var animData = e.anim[e.animState];
         if(isPlayer) {
@@ -117,7 +152,19 @@ var combat = {
                 gfx.drawPlayer(animData[0], animData[1], e.x, e.y, e.onTop ? "menucursorC" : "characters");
             }
         } else {
-            gfx.drawCharacter(animData[0], animData[1], x, y);
+            gfx.drawCharacter(e.spriteidx, animData[1], x, y);
+        }
+        if(e.throwables.length > 0 && e.lastThrownFrame < e.animState && e.animState === 0) {
+            e.lastThrownFrame = e.animState;
+            var c = (4 + x + 0.5) / 2;
+            var b = 2 + Math.random() * 1;
+            combat.throwables.push({
+                obj: e.throwables[0],
+                frame: 0, time: 500, 
+                b: b, c: c, y: y - 0.5, dir: -1,
+                target: combat.playerAnimInfo
+            });
+            e.throwables.splice(0, 1);
         }
     },
     clearAnimsAndRemoveCorpses: function() {
@@ -205,10 +252,7 @@ var combat = {
         }
         return -1;
     },
-    damagePlayer: function(damage) {
-        player.health = Math.max(0, player.health - damage);
-        this.playerAnimInfo.hit = true;
-    },
+    damagePlayer: function(damage) { player.health = Math.max(0, player.health - damage); },
     damageEnemy: function(enemyidx, damage) {
         this.enemies[enemyidx].health -= damage;
         if(this.enemies[enemyidx].health <= 0) {

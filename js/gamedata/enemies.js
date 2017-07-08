@@ -14,16 +14,12 @@ function EnemyDetail(name, health, atk, def, fieldheight, fieldwidth, spriteidx,
 }
 function GetEnemy(name) {
     switch(name) {
-        case "Beckett": return new EnemyDetail(name, 10, 1, 1, 3, 2, 0, true, [0, 0, 1, 0], ["babySlap"], [
+        case "Beckett": return new EnemyDetail(name, 10, 1, 1, 3, 2, 0, true, [0, 0, 1, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [
             { money: true, min: 10, max: 10 },
             { seed: "carrot", min: 2, max: 2 }
         ]);
-        case "chode": return new EnemyDetail(name, 1, 1, 1, 3, 2, 1, true, [0, 0, 1, 0], ["dumbbattery"], [
-            { money: true, min: 10, max: 10 },
-            { seed: "carrot", min: 2, max: 2 }
-        ]);
-        case "dave": return new EnemyDetail(name, 10, 1, 1, 3, 1, 2, false, [0, 1, 0, 0], ["cry"], [{ money: true, min: 5, max: 10 }]);
-        case "robo": return new EnemyDetail(name, 8, 2, 1, 3, 2, 3, false, [0, 0, 1, 0], ["dumbbattery"], [
+        case "dave": return new EnemyDetail(name, 10, 1, 1, 3, 1, 2, false, [0, 1, 0, 0], ["app"], [{ money: true, min: 5, max: 10 }]);
+        case "robo": return new EnemyDetail(name, 8, 2, 1, 3, 2, 3, false, [0, 0, 1, 0], [["dumbbattery", 1], ["gear"]], [
             { money: true, min: 0, max: 5 },
             { seed: "carrot", min: -1, max: 1 }
         ]);
@@ -47,31 +43,43 @@ var enemyAttacks = {
             animFPS: 4, animData: [ [0, 2], [0, 3] ]
         };
     },
-    //cry: function(e) { return Capitalize(e.name) + " shat themselves and cried for like 20 minutes." },
-    babySlap: function(e) {
-        combat.damagePlayer(1);
+    gear: function(e) {
         return {
-            text: e.name + " slaps for 1 damage.",
+            text: e.name + " is thinking about the concept of gears.",
             animFPS: 4, animData: [ [0, 2], [0, 3] ]
         };
     },
     dumbbattery: function(e) {
         var dmg = 0;
-        var hasCrops = 0;
+        var crops = [];
         for(var x = 0; x < combat.enemyGrid.length; x++) {
             for(var y = 0; y < combat.enemyGrid[0].length; y++) {
                 var tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.activeTime > 0 || tile.rotten) { continue; }
                 dmg += tile.power;
-                hasCrops = true;
+                crops.push(tile.name);
             }
         }
         dmg += dmg == 0 ? (e.atk / 1.5) : e.atk;
         dmg = Math.max(1, Math.round(dmg - player.def));
-        if(!hasCrops) { // no fresh crops
-            if(Math.random() < 0.2) { return enemyAttacks.cry(e); }
+        if(crops.length === 0) { // no fresh crops
+            var doAttack = false;
             var pos = {x: -1, y: -1};
+            var attempts = 5;
+            if(Math.random() > 0.5) {
+                doAttack = true;
+            } else {
+                while(attempts-- >= 0 && pos.x < 0) {
+                    var x = Math.floor(Math.random() * combat.enemyGrid.length);
+                    var y = Math.floor(Math.random() * combat.enemyGrid[0].length);
+                    if(combat.enemyGrid[x][y] === null) {
+                        pos = { x: x, y: y };
+                    }
+                }
+                if(pos.x < 0) { doAttack = true; }
+            }
+            if(doAttack) { return enemyAttacks[e.attacks[1][0]](e); }
             var newCrop = GetCrop("battery");
             newCrop.activeTime = newCrop.time;
             combat.enemyGrid[pos.x][pos.y] = newCrop;
@@ -86,9 +94,17 @@ var enemyAttacks = {
             combat.removeFreshEnemyCrops();
             return {
                 text: e.name + " attacks for " + dmg + " damage.",
-                animFPS: 8, animData: [ [0, 2], [0, 3] ]
+                animFPS: 12, animData: [ [e.spriteidx, 4], [e.spriteidx, 4], [e.spriteidx, 5], [e.spriteidx, 0, true] ],
+                throwables: crops
             };
         }
+    },
+    babySlap: function(e) {
+        combat.damagePlayer(1);
+        return {
+            text: e.name + " slaps for 1 damage.",
+            animFPS: 12, animData: [ [e.spriteidx, 4], [e.spriteidx, 4], [e.spriteidx, 5], [e.spriteidx, 0, true] ]
+        };
     }
     /*dumbbattery: function(e) {
         var dmg = 0;
