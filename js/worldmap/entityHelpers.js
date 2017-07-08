@@ -17,10 +17,12 @@ function GetInvisibleEntity(name, interact, additional) {
 };
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
+    var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
+    var len = (additional !== undefined && additional.sheetlen !== undefined) ? additional.sheetlen : 4;
     var res = {
         name: name, visible: true, 
         pos: {x: x, y: y}, solid: true, 
-        anim: new MapAnim((big ? "mapcharbig" : "mapchar"), firstx, 0, (big ? 32 : 16), (big ? 40 : 20), dir),
+        anim: new MapAnim(sheet, firstx, 0, (big ? 32 : 16), (big ? 40 : 20), dir, len),
         moving: false,
         sx: firstx * (big ? 32 : 16), dir: dir,
         movement: movement, interact: interact

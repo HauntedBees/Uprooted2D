@@ -2,66 +2,108 @@ var mapentities = {
     "farmersmarket": [
         //EnterShop("ChickenCoop", 10, 6, "coop"),
         //EnterShop("UpgradeTest", 10, 5, "farmupgradeFull"),
-        GetCommonEntity("SexFuck6969", 6, 10, 0, 3, undefined, undefined, { storageKey: "craig", postBattle: "PostInitialBattle" }),
-        SwitchMap("ExitAreaSouth", 0, 12, true, false, 5, 8, "farmpath"),
+        GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "bike", visible: false }),
+        GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
+        SwitchMap("ExitAreaSouth", 0, 13, true, false, 5, 8, "farmpath"),
         GetInvisibleEntity("PostInitialBattle", [
             GetSpeak("oops I killed a man. i should go kick his boss's ass, too. also his boss's ass,"),
             GetSpeak("so on and so forth, all the way up to the top. I should head to my farm first to get supplies.") 
         ], { storageKey: "PostInitialBattle" }),
         {
             name: "CutscenePrompt",
-            pos: {x: 11, y: 7}, // 10
+            pos: {x: 10, y: 5}, // 10
             solid: false,
-            //autoplay: true, 
+            autoplay: true, 
             interact: [
-                GetSpeak("oh shit is that a le fucking farmer's market"),
-                function() {
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["craig"].dir = 0;
-                    worldmap.importantEntities["craig"].moving = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["craig"].pos.y -= 0.025;//0.2;//0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["craig"].pos.y <= 8.5) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["craig"].dir = 3;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["craig"].pos.x += 0.025;//0.2;//0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["craig"].pos.x >= 10) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.importantEntities["craig"].dir = 0;
-                    worldmap.refreshMap();
-                    worldmap.writeText("fucking sick");
-                    worldmap.importantEntities["craig"].moving = false;
-                },
-                GetSpeak("can i get a fuckin uhhhh carrot"),
-                function() {
-                    worldmap.importantEntities["craig"].dir = 1;
-                    worldmap.refreshMap();
-                    worldmap.writeText("this carrot is dope as SHIT, you really are a mighty farmer");
-                },
-                GetSpeak("i'm gonna use this carrot data to create PROPRIETARY FOOD SUBSTITUTES"),
-                GetSpeak("oh no you are going to fight me now because of that i guess"),
+                GetSpeak("it's battle"),
                 function() {
                     worldmap.clearTarget();
-                    game.target = worldmap.importantEntities["craig"];
-                    tutorial.startBattle();
+                    game.target = worldmap.importantEntities["hipster"];
+                    combat.startBattle(["Beckett"]);
                 }
+                /*function() {
+                    worldmap.waitForAnimation = true;
+                    worldmap.importantEntities["hipster"].moving = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["hipster"].pos.x += 0.025;//0.2;//0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["hipster"].pos.x >= 6) {
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                function() {
+                    worldmap.waitForAnimation = true;
+                    worldmap.importantEntities["hipster"].moving = false;
+                    worldmap.animIdx = setTimeout(function() {
+                        worldmap.finishAnimation();
+                    }, 500);
+                },
+                function() {
+                    worldmap.writeText("Beckett: Ah! This must be it! NAME's famous produce stand!");
+                    worldmap.importantEntities["hipster"].moving = true;
+                    worldmap.importantEntities["hipster"].anim.shiftY(2).shiftX(3, 2).setFPS(8);
+                },
+                function() {
+                    worldmap.waitForAnimation = true;
+                    worldmap.importantEntities["hipster"].moving = true;
+                    worldmap.importantEntities["hipster"].anim.shiftX(1, 4).shiftY(0).setFPS();
+                    worldmap.importantEntities["bike"].anim.shiftY(2);
+                    worldmap.importantEntities["bike"].visible = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["hipster"].pos.y += 0.025;
+                        worldmap.importantEntities["hipster"].pos.x += 0.05;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["hipster"].pos.x >= 8) {
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                function() {
+                    worldmap.importantEntities["hipster"].anim.shiftX(3, 2).setFPS(8);
+                    worldmap.writeText("Beckett: The guys back at the office were right -- all of this looks amazing!");
+                },
+                function() {
+                    worldmap.importantEntities["hipster"].moving = false;
+                    worldmap.importantEntities["hipster"].anim.shiftX(2, 4);
+                    worldmap.writeText("Beckett: This carrot looks so nutritious!");
+                },
+                function() {
+                    worldmap.importantEntities["hipster"].moving = true;
+                    worldmap.writeText("Beckett: ...");
+                },
+                GetSpeak("Beckett: And it looks like this analysis confirms that suspicion!"),
+                function() {
+                    worldmap.importantEntities["hipster"].moving = false;
+                    worldmap.writeText("Beckett: Hm?");
+                },
+                function() {
+                    worldmap.importantEntities["hipster"].moving = true;
+                    worldmap.importantEntities["hipster"].anim.shiftX(3, 2).setFPS(8);
+                    worldmap.writeText("Beckett: Oh. You're probably wondering what that was all about.");
+                },
+                GetSpeak("Beckett: The startup I work for is going to use this carrot data to help us create PROPRIETARY FOOD SUBSTITUTES."),
+                GetSpeak("Beckett: The world will be so much better when people don't have to worry about what to eat!"),
+                GetSpeak("Beckett: But for that to work, we also need to make sure Food2 has no competition..."),
+                GetSpeak("Beckett: So, I'd like to make you an offer. Ten million coins to retire and never farm again."),
+                function() {
+                    worldmap.importantEntities["hipster"].moving = false;
+                    worldmap.writeText("Beckett: ...");
+                },
+                function() {
+                    worldmap.importantEntities["hipster"].moving = true;
+                    worldmap.writeText("Beckett: No? Guess it's time for you to die then!");
+                },
+                function() {
+                    worldmap.clearTarget();
+                    game.target = worldmap.importantEntities["hipster"];
+                    tutorial.startBattle();
+                }*/
             ]
         }
     ],
     "farmpath": [
-        SwitchMap("ExitAreaNorth", 0, 7, true, false, 7, 10, "farmersmarket"), 
+        SwitchMap("ExitAreaNorth", 0, 7, true, false, 7, 12, "farmersmarket"), 
         SwitchMap("ExitAreaWest", 0, 0, false, true, 22, 12, "farm"),
         SwitchMap("ExitAreaSouth", 0, 15, true, false, 21.5, 1, "firstvillage")
     ],

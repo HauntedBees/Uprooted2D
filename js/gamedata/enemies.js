@@ -14,6 +14,10 @@ function EnemyDetail(name, health, atk, def, fieldheight, fieldwidth, spriteidx,
 }
 function GetEnemy(name) {
     switch(name) {
+        case "Beckett": return new EnemyDetail(name, 10, 1, 1, 3, 2, 0, true, [0, 0, 1, 0], ["babySlap"], [
+            { money: true, min: 10, max: 10 },
+            { seed: "carrot", min: 2, max: 2 }
+        ]);
         case "chode": return new EnemyDetail(name, 1, 1, 1, 3, 2, 1, true, [0, 0, 1, 0], ["dumbbattery"], [
             { money: true, min: 10, max: 10 },
             { seed: "carrot", min: 2, max: 2 }
@@ -37,8 +41,56 @@ function GetEnemy(name) {
     }
 }
 var enemyAttacks = {
-    cry: function(e) { return Capitalize(e.name) + " shat themselves and cried for like 20 minutes." },
+    app: function(e) {
+        return {
+            text: e.name + " is distracted by a hot new App.",
+            animFPS: 4, animData: [ [0, 2], [0, 3] ]
+        };
+    },
+    //cry: function(e) { return Capitalize(e.name) + " shat themselves and cried for like 20 minutes." },
+    babySlap: function(e) {
+        combat.damagePlayer(1);
+        return {
+            text: e.name + " slaps for 1 damage.",
+            animFPS: 4, animData: [ [0, 2], [0, 3] ]
+        };
+    },
     dumbbattery: function(e) {
+        var dmg = 0;
+        var hasCrops = 0;
+        for(var x = 0; x < combat.enemyGrid.length; x++) {
+            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined) { continue; }
+                if(tile.activeTime > 0 || tile.rotten) { continue; }
+                dmg += tile.power;
+                hasCrops = true;
+            }
+        }
+        dmg += dmg == 0 ? (e.atk / 1.5) : e.atk;
+        dmg = Math.max(1, Math.round(dmg - player.def));
+        if(!hasCrops) { // no fresh crops
+            if(Math.random() < 0.2) { return enemyAttacks.cry(e); }
+            var pos = {x: -1, y: -1};
+            var newCrop = GetCrop("battery");
+            newCrop.activeTime = newCrop.time;
+            combat.enemyGrid[pos.x][pos.y] = newCrop;
+            combat.drawCrops();
+            combat.drawBottom();
+            return {
+                text: e.name + " started charging a battery.",
+                animFPS: 4, animData: [ [0, 2], [0, 3] ]
+            };
+        } else {
+            combat.damagePlayer(dmg);
+            combat.removeFreshEnemyCrops();
+            return {
+                text: e.name + " attacks for " + dmg + " damage.",
+                animFPS: 8, animData: [ [0, 2], [0, 3] ]
+            };
+        }
+    }
+    /*dumbbattery: function(e) {
         var dmg = 0;
         var hasCrops = 0;
         for(var x = 0; x < combat.enemyGrid.length; x++) {
@@ -78,12 +130,15 @@ var enemyAttacks = {
                 combat.enemyGrid[pos.x][pos.y] = newCrop;
                 combat.drawCrops();
                 combat.drawBottom();
-                return Capitalize(e.name) + " started charging a battery.";
+                return {
+                    text: e.name + " started charging a battery.",
+                    animFPS: 4, animData: [ [0, 2], [0, 3] ]
+                };
             }
         } else {
             combat.damagePlayer(dmg);
             combat.removeFreshEnemyCrops();
             return Capitalize(e.name) + " attacks for " + dmg + " damage";
         }
-    }
+    }*/
 };

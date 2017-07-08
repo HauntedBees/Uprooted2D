@@ -23,7 +23,7 @@ var game = {
         gfx.tileWidth = tilewidth;
         gfx.tileHeight = tileheight;
         spriteData.populate();
-        gfx.loadSpriteSheets(["sheet", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig",
+        gfx.loadSpriteSheets(["sheet", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster",
                                 "maps/farmersmarket", "maps/farmpath", "maps/farm", "maps/firstvillage",
                                 "shops/cock"], this.sheetsLoaded);
     },
