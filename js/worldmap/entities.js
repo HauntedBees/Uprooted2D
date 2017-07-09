@@ -4,7 +4,7 @@ var mapentities = {
         //EnterShop("UpgradeTest", 10, 5, "farmupgradeFull"),
         GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "bike", visible: false }),
         GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
-        SwitchMap("ExitAreaSouth", 0, 13, true, false, 5, 8, "farmpath"),
+        SwitchMap("ExitAreaSouth", 0, 13, true, false, 7, 4, "farmpath"),
         GetInvisibleEntity("PostInitialBattle", [
             GetSpeak("oops I killed a man. i should go kick his boss's ass, too. also his boss's ass,"),
             GetSpeak("so on and so forth, all the way up to the top. I should head to my farm first to get supplies.") 
@@ -19,6 +19,7 @@ var mapentities = {
                 function() {
                     worldmap.clearTarget();
                     game.target = worldmap.importantEntities["hipster"];
+                    //tutorial.startBattle();
                     combat.startBattle(["Beckett"]);
                 }
                 /*function() {
@@ -103,7 +104,7 @@ var mapentities = {
         }
     ],
     "farmpath": [
-        SwitchMap("ExitAreaNorth", 0, 7, true, false, 7, 12, "farmersmarket"), 
+        SwitchMap("ExitAreaNorth", 0, 3, true, false, 7, 12, "farmersmarket"), 
         SwitchMap("ExitAreaWest", 0, 0, false, true, 22, 12, "farm"),
         SwitchMap("ExitAreaSouth", 0, 15, true, false, 21.5, 1, "firstvillage")
     ],
