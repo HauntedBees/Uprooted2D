@@ -72,7 +72,17 @@ var combat = {
         var initx = 11 - combat.enemies.length;
         for(var i = 0; i < combat.enemies.length; i++) { // enemies
             if(combat.enemies[i].isBig) {
-                gfx.drawBigCharacter(combat.enemies[i].spriteidx, 0, initx + i, 5.75);
+                if(combat.enemies[i].dead) {
+                    gfx.drawDitheredCharacter(combat.enemies[i].spriteidx, 1, initx + i, 5.75, (combat.enemies[i].deadFrame++));
+                } else if(combat.enemies[i].hit) {
+                    var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
+                    var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
+                    gfx.drawBigCharacter(combat.enemies[i].spriteidx, 1, initx + i + dx, 5 + dy);
+                } else if(combat.enemies[i].anim) {
+                    combat.animateEntity(combat.enemies[i], initx + i, 5, false, true);
+                } else {
+                    gfx.drawBigCharacter(combat.enemies[i].spriteidx, 0, initx + i, 5);
+                }
             } else {
                 if(combat.enemies[i].dead) {
                     gfx.drawDitheredCharacter(combat.enemies[i].spriteidx, 1, initx + i, 5.75, (combat.enemies[i].deadFrame++));
@@ -124,7 +134,7 @@ var combat = {
             t.frame += combat.dt;
         }
     },
-    animateEntity: function (e, x, y, isPlayer) {
+    animateEntity: function (e, x, y, isPlayer, isBig) {
         var dt = (+new Date()) - e.lastRan;
         if(dt >= e.timePerFrame) {
             if(e.anim[e.animState][2]) {
@@ -151,6 +161,8 @@ var combat = {
             } else {
                 gfx.drawPlayer(animData[0], animData[1], e.x, e.y, e.onTop ? "menucursorC" : "characters");
             }
+        } else if(isBig) {
+            gfx.drawBigCharacter(e.spriteidx, animData[1], x, y);
         } else {
             gfx.drawCharacter(e.spriteidx, animData[1], x, y);
         }
@@ -168,6 +180,7 @@ var combat = {
         }
     },
     clearAnimsAndRemoveCorpses: function() {
+        combat.throwables = [];
         combat.playerAnimInfo.hit = false;
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
             combat.enemies[i].hit = false;

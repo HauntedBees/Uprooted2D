@@ -13,7 +13,7 @@ var mapentities = {
             name: "CutscenePrompt",
             pos: {x: 10, y: 5}, // 10
             solid: false,
-            autoplay: true, 
+            //autoplay: true, 
             interact: [
                 GetSpeak("it's battle"),
                 function() {
@@ -123,7 +123,10 @@ var mapentities = {
             GetSpeak("..."),
             GetSpeak("...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn."),
             GetFight(["bigBot"])
-        ], { big: true, postBattle: "PostBoss" }),
+        ], { big: true, postBattle: "PostBoss", failedInteract: [
+            GetSpeak("bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain!"),
+            GetFight(["bigBot"])
+        ] }),
         {
             name: "PostBoss",
             pos: {x: -1, y: -1},

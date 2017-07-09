@@ -138,7 +138,11 @@ var worldmap = {
             this.fullAnimIdx = setInterval(worldmap.moveEntities, 10);
             return true;
         }
-        return game.target.interact[this.dialogState]();
+        if(game.target.failed && game.target.failedInteract !== undefined) {
+            return game.target.failedInteract[this.dialogState]();
+        } else {
+            return game.target.interact[this.dialogState]();
+        }
     },
     keyPress: function(key) {
         var pos = { x: this.pos.x, y: this.pos.y };
@@ -206,7 +210,11 @@ var worldmap = {
                     clearInterval(this.fullAnimIdx);
                     this.dialogState = 0;
                     game.target = e;
-                    if(e.interact[0]()) { return; }
+                    if(e.failed && e.failedInteract !== undefined) {
+                        if(e.failedInteract[0]()) { return; }
+                    } else {
+                        if(e.interact[0]()) { return; }
+                    }
                     break;
                 }
             }
@@ -215,8 +223,13 @@ var worldmap = {
                 var e = this.entities[i];
                 if(!e.solid && (e.pos.x == newPos.x || e.isRow) && (e.pos.y == newPos.y || e.isColumn) && e.interact !== undefined) {
                     this.inDialogue = true;
+                    this.dialogState = 0;
                     game.target = e;
-                    if(e.interact[0]()) { return; }
+                    if(e.failed && e.failedInteract !== undefined) {
+                        if(e.failedInteract[0]()) { return; }
+                    } else {
+                        if(e.interact[0]()) { return; }
+                    }
                     break;
                 }
             }
