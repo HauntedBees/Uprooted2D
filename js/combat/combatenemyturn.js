@@ -2,7 +2,7 @@ combat.enemyTurn = {
     dy: 7, 
     setup: function(args) {
         var enemy = args.enemy;
-        combat.setPlayerAnim();
+        combat.animHelper.SetPlayerAnimInfo();
         gfx.drawFullbox(this.dy);
         var attackData = this.doAttack(enemy);
         combat.setAnim(args.idx, attackData.animData, GetFrameRate(attackData.animFPS), attackData.throwables);

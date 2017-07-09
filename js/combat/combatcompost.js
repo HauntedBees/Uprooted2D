@@ -51,10 +51,10 @@ combat.compost = {
         }
         if(this.healButtonSelected) {
             gfx.drawCursor(0, this.dy, this.healButtonWidth, 0);
-            combat.setPlayerAnim([[6, 0]]);
+            combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
         } else if(this.attackButtonSelected) {
             gfx.drawCursor(0, this.dy + 1, this.attackButtonWidth, 0);
-            combat.setPlayerAnim([[2, 0]]);
+            combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
         } else {
             var px = this.cursor.x - combat.dx; var py = this.cursor.y - combat.dy;
             var tile = combat.grid[px][py];
@@ -65,7 +65,7 @@ combat.compost = {
                     } else {
                         gfx.drawCursor(tile.x + combat.dx, tile.y + combat.dy, 1, 1, "bcursor");
                     }
-                    combat.setPlayerAnim([[7, 0]], tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25, true);
+                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25, true);
                 } else {
                     if(this.isCompostable(tile)) {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1);
@@ -73,9 +73,9 @@ combat.compost = {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1, "bcursor");
                     }
                     if(tile.size === 2) {
-                        combat.setPlayerAnim([[7, 0]], this.cursor.x + 0.5, this.cursor.y + 0.25, true);
+                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x + 0.5, this.cursor.y + 0.25, true);
                     } else {
-                        combat.setPlayerAnim([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
                     }
                 }
             } else {
@@ -89,10 +89,10 @@ combat.compost = {
                 }
                 if(cowIdx < 0) {
                     gfx.drawCursor(this.cursor.x, this.cursor.y, 0, 0, "bcursor");
-                    combat.setPlayerAnim([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
                 } else {
                     gfx.drawCursor(cowPos.x, cowPos.y, 1, 1);
-                    combat.setPlayerAnim([[7, 0]], cowPos.x + 0.5, cowPos.y + 0.25, true);
+                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], cowPos.x + 0.5, cowPos.y + 0.25, true);
                 }
             }
         }
@@ -161,8 +161,8 @@ combat.compost = {
                 next: function() { combat.endTurn(combat.inbetween) },
                 text: "You compost your crops, recovering " + healAmount + " health."
             });
-            combat.setPlayerAnim([[1, 1]]);
-            combat.drawCrops();
+            combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
+            combat.animHelper.DrawCrops();
             return true;
         } else if(pos.y == (this.dy + 1) && pos.x < 3 && player.canAttackWithCompost()) { // attack
             if(this.selectedCrops.length == 0) { return false; }
@@ -192,7 +192,7 @@ combat.compost = {
                 next: function() { combat.endTurn(combat.inbetween) },
                 text: "You compost your crops and hurl them forward, dealing " + damage + " damage" + (combat.enemies.length > 1 ? " to everyone." : ".")
             });
-            combat.drawCrops();
+            combat.animHelper.DrawCrops();
             return true;
         }
         if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }

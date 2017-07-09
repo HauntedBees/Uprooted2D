@@ -51,18 +51,14 @@ ThrowAnim.prototype.getFrame = function(dt) {
     this.current += dt;
 };
 
-function EnemyThrowAnim(y, time, sprite, b, c, target) {
-    ThrowAnim.call(this, y, time, sprite, b, c, -1);
-    this.target = target;
-}
+function EnemyThrowAnim(y, time, sprite, b, c) { ThrowAnim.call(this, y, time, sprite, b, c, -1); }
 EnemyThrowAnim.prototype = Object.create(ThrowAnim.prototype);
 EnemyThrowAnim.prototype.constructor = EnemyThrowAnim;
-EnemyThrowAnim.prototype.finish = function() { this.target.hit = true; }
+EnemyThrowAnim.prototype.finish = function() { combat.animHelper.GivePlayerAHit(); }
 
 function PlayerThrowAnim(y, time, sprite, b, c, tidx, last) {
     ThrowAnim.call(this, y, time, sprite, b, c, 1);
     this.tidx = tidx;
-    this.target = combat.enemies[tidx];
     this.last = last;
 }
 PlayerThrowAnim.prototype = Object.create(ThrowAnim.prototype);
@@ -71,7 +67,7 @@ PlayerThrowAnim.prototype.finish = function() {
     if(this.last) {
         combat.displayEnemyDamage(this.tidx);
     } else {
-        this.target.hit = true;
+        combat.animHelper.GiveEnemyAHit(this.tidx);
     } 
 }
 

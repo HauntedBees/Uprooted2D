@@ -22,7 +22,7 @@ combat.selectTarget = {
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
-        combat.setPlayerAnim([[2, 0]]);
+        combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
         if(this.sicklePos.x >= 0) {
             var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
@@ -144,8 +144,8 @@ combat.selectTarget = {
             } else { damagetext += "."; }
             combat.damageEnemy(this.cursorx, damage);
         }
-        combat.setPlayerAnim([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
-        combat.flagFreshCropsAndGetSeeds(criticalHit);
+        combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
+        combat.flagFreshCrops(true, criticalHit);
         game.transition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: damagetext

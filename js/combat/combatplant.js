@@ -152,7 +152,7 @@ combat.plant = {
             this.cursor = { x: 0, y: this.dy };
             player.decreaseItem(this.activeCrop.name);
             this.activeCrop = null;
-            combat.drawCrops();
+            combat.animHelper.DrawCrops();
             if(--combat.numPlantTurns == 0) {
                 if(player.canAttackAfterPlanting()) {
                     game.transition(this, combat.menu);
@@ -226,7 +226,7 @@ combat.plant = {
             text: t
         });
         combat.drawMainElements();
-        combat.drawCrops();
+        combat.animHelper.DrawCrops();
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClean);
@@ -234,13 +234,13 @@ combat.plant = {
         var cursorX = this.cursor.x, cursorY = this.cursor.y;
         if(this.activeCrop === null) {
             this.setText();
-            combat.setPlayerAnim([[6, 0]]);
+            combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
         } else {
             size = this.activeCrop.size - 1;
             if(size == 1) {
-                combat.setPlayerAnim([[7, 0]], cursorX + 0.5, cursorY + 0.25, true);
+                combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX + 0.5, cursorY + 0.25, true);
             } else {
-                combat.setPlayerAnim([[7, 0]], cursorX, cursorY - 0.25, true);
+                combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX, cursorY - 0.25, true);
             }
         }
         gfx.drawInfobox(16, 3, this.dy + 0.5);

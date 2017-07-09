@@ -49,7 +49,7 @@ combat.menu = {
                 charX = 5;
                 break;
         }
-        combat.setPlayerAnim([[charX, charY]]);
+        combat.animHelper.SetPlayerAnimInfo([[charX, charY]]);
         gfx.drawInfobox(11, 2.5, this.dy + 1.5);
         gfx.drawWrappedText(text, 4.5 * 16, 11 + ((1.5 + this.dy) * 16), 170);
         combat.drawBottom();
@@ -108,6 +108,7 @@ combat.menu = {
         } else {
             if(Math.random() > (0.45 * player.luck)) {
                 worldmap.clearTarget();
+                clearInterval(combat.charAnimIdx);
                 game.transition(this, combat.inbetween, {
                     next: function() {
                         game.transition(combat.inbetween, worldmap, {

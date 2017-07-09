@@ -83,7 +83,7 @@ var enemyAttacks = {
             var newCrop = GetCrop("battery");
             newCrop.activeTime = newCrop.time;
             combat.enemyGrid[pos.x][pos.y] = newCrop;
-            combat.drawCrops();
+            combat.animHelper.DrawCrops();
             combat.drawBottom();
             return {
                 text: e.name + " started charging a battery.",
@@ -91,7 +91,7 @@ var enemyAttacks = {
             };
         } else {
             combat.damagePlayer(dmg);
-            combat.flagFreshEnemyCropsAndGetSeeds();
+            combat.flagFreshCrops(false);
             return {
                 text: e.name + " attacks for " + dmg + " damage.",
                 animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ],
@@ -151,7 +151,7 @@ var enemyAttacks = {
                 var newCrop = GetCrop("battery");
                 newCrop.activeTime = newCrop.time;
                 combat.enemyGrid[pos.x][pos.y] = newCrop;
-                combat.drawCrops();
+                combat.animHelper.DrawCrops();
                 combat.drawBottom();
                 return {
                     text: e.name + " started charging a battery.",
@@ -160,7 +160,7 @@ var enemyAttacks = {
             }
         } else {
             combat.damagePlayer(dmg);
-            combat.flagFreshEnemyCropsAndGetSeeds();
+            combat.flagFreshCrops(false);
             return Capitalize(e.name) + " attacks for " + dmg + " damage";
         }
     }*/
