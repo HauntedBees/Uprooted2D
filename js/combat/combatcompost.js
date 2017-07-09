@@ -96,6 +96,7 @@ combat.compost = {
                 }
             }
         }
+        gfx.drawTileToGrid("bigbin", 5, 5, "menucursorB");
         combat.drawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
@@ -144,7 +145,7 @@ combat.compost = {
                     combat.happyCows[pos.cow].removeMe = true;
                     thereAreCows = true;
                 } else {
-                    var crop = combat.removeCrop(pos);
+                    var crop = combat.flagCrop(pos);
                     healAmount += (1.1 - (crop.activeTime / crop.time)) * crop.power;
                 }
             }
@@ -160,6 +161,7 @@ combat.compost = {
                 next: function() { combat.endTurn(combat.inbetween) },
                 text: "You compost your crops, recovering " + healAmount + " health."
             });
+            combat.setPlayerAnim([[1, 1]]);
             combat.drawCrops();
             return true;
         } else if(pos.y == (this.dy + 1) && pos.x < 3 && player.canAttackWithCompost()) { // attack
@@ -172,7 +174,7 @@ combat.compost = {
                     combat.happyCows[pos.cow].removeMe = true;
                     thereAreCows = true;
                 } else {
-                    var crop = combat.removeCrop(pos);
+                    var crop = combat.flagCrop(pos);
                     damage += (0.1 + (crop.activeTime / crop.time)) * crop.power;
                 }
             }

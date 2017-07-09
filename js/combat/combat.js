@@ -4,7 +4,7 @@ var combat = {
     playerAnimInfo: { animState: 0, anim: [[0, 0]], x: 4, y: 5.75, throwables: [] },
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0,
-    throwables: [], otherShitToAnimate: [],
+    animatables: [],
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     startBattle: function(enemies) {
         worldmap.clean();
@@ -15,8 +15,7 @@ var combat = {
         this.setPlayerAnim();
         this.lastTargetCrop = false;
         this.lastTarget = 0;
-        this.throwables = [];
-        this.otherShitToAnimate = [];
+        this.animatables = [];
         this.setSeason(enemies);
         this.enemies = [];
         this.expEarned = 0;
@@ -102,8 +101,7 @@ var combat = {
                 }
             }
         }
-        combat.drawThrowables();
-        combat.animOtherShit();
+        combat.drawAnimatedShit();
     },
     setPlayerAnim: function(anims, x, y, top, fr) {
         combat.playerAnimInfo.animState = 0;
@@ -125,43 +123,15 @@ var combat = {
         combat.enemies[idx].lastThrownFrame = -1;
         combat.drawCharacters();
     },
-    animOtherShit: function() {
-        for(var i = combat.otherShitToAnimate.length - 1; i >= 0; i--) {
-            var t = combat.otherShitToAnimate[i];
+    drawAnimatedShit: function() {
+        for(var i = combat.animatables.length - 1; i >= 0; i--) {
+            var t = combat.animatables[i];
             if(t.current >= t.time) {
-                combat.otherShitToAnimate.splice(i, 1);
-                continue;
+                t.finish();
+                combat.animatables.splice(i, 1);
+            } else {
+                t.getFrame(combat.dt);
             }
-            if(t.type === "anim") {
-                var idx = Math.floor(t.frames * t.current / t.time);
-                gfx.drawTileToGrid(t.sprite + idx, t.x, t.y, "menucursorC");
-            } else if(t.type === "move") {
-                var dt = t.current / t.time;
-                var newx = t.x + (t.destx - t.x) * dt;
-                var newy = t.y + (t.desty - t.y) * dt;
-                gfx.drawTileToGrid(t.sprite, newx, newy, "menucursorC");
-            }
-            t.current += combat.dt;
-        }
-    },
-    drawThrowables: function() {
-        for(var i = combat.throwables.length - 1; i >= 0; i--) {
-            var t = combat.throwables[i];
-            if(t.frame >= t.time) {
-                if(t.fromPlayer && combat.throwables.length === 1) {
-                    combat.displayEnemyDamage(t.tidx);
-                } else {
-                    t.target.hit = true;
-                }
-                combat.throwables.splice(i, 1);
-                continue;
-            }
-            var radians = Math.PI * (t.dir < 0 ? (t.frame / t.time) : (1 - (t.frame / t.time)));
-            var x = t.c + (0.4 * t.c) * Math.cos(radians);
-            var y = t.y + t.b * Math.sin(-radians);
-            gfx.drawTileToGrid(t.obj, x, y, "characters");
-            if(t.frame > t.time) { continue; }
-            t.frame += combat.dt;
         }
     },
     animateEntity: function (e, x, y, isPlayer, isBig) {
@@ -212,52 +182,27 @@ var combat = {
                 var gy = e.throwables[0][2];
                 var seedDrop = combat.grid[gx][gy].seedDrop;
                 if(seedDrop !== undefined) {
-                    combat.otherShitToAnimate.push({
-                        x: this.dx + gx, y: this.dy + gy,
-                        destx: combat.playerAnimInfo.x, desty: combat.playerAnimInfo.y,  
-                        current: 0, time: 250, type: "move",
-                        sprite: seedDrop
-                    });
+                    combat.animatables.push(new MoveAnim(this.dx + gx, this.dy + gy, combat.playerAnimInfo.x, combat.playerAnimInfo.y, 250, seedDrop));
                 }
                 var isTree = combat.wipeOutCrop(gx, gy);
                 if(isTree) { gx += 0.5; gy += 0.5; }
-                combat.otherShitToAnimate.push({
-                    x: this.dx + gx, y: this.dy + gy, 
-                    current: 0, time: 250, type: "anim",
-                    sprite: "puff", frames: 5
-                });
-                combat.throwables.push({
-                    obj: e.throwables[0][0],
-                    frame: 0, time: 500, 
-                    b: b, c: c, y: y - 0.5, dir: 1,
-                    fromPlayer: true, tidx: combat.lastTarget,
-                    target: combat.enemies[combat.lastTarget]
-                });
+                combat.animatables.push(new SheetAnim(this.dx + gx, this.dy + gy, 250, "puff", 5));
+                combat.animatables.push(new PlayerThrowAnim(y - 0.5, 500, e.throwables[0][0], b, c, combat.lastTarget, e.throwables.length === 1));
             } else {
                 var c = (4 + x + 0.5) / 2;
                 var gx = e.throwables[0][1];
                 var gy = e.throwables[0][2];
                 var isTree = combat.wipeOutEnemyCrop(gx, gy);
                 if(isTree) { gx += 0.5; gy += 0.5; }
-                combat.otherShitToAnimate.push({
-                    x: this.enemydx + gx, y: this.enemydy + gy, 
-                    current: 0, time: 250, type: "anim",
-                    sprite: "puff", frames: 5
-                });
-                combat.throwables.push({
-                    obj: e.throwables[0][0],
-                    frame: 0, time: 500, 
-                    b: b, c: c, y: y - 0.5, dir: -1,
-                    target: combat.playerAnimInfo
-                });
+                combat.animatables.push(new SheetAnim(this.enemydx + gx, this.enemydy + gy, 250, "puff", 5));
+                combat.animatables.push(new EnemyThrowAnim(y - 0.5, 500, e.throwables[0][0], b, c, combat.playerAnimInfo));
             }
             e.lastThrownFrame = e.animState;
             e.throwables.splice(0, 1);
         }
     },
     clearAnimsAndRemoveCorpses: function() {
-        combat.throwables = [];
-        combat.otherShitToAnimate = [];
+        combat.animatables = [];
         combat.playerAnimInfo.throwables = [];
         combat.playerAnimInfo.hit = false;
         combat.cleanFlaggedCrops();
@@ -628,7 +573,12 @@ var combat = {
                 crop.flagged = true;
             }
         }
-        this.drawCrops();
+    },
+    flagCrop: function(pos) {
+        var crop = this.grid[pos.x][pos.y];
+        this.grid[pos.x][pos.y] = null;
+        crop.flagged = true;
+        return crop;
     },
     removeCrop: function(pos) {
         var crop = this.grid[pos.x][pos.y];

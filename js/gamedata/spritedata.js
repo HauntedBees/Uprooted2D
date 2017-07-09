@@ -69,6 +69,7 @@ var spriteData = {
         }
     },
     names: {
+        "bigbin": [10, 1, true],
         "puff4": [4, 15],
         "grass": [9, 14],
         "edgeWA": [8, 13],
