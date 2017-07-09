@@ -132,8 +132,15 @@ var combat = {
                 combat.otherShitToAnimate.splice(i, 1);
                 continue;
             }
-            var idx = Math.floor(t.frames * t.current / t.time);
-            gfx.drawTileToGrid(t.sprite + idx, t.x, t.y, "menucursorC");
+            if(t.type === "anim") {
+                var idx = Math.floor(t.frames * t.current / t.time);
+                gfx.drawTileToGrid(t.sprite + idx, t.x, t.y, "menucursorC");
+            } else if(t.type === "move") {
+                var dt = t.current / t.time;
+                var newx = t.x + (t.destx - t.x) * dt;
+                var newy = t.y + (t.desty - t.y) * dt;
+                gfx.drawTileToGrid(t.sprite, newx, newy, "menucursorC");
+            }
             t.current += combat.dt;
         }
     },
@@ -203,11 +210,20 @@ var combat = {
                 var c = (initx + combat.lastTarget + x - 0.5) / 2;
                 var gx = e.throwables[0][1];
                 var gy = e.throwables[0][2];
+                var seedDrop = combat.grid[gx][gy].seedDrop;
+                if(seedDrop !== undefined) {
+                    combat.otherShitToAnimate.push({
+                        x: this.dx + gx, y: this.dy + gy,
+                        destx: combat.playerAnimInfo.x, desty: combat.playerAnimInfo.y,  
+                        current: 0, time: 250, type: "move",
+                        sprite: seedDrop
+                    });
+                }
                 var isTree = combat.wipeOutCrop(gx, gy);
                 if(isTree) { gx += 0.5; gy += 0.5; }
                 combat.otherShitToAnimate.push({
                     x: this.dx + gx, y: this.dy + gy, 
-                    current: 0, time: 250,
+                    current: 0, time: 250, type: "anim",
                     sprite: "puff", frames: 5
                 });
                 combat.throwables.push({
@@ -225,7 +241,7 @@ var combat = {
                 if(isTree) { gx += 0.5; gy += 0.5; }
                 combat.otherShitToAnimate.push({
                     x: this.enemydx + gx, y: this.enemydy + gy, 
-                    current: 0, time: 250,
+                    current: 0, time: 250, type: "anim",
                     sprite: "puff", frames: 5
                 });
                 combat.throwables.push({
@@ -596,7 +612,7 @@ var combat = {
                 var seedChance = Math.random() * player.luck * (isCritical ? 0.5 : 1);
                 if(crop.name.indexOf("special") === 0) { seedChance = 1; }
                 if(seedChance < 0.05) {
-                    console.log("Got a " + crop.name + " seed!");
+                    crop.seedDrop = crop.name + "seed";
                     player.increaseItem(crop.name);
                 }
             }
