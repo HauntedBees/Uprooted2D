@@ -1,5 +1,6 @@
 var combat = {
-    enemies: [], state: 0, season: 0, numPlantTurns: 0, dt: 50, 
+    enemies: [], state: 0, season: 0, numPlantTurns: 0, dt: 50,
+    lastTarget: 0, lastTargetCrop: false, 
     playerAnimInfo: { animState: 0, anim: [[0, 0]], x: 4, y: 5.75, throwables: [] },
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, throwables: [], 
@@ -11,6 +12,8 @@ var combat = {
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
         game.currentInputHandler = this.menu;
         this.setPlayerAnim();
+        this.lastTargetCrop = false;
+        this.lastTarget = 0;
         this.throwables = [];
         this.setSeason(enemies);
         this.enemies = [];
@@ -99,14 +102,16 @@ var combat = {
         }
         combat.drawThrowables();
     },
-    setPlayerAnim: function(anims, x, y, top) {
+    setPlayerAnim: function(anims, x, y, top, fr) {
         combat.playerAnimInfo.animState = 0;
         combat.playerAnimInfo.anim = anims || [[0, 0]];
-        combat.playerAnimInfo.timePerFrame = anim.timePerFrame;
+        combat.playerAnimInfo.timePerFrame = fr || anim.timePerFrame;
+        combat.playerAnimInfo.lastRan = +new Date();
         combat.playerAnimInfo.x = x || 4; 
         combat.playerAnimInfo.y = y || 5.75; 
         combat.playerAnimInfo.onTop = top; 
         combat.playerAnimInfo.lastThrownFrame = -1;
+        combat.playerAnimInfo.throwables = [];
     },
     setAnim: function (idx, anim, fr, throwables) {
         combat.enemies[idx].animState = 0;
@@ -122,7 +127,11 @@ var combat = {
         for(var i = combat.throwables.length - 1; i >= 0; i--) {
             var t = combat.throwables[i];
             if(t.frame >= t.time) {
-                t.target.hit = true;
+                if(t.fromPlayer && combat.throwables.length === 1) {
+                    combat.displayEnemyDamage(t.tidx);
+                } else {
+                    t.target.hit = true;
+                }
                 combat.throwables.splice(i, 1);
                 continue;
             }
@@ -145,7 +154,14 @@ var combat = {
                 } else if(e.lastThrownFrame < 0) {
                     if(!isPlayer) {
                         combat.playerAnimInfo.hit = true;
+                    } else {
+                        if(combat.lastTargetCrop) {
+
+                        } else {
+                            combat.displayEnemyDamage(combat.lastTarget);
+                        }
                     }
+                    e.lastThrownFrame = 0;
                 }
             } else {
                 e.lastRan = +new Date();
@@ -167,26 +183,39 @@ var combat = {
             gfx.drawCharacter(e.spriteidx, animData[1], x, y);
         }
         if(e.throwables.length > 0 && e.lastThrownFrame < e.animState && e.animState === 0) {
-            e.lastThrownFrame = e.animState;
-            var c = (4 + x + 0.5) / 2;
             var b = 2 + Math.random() * 1;
-            combat.throwables.push({
-                obj: e.throwables[0],
-                frame: 0, time: 500, 
-                b: b, c: c, y: y - 0.5, dir: -1,
-                target: combat.playerAnimInfo
-            });
+            if(isPlayer) {
+                var initx = 11 - combat.enemies.length;
+                var c = (initx + combat.lastTarget + x - 0.5) / 2;
+                combat.throwables.push({
+                    obj: e.throwables[0],
+                    frame: 0, time: 500, 
+                    b: b, c: c, y: y - 0.5, dir: 1,
+                    fromPlayer: true, tidx: combat.lastTarget,
+                    target: combat.enemies[combat.lastTarget]
+                });
+            } else {
+                var c = (4 + x + 0.5) / 2;
+                combat.throwables.push({
+                    obj: e.throwables[0],
+                    frame: 0, time: 500, 
+                    b: b, c: c, y: y - 0.5, dir: -1,
+                    target: combat.playerAnimInfo
+                });
+            }
+            e.lastThrownFrame = e.animState;
             e.throwables.splice(0, 1);
         }
     },
     clearAnimsAndRemoveCorpses: function() {
         combat.throwables = [];
+        combat.playerAnimInfo.throwables = [];
         combat.playerAnimInfo.hit = false;
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
             combat.enemies[i].hit = false;
             combat.enemies[i].animState = 0;
             combat.enemies[i].anim = null;
-            if(combat.enemies[i].dead) {
+            if(combat.enemies[i].health <= 0) {
                 combat.enemies.splice(i, 1);
             }
         }
@@ -270,8 +299,6 @@ var combat = {
         this.enemies[enemyidx].health -= damage;
         if(this.enemies[enemyidx].health <= 0) {
             var e = this.enemies[enemyidx];
-            e.dead = true;
-            e.deadFrame = 0;
             this.expEarned += e.exp;
             for(var i = 0; i < e.drops.length; i++) {
                 var dropInfo = e.drops[i];
@@ -281,6 +308,14 @@ var combat = {
                     this.addDroppedSeedToItemsEarned(dropInfo.seed, Math.max(0, Range(dropInfo.min, dropInfo.max)));
                 }
             }
+        }
+    },
+    displayEnemyDamage: function(enemyidx) {
+        if(enemyidx >= this.enemies.length) { return; }
+        if(this.enemies[enemyidx].health <= 0) {
+            var e = this.enemies[enemyidx];
+            e.dead = true;
+            e.deadFrame = 0;
         } else {
             this.enemies[enemyidx].hit = true;
         }
@@ -481,6 +516,7 @@ var combat = {
                 if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { continue; }
                 var crop = this.grid[x][y];
                 if(crop.rotten || crop.activeTime > 0) { continue; }
+                combat.playerAnimInfo.throwables.push(crop.name);
                 var seedChance = Math.random() * player.luck * (isCritical ? 0.5 : 1);
                 if(crop.respawn > 0) {
                     crop.activeTime = crop.respawn;

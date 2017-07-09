@@ -2,7 +2,6 @@ combat.inbetween = {
     next: null, dy: 7, 
     setup: function(args) {
         this.next = args.next;
-        combat.setPlayerAnim();
         gfx.drawFullbox(this.dy);
         gfx.drawFullText(args.text, this.dy * 16);
         combat.drawBottom();

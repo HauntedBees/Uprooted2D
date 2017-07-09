@@ -100,6 +100,8 @@ combat.selectTarget = {
                 cropPos = {x: crop.x, y: crop.y};
                 crop = combat.enemyGrid[crop.x][crop.y];
             }
+            combat.lastTarget = cropPos;
+            combat.lastTargetCrop = false;
             var damage = Math.ceil(damage / 6);
             damagetext += "You attack the " + crop.displayname + " for like " + damage + " damage";
             if((crop.power - damage) <= 0) {
@@ -115,6 +117,8 @@ combat.selectTarget = {
                 combat.enemyGrid[cropPos.x][cropPos.y] = null;
             }
         } else {
+            combat.lastTarget = this.cursorx;
+            combat.lastTargetCrop = false;
             var target = combat.enemies[this.cursorx];
             if(!criticalHit) { damage = Math.max(1, damage - target.def); }
             damagetext += "You attack " + target.name + " for like " + damage + " damage";
@@ -123,6 +127,7 @@ combat.selectTarget = {
             } else { damagetext += "."; }
             combat.damageEnemy(this.cursorx, damage);
         }
+        combat.setPlayerAnim([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
         combat.removeFreshCrops(criticalHit);
         game.transition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },

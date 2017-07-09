@@ -11,54 +11,62 @@ combat.menu = {
         this.drawOption("Run", 3, this.cursorY === 3);
         gfx.drawCursor(0, this.dy + this.cursorY, this.options[this.cursorY], 0);
         var text = "abba is a band";
-        var charPose = 0;
+        var charX = 0, charY = 0;
         switch(this.cursorY) {
             case 0:
                 if(combat.numPlantTurns == 0) {
                     text = "You can't plant any more seeds this turn.";
-                    charPose = 3;
+                    charX = 3;
                 } else if(combat.numPlantTurns == 1) {
                     text = "Plant a Seed in your Field.";
-                    charPose = 1;
+                    charX = 1;
                 } else {
                     text = "Plant up to " + combat.numPlantTurns + " Seeds in your Field.";
-                    charPose = 1;
+                    charX = 1;
                 }
                 break;
             case 1:
-                text = "Attack with Melee or with any Ripe Crops in your Field.";
-                charPose = 2;
+                var count = this.highlightReadyCropsAndReturnCount();
+                if(count === 0) {
+                    text = "Perform a Melee attack.";
+                    charX = 2;
+                } else {
+                    text = "Attack with Ripe Crops on your Field.";
+                    charX = 1; charY = 1;
+                }
                 break;
             case 2: 
                 if(player.equipment.compost === null) {
                     text = "You need a Compost Bin equipped to perform this action.";
-                    charPose = 3;
+                    charX = 3;
                 } else {
                     text = "Compost any Crops in your Field to recover Health.";
-                    charPose = 4;
+                    charX = 4;
                 }
                 break;
             case 3:
                 text = "Fuck off and cry to your mum, shitbird.";
-                charPose = 5;
+                charX = 5;
                 break;
         }
-        combat.setPlayerAnim([[charPose, 0]]);
+        combat.setPlayerAnim([[charX, charY]]);
         gfx.drawInfobox(11, 2.5, this.dy + 1.5);
         gfx.drawWrappedText(text, 4.5 * 16, 11 + ((1.5 + this.dy) * 16), 170);
-        if(this.cursorY === 1) { this.highlightReadyCrops(); }
         combat.drawBottom();
     },
-    highlightReadyCrops: function() {
+    highlightReadyCropsAndReturnCount: function() {
+        var count = 0;
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 var tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.activeTime > 0 || tile.rotten) { continue; }
+                count++;
                 var size = tile.size - 1;
                 gfx.drawCursor(x + combat.dx, y + combat.dy, size, size, "xcursor");
             }
         }
+        return count;
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
     drawOption: function(text, y, selected) {
