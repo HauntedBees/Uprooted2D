@@ -58,7 +58,7 @@ var enemyAttacks = {
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.activeTime > 0 || tile.rotten) { continue; }
                 dmg += tile.power;
-                crops.push(tile.name);
+                crops.push([tile.name, x, y]);
             }
         }
         dmg += dmg == 0 ? (e.atk / 1.5) : e.atk;
@@ -91,7 +91,7 @@ var enemyAttacks = {
             };
         } else {
             combat.damagePlayer(dmg);
-            combat.removeFreshEnemyCrops();
+            combat.flagFreshEnemyCropsAndGetSeeds();
             return {
                 text: e.name + " attacks for " + dmg + " damage.",
                 animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ],
@@ -160,7 +160,7 @@ var enemyAttacks = {
             }
         } else {
             combat.damagePlayer(dmg);
-            combat.removeFreshEnemyCrops();
+            combat.flagFreshEnemyCropsAndGetSeeds();
             return Capitalize(e.name) + " attacks for " + dmg + " damage";
         }
     }*/

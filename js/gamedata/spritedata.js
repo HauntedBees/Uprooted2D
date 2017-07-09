@@ -7,6 +7,7 @@ var spriteData = {
             spriteData.names["cursor" + i] = [1 + i, 11];
             spriteData.names["bcursor" + i] = [5 + i, 12];
             spriteData.names["xcursor" + i] = [9 + i, 12];
+            spriteData.names["puff" + i] = [i, 15];
             if(i < 2) {
                 spriteData.names["apple" + i] = [3 + i, 0, true];
                 spriteData.names["banana" + i] = [5 + i, 0, true];
@@ -68,6 +69,7 @@ var spriteData = {
         }
     },
     names: {
+        "puff4": [4, 15],
         "grass": [9, 14],
         "edgeWA": [8, 13],
         "edgeW": [9, 13],

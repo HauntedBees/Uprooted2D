@@ -128,7 +128,7 @@ combat.selectTarget = {
             combat.damageEnemy(this.cursorx, damage);
         }
         combat.setPlayerAnim([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
-        combat.removeFreshCrops(criticalHit);
+        combat.flagFreshCropsAndGetSeeds(criticalHit);
         game.transition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: damagetext

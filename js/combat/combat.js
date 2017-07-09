@@ -3,7 +3,8 @@ var combat = {
     lastTarget: 0, lastTargetCrop: false, 
     playerAnimInfo: { animState: 0, anim: [[0, 0]], x: 4, y: 5.75, throwables: [] },
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
-    grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, throwables: [], 
+    grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0,
+    throwables: [], otherShitToAnimate: [],
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     startBattle: function(enemies) {
         worldmap.clean();
@@ -15,6 +16,7 @@ var combat = {
         this.lastTargetCrop = false;
         this.lastTarget = 0;
         this.throwables = [];
+        this.otherShitToAnimate = [];
         this.setSeason(enemies);
         this.enemies = [];
         this.expEarned = 0;
@@ -101,6 +103,7 @@ var combat = {
             }
         }
         combat.drawThrowables();
+        combat.animOtherShit();
     },
     setPlayerAnim: function(anims, x, y, top, fr) {
         combat.playerAnimInfo.animState = 0;
@@ -122,8 +125,19 @@ var combat = {
         combat.enemies[idx].lastThrownFrame = -1;
         combat.drawCharacters();
     },
+    animOtherShit: function() {
+        for(var i = combat.otherShitToAnimate.length - 1; i >= 0; i--) {
+            var t = combat.otherShitToAnimate[i];
+            if(t.current >= t.time) {
+                combat.otherShitToAnimate.splice(i, 1);
+                continue;
+            }
+            var idx = Math.floor(t.frames * t.current / t.time);
+            gfx.drawTileToGrid(t.sprite + idx, t.x, t.y, "menucursorC");
+            t.current += combat.dt;
+        }
+    },
     drawThrowables: function() {
-        if(combat.throwables.length === 0) { return; }
         for(var i = combat.throwables.length - 1; i >= 0; i--) {
             var t = combat.throwables[i];
             if(t.frame >= t.time) {
@@ -156,7 +170,7 @@ var combat = {
                         combat.playerAnimInfo.hit = true;
                     } else {
                         if(combat.lastTargetCrop) {
-
+                            // TODO: targeting crops
                         } else {
                             combat.displayEnemyDamage(combat.lastTarget);
                         }
@@ -187,8 +201,17 @@ var combat = {
             if(isPlayer) {
                 var initx = 11 - combat.enemies.length;
                 var c = (initx + combat.lastTarget + x - 0.5) / 2;
+                var gx = e.throwables[0][1];
+                var gy = e.throwables[0][2];
+                var isTree = combat.wipeOutCrop(gx, gy);
+                if(isTree) { gx += 0.5; gy += 0.5; }
+                combat.otherShitToAnimate.push({
+                    x: this.dx + gx, y: this.dy + gy, 
+                    current: 0, time: 250,
+                    sprite: "puff", frames: 5
+                });
                 combat.throwables.push({
-                    obj: e.throwables[0],
+                    obj: e.throwables[0][0],
                     frame: 0, time: 500, 
                     b: b, c: c, y: y - 0.5, dir: 1,
                     fromPlayer: true, tidx: combat.lastTarget,
@@ -196,8 +219,17 @@ var combat = {
                 });
             } else {
                 var c = (4 + x + 0.5) / 2;
+                var gx = e.throwables[0][1];
+                var gy = e.throwables[0][2];
+                var isTree = combat.wipeOutEnemyCrop(gx, gy);
+                if(isTree) { gx += 0.5; gy += 0.5; }
+                combat.otherShitToAnimate.push({
+                    x: this.enemydx + gx, y: this.enemydy + gy, 
+                    current: 0, time: 250,
+                    sprite: "puff", frames: 5
+                });
                 combat.throwables.push({
-                    obj: e.throwables[0],
+                    obj: e.throwables[0][0],
                     frame: 0, time: 500, 
                     b: b, c: c, y: y - 0.5, dir: -1,
                     target: combat.playerAnimInfo
@@ -209,8 +241,10 @@ var combat = {
     },
     clearAnimsAndRemoveCorpses: function() {
         combat.throwables = [];
+        combat.otherShitToAnimate = [];
         combat.playerAnimInfo.throwables = [];
         combat.playerAnimInfo.hit = false;
+        combat.cleanFlaggedCrops();
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
             combat.enemies[i].hit = false;
             combat.enemies[i].animState = 0;
@@ -369,6 +403,7 @@ var combat = {
         game.transition(game.currentInputHandler, worldmap, {  init: { x: inn.x,  y: inn.y }, map: inn.map });
     },
     endTurn: function(caller) {
+        this.clearAnimsAndRemoveCorpses();
         this.drawMainElements();
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
             game.transition(game.currentInputHandler, combat.inbetween, {
@@ -510,20 +545,55 @@ var combat = {
         }
         this.drawCrops();
     },
-    removeFreshCrops: function(isCritical) {
+    wipeOutCrop: function(x, y) {
+        if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { return false; }
+        var crop = this.grid[x][y];
+        if(crop.rotten || crop.activeTime > 0) { return false; }
+        if(crop.respawn > 0) {
+            crop.activeTime = crop.respawn;
+            crop.flagged = false;
+        } else {
+            this.grid[x][y] = null;
+        }
+        this.drawCrops();
+        return (crop.size == 2);
+    },
+    wipeOutEnemyCrop: function(x, y) {
+        if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { return false; }
+        var crop = this.enemyGrid[x][y];
+        if(crop.rotten || crop.activeTime > 0) { return false; }
+        if(crop.respawn > 0) {
+            crop.activeTime = crop.respawn;
+            crop.flagged = false;
+        } else {
+            this.enemyGrid[x][y] = null;
+        }
+        this.drawCrops();
+        return (crop.size == 2);
+    },
+    cleanFlaggedCrops: function() {
+        for(var x = 0; x < this.grid.length; x++) {
+            for(var y = 0; y < this.grid[0].length; y++) {
+                if(this.grid[x][y] === null || this.grid[x][y].name === undefined || !this.grid[x][y].flagged) { continue; }
+                combat.wipeOutCrop(x, y);
+            }
+        }
+        for(var x = 0; x < this.enemyGrid.length; x++) {
+            for(var y = 0; y < this.enemyGrid[0].length; y++) {
+                if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined || !this.enemyGrid[x][y].flagged) { continue; }
+                combat.wipeOutEnemyCrop(x, y);
+            }
+        }
+    },
+    flagFreshCropsAndGetSeeds: function(isCritical) {
         for(var x = 0; x < this.grid.length; x++) {
             for(var y = 0; y < this.grid[0].length; y++) {
                 if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { continue; }
                 var crop = this.grid[x][y];
                 if(crop.rotten || crop.activeTime > 0) { continue; }
-                combat.playerAnimInfo.throwables.push(crop.name);
+                crop.flagged = true;
+                combat.playerAnimInfo.throwables.push([crop.name, x, y]);
                 var seedChance = Math.random() * player.luck * (isCritical ? 0.5 : 1);
-                if(crop.respawn > 0) {
-                    crop.activeTime = crop.respawn;
-                    seedChance *= 1.5;
-                } else {
-                    this.grid[x][y] = null;
-                }
                 if(crop.name.indexOf("special") === 0) { seedChance = 1; }
                 if(seedChance < 0.05) {
                     console.log("Got a " + crop.name + " seed!");
@@ -533,17 +603,13 @@ var combat = {
         }
         this.drawCrops();
     },
-    removeFreshEnemyCrops: function() {
+    flagFreshEnemyCropsAndGetSeeds: function() {
         for(var x = 0; x < this.enemyGrid.length; x++) {
             for(var y = 0; y < this.enemyGrid[0].length; y++) {
                 if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { continue; }
                 var crop = this.enemyGrid[x][y];
                 if(crop.rotten || crop.activeTime > 0) { continue; }
-                if(crop.respawn > 0) {
-                    crop.activeTime = crop.respawn;
-                } else {
-                    this.enemyGrid[x][y] = null;
-                }
+                crop.flagged = true;
             }
         }
         this.drawCrops();
@@ -564,6 +630,7 @@ var combat = {
             for(var y = 0; y < this.grid[0].length; y++) {
                 if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { continue; }
                 var crop = this.grid[x][y];
+                if(crop.hidden) { continue; }
                 var newFrame = Math.floor((crop.frames - 1) * ((crop.time - crop.activeTime) / crop.time));
                 if(crop.size == 2) {
                     if(newFrame < 3) {
