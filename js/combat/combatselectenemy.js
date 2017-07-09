@@ -6,11 +6,19 @@ combat.selectTarget = {
         this.cursorx = 0;
         this.sicklePos = {x: -1, y: -1};
         this.canSickle = player.canSickleCrops();
-        if(!this.canSickle && combat.enemies.length === 1) {
+        if(combat.enemies.length === 1 && (!this.canSickle || this.enemyGridIsEmpty())) {
             this.click(null);
         } else {
             this.drawAll();
         }
+    },
+    enemyGridIsEmpty: function() {
+        for(var x = 0; x < combat.enemywidth; x++) {
+            for(var y = 0; y < combat.enemyheight; y++) {
+                if(combat.enemyGrid[x][y] !== null) { return false; }
+            }
+        }
+        return true;
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
@@ -27,9 +35,18 @@ combat.selectTarget = {
             var initx = 11 - combat.enemies.length;
             gfx.drawCursor(initx + this.cursorx, 5.25, 0, 0.5);
         }
-        combat.menu.highlightReadyCrops();
+        combat.menu.highlightReadyCropsAndReturnCount();
         gfx.drawInfobox(9, 1.5, this.dy);
-        gfx.drawWrappedText(Capitalize(combat.enemies[this.cursorx].name), 6.5 * 16, 11 + (this.dy * 16), 85);
+        if(this.sicklePos.x >= 0) {
+            var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
+            if(crop === null) {
+                gfx.drawWrappedText("", 6.5 * 16, 11 + (this.dy * 16), 85);
+            } else {
+                gfx.drawWrappedText(Capitalize(crop.name), 6.5 * 16, 11 + (this.dy * 16), 85);
+            }
+        } else {
+            gfx.drawWrappedText(combat.enemies[this.cursorx].name, 6.5 * 16, 11 + (this.dy * 16), 85);
+        }
         combat.drawBottom();
     },
 
@@ -100,7 +117,7 @@ combat.selectTarget = {
                 cropPos = {x: crop.x, y: crop.y};
                 crop = combat.enemyGrid[crop.x][crop.y];
             }
-            combat.lastTarget = cropPos;
+            combat.lastTarget = 0;
             combat.lastTargetCrop = false;
             var damage = Math.ceil(damage / 6);
             damagetext += "You attack the " + crop.displayname + " for like " + damage + " damage";
