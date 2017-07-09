@@ -5,7 +5,7 @@ combat.enemyTurn = {
         combat.animHelper.SetPlayerAnimInfo();
         gfx.drawFullbox(this.dy);
         var attackData = this.doAttack(enemy);
-        combat.setAnim(args.idx, attackData.animData, GetFrameRate(attackData.animFPS), attackData.throwables);
+        combat.animHelper.SetEnemyAnimInfo(args.idx, attackData.animData, GetFrameRate(attackData.animFPS), attackData.throwables);
         gfx.drawFullText(attackData.text, this.dy * 16);
         combat.animHelper.DrawBottom();
     },

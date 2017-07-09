@@ -103,7 +103,7 @@ PlayerAnimInfo.prototype.Animate = function() {
                 if(combat.lastTargetCrop) {
                     // TODO: targeting crops
                 } else {
-                    combat.displayEnemyDamage(combat.lastTarget);
+                    combat.animHelper.DisplayEnemyDamage(combat.lastTarget);
                 }
                 this.lastThrownFrame = 0;
             }
@@ -138,13 +138,12 @@ PlayerAnimInfo.prototype.Animate = function() {
     }
 };
 
-
 function CombatAnimHelper(enemies) {
     var playerAnimInfo = new PlayerAnimInfo();
     var enemyAnimInfos = [];
     var initx = 11 - enemies.length;
     for(var i = 0; i < enemies.length; i++) {
-        var e = GetEnemy(enemies[i]);
+        var e = enemies[i];
         enemyAnimInfos.push(new EnemyAnimInfo([[e.spriteidx, 0]], initx + i, e.isBig ? 5 : 5.75, 0, e.isBig, e.spriteidx));
     }
     var anims = [];
@@ -169,6 +168,7 @@ function CombatAnimHelper(enemies) {
         var initx = 11 - combat.enemies.length;
         enemyAnimInfos[idx] = new EnemyAnimInfo(anims, initx + idx, e.isBig ? 5 : 5.75, fr, e.isBig, e.spriteidx);
         enemyAnimInfos[idx].throwables = throwables || [];
+        this.Animate();
     };
 
     this.GivePlayerAHit = function() { playerAnimInfo.hit = true; };
@@ -177,6 +177,14 @@ function CombatAnimHelper(enemies) {
         var e = enemyAnimInfos[idx];
         e.dead = true;
         e.deadFrame = 0;
+    };
+    this.DisplayEnemyDamage = function(idx) {
+        if(idx >= combat.enemies.length) { return; }
+        if(combat.enemies[idx].health <= 0) {
+            this.MakeEnemyACorpse(idx);
+        } else {
+            this.GiveEnemyAHit(idx);
+        }
     };
 
     this.AddPlayerThrowable = function(t) { playerAnimInfo.throwables.push(t); };

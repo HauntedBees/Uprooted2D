@@ -65,7 +65,7 @@ PlayerThrowAnim.prototype = Object.create(ThrowAnim.prototype);
 PlayerThrowAnim.prototype.constructor = PlayerThrowAnim;
 PlayerThrowAnim.prototype.finish = function() {
     if(this.last) {
-        combat.displayEnemyDamage(this.tidx);
+        combat.animHelper.DisplayEnemyDamage(this.tidx);
     } else {
         combat.animHelper.GiveEnemyAHit(this.tidx);
     } 
