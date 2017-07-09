@@ -52,7 +52,7 @@ combat.menu = {
         combat.animHelper.SetPlayerAnimInfo([[charX, charY]]);
         gfx.drawInfobox(11, 2.5, this.dy + 1.5);
         gfx.drawWrappedText(text, 4.5 * 16, 11 + ((1.5 + this.dy) * 16), 170);
-        combat.drawBottom();
+        combat.animHelper.DrawBottom();
     },
     highlightReadyCropsAndReturnCount: function() {
         var count = 0;

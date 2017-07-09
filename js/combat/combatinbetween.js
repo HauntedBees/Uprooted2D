@@ -4,7 +4,7 @@ combat.inbetween = {
         this.next = args.next;
         gfx.drawFullbox(this.dy);
         gfx.drawFullText(args.text, this.dy * 16);
-        combat.drawBottom();
+        combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(["menuA", "menuB", "menucursorA", "menucursorB", "menutext"]); },
     mouseMove: function(pos) { return true; },

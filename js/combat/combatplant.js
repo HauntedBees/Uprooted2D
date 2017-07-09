@@ -144,7 +144,7 @@ combat.plant = {
                 } else {
                     combat.happyCows.push({ x: px - 1, y: py - 1, feed: newCrop.power });
                 }
-                combat.drawMainElements();
+                combat.animHelper.DrawBackground();
             } else {
                 newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier());
                 combat.grid[px][py] = newCrop;
@@ -225,7 +225,7 @@ combat.plant = {
             },
             text: t
         });
-        combat.drawMainElements();
+        combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
     },
     drawAll: function() {
@@ -252,7 +252,7 @@ combat.plant = {
         } else {
             gfx.drawCursor(cursorX, cursorY, size, size, "bcursor");
         }
-        combat.drawBottom();
+        combat.animHelper.DrawBottom();
         for(var i = 0; i < this.actualIndexes.length; i++) {
             var actItem = player.inventory[this.actualIndexes[i]];
             gfx.drawInventoryItem(actItem, i % this.inventoryWidth, this.dy + 0.5 + Math.floor(i / this.inventoryWidth), "menuA");

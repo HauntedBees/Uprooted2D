@@ -47,7 +47,7 @@ combat.selectTarget = {
         } else {
             gfx.drawWrappedText(combat.enemies[this.cursorx].name, 6.5 * 16, 11 + (this.dy * 16), 85);
         }
-        combat.drawBottom();
+        combat.animHelper.DrawBottom();
     },
 
     clean: function() { gfx.clearSome(this.layersToClear); },

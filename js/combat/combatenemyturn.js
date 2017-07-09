@@ -7,7 +7,7 @@ combat.enemyTurn = {
         var attackData = this.doAttack(enemy);
         combat.setAnim(args.idx, attackData.animData, GetFrameRate(attackData.animFPS), attackData.throwables);
         gfx.drawFullText(attackData.text, this.dy * 16);
-        combat.drawBottom();
+        combat.animHelper.DrawBottom();
     },
     doAttack: function(enemy) {
         var rand = Math.random();

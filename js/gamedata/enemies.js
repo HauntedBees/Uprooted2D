@@ -84,7 +84,7 @@ var enemyAttacks = {
             newCrop.activeTime = newCrop.time;
             combat.enemyGrid[pos.x][pos.y] = newCrop;
             combat.animHelper.DrawCrops();
-            combat.drawBottom();
+            combat.animHelper.DrawBottom();
             return {
                 text: e.name + " started charging a battery.",
                 animFPS: 4, animData: [ [0, 4], [0, 5] ]
@@ -152,7 +152,7 @@ var enemyAttacks = {
                 newCrop.activeTime = newCrop.time;
                 combat.enemyGrid[pos.x][pos.y] = newCrop;
                 combat.animHelper.DrawCrops();
-                combat.drawBottom();
+                combat.animHelper.DrawBottom();
                 return {
                     text: e.name + " started charging a battery.",
                     animFPS: 4, animData: [ [0, 2], [0, 3] ]

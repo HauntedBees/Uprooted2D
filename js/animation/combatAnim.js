@@ -149,6 +149,20 @@ function CombatAnimHelper(enemies) {
     }
     var anims = [];
     
+    this.DrawBottom = function() {
+        for(var x = 0; x < gfx.tileWidth; x++) { gfx.drawSprite("sheet", 15, 11, x * 16, 9.25 * 16, "menuA"); }
+        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, 9.9 * 16);
+        var season = "";
+        switch(combat.season) {
+            case 0: season = "Spring"; break;
+            case 1: season = "Summer"; break;
+            case 2: season = "Autumn"; break;
+            case 3: season = "Winter"; break;
+        }
+        gfx.drawSprite("sheet", 12 + combat.season, 10, 12 * 16 - 3, 9 * 16 + 1, "menuA");
+        gfx.drawText(season, 13 * 16 - 1, 9.9 * 16);
+    };
+
     this.SetPlayerAnimInfo = function(anims, x, y, top, fr) { playerAnimInfo = new PlayerAnimInfo(anims, x, y, fr, top); };
     this.SetEnemyAnimInfo = function(idx, anims, fr, throwables) {
         var e = combat.enemies[idx];
@@ -166,9 +180,20 @@ function CombatAnimHelper(enemies) {
     };
 
     this.AddPlayerThrowable = function(t) { playerAnimInfo.throwables.push(t); };
-    this.AnimateEntities = function() {
+    var AnimateEntities = function() {
         playerAnimInfo.Animate();
         for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Animate(); }
+    };
+    var AnimateParticles = function() {
+        for(var i = anims.length - 1; i >= 0; i--) {
+            var t = anims[i];
+            if(t.current >= t.time) {
+                t.finish();
+                anims.splice(i, 1);
+            } else {
+                t.getFrame(combat.dt);
+            }
+        }
     };
     this.CleanEntities = function() {
         playerAnimInfo.Reset();
@@ -179,15 +204,9 @@ function CombatAnimHelper(enemies) {
     this.AddAnim = function(a) { anims.push(a); };
     this.CleanAnims = function() { anims = []; };
     this.Animate = function() {
-        for(var i = anims.length - 1; i >= 0; i--) {
-            var t = anims[i];
-            if(t.current >= t.time) {
-                t.finish();
-                anims.splice(i, 1);
-            } else {
-                t.getFrame(combat.dt);
-            }
-        }
+        gfx.clearSome(["characters", "menucursorC"]);
+        AnimateEntities();
+        AnimateParticles();
     };
     var DrawCropGrid = function(grid, dx, dy, drawWeed) {
         for(var x = 0; x < grid.length; x++) {
@@ -229,5 +248,60 @@ function CombatAnimHelper(enemies) {
         gfx.clearLayer("foreground");
         DrawCropGrid(combat.grid, combat.dx, combat.dy, true);
         DrawCropGrid(combat.enemyGrid, combat.enemydx, combat.enemydy);
+    };
+    this.DrawBackground = function() {
+        gfx.clearLayer("background");
+        for(var x = 0; x < combat.enemywidth; x++) { // enemy field
+            for(var y = 0; y < combat.enemyheight; y++) {
+                gfx.drawTileToGrid("tech", combat.enemydx + x, y + combat.enemydy, "background");
+            }
+        }
+        var toDrawAfterwards = [];
+        gfx.drawTileToGrid("edgeWA", combat.dx - 1, combat.dy - 1, "background");
+        gfx.drawTileToGrid("edgeWD", combat.dx + player.gridWidth, combat.dy - 1, "background");
+        gfx.drawTileToGrid("edgeSA", combat.dx - 1, combat.dy + player.gridHeight, "background");
+        gfx.drawTileToGrid("edgeSD", combat.dx + player.gridWidth, combat.dy + player.gridHeight, "background");
+        for(var y = 0; y < player.gridHeight; y++) {
+            gfx.drawTileToGrid("edgeA", combat.dx - 1, y + combat.dy, "background");
+            gfx.drawTileToGrid("edgeD", combat.dx + player.gridWidth, y + combat.dy, "background");
+        }
+        for(var x = 0; x < player.gridWidth; x++) { // player field
+            gfx.drawTileToGrid("edgeW", x + combat.dx, combat.dy - 1, "background");
+            gfx.drawTileToGrid("edgeS", x + combat.dx, combat.dy + player.gridHeight, "background");
+            for(var y = 0; y < player.gridHeight; y++) {
+                gfx.drawTileToGrid("dirt", x + combat.dx, y + combat.dy, "background");
+                var item = player.itemGrid[x][y];
+                if(item !== null && !item.coord) { 
+                    var iteminfo = GetFarmInfo(item);
+                    if(item === "_cow") {
+                        if(combat.getCowIndex(x, y) >= 0) {
+                            toDrawAfterwards.push({ sprite: "cowready", x: (x + combat.dx), y: (y + combat.dy) });
+                        } else {
+                            toDrawAfterwards.push({ sprite: "cow", x: (x + combat.dx), y: (y + combat.dy) });
+                        }
+                    } else if(item === "_modulator") {
+                        toDrawAfterwards.push({ sprite: "mod" + combat.season, x: (x + combat.dx), y: (y + combat.dy) });
+                    } else if(iteminfo.displaySprite !== undefined) {
+                        toDrawAfterwards.push({ sprite: iteminfo.displaySprite, x: (x + combat.dx), y: (y + combat.dy) });
+                    } else if(item === "_lake") {
+                        gfx.drawTileToGrid(pausemenu.farmmod.getWaterFrame(x, y), x + combat.dx, y + combat.dy, "background");
+                    //} else if(item[0] === "_" && GetFarmInfo(item).size == 2) {
+                    //    toDrawAfterwards.push({ sprite: "cow", x: (x + combat.dx), y: (y + combat.dy) });
+                    } else if(item === "_shooter") {
+                        if(combat.getUsedShooterIndex(x, y) >= 0) {
+                            gfx.drawTileToGrid("_shooterClosed", x + combat.dx, y + combat.dy, "background");
+                        } else {
+                            gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
+                        }
+                    } else {
+                        gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
+                    }
+                 }
+            }
+        }
+        for(var i = 0; i < toDrawAfterwards.length; i++) {
+            var item = toDrawAfterwards[i];
+            gfx.drawTileToGrid(item.sprite, item.x, item.y, "background");
+        }
     };
 }

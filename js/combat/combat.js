@@ -1,21 +1,18 @@
 var combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0, dt: 50,
     lastTarget: 0, lastTargetCrop: false, 
-    playerAnimInfo: { animState: 0, anim: [[0, 0]], x: 4, y: 5.75, throwables: [] },
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0,
-    animatables: [],
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
+    animHelper: null, 
     startBattle: function(enemies) {
         worldmap.clean();
         gfx.clearAll();
         player.initGridDimensions();
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
         game.currentInputHandler = this.menu;
-        this.setPlayerAnim();
         this.lastTargetCrop = false;
         this.lastTarget = 0;
-        this.animatables = [];
         this.setSeason(enemies);
         this.enemies = [];
         this.expEarned = 0;
@@ -46,9 +43,13 @@ var combat = {
             this.enemyheight = Math.max(this.enemyheight, enemy.fieldheight);
             this.enemies.push(enemy);
         }
+        this.animHelper = new CombatAnimHelper(enemies);
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
-        this.drawMainElements();
-        combat.charAnimIdx = setInterval(combat.drawCharacters, this.dt);
+        this.enemydx = 10 + Math.floor((5 - this.enemywidth) / 2);
+        this.enemydy = this.dy + Math.floor((player.gridHeight - this.enemyheight) / 2);
+        combat.animHelper.DrawBackground();
+        combat.animHelper.DrawCrops();
+        combat.charAnimIdx = setInterval(function() { combat.animHelper.Animate() }, this.dt);
         this.startRound();
         this.menu.setup();
     },
@@ -70,207 +71,19 @@ var combat = {
             season -= dist[j];
         }
     },
-    drawCharacters: function() {
-        gfx.clearSome(["characters", "menucursorC"]);
-        combat.animateEntity(combat.playerAnimInfo, 4, 5.75, true);
-        var initx = 11 - combat.enemies.length;
-        for(var i = 0; i < combat.enemies.length; i++) { // enemies
-            if(combat.enemies[i].isBig) {
-                if(combat.enemies[i].dead) {
-                    gfx.drawDitheredBigCharacter(combat.enemies[i].spriteidx, 1, initx + i, 5, (combat.enemies[i].deadFrame++));
-                } else if(combat.enemies[i].hit) {
-                    var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
-                    var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-                    gfx.drawBigCharacter(combat.enemies[i].spriteidx, 1, initx + i + dx, 5 + dy);
-                } else if(combat.enemies[i].anim) {
-                    combat.animateEntity(combat.enemies[i], initx + i, 5, false, true);
-                } else {
-                    gfx.drawBigCharacter(combat.enemies[i].spriteidx, 0, initx + i, 5);
-                }
-            } else {
-                if(combat.enemies[i].dead) {
-                    gfx.drawDitheredCharacter(combat.enemies[i].spriteidx, 1, initx + i, 5.75, (combat.enemies[i].deadFrame++));
-                } else if(combat.enemies[i].hit) {
-                    var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
-                    var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-                    gfx.drawCharacter(combat.enemies[i].spriteidx, 1, initx + i + dx, 5.75 + dy);
-                } else if(combat.enemies[i].anim) {
-                    combat.animateEntity(combat.enemies[i], initx + i, 5.75);
-                } else {
-                    gfx.drawCharacter(combat.enemies[i].spriteidx, 0, initx + i, 5.75);
-                }
-            }
-        }
-        combat.drawAnimatedShit();
-    },
-    setPlayerAnim: function(anims, x, y, top, fr) {
-        combat.playerAnimInfo.animState = 0;
-        combat.playerAnimInfo.anim = anims || [[0, 0]];
-        combat.playerAnimInfo.timePerFrame = fr || anim.timePerFrame;
-        combat.playerAnimInfo.lastRan = +new Date();
-        combat.playerAnimInfo.x = x || 4; 
-        combat.playerAnimInfo.y = y || 5.75; 
-        combat.playerAnimInfo.onTop = top; 
-        combat.playerAnimInfo.lastThrownFrame = -1;
-        combat.playerAnimInfo.throwables = [];
-    },
     setAnim: function (idx, anim, fr, throwables) {
-        combat.enemies[idx].animState = 0;
-        combat.enemies[idx].timePerFrame = fr;
-        combat.enemies[idx].lastRan = +new Date();
-        combat.enemies[idx].anim = anim;
-        combat.enemies[idx].throwables = throwables || [];
-        combat.enemies[idx].lastThrownFrame = -1;
-        combat.drawCharacters();
-    },
-    drawAnimatedShit: function() {
-        for(var i = combat.animatables.length - 1; i >= 0; i--) {
-            var t = combat.animatables[i];
-            if(t.current >= t.time) {
-                t.finish();
-                combat.animatables.splice(i, 1);
-            } else {
-                t.getFrame(combat.dt);
-            }
-        }
-    },
-    animateEntity: function (e, x, y, isPlayer, isBig) {
-        var dt = (+new Date()) - e.lastRan;
-        if(dt >= e.timePerFrame) {
-            if(e.anim[e.animState][2]) {
-                if(e.throwables.length > 0) {
-                    e.lastRan = +new Date();
-                    e.animState = 0;
-                    e.lastThrownFrame = -1;
-                } else if(e.lastThrownFrame < 0) {
-                    if(!isPlayer) {
-                        combat.playerAnimInfo.hit = true;
-                    } else {
-                        if(combat.lastTargetCrop) {
-                            // TODO: targeting crops
-                        } else {
-                            combat.displayEnemyDamage(combat.lastTarget);
-                        }
-                    }
-                    e.lastThrownFrame = 0;
-                }
-            } else {
-                e.lastRan = +new Date();
-                e.animState = (e.animState + 1) % e.anim.length;
-            }
-        }
-        var animData = e.anim[e.animState];
-        if(isPlayer) {
-            if(combat.playerAnimInfo.hit) {
-                var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
-                var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-                gfx.drawPlayer(0, 1, e.x + dx, e.y + dy);
-            } else {
-                gfx.drawPlayer(animData[0], animData[1], e.x, e.y, e.onTop ? "menucursorC" : "characters");
-            }
-        } else if(isBig) {
-            gfx.drawBigCharacter(e.spriteidx, animData[1], x, y);
-        } else {
-            gfx.drawCharacter(e.spriteidx, animData[1], x, y);
-        }
-        if(e.throwables.length > 0 && e.lastThrownFrame < e.animState && e.animState === 0) {
-            var b = 2 + Math.random() * 1;
-            if(isPlayer) {
-                var initx = 11 - combat.enemies.length;
-                var c = (initx + combat.lastTarget + x - 0.5) / 2;
-                var gx = e.throwables[0][1];
-                var gy = e.throwables[0][2];
-                var seedDrop = combat.grid[gx][gy].seedDrop;
-                if(seedDrop !== undefined) {
-                    combat.animatables.push(new MoveAnim(this.dx + gx, this.dy + gy, combat.playerAnimInfo.x, combat.playerAnimInfo.y, 250, seedDrop));
-                }
-                var isTree = combat.wipeOutCrop(gx, gy);
-                if(isTree) { gx += 0.5; gy += 0.5; }
-                combat.animatables.push(new SheetAnim(this.dx + gx, this.dy + gy, 250, "puff", 5));
-                combat.animatables.push(new PlayerThrowAnim(y - 0.5, 500, e.throwables[0][0], b, c, combat.lastTarget, e.throwables.length === 1));
-            } else {
-                var c = (4 + x + 0.5) / 2;
-                var gx = e.throwables[0][1];
-                var gy = e.throwables[0][2];
-                var isTree = combat.wipeOutEnemyCrop(gx, gy);
-                if(isTree) { gx += 0.5; gy += 0.5; }
-                combat.animatables.push(new SheetAnim(this.enemydx + gx, this.enemydy + gy, 250, "puff", 5));
-                combat.animatables.push(new EnemyThrowAnim(y - 0.5, 500, e.throwables[0][0], b, c, combat.playerAnimInfo));
-            }
-            e.lastThrownFrame = e.animState;
-            e.throwables.splice(0, 1);
-        }
+        combat.animHelper.SetEnemyAnimInfo(idx, anim, fr, throwables);
+        combat.animHelper.Animate();
     },
     clearAnimsAndRemoveCorpses: function() {
-        combat.animatables = [];
-        combat.playerAnimInfo.throwables = [];
-        combat.playerAnimInfo.hit = false;
+        combat.animHelper.CleanAnims();
+        combat.animHelper.CleanEntities();
         combat.cleanFlaggedCrops();
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
-            combat.enemies[i].hit = false;
-            combat.enemies[i].animState = 0;
-            combat.enemies[i].anim = null;
             if(combat.enemies[i].health <= 0) {
+                combat.animHelper.RemoveEnemy(i);
                 combat.enemies.splice(i, 1);
             }
-        }
-    },
-    drawMainElements: function() {
-        gfx.clearLayer("background");
-        this.drawCharacters();
-        this.enemydx = 10 + Math.floor((5 - this.enemywidth) / 2);
-        this.enemydy = this.dy + Math.floor((player.gridHeight - this.enemyheight) / 2);
-        for(var x = 0; x < this.enemywidth; x++) { // enemy field
-            for(var y = 0; y < this.enemyheight; y++) {
-                gfx.drawTileToGrid("tech", this.enemydx + x, y + this.enemydy, "background");
-            }
-        }
-        var toDrawAfterwards = [];
-        gfx.drawTileToGrid("edgeWA", this.dx - 1, this.dy - 1, "background");
-        gfx.drawTileToGrid("edgeWD", this.dx + player.gridWidth, this.dy - 1, "background");
-        gfx.drawTileToGrid("edgeSA", this.dx - 1, this.dy + player.gridHeight, "background");
-        gfx.drawTileToGrid("edgeSD", this.dx + player.gridWidth, this.dy + player.gridHeight, "background");
-        for(var y = 0; y < player.gridHeight; y++) {
-            gfx.drawTileToGrid("edgeA", this.dx - 1, y + this.dy, "background");
-            gfx.drawTileToGrid("edgeD", this.dx + player.gridWidth, y + this.dy, "background");
-        }
-        for(var x = 0; x < player.gridWidth; x++) { // player field
-            gfx.drawTileToGrid("edgeW", x + this.dx, this.dy - 1, "background");
-            gfx.drawTileToGrid("edgeS", x + this.dx, this.dy + player.gridHeight, "background");
-            for(var y = 0; y < player.gridHeight; y++) {
-                gfx.drawTileToGrid("dirt", x + this.dx, y + this.dy, "background");
-                var item = player.itemGrid[x][y];
-                if(item !== null && !item.coord) { 
-                    var iteminfo = GetFarmInfo(item);
-                    if(item === "_cow") {
-                        if(this.getCowIndex(x, y) >= 0) {
-                            toDrawAfterwards.push({ sprite: "cowready", x: (x + this.dx), y: (y + this.dy) });
-                        } else {
-                            toDrawAfterwards.push({ sprite: "cow", x: (x + this.dx), y: (y + this.dy) });
-                        }
-                    } else if(item === "_modulator") {
-                        toDrawAfterwards.push({ sprite: "mod" + combat.season, x: (x + this.dx), y: (y + this.dy) });
-                    } else if(iteminfo.displaySprite !== undefined) {
-                        toDrawAfterwards.push({ sprite: iteminfo.displaySprite, x: (x + this.dx), y: (y + this.dy) });
-                    } else if(item === "_lake") {
-                        gfx.drawTileToGrid(pausemenu.farmmod.getWaterFrame(x, y), x + this.dx, y + this.dy, "background");
-                    //} else if(item[0] === "_" && GetFarmInfo(item).size == 2) {
-                    //    toDrawAfterwards.push({ sprite: "cow", x: (x + this.dx), y: (y + this.dy) });
-                    } else if(item === "_shooter") {
-                        if(this.getUsedShooterIndex(x, y) >= 0) {
-                            gfx.drawTileToGrid("_shooterClosed", x + this.dx, y + this.dy, "background");
-                        } else {
-                            gfx.drawTileToGrid(item, x + this.dx, y + this.dy, "background");
-                        }
-                    } else {
-                        gfx.drawTileToGrid(item, x + this.dx, y + this.dy, "background");
-                    }
-                 }
-            }
-        }
-        for(var i = 0; i < toDrawAfterwards.length; i++) {
-            var item = toDrawAfterwards[i];
-            gfx.drawTileToGrid(item.sprite, item.x, item.y, "background");
         }
     },
     getUsedShooterIndex: function(x, y) {
@@ -308,11 +121,9 @@ var combat = {
     displayEnemyDamage: function(enemyidx) {
         if(enemyidx >= this.enemies.length) { return; }
         if(this.enemies[enemyidx].health <= 0) {
-            var e = this.enemies[enemyidx];
-            e.dead = true;
-            e.deadFrame = 0;
+            combat.animHelper.MakeEnemyACorpse(enemyidx);
         } else {
-            this.enemies[enemyidx].hit = true;
+            combat.animHelper.GiveEnemyAHit(enemyidx);
         }
     },
     addDroppedSeedToItemsEarned: function(seed, amount) {
@@ -329,7 +140,7 @@ var combat = {
         this.numPlantTurns = player.getPlantingTurns();
         if(this.usedShooters.length > 0) {
             this.usedShooters = [];
-            this.drawMainElements();
+            combat.animHelper.DrawBackground();
         }
         this.ageCrops();
         this.state = 0;
@@ -365,7 +176,8 @@ var combat = {
     },
     endTurn: function(caller) {
         this.clearAnimsAndRemoveCorpses();
-        this.drawMainElements();
+        combat.animHelper.DrawBackground();
+        combat.animHelper.DrawCrops();
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
             game.transition(game.currentInputHandler, combat.inbetween, {
                 next: combat.fuckingDead,
@@ -425,21 +237,6 @@ var combat = {
             var idx = this.state - 1;
             game.transition(caller, combat.enemyTurn, { enemy: this.enemies[idx], idx: idx });
         }
-    },
-    drawBottom: function() {
-        for(var x = 0; x < gfx.tileWidth; x++) {
-             gfx.drawSprite("sheet", 15, 11, x * 16, 9.25 * 16, "menuA");
-        }
-        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, 9.9 * 16);
-        var season = "";
-        switch(this.season) {
-            case 0: season = "Spring"; break;
-            case 1: season = "Summer"; break;
-            case 2: season = "Autumn"; break;
-            case 3: season = "Winter"; break;
-        }
-        gfx.drawSprite("sheet", 12 + this.season, 10, 12 * 16 - 3, 9 * 16 + 1, "menuA");
-        gfx.drawText(season, 13 * 16 - 1, 9.9 * 16);
     },
     getGrid: function(w, h) {
         var g = [];
@@ -504,56 +301,18 @@ var combat = {
                 }
             }
         }
-        this.drawCrops();
+        combat.animHelper.DrawCrops();
     },
-    wipeOutCrop: function(x, y) {
-        if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { return false; }
-        var crop = this.grid[x][y];
-        if(crop.rotten || crop.activeTime > 0) { return false; }
-        if(crop.respawn > 0) {
-            crop.activeTime = crop.respawn;
-            crop.flagged = false;
-        } else {
-            this.grid[x][y] = null;
-        }
-        this.drawCrops();
-        return (crop.size == 2);
-    },
-    wipeOutEnemyCrop: function(x, y) {
-        if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { return false; }
-        var crop = this.enemyGrid[x][y];
-        if(crop.rotten || crop.activeTime > 0) { return false; }
-        if(crop.respawn > 0) {
-            crop.activeTime = crop.respawn;
-            crop.flagged = false;
-        } else {
-            this.enemyGrid[x][y] = null;
-        }
-        this.drawCrops();
-        return (crop.size == 2);
-    },
-    cleanFlaggedCrops: function() {
-        for(var x = 0; x < this.grid.length; x++) {
-            for(var y = 0; y < this.grid[0].length; y++) {
-                if(this.grid[x][y] === null || this.grid[x][y].name === undefined || !this.grid[x][y].flagged) { continue; }
-                combat.wipeOutCrop(x, y);
-            }
-        }
-        for(var x = 0; x < this.enemyGrid.length; x++) {
-            for(var y = 0; y < this.enemyGrid[0].length; y++) {
-                if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined || !this.enemyGrid[x][y].flagged) { continue; }
-                combat.wipeOutEnemyCrop(x, y);
-            }
-        }
-    },
-    flagFreshCropsAndGetSeeds: function(isCritical) {
-        for(var x = 0; x < this.grid.length; x++) {
-            for(var y = 0; y < this.grid[0].length; y++) {
-                if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { continue; }
-                var crop = this.grid[x][y];
+    flagFreshCrops: function(isPlayer, isCritical) {
+        var grid = (isPlayer ? this.grid : this.enemyGrid);
+        for(var x = 0; x < grid.length; x++) {
+            for(var y = 0; y < grid[0].length; y++) {
+                if(grid[x][y] === null || grid[x][y].name === undefined) { continue; }
+                var crop = grid[x][y];
                 if(crop.rotten || crop.activeTime > 0) { continue; }
                 crop.flagged = true;
-                combat.playerAnimInfo.throwables.push([crop.name, x, y]);
+                if(!isPlayer) { continue; }
+                combat.animHelper.AddPlayerThrowable([crop.name, x, y]);
                 var seedChance = Math.random() * player.luck * (isCritical ? 0.5 : 1);
                 if(crop.name.indexOf("special") === 0) { seedChance = 1; }
                 if(seedChance < 0.05) {
@@ -562,23 +321,39 @@ var combat = {
                 }
             }
         }
-        this.drawCrops();
-    },
-    flagFreshEnemyCropsAndGetSeeds: function() {
-        for(var x = 0; x < this.enemyGrid.length; x++) {
-            for(var y = 0; y < this.enemyGrid[0].length; y++) {
-                if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { continue; }
-                var crop = this.enemyGrid[x][y];
-                if(crop.rotten || crop.activeTime > 0) { continue; }
-                crop.flagged = true;
-            }
-        }
     },
     flagCrop: function(pos) {
         var crop = this.grid[pos.x][pos.y];
         this.grid[pos.x][pos.y] = null;
         crop.flagged = true;
         return crop;
+    },
+    cleanFlaggedCrops: function() {
+        for(var x = 0; x < this.grid.length; x++) {
+            for(var y = 0; y < this.grid[0].length; y++) {
+                if(this.grid[x][y] === null || this.grid[x][y].name === undefined || !this.grid[x][y].flagged) { continue; }
+                combat.purgeFlaggedCrop(this.grid, x, y);
+            }
+        }
+        for(var x = 0; x < this.enemyGrid.length; x++) {
+            for(var y = 0; y < this.enemyGrid[0].length; y++) {
+                if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined || !this.enemyGrid[x][y].flagged) { continue; }
+                combat.purgeFlaggedCrop(this.enemyGrid, x, y);
+            }
+        }
+    },
+    purgeFlaggedCrop: function(grid, x, y) {
+        if(grid[x][y] === null || grid[x][y].name === undefined) { return false; }
+        var crop = grid[x][y];
+        if(crop.rotten || crop.activeTime > 0) { return false; }
+        if(crop.respawn > 0) {
+            crop.activeTime = crop.respawn;
+            crop.flagged = false;
+        } else {
+            grid[x][y] = null;
+        }
+        combat.animHelper.DrawCrops();
+        return (crop.size == 2);
     },
     removeCrop: function(pos) {
         var crop = this.grid[pos.x][pos.y];
@@ -589,65 +364,5 @@ var combat = {
             this.grid[pos.x + this.dx][pos.y + 1] = null;
         }
         return crop;
-    },
-    drawCrops: function() {
-        gfx.clearLayer("foreground");
-        for(var x = 0; x < this.grid.length; x++) { // player grid
-            for(var y = 0; y < this.grid[0].length; y++) {
-                if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { continue; }
-                var crop = this.grid[x][y];
-                if(crop.hidden) { continue; }
-                var newFrame = Math.floor((crop.frames - 1) * ((crop.time - crop.activeTime) / crop.time));
-                if(crop.size == 2) {
-                    if(newFrame < 3) {
-                        gfx.drawTileToGrid("tree" + newFrame, x + this.dx, y + this.dy, "foreground");
-                    } else {
-                        gfx.drawTileToGrid("tree2", x + this.dx, y + this.dy, "foreground");
-                        newFrame -= 3;
-                        gfx.drawTileToGrid(crop.name + newFrame, x + this.dx, y + this.dy, "foreground");
-                    }
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), x + this.dx + 1, y + this.dy, "foreground", true);
-                } else if(crop.type === "water") {
-                    if(crop.name === "net") {
-                        if(crop.rotten) {
-                            gfx.drawTileToGrid(crop.name + "0", x + this.dx, y + this.dy, "foreground");
-                        } else {
-                            gfx.drawTileToGrid(crop.name + "1", x + this.dx, y + this.dy, "foreground");
-                            gfx.drawItemNumber(0, x + this.dx, y + this.dy, "foreground", true);
-                        }
-                    }
-                } else if(crop.type === "rod") {
-                    if(crop.fishNum === undefined) {
-                        gfx.drawTileToGrid(crop.name + "0", x + this.dx, y + this.dy, "foreground");
-                    } else {
-                        gfx.drawTileToGrid("fish" + crop.fishNum, x + this.dx, y + this.dy, "foreground");
-                    }
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), x + this.dx, y + this.dy, "foreground", true);
-                } else {
-                    gfx.drawTileToGrid(crop.rotten ? "weed" : (crop.name + newFrame), x + this.dx, y + this.dy, "foreground");
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), x + this.dx, y + this.dy, "foreground", true);
-                }
-            }
-        }
-        for(var x = 0; x < this.enemyGrid.length; x++) { // enemy grid
-            for(var y = 0; y < this.enemyGrid[0].length; y++) {
-                if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { continue; }
-                var crop = this.enemyGrid[x][y];
-                var newFrame = Math.floor((crop.frames - 1) * ((crop.time - crop.activeTime) / crop.time));
-                if(crop.size == 2) {
-                    if(newFrame < 3) {
-                        gfx.drawTileToGrid("tree" + newFrame, this.enemydx + x, y + this.enemydy, "foreground");
-                    } else {
-                        gfx.drawTileToGrid("tree2", this.enemydx + x, y + this.enemydy, "foreground");
-                        newFrame -= 3;
-                        gfx.drawTileToGrid(crop.name + newFrame, this.enemydx + x, y + this.enemydy, "foreground");
-                    }
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), this.enemydx + x, y + this.enemydy, "foreground", true);
-                } else {
-                    gfx.drawTileToGrid(crop.name + newFrame, this.enemydx + x, y + this.enemydy, "foreground");
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), this.enemydx + x, y + this.enemydy, "foreground", true);
-                }
-            }
-        }
     }
 };

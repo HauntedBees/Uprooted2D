@@ -97,7 +97,7 @@ combat.compost = {
             }
         }
         gfx.drawTileToGrid("bigbin", 5, 5, "menucursorB");
-        combat.drawBottom();
+        combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
     cancel: function() { game.transition(this, combat.menu); return true; },
@@ -153,7 +153,7 @@ combat.compost = {
                 for(var i = combat.happyCows.length - 1; i >= 0; i--) {
                     if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
                 }
-                combat.drawMainElements();
+                combat.animHelper.DrawBackground();
             }
             healAmount = Math.ceil(healAmount);
             player.health = Math.min(player.maxhealth, player.health + healAmount);
@@ -182,7 +182,7 @@ combat.compost = {
                 for(var i = combat.happyCows.length - 1; i >= 0; i--) {
                     if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
                 }
-                combat.drawMainElements();
+                combat.animHelper.DrawBackground();
             }
             damage = Math.ceil(damage / 3.5);
             for(var i = combat.enemies.length - 1; i >= 0; i--) {
