@@ -8,6 +8,6 @@ combat.inbetween = {
     },
     clean: function() { gfx.clearSome(["menuA", "menuB", "menucursorA", "menucursorB", "menutext"]); },
     mouseMove: function(pos) { return true; },
-    click: function(pos) { combat.clearAnimsAndRemoveCorpses(); this.next(); return true; },
+    click: function(pos) { this.next(); return true; },
     keyPress: function(key) { if(key == "Enter" || key == " ") { return this.click(null); } return true; }
 };

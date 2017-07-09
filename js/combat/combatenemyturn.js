@@ -25,7 +25,7 @@ combat.enemyTurn = {
         return enemyAttacks[attack](enemy);
     },
     clean: function() { gfx.clearSome(["menuA", "menutext"]); },
-    click: function(pos) { combat.clearAnimsAndRemoveCorpses(); combat.endTurn(this); return true; },
+    click: function(pos) { combat.endTurn(this); return true; },
     keyPress: function(key) { if(key == "Enter" || key == " ") { return this.click(null); }  return true; },
     mouseMove: function(pos) { return true; }
 };
