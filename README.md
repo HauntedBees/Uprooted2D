@@ -18,7 +18,7 @@ If you don't want to or cannot install Gulp, you can probably build the collisio
 If you don't want to or cannot install Paint.NET, you can edit the image files in any old image editor. They're images.
 
 ### images
-For pretty much every file in the **pdn** directory, just copy the main layer into a new file, scale it by 400% (using _nearest neighbor_ scaling) and then save it as a PNG with the same name in the **img** directory. For map files, copy the red/transparent layer into a new file, scale it to 1/16 its original size, then save that as a PNG with the sam name in the **collision** directory.
+For pretty much every file in the **pdn** directory, just copy the main layer into a new file, scale it by 400% (using _nearest neighbor_ scaling) and then save it as a PNG with the same name in the **img** directory. For map files, copy the red/transparent layer into a new file, scale it to 1/16 its original size, then save that as a PNG with the same name in the **collision** directory.
 ### worldmap/collisions.js
 run ``gulp buildcollisions`` any time a file in the **collision** directory is added/changed/removed. currently the output file needs to have the last comma and the closing ``};`` manually removed and added respectively.
 ### main game
