@@ -325,7 +325,12 @@ var combat = {
     },
     fuckingDead: function() {
         var inn = inns[player.lastInn];
+        if(game.target !== null) {
+            game.target.failed = true;
+            game.target = null;
+        }
         player.health = player.maxhealth;
+        clearInterval(combat.charAnimIdx);
         game.transition(game.currentInputHandler, worldmap, {  init: { x: inn.x,  y: inn.y }, map: inn.map });
     },
     endTurn: function(caller) {

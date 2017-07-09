@@ -24,7 +24,7 @@ function GetEnemy(name) {
             { seed: "carrot", min: -1, max: 1 }
         ]);
         case "bigBot":
-            var bot = new EnemyDetail(name, 60, 5, 2, 3, 3, 0, true, [0, 0, 1, 0], ["dumbbattery"], [
+            var bot = new EnemyDetail(name, 60, 5, 2, 3, 3, 0, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
                 { money: true, min: 20, max: 50 },
                 { seed: "carrot", min: 8, max: 10 },
                 { seed: "beet", min: 8, max: 10 },
@@ -40,13 +40,13 @@ var enemyAttacks = {
     app: function(e) {
         return {
             text: e.name + " is distracted by a hot new App.",
-            animFPS: 4, animData: [ [0, 2], [0, 3] ]
+            animFPS: 4, animData: [ [0, 4], [0, 5] ]
         };
     },
     gear: function(e) {
         return {
             text: e.name + " is thinking about the concept of gears.",
-            animFPS: 4, animData: [ [0, 2], [0, 3] ]
+            animFPS: 4, animData: [ [0, 4], [0, 5] ]
         };
     },
     dumbbattery: function(e) {
@@ -67,7 +67,7 @@ var enemyAttacks = {
             var doAttack = false;
             var pos = {x: -1, y: -1};
             var attempts = 5;
-            if(Math.random() > 0.5) {
+            if(Math.random() > 0.95) {
                 doAttack = true;
             } else {
                 while(attempts-- >= 0 && pos.x < 0) {
@@ -87,14 +87,14 @@ var enemyAttacks = {
             combat.drawBottom();
             return {
                 text: e.name + " started charging a battery.",
-                animFPS: 4, animData: [ [0, 2], [0, 3] ]
+                animFPS: 4, animData: [ [0, 4], [0, 5] ]
             };
         } else {
             combat.damagePlayer(dmg);
             combat.removeFreshEnemyCrops();
             return {
                 text: e.name + " attacks for " + dmg + " damage.",
-                animFPS: 12, animData: [ [e.spriteidx, 4], [e.spriteidx, 4], [e.spriteidx, 5], [e.spriteidx, 0, true] ],
+                animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ],
                 throwables: crops
             };
         }
@@ -103,7 +103,14 @@ var enemyAttacks = {
         combat.damagePlayer(1);
         return {
             text: e.name + " slaps for 1 damage.",
-            animFPS: 12, animData: [ [e.spriteidx, 4], [e.spriteidx, 4], [e.spriteidx, 5], [e.spriteidx, 0, true] ]
+            animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ]
+        };
+    },
+    standardAttack: function(e) {
+        combat.damagePlayer(e.atk);
+        return {
+            text: e.name + " attacks for " + e.atk + " damage.",
+            animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ]
         };
     }
     /*dumbbattery: function(e) {
