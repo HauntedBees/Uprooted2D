@@ -45,6 +45,16 @@ var gfx = {
         layer = layer || "characters";
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["charsheet"], sx * 16, sy * 20, 16, 20, x * 16, y * 16 - 4, 16, 20);
     },
+    drawDitheredBigCharacter: function(sx, sy, x, y, d, layer) {
+        if(d === 0) { return gfx.drawCharacter(sx, sy, x, y, layer); }
+        var ctx = gfx.ctx[(layer || "characters")];
+        var sheet = gfx.spritesheets["charsheetbig"];
+        var ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
+        for(var i = 0; i < 32; i++) {
+            if(!ditherAmounts[i % 16]) { continue; }
+            gfx.drawImage(ctx, sheet, sx * 32 + i, sy * 40, 1, 40, x * 16 - 8 + i, y * 16 - 10, 1, 40);
+        }
+    },
     drawDitheredCharacter: function(sx, sy, x, y, d, layer) {
         if(d === 0) { return gfx.drawCharacter(sx, sy, x, y, layer); }
         var ctx = gfx.ctx[(layer || "characters")];

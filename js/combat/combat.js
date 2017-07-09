@@ -76,7 +76,7 @@ var combat = {
         for(var i = 0; i < combat.enemies.length; i++) { // enemies
             if(combat.enemies[i].isBig) {
                 if(combat.enemies[i].dead) {
-                    gfx.drawDitheredCharacter(combat.enemies[i].spriteidx, 1, initx + i, 5.75, (combat.enemies[i].deadFrame++));
+                    gfx.drawDitheredBigCharacter(combat.enemies[i].spriteidx, 1, initx + i, 5, (combat.enemies[i].deadFrame++));
                 } else if(combat.enemies[i].hit) {
                     var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
                     var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
