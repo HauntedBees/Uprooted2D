@@ -18,7 +18,8 @@ combat.compost = {
         for(var i = 0; i < this.selectedCrops.length; i++) {
             var pos = this.selectedCrops[i];
             if(pos.cow !== undefined) {
-                gfx.drawCursor(pos.x, pos.y, 1, 1, "xcursor");
+                var croppos = combat.happyCows[pos.cow];
+                gfx.drawCursor(croppos.x + combat.dx, croppos.y + combat.dy, 1, 1, "xcursor");
             } else {
                 var size = combat.grid[pos.x][pos.y].size - 1;
                 gfx.drawCursor(pos.x + combat.dx, pos.y + combat.dy, size, size, "xcursor");
@@ -96,7 +97,7 @@ combat.compost = {
                 }
             }
         }
-        gfx.drawTileToGrid("bigbin", 5, 5, "menucursorB");
+        gfx.drawTileToGrid("compost", 4, 6, "menucursorB");
         combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
@@ -136,19 +137,27 @@ combat.compost = {
     click: function(pos) {
         if(pos.y == this.dy && pos.x < 3) { // heal
             if(this.selectedCrops.length == 0) { return false; }
-            var healAmount = 0;
-            var thereAreCows = false;
+            var healAmount = 0, thereAreCows = false;
             for(var i = 0; i < this.selectedCrops.length; i++) {
-                var pos = this.selectedCrops[i];
-                if(pos.cow !== undefined) {
-                    healAmount += 1.5 * combat.happyCows[pos.cow].feed;
-                    combat.happyCows[pos.cow].removeMe = true;
+                var croppos = this.selectedCrops[i];
+                if(croppos.cow !== undefined) {
+                    healAmount += 1.5 * combat.happyCows[croppos.cow].feed;
+                    combat.happyCows[croppos.cow].removeMe = true;
                     thereAreCows = true;
+                    croppos = combat.happyCows[croppos.cow];
+                    combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 250, "puff", 5));
+                    combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 4, 6, 1000, "milk"));
                 } else {
-                    var crop = combat.flagCrop(pos);
+                    var crop = combat.flagCrop(croppos);
                     healAmount += (1.1 - (crop.activeTime / crop.time)) * crop.power;
+                    var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds)
+                    combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x, combat.dy + croppos.y, 250, "puff", 5));
+                    combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x, combat.dy + croppos.y, 4, 6, 1000, cropSprite));
                 }
             }
+            var anim = new NotAnAnim(4, 6, 1000, "compost");
+            anim.finish = function() { combat.animHelper.AddAnim(new ShakeAnim(4, 6, 500, "compost", 0.25, 20)); };
+            combat.animHelper.AddAnim(anim);
             if(thereAreCows) {
                 for(var i = combat.happyCows.length - 1; i >= 0; i--) {
                     if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
@@ -168,16 +177,34 @@ combat.compost = {
             if(this.selectedCrops.length == 0) { return false; }
             var damage = 0;
             for(var i = 0; i < this.selectedCrops.length; i++) {
-                var pos = this.selectedCrops[i];
-                if(pos.cow !== undefined) {
-                    damage += 0.01 * combat.happyCows[pos.cow].feed;
-                    combat.happyCows[pos.cow].removeMe = true;
+                var croppos = this.selectedCrops[i];
+                if(croppos.cow !== undefined) {
+                    damage += 0.01 * combat.happyCows[croppos.cow].feed;
+                    combat.happyCows[croppos.cow].removeMe = true;
                     thereAreCows = true;
+                    croppos = combat.happyCows[croppos.cow];
+                    combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 250, "puff", 5));
+                    combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 4, 6, 1000, "milk"));
                 } else {
-                    var crop = combat.flagCrop(pos);
+                    var crop = combat.flagCrop(croppos);
                     damage += (0.1 + (crop.activeTime / crop.time)) * crop.power;
+                    var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds)
+                    combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x, combat.dy + croppos.y, 250, "puff", 5));
+                    combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x, combat.dy + croppos.y, 4, 6, 1000, cropSprite));
                 }
             }
+            var anim = new NotAnAnim(4, 6, 1000, "compost");
+            anim.finish = function() {
+                var anim = new ShakeAnim(4, 6, 500, "compost", 0.25, 20);
+                anim.finish = function() {
+                    combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
+                    for(var i = 0; i < combat.enemies.length; i++) {
+                        combat.animHelper.AddPlayerThrowable(["compostpile", -1, -1, i]);
+                    }
+                };
+                combat.animHelper.AddAnim(anim);
+            };
+            combat.animHelper.AddAnim(anim);
             if(thereAreCows) {
                 for(var i = combat.happyCows.length - 1; i >= 0; i--) {
                     if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }

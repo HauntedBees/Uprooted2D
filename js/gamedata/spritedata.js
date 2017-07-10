@@ -69,6 +69,8 @@ var spriteData = {
         }
     },
     names: {
+        "compostpile": [6, 15],
+        "milk": [5, 15],
         "bigbin": [10, 1, true],
         "puff4": [4, 15],
         "grass": [9, 14],

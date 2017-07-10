@@ -123,16 +123,20 @@ PlayerAnimInfo.prototype.Animate = function() {
     if(this.throwables.length > 0 && this.lastThrownFrame < this.animState && this.animState === 0) {
         var b = 2 + Math.random() * 1;
         var initx = 11 - combat.enemies.length;
-        var c = (initx + combat.lastTarget + this.x - 0.5) / 2;
+        var customtarget = this.throwables[0][3] !== undefined;
+        var targetidx = (this.throwables[0][3] === undefined ? combat.lastTarget: this.throwables[0][3]);
+        var c = (initx + targetidx + this.x - 0.5) / 2;
         var gx = this.throwables[0][1], gy = this.throwables[0][2];
-        var seedDrop = combat.grid[gx][gy].seedDrop;
-        if(seedDrop !== undefined) {
-            this.animHelper.AddAnim(new MoveAnim(this.dx + gx, this.dy + gy, this.x, this.y, 250, seedDrop));
+        if(gx >= 0) {
+            var seedDrop = combat.grid[gx][gy].seedDrop;
+            if(seedDrop !== undefined) {
+                combat.animHelper.AddAnim(new MoveAnim(this.dx + gx, this.dy + gy, this.x, this.y, 250, seedDrop));
+            }
+            var isTree = combat.purgeFlaggedCrop(combat.grid, gx, gy);
+            if(isTree) { gx += 0.5; gy += 0.5; }
+            combat.animHelper.AddAnim(new SheetAnim(combat.dx + gx, combat.dy + gy, 250, "puff", 5));
         }
-        var isTree = combat.purgeFlaggedCrop(combat.grid, gx, gy);
-        if(isTree) { gx += 0.5; gy += 0.5; }
-        combat.animHelper.AddAnim(new SheetAnim(combat.dx + gx, combat.dy + gy, 250, "puff", 5));
-        combat.animHelper.AddAnim(new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0][0], b, c, combat.lastTarget, this.throwables.length === 1));
+        combat.animHelper.AddAnim(new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0][0], b, c, targetidx, customtarget || this.throwables.length === 1));
         this.lastThrownFrame = this.animState;
         this.throwables.splice(0, 1);
     }
@@ -161,6 +165,8 @@ function CombatAnimHelper(enemies) {
         gfx.drawSprite("sheet", 12 + combat.season, 10, 12 * 16 - 3, 9 * 16 + 1, "menuA");
         gfx.drawText(season, 13 * 16 - 1, 9.9 * 16);
     };
+
+    this.GetPlayerPos = function() { return { x: playerAnimInfo.x, y: playerAnimInfo.y }; };
 
     this.SetPlayerAnimInfo = function(anims, x, y, top, fr) { playerAnimInfo = new PlayerAnimInfo(anims, x, y, fr, top); };
     this.SetEnemyAnimInfo = function(idx, anims, fr, throwables) {

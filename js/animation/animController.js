@@ -8,6 +8,38 @@ function CombatAnim(x, y, time, sprite) {
 CombatAnim.prototype.getFrame = function(dt) { this.current += dt; };
 CombatAnim.prototype.finish = function() {};
 
+function NotAnAnim(x, y, time, sprite) {
+    CombatAnim.call(this, x, y, time, sprite);
+}
+NotAnAnim.prototype = Object.create(CombatAnim.prototype);
+NotAnAnim.prototype.constructor = NotAnAnim;
+NotAnAnim.prototype.getFrame = function(dt) {
+    gfx.drawTileToGrid(this.sprite, this.x, this.y, "menucursorC");
+    this.current += dt;
+};
+
+function ShakeAnim(x, y, time, sprite, variance, numShakes) {
+    CombatAnim.call(this, x, y, time, sprite);
+    this.delta = variance / 2;
+    this.numShakes = numShakes;
+    this.lastShake = -1;
+    this.dx = 0;
+    this.dy = 0;
+}
+ShakeAnim.prototype = Object.create(CombatAnim.prototype);
+ShakeAnim.prototype.constructor = ShakeAnim;
+ShakeAnim.prototype.getFrame = function(dt) {
+    var shakeNum = Math.floor((this.current / this.time) * this.numShakes);
+    if(shakeNum > this.lastShake) {
+        var a = Math.floor(16 * Math.random());
+        this.dx = this.delta * ((a & 4) == 0 ? 1 : -1);
+        this.dy = this.delta * ((a & 8) == 0 ? 1 : -1);
+        this.lastShake = shakeNum;
+    }
+    gfx.drawTileToGrid(this.sprite, this.x + this.dx, this.y + this.dy, "menucursorC");
+    this.current += dt;
+};
+
 function MoveAnim(x1, y1, x2, y2, time, sprite) {
     CombatAnim.call(this, x1, y1, time, sprite);
     this.x2 = x2;

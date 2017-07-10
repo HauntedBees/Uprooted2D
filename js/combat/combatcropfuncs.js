@@ -1,8 +1,8 @@
 combat.getUsedShooterIndex = function(x, y) { return combat.getArrIdx(combat.usedShooters, x, y); };
 combat.getCowIndex = function(x, y) { return combat.getArrIdx(combat.happyCows, x, y); };
 combat.getArrIdx = function(arr, x, y) {
-    for(var i = 0; i < this.arr.length; i++) {
-        if(this.arr[i].x === x && this.arr[i].y === y) {
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i].x === x && arr[i].y === y) {
             return i;
         }
     }
