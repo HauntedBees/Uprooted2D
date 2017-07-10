@@ -21,6 +21,7 @@ var input = {
         }
     },
     clearAllKeys: function() {
+        input.mainKey = undefined;
         for(var key in input.keys) {
             clearInterval(input.keys[key]);
             input.keys[key] = undefined;
