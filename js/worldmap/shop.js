@@ -384,6 +384,7 @@ worldmap.shop = {
                 isEnter = true;
             }
         }
+        if(moveDir === 0 && !isEnter) { return false; }
         if(isEnter) {
             return this.click(pos);
         } else {
