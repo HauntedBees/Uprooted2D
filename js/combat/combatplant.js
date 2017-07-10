@@ -228,6 +228,20 @@ combat.plant = {
         combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
     },
+    drawXs: function() {
+        for(var x = 0; x < player.gridWidth; x++) {
+            for(var y = 0; y < player.gridHeight; y++) {
+                if(combat.grid[x][y] !== null) { continue; }
+                var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
+                var item = player.inventory[this.actualIndexes[idx]];
+                this.activeCrop = GetCrop(item[0]);
+                if(!this.isValidLocationForCrop(x, y)) {
+                    gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");
+                }
+                this.activeCrop = null;
+            }
+        }
+    },
     drawAll: function() {
         gfx.clearSome(this.layersToClean);
         var size = 0;
@@ -235,6 +249,7 @@ combat.plant = {
         if(this.activeCrop === null) {
             this.setText();
             combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
+            this.drawXs();
         } else {
             size = this.activeCrop.size - 1;
             if(size == 1) {
