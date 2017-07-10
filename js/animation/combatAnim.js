@@ -253,6 +253,8 @@ function CombatAnimHelper(enemies) {
                             gfx.drawItemNumber(0, xdx, ydy, "foreground", true);
                         }
                     }
+                } else if(crop.type === "bee") {
+                    gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
                 } else if(crop.type === "rod") {
                     gfx.drawTileToGrid(crop.fishNum === undefined ? (crop.name + "0") : ("fish" + crop.fishNum), xdx, ydy, "foreground");
                     gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, "foreground", true);

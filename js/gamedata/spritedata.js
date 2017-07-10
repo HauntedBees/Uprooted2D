@@ -39,6 +39,14 @@ var spriteData = {
             spriteData.names[mush[i]] = [16 + i, 12];
             spriteData.names[mush[i] + "seed"] = [16 + i, 11];
         }
+        
+        var bees = ["beeB", "beeR", "beeG"];
+        for(var i = 0; i < bees.length; i++) {
+            spriteData.names[bees[i] + "seed"] = [11 + i, 13];
+            spriteData.names[bees[i] + "0"] = [14, 14];
+            spriteData.names[bees[i] + "1"] = [11 + i, 14];
+            spriteData.names[bees[i]] = [11 + i, 15];
+        }
         var rices = ["arborio", "blackrice", "rice"];
         for(var i = 0; i < rices.length; i++) {
             var rice = rices[i];
@@ -69,6 +77,7 @@ var spriteData = {
         }
     },
     names: {
+        "_beehive": [14, 12],
         "x": [7, 15],
         "compostpile": [6, 15],
         "milk": [5, 15],
@@ -178,7 +187,7 @@ var spriteData = {
         "tools": [21, 15], 
         "fixtures": [17, 7],
         "arrowR": [15, 13],
-        "arrowL": [13, 13],
+        "arrowL": [14, 13],
         "weed": [14, 16],
         "spear": [20, 16],
         "spearseed": [20, 16]

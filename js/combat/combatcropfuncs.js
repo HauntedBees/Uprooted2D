@@ -28,6 +28,9 @@ combat.ageCrops = function() {
                     crop.power = 10 + fishNum * 10;
                     crop.fishNum = fishNum;
                 }
+            } else if(crop.type === "bee" && (Math.random() * player.luck) < crop.req) {
+                crop.rotten = false;
+                crop.activeTime = 0;   
             }
             if(crop.activeTime > 0) {
                 crop.activeTime -= 1;

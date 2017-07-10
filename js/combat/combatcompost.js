@@ -149,7 +149,15 @@ combat.compost = {
                     combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 4, 6, 1000, "milk"));
                 } else {
                     var crop = combat.flagCrop(croppos);
-                    healAmount += (1.1 - (crop.activeTime / crop.time)) * crop.power;
+                    if(crop.type === "bee") {
+                        if(crop.activeTime === 0) {
+                            healAmount += 1.45 * crop.power;
+                        } else {
+                            healAmount *= 0.75;
+                        }
+                    } else {
+                        healAmount += (1.1 - (crop.activeTime / crop.time)) * crop.power;
+                    }
                     var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds)
                     combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x, combat.dy + croppos.y, 250, "puff", 5));
                     combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x, combat.dy + croppos.y, 4, 6, 1000, cropSprite));

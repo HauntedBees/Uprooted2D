@@ -55,6 +55,7 @@ combat.plant = {
         }
         if(type === "_modulator") { return this.activeCrop.type === "veg"; }
         if(type === "_log") { return this.activeCrop.type === "mush"; }
+        if(type === "_beehive") { return this.activeCrop.type === "bee"; }
         if(type === "_coop") { return this.activeCrop.type === "egg"; }
         if(type === "_paddy") { return this.activeCrop.type === "rice"; }
         if(type === "_lake") { return this.activeCrop.type === "water" || this.activeCrop.type === "rod" || this.activeCrop.type === "spear"; }

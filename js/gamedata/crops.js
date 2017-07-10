@@ -69,6 +69,7 @@ function GetEquipment(name) {
 
 function GetCrop(name) {
     switch(name) {
+        case "beeB": return new CropDetail(name, "Honeybee", 10, "bee", 1, 999, 2, 5, 0, 1, 1, 0, 1, { req: 0.1 });
         case "rice": return new CropDetail(name, "Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
         case "arborio": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
         case "blackrice": return new CropDetail(name, "Black Rice", 10, "rice", 1, 5, 4, 5, 0, 0, 1, 1, 1);
@@ -120,6 +121,9 @@ function GetFarmInfo(name) {
         };
         case "_modulator": return { name: name, displayname: "Modulator", price: 100, shortdesc: "Changes seasons when fed seeds.", size: 2, displaySprite: "mod0",
             desc: "If vegetable seeds are planted in this, it will return the seeds and change the season based on the seed."
+        };
+        case "_beehive": return { name: name, displayname: "Beehive", price: 100, shortdesc: "Holds bees.",
+            desc: "Allows Bees to be placed. Bees will randomly produce honey, which can recover lots of health or stun enemies."
         };
     }
 }
