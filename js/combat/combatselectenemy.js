@@ -33,7 +33,11 @@ combat.selectTarget = {
             }
         } else {
             var initx = 11 - combat.enemies.length;
-            gfx.drawCursor(initx + this.cursorx, 5.25, 0, 0.5);
+            if(combat.enemies[this.cursorx].isBig) {
+                gfx.drawCursor(initx + this.cursorx - 0.5, 4.5, 1, 1.5);
+            } else {
+                gfx.drawCursor(initx + this.cursorx, 5.25, 0, 0.5);
+            }
         }
         combat.menu.highlightReadyCropsAndReturnCount();
         gfx.drawInfobox(9, 1.5, this.dy);
