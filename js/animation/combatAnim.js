@@ -99,7 +99,7 @@ PlayerAnimInfo.prototype.Animate = function() {
                 this.lastRan = +new Date();
                 this.animState = 0;
                 this.lastThrownFrame = -1;
-            } else if(this.lastThrownFrame < 0) {
+            } else if(this.lastThrownFrame < 0 && !this.isRun) {
                 if(combat.lastTargetCrop) {
                     // TODO: targeting crops
                 } else {
@@ -111,12 +111,16 @@ PlayerAnimInfo.prototype.Animate = function() {
             this.lastRan = +new Date();
             this.animState = (this.animState + 1) % this.animArray.length;
         }
+    } else if(this.isRun && !this.animArray[this.animState][2]) {
+        this.x -= 0.1;
     }
     var animData = this.animArray[this.animState];
     if(this.hit) {
         var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
         var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-        gfx.drawPlayer(0, 1, this.x + dx, this.y + dy);
+        gfx.drawPlayer(0, (player.health <= 0) ? 2 : 1, this.x + dx, this.y + dy);
+    } else if(animData[3] !== undefined) {
+        gfx.drawWidePlayer(animData[0], animData[1], this.x, this.y, this.onTop ? "menucursorC" : "characters");
     } else {
         gfx.drawPlayer(animData[0], animData[1], this.x, this.y, this.onTop ? "menucursorC" : "characters");
     }
@@ -169,6 +173,7 @@ function CombatAnimHelper(enemies) {
     this.GetPlayerPos = function() { return { x: playerAnimInfo.x, y: playerAnimInfo.y }; };
 
     this.SetPlayerAnimInfo = function(anims, x, y, top, fr) { playerAnimInfo = new PlayerAnimInfo(anims, x, y, fr, top); };
+    this.SetUpPlayerForRun = function() { playerAnimInfo.isRun = true; }
     this.SetEnemyAnimInfo = function(idx, anims, fr, throwables) {
         var e = combat.enemies[idx];
         var initx = 11 - combat.enemies.length;

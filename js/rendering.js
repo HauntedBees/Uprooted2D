@@ -37,6 +37,10 @@ var gfx = {
     drawBigCharacter: function(sx, sy, x, y) {
         gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["charsheetbig"], sx * 32, sy * 40, 32, 40, x * 16 - 8, y * 16 - 10, 32, 40);
     },
+    drawWidePlayer: function(sx, sy, x, y, layer) {
+        layer = layer || "characters";
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["playersheet"], sx * 16, sy * 20, 32, 20, x * 16 - 8, y * 16 - 4, 32, 20);
+    },
     drawPlayer: function(sx, sy, x, y, layer) {
         layer = layer || "characters";
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["playersheet"], sx * 16, sy * 20, 16, 20, x * 16, y * 16 - 4, 16, 20);

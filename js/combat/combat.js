@@ -118,6 +118,7 @@ var combat = {
         combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
+            combat.animHelper.SetPlayerAnimInfo([[3, 1, false, true]]);
             game.transition(game.currentInputHandler, combat.inbetween, {
                 next: combat.fuckingDead,
                 text: "i can't believe the protagonist is fucking dead."
@@ -125,6 +126,7 @@ var combat = {
             return;
         } else if(this.enemies.length == 0) {
             player.addExp(this.expEarned);
+            combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
             var text = "You did a the win.! You's's " + this.expEarned + "EXP";
             player.monies += this.moniesEarned;
             for(var i = 0; i < this.itemsEarned.length; i++) {
@@ -201,6 +203,7 @@ var combat = {
     checkForLevelUp: function() {
         if(player.exp >= player.nextExp) {
             player.levelUp();
+            combat.animHelper.SetPlayerAnimInfo([[2, 2], [2, 3]]);
             game.transition(game.currentInputHandler, combat.inbetween, {
                 next: combat.checkForLevelUp,
                 text: "Whoah [gamer voice] nice! You hit level " + player.level + "!"

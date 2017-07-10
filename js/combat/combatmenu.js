@@ -101,16 +101,19 @@ combat.menu = {
     },
     tryFlee: function() {
         if(combat.isBossBattle) {
+            combat.animHelper.SetPlayerAnimInfo([[3, 0]]);
             game.transition(this, combat.inbetween, {
                 next: function() { combat.endTurn(combat.inbetween) },
                 text: "You tried to run away, but you can't-- you can't fucking... DO that... in this battle, fucking hell."
             });
         } else {
             if(Math.random() > (0.45 * player.luck)) {
+                combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [5, 3], [5, 2]]);
+                combat.animHelper.SetUpPlayerForRun();
                 worldmap.clearTarget();
-                clearInterval(combat.charAnimIdx);
                 game.transition(this, combat.inbetween, {
                     next: function() {
+                        clearInterval(combat.charAnimIdx);
                         game.transition(combat.inbetween, worldmap, {
                             init: worldmap.pos,
                             map: worldmap.mapName,
@@ -120,6 +123,8 @@ combat.menu = {
                     text: "You ran away like a baby that runs which is actually pretty impressive for a baby so good job (y)"
                 });
             } else {
+                combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [0, 3], [3, 2, true, true]]);
+                combat.animHelper.SetUpPlayerForRun();
                 game.transition(this, combat.inbetween, {
                     next: function() { combat.endTurn(combat.inbetween) },
                     text: "You tried to run away, but failed miserably, you stupid idiot. #lmao"
