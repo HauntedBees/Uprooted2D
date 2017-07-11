@@ -207,7 +207,7 @@ combat.compost = {
                 anim.finish = function() {
                     combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
                     for(var i = 0; i < combat.enemies.length; i++) {
-                        combat.animHelper.AddPlayerThrowable(["compostpile", -1, -1, i]);
+                        combat.animHelper.AddPlayerThrowable({name: "compostpile", x: -1, y: -1, customtarget: i});
                     }
                 };
                 combat.animHelper.AddAnim(anim);

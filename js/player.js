@@ -64,6 +64,11 @@ var player = {
         this.gridHeight = newheight;
         this.gridLevel = newLevel;
     },
+    getRandomLuckyNumber: function(inverse) {
+        var num = (Math.random() * player.luck);
+        if(inverse) { num = 1 - num; }
+        return num;
+    },
     initGridDimensions: function() { if(this.itemGrid === null) { this.itemGrid = combat.getGrid(this.gridWidth, this.gridHeight); } },
     addExp: function(n) { this.totalExp += n; if(this.level < 50) { this.exp += n; } },
     levelUp: function() {

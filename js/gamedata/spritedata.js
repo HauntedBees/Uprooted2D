@@ -77,6 +77,8 @@ var spriteData = {
         }
     },
     names: {
+        "goopdrop": [15, 15],
+        "hgoop": [14, 15],
         "_beehive": [14, 12],
         "x": [7, 15],
         "compostpile": [6, 15],

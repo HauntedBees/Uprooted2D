@@ -88,14 +88,22 @@ EnemyThrowAnim.prototype = Object.create(ThrowAnim.prototype);
 EnemyThrowAnim.prototype.constructor = EnemyThrowAnim;
 EnemyThrowAnim.prototype.finish = function() { combat.animHelper.GivePlayerAHit(); }
 
-function PlayerThrowAnim(y, time, sprite, b, c, tidx, last) {
+function PlayerThrowAnim(y, time, sprite, b, c, tidx, last, stick) {
     ThrowAnim.call(this, y, time, sprite, b, c, 1);
     this.tidx = tidx;
     this.last = last;
+    this.stick = stick;
 }
 PlayerThrowAnim.prototype = Object.create(ThrowAnim.prototype);
 PlayerThrowAnim.prototype.constructor = PlayerThrowAnim;
 PlayerThrowAnim.prototype.finish = function() {
+    if(this.stick) {
+        var pos = combat.animHelper.GetEnemyPos(this.tidx);
+        var anim = new MoveAnim(pos.x, pos.y - 0.25, pos.x, pos.y + 0.25, 1000, "goopdrop");
+        anim.tidx = this.tidx;
+        anim.finish = function() { combat.enemies[this.tidx].justStuck = false; };
+        combat.animHelper.AddAnim(anim);
+    }
     if(this.last) {
         combat.animHelper.DisplayEnemyDamage(this.tidx);
     } else {

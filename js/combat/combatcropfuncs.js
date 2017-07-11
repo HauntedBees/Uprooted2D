@@ -77,8 +77,8 @@ combat.flagFreshCrops = function(isPlayer, isCritical) {
             if(crop.rotten || crop.activeTime > 0) { continue; }
             crop.flagged = true;
             if(!isPlayer) { continue; }
-            combat.animHelper.AddPlayerThrowable([crop.name, x, y]);
-            var seedChance = Math.random() * player.luck * (isCritical ? 0.5 : 1);
+            combat.animHelper.AddPlayerThrowable({name: crop.name, x: x, y: y, stickChance: crop.stickChance !== undefined});
+            var seedChance = player.getRandomLuckyNumber() * (isCritical ? 0.5 : 1);
             if(crop.name.indexOf("special") === 0) { seedChance = 1; }
             if(seedChance < 0.05) {
                 crop.seedDrop = crop.name + "seed";

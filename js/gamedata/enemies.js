@@ -6,6 +6,7 @@ function EnemyDetail(name, health, atk, def, fieldheight, fieldwidth, spriteidx,
     this.fieldheight = fieldheight;
     this.fieldwidth = fieldwidth;
     this.spriteidx = spriteidx;
+    this.stickTurns = 0;
     this.seasonDistribution = seasonDistribution;
     this.attacks = attacks;
     this.exp = Math.ceil(health/10 + atk + def/2 + attacks.length*2);

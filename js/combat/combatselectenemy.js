@@ -105,13 +105,20 @@ combat.selectTarget = {
         return true;
     },
     click: function(pos) {
-        var damage = this.getDamage();
+        var attackinfo = this.getAttackDetails();
+        var damage = attackinfo.damage;
+        var stunTurns = attackinfo.stun;
         var damagetext = "";
         var criticalHit = false;
-        if(Math.random() * player.luck < 0.05) {
+        if(player.getRandomLuckyNumber() < 0.05) {
             damage = Math.max(damage + 2, Math.ceil(damage * Math.max(1.5, 1 + Math.random())));
             damagetext = "CRITICAL HIT! ";
             criticalHit = true;
+            if(stunTurns > 0) {
+                stunTurns = Math.round(stunTurns * 1.5);
+            } else if(attackinfo.stunPotential) {
+                stunTurns = 2;
+            }
         }
         if(this.sicklePos.x >= 0) {
             var cropPos = {x: this.sicklePos.x - combat.enemydx, y: this.sicklePos.y - combat.enemydy};
@@ -148,6 +155,7 @@ combat.selectTarget = {
                 damagetext += ", killing them instantly."
             } else { damagetext += "."; }
             combat.damageEnemy(this.cursorx, damage);
+            if(stunTurns > 0) { combat.stickEnemy(this.cursorx, stunTurns); }
         }
         combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
         combat.flagFreshCrops(true, criticalHit);
@@ -157,8 +165,8 @@ combat.selectTarget = {
         });
         return true;
     },
-    getDamage: function() {
-        var dmg = 0;
+    getAttackDetails: function() {
+        var dmg = 0, stickAmount = 0, potentialForStun = false;
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 var tile = combat.grid[x][y];
@@ -166,17 +174,27 @@ combat.selectTarget = {
                 if(tile.activeTime > 0 || tile.rotten) { continue; }
                 var reduction = player.getArmorBalancedMultiplier(tile.seasons[combat.season]);
                 if(tile.seasons[combat.season] > 0.5) {
-                    if(combat.season == 0 && player.skilltree.Sspring == 1 ||
-                        combat.season == 1 && player.skilltree.Ssummer == 1 ||
-                        combat.season == 2 && player.skilltree.Sautumn == 1 ||
-                        combat.season == 3 && player.skilltree.Swinter == 1) {
+                    if(combat.season == 0 && player.skilltree.Sspring == 1 || combat.season == 1 && player.skilltree.Ssummer == 1 ||
+                        combat.season == 2 && player.skilltree.Sautumn == 1 || combat.season == 3 && player.skilltree.Swinter == 1) {
                         reduction *= 1.35;
+                    }
+                }
+                if(tile.type === "bee") {
+                    potentialForStun = true;
+                    if(stickAmount === 0 && player.getRandomLuckyNumber() < tile.stickChance) {
+                        stickAmount = Range(tile.stickRange[0], tile.stickRange[1]);
+                    } else {
+                        stickAmount = Math.max(stickAmount, 1.2 * Range(tile.stickRange[0], tile.stickRange[1]));
                     }
                 }
                 dmg += tile.power * reduction;
             }
         }
         dmg += (dmg === 0 ? Math.round((player.atk / 2) + player.getSickleAttackBonus()) : player.atk);
-        return Math.floor(dmg);
+        return {
+            damage: Math.floor(dmg),
+            stun: Math.round(stickAmount),
+            stunPotential: potentialForStun
+        };
     }
 };

@@ -80,6 +80,9 @@ var combat = {
     },
     startRound: function() {
         this.numPlantTurns = player.getPlantingTurns();
+        for(var i = 0; i < combat.enemies.length; i++) {
+            combat.enemies[i].stickTurns = Math.max(0, combat.enemies[i].stickTurns - 1);
+        }
         if(this.usedShooters.length > 0) {
             this.usedShooters = [];
             combat.animHelper.DrawBackground();
@@ -102,6 +105,10 @@ var combat = {
                 }
             }
         }
+    },
+    stickEnemy: function(enemyidx, turns) {
+        if(this.enemies[enemyidx].stickTurns === 0) { this.enemies[enemyidx].justStuck = true; }
+        this.enemies[enemyidx].stickTurns = Math.min(this.enemies[enemyidx].stickTurns + turns, 8);
     },
     addDroppedSeedToItemsEarned: function(seed, amount) {
         if(amount === 0) { return; }
@@ -184,6 +191,7 @@ var combat = {
         combat.animHelper.CleanEntities();
         combat.cleanFlaggedCrops();
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
+            combat.enemies[i].justStuck = false;
             if(combat.enemies[i].health <= 0) {
                 combat.animHelper.RemoveEnemy(i);
                 combat.enemies.splice(i, 1);

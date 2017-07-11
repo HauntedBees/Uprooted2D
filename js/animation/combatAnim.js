@@ -127,10 +127,10 @@ PlayerAnimInfo.prototype.Animate = function() {
     if(this.throwables.length > 0 && this.lastThrownFrame < this.animState && this.animState === 0) {
         var b = 2 + Math.random() * 1;
         var initx = 11 - combat.enemies.length;
-        var customtarget = this.throwables[0][3] !== undefined;
-        var targetidx = (this.throwables[0][3] === undefined ? combat.lastTarget: this.throwables[0][3]);
+        var customtarget = this.throwables[0].customtarget !== undefined;
+        var targetidx = (this.throwables[0].customtarget === undefined ? combat.lastTarget: this.throwables[0].customtarget);
         var c = (initx + targetidx + this.x - 0.5) / 2;
-        var gx = this.throwables[0][1], gy = this.throwables[0][2];
+        var gx = this.throwables[0].x, gy = this.throwables[0].y;
         if(gx >= 0) {
             var seedDrop = combat.grid[gx][gy].seedDrop;
             if(seedDrop !== undefined) {
@@ -140,7 +140,7 @@ PlayerAnimInfo.prototype.Animate = function() {
             if(isTree) { gx += 0.5; gy += 0.5; }
             combat.animHelper.AddAnim(new SheetAnim(combat.dx + gx, combat.dy + gy, 250, "puff", 5));
         }
-        combat.animHelper.AddAnim(new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0][0], b, c, targetidx, customtarget || this.throwables.length === 1));
+        combat.animHelper.AddAnim(new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0].name, b, c, targetidx, customtarget || this.throwables.length === 1, this.throwables[0].stickChance));
         this.lastThrownFrame = this.animState;
         this.throwables.splice(0, 1);
     }
@@ -182,6 +182,8 @@ function CombatAnimHelper(enemies) {
         this.Animate();
     };
 
+    this.GetEnemyPos = function(idx) { return { x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y } };
+
     this.GivePlayerAHit = function() { playerAnimInfo.hit = true; };
     this.GiveEnemyAHit = function(idx) { enemyAnimInfos[idx].hit = true; };
     this.MakeEnemyACorpse = function(idx) {
@@ -202,6 +204,11 @@ function CombatAnimHelper(enemies) {
     var AnimateEntities = function() {
         playerAnimInfo.Animate();
         for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Animate(); }
+        for(var i = 0; i < combat.enemies.length; i++) {
+            if(combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck) {
+               gfx.drawTileToGrid("hgoop", enemyAnimInfos[i].x, enemyAnimInfos[i].y, "characters"); 
+            }
+        }
     };
     var AnimateParticles = function() {
         for(var i = anims.length - 1; i >= 0; i--) {
