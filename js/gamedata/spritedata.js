@@ -77,6 +77,7 @@ var spriteData = {
         }
     },
     names: {
+        "animalRabbit": [15, 12],
         "goopdrop": [15, 15],
         "hgoop": [14, 15],
         "_beehive": [14, 12],

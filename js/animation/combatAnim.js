@@ -134,13 +134,25 @@ PlayerAnimInfo.prototype.Animate = function() {
         if(gx >= 0) {
             var seedDrop = combat.grid[gx][gy].seedDrop;
             if(seedDrop !== undefined) {
-                combat.animHelper.AddAnim(new MoveAnim(this.dx + gx, this.dy + gy, this.x, this.y, 250, seedDrop));
+                combat.animHelper.AddAnim(new MoveAnim(combat.dx + gx, combat.dy + gy, this.x, this.y, 250, seedDrop));
             }
             var isTree = combat.purgeFlaggedCrop(combat.grid, gx, gy);
             if(isTree) { gx += 0.5; gy += 0.5; }
             combat.animHelper.AddAnim(new SheetAnim(combat.dx + gx, combat.dy + gy, 250, "puff", 5));
         }
-        combat.animHelper.AddAnim(new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0].name, b, c, targetidx, customtarget || this.throwables.length === 1, this.throwables[0].stickChance));
+        var throwAnim = new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0].name, b, c, targetidx, customtarget || this.throwables.length === 1, this.throwables[0].stickChance);
+        if(this.throwables[0].animal !== undefined) {
+            var sprite = "animal" + this.throwables[0].animal;
+            var yPos = this.y;
+            throwAnim.finish2 = function() {
+                var numAnimals = Range(2, 10);
+                while(numAnimals-- > 0) {
+                    var yP = yPos - 2 + 2 * Math.random();
+                    combat.animHelper.AddAnim(new MoveAnim(-1, yP, 16, yP, 1000, sprite));
+                }
+            };
+        }
+        combat.animHelper.AddAnim(throwAnim);
         this.lastThrownFrame = this.animState;
         this.throwables.splice(0, 1);
     }

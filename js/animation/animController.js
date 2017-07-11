@@ -104,6 +104,7 @@ PlayerThrowAnim.prototype.finish = function() {
         anim.finish = function() { combat.enemies[this.tidx].justStuck = false; };
         combat.animHelper.AddAnim(anim);
     }
+    if(this.finish2 !== undefined) { this.finish2(); }
     if(this.last) {
         combat.animHelper.DisplayEnemyDamage(this.tidx);
     } else {

@@ -85,7 +85,7 @@ function GetCrop(name) {
         case "portobello": return new CropDetail(name, "Portobello", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "beet": return new CropDetail(name, "Beet", 10, "veg", 1, 1, 2, 5, 0, 0, 0.66, 1, 1);
         case "apple": return new CropDetail(name, "Apple", 10, "tree", 2, 5, 5, 2, 2, 0.75, 0.75, 1, 0.75);
-        case "carrot": return new CropDetail(name, "Carrot", 10, "veg", 1, 2, 2, 3, 0, 1, 0.66, 1, 0.66);
+        case "carrot": return new CropDetail(name, "Carrot", 10, "veg", 1, 2, 2, 3, 0, 1, 0.66, 1, 0.66, { animal: "Rabbit", animalChance: 1, animalDamageMult: 2 });
         case "leek": return new CropDetail(name, "Leek", 10, "veg", 1, 2, 3, 8, 0, 0, 0, 0, 1);
         case "lemon": return new CropDetail(name, "Lemon", 10, "tree", 2, 5, 5, 4, 2, 1, 1, 1);
         case "rhubarb": return new CropDetail(name, "Rhubarb", 10, "veg", 1, 20, 4, 15, 0, 1);

@@ -121,6 +121,7 @@ combat.selectTarget = {
             }
         }
         if(this.sicklePos.x >= 0) {
+            attackinfo.animals = [];
             var cropPos = {x: this.sicklePos.x - combat.enemydx, y: this.sicklePos.y - combat.enemydy};
             var crop = combat.enemyGrid[cropPos.x][cropPos.y];
             if(crop === null) { return false; }
@@ -150,15 +151,22 @@ combat.selectTarget = {
             combat.lastTargetCrop = false;
             var target = combat.enemies[this.cursorx];
             if(!criticalHit) { damage = Math.max(1, damage - target.def); }
-            damagetext += "You attack " + target.name + " for like " + damage + " damage";
+            if(attackinfo.animals.length > 0) {
+                damagetext += "Nature Strikes! You and your animal friends attack " + target.name + " for like " + damage + " damage";
+            } else {
+                damagetext += "You attack " + target.name + " for like " + damage + " damage";
+            }
             if((target.health - damage) <= 0) {
                 damagetext += ", killing them instantly."
             } else { damagetext += "."; }
             combat.damageEnemy(this.cursorx, damage);
-            if(stunTurns > 0) { combat.stickEnemy(this.cursorx, stunTurns); }
+            if(stunTurns > 0) { 
+                damagetext += " Also they're all sticky now.";
+                combat.stickEnemy(this.cursorx, stunTurns);
+            }
         }
         combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
-        combat.flagFreshCrops(true, criticalHit);
+        combat.flagFreshCrops(true, criticalHit, attackinfo.animals);
         game.transition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: damagetext
@@ -166,7 +174,9 @@ combat.selectTarget = {
         return true;
     },
     getAttackDetails: function() {
-        var dmg = 0, stickAmount = 0, potentialForStun = false;
+        var dmg = 0;
+        var stickAmount = 0, potentialForStun = false;
+        var animals = [];
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 var tile = combat.grid[x][y];
@@ -187,14 +197,20 @@ combat.selectTarget = {
                         stickAmount = Math.max(stickAmount, 1.2 * Range(tile.stickRange[0], tile.stickRange[1]));
                     }
                 }
-                dmg += tile.power * reduction;
+                var addtlDamage = tile.power * reduction;
+                if(tile.animal !== undefined && player.getRandomLuckyNumber() <= tile.animalChance) {
+                    animals.push({ crop: tile.name, animal: tile.animal });
+                    addtlDamage *= tile.animalDamageMult;
+                }
+                dmg += addtlDamage;
             }
         }
         dmg += (dmg === 0 ? Math.round((player.atk / 2) + player.getSickleAttackBonus()) : player.atk);
         return {
             damage: Math.floor(dmg),
             stun: Math.round(stickAmount),
-            stunPotential: potentialForStun
+            stunPotential: potentialForStun,
+            animals: animals
         };
     }
 };
