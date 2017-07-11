@@ -110,6 +110,7 @@ combat.selectTarget = {
         var stunTurns = attackinfo.stun;
         var damagetext = "";
         var criticalHit = false;
+        var additionalTargets = [];
         if(player.getRandomLuckyNumber() < 0.05) {
             damage = Math.max(damage + 2, Math.ceil(damage * Math.max(1.5, 1 + Math.random())));
             damagetext = "CRITICAL HIT! ";
@@ -150,23 +151,35 @@ combat.selectTarget = {
             combat.lastTarget = this.cursorx;
             combat.lastTargetCrop = false;
             var target = combat.enemies[this.cursorx];
+            if(attackinfo.numCrops > 3 && combat.enemies.length > 1) {
+                while((player.getRandomLuckyNumber(true) * attackinfo.numCrops--) > 0.9) {
+                    var idx = Range(0, combat.enemies.length);
+                    if(idx === this.cursorx) { idx = (idx + 1) % combat.enemies.length; }
+                    additionalTargets.push(idx);
+                }
+            }
             if(!criticalHit) { damage = Math.max(1, damage - target.def); }
             if(attackinfo.animals.length > 0) {
                 damagetext += "Nature Strikes! You and your animal friends attack " + target.name + " for like " + damage + " damage";
             } else {
                 damagetext += "You attack " + target.name + " for like " + damage + " damage";
             }
+            if(additionalTargets.length > 0) { damagetext += ", plus recoil"; }
             if((target.health - damage) <= 0) {
                 damagetext += ", killing them instantly."
             } else { damagetext += "."; }
             combat.damageEnemy(this.cursorx, damage);
+            var recoilDamage = Math.ceil(damage * 0.15);
+            for(var i = 0; i < additionalTargets.length; i++) {
+                combat.damageEnemy(additionalTargets[i], recoilDamage);
+            }
             if(stunTurns > 0) { 
                 damagetext += " Also they're all sticky now.";
                 combat.stickEnemy(this.cursorx, stunTurns);
             }
         }
         combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
-        combat.flagFreshCrops(true, criticalHit, attackinfo.animals);
+        combat.flagFreshCrops(true, criticalHit, attackinfo.animals, additionalTargets);
         game.transition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: damagetext
@@ -174,7 +187,7 @@ combat.selectTarget = {
         return true;
     },
     getAttackDetails: function() {
-        var dmg = 0;
+        var dmg = 0, numCrops = 0;
         var stickAmount = 0, potentialForStun = false;
         var animals = [];
         for(var x = 0; x < player.gridWidth; x++) {
@@ -182,6 +195,7 @@ combat.selectTarget = {
                 var tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.activeTime > 0 || tile.rotten) { continue; }
+                numCrops++;
                 var reduction = player.getArmorBalancedMultiplier(tile.seasons[combat.season]);
                 if(tile.seasons[combat.season] > 0.5) {
                     if(combat.season == 0 && player.skilltree.Sspring == 1 || combat.season == 1 && player.skilltree.Ssummer == 1 ||
@@ -210,7 +224,8 @@ combat.selectTarget = {
             damage: Math.floor(dmg),
             stun: Math.round(stickAmount),
             stunPotential: potentialForStun,
-            animals: animals
+            animals: animals,
+            numCrops: numCrops
         };
     }
 };

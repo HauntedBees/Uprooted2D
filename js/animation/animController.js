@@ -72,12 +72,13 @@ function ThrowAnim(y, time, sprite, b, c, dir) {
     this.b = b;
     this.c = c;
     this.dir = dir;
+    this.xmult = c;
 }
 ThrowAnim.prototype = Object.create(CombatAnim.prototype);
 ThrowAnim.prototype.constructor = ThrowAnim;
 ThrowAnim.prototype.getFrame = function(dt) {
     var radians = Math.PI * (this.dir < 0 ? (this.current / this.time) : (1 - (this.current / this.time)));
-    var x = this.c + (0.4 * this.c) * Math.cos(radians);
+    var x = this.xmult + (0.4 * this.c) * Math.cos(radians);
     var y = this.y + this.b * Math.sin(-radians);
     gfx.drawTileToGrid(this.sprite, x, y, "characters");
     this.current += dt;
@@ -104,7 +105,11 @@ PlayerThrowAnim.prototype.finish = function() {
         anim.finish = function() { combat.enemies[this.tidx].justStuck = false; };
         combat.animHelper.AddAnim(anim);
     }
-    if(this.finish2 !== undefined) { this.finish2(); }
+    if(this.additionalFinishes !== undefined) { 
+        for(var i = 0; i < this.additionalFinishes.length; i++) {
+            this.additionalFinishes[i]();
+        }
+    }
     if(this.last) {
         combat.animHelper.DisplayEnemyDamage(this.tidx);
     } else {

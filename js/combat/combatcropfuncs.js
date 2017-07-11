@@ -68,7 +68,7 @@ combat.ageCrops = function() {
     }
     combat.animHelper.DrawCrops();
 };
-combat.flagFreshCrops = function(isPlayer, isCritical, animals) {
+combat.flagFreshCrops = function(isPlayer, isCritical, animals, additionalTargets) {
     var grid = (isPlayer ? this.grid : this.enemyGrid);
     for(var x = 0; x < grid.length; x++) {
         for(var y = 0; y < grid[0].length; y++) {
@@ -84,7 +84,17 @@ combat.flagFreshCrops = function(isPlayer, isCritical, animals) {
                 animals.splice(i, 1);
                 break;
             }
-            combat.animHelper.AddPlayerThrowable({name: crop.name, x: x, y: y, stickChance: crop.stickChance !== undefined, animal: animal});
+            var throwableData = {
+                name: crop.name,
+                x: x, y: y,
+                stickChance: crop.stickChance !== undefined,
+                animal: animal
+            };
+            if(additionalTargets.length > 0) {
+                throwableData.bonusTarget = additionalTargets[0];
+                additionalTargets.splice(0, 1);
+            }
+            combat.animHelper.AddPlayerThrowable(throwableData);
             var seedChance = player.getRandomLuckyNumber() * (isCritical ? 0.5 : 1);
             if(crop.name.indexOf("special") === 0) { seedChance = 1; }
             if(seedChance < 0.05) {

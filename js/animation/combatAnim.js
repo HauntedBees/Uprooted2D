@@ -125,7 +125,7 @@ PlayerAnimInfo.prototype.Animate = function() {
         gfx.drawPlayer(animData[0], animData[1], this.x, this.y, this.onTop ? "menucursorC" : "characters");
     }
     if(this.throwables.length > 0 && this.lastThrownFrame < this.animState && this.animState === 0) {
-        var b = 2 + Math.random() * 1;
+        var b = 2 + Math.random();
         var initx = 11 - combat.enemies.length;
         var customtarget = this.throwables[0].customtarget !== undefined;
         var targetidx = (this.throwables[0].customtarget === undefined ? combat.lastTarget: this.throwables[0].customtarget);
@@ -141,16 +141,31 @@ PlayerAnimInfo.prototype.Animate = function() {
             combat.animHelper.AddAnim(new SheetAnim(combat.dx + gx, combat.dy + gy, 250, "puff", 5));
         }
         var throwAnim = new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0].name, b, c, targetidx, customtarget || this.throwables.length === 1, this.throwables[0].stickChance);
+        throwAnim.additionalFinishes = [];
         if(this.throwables[0].animal !== undefined) {
             var sprite = "animal" + this.throwables[0].animal;
             var yPos = this.y;
-            throwAnim.finish2 = function() {
+            throwAnim.additionalFinishes.push(function() {
                 var numAnimals = Range(2, 10);
                 while(numAnimals-- > 0) {
                     var yP = yPos - 2 + 2 * Math.random();
                     combat.animHelper.AddAnim(new MoveAnim(-1, yP, 16, yP, 1000, sprite));
                 }
-            };
+            });
+        }
+        if(this.throwables[0].bonusTarget !== undefined) {
+            var sprite2 = this.throwables[0].name;
+            var b2 = 0.5 + Math.random();
+            var secondX = this.throwables[0].bonusTarget;
+            var c2 = (Math.min(secondX, targetidx) + targetidx + secondX) / 2;
+            var y2 = this.y - 0.5;
+            var dir2 = (secondX > targetidx) ? 1 : - 1;
+            throwAnim.additionalFinishes.push(function() {
+                var secanim = new PlayerThrowAnim(y2, 500, sprite2, b2, c2, secondX, true, false);
+                secanim.dir = dir2;
+                secanim.xmult = initx + 1;
+                combat.animHelper.AddAnim(secanim);
+            });
         }
         combat.animHelper.AddAnim(throwAnim);
         this.lastThrownFrame = this.animState;
