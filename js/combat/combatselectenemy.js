@@ -132,6 +132,8 @@ combat.selectTarget = {
             damagetext += "You attack the " + crop.displayname + " for like " + damage + " damage";
             if((crop.power - damage) <= 0) {
                 damagetext += ", destroying it instantly."
+                crop.hidden = true;
+                combat.animHelper.DrawCrops();
                 combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
             } else { damagetext += "."; }
             crop.power -= damage;
