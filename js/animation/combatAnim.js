@@ -3,6 +3,8 @@ function EntityAnimInfo(ani, x, y, fr) {
     this.animArray = ani || [[0, 0]];
     this.x = x || 4;
     this.y = y || 5.75;
+    this.initX = this.x;
+    this.initY = this.y;
     this.throwables = [];
     this.timePerFrame = fr || anim.timePerFrame;
     this.lastRan = +new Date();
@@ -16,10 +18,11 @@ EntityAnimInfo.prototype.Reset = function() {
     this.animState = 0;
 };
 
-function EnemyAnimInfo(ani, x, y, fr, big, spriteidx) {
+function EnemyAnimInfo(ani, x, y, fr, size, spriteidx, sheet) {
     EntityAnimInfo.call(this, ani, x, y, fr);
     this.spriteidx = spriteidx;
-    this.isBig = big;
+    this.sheet = sheet;
+    this.size = size;
 }
 EnemyAnimInfo.prototype = Object.create(EntityAnimInfo.prototype);
 EnemyAnimInfo.prototype.constructor = EnemyAnimInfo;
@@ -45,11 +48,7 @@ EnemyAnimInfo.prototype.InnerAnimate = function() {
         }
     }
     var animData = this.animArray[this.animState];
-    if(this.isBig) {
-        gfx.drawBigCharacter(this.spriteidx, animData[1], this.x, this.y);
-    } else {
-        gfx.drawCharacter(this.spriteidx, animData[1], this.x, this.y);
-    }
+    gfx.drawCharacter(this.spriteidx, animData[1], this.sheet, this.size, this.x, this.y);
     if(this.throwables.length > 0 && this.lastThrownFrame < this.animState && this.animState === 0) {
         var b = 2 + Math.random() * 1, c = (4 + this.x + 0.5) / 2;
         var gx = this.throwables[0][1], gy = this.throwables[0][2];
@@ -62,26 +61,14 @@ EnemyAnimInfo.prototype.InnerAnimate = function() {
     }
 };
 EnemyAnimInfo.prototype.Animate = function() {
-    if(this.isBig) {
-        if(this.dead) {
-            gfx.drawDitheredBigCharacter(this.spriteidx, 1, this.x, 5, (this.deadFrame++));
-        } else if(this.hit) {
-            var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
-            var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-            gfx.drawBigCharacter(this.spriteidx, 1, this.x + dx, this.y + dy);
-        } else {
-            this.InnerAnimate();
-        }
+    if(this.dead) {
+        gfx.drawDitheredCharacter(this.spriteidx, 1, this.sheet, this.size, this.x, this.y, (this.deadFrame++));
+    } else if(this.hit) {
+        var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
+        var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
+        gfx.drawCharacter(this.spriteidx, 1, this.sheet, this.size, this.x + dx, this.y + dy);
     } else {
-        if(this.dead) {
-            gfx.drawDitheredCharacter(this.spriteidx, 1, this.x, this.y, (this.deadFrame++));
-        } else if(this.hit) {
-            var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
-            var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-            gfx.drawCharacter(this.spriteidx, 1, this.x + dx, this.y + dy);
-        } else {
-            this.InnerAnimate();
-        }
+        this.InnerAnimate();
     }
 };
 
@@ -176,13 +163,41 @@ PlayerAnimInfo.prototype.Animate = function() {
 function CombatAnimHelper(enemies) {
     var playerAnimInfo = new PlayerAnimInfo();
     var enemyAnimInfos = [];
-    var initx = 11 - enemies.length;
+    var currentx = 11 - enemies.length;
     for(var i = 0; i < enemies.length; i++) {
         var e = enemies[i];
-        enemyAnimInfos.push(new EnemyAnimInfo([[e.spriteidx, 0]], initx + i, e.isBig ? 5 : 5.75, 0, e.isBig, e.spriteidx));
+        var y = e.size == "lg" ? 5 : 5.75;
+        enemyAnimInfos.push(new EnemyAnimInfo([[e.spriteidx, 0]], currentx, y, 0, e.size, e.spriteidx, e.sheet));
+        switch(e.size) {
+            case "sm": currentx += 1; break;
+            case "md": currentx += 1.5; break;
+            case "lg": currentx += 2; break;
+        }
     }
     var anims = [];
-    
+
+    this.GetCursorInfo = function(x) {
+        var currentx = 11 - combat.enemies.length;
+        for(var i = 0; i < combat.enemies.length; i++) {
+            if(x === i) {
+                var info = combat.enemies[i].cursorinfo;
+                var size = combat.enemies[i].size;
+                var y = 0, posy = 5.75;
+                switch(size) {
+                    case "sm": y = 5.25; break;
+                    case "md": y = 5.0; break;
+                    case "lg": y = 4.5; posy = 5; break;
+                }
+                return { x: currentx + info.dx, rawX: currentx, y: y + info.dy, rawY: posy, w: info.w, h: info.h };
+            }
+            switch(combat.enemies[i].size) {
+                case "sm": currentx += 1; break;
+                case "md": currentx += 1.5; break;
+                case "lg": currentx += 2; break;
+            }
+        }
+    };
+
     this.DrawBottom = function() {
         for(var x = 0; x < gfx.tileWidth; x++) { gfx.drawSprite("sheet", 15, 11, x * 16, 9.25 * 16, "menuA"); }
         gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, 9.9 * 16);
@@ -203,8 +218,8 @@ function CombatAnimHelper(enemies) {
     this.SetUpPlayerForRun = function() { playerAnimInfo.isRun = true; }
     this.SetEnemyAnimInfo = function(idx, anims, fr, throwables) {
         var e = combat.enemies[idx];
-        var initx = 11 - combat.enemies.length;
-        enemyAnimInfos[idx] = new EnemyAnimInfo(anims, initx + idx, e.isBig ? 5 : 5.75, fr, e.isBig, e.spriteidx);
+        var pos = this.GetCursorInfo(idx);
+        enemyAnimInfos[idx] = new EnemyAnimInfo(anims, pos.rawX, pos.rawY, fr, e.size, e.spriteidx, e.sheet);
         enemyAnimInfos[idx].throwables = throwables || [];
         this.Animate();
     };

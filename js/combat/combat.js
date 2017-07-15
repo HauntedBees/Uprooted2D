@@ -197,6 +197,9 @@ var combat = {
                 combat.enemies.splice(i, 1);
             }
         }
+        for(var i = 0; i < combat.enemies.length; i++) {
+            combat.animHelper.SetEnemyAnimInfo(i, [[combat.enemies[i].spriteidx, 0]]);
+        }
     },
     fuckingDead: function() {
         var inn = inns[player.lastInn];

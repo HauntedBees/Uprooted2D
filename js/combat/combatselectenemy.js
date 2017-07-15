@@ -32,12 +32,8 @@ combat.selectTarget = {
                 gfx.drawCursor(this.sicklePos.x, this.sicklePos.y, crop.size - 1, crop.size - 1);
             }
         } else {
-            var initx = 11 - combat.enemies.length;
-            if(combat.enemies[this.cursorx].isBig) {
-                gfx.drawCursor(initx + this.cursorx - 0.5, 4.5, 1, 1.5);
-            } else {
-                gfx.drawCursor(initx + this.cursorx, 5.25, 0, 0.5);
-            }
+            var cursorInfo = combat.animHelper.GetCursorInfo(this.cursorx);
+            gfx.drawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
         }
         combat.menu.highlightReadyCropsAndReturnCount();
         gfx.drawInfobox(9, 1.5, this.dy);

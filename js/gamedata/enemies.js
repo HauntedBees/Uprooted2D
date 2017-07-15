@@ -1,11 +1,18 @@
-function EnemyDetail(name, health, atk, def, fieldheight, fieldwidth, spriteidx, boss, seasonDistribution, attacks, drops) {
+function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldheight, fieldwidth, boss, seasonDistribution, attacks, drops) {
     this.name = name;
     this.health = health;
     this.atk = atk;
     this.def = def;
+    this.cursorinfo = cursorinfo;
     this.fieldheight = fieldheight;
     this.fieldwidth = fieldwidth;
+    this.size = size;
     this.spriteidx = spriteidx;
+    switch(this.size) {
+        case "sm": 
+        case "md": this.sheet = "charsheet"; break;
+        case "lg": this.sheet = "charsheetbig"; break;
+    }
     this.stickTurns = 0;
     this.seasonDistribution = seasonDistribution;
     this.attacks = attacks;
@@ -15,17 +22,22 @@ function EnemyDetail(name, health, atk, def, fieldheight, fieldwidth, spriteidx,
 }
 function GetEnemy(name) {
     switch(name) {
-        case "Beckett": return new EnemyDetail(name, 10, 1, 1, 3, 2, 0, true, [0, 0, 1, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [
+        case "Discussly": return new EnemyDetail(name, "sm", 0, { dx: 0, dy: 0.25, w: 0, h: 0.25 }, 10, 1, 1, 3, 2, true, [0, 0, 1, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [
             { money: true, min: 10, max: 10 },
             { seed: "carrot", min: 2, max: 2 }
         ]);
-        case "dave": return new EnemyDetail(name, 10, 1, 1, 3, 1, 2, false, [0, 1, 0, 0], ["app"], [{ money: true, min: 5, max: 10 }]);
-        case "robo": return new EnemyDetail(name, 8, 2, 1, 3, 2, 3, false, [0, 0, 1, 0], [["dumbbattery", 1], ["gear"]], [
+        case "Beckett": return new EnemyDetail(name, "sm", 7, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 1, 1, 3, 2, true, [0, 0, 1, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [
+            { money: true, min: 10, max: 10 },
+            { seed: "carrot", min: 2, max: 2 }
+        ]);
+        case "Worker": return new EnemyDetail(name, "md", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "ScienceMan": return new EnemyDetail(name, "md", 3, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "robo": return new EnemyDetail(name, "sm", 1, { dx: 0, dy: 0, w: 0, h: 0 }, 8, 2, 1, 3, 2, false, [0, 0, 1, 0], [["dumbbattery", 1], ["gear"]], [
             { money: true, min: 0, max: 5 },
             { seed: "carrot", min: -1, max: 1 }
         ]);
         case "bigBot":
-            var bot = new EnemyDetail(name, 60, 5, 2, 3, 3, 0, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
+            var bot = new EnemyDetail(name, "lg", 0, { dx: 0, dy: 0, w: 1, h: 1.5 }, 60, 5, 2, 3, 3, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
                 { money: true, min: 20, max: 50 },
                 { seed: "carrot", min: 8, max: 10 },
                 { seed: "beet", min: 8, max: 10 },
