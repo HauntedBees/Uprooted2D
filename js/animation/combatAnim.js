@@ -248,7 +248,11 @@ function CombatAnimHelper(enemies) {
         for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Animate(); }
         for(var i = 0; i < combat.enemies.length; i++) {
             if(combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck) {
-               gfx.drawTileToGrid("hgoop", enemyAnimInfos[i].x, enemyAnimInfos[i].y, "characters"); 
+                if(combat.enemies[i].size === "lg") {
+                    gfx.drawTileToGrid("hgoop", enemyAnimInfos[i].x + 0.5, enemyAnimInfos[i].y + 1, "characters");
+                } else {
+                    gfx.drawTileToGrid("hgoop", enemyAnimInfos[i].x + combat.enemies[i].cursorinfo.dx, enemyAnimInfos[i].y, "characters");
+                }
             }
         }
     };
