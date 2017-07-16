@@ -20,7 +20,7 @@ worldmap.shop = {
         }
         this.cursorInitx = this.details.doesSell ? 2 : 1;
         gfx.drawStore(this.details.img);
-        this.drawDetails(this.details.opening, true);
+        this.drawDetails(GetText(this.details.opening), true);
     },
     drawDetails: function(text, isopening) {
         gfx.clearSome(this.layersToClear);
@@ -29,7 +29,7 @@ worldmap.shop = {
             case 1: this.drawDetailsSellingSelect(); break;
             default: this.drawDetailsBuying(); break;
         }
-        if(this.isUpgradeShop && this.upgradeIndexes.length === 0 && isopening) { text = this.details.empty; }
+        if(this.isUpgradeShop && this.upgradeIndexes.length === 0 && isopening) { text = GetText(this.details.empty); }
         gfx.drawText("Coins: " + player.monies, 2, 16 * 6.75, "#FFFFFF");
         gfx.drawWrappedText(text, 2, 16 * 7.25, 235, "#FFFFFF");
     },
@@ -145,7 +145,7 @@ worldmap.shop = {
             if((this.numArrows & 1) === 1) {
                 text = "Go Back";
             } else {
-                text = this.details.leaveSell;
+                text = GetText(this.details.leaveSell);
             }
         } else if((this.numArrows & 2) === 2 && newCursorX > this.actualIdxs.length) {
             text = "Go Forward";
@@ -176,10 +176,10 @@ worldmap.shop = {
         this.cursorX = newCursorX;
         var text = "";
         switch(this.cursorX) {
-            case 1: text = "Seeds & Consumables\n Sell your seeds, eggs, and other consumable supplies."; break;
-            case 2: text = "Tools & Equipment\n Sell your equipment, like sickles, gloves, and compost bins."; break;
-            case 3: text = "Field Fixtures\n Sell your Fixtures, like chicken coops and mushroom logs."; break;
-            default: text = this.details.leaveSell; break;
+            case 1: text = GetText("s_sellseed"); break;
+            case 2: text = GetText("s_selltool"); break;
+            case 3: text = GetText("s_sellfixture");; break;
+            default: text = GetText(this.details.leaveSell); break;
         }
         this.drawDetails(text);
         return true;
@@ -193,8 +193,8 @@ worldmap.shop = {
         return true;
     },
     getText: function() {
-        if(this.cursorX == 0) { return this.details.leaving; }
-        if(this.details.doesSell && this.cursorX == 1) { return this.details.selling; }
+        if(this.cursorX == 0) { return GetText(this.details.leaving); }
+        if(this.details.doesSell && this.cursorX == 1) { return GetText(this.details.selling); }
         var cursor = (this.upgradeIndexes.length > 0) ? this.upgradeIndexes[this.cursorX - this.cursorInitx] : (this.cursorX - this.cursorInitx);
         var productInfo = this.details.wares[cursor];
         if(productInfo.type == "seed") { return this.getSeedText(productInfo); }
@@ -214,11 +214,11 @@ worldmap.shop = {
         }
         var str = size + " Upgrade (" + productInfo.price + " coins)\n ";
         if(productInfo.product.slice(-1) === "I") {
-            str += "This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat. ";
+            str += GetText("s_fieldI");
         } else if(productInfo.product.slice(-1) === "O") {
-            str += "This configuration gives room for more large Fixtures and Trees.";
+            str += GetText("s_fieldO");
         } else if(productInfo.product.slice(-1) === "_") {
-            str += "This configuration gives additional space, but less room for large Fixtures and Trees.";
+            str += GetText("s_field_");
         }
         return str;
     },
@@ -276,7 +276,7 @@ worldmap.shop = {
         }
         player.monies += price;
         player.decreaseItem(actualItem[0]);
-        this.drawDetails(this.details.didSell);
+        this.drawDetails(GetText(this.details.didSell));
         return true;
     },
     clickSellSelect: function(pos) {
@@ -295,7 +295,7 @@ worldmap.shop = {
     clickBuying: function(pos) {
         if(this.details.doesSell && this.cursorX == 1) {
             this.sellingState = 1;
-            this.drawDetails("Seeds & Consumables\n Sell your seeds, eggs, and other consumable supplies.");
+            this.drawDetails(GetText("s_sellseed"));
             return true;
         }
         var cursor = (this.isUpgradeShop) ? this.upgradeIndexes[this.cursorX - this.cursorInitx] : (this.cursorX - this.cursorInitx);
@@ -313,7 +313,7 @@ worldmap.shop = {
             price = productInfo.price;
         }
         
-        if(price > player.monies) { this.drawDetails(this.details.notEnough); return true; }
+        if(price > player.monies) { this.drawDetails(GetText(this.details.notEnough)); return true; }
         player.monies -= price;
 
         if(productInfo.type === "upgrade") {
@@ -330,7 +330,7 @@ worldmap.shop = {
         } else {
             player.increaseItem(productInfo.product, 1);
         }
-        this.drawDetails(this.details.purchased);
+        this.drawDetails(GetText(this.details.purchased));
         return true;
     },
     cancel: function() {
@@ -349,7 +349,7 @@ worldmap.shop = {
             case 1:
                 this.sellingState = 0;
                 this.cursorX = 1;
-                this.drawDetails(this.details.selling);
+                this.drawDetails(GetText(this.details.selling));
                 break;
             default: 
                 game.transition(this, worldmap, {

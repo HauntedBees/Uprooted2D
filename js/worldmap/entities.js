@@ -140,7 +140,9 @@ var mapentities = {
         }
     ],
     "firstvillage": [
-        SwitchMap("ExitAreaNorth", 0, 0, true, false, 14, 14, "farmpath")
+        SwitchMap("ExitAreaNorth", 0, 0, true, false, 14, 14, "farmpath"),
+        EnterShop("EquipmentShop", 17, 12, "equip1"),
+        EnterShop("UpgradeShop", 18, 20, "upgrade1")
         //ExitAreaWest to forest
         //ExitAreaSouth to river
     ]

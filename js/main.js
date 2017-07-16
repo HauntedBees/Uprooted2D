@@ -14,7 +14,7 @@ if (typeof Object.assign != 'function') {
     };
 }
 var game = {
-    currentInputHandler: worldmap, target: null,
+    currentInputHandler: worldmap, target: null, language: "en-dm",
     init: function(canvasObj, ctxObj, width, height, tilewidth, tileheight) {
         gfx.canvas = canvasObj;
         gfx.ctx = ctxObj;
@@ -25,7 +25,7 @@ var game = {
         spriteData.populate();
         gfx.loadSpriteSheets(["sheet", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster",
                                 "maps/farmersmarket", "maps/farmpath", "maps/farm", "maps/firstvillage",
-                                "shops/cock"], this.sheetsLoaded);
+                                "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3"], this.sheetsLoaded);
     },
     transition: function(from, to, arg) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }

@@ -1,0 +1,20 @@
+"Key","en-us","en-dm"
+"s_co","Bu-GAWK! Hi boss! Got some good things on sale! ","Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow! "
+"s_sell","What're you selling? ","WOT'RE YA SELLIN'???"
+"s_eq1o","Welcome to my Equipment Shop! Please, buy many things.","Hello I am a public domain dwarf and I sell equipment. You can equip it from the Menu, which is probably a good choice. "
+"s_leave","Thank you, come again! ","fuck off "
+"s_leave2","Bye. ","bye fucker "
+"s_notenough","You can't afford that... ","Hey fuckface this is a store not charity. Have the money or have a gofuckyourself. "
+"s_purchased","Thank you! ","thanks mom "
+"s_up1p","Excellent! Now you'll have a 4x3 grid of tiles to plant crops and place fixtures on! ",
+"s_didsell","Thank you for the goods!","Thanks for the shit, fucfkace. "
+"s_leavesell","Anything else?","stop giving me THINGS and start giving me MONEY. "
+"s_cpurch","Bu-GAW! Thank you for your patronage!","Bu-GAWK!! Good shit, good shit. Thank you for your patronage! "
+"s_up1o","Are you tired of only having 9 tiles to plant crops in? Tire no more! For just 2000 coins I can give you three more tiles to plant on! ",
+"s_upempty","Welcome. Unfortunately, I have no other upgrades for you. ",
+"s_sellseed","Seeds & Consumables\n Sell your seeds, eggs, and other consumable supplies. ",
+"s_selltool","Tools & Equipment\n Sell your equipment, like sickles, gloves, and compost bins. ",
+"s_sellfixture","Field Fixtures\n Sell your Fixtures, like chicken coops and mushroom logs. ",
+"s_fieldI","This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat. ",
+"s_fieldO","This configuration gives room for more large Fixtures and Trees. ",
+"s_field_","This configuration gives additional space, but less room for large Fixtures and Trees. ",
