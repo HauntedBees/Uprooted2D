@@ -52,5 +52,6 @@ var fulltext = {
 	"s_sellfixture": { "en-us": "Field Fixtures\n Sell your Fixtures, like chicken coops and mushroom logs." }, 
 	"s_fieldI": { "en-us": "This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat." }, 
 	"s_fieldO": { "en-us": "This configuration gives room for more large Fixtures and Trees." }, 
-	"s_field_": { "en-us": "This configuration gives additional space, but less room for large Fixtures and Trees." }
+	"s_field_": { "en-us": "This configuration gives additional space, but less room for large Fixtures and Trees." }, 
+	"s_fi1o": { "en-us": "Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!" }
 };

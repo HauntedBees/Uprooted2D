@@ -141,6 +141,7 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen) {
         var curTime = +new Date();
         var update = (curTime - this.lastRan) >= this.frameRate;
         var frame = 0;
+        if(dir === undefined) { dir = this.lastDir; }
         if(dir !== this.lastDir) {
             this.state = 0;
             this.lastDir = dir;

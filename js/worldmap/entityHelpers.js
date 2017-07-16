@@ -15,6 +15,7 @@ function GetInvisibleEntity(name, interact, additional) {
     var res = { name: name, pos: {x: -1, y: -1}, solid: false, interact: interact };
     return Object.assign(res, additional);
 };
+function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: [ GetSpeak(text) ] }; };
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
     var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
