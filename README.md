@@ -22,7 +22,7 @@ If you don't want to or cannot install PowerShell, you can just edit **text.js**
 ### images
 For pretty much every file in the **pdn** directory, just copy the main layer into a new file, scale it by 400% (using _nearest neighbor_ scaling) and then save it as a PNG with the same name in the **img** directory. For map files, copy the red/transparent layer into a new file, scale it to 1/16 its original size, then save that as a PNG with the same name in the **collision** directory.
 ### worldmap/collisions.js
-run ``gulp buildcollisions`` any time a file in the **collision** directory is added/changed/removed. currently the output file needs to have the last comma and the closing ``};`` manually removed and added respectively.
+Run ``gulp buildcollisions`` any time a file in the **collision** directory is added/changed/removed. Currently the output file needs to have the last comma and the closing ``};`` manually removed and added respectively.
 ### gamedata/text.js
 Run ``BuildTextJS.ps1`` whenever **raw_text.csv** is updated, after editing the ps1 file to point to the proper paths for the ``$out`` and ``$csv`` variables.
 ### main game
