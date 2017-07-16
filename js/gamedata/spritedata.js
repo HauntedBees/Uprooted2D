@@ -75,6 +75,12 @@ var spriteData = {
                 spriteData.names["skillD_" + item + j] = [4, 13];
             }
         }
+        for(var i = 0; i < 13; i++) {
+            spriteData.names["sickle_" + i] = [i, 16];
+            if(i < 9) { spriteData.names["compost_" + i] = [i, 17]; }
+            if(i < 5) { spriteData.names["glove_" + i] = [i, 18]; }
+            if(i < 11) { spriteData.names["can_" + i] = [i, 19]; }
+        }
     },
     names: {
         "animalRabbit": [15, 12],

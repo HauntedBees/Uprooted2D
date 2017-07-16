@@ -53,17 +53,51 @@ function GetEquipmentDesc(equipInfo) {
 
 function GetEquipment(name) {
     switch(name) {
-        case "!baseSickle": return {name: name, displayname: "Sickle", price: 50, sprite: "sickle", type: "weapon", power: 1, targetCrops: false };
-        case "!goodSickle": return {name: name, displayname: "Focused Sickle", price: 50, sprite: "sickle", type: "weapon", power: 5, targetCrops: true };
-        case "!weakCompost": return {name: name, displayname: "Weak Compost Bin", price: 50, sprite: "compost", type: "compost", amount: 3 };
-        case "!baseCompost": return {name: name, displayname: "Compost Bin", price: 50, sprite: "compost", type: "compost", amount: 3 };
-        case "!strongCompost": return {name: name, displayname: "Focused Compost Bin", price: 50, sprite: "compost", type: "compost", amount: 6, canAttack: true };
-        case "!weakGloves": return {name: name, displayname: "Standard Gloves", price: 50, sprite: "glove", type: "gloves", amount: 2 };
-        case "!pairGloves": return {name: name, displayname: "Combat Gloves", price: 50, sprite: "glove", type: "gloves", amount: 2, canAttack: true };
-        case "!weakSoil": return {name: name, displayname: "Good Soil", price: 50, sprite: "can", type: "soil", boost: 0.2 };
-        case "!fortSoil": return {name: name, displayname: "Fortified Soil", price: 50, sprite: "can", type: "soil", boost: 0.2, rotResist: 1 };
-        case "!balancedGreenhouse": return {name: name, displayname: "Balanced Greenhouse", price: 50, sprite: "fertilizer", type: "armor", boost: 0.1 };
-        case "!amplifyingGreenhouse": return {name: name, displayname: "Amplifying Greenhouse", price: 50, sprite: "fertilizer", type: "armor", amplify: 0.4 };
+        case "!babySickle": return {name: name, displayname: "Small Sickle", price: 50, sprite: "sickle_0", type: "weapon", power: 0, targetCrops: false };
+        case "!baseSickle": return {name: name, displayname: "Sickle", price: 50, sprite: "sickle", type: "weapon", power: 2, targetCrops: false };
+        case "!goodSickle": return {name: name, displayname: "Crop Sickle", price: 50, sprite: "sickle_1", type: "weapon", power: 5, targetCrops: true };
+        case "!spSickle": return {name: name, displayname: "Spring Sickle", price: 50, sprite: "sickle_2", type: "weapon", power: 10, targetCrops: true, sp: 5 };
+        case "!suSickle": return {name: name, displayname: "Summer Sickle", price: 50, sprite: "sickle_3", type: "weapon", power: 10, targetCrops: true, su: 5 };
+        case "!auSickle": return {name: name, displayname: "Autumn Sickle", price: 50, sprite: "sickle_4", type: "weapon", power: 10, targetCrops: true, au: 5 };
+        case "!wiSickle": return {name: name, displayname: "Winter Sickle", price: 50, sprite: "sickle_5", type: "weapon", power: 10, targetCrops: true, wi: 5 };
+        case "!dblSickle": return {name: name, displayname: "Double Sickle", price: 50, sprite: "sickle_6", type: "weapon", power: 8, targetCrops: true, attacks: 2 };
+        case "!hvySickle": return {name: name, displayname: "Heavy Sickle", price: 50, sprite: "sickle_7", type: "weapon", power: 20, targetCrops: false };
+        case "!hoe": return {name: name, displayname: "Hoe", price: 50, sprite: "hoe", type: "weapon", power: 35, targetCrops: true, noEnemies: true };
+        case "!salthoe": return {name: name, displayname: "Salty Hoe", price: 50, sprite: "sickle_8", type: "weapon", power: 32, targetCrops: true, noEnemies: true, wi: 15 };
+        case "!sicklerang": return {name: name, displayname: "Sickle-Rang", price: 50, sprite: "sickle_9", type: "weapon", power: 20, targetCrops: false, attacks: 999 };
+        case "!sunSickle": return {name: name, displayname: "Sickle of Light", price: 50, sprite: "sickle_10", type: "weapon", power: 25, targetCrops: true, sp: 10, su: 10 };
+        case "!pltSickle": return {name: name, displayname: "Platinum Sickle", price: 50, sprite: "sickle_11", type: "weapon", power: 30, targetCrops: false };
+        case "!sickle2": return {name: name, displayname: "Sickle2", price: 50, sprite: "sickle_12", type: "weapon", power: 60, targetCrops: true, attacks: 2, tech: true };
+
+        case "!weakCompost": return {name: name, displayname: "Small Compost Bin", price: 50, sprite: "compost_0", type: "compost", amount: 1, rotOnly: true };
+        case "!baseCompost": return {name: name, displayname: "Compost Bin", price: 50, sprite: "compost", type: "compost", amount: 3, rotOnly: true };
+        case "!strongCompost": return {name: name, displayname: "Battle Compost Bin", price: 50, sprite: "compost_1", type: "compost", amount: 4, canAttack: true, rotOnly: true };
+        case "!sturdyCompost": return {name: name, displayname: "Sturdy Compost Bin", price: 50, sprite: "compost_2", type: "compost", amount: 4 };
+        case "!fortCompost": return {name: name, displayname: "Fortified Compost Bin", price: 50, sprite: "compost_3", type: "compost", amount: 6, canAttack: true, rotOnly: true };
+        case "!healthyCompost": return {name: name, displayname: "Healthy Compost Bin", price: 50, sprite: "compost_4", type: "compost", amount: 8, bonus: 0.1 };
+        case "!frothCompost": return {name: name, displayname: "Frothy Compost Bin", price: 50, sprite: "compost_5", type: "compost", amount: 8, canAttack: true, rotOnly: true, bonus: 0.25 };
+        case "!jumboCompost": return {name: name, displayname: "Jumbo Compost Bin", price: 50, sprite: "compost_6", type: "compost", amount: 50, canAttack: true };
+        case "!vitaminCompost": return {name: name, displayname: "Vitamin-Enriched Compost Bin", price: 50, sprite: "compost_7", type: "compost", amount: 8, bonus: 0.3 };
+        case "!compost2": return {name: name, displayname: "Compost2", price: 50, sprite: "compost_8", type: "compost", amount: 50, canAttack: true, bonus: 0.2, tech: true };
+
+        case "!weakGloves": return {name: name, displayname: "Gloves", price: 50, sprite: "glove_0", type: "gloves", amount: 3, def: 0.25 };
+        case "!pairGloves": return {name: name, displayname: "Slapping Gloves", price: 50, sprite: "glove_1", type: "gloves", amount: 2, canAttack: true, def: 0.25 };
+        case "!gardenGloves": return {name: name, displayname: "Gardening Gloves", price: 50, sprite: "glove_2", type: "gloves", amount: 6, def: 0.5 };
+        case "!sbGloves": return {name: name, displayname: "Boxing Gloves", price: 50, sprite: "glove_3", type: "gloves", amount: 3, canAttack: true, def: 0.5 };
+        case "!gloves2": return {name: name, displayname: "Gloves2", price: 50, sprite: "glove_4", type: "gloves", amount: 5, canAttack: true, def: 0.5, tech: true };
+
+        case "!weakSoil": return {name: name, displayname: "Watering Can", price: 50, sprite: "can", type: "soil", speed: 0.15 };
+        case "!fortSoil": return {name: name, displayname: "Fortifying Water", price: 50, sprite: "can_0", type: "soil", boost: 0.2 };
+        case "!ampSoil": return {name: name, displayname: "Amplifying Water", price: 50, sprite: "can_1", type: "soil", amplify: 0.4 };
+        case "!speedSoil": return {name: name, displayname: "Speedier Water", price: 50, sprite: "can_2", type: "soil", speed: 0.3 };
+        case "!sturdSoil": return {name: name, displayname: "Sturdy Water", price: 50, sprite: "can_3", type: "soil", boost: 0.4 };
+        case "!minSoil": return {name: name, displayname: "Minmax Water", price: 50, sprite: "can_4", type: "soil", amplify: 0.6 };
+        case "!sturdSpeed": return {name: name, displayname: "Sturdy Speedy", price: 50, sprite: "can_5", type: "soil", speed: 0.25, boost: 0.35 };
+        case "!fastAmp": return {name: name, displayname: "Fast Amplifier", price: 50, sprite: "can_6", type: "soil", speed: 0.25, amplify: 0.5 };
+        case "!waterfall": return {name: name, displayname: "Waterfall Can", price: 50, sprite: "can_7", type: "soil", speed: 0.5 };
+        case "!immunity": return {name: name, displayname: "Immunity Can", price: 50, sprite: "can_8", type: "soil", boost: 0.65 };
+        case "!seasonal": return {name: name, displayname: "Seasonal Can", price: 50, sprite: "can_9", type: "soil", amplify: 0.9 };
+        case "!pesticide2": return {name: name, displayname: "Pesticide2", price: 50, sprite: "can_10", type: "soil", speed: 0.45, boost: 0.5, tech: true };
     }
 }
 
