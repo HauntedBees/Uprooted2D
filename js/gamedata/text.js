@@ -53,5 +53,21 @@ var fulltext = {
 	"s_fieldI": { "en-us": "This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat." }, 
 	"s_fieldO": { "en-us": "This configuration gives room for more large Fixtures and Trees." }, 
 	"s_field_": { "en-us": "This configuration gives additional space, but less room for large Fixtures and Trees." }, 
-	"s_fi1o": { "en-us": "Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!" }
+	"s_fi1o": { "en-us": "Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!" }, 
+	"quest1": {
+		"en-us": "", 
+		"en-dm": "oi u fuck"
+	},
+	"quest1_a": {
+		"en-us": "", 
+		"en-dm": "A lovable squirrel ran off with some of my mushroom seeds. Bring them back to me and I'll be happy."
+	},
+	"quest1_b": {
+		"en-us": "", 
+		"en-dm": "sick thanks. Have a mushroom log."
+	},
+	"quest1_c": {
+		"en-us": "", 
+		"en-dm": "yo lass what i NEED is my SHIITAKE MUSHROOM SEEDS. give the fuck."
+	}
 };

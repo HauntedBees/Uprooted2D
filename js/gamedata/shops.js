@@ -27,8 +27,9 @@ var stores = {
     "equip1": {
         img: "shops/dwarf",
         wares: [
+            { product: "!baseSickle", price: 50, type: "equipment" },
             { product: "!goodSickle", price: 50, type: "equipment" },
-            { product: "!strongCompost", price: 50, type: "equipment" }
+            { product: "!baseCompost", price: 50, type: "equipment" }
         ],
         opening: "s_eq1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
     },
@@ -42,20 +43,10 @@ var stores = {
     "fixture1": {
         img: "shops/dwarf3",
         wares: [
-            { product: "_log", price: 150, type: "farm" },
+            { product: "_log", price: 150, type: "farm", locked: "quest1" },
             { product: "_coop", price: 100, type: "farm" }
         ],
-        opening: "s_fi1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
-    },
-    "mushhouse": {
-        img: "shops/cock",
-        wares: [
-            { product: "_log", price: 150, type: "farm" },
-            { product: "shiitake", price: 10, type: "seed" },
-            { product: "milkcap", price: 10, type: "seed" },
-            { product: "portobello", price: 10, type: "seed" }
-        ],
-        opening: "s_co", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_cpurch"
+        opening: "s_fi1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased", talk: "quest1"
     },
     "template": {
         img: "",

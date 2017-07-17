@@ -2,6 +2,7 @@ uglifyjs ^
     js/gamedata/crops.js ^
     js/gamedata/enemies.js ^
     js/gamedata/shops.js ^
+    js/gamedata/quests.js ^
     js/gamedata/spritedata.js ^
     js/gamedata/misc.js ^
     js/gamedata/text.js ^

@@ -4,23 +4,35 @@ worldmap.shop = {
     sellingState: 0, sellingType: "", actualIdxs: [],
     maxSell: 12, sellOffset: 0, numArrows: 0, isUpgradeShop: false,
     layersToClear: ["characters", "menutext", "menucursorA"],
-    upgradeIndexes: [],
+    availableIndexes: [], hasTalk: "",
     setup: function(shopName) {
         this.details = stores[shopName];
         this.sellingState = 0;
         this.sellingType = "";
+        this.hasTalk = (this.details.talk && player.questsCleared.indexOf(this.details.talk) < 0) ? this.details.talk : "";
         this.sellOffset = 0;
         this.numArrows = 0;
         if(this.details.wares.length > 6 || (this.details.doesSell && this.details.wares.length > 5)) {
             this.dx = 1;
-            this.initx = this.details.doesSell ? 3 : 2;
+            this.initx = (this.hasTalk || this.details.doesSell) ? 3 : 2;
         } else {
             this.dx = 2;
-            this.initx = this.details.doesSell ? 5 : 3;
+            this.initx = (this.hasTalk || this.details.doesSell) ? 5 : 3;
         }
-        this.cursorInitx = this.details.doesSell ? 2 : 1;
+        this.cursorInitx = (this.hasTalk || this.details.doesSell) ? 2 : 1;
+        this.cursorX = this.cursorInitx;
         gfx.drawStore(this.details.img);
         this.drawDetails(GetText(this.details.opening), true);
+    },
+    resetTalk: function() {
+        this.hasTalk = "";
+        if(this.details.doesSell) { return; }
+        if(this.details.wares.length > 6 || (this.details.doesSell && this.details.wares.length > 5)) {
+            this.initx = 2;
+        } else {
+            this.initx = 3;
+        }
+        this.cursorInitx = 1;
     },
     drawDetails: function(text, isopening) {
         gfx.clearSome(this.layersToClear);
@@ -29,7 +41,7 @@ worldmap.shop = {
             case 1: this.drawDetailsSellingSelect(); break;
             default: this.drawDetailsBuying(); break;
         }
-        if(this.isUpgradeShop && this.upgradeIndexes.length === 0 && isopening) { text = GetText(this.details.empty); }
+        if(this.isUpgradeShop && this.availableIndexes.length === 0 && isopening) { text = GetText(this.details.empty); }
         gfx.drawText("Coins: " + player.monies, 2, 16 * 6.75, "#FFFFFF");
         gfx.drawWrappedText(text, 2, 16 * 7.25, 235, "#FFFFFF");
     },
@@ -100,23 +112,30 @@ worldmap.shop = {
     },
     drawDetailsBuying: function() {
         gfx.drawTileToGrid("exit", 1, this.yPos, "characters");
-        if(this.details.doesSell) {
+        if(this.hasTalk) {
+            gfx.drawTileToGrid("talk", (this.details.doesSell ? 2 : 1) + this.dx, this.yPos, "characters");
+        } else if(this.details.doesSell) {
             gfx.drawTileToGrid("sell", 1 + this.dx, this.yPos, "characters");
         }
-        this.upgradeIndexes = []; var j = 0;
+        this.availableIndexes = []; var j = 0;
         this.isUpgradeShop = false;
         for(var i = 0; i < this.details.wares.length; i++) {
             if(this.details.wares[i].type === "upgrade") {
                 this.isUpgradeShop = true;
                 var res = spriteData.names[this.details.wares[i].product + "-" + player.gridLevel];
                 if(res === undefined) { continue; }
-                this.upgradeIndexes.push(i);
+                this.availableIndexes.push(i);
                 gfx.drawTileToGrid(this.details.wares[i].product + "-" + player.gridLevel, this.initx + j * this.dx, this.yPos, "characters");
                 j++;
-            } else if(this.details.wares[i].type === "equipment") {
-                gfx.drawTileToGrid(GetEquipment(this.details.wares[i].product).sprite, this.initx + i * this.dx, this.yPos, "characters");
             } else {
-                gfx.drawTileToGrid(this.details.wares[i].product, this.initx + i * this.dx, this.yPos, "characters");
+                if(this.details.wares[i].locked !== undefined && player.questsCleared.indexOf(this.details.wares[i].locked) < 0) { continue; }
+                this.availableIndexes.push(i);
+                if(this.details.wares[i].type === "equipment") {
+                    gfx.drawTileToGrid(GetEquipment(this.details.wares[i].product).sprite, this.initx + j * this.dx, this.yPos, "characters");
+                } else {
+                    gfx.drawTileToGrid(this.details.wares[i].product, this.initx + j * this.dx, this.yPos, "characters");
+                }
+                j++;
             }
         }
         gfx.drawCursor(1 + this.cursorX * this.dx, this.yPos, 0, 0);
@@ -187,15 +206,16 @@ worldmap.shop = {
     mouseMoveBuying: function(pos) {
         var newCursorX = Math.floor((pos.x - 1) / this.dx);
         if(newCursorX < 0 || newCursorX >= (this.details.wares.length + this.cursorInitx)) { return false; }
-        if(this.isUpgradeShop && newCursorX > this.upgradeIndexes.length) { return false; }
+        if(newCursorX > ((this.hasTalk || this.details.doesSell ? 1 : 0) + this.availableIndexes.length)) { return false; }
         this.cursorX = newCursorX;
         this.drawDetails(this.getText());
         return true;
     },
     getText: function() {
         if(this.cursorX == 0) { return GetText(this.details.leaving); }
-        if(this.details.doesSell && this.cursorX == 1) { return GetText(this.details.selling); }
-        var cursor = (this.upgradeIndexes.length > 0) ? this.upgradeIndexes[this.cursorX - this.cursorInitx] : (this.cursorX - this.cursorInitx);
+        if(this.hasTalk && this.cursorX == 1) { return GetText(this.hasTalk); }
+        else if(this.details.doesSell && this.cursorX == 1) { return GetText(this.details.selling); }
+        var cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
         var productInfo = this.details.wares[cursor];
         if(productInfo.type == "seed") { return this.getSeedText(productInfo); }
         if(productInfo.type == "farm") { return this.getFarmText(productInfo); }
@@ -293,13 +313,16 @@ worldmap.shop = {
         return true;
     },
     clickBuying: function(pos) {
-        if(this.details.doesSell && this.cursorX == 1) {
+        if(this.hasTalk && this.cursorX === 1) {
+            this.drawDetails(quests.getQuestText(this.hasTalk));
+            return true;
+        } else if(this.details.doesSell && this.cursorX === 1) {
             this.sellingState = 1;
             this.drawDetails(GetText("s_sellseed"));
             return true;
         }
-        var cursor = (this.isUpgradeShop) ? this.upgradeIndexes[this.cursorX - this.cursorInitx] : (this.cursorX - this.cursorInitx);
-        if(this.isUpgradeShop && this.upgradeIndexes.length === 0) { return false; }
+        var cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
+        if(this.isUpgradeShop && this.availableIndexes.length === 0) { return false; }
         var productInfo = this.details.wares[cursor];
         var price = 0;
         if(productInfo.price === undefined) {

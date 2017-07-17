@@ -3,14 +3,14 @@ var player = {
     atk: 3, def: 2, luck: 0.7,
     level: 1, exp: 0, nextExp: 4, totalExp: 0, 
     eploids: 10, monies: 1000, playTime: 0,
-    clearedEntities: [], 
+    clearedEntities: [], questsCleared: [], activeQuests: {}, 
     lastInn: "start",
     equipment: {
-        weapon: null, 
+        weapon: "!babySickle", 
         compost: "!weakCompost", 
         gloves: null, 
         soil: null, 
-        armor: null, 
+        armor: null
     },
     getPlayTimeString: function() {
         var time = this.playTime;
@@ -21,7 +21,7 @@ var player = {
         return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (time < 10 ? "0" : "") + time;
     },
     inventory: [
-        ["specialgrapes", 1], ["carrot", 6], ["beet", 4], ["!weakCompost", 1]/*, ["_log", 1], ["_coop", 2], ["_cow", 54], ["fodder", 5],
+        ["specialgrapes", 1], ["carrot", 6], ["beet", 4], ["!weakCompost", 1], ["!babySickle", 1] // ACTUAL STARTING INVENTORY
         ["_shooter", 2], ["_hotspot", 1], ["_modulator", 1], ["battery", 4], ["spear", 5], 
         ["!baseSickle", 1], ["!goodSickle", 1], ["!weakCompost", 1], ["!strongCompost", 1], ["!weakGloves", 1], ["!pairGloves", 1],
         ["!weakSoil", 1], ["!fortSoil", 1], ["!balancedGreenhouse", 1], ["!amplifyingGreenhouse", 1]
@@ -39,6 +39,13 @@ var player = {
         Sautumn: 1,
         Swinter: 0,
         season: 0
+    },
+    hasItem: function(item, amount) {
+        amount = amount || 1;
+        for(var i = 0; i < player.inventory.length; i++) {
+            if(player.inventory[i][0] === item && player.inventory[i][1] >= amount) { return true; }
+        }
+        return false;
     },
     isEquipped: function(item) {
         return this.equipment.weapon === item || this.equipment.compost === item || this.equipment.gloves === item || this.equipment.soil === item || this.equipment.armor === item;
