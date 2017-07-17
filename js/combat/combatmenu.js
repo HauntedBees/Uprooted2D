@@ -28,8 +28,13 @@ combat.menu = {
             case 1:
                 var count = this.highlightReadyCropsAndReturnCount();
                 if(count === 0) {
-                    text = "Perform a Melee attack.";
-                    charX = 2;
+                    if(player.canMelee()) {
+                        text = "Perform a Melee attack.";
+                        charX = 2;
+                    } else {
+                        text = "You need a weapon to attack.";
+                        charX = 3;
+                    }
                 } else {
                     text = "Attack with Ripe Crops on your Field.";
                     charX = 1; charY = 1;
@@ -92,7 +97,11 @@ combat.menu = {
         if(pos.x > 4) { return false; }
         switch(pos.y - this.dy) {
             case 0: if(combat.numPlantTurns > 0) { game.transition(this, combat.plant); } break;
-            case 1: game.transition(this, combat.selectTarget); break;
+            case 1:
+                var count = this.highlightReadyCropsAndReturnCount();
+                if(count === 0 && !player.canMelee()) { return; }
+                game.transition(this, combat.selectTarget);
+                break;
             case 2: if(player.equipment.compost !== null) { game.transition(this, combat.compost); } break;
             case 3: this.tryFlee(); break;
             default: return false;

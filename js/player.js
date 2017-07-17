@@ -90,6 +90,11 @@ var player = {
         this.nextExp = Math.floor(this.level * this.level * 5 * Math.pow(1.02, this.level - 2));
         this.getLevelUpItemBonuses();
     },
+    canMelee: function() { // TODO: factor in weapons that can attack crops but not people
+        if(player.equipment.weapon === null) { return false; }
+        if(player.equipment.noEnemies) { return false; }
+        return true;
+    },
     getArmorBalancedMultiplier: function(seasonVal) {
         if(this.equipment.armor === null) { return 1; }
         var equipInfo = GetEquipment(this.equipment.armor);
