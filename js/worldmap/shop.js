@@ -20,7 +20,7 @@ worldmap.shop = {
             this.initx = (this.hasTalk || this.details.doesSell) ? 5 : 3;
         }
         this.cursorInitx = (this.hasTalk || this.details.doesSell) ? 2 : 1;
-        this.cursorX = this.cursorInitx;
+        this.cursorX = 0;
         gfx.drawStore(this.details.img);
         this.drawDetails(GetText(this.details.opening), true);
     },
@@ -221,6 +221,7 @@ worldmap.shop = {
         if(productInfo.type == "farm") { return this.getFarmText(productInfo); }
         if(productInfo.type == "equipment") { return this.getEquipText(productInfo); }
         if(productInfo.type == "upgrade") { return this.getUpgradeText(productInfo); }
+        if(productInfo.type == "inn") { return "Take a Sleepsy Nappsy (" + productInfo.price + " coins)\n Recovers all of your health."; }
         return "i don't know what this is";
     },
     getUpgradeText: function(productInfo) {
@@ -339,7 +340,9 @@ worldmap.shop = {
         if(price > player.monies) { this.drawDetails(GetText(this.details.notEnough)); return true; }
         player.monies -= price;
 
-        if(productInfo.type === "upgrade") {
+        if(productInfo.type === "inn") {
+            player.health = player.maxhealth;
+        } else if(productInfo.type === "upgrade") {
             var dims = {x: 0, y: 0, new: "n"};
             switch(productInfo.product) {
                 case "farmupgradeI": dims = {x: 4, y: 3, new: "I"}; break;

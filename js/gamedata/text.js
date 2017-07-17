@@ -69,5 +69,17 @@ var fulltext = {
 	"quest1_c": {
 		"en-us": "", 
 		"en-dm": "yo lass what i NEED is my SHIITAKE MUSHROOM SEEDS. give the fuck."
+	},
+	"s_seed1": {
+		"en-us": "", 
+		"en-dm": "hi I got seeds"
+	},
+	"s_inn1": {
+		"en-us": "", 
+		"en-dm": "hey hey hey my inn is in... business. It's in business. That's a thing people say. Fuck off."
+	},
+	"s_innpurch": {
+		"en-us": "", 
+		"en-dm": "enjoy your sleep"
 	}
 };

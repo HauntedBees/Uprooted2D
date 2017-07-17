@@ -43,10 +43,34 @@ var stores = {
     "fixture1": {
         img: "shops/dwarf3",
         wares: [
+            { product: "_coop", price: 100, type: "farm" },
+            { product: "egg", price: 20, type: "seed" },
             { product: "_log", price: 150, type: "farm", locked: "quest1" },
-            { product: "_coop", price: 100, type: "farm" }
+            { product: "shiitake", price: 20, type: "seed", locked: "quest1" },
+            { product: "milkcap", price: 20, type: "seed", locked: "quest1" },
+            { product: "portobello", price: 20, type: "seed", locked: "quest1" }
         ],
         opening: "s_fi1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased", talk: "quest1"
+    },
+    "seed1": {
+        img: "shops/dwarf",
+        wares: [
+            { product: "carrot", price: 5, type: "seed" },
+            { product: "beet", price: 6, type: "seed" },
+            { product: "pineapple", price: 12, type: "seed" },
+            { product: "ginger", price: 10, type: "seed" },
+            { product: "apple", price: 10, type: "seed" },
+            { product: "rhubarb", price: 10, type: "seed" }
+        ],
+        buyMult: 1, doesSell: false,
+        opening: "s_seed1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_purchased"
+    },
+    "inn1": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "sleep", price: 6, type: "inn" }
+        ],
+        opening: "s_inn1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_innpurch"
     },
     "template": {
         img: "",
@@ -55,7 +79,7 @@ var stores = {
             { product: "", price: 0, type: "" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "", notEnough: "", purchased: ""
+        opening: "", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_purchased"
         /*selling: "", didSell: "", leaveSell: "",*/
     }
 };

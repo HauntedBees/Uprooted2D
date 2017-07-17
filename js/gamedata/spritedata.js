@@ -198,6 +198,7 @@ var spriteData = {
         "arrowR": [15, 13],
         "arrowL": [14, 13],
         "talk": [13, 16],
+        "sleep": [12, 17],
         "weed": [14, 16],
         "spear": [20, 16],
         "spearseed": [20, 16]
