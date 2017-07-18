@@ -73,6 +73,8 @@ var worldmap = {
             }
             worldmap.entities[i].pos = newPos;
             if(Math.round(newPos.x) == pointinfo.x && Math.round(newPos.y) == pointinfo.y) {
+                newPos.x = pointinfo.x;
+                newPos.y = pointinfo.y;
                 worldmap.entities[i].movement.state = (em.state + 1) % em.points.length;
             }
         }
