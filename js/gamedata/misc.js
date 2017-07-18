@@ -18,5 +18,6 @@ var miscText = {
     "skill_Swinter1": "Winter 2\n Makes Winter crops 35% more powerful.\n \n Requires Winter."
 };
 var inns = {
-    "start": { x: 21, y: 5.25, map: "farm" }
+    "start": { x: 21, y: 5.25, map: "farm" },
+    "inn1": { x : 16, y: 5, map: "firstvillage" }
 };

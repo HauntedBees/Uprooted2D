@@ -341,6 +341,7 @@ worldmap.shop = {
         player.monies -= price;
 
         if(productInfo.type === "inn") {
+            player.lastInn = this.details.innId;
             player.health = player.maxhealth;
         } else if(productInfo.type === "upgrade") {
             var dims = {x: 0, y: 0, new: "n"};

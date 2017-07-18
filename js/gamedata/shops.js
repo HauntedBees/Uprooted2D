@@ -66,10 +66,8 @@ var stores = {
         opening: "s_seed1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_purchased"
     },
     "inn1": {
-        img: "shops/dwarf2",
-        wares: [
-            { product: "sleep", price: 6, type: "inn" }
-        ],
+        img: "shops/dwarf2", innId: "inn1",
+        wares: [ { product: "sleep", price: 6, type: "inn" } ],
         opening: "s_inn1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_innpurch"
     },
     "template": {
