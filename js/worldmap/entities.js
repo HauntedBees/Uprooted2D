@@ -158,6 +158,30 @@ var mapentities = {
     ],
     "belowvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 21.5, 28, "firstvillage"),
+        SwitchMap("EnterFacilitySide", 13, 16, false, false, 30, 3, "researchfacility"),
+        SwitchMap("EnterFacilityL", 7, 18, false, false, 15.5, 26, "researchfacility"),
+        SwitchMap("EnterFacilityR", 8, 18, false, false, 15.5, 26, "researchfacility"),
         GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), commonInteractArrays.researchRobo, {sy: 4})
+    ],
+    "researchfacility": [
+        SwitchMap("ExitAreaSouth", 0, 27, true, false, 7.5, 19, "belowvillage"),
+        SwitchMap("ExitAreaEast", 31, 3, false, false, 13, 15, "belowvillage"),
+        GetCommonEntity("Fucker", 17, 1, 0, 0, undefined, [
+            GetSpeak("Don't interfere with my stuff you baka."),
+            GetFight(["ScienceMan"])
+        ], { sy: 4, postBattle: "PostBoss2", failedInteract: [
+            GetSpeak("Fuck off."),
+            GetFight(["ScienceMan"])
+        ] }),
+        {
+            name: "PostBoss2",
+            pos: {x: -1, y: -1},
+            solid: false,
+            storageKey: "PostBoss2",
+            interact: [
+                GetSpeak("I bet if that robot was still alive it'd be saying \"aw nuts\" right now, ha ha."),
+                GetSpeak("Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c")
+            ]
+        }
     ]
 };
