@@ -47,6 +47,10 @@ function GetEnemy(name) {
             ]);
             bot.isBig = true;
             return bot;
+        case "robo2": return new EnemyDetail(name, "sm", 2, { dx: 0, dy: 0, w: 0, h: 0 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0], [["dumbbattery", 1], ["gear"]], [
+            { money: true, min: 0, max: 5 },
+            { seed: "carrot", min: -1, max: 1 }
+        ]);
     }
 }
 var enemyAttacks = {

@@ -142,7 +142,7 @@ var mapentities = {
     "firstvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 14, 14, "farmpath"),
         //ExitAreaWest to forest
-        //ExitAreaSouth to river
+        SwitchMap("ExitAreaSouth", 0, 30, true, false, 21.5, 1, "belowvillage"),
         EnterShop("EquipmentShop", 17, 12, "equip1"),
         GetSign(18, 13, "Equipment Shop"),
         EnterShop("UpgradeShop", 18, 20, "upgrade1"),
@@ -153,6 +153,11 @@ var mapentities = {
         EnterShop("SeedShopR", 6, 17, "seed1"),
         GetSign(7, 18, "Seed Shop"),
         EnterShop("Inn", 16, 4, "inn1"),
-        GetSign(15, 5, "Inn")
+        GetSign(15, 5, "Inn"),
+        GetSign(1, 24, "Shitblossom Forest")
+    ],
+    "belowvillage": [
+        SwitchMap("ExitAreaNorth", 0, 0, true, false, 21.5, 28, "firstvillage"),
+        GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), commonInteractArrays.researchRobo, {sy: 4})
     ]
 };
