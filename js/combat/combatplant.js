@@ -62,6 +62,22 @@ combat.plant = {
         if(type === "_hotspot" || parent === "_hotspot") { return this.activeCrop.type === "tech"; }
         if(type.corner === "_cow") { return this.activeCrop.type === "food" || this.activeCrop.type === "veg"; }
     },
+    getSprinklerMultiplier: function(x, y, size) {
+        var isNearASprinkler = (this.isSprinkler(x - 1, y - 1) || this.isSprinkler(x - 1, y) || this.isSprinkler(x - 1, y + 1)
+                                || this.isSprinkler(x, y - 1) || this.isSprinkler(x, y + 1)
+                                || this.isSprinkler(x + 1, y - 1) || this.isSprinkler(x + 1, y) || this.isSprinkler(x + 1, y + 1));
+        if(isNearASprinkler) { return 0.8; }
+        if(size === 1) {
+            if(this.getSprinklerMultiplier(x + 1, y) === 0.8) { return 0.8; }
+            if(this.getSprinklerMultiplier(x + 1, y + 1) === 0.8) { return 0.8; }
+            if(this.getSprinklerMultiplier(x, y + 1) === 0.8) { return 0.8; }
+        }
+        return 1;
+    },
+    isSprinkler: function(x, y) {
+        if(x < 0 || y < 0 || x >= player.gridWidth || y >= player.gridHeight) { return false; }
+        return player.itemGrid[x][y] === "_sprinkler";
+    },
     
     keyPress: function(key) {
         var pos = { x: this.cursor.x, y: this.cursor.y };
@@ -147,7 +163,7 @@ combat.plant = {
                 }
                 combat.animHelper.DrawBackground();
             } else {
-                newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier());
+                newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
                 combat.grid[px][py] = newCrop;
             }
             this.cursor = { x: 0, y: this.dy };

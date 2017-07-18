@@ -159,5 +159,8 @@ function GetFarmInfo(name) {
         case "_beehive": return { name: name, displayname: "Beehive", price: 100, shortdesc: "Holds bees.",
             desc: "Allows Bees to be placed. Bees will randomly produce honey, which can recover lots of health or stun enemies."
         };
+        case "_sprinkler": return { name: name, displayname: "Sprinkler", price: 100, shortdesc: "Makes crops around it grow faster.",
+            desc: "Vegetables and trees planted in the 8 tiles around a sprinkler will grow 25% faster."
+        };
     }
 }
