@@ -263,12 +263,14 @@ combat.plant = {
         combat.animHelper.DrawCrops();
     },
     drawXs: function() {
+        var item = player.inventory[this.actualIndexes[idx]];
+        if(item === undefined || item === null) { return; }
+        var tempCrop = GetCrop(item[0]);
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 if(combat.grid[x][y] !== null) { continue; }
                 var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
-                var item = player.inventory[this.actualIndexes[idx]];
-                this.activeCrop = GetCrop(item[0]);
+                this.activeCrop = tempCrop;
                 if(!this.isValidLocationForCrop(x, y)) {
                     gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");
                 }
@@ -310,6 +312,7 @@ combat.plant = {
     setText: function() {
         var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
         var item = player.inventory[this.actualIndexes[idx]];
+        if(item === null || item === undefined) { return; }
         var iteminfo = GetCrop(item[0]);
         var str = iteminfo.displayname + " (" + item[1] + ")\n";
         str += " Power: " + iteminfo.power + "\n";

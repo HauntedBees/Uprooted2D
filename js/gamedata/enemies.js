@@ -57,7 +57,7 @@ function GetEnemy(name) {
                 { seed: "carrot", min: -1, max: 1 }
             ], { tile: "watertile" });
         case "seaMonk": return new EnemyDetail(name, "md", 6, { dx: 0, dy: -0.2, w: 0.5, h: 1.1 }, 60, 4, 3, 3, 2, false, [0, 1, 1, 0],
-            [["splashAttack", 1], ["wellAlgae", 0.45], ["kelpKelpKelpKELPKELPKELP", 0.95], ["harvestOrAttack", 1]],
+            [["splashAttack", 0.15], ["wellAlgae", 0.45], ["kelpKelpKelpKELPKELPKELP", 0.95], ["harvestOrAttack", 1]],
             [
                 { money: true, min: 0, max: 5 },
                 { seed: "carrot", min: -1, max: 1 }, 
