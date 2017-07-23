@@ -263,6 +263,7 @@ combat.plant = {
         combat.animHelper.DrawCrops();
     },
     drawXs: function() {
+        var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
         var item = player.inventory[this.actualIndexes[idx]];
         if(item === undefined || item === null) { return; }
         var tempCrop = GetCrop(item[0]);
