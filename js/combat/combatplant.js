@@ -269,7 +269,7 @@ combat.plant = {
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 if(combat.grid[x][y] !== null) { continue; }
-                var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
+        var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
                 this.activeCrop = tempCrop;
                 if(!this.isValidLocationForCrop(x, y)) {
                     gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");
