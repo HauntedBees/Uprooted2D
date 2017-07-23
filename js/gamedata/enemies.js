@@ -153,6 +153,15 @@ var enemyFuncs = {
         } else {
             return { status: true, crop: true, destroyed: false };
         }
+    },
+    DisturbTile: function(x, y, type) {
+        var itemTile = player.itemGrid[x][y];
+        if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
+        if((itemTile !== null && itemTile !== "_hotspot") || combat.grid[x][y] !== null) { return false; }
+        var newCrop = GetCrop(type);
+        newCrop.activeTime = newCrop.time;
+        combat.grid[x][y] = newCrop;
+        return true;
     }
 };
 var enemyAttacks = {
@@ -230,5 +239,21 @@ var enemyAttacks = {
             enemyFuncs.SplashTile(e, x, y);
         }
         return { text: e.name + " pours water all over your field!", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+    },
+    rockToss: function(e) {
+        var res = enemyFuncs.DisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "rock");
+        if(res) {
+            return { text: e.name + " throws a rock onto your field.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        } else {
+            return { text: e.name + " tries throwing a rock, but misses.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        }
+    },
+    saltToss: function(e) {
+        var res = enemyFuncs.DisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "salt");
+        if(res) {
+            return { text: e.name + " throws salt onto your field.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        } else {
+            return { text: e.name + " tries throwing salt, but the wind blows it away.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        }
     }
 };

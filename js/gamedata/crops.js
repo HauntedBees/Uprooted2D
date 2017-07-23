@@ -130,6 +130,8 @@ function GetCrop(name) {
         case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
         case "algae": return new CropDetail(name, "Algae", 10, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "kelp": return new CropDetail(name, "Kelp", 10, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { noRot: true });
+        case "rock": return new CropDetail(name, "Rock", 10, "rock", 1, 5, 1, 0, 0);
+        case "salt": return new CropDetail(name, "Salt", 10, "rock", 1, 30, 1, 0, 0);
     }
 }
 function GetFarmInfo(name) {
