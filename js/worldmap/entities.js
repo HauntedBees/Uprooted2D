@@ -187,7 +187,22 @@ var mapentities = {
     "bridge": [
         SwitchMap("GoUnderwater", 10, 17, false, false, 41, 20, "underwater"),
         GetSign(15, 16, "Mermaid Shoppe"),
-        EnterShop("Mermaid Shoppe", 16, 16, "mermaid")
+        EnterShop("Mermaid Shoppe", 16, 16, "mermaid"),
+        GetCommonEntity("Worker1", 28, 8, 0, 3, undefined, [
+            function() {
+                if(player.hasQuest("helpSeaMonster")) {
+                    worldmap.writeText(GetText("constr1_foe"));
+                } else {
+                    worldmap.writeText(GetText("constr1_fr1"));
+                }
+            }, function() {
+                if(player.hasQuest("helpSeaMonster")) {
+                    combat.startBattle(["Worker"]);
+                } else {
+                    worldmap.writeText(GetText("constr1_fr2"));
+                }
+            }
+        ])
     ],
     "underwater": [
         SwitchMap("GoAboveGround", 42, 20, false, false, 11, 17, "bridge")

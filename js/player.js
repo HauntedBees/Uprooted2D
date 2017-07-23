@@ -40,6 +40,8 @@ var player = {
         Swinter: 0,
         season: 0
     },
+    hasQuest: function(q) { return player.activeQuests[q] !== undefined; },
+    completedQuest: function(q) { return player.questsCleared.indexOf(q) >= 0; },
     hasItem: function(item, amount) {
         amount = amount || 1;
         for(var i = 0; i < player.inventory.length; i++) {

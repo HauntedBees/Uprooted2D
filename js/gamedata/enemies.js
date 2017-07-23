@@ -21,6 +21,11 @@ function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldh
     this.boss = boss;
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
 }
+function GetDisplayName(name) {
+    if(name === "Worker") {
+        return ["Chet", "Brett", "Jeromy", "Chad", "Clung"][Math.floor(Math.random() * 5)];
+    } else { return name; }
+}
 function GetEnemy(name) {
     switch(name) {
         case "Discussly": return new EnemyDetail(name, "sm", 0, { dx: 0, dy: 0.25, w: 0, h: 0.25 }, 10, 1, 1, 3, 2, true, [0, 0, 1, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [
@@ -31,7 +36,7 @@ function GetEnemy(name) {
                 { money: true, min: 10, max: 10 },
                 { seed: "carrot", min: 2, max: 2 }
             ]);
-        case "Worker": return new EnemyDetail(name, "md", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "Worker": return new EnemyDetail(GetDisplayName(name), "md", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
         case "ScienceMan": return new EnemyDetail(name, "md", 3, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
         case "robo": return new EnemyDetail(name, "sm", 1, { dx: 0, dy: 0, w: 0, h: 0 }, 8, 2, 1, 3, 2, false, [0, 0, 1, 0], [["dumbbattery", 1], ["gear"]], [
                 { money: true, min: 0, max: 5 },
@@ -121,7 +126,7 @@ var enemyFuncs = {
         }
         if(["_sprinkler", "_paddy", "_lake", "_cow", "_log", "_coop", "_beehive"].indexOf(itemPos) >= 0) { return { status: false }; }
         if(itemPos === "_strongsoil" && (Math.random() * player.luck) > 0.75) { return { status: false }; }
-        
+
         if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
             if(!noRecursion && itemPos !== "_shooter") {
                 combat.effectGrid[initx][inity] = { type: "shocked", duration: e.atk };

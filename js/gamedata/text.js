@@ -101,5 +101,17 @@ var fulltext = {
 	"questM_c": {
 		"en-us": "", 
 		"en-dm": "please take care of the sea creature underwater. Just head west of here."
+	},
+	"constr1_foe": {
+		"en-us": "", 
+		"en-dm": "gonna fuck you up"
+	},
+	"constr1_fr1": {
+		"en-us": "", 
+		"en-dm": "hey there. We under construction, so you can't drive through here."
+	},
+	"constr1_fr2": {
+		"en-us": "", 
+		"en-dm": "talk to the boss-man if you got qustions. He on the bridge."
 	}
 };

@@ -31,3 +31,6 @@ questM,,hey there
 questM_a,,there's some sort of creature underwater that keeps moving my construction equipment with relative ease! Please calm it.
 questM_b,,gee thanks friend. Now I can build more underwater drills or something. Fuck I duno.
 questM_c,,please take care of the sea creature underwater. Just head west of here.
+constr1_foe,,gonna fuck you up
+constr1_fr1,,"hey there. We under construction, so you can't drive through here."
+constr1_fr2,,talk to the boss-man if you got qustions. He on the bridge.
