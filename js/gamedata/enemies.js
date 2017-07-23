@@ -119,7 +119,7 @@ var enemyFuncs = {
             initx = itemPos.x; inity = itemPos.y;
             itemPos = player.itemGrid[itemPos.x][itemPos.y];
         }
-        if(["_sprinkler", "_paddy", "_lake", "_cow"].indexOf(itemPos) >= 0) {
+        if(["_sprinkler", "_paddy", "_lake", "_cow", "_log", "_coop", "_beehive"].indexOf(itemPos) >= 0) {
             return { status: false };
         }
         if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
