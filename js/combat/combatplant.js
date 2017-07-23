@@ -58,6 +58,7 @@ combat.plant = {
             if(combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "shocked") { return false; }
             return this.activeCrop.type === "veg";
         }
+        if(type === "_strongsoil") { return this.activeCrop.type === "veg" || this.activeCrop.type === "tree"; }
         var isBurned = (combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "burned");
         if(type === "_log") { return this.activeCrop.type === "mush" && !isBurned; }
         if(type === "_beehive") { return this.activeCrop.type === "bee" && !isBurned; }
@@ -173,15 +174,12 @@ combat.plant = {
             } else {
                 newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
                 var effects = combat.effectGrid[px][py];
+                var divider = (combat.itemGrid[px][py] !== null && combat.itemGrid[px][py] === "_strongsoil") ? 1.25 : 2;
                 if(effects !== null) {
-                    if(effects.type === "splashed") {
-                        if(newCrop.type === "tech") { 
-                            newCrop.power = 1;
-                        } else {
-                            newCrop.power = Math.ceil(newCrop.power / 2); // TODO: water resistance
-                        }
-                    } else if(effects.type === "burned") {
-                        newCrop.power = Math.ceil(newCrop.power / 2); // TODO: fire resistance
+                    if(effects.type === "shocked") {
+                        newCrop.power = 1;
+                    } else if(effects.type === "splashed" || effects.type === "burned") {
+                        newCrop.power = Math.ceil(newCrop.power / divider);
                     }
                 }
                 combat.grid[px][py] = newCrop;

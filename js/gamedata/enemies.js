@@ -119,9 +119,9 @@ var enemyFuncs = {
             initx = itemPos.x; inity = itemPos.y;
             itemPos = player.itemGrid[itemPos.x][itemPos.y];
         }
-        if(["_sprinkler", "_paddy", "_lake", "_cow", "_log", "_coop", "_beehive"].indexOf(itemPos) >= 0) {
-            return { status: false };
-        }
+        if(["_sprinkler", "_paddy", "_lake", "_cow", "_log", "_coop", "_beehive"].indexOf(itemPos) >= 0) { return { status: false }; }
+        if(itemPos === "_strongsoil" && (Math.random() * player.luck) > 0.75) { return { status: false }; }
+        
         if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
             if(!noRecursion && itemPos !== "_shooter") {
                 combat.effectGrid[initx][inity] = { type: "shocked", duration: e.atk };
@@ -137,13 +137,8 @@ var enemyFuncs = {
         combat.animHelper.DrawBackground();
         var crop = combat.grid[x][y];
         if(crop === null) { return { status: true, crop: false }; }
-        var dmg = Math.ceil(e.atk / 2); // TODO: water resistance
-        if(crop.x !== undefined) {
-            crop = combat.grid[crop.x][crop.y];
-            dmg = Math.ceil(dmg / 2);
-            if(itemPos === "_hotspot") { dmg *= 25; }
-        }
 
+        var dmg = enemyFuncs.GetCropDamage(e, x, y);
         crop.power -= dmg;
         if(crop.rotten) { crop.power = 0; }
         if(crop.power <= 0) {
@@ -170,19 +165,16 @@ var enemyFuncs = {
         if(effect !== null && effect.type === "splashed") { return { status: false, wet: true }; }
         if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
         if(["_cow", "_lake", "_paddy", "_shooter", "_hotspot", "_modulator", "_sprinkler"].indexOf(itemTile) >= 0) { return { status: false }; }
-        
+        if(itemPos === "_strongsoil" && (Math.random() * player.luck) > 0.75) { return { status: false }; }
+
         combat.effectGrid[x][y] = { type: "burned", duration: e.atk };
         if(["_log", "_coop", "_beehive"].indexOf(itemTile) >= 0) {
             var hadTile = (crop !== null);
             if(hadTile) { combat.grid[x][y] = null; }
             return { status: true, crop: hadTile, destroyed: true, special: itemTile };
         }
-        if(crop === null) { return {status: true, crop: false }; }
-        var dmg = Math.ceil(e.atk / 2); // TODO: fire resistance
-        if(crop.x !== undefined) {
-            crop = combat.grid[crop.x][crop.y];
-            dmg = Math.ceil(dmg / 2);
-        }
+        if(crop === null) { return { status: true, crop: false }; }
+        var dmg = enemyFuncs.GetCropDamage(e, x, y);
 
         crop.power -= dmg;
         if(crop.rotten) { crop.power = 0; }
@@ -193,6 +185,17 @@ var enemyFuncs = {
         } else {
             return { status: true, crop: true, destroyed: false, special: "" };
         }
+    },
+    GetCropDamage: function(e, x, y) {
+        var crop = combat.grid[x][y];
+        var itemTile = player.itemGrid[x][y];
+        var dmg = Math.ceil(e.atk / 2); // TODO: water/fire resistance
+        if(crop.x !== undefined) {
+            crop = combat.grid[crop.x][crop.y];
+            dmg = Math.ceil(dmg / 2);
+        }
+        if(itemTile === "_strongsoil") { dmg = Math.round(dmg / 2); }
+        return dmg;
     }
 };
 var enemyAttacks = {

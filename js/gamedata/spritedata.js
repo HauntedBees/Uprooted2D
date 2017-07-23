@@ -224,6 +224,7 @@ var spriteData = {
         "rock1": [6, 18],
         "salt": [7, 18],
         "salt0": [7, 18],
-        "salt1": [7, 18]
+        "salt1": [7, 18],
+        "_strongsoil": [5, 18]
     } 
 };

@@ -166,5 +166,8 @@ function GetFarmInfo(name) {
         case "_sprinkler": return { name: name, displayname: "Sprinkler", price: 100, shortdesc: "Makes crops around it grow faster.",
             desc: "Vegetables and trees planted in the 8 tiles around a sprinkler will grow 25% faster."
         };
+        case "_strongsoil": return { name: name, displayname: "Strong Soil", price: 100, shortdesc: "Makes crops more resistant to damage.",
+            desc: "Vegetables and trees planted on Strong Soil will take less damage from fire and water damage as well as standard attacks. The soil itself is also more resistant to burning and flooding."
+        };
     }
 }
