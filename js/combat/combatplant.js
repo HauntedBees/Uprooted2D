@@ -58,9 +58,10 @@ combat.plant = {
             if(combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "shocked") { return false; }
             return this.activeCrop.type === "veg";
         }
-        if(type === "_log") { return this.activeCrop.type === "mush"; }
-        if(type === "_beehive") { return this.activeCrop.type === "bee"; }
-        if(type === "_coop") { return this.activeCrop.type === "egg"; }
+        var isBurned = (combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "burned");
+        if(type === "_log") { return this.activeCrop.type === "mush" && !isBurned; }
+        if(type === "_beehive") { return this.activeCrop.type === "bee" && !isBurned; }
+        if(type === "_coop") { return this.activeCrop.type === "egg" && !isBurned; }
         if(type === "_paddy") { return this.activeCrop.type === "rice"; }
         if(type === "_lake") { return this.activeCrop.type === "water" || this.activeCrop.type === "rod" || this.activeCrop.type === "spear"; }
         if(type === "_hotspot" || parent === "_hotspot") {
@@ -177,8 +178,10 @@ combat.plant = {
                         if(newCrop.type === "tech") { 
                             newCrop.power = 1;
                         } else {
-                            newCrop.power = Math.ceil(newCrop.power / 2);
+                            newCrop.power = Math.ceil(newCrop.power / 2); // TODO: water resistance
                         }
+                    } else if(effects.type === "burned") {
+                        newCrop.power = Math.ceil(newCrop.power / 2); // TODO: fire resistance
                     }
                 }
                 combat.grid[px][py] = newCrop;
@@ -270,7 +273,6 @@ combat.plant = {
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 if(combat.grid[x][y] !== null) { continue; }
-        var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
                 this.activeCrop = tempCrop;
                 if(!this.isValidLocationForCrop(x, y)) {
                     gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");

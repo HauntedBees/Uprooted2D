@@ -345,6 +345,7 @@ function CombatAnimHelper(enemies) {
             for(var y = 0; y < player.gridHeight; y++) {
                 gfx.drawTileToGrid("dirt", x + combat.dx, y + combat.dy, "background");
                 var item = player.itemGrid[x][y];
+                var effect = combat.effectGrid[x][y];
                 if(item !== null && !item.coord) { 
                     var iteminfo = GetFarmInfo(item);
                     if(item === "_cow") {
@@ -366,10 +367,14 @@ function CombatAnimHelper(enemies) {
                             gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
                         }
                     } else {
-                        gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
+                        if(["_log", "_coop", "_beehive"].indexOf(item) >= 0 && (effect !== null && effect.type === "burned")) {
+                            effect = null;
+                            gfx.drawTileToGrid(item + "Burned", x + combat.dx, y + combat.dy, "background");
+                        } else {
+                            gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
+                        }
                     }
                 }
-                var effect = combat.effectGrid[x][y];
                 if(effect !== null) {
                     toDrawAfterwards.push({ sprite: effect.type, x: (x + combat.dx), y: (y + combat.dy) });
                 }

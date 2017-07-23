@@ -137,7 +137,7 @@ var enemyFuncs = {
         combat.animHelper.DrawBackground();
         var crop = combat.grid[x][y];
         if(crop === null) { return { status: true, crop: false }; }
-        var dmg = Math.ceil(e.atk / 2);
+        var dmg = Math.ceil(e.atk / 2); // TODO: water resistance
         if(crop.x !== undefined) {
             crop = combat.grid[crop.x][crop.y];
             dmg = Math.ceil(dmg / 2);
@@ -162,6 +162,37 @@ var enemyFuncs = {
         newCrop.activeTime = newCrop.time;
         combat.grid[x][y] = newCrop;
         return true;
+    },
+    BurnTile: function(e, x, y) {
+        var itemTile = player.itemGrid[x][y];
+        var crop = combat.grid[x][y];
+        var effect = combat.effectGrid[x][y];
+        if(effect !== null && effect.type === "splashed") { return { status: false, wet: true }; }
+        if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
+        if(["_cow", "_lake", "_paddy", "_shooter", "_hotspot", "_modulator", "_sprinkler"].indexOf(itemTile) >= 0) { return { status: false }; }
+        
+        combat.effectGrid[x][y] = { type: "burned", duration: e.atk };
+        if(["_log", "_coop", "_beehive"].indexOf(itemTile) >= 0) {
+            var hadTile = (crop !== null);
+            if(hadTile) { combat.grid[x][y] = null; }
+            return { status: true, crop: hadTile, destroyed: true, special: itemTile };
+        }
+        if(crop === null) { return {status: true, crop: false }; }
+        var dmg = Math.ceil(e.atk / 2); // TODO: fire resistance
+        if(crop.x !== undefined) {
+            crop = combat.grid[crop.x][crop.y];
+            dmg = Math.ceil(dmg / 2);
+        }
+
+        crop.power -= dmg;
+        if(crop.rotten) { crop.power = 0; }
+        if(crop.power <= 0) {
+            combat.grid[x][y] = null;
+            combat.animHelper.DrawCrops();
+            return { status: true, crop: true, destroyed: true, special: "" };
+        } else {
+            return { status: true, crop: true, destroyed: false, special: "" };
+        }
     }
 };
 var enemyAttacks = {
@@ -254,6 +285,30 @@ var enemyAttacks = {
             return { text: e.name + " throws salt onto your field.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
         } else {
             return { text: e.name + " tries throwing salt, but the wind blows it away.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        }
+    },
+    burnAttack: function(e) {
+        var res = enemyFuncs.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+        if(!res.status) { return { text: e.name + " tries to set a fire, but fails.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] }; }
+        if(!res.crop) {
+            if(res.special === undefined || res.special === "") {
+                return { text: e.name + " sets a fire on your field.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            } else {
+                return { text: e.name + " sets a fire on your field, burning your " + GetFarmInfo(res.special).displayname, animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            }
+        }
+        if(res.destroyed) {
+            if(res.special === undefined || res.special === "") {
+                return { text: e.name + " sets a fire on your field, destroying a crop.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            } else {
+                return { text: e.name + " sets a fire on your field, burning your " + GetFarmInfo(res.special).displayname, animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            }
+        } else {
+            if(res.special === undefined || res.special === "") {
+                return { text: e.name + " sets a fire on your field, damaging a crop.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            } else {
+                return { text: e.name + " sets a fire on your field, burning your " + GetFarmInfo(res.special).displayname, animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            }
         }
     }
 };
