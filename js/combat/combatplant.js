@@ -174,7 +174,7 @@ combat.plant = {
             } else {
                 newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
                 var effects = combat.effectGrid[px][py];
-                var divider = (combat.itemGrid[px][py] !== null && combat.itemGrid[px][py] === "_strongsoil") ? 1.25 : 2;
+                var divider = (player.itemGrid[px][py] !== null && player.itemGrid[px][py] === "_strongsoil") ? 1.25 : 2;
                 if(effects !== null) {
                     if(effects.type === "shocked") {
                         newCrop.power = 1;
