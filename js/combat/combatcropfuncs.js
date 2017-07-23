@@ -60,7 +60,7 @@ combat.ageCrops = function() {
             } else if(crop.activeTime == 0) {
                 if(crop.respawn > 0) {
                     crop.activeTime = crop.respawn;
-                } else {
+                } else if(!crop.noRot) {
                     crop.rotten = true;
                 }
             }

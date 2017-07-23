@@ -35,5 +35,21 @@ var quests = {
             }
         },
         { text: "quest1_c", next: function() { player.activeQuests["quest1"] = 1 } }
+    ],
+    "questM": [
+        { text: "questM_a", next: function() { player.activeQuests["questM"] = 1 } },
+        {
+            condition: function() { return (player.clearedEntities.indexOf("seaKing") >= 0); },
+            success: function() { player.activeQuests["questM"] = 2 },
+            failure: function() { player.activeQuests["questM"] = 3 }
+        },
+        {
+            text: "questM_b",
+            next: function() {
+                worldmap.shop.resetTalk();
+                quests.completeQuest("questM");
+            }
+        },
+        { text: "questM_c", next: function() { player.activeQuests["questM"] = 1 } }
     ]
 };

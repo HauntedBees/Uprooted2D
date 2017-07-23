@@ -327,7 +327,7 @@ function CombatAnimHelper(enemies) {
         gfx.clearLayer("background");
         for(var x = 0; x < combat.enemywidth; x++) { // enemy field
             for(var y = 0; y < combat.enemyheight; y++) {
-                gfx.drawTileToGrid("tech", combat.enemydx + x, y + combat.enemydy, "background");
+                gfx.drawTileToGrid(combat.enemyTile, combat.enemydx + x, y + combat.enemydy, "background");
             }
         }
         var toDrawAfterwards = [];
@@ -344,6 +344,10 @@ function CombatAnimHelper(enemies) {
             gfx.drawTileToGrid("edgeS", x + combat.dx, combat.dy + player.gridHeight, "background");
             for(var y = 0; y < player.gridHeight; y++) {
                 gfx.drawTileToGrid("dirt", x + combat.dx, y + combat.dy, "background");
+                var effect = combat.effectGrid[x][y];
+                if(effect !== null) {
+                    gfx.drawTileToGrid(effect.type, x + combat.dx, y + combat.dy, "background");
+                }
                 var item = player.itemGrid[x][y];
                 if(item !== null && !item.coord) { 
                     var iteminfo = GetFarmInfo(item);

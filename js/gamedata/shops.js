@@ -70,6 +70,17 @@ var stores = {
         wares: [ { product: "sleep", price: 6, type: "inn" } ],
         opening: "s_inn1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_innpurch"
     },
+    "mermaid": {
+        img: "shops/merm",
+        wares: [
+            { product: "_paddy", price: 100, type: "farm" },
+            { product: "rice", price: 20, type: "seed" },
+            { product: "_lake", price: 100, type: "farm" },
+            { product: "rod", price: 20, type: "seed" },
+            { product: "net", price: 20, type: "seed" }
+        ],
+        opening: "s_mermhello", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased", talk: "questM"
+    },
     "template": {
         img: "",
         wares: [

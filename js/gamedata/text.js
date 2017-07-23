@@ -81,5 +81,25 @@ var fulltext = {
 	"s_innpurch": {
 		"en-us": "", 
 		"en-dm": "enjoy your sleep"
+	},
+	"s_mermhello": {
+		"en-us": "", 
+		"en-dm": "this is a mermaid... hello!!"
+	},
+	"questM": {
+		"en-us": "", 
+		"en-dm": "hey there"
+	},
+	"questM_a": {
+		"en-us": "", 
+		"en-dm": "there's some sort of creature underwater that keeps moving my construction equipment with relative ease! Please calm it."
+	},
+	"questM_b": {
+		"en-us": "", 
+		"en-dm": "gee thanks friend. Now I can build more underwater drills or something. Fuck I duno."
+	},
+	"questM_c": {
+		"en-us": "", 
+		"en-dm": "please take care of the sea creature underwater. Just head west of here."
 	}
 };

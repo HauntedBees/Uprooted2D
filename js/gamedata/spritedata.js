@@ -202,6 +202,17 @@ var spriteData = {
         "sleep": [12, 17],
         "weed": [14, 16],
         "spear": [20, 16],
-        "spearseed": [20, 16]
+        "spearseed": [20, 16],
+        "watertile": [0, 21],
+        "splashed": [0, 20],
+        "algae0": [1, 21],
+        "algae1": [2, 21],
+        "algae": [2, 21],
+        "kelp0": [1, 20],
+        "kelp1": [2, 20],
+        "kelp2": [3, 20],
+        "kelp3": [4, 20],
+        "kelp4": [5, 20],
+        "kelp": [5, 20]
     } 
 };

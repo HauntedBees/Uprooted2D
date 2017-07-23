@@ -183,5 +183,13 @@ var mapentities = {
                 GetSpeak("Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c")
             ]
         }
+    ],
+    "bridge": [
+        SwitchMap("GoUnderwater", 10, 17, false, false, 41, 20, "underwater"),
+        GetSign(15, 16, "Mermaid Shoppe"),
+        EnterShop("Mermaid Shoppe", 16, 16, "mermaid")
+    ],
+    "underwater": [
+        SwitchMap("GoAboveGround", 42, 20, false, false, 11, 17, "bridge")
     ]
 };

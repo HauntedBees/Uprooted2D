@@ -164,6 +164,12 @@ combat.plant = {
                 combat.animHelper.DrawBackground();
             } else {
                 newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
+                var effects = combat.effectGrid[px][py];
+                if(effects !== null) {
+                    if(effects.type === "splashed") {
+                        newCrop.power = Math.ceil(newCrop.power / 2);
+                    }
+                }
                 combat.grid[px][py] = newCrop;
             }
             this.cursor = { x: 0, y: this.dy };

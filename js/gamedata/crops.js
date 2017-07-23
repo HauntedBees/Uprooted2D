@@ -128,6 +128,8 @@ function GetCrop(name) {
         case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 1);
         case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 6, 3, 0, 0, 1);
         case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
+        case "algae": return new CropDetail(name, "Algae", 10, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { noRot: true });
+        case "kelp": return new CropDetail(name, "Kelp", 10, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { noRot: true });
     }
 }
 function GetFarmInfo(name) {

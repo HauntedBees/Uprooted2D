@@ -2,7 +2,7 @@ var combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0, dt: 50,
     lastTarget: 0, lastTargetCrop: false, 
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
-    grid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0,
+    grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     animHelper: null, 
     startBattle: function(enemies) {
@@ -10,6 +10,7 @@ var combat = {
         gfx.clearAll();
         player.initGridDimensions();
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
+        this.effectGrid = this.getGrid(player.gridWidth, player.gridHeight);
         game.currentInputHandler = this.menu;
         this.lastTargetCrop = false;
         this.lastTarget = 0;
@@ -41,6 +42,7 @@ var combat = {
             this.isBossBattle = this.isBossBattle || enemy.boss;
             this.enemywidth += enemy.fieldwidth;
             this.enemyheight = Math.max(this.enemyheight, enemy.fieldheight);
+            if(enemy.tile) { this.enemyTile = enemy.tile; }
             this.enemies.push(enemy);
         }
         this.animHelper = new CombatAnimHelper(this.enemies);
@@ -79,6 +81,7 @@ var combat = {
         }
     },
     startRound: function() {
+        this.cleanUpEffects();
         this.numPlantTurns = player.getPlantingTurns();
         for(var i = 0; i < combat.enemies.length; i++) {
             combat.enemies[i].stickTurns = Math.max(0, combat.enemies[i].stickTurns - 1);
@@ -185,6 +188,17 @@ var combat = {
             var idx = this.state - 1;
             game.transition(caller, combat.enemyTurn, { enemy: this.enemies[idx], idx: idx });
         }
+    },
+    cleanUpEffects: function() {
+        var redraw = false;
+        for(var x = 0; x < player.gridWidth; x++) {
+            for(var y = 0; y < player.gridHeight; y++) {
+                var obj = combat.effectGrid[x][y];
+                if(obj === null) { continue; }
+                if(--obj.duration <= 0) { redraw = true; combat.effectGrid[x][y] = null; }
+            }
+        }
+        if(redraw) { combat.animHelper.DrawBackground(); }
     },
     clearAnimsAndRemoveCorpses: function() {
         combat.animHelper.CleanAnims();
