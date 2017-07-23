@@ -344,10 +344,6 @@ function CombatAnimHelper(enemies) {
             gfx.drawTileToGrid("edgeS", x + combat.dx, combat.dy + player.gridHeight, "background");
             for(var y = 0; y < player.gridHeight; y++) {
                 gfx.drawTileToGrid("dirt", x + combat.dx, y + combat.dy, "background");
-                var effect = combat.effectGrid[x][y];
-                if(effect !== null) {
-                    gfx.drawTileToGrid(effect.type, x + combat.dx, y + combat.dy, "background");
-                }
                 var item = player.itemGrid[x][y];
                 if(item !== null && !item.coord) { 
                     var iteminfo = GetFarmInfo(item);
@@ -363,8 +359,6 @@ function CombatAnimHelper(enemies) {
                         toDrawAfterwards.push({ sprite: iteminfo.displaySprite, x: (x + combat.dx), y: (y + combat.dy) });
                     } else if(item === "_lake") {
                         gfx.drawTileToGrid(pausemenu.farmmod.getWaterFrame(x, y), x + combat.dx, y + combat.dy, "background");
-                    //} else if(item[0] === "_" && GetFarmInfo(item).size == 2) {
-                    //    toDrawAfterwards.push({ sprite: "cow", x: (x + combat.dx), y: (y + combat.dy) });
                     } else if(item === "_shooter") {
                         if(combat.getUsedShooterIndex(x, y) >= 0) {
                             gfx.drawTileToGrid("_shooterClosed", x + combat.dx, y + combat.dy, "background");
@@ -374,7 +368,11 @@ function CombatAnimHelper(enemies) {
                     } else {
                         gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
                     }
-                 }
+                }
+                var effect = combat.effectGrid[x][y];
+                if(effect !== null) {
+                    toDrawAfterwards.push({ sprite: effect.type, x: (x + combat.dx), y: (y + combat.dy) });
+                }
             }
         }
         for(var i = 0; i < toDrawAfterwards.length; i++) {

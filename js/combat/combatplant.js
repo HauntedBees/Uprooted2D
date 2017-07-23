@@ -51,15 +51,22 @@ combat.plant = {
         var parent = (type.x !== undefined ? player.itemGrid[type.x][type.y] : type);
         if(type === "_shooter") { 
             if(["veg", "mush", "rice"].indexOf(this.activeCrop.type) < 0) { return false; }
+            if(combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "shocked") { return false; }
             return combat.getUsedShooterIndex(x, y) < 0;
         }
-        if(type === "_modulator") { return this.activeCrop.type === "veg"; }
+        if(type === "_modulator") {
+            if(combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "shocked") { return false; }
+            return this.activeCrop.type === "veg";
+        }
         if(type === "_log") { return this.activeCrop.type === "mush"; }
         if(type === "_beehive") { return this.activeCrop.type === "bee"; }
         if(type === "_coop") { return this.activeCrop.type === "egg"; }
         if(type === "_paddy") { return this.activeCrop.type === "rice"; }
         if(type === "_lake") { return this.activeCrop.type === "water" || this.activeCrop.type === "rod" || this.activeCrop.type === "spear"; }
-        if(type === "_hotspot" || parent === "_hotspot") { return this.activeCrop.type === "tech"; }
+        if(type === "_hotspot" || parent === "_hotspot") {
+            if(combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "shocked") { return false; }
+            return this.activeCrop.type === "tech";
+        }
         if(type.corner === "_cow") { return this.activeCrop.type === "food" || this.activeCrop.type === "veg"; }
     },
     getSprinklerMultiplier: function(x, y, size) {
@@ -167,7 +174,11 @@ combat.plant = {
                 var effects = combat.effectGrid[px][py];
                 if(effects !== null) {
                     if(effects.type === "splashed") {
-                        newCrop.power = Math.ceil(newCrop.power / 2);
+                        if(newCrop.type === "tech") { 
+                            newCrop.power = 1;
+                        } else {
+                            newCrop.power = Math.ceil(newCrop.power / 2);
+                        }
                     }
                 }
                 combat.grid[px][py] = newCrop;

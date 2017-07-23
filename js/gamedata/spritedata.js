@@ -205,6 +205,7 @@ var spriteData = {
         "spearseed": [20, 16],
         "watertile": [0, 21],
         "splashed": [0, 20],
+        "shocked": [6, 20],
         "algae0": [1, 21],
         "algae1": [2, 21],
         "algae": [2, 21],

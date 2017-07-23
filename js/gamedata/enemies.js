@@ -111,7 +111,49 @@ var enemyFuncs = {
         combat.animHelper.DrawBottom();
         return true;
     },
-    GetGenericStandbyAttack: function(str) { return { text: str, animFPS: 4, animData: [ [0, 4], [0, 5] ] }; }
+    GetGenericStandbyAttack: function(str) { return { text: str, animFPS: 4, animData: [ [0, 4], [0, 5] ] }; },
+    SplashTile: function(e, x, y, noRecursion) {
+        var itemPos = player.itemGrid[x][y];
+        var initx = x, inity = y;
+        if(itemPos !== null && itemPos.x !== undefined) {
+            initx = itemPos.x; inity = itemPos.y;
+            itemPos = player.itemGrid[itemPos.x][itemPos.y];
+        }
+        if(["_sprinkler", "_paddy", "_lake", "_cow"].indexOf(itemPos) >= 0) {
+            return { status: false };
+        }
+        if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
+            if(!noRecursion && itemPos !== "_shooter") {
+                combat.effectGrid[initx][inity] = { type: "shocked", duration: e.atk };
+                enemyFuncs.SplashTile(e, initx + 1, inity, true);
+                enemyFuncs.SplashTile(e, initx, inity + 1, true);
+                enemyFuncs.SplashTile(e, initx + 1, inity + 1, true);
+            } else {
+                combat.effectGrid[x][y] = { type: "shocked", duration: e.atk };
+            }
+        } else {
+            combat.effectGrid[x][y] = { type: "splashed", duration: e.atk };
+        }
+        combat.animHelper.DrawBackground();
+        var crop = combat.grid[x][y];
+        if(crop === null) { return { status: true, crop: false }; }
+        var dmg = Math.ceil(e.atk / 2);
+        if(crop.x !== undefined) {
+            crop = combat.grid[crop.x][crop.y];
+            dmg = Math.ceil(dmg / 2);
+            if(itemPos === "_hotspot") { dmg *= 25; }
+        }
+
+        crop.power -= dmg;
+        if(crop.rotten) { crop.power = 0; }
+        if(crop.power <= 0) {
+            combat.grid[x][y] = null;
+            combat.animHelper.DrawCrops();
+            return { status: true, crop: true, destroyed: true };
+        } else {
+            return { status: true, crop: true, destroyed: false };
+        }
+    }
 };
 var enemyAttacks = {
     app: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is distracted by a hot new App."); },
@@ -164,10 +206,7 @@ var enemyAttacks = {
     }, 
     harvestOrAttack: function(e) {
         var atkData = enemyFuncs.GetAvailableCropsAndDamage(e);
-        var dmg = Math.max(1, e.atk - player.def);
-        if(atkData.crops.length === 0) {
-            dmg = atkData.damage;
-        }
+        var dmg = atkData.crops.length === 0 ? Math.max(1, e.atk - player.def) : atkData.damage;
         combat.damagePlayer(dmg);
         return {
             text: e.name + " attacks for " + dmg + " damage.",
@@ -176,43 +215,20 @@ var enemyAttacks = {
         };
     },
     splashAttack: function(e) {
-        var x = Math.floor(Math.random() * player.gridWidth);
-        var y = Math.floor(Math.random() * player.gridHeight);
-        var itemPos = player.itemGrid[x][y];
-        if(["__sprinkler", "_modulator", "_hotspot", "_shooter", "_paddy", "_lake", "_cow"].indexOf(itemPos) >= 0 || (itemPos !== null && itemPos.x !== undefined)) {
-            return {
-                text: e.name + " splashes some water, but it does nothing.",
-                animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ]
-            };
-        }
-        combat.effectGrid[x][y] = { type: "splashed", duration: e.atk };
-        combat.animHelper.DrawBackground();
-        var crop = combat.grid[x][y];
-        if(crop === null) {
-            return {
-                text: e.name + " splashes some water on your field.",
-                animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ]
-            };
-        }
-        var dmg = Math.ceil(e.atk / 2);
-        if(crop.x !== undefined) {
-            crop = combat.grid[crop.x][crop.y];
-            dmg = Math.ceil(dmg / 2);
-        }
-        crop.power -= dmg;
-        if(crop.rotten) { crop.power = 0; }
-        if(crop.power <= 0) {
-            combat.grid[x][y] = null;
-            combat.animHelper.DrawCrops();
-            return {
-                text: e.name + " splashes some water on your field, destroying a crop!",
-                animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ]
-            };
+        var res = enemyFuncs.SplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+        if(!res.status) { return { text: e.name + " splashes some water, but it does nothing.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] }; }
+        if(!res.crop) { return { text: e.name + " splashes some water on your field.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] }; }
+        if(res.destroyed) {
+            return { text: e.name + " splashes some water on your field, destroying a crop!", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
         } else {
-            return {
-                text: e.name + " splashes some water on your field, damaging a crop!",
-                animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ]
-            };
+            return { text: e.name + " splashes some water on your field, damaging a crop!",  animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
         }
+    },
+    floodRow: function(e) {
+        var y = Math.floor(Math.random() * player.gridHeight);
+        for(var x = 0; x < player.gridWidth; x++) {
+            enemyFuncs.SplashTile(e, x, y);
+        }
+        return { text: e.name + " pours water all over your field!", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
     }
 };
