@@ -202,6 +202,17 @@ var mapentities = {
                     worldmap.writeText(GetText("constr1_fr2"));
                 }
             }
+        ]),
+        GetCommonEntity("Worker2", 20, 10, 0, 3, GetStdMovement([ [20, 10, 1], [10, 10, 1], [10, 8, 0], [20, 8, 3], [20, 10, 2] ]), [
+            function(activePress) {
+                if(player.hasQuest("helpSeaMonster")) {
+                    combat.startBattle(["Worker"]);
+                } else if(activePress) {
+                    worldmap.writeText("hi im paul");
+                } else {
+                    return true;
+                }
+            }
         ])
     ],
     "underwater": [

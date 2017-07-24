@@ -63,12 +63,14 @@ var worldmap = {
             } else if(pointinfo.dx > 0) {
                 worldmap.entities[i].dir = 3;
             }
-            if(Math.round(newPos.x) == Math.round(worldmap.pos.x) && Math.round(newPos.y) == Math.round(worldmap.pos.y)) {
+            if(Math.round(newPos.x) == Math.round(worldmap.pos.x) && Math.round(newPos.y) == Math.round(worldmap.pos.y) && e.interact !== undefined) {
                 worldmap.inDialogue = true;
                 clearInterval(worldmap.fullAnimIdx);
                 worldmap.dialogState = 0;
                 game.target = e;
-                e.interact[0]();
+                if(e.interact[0]()) {
+                    worldmap.finishDialog();
+                }
                 break;
             }
             worldmap.entities[i].pos = newPos;
@@ -135,9 +137,7 @@ var worldmap = {
         if(!this.inDialogue || this.waitForAnimation) { return false; }
         this.dialogState++;
         if(game.target == null || this.dialogState >= game.target.interact.length) {
-            gfx.clearSome(["menuA", "menutext"]);
-            this.inDialogue = false;
-            this.fullAnimIdx = setInterval(worldmap.moveEntities, 10);
+            this.finishDialog();
             return true;
         }
         if(game.target.failed && game.target.failedInteract !== undefined) {
@@ -145,6 +145,11 @@ var worldmap = {
         } else {
             return game.target.interact[this.dialogState]();
         }
+    },
+    finishDialog: function() {
+        gfx.clearSome(["menuA", "menutext"]);
+        this.inDialogue = false;
+        this.fullAnimIdx = setInterval(worldmap.moveEntities, 10);
     },
     keyPress: function(key) {
         var pos = { x: this.pos.x, y: this.pos.y };
@@ -206,16 +211,16 @@ var worldmap = {
             }
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];
-                if(e.solid && worldmap.isCollision(e, newPos) && e.interact !== undefined) {
+                if(worldmap.isCollision(e, newPos) && e.interact !== undefined) {
                     e.dir = this.invertDir(this.playerDir);
                     this.inDialogue = true;
                     clearInterval(this.fullAnimIdx);
                     this.dialogState = 0;
                     game.target = e;
                     if(e.failed && e.failedInteract !== undefined) {
-                        if(e.failedInteract[0]()) { return; }
+                        if(e.failedInteract[0](true)) { return; }
                     } else {
-                        if(e.interact[0]()) { return; }
+                        if(e.interact[0](true)) { return; }
                     }
                     break;
                 }
@@ -248,7 +253,7 @@ var worldmap = {
         }
     },
     isCollision: function(e, newPos) {
-        if(e.pos.x == newPos.x && e.pos.y == newPos.y) { return true; }
+        if(Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y) === newPos.y) { return true; }
         return e.big && (
             ((e.pos.x + 1) == newPos.x && e.pos.y == newPos.y)
             || (e.pos.x == newPos.x && (e.pos.y + 1) == newPos.y)
