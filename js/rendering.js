@@ -119,6 +119,12 @@ var gfx = {
         gfx.ctx["menutext"].font = "22px PressStart2P";
         return gfx.ctx["menutext"].measureText(t).width;
     },
+    drawChoice: function(y, t, selected) {
+        var tile = selected ? 9 : 7;
+        for(var x = 0; x < 15; x++) { gfx.drawSprite("sheet", tile, 11, x * 16, y * 16 - 8, "menuA"); }
+        if(selected) { gfx.drawCursor(0, y - 0.5, 14, -0.25); }
+        gfx.drawText(t, 8, y * 16);
+    },
     drawText: function(t, x, y, color) {
         gfx.ctx["menutext"].font = "22px PressStart2P";
         gfx.ctx["menutext"].fillStyle = (color || "#000000");

@@ -4,7 +4,7 @@ var worldmap = {
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0,
     entities: [], importantEntities: {},
-    inDialogue: false, dialogState: 0,
+    inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
     waitForAnimation: false, animIdx: 0, 
     setup: function(args) {
         this.inDialogue = false;
@@ -12,6 +12,8 @@ var worldmap = {
         this.dialogState = 0;
         this.mapName = args.map;
         this.pos = args.init;
+        this.dialogData = null;
+        this.forceEndDialog = false;
         this.importantEntities = {};
         if(!args.noEntityUpdate) {
             if(mapentities[this.mapName] !== undefined) {
@@ -122,10 +124,18 @@ var worldmap = {
         if(idx >= 0) { this.entities.splice(idx, 1); }
         game.target = null;
     },
-    writeText: function(t) {
-        gfx.clearSome(["menuA", "menutext"]);
+    writeText: function(t, choices, isRefresh) {
+        gfx.clearSome(["menuA", "menutext", "menucursorA"]);
         gfx.drawFullbox();
         gfx.drawFullText(t);
+        if(choices === undefined) {
+            worldmap.dialogData = null;
+            return;
+        }
+        if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
+        for(var i = 0; i < choices.length; i++) {
+            gfx.drawChoice(2.5 + i, choices[i], worldmap.dialogData.idx === i);
+        }
     },
     mouseMove: function(pos) { return true; },
     finishAnimation: function() {
@@ -135,23 +145,48 @@ var worldmap = {
     },
     click: function(pos) {
         if(!this.inDialogue || this.waitForAnimation) { return false; }
+        var idx = (this.dialogData === null ? undefined : this.dialogData.idx);
         this.dialogState++;
-        if(game.target == null || this.dialogState >= game.target.interact.length) {
+        if(worldmap.forceEndDialog || game.target == null || this.dialogState >= game.target.interact.length) {
             this.finishDialog();
             return true;
         }
         if(game.target.failed && game.target.failedInteract !== undefined) {
-            return game.target.failedInteract[this.dialogState]();
+            return game.target.failedInteract[this.dialogState](idx);
         } else {
-            return game.target.interact[this.dialogState]();
+            return game.target.interact[this.dialogState](idx);
         }
     },
     finishDialog: function() {
         gfx.clearSome(["menuA", "menutext"]);
+        this.forceEndDialog = false;
         this.inDialogue = false;
         this.fullAnimIdx = setInterval(worldmap.moveEntities, 10);
     },
+    handleMenuChoices: function(key) {
+        var dy = 0;
+        switch(key) {
+            case "w": dy--; break;
+            case "s": dy++; break;
+            case " ":
+            case "Enter": return this.click(null);
+        }
+        var newchoice = worldmap.dialogData.idx + dy;
+        if(newchoice < 0) { newchoice = 0; }
+        if(newchoice >= worldmap.dialogData.choices.length) { newchoice = worldmap.dialogData.choices.length - 1; }
+        worldmap.dialogData.idx = newchoice;
+        worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true);
+    },
     keyPress: function(key) {
+        if(this.inDialogue) {
+            this.freeMovement = false;
+            input.clearAllKeys();
+            if(this.dialogData === null) { 
+                return (key === " " || key === "Enter") ? this.click(null) : false;
+            }
+            return this.handleMenuChoices(key);
+        }
+        this.freeMovement = true;
         var pos = { x: this.pos.x, y: this.pos.y };
         var isEnter = false;
         var moveSpeed = 0.25;
@@ -179,13 +214,6 @@ var worldmap = {
                 game.transition(this, pausemenu);
                 return;
         }
-        if(this.inDialogue) {
-            if(isEnter) {
-                return this.click(null);
-            } else {
-                return false;
-            }
-        }
         var newPos = {
             x: Math.round(pos.x),
             y: Math.round(pos.y)
@@ -212,8 +240,9 @@ var worldmap = {
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];
                 if(worldmap.isCollision(e, newPos) && e.interact !== undefined) {
-                    e.dir = this.invertDir(this.playerDir);
+                    if(!e.noChange) { e.dir = this.invertDir(this.playerDir); }
                     this.inDialogue = true;
+                    this.forceEndDialog = false;
                     clearInterval(this.fullAnimIdx);
                     this.dialogState = 0;
                     game.target = e;
@@ -230,6 +259,7 @@ var worldmap = {
                 var e = this.entities[i];
                 if(!e.solid && (e.pos.x == newPos.x || e.isRow) && (e.pos.y == newPos.y || e.isColumn) && e.interact !== undefined) {
                     this.inDialogue = true;
+                    this.forceEndDialog = false;
                     this.dialogState = 0;
                     game.target = e;
                     if(e.failed && e.failedInteract !== undefined) {

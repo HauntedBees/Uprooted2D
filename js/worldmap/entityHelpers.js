@@ -31,7 +31,7 @@ function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional
     if(big) { res.anim.big = true; }
     return Object.assign(res, additional);
 };
-function GetSpeak(t) { return function() { worldmap.writeText(t); }  }
+function GetSpeak(t, choices) { return function() { worldmap.writeText(t, choices); }  }
 function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
 var commonInteractArrays = {

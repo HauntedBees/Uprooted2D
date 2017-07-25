@@ -216,6 +216,32 @@ var mapentities = {
         ])
     ],
     "underwater": [
-        SwitchMap("GoAboveGround", 42, 20, false, false, 11, 17, "bridge")
+        SwitchMap("GoAboveGround", 42, 20, false, false, 11, 17, "bridge"),
+        GetCommonEntity("ShipLeft", 15, 3, 1, 0, undefined, undefined, { big: true, sy: 1 }),
+        GetCommonEntity("ShipMiddle", 17, 3, 1, 1, undefined, undefined, { big: true, sy: 1 }),
+        GetCommonEntity("ShipRight", 19, 3, 1, 2, undefined, undefined, { big: true, sy: 1 }),
+        GetCommonEntity("SeaLeft", 15, 3, 1, 0, undefined, undefined, { big: true, sy: 2 }),
+        GetCommonEntity("SeaMiddle", 17, 3, 1, 1, undefined, [
+            function() {
+                if(player.hasQuest("helpSeaMonster")) {
+                    worldmap.writeText("hey thanks for helping me out crombro");
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.writeText("hi do you want to help me", ["sure why the fuck", "eat shit or die trying, poopslut"]);
+                }
+            },
+            function(idx) {
+                if(idx === 0) {
+                    worldmap.writeText("sick thanks man");
+                    player.activeQuests["helpSeaMonster"] = 0;
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.writeText("you first asshole");
+                }
+            }, function() {
+                combat.startBattle(["seaHandR", "seaMan", "seaHandL"]);
+            }
+        ], { big: true, sy: 2, noChange: true }),
+        GetCommonEntity("SeaRight", 19, 3, 1, 2, undefined, undefined, { big: true, sy: 2 })
     ]
 };
