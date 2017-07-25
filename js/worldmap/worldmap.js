@@ -127,14 +127,14 @@ var worldmap = {
     writeText: function(t, choices, isRefresh) {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
         gfx.drawFullbox();
-        gfx.drawFullText(t);
+        gfx.drawFullText(GetText(t));
         if(choices === undefined) {
             worldmap.dialogData = null;
             return;
         }
         if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
         for(var i = 0; i < choices.length; i++) {
-            gfx.drawChoice(2.5 + i, choices[i], worldmap.dialogData.idx === i);
+            gfx.drawChoice(2.5 + i, GetText(choices[i]), worldmap.dialogData.idx === i);
         }
     },
     mouseMove: function(pos) { return true; },

@@ -8,6 +8,8 @@ var mapentities = {
         GetInvisibleEntity("PostInitialBattle", [
             GetSpeak("oops I killed a man. i should go kick his boss's ass, too. also his boss's ass,"),
             GetSpeak("so on and so forth, all the way up to the top. I should head to my farm first to get supplies.") 
+            GetSpeak("Pb0_0"),
+            GetSpeak("Pb0_1") 
         ], { storageKey: "PostInitialBattle" }),
         {
             name: "CutscenePrompt",
@@ -15,7 +17,7 @@ var mapentities = {
             solid: false,
             //autoplay: true, 
             interact: [
-                GetSpeak("it's battle"),
+                GetSpeak("testA"),
                 function() {
                     worldmap.clearTarget();
                     game.target = worldmap.importantEntities["hipster"];
@@ -118,14 +120,14 @@ var mapentities = {
         GetCommonEntity("Robo6", 9, 15, 4, 2, commonMovementDatas.robo(9, 1), commonInteractArrays.robo),
         EnterShop("ChickenCoop", 18, 3, "coop"),
         GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, [
-            GetSpeak("hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm."),
-            GetSpeak("aLso bY \"rEsearch\" i mEan \"lOot aNd pIllage.\""),
-            GetSpeak("oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies?"),
-            GetSpeak("..."),
-            GetSpeak("...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn."),
+            GetSpeak("B1_1"),
+            GetSpeak("B1_2"),
+            GetSpeak("B1_3"),
+            GetSpeak("B1_4"),
+            GetSpeak("B1_5"),
             GetFight(["bigBot"])
         ], { big: true, postBattle: "PostBoss", failedInteract: [
-            GetSpeak("bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain!"),
+            GetSpeak("B1_6"),
             GetFight(["bigBot"])
         ] }),
         {
@@ -134,8 +136,8 @@ var mapentities = {
             solid: false,
             storageKey: "PostBoss",
             interact: [
-                GetSpeak("I bet if that robot was still alive it'd be saying \"aw nuts\" right now, ha ha."),
-                GetSpeak("Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c")
+                GetSpeak("Pb1_0"),
+                GetSpeak("Pb1_1")
             ]
         }
     ],
@@ -167,10 +169,10 @@ var mapentities = {
         SwitchMap("ExitAreaSouth", 0, 27, true, false, 7.5, 19, "belowvillage"),
         SwitchMap("ExitAreaEast", 31, 3, false, false, 13, 15, "belowvillage"),
         GetCommonEntity("Fucker", 17, 1, 0, 0, undefined, [
-            GetSpeak("Don't interfere with my stuff you baka."),
+            GetSpeak("B2_0"),
             GetFight(["ScienceMan"])
         ], { sy: 4, postBattle: "PostBoss2", failedInteract: [
-            GetSpeak("Fuck off."),
+            GetSpeak("B2_1"),
             GetFight(["ScienceMan"])
         ] }),
         {
@@ -179,8 +181,8 @@ var mapentities = {
             solid: false,
             storageKey: "PostBoss2",
             interact: [
-                GetSpeak("I bet if that robot was still alive it'd be saying \"aw nuts\" right now, ha ha."),
-                GetSpeak("Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c")
+                GetSpeak("Pb2_0"),
+                GetSpeak("Pb2_1")
             ]
         }
     ],
@@ -191,24 +193,24 @@ var mapentities = {
         GetCommonEntity("Worker1", 28, 8, 0, 3, undefined, [
             function() {
                 if(player.hasQuest("helpSeaMonster")) {
-                    worldmap.writeText(GetText("constr1_foe"));
+                    worldmap.writeText("constr1_foe");
                 } else {
-                    worldmap.writeText(GetText("constr1_fr1"));
+                    worldmap.writeText("constr1_fr1");
                 }
             }, function() {
                 if(player.hasQuest("helpSeaMonster")) {
                     combat.startBattle(["Worker"]);
                 } else {
-                    worldmap.writeText(GetText("constr1_fr2"));
+                    worldmap.writeText("constr1_fr2");
                 }
             }
         ]),
         GetCommonEntity("Worker2", 20, 10, 0, 3, GetStdMovement([ [20, 10, 1], [10, 10, 1], [10, 8, 0], [20, 8, 3], [20, 10, 2] ]), [
             function(activePress) {
                 if(player.hasQuest("helpSeaMonster")) {
-                    worldmap.writeText("get fucked four eyes");
+                    worldmap.writeText("w21");
                 } else if(activePress) {
-                    worldmap.writeText("hi im paul");
+                    worldmap.writeText("w22");
                     worldmap.forceEndDialog = true;
                 } else {
                     return true;
@@ -228,19 +230,19 @@ var mapentities = {
         GetCommonEntity("SeaMiddle", 17, 3, 1, 1, undefined, [
             function() {
                 if(player.hasQuest("helpSeaMonster")) {
-                    worldmap.writeText("hey thanks for helping me out crombro");
+                    worldmap.writeText("sm4");
                     worldmap.forceEndDialog = true;
                 } else {
-                    worldmap.writeText("hi do you want to help me", ["sure why the fuck", "eat shit or die trying, poopslut"]);
+                    worldmap.writeText("sm1", ["sm1c1", "sm1c2"]);
                 }
             },
             function(idx) {
                 if(idx === 0) {
-                    worldmap.writeText("sick thanks man");
+                    worldmap.writeText("sm2");
                     player.activeQuests["helpSeaMonster"] = 0;
                     worldmap.forceEndDialog = true;
                 } else {
-                    worldmap.writeText("you first asshole");
+                    worldmap.writeText("sm3");
                 }
             }, function() {
                 combat.startBattle(["seaHandR", "seaMan", "seaHandL"]);

@@ -113,5 +113,97 @@ var fulltext = {
 	"constr1_fr2": {
 		"en-us": "", 
 		"en-dm": "talk to the boss-man if you got qustions. He on the bridge."
+	},
+	"sm1": {
+		"en-us": "", 
+		"en-dm": "hi do you want to help me"
+	},
+	"sm1c1": {
+		"en-us": "", 
+		"en-dm": "sure why the fuck"
+	},
+	"sm1c2": {
+		"en-us": "", 
+		"en-dm": "eat shit or die trying, poopslut"
+	},
+	"sm2": {
+		"en-us": "", 
+		"en-dm": "sick thanks man"
+	},
+	"sm3": {
+		"en-us": "", 
+		"en-dm": "you first asshole"
+	},
+	"sm4": {
+		"en-us": "", 
+		"en-dm": "hey thanks for helping me out crombro"
+	},
+	"w21": {
+		"en-us": "", 
+		"en-dm": "get fucked four eyes"
+	},
+	"w22": {
+		"en-us": "", 
+		"en-dm": "hi im paul"
+	},
+	"Pb2_0": {
+		"en-us": "", 
+		"en-dm": "ha that guy got killed"
+	},
+	"Pb2_1": {
+		"en-us": "", 
+		"en-dm": "because I killed him"
+	},
+	"B2_0": {
+		"en-us": "", 
+		"en-dm": "Don't interfere with my stuff you baka."
+	},
+	"B2_1": {
+		"en-us": "", 
+		"en-dm": "Fuck off."
+	},
+	"Pb1_0": {
+		"en-us": "", 
+		"en-dm": "I bet if that robot was still alive it'd be saying \"aw nuts\" right now, ha ha."
+	},
+	"Pb1_1": {
+		"en-us": "", 
+		"en-dm": "Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c"
+	},
+	"B1_1": {
+		"en-us": "", 
+		"en-dm": "hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm."
+	},
+	"B1_2": {
+		"en-us": "", 
+		"en-dm": "aLso bY \"rEsearch\" i mEan \"lOot aNd pIllage.\""
+	},
+	"B1_3": {
+		"en-us": "", 
+		"en-dm": "oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies?"
+	},
+	"B1_4": {
+		"en-us": "", 
+		"en-dm": "..."
+	},
+	"B1_5": {
+		"en-us": "", 
+		"en-dm": "...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn."
+	},
+	"B1_6": {
+		"en-us": "", 
+		"en-dm": "bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain!"
+	},
+	"Pb0_0": {
+		"en-us": "", 
+		"en-dm": "oops I killed a man. i should go kick his boss's ass, too. also his boss's ass,"
+	},
+	"Pb0_1": {
+		"en-us": "", 
+		"en-dm": "so on and so forth, all the way up to the top. I should head to my farm first to get supplies."
+	},
+	"testA": {
+		"en-us": "", 
+		"en-dm": "it's battle"
 	}
 };

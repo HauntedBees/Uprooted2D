@@ -39,7 +39,7 @@ var quests = {
     "questM": [
         { text: "questM_a", next: function() { player.activeQuests["questM"] = 1 } },
         {
-            condition: function() { return (player.clearedEntities.indexOf("seaKing") >= 0); },
+            condition: function() { return (player.clearedEntities.indexOf("helpSeaMonster") >= 0); },
             success: function() { player.activeQuests["questM"] = 2 },
             failure: function() { player.activeQuests["questM"] = 3 }
         },
