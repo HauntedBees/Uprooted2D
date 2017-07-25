@@ -161,6 +161,7 @@ var worldmap = {
         gfx.clearSome(["menuA", "menutext"]);
         this.forceEndDialog = false;
         this.inDialogue = false;
+        this.freeMovement = true;
         this.fullAnimIdx = setInterval(worldmap.moveEntities, 10);
     },
     handleMenuChoices: function(key) {
