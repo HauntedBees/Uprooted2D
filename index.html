@@ -34,25 +34,7 @@
         </div>
         <script src="out.js"></script>
         <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function() {
-                var canvasObj = {
-                    background: document.getElementById("background"),
-                    characters: document.getElementById("characters"),
-                    foreground: document.getElementById("foreground"),
-                    menuA: document.getElementById("menuA"),
-                    menuB: document.getElementById("menuB"),
-                    menucursorA: document.getElementById("menucursorA"),
-                    menucursorB: document.getElementById("menucursorB"),
-                    menucursorC: document.getElementById("menucursorC"),
-                    menutext: document.getElementById("menutext"), 
-                    tutorial: document.getElementById("tutorial")
-                };
-                var contextObj = {};
-                for(var key in canvasObj) {
-                    contextObj[key] = canvasObj[key].getContext("2d");
-                }
-                game.init(canvasObj, contextObj, 960, 640, 15, 10);
-            });
+            document.addEventListener("DOMContentLoaded", game.fullInit);
         </script>
     </body>
 </html>

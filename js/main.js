@@ -15,6 +15,28 @@ if (typeof Object.assign != 'function') {
 }
 var game = {
     currentInputHandler: worldmap, target: null, language: "en-dm",
+    sheetsToLoad: ["sheet", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster",
+                    "maps/farmersmarket", "maps/farmpath", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
+                    "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm"],
+    canvasLayers: ["background", "characters", "foreground", "menuA", "menuB", "menucursorA", "menucursorB", "menucursorC", "menutext", "tutorial"], 
+    fullInit: function() {
+        var canvasObj = {};
+        for(var i = 0; i < game.canvasLayers.length; i++) {
+            var name = game.canvasLayers[i];
+            game.createCanvas(name)
+            canvasObj[name] = document.getElementById(name);
+        }
+        var contextObj = {};
+        for(var key in canvasObj) {
+            contextObj[key] = canvasObj[key].getContext("2d");
+        }
+        game.init(canvasObj, contextObj, 960, 640, 15, 10);
+    },
+    createCanvas: function(name) {
+        var canvas = document.createElement("canvas");
+        canvas.id = name; canvas.width = 960; canvas.height = 640;
+        document.body.appendChild(canvas);
+    },
     init: function(canvasObj, ctxObj, width, height, tilewidth, tileheight) {
         gfx.canvas = canvasObj;
         gfx.ctx = ctxObj;
@@ -23,9 +45,7 @@ var game = {
         gfx.tileWidth = tilewidth;
         gfx.tileHeight = tileheight;
         spriteData.populate();
-        gfx.loadSpriteSheets(["sheet", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster",
-                                "maps/farmersmarket", "maps/farmpath", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
-                                "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm"], this.sheetsLoaded);
+        gfx.loadSpriteSheets(this.sheetsToLoad, this.sheetsLoaded);
     },
     transition: function(from, to, arg) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }

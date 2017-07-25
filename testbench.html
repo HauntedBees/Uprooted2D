@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <style>
+            body { width: 25%; margin: 0 auto }
+            div { width: 100% }
+            div.header { text-align: center; font-size: x-large; margin: 20px 0; }
+            span { display: inline-block; width: 50% }
+            span.l { text-align: left }
+            span.r { text-align: right; font-weight: bold }
+            span.pass { color: #009900 }
+            span.fail { color: #990000 }
+            span.hold { color: #696969 }
+            canvas { display: none }
+        </style>
+    </head>
+    <body>
+        <div class="header">Farming Fantasy Testbench</div>
+        <script src="out.js"></script>
+        <script type="text/javascript">
+            function WriteLine(left, passed) {
+                var html = "<div><span class='l'>" + left + "</span><span class='r " + (passed ? "pass" : "fail") + "'>" + (passed ? "Passed" : "Failed") + "</span></div>";
+                document.body.innerHTML += html;
+            }
+            function Test(name, func) { WriteLine(name, func()); }
+            function TimeTest(name, id, delay, setupfunc, func) {
+                var html = "<div><span class='l'>" + name + "</span><span id='" + id + "' class='r hold'>Loading</span></div>";
+                document.body.innerHTML += html;
+                if(setupfunc !== null) { setupfunc(); }
+                setTimeout(function() {
+                    var passed = func();
+                    var obj = document.getElementById(id);
+                    obj.className = "r " + (passed ? "pass" : "fail");
+                    obj.innerText = (passed ? "Passed" : "Failed");
+                }, delay);
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                game.fullInit();
+                    /* main.js */
+                    setTimeout(function() {
+                    Test("game.createCanvas", function() {
+                        game.createCanvas("borf");
+                        var result = document.getElementById("borf") !== null;
+                        if(result) { document.getElementById("borf").remove(); }
+                        return result;
+                    });
+                    Test("game.fullInit - canvas", function() {
+                        for(var i = 0; i < game.canvasLayers.length; i++) { if(document.getElementById(game.canvasLayers[i]) === null) { return false; } }
+                        return true;
+                    });
+                    Test("game.fullInit - ctx", function() {
+                        for(var i = 0; i < game.canvasLayers.length; i++) { if(gfx.ctx[game.canvasLayers[i]] === undefined) { return false; } }
+                        return true;
+                    });
+                    Test("spriteData.populate", function() { return spriteData.names["milkcap2"] !== undefined; });
+                    Test("game.save/load", function() {
+                        player.borfo = "barp";
+                        game.save(99);
+                        delete player.borfo;
+                        game.load(99);
+                        return player.borfo === "barp";
+                    });
+                    TimeTest("game.incrementTime", "timer", 1100, function() { player.playTime = 0; }, function() { return player.playTime === 1; });
+                    Test("gfx.loadSpriteSheets", function() {
+                        for(var i = 0; i < game.sheetsToLoad.length; i++) {
+                            if(gfx.spritesheets[game.sheetsToLoad[i]] === undefined) { return false; }
+                        }
+                        return true;
+                    });
+                    Test("game.transition", function() {
+                        game.currentInputHandler = combat.plant;
+                        combat.plant.wompos = true;
+                        game.transition(combat.plant, pausemenu.inventory);
+                        var result = game.currentInputHandler.wompos === undefined;
+                        combat.plant.wompos = undefined;
+                        return result;
+                    });
+                }, 100);
+            });
+        </script>
+    </body>
+</html>
