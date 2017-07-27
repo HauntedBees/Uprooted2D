@@ -126,6 +126,10 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "eat shit or die trying, poopslut"
 	},
+	"sm1c3": {
+		"en-us": "", 
+		"en-dm": "I'll think about it."
+	},
 	"sm2": {
 		"en-us": "", 
 		"en-dm": "sick thanks man"
@@ -137,6 +141,10 @@ var fulltext = {
 	"sm4": {
 		"en-us": "", 
 		"en-dm": "hey thanks for helping me out crombro"
+	},
+	"sm5": {
+		"en-us": "", 
+		"en-dm": "yeah that's fair"
 	},
 	"w21": {
 		"en-us": "", 

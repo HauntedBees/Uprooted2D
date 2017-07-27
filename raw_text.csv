@@ -1,59 +1,61 @@
-Key,en-us,en-dm
-s_co,Bu-GAWK! Hi boss! Got some good things on sale! ,Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow! 
-s_sell,What're you selling? ,WOT'RE YA SELLIN'???
-s_eq1o,"Welcome to my Equipment Shop! Please, buy many things.","Hello I am a public domain dwarf and I sell equipment. You can equip it from the Menu, which is probably a good choice. "
-s_leave,"Thank you, come again! ",fuck off 
-s_leave2,Bye. ,bye fucker 
-s_notenough,You can't afford that... ,Hey fuckface this is a store not charity. Have the money or have a gofuckyourself. 
-s_purchased,Thank you! ,thanks mom 
-s_up1p,Excellent! Now you'll have a 4x3 grid of tiles to plant crops and place fixtures on! ,
-s_didsell,Thank you for the goods!,"Thanks for the shit, fucfkace. "
-s_leavesell,Anything else?,stop giving me THINGS and start giving me MONEY. 
-s_cpurch,Bu-GAW! Thank you for your patronage!,"Bu-GAWK!! Good shit, good shit. Thank you for your patronage! "
-s_up1o,Are you tired of only having 9 tiles to plant crops in? Tire no more! For just 2000 coins I can give you three more tiles to plant on! ,
-s_upempty,"Welcome. Unfortunately, I have no other upgrades for you. ",
-s_sellseed,"Seeds & Consumables\n Sell your seeds, eggs, and other consumable supplies. ",
-s_selltool,"Tools & Equipment\n Sell your equipment, like sickles, gloves, and compost bins. ",
-s_sellfixture,"Field Fixtures\n Sell your Fixtures, like chicken coops and mushroom logs. ",
-s_fieldI,"This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat. ",
-s_fieldO,This configuration gives room for more large Fixtures and Trees. ,
-s_field_,"This configuration gives additional space, but less room for large Fixtures and Trees. ",
-s_fi1o,"Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!",
-quest1,,oi u fuck
-quest1_a,,A lovable squirrel ran off with some of my mushroom seeds. Bring them back to me and I'll be happy.
-quest1_b,,sick thanks. Have a mushroom log.
-quest1_c,,yo lass what i NEED is my SHIITAKE MUSHROOM SEEDS. give the fuck.
-s_seed1,,hi I got seeds
-s_inn1,,hey hey hey my inn is in... business. It's in business. That's a thing people say. Fuck off.
-s_innpurch,,enjoy your sleep
-s_mermhello,,this is a mermaid... hello!!
-questM,,hey there
-questM_a,,there's some sort of creature underwater that keeps moving my construction equipment with relative ease! Please calm it.
-questM_b,,gee thanks friend. Now I can build more underwater drills or something. Fuck I duno.
-questM_c,,please take care of the sea creature underwater. Just head west of here.
-constr1_foe,,gonna fuck you up
-constr1_fr1,,"hey there. We under construction, so you can't drive through here."
-constr1_fr2,,talk to the boss-man if you got qustions. He on the bridge.
-sm1,,hi do you want to help me 
-sm1c1,,sure why the fuck 
-sm1c2,,"eat shit or die trying, poopslut "
-sm2,,sick thanks man 
-sm3,,you first asshole 
-sm4,,hey thanks for helping me out crombro 
-w21,,get fucked four eyes 
-w22,,hi im paul 
-Pb2_0,,ha that guy got killed
-Pb2_1,,because I killed him
-B2_0,,Don't interfere with my stuff you baka. 
-B2_1,,Fuck off. 
-Pb1_0,,"I bet if that robot was still alive it'd be saying ""aw nuts"" right now, ha ha. "
-Pb1_1,,Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c 
-B1_1,,hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm. 
-B1_2,,"aLso bY ""rEsearch"" i mEan ""lOot aNd pIllage."" "
-B1_3,,oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies? 
-B1_4,,... 
-B1_5,,"...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn. "
-B1_6,,"bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain! "
-Pb0_0,,"oops I killed a man. i should go kick his boss's ass, too. also his boss's ass, "
-Pb0_1,,"so on and so forth, all the way up to the top. I should head to my farm first to get supplies. "
-testA,,it's battle 
+Key,en-dm,en-us
+s_co,Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow! ,Bu-GAWK! Hi boss! Got some good things on sale! 
+s_sell,WOT'RE YA SELLIN'???,What're you selling? 
+s_eq1o,"Hello I am a public domain dwarf and I sell equipment. You can equip it from the Menu, which is probably a good choice. ","Welcome to my Equipment Shop! Please, buy many things."
+s_leave,fuck off ,"Thank you, come again! "
+s_leave2,bye fucker ,Bye. 
+s_notenough,Hey fuckface this is a store not charity. Have the money or have a gofuckyourself. ,You can't afford that... 
+s_purchased,thanks mom ,Thank you! 
+s_up1p,,Excellent! Now you'll have a 4x3 grid of tiles to plant crops and place fixtures on! 
+s_didsell,"Thanks for the shit, fucfkace. ",Thank you for the goods!
+s_leavesell,stop giving me THINGS and start giving me MONEY. ,Anything else?
+s_cpurch,"Bu-GAWK!! Good shit, good shit. Thank you for your patronage! ",Bu-GAW! Thank you for your patronage!
+s_up1o,,Are you tired of only having 9 tiles to plant crops in? Tire no more! For just 2000 coins I can give you three more tiles to plant on! 
+s_upempty,,"Welcome. Unfortunately, I have no other upgrades for you. "
+s_sellseed,,"Seeds & Consumables\n Sell your seeds, eggs, and other consumable supplies. "
+s_selltool,,"Tools & Equipment\n Sell your equipment, like sickles, gloves, and compost bins. "
+s_sellfixture,,"Field Fixtures\n Sell your Fixtures, like chicken coops and mushroom logs. "
+s_fieldI,,"This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat. "
+s_fieldO,,This configuration gives room for more large Fixtures and Trees. 
+s_field_,,"This configuration gives additional space, but less room for large Fixtures and Trees. "
+s_fi1o,,"Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!"
+quest1,oi u fuck,
+quest1_a,A lovable squirrel ran off with some of my mushroom seeds. Bring them back to me and I'll be happy.,
+quest1_b,sick thanks. Have a mushroom log.,
+quest1_c,yo lass what i NEED is my SHIITAKE MUSHROOM SEEDS. give the fuck.,
+s_seed1,hi I got seeds,
+s_inn1,hey hey hey my inn is in... business. It's in business. That's a thing people say. Fuck off.,
+s_innpurch,enjoy your sleep,
+s_mermhello,this is a mermaid... hello!!,
+questM,hey there,
+questM_a,there's some sort of creature underwater that keeps moving my construction equipment with relative ease! Please calm it.,
+questM_b,gee thanks friend. Now I can build more underwater drills or something. Fuck I duno.,
+questM_c,please take care of the sea creature underwater. Just head west of here.,
+constr1_foe,gonna fuck you up,
+constr1_fr1,"hey there. We under construction, so you can't drive through here.",
+constr1_fr2,talk to the boss-man if you got qustions. He on the bridge.,
+sm1,hi do you want to help me ,
+sm1c1,sure why the fuck ,
+sm1c2,"eat shit or die trying, poopslut ",
+sm1c3,I'll think about it.,
+sm2,sick thanks man ,
+sm3,you first asshole ,
+sm4,hey thanks for helping me out crombro ,
+sm5,yeah that's fair,
+w21,get fucked four eyes ,
+w22,hi im paul ,
+Pb2_0,ha that guy got killed,
+Pb2_1,because I killed him,
+B2_0,Don't interfere with my stuff you baka. ,
+B2_1,Fuck off. ,
+Pb1_0,"I bet if that robot was still alive it'd be saying ""aw nuts"" right now, ha ha. ",
+Pb1_1,Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c ,
+B1_1,hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm. ,
+B1_2,"aLso bY ""rEsearch"" i mEan ""lOot aNd pIllage."" ",
+B1_3,oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies? ,
+B1_4,... ,
+B1_5,"...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn. ",
+B1_6,"bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain! ",
+Pb0_0,"oops I killed a man. i should go kick his boss's ass, too. also his boss's ass, ",
+Pb0_1,"so on and so forth, all the way up to the top. I should head to my farm first to get supplies. ",
+testA,it's battle ,

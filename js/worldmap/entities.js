@@ -233,16 +233,23 @@ var mapentities = {
                     worldmap.writeText("sm4");
                     worldmap.forceEndDialog = true;
                 } else {
-                    worldmap.writeText("sm1", ["sm1c1", "sm1c2"]);
+                    worldmap.writeText("sm1", ["sm1c1", "sm1c2", "sm1c3"]);
                 }
             },
             function(idx) {
-                if(idx === 0) {
-                    worldmap.writeText("sm2");
-                    player.activeQuests["helpSeaMonster"] = 0;
-                    worldmap.forceEndDialog = true;
-                } else {
-                    worldmap.writeText("sm3");
+                switch(idx) {
+                    case 0:
+                        worldmap.writeText("sm2");
+                        player.activeQuests["helpSeaMonster"] = 0;
+                        worldmap.forceEndDialog = true;
+                        break;
+                    case 1:
+                        worldmap.writeText("sm3");
+                        break;
+                    default:
+                        worldmap.writeText("sm5");
+                        worldmap.forceEndDialog = true;
+                        break;
                 }
             }, function() {
                 combat.startBattle(["seaHandR", "seaMan", "seaHandL"]);
