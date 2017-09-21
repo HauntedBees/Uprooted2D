@@ -354,6 +354,8 @@ function CombatAnimHelper(enemies) {
                         } else {
                             toDrawAfterwards.push({ sprite: "cow", x: (x + combat.dx), y: (y + combat.dy) });
                         }
+                    } else if(item === "_charger") {
+                        toDrawAfterwards.push({ sprite: "chargerplaced", x: (x + combat.dx), y: (y + combat.dy) });
                     } else if(item === "_modulator") {
                         toDrawAfterwards.push({ sprite: "mod" + combat.season, x: (x + combat.dx), y: (y + combat.dy) });
                     } else if(iteminfo.displaySprite !== undefined) {

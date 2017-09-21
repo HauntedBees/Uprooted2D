@@ -68,6 +68,7 @@ function GetEquipment(name) {
         case "!sunSickle": return {name: name, displayname: "Sickle of Light", price: 50, sprite: "sickle_10", type: "weapon", power: 25, targetCrops: true, sp: 10, su: 10 };
         case "!pltSickle": return {name: name, displayname: "Platinum Sickle", price: 50, sprite: "sickle_11", type: "weapon", power: 30, targetCrops: false };
         case "!sickle2": return {name: name, displayname: "Sickle2", price: 50, sprite: "sickle_12", type: "weapon", power: 60, targetCrops: true, attacks: 2, tech: true };
+        case "!sickle2_weak": return {name: name, displayname: "Sickle2", price: 50, sprite: "sickle_12", type: "weapon", power: 0, targetCrops: false, noEnemies: true, tech: true };
 
         case "!weakCompost": return {name: name, displayname: "Small Compost Bin", price: 50, sprite: "compost_0", type: "compost", amount: 1, rotOnly: true };
         case "!baseCompost": return {name: name, displayname: "Compost Bin", price: 50, sprite: "compost", type: "compost", amount: 3, rotOnly: true };
@@ -138,36 +139,39 @@ function GetFarmInfo(name) {
     switch(name) {
         case "_log": return { name: name, displayname: "Mshrm Log", price: 100, shortdesc: "Allows Mushrooms to be grown.",
             desc: "Allows Mushrooms to be grown. Mushrooms regrow after harvest and do not rot after being grown."
-        };
-        case "_coop": return { name: name, displayname: "Incubator", price: 100, shortdesc: "Allows Eggs to be hatched.",
-            desc: "Allows Eggs to be hatched. Hatched eggs do not rot and do more damage the longer they are left on the Field."
-        };
-        case "_cow": return { name: name, displayname: "Cow", price: 100, shortdesc: "Produces healing Milk when fed.", size: 2, displaySprite: "cow",
-            desc: "Produces healing Milk when fed fodder or vegetable seeds. Milk can be collected by Composting."
-        };
-        case "_lake": return { name: name, displayname: "Lake", price: 100, shortdesc: "Allows fishing tools to be placed.",
-            desc: "Allows sea creatures to be caught with appropriate equipment."
-        };
-        case "_paddy": return { name: name, displayname: "Rice Paddy", price: 100, shortdesc: "Allows rice to be grown.",
-            desc: "Allows rice to be grown. Can only be placed on the bottom row of a Field."
-        };
-        case "_shooter": return { name: name, displayname: "Seed Shooter", price: 100, shortdesc: "Immediately shoots seeds it is fed.",
-            desc: "If seeds are planted in this, it will immediately shoot seeds at all enemies."
-        };
-        case "_hotspot": return { name: name, displayname: "Hotspot", price: 100, shortdesc: "Allows electronics to be placed.", size: 2, displaySprite: "hotspot",
-            desc: "Allows electronic devices to be 'planted.'"
-        };
+        }; // Area 1: Farm/Town
         case "_modulator": return { name: name, displayname: "Modulator", price: 100, shortdesc: "Changes seasons when fed seeds.", size: 2, displaySprite: "mod0",
             desc: "If vegetable seeds are planted in this, it will return the seeds and change the season based on the seed."
-        };
+        }; // Area 1: BOSS: Big Robot
+        case "_sprinkler": return { name: name, displayname: "Sprinkler", price: 100, shortdesc: "Makes crops around it grow faster.",
+            desc: "Vegetables and trees planted in the 8 tiles around a sprinkler will grow 25% faster."
+        }; // Area 1: Town
+        case "_coop": return { name: name, displayname: "Incubator", price: 100, shortdesc: "Allows Eggs to be hatched.",
+            desc: "Allows Eggs to be hatched. Hatched eggs do not rot and do more damage the longer they are left on the Field."
+        }; // Area 1: Forest/Town
+        case "_shooter": return { name: name, displayname: "Seed Shooter", price: 100, shortdesc: "Immediately shoots seeds it is fed.",
+            desc: "If seeds are planted in this, it will immediately shoot seeds at all enemies."
+        }; // Area 1: BOSS: Mad Scientist
+        case "_lake": return { name: name, displayname: "Lake", price: 100, shortdesc: "Allows fishing tools to be placed.",
+            desc: "Allows sea creatures to be caught with appropriate equipment."
+        }; // Area 2: Bridge
+        case "_paddy": return { name: name, displayname: "Rice Paddy", price: 100, shortdesc: "Allows rice to be grown.",
+            desc: "Allows rice to be grown. Can only be placed on the bottom row of a Field."
+        }; // Area 2: Bridge
+        case "_cow": return { name: name, displayname: "Cow", price: 100, shortdesc: "Produces healing Milk when fed.", size: 2, displaySprite: "cow",
+            desc: "Produces healing Milk when fed fodder or vegetable seeds. Milk can be collected by Composting."
+        }; // Area 3: Totally Real Farm
+        case "_strongsoil": return { name: name, displayname: "Strong Soil", price: 100, shortdesc: "Makes crops more resistant to damage.",
+            desc: "Vegetables and trees planted on Strong Soil will take less damage from fire and water damage as well as standard attacks. The soil itself is also more resistant to burning and flooding."
+        }; // Area 3: Totally Real Farm
+        case "_hotspot": return { name: name, displayname: "Hotspot", price: 100, shortdesc: "Allows electronics to be placed.", size: 2, displaySprite: "hotspot",
+            desc: "Allows electronic devices to be 'planted.'"
+        }; // Area 3: BOSS: Totally Real Farm
         case "_beehive": return { name: name, displayname: "Beehive", price: 100, shortdesc: "Holds bees.",
             desc: "Allows Bees to be placed. Bees will randomly produce honey, which can recover lots of health or stun enemies."
         };
-        case "_sprinkler": return { name: name, displayname: "Sprinkler", price: 100, shortdesc: "Makes crops around it grow faster.",
-            desc: "Vegetables and trees planted in the 8 tiles around a sprinkler will grow 25% faster."
-        };
-        case "_strongsoil": return { name: name, displayname: "Strong Soil", price: 100, shortdesc: "Makes crops more resistant to damage.",
-            desc: "Vegetables and trees planted on Strong Soil will take less damage from fire and water damage as well as standard attacks. The soil itself is also more resistant to burning and flooding."
+        case "_charger": return { name: name, displayname: "Sickle2 Charger", price: 100, shortdesc: "Charges Sickle2.", size: 2, displaySprite: "chargerplaced",
+            desc: "This must be present in your field in order to use your Sickle2 effectively."
         };
     }
 }

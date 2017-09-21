@@ -88,6 +88,8 @@ var spriteData = {
         "goopdrop": [15, 15],
         "hgoop": [14, 15],
         "_beehive": [14, 12],
+        "chargerplaced": [10, 2, true],
+        "_charger": [10, 21],
         "x": [7, 15],
         "compostpile": [6, 15],
         "milk": [5, 15],

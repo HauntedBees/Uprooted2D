@@ -20,6 +20,19 @@ var combat = {
         this.itemsEarned = [];
         this.happyCows = [];
         this.usedShooters = [];
+        if(player.equipment.weapon === "!sickle2") {
+            var hasCharger = false;
+            for(var x = 0; x < player.gridWidth; x++) {
+                if(hasCharger) { break; }
+                for(var y = 0; y < player.gridHeight; y++) {
+                    if(player.itemGrid[x][y] === "_charger") {
+                        hasCharger = true;
+                        break;
+                    }
+                }
+            }
+            if(!hasCharger) { player.equipment.weapon = "!sickle2_weak"; }
+        }
         switch(player.gridWidth) {  // 3, 4, 6, 8, 10
             case 4: this.dx = 2; break;
             case 6: this.dx = 1; break;
@@ -215,6 +228,9 @@ var combat = {
             combat.animHelper.SetEnemyAnimInfo(i, [[combat.enemies[i].spriteidx, 0]]);
         }
     },
+    wrapUpCombat: function() {
+        if(player.equipment.weapon === "!sickle2_weak") { player.equipment.weapon = "!sickle2"; }
+    },
     fuckingDead: function() {
         var inn = inns[player.lastInn];
         if(game.target !== null) {
@@ -223,6 +239,7 @@ var combat = {
         }
         player.health = player.maxhealth;
         clearInterval(combat.charAnimIdx);
+        combat.wrapUpCombat();
         game.transition(game.currentInputHandler, worldmap, {  init: { x: inn.x,  y: inn.y }, map: inn.map });
     },
     checkForLevelUp: function() {
@@ -234,6 +251,7 @@ var combat = {
                 text: "Whoah [gamer voice] nice! You hit level " + player.level + "!"
             });
         } else {
+            combat.wrapUpCombat();
             var postCombat = game.target.postBattle;
             worldmap.clearTarget();
             clearInterval(combat.charAnimIdx);
