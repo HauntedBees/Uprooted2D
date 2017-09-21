@@ -94,7 +94,7 @@ var player = {
     },
     canMelee: function() { // TODO: factor in weapons that can attack crops but not people
         if(player.equipment.weapon === null) { return false; }
-        if(player.equipment.noEnemies) { return false; }
+        if(GetEquipment(player.equipment.weapon).noEnemies) { return false; }
         return true;
     },
     getArmorBalancedMultiplier: function(seasonVal) {

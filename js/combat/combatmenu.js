@@ -32,7 +32,7 @@ combat.menu = {
                         text = "Perform a Melee attack.";
                         charX = 2;
                     } else {
-                        text = "You need a weapon to attack.";
+                        text = "You need an appropriate weapon to attack.";
                         charX = 3;
                     }
                 } else {
