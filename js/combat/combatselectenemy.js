@@ -217,7 +217,7 @@ combat.selectTarget = {
                 dmg += addtlDamage;
             }
         }
-        dmg += (dmg === 0 ? Math.round((player.atk / 2) + player.getSickleAttackBonus()) : player.atk);
+        dmg += (dmg === 0 ? Math.round((player.atk / 2) + player.getSickleAttackBonus(combat.season)) : player.atk);
         return {
             damage: Math.floor(dmg),
             stun: Math.round(stickAmount),

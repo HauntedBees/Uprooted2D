@@ -170,10 +170,15 @@ var player = {
         var equipInfo = GetEquipment(this.equipment.weapon);
         return equipInfo.targetCrops;
     },
-    getSickleAttackBonus: function() {
+    getSickleAttackBonus: function(season) {
         if(this.equipment.weapon === null) { return 0; }
         var equipInfo = GetEquipment(this.equipment.weapon);
-        return equipInfo.power;
+        var bonus = equipInfo.power;
+        if(season === 0 && equipInfo.sp) { bonus += equipInfo.sp; }
+        else if(season === 1 && equipInfo.su) { bonus += equipInfo.su; }
+        else if(season === 2 && equipInfo.au) { bonus += equipInfo.au; }
+        else if(season === 3 && equipInfo.wi) { bonus += equipInfo.wi; }
+        return bonus;
     },
     decreaseItem: function(name) {
         var idx = -1;
