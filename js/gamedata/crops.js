@@ -35,6 +35,16 @@ function GetEquipmentDesc(equipInfo) {
     if(equipInfo.type === "weapon") {
         str += "Power: " + equipInfo.power;
         if(equipInfo.targetCrops) { str += "\n Can target enemy Crops."; }
+        if(equipInfo.noEnemies) { str += "\n Cannot target enemies."; }
+        if(equipInfo.sp) { str += "\n Stronger in Spring."; }
+        if(equipInfo.su) { str += "\n Stronger in Summer."; }
+        if(equipInfo.au) { str += "\n Stronger in Autumn."; }
+        if(equipInfo.wi) { str += "\n Stronger in Winter."; }
+        if(equipInfo.tech) { str += "\n Requires Sickle2 Charger on field."; }
+        if(equipInfo.attacks) { 
+            if(equipInfo.attacks === 999) { str += "\n Attacks all enemies."; }
+            else { str += "\n Attacks "+ equipInfo.attacks + " enemies."; }
+        }
     } else if(equipInfo.type === "compost") {
         str += "Holding Amount: " + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n Can attack enemies with Compost."; }
