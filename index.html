@@ -1,10 +1,7 @@
 <html>
     <head>
         <style>
-            @font-face {
-                font-family: "PressStart2P";
-                src: url("styles/PressStart2P.ttf");
-            }
+            @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
             body { font-family: "PressStart2P"; text-align: center; width: 100% }
             canvas {
                 border: 1px solid black;
@@ -14,12 +11,10 @@
                 position: absolute;
                 right: 0; 
                 text-align: center;
-                /*top: 300px;
-                transform: scale(4);*/
             }
         </style>
     </head>
-    <body> <!-- Previously: 10 x 9 (160x144) -->
+    <body>
         <div id="canvasContainer"> <!-- 15 x 10 (240x160) -->
             <canvas id="background" width="960" height="640"></canvas>
             <canvas id="characters" width="960" height="640"></canvas>
@@ -33,8 +28,6 @@
             <canvas id="tutorial" width="960" height="640"></canvas>
         </div>
         <script src="out.js"></script>
-        <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", game.fullInit);
-        </script>
+        <script type="text/javascript">document.addEventListener("DOMContentLoaded", game.fullInit);</script>
     </body>
 </html>

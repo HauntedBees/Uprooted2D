@@ -8,6 +8,10 @@ var spriteData = {
             spriteData.names["bcursor" + i] = [5 + i, 12];
             spriteData.names["xcursor" + i] = [9 + i, 12];
             spriteData.names["puff" + i] = [i, 15];
+            spriteData.names["quail" + i] = [22 + i, 6];
+            spriteData.names["goose" + i] = [26 + i, 6];
+            spriteData.names["turkey" + i] = [22 + i, 7];
+            spriteData.names["platypus" + i] = [26 + i, 7];
             if(i < 2) {
                 spriteData.names["apple" + i] = [3 + i, 0, true];
                 spriteData.names["banana" + i] = [5 + i, 0, true];
@@ -32,12 +36,21 @@ var spriteData = {
                 spriteData.names["shiitake" + i] = [16 + i, 8];
                 spriteData.names["milkcap" + i] = [16 + i, 9];
                 spriteData.names["portobello" + i] = [16 + i, 10];
+                
+                spriteData.names["greenshroom" + i] = [22 + i, 8];
+                spriteData.names["blackshroom" + i] = [22 + i, 9];
+                spriteData.names["poisnshroom" + i] = [22 + i, 10];
             }
         }
         var mush = ["shiitake", "milkcap", "portobello"];
         for(var i = 0; i < mush.length; i++) {
             spriteData.names[mush[i]] = [16 + i, 12];
             spriteData.names[mush[i] + "seed"] = [16 + i, 11];
+        }
+        mush = ["greenshroom", "blackshroom", "poisnshroom"];
+        for(var i = 0; i < mush.length; i++) {
+            spriteData.names[mush[i]] = [22 + i, 12];
+            spriteData.names[mush[i] + "seed"] = [22 + i, 11];
         }
         
         var bees = ["beeB", "beeR", "beeG"];
@@ -136,6 +149,14 @@ var spriteData = {
         "egg": [16, 6],
         "eggseed": [16, 6],
         "egg3": [16, 7],
+        "quail": [22, 6],
+        "quailseed": [22, 6],
+        "goose": [26, 6],
+        "gooseseed": [26, 6],
+        "turkey": [22, 7],
+        "turkeyseed": [22, 7],
+        "platypus": [26, 7],
+        "platypusseed": [26, 7],
         "_lake": [19, 13],
         "lakeD": [16, 13], 
         "lakeA": [18, 13], 

@@ -124,10 +124,6 @@ function GetCrop(name) {
         case "metalrod": return new CropDetail(name, "Metal Rod", 10, "rod", 1, 20, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.8, req: 0.175 });
         case "net": return new CropDetail(name, "Fish Net", 10, "water", 1, -1, 2, 10, 0, 0, 0, 0, 0, { rotten: true, req: 0.05 });
         case "fodder": return new CropDetail(name, "Fodder", 10, "food", 1, 0, 1, 4, 0, 0, 0, 0, 0);
-        case "egg": return new CropDetail(name, "Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
-        case "shiitake": return new CropDetail(name, "Shiitake", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-        case "milkcap": return new CropDetail(name, "Milk Cap", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-        case "portobello": return new CropDetail(name, "Portobello", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "beet": return new CropDetail(name, "Beet", 10, "veg", 1, 1, 2, 5, 0, 0, 0.66, 1, 1);
         case "apple": return new CropDetail(name, "Apple", 10, "tree", 2, 5, 5, 2, 2, 0.75, 0.75, 1, 0.75);
         case "carrot": return new CropDetail(name, "Carrot", 10, "veg", 1, 2, 2, 3, 0, 1, 0.66, 1, 0.66, { animal: "Rabbit", animalChance: 0.01, animalDamageMult: 2 });
@@ -143,6 +139,19 @@ function GetCrop(name) {
         case "kelp": return new CropDetail(name, "Kelp", 10, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "rock": return new CropDetail(name, "Rock", 10, "rock", 1, 5, 1, 0, 0);
         case "salt": return new CropDetail(name, "Salt", 10, "rock", 1, 30, 1, 0, 0);
+        /* Mushrooms */
+        case "shiitake": return new CropDetail(name, "Shiitake", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+        case "milkcap": return new CropDetail(name, "Milk Cap", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+        case "portobello": return new CropDetail(name, "Portobello", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+        case "greenshroom": return new CropDetail(name, "Green Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+        case "blackshroom": return new CropDetail(name, "Black Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+        case "poisnshroom": return new CropDetail(name, "Definitely Poisonous Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+        /* Eggs */
+        case "egg": return new CropDetail(name, "Chicken Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
+        case "quail": return new CropDetail(name, "Quail Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
+        case "goose": return new CropDetail(name, "Goose Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
+        case "turkey": return new CropDetail(name, "Turkey Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
+        case "platypus": return new CropDetail(name, "Platypus Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
     }
 }
 function GetFarmInfo(name) {
