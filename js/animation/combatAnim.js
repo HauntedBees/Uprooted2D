@@ -120,6 +120,11 @@ PlayerAnimInfo.prototype.Animate = function() {
         var initx = 11 - combat.enemies.length;
         var customtarget = this.throwables[0].customtarget !== undefined;
         var targetidx = (this.throwables[0].customtarget === undefined ? combat.lastTarget: this.throwables[0].customtarget);
+        var realtarget = targetidx;
+        if(Array.isArray(targetidx)) {
+            realtarget = targetidx;
+            targetidx = targetidx[0];
+        }
         var c = (initx + targetidx + this.x - 0.5) / 2;
         var gx = this.throwables[0].x, gy = this.throwables[0].y;
         if(gx >= 0) {
@@ -131,7 +136,7 @@ PlayerAnimInfo.prototype.Animate = function() {
             if(isTree) { gx += 0.5; gy += 0.5; }
             combat.animHelper.AddAnim(new SheetAnim(combat.dx + gx, combat.dy + gy, 250, "puff", 5));
         }
-        var throwAnim = new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0].name, b, c, targetidx, customtarget || this.throwables.length === 1, this.throwables[0].stickChance);
+        var throwAnim = new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0].name, b, c, realtarget, customtarget || this.throwables.length === 1, this.throwables[0].stickChance);
         throwAnim.additionalFinishes = [];
         if(this.throwables[0].animal !== undefined) {
             var sprite = "animal" + this.throwables[0].animal;

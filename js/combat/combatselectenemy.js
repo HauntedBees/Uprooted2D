@@ -211,11 +211,11 @@ combat.selectTarget = {
                     combat.lastTarget = targetidx;
                 }
                 combat.lastTargetCrop = false;
-                var target = combat.enemies[this.cursorx];
+                var target = combat.enemies[targetidx];
                 if(attackinfo.numCrops > 3 && combat.enemies.length > 1) {
                     while((player.getRandomLuckyNumber(true) * attackinfo.numCrops--) > 0.9) {
                         var idx = Range(0, combat.enemies.length);
-                        if(idx === this.cursorx) { idx = (idx + 1) % combat.enemies.length; }
+                        if(idx === targetidx) { idx = (idx + 1) % combat.enemies.length; }
                         additionalTargets.push(idx);
                     }
                 }

@@ -102,7 +102,15 @@ PlayerThrowAnim.prototype.finish = function() {
         var pos = combat.animHelper.GetEnemyPos(this.tidx);
         var anim = new MoveAnim(pos.x, pos.y - 0.25, pos.x, pos.y + 0.25, 1000, "goopdrop");
         anim.tidx = this.tidx;
-        anim.finish = function() { combat.enemies[this.tidx].justStuck = false; };
+        anim.finish = function() { 
+            if(Array.isArray(this.tidx)) {
+                for(var i = 0; i < this.tidx.length; i++) {
+                    combat.enemies[this.tidx[i]].justStuck = false;
+                }
+            } else {
+                combat.enemies[this.tidx].justStuck = false;
+            }
+        };
         combat.animHelper.AddAnim(anim);
     }
     if(this.additionalFinishes !== undefined) { 
@@ -110,11 +118,23 @@ PlayerThrowAnim.prototype.finish = function() {
             this.additionalFinishes[i]();
         }
     }
-    if(this.last) {
-        combat.animHelper.DisplayEnemyDamage(this.tidx);
+    if(Array.isArray(this.tidx)) {
+        if(this.last) {
+            for(var i = 0; i < this.tidx.length; i++) {
+                combat.animHelper.DisplayEnemyDamage(this.tidx[i]);
+            }
+        } else {
+            for(var i = 0; i < this.tidx.length; i++) {
+                combat.animHelper.GiveEnemyAHit(this.tidx[i]);
+            }
+        }
     } else {
-        combat.animHelper.GiveEnemyAHit(this.tidx);
-    } 
+        if(this.last) {
+            combat.animHelper.DisplayEnemyDamage(this.tidx);
+        } else {
+            combat.animHelper.GiveEnemyAHit(this.tidx);
+        }
+    }
 }
 
 
