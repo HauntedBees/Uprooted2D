@@ -115,7 +115,7 @@ combat.compost = {
     },
     isCompostable: function(tile) {
         if(tile.type === "egg" || tile.type === "tech") { return false; }
-        return (player.equipment.compost !== null && (player.equipment.compost !== "!weakCompost" || tile.rotten));
+        return (player.equipment.compost !== null && (!GetEquipment(player.equipment.compost).rotOnly || tile.rotten));
     },
     mouseMove: function(pos) {
         this.attackButtonSelected = false;

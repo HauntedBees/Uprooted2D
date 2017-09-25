@@ -48,7 +48,7 @@ function GetEquipmentDesc(equipInfo) {
     } else if(equipInfo.type === "compost") {
         str += "Holding Amount: " + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n Can attack enemies with Compost."; }
-        if(equipInfo.name === "!weakCompost") { str += "\n Can only compost rotten crops."; }
+        if(equipInfo.rotOnly) { str += "\n Can only compost rotten crops."; }
     } else if(equipInfo.type === "gloves") {
         str += "Seeds Per Turn: " + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n Can Attack or Compost after planting seeds."; }
