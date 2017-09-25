@@ -1,6 +1,6 @@
 var combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0, dt: 50,
-    lastTarget: 0, lastTargetCrop: false, 
+    lastTarget: 0, lastTargetCrop: false,
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,

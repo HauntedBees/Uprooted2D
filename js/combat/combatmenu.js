@@ -100,7 +100,9 @@ combat.menu = {
             case 1:
                 var count = this.highlightReadyCropsAndReturnCount();
                 if(count === 0 && !player.canMelee()) { return; }
-                game.transition(this, combat.selectTarget);
+                var attackCount = 1;
+                if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
+                game.transition(this, combat.selectTarget, attackCount);
                 break;
             case 2: if(player.equipment.compost !== null) { game.transition(this, combat.compost); } break;
             case 3: this.tryFlee(); break;

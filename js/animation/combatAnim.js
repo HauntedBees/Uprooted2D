@@ -89,6 +89,10 @@ PlayerAnimInfo.prototype.Animate = function() {
             } else if(this.lastThrownFrame < 0 && !this.isRun) {
                 if(combat.lastTargetCrop) {
                     // TODO: targeting crops
+                } else if(Array.isArray(combat.lastTarget)) {
+                    for(var q = 0; q < combat.lastTarget.length; q++) {
+                        combat.animHelper.DisplayEnemyDamage(combat.lastTarget[q]);
+                    }
                 } else {
                     combat.animHelper.DisplayEnemyDamage(combat.lastTarget);
                 }

@@ -1,14 +1,19 @@
 combat.selectTarget = {
-    cursorx: 0, canSickle: false, dy: 8,
-    sicklePos: {x: -1, y: -1}, 
-    layersToClear: ["menucursorA", "menutext"], 
-    setup: function(notfirst) {
+    cursorx: 0, canSickle: false, dy: 8, 
+    sicklePos: {x: -1, y: -1}, targets: [], maxTargets: 0, 
+    layersToClear: ["menucursorA", "menucursorB", "menutext"], 
+    setup: function(numAttacks) {
         this.cursorx = 0;
         this.sicklePos = {x: -1, y: -1};
         this.canSickle = player.canSickleCrops();
-        if(combat.enemies.length === 1 && (!this.canSickle || this.enemyGridIsEmpty())) {
-            this.click(null);
+        this.targets = [];
+        numAttacks = numAttacks || 1;
+        console.log(numAttacks + "/" + combat.enemies.length);
+        if(numAttacks >= combat.enemies.length && (!this.canSickle || this.enemyGridIsEmpty())) {
+            for(var i = 0; i < combat.enemies.length; i++) { this.targets.push(i); }
+            this.attack();
         } else {
+            this.maxTargets = numAttacks;
             this.drawAll();
         }
     },
@@ -23,6 +28,15 @@ combat.selectTarget = {
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
         combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
+        for(var i = 0; i < this.targets.length; i++) {
+            var idx = this.targets[i];
+            if(idx.x === undefined) {
+                var cursorInfo = combat.animHelper.GetCursorInfo(idx);
+                gfx.drawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h, "xcursor");
+            } else {
+                gfx.drawCursor(idx.x, idx.y, 0, 0, "xcursor");
+            }
+        }
         if(this.sicklePos.x >= 0) {
             var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
@@ -101,6 +115,38 @@ combat.selectTarget = {
         return true;
     },
     click: function(pos) {
+        var doAttack = false;
+        if(this.sicklePos.x >= 0) {
+            var cropPos = {x: this.sicklePos.x - combat.enemydx, y: this.sicklePos.y - combat.enemydy};
+            var crop = combat.enemyGrid[cropPos.x][cropPos.y];
+            if(crop === null) { return false; }
+            doAttack = this.toggleTarget(this.sicklePos, true);
+        } else {
+            doAttack = this.toggleTarget(this.cursorx, false);
+        }
+        if(doAttack) { this.attack(); }
+        else { this.drawAll(); }
+    },
+    toggleTarget: function(idx, isPoint) {
+        for(var i = 0; i < this.targets.length; i++) {
+            var sel = this.targets[i];
+            var same = false;
+            if(isPoint) {
+                if(sel.x === undefined) { continue; }
+                same = (sel.x === idx.x && sel.y === idx.y);
+            } else {
+                if(sel.x !== undefined) { continue; }
+                same = (sel === idx);
+            }
+            if(same) {
+                this.targets.splice(i, 1);
+                return false;
+            }
+        }
+        this.targets.push(idx);
+        return (this.targets.length === this.maxTargets);
+    },
+    attack: function() {
         var attackinfo = this.getAttackDetails();
         var damage = attackinfo.damage;
         var stunTurns = attackinfo.stun;
@@ -117,65 +163,106 @@ combat.selectTarget = {
                 stunTurns = 2;
             }
         }
-        if(this.sicklePos.x >= 0) {
-            attackinfo.animals = [];
-            var cropPos = {x: this.sicklePos.x - combat.enemydx, y: this.sicklePos.y - combat.enemydy};
-            var crop = combat.enemyGrid[cropPos.x][cropPos.y];
-            if(crop === null) { return false; }
-            if(crop.x !== undefined) {
-                cropPos = {x: crop.x, y: crop.y};
-                crop = combat.enemyGrid[crop.x][crop.y];
-            }
-            combat.lastTarget = 0;
-            combat.lastTargetCrop = false;
-            var damage = Math.ceil(damage / 6);
-            damagetext += "You attack the " + crop.displayname + " for like " + damage + " damage";
-            if((crop.power - damage) <= 0) {
-                damagetext += ", destroying it instantly."
-                crop.hidden = true;
-                combat.animHelper.DrawCrops();
-                combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
-            } else { damagetext += "."; }
-            crop.power -= damage;
-            if(crop.power <= 0) {
-                if(crop.size == 2) {
-                    combat.enemyGrid[cropPos.x + 1][cropPos.y] = null;
-                    combat.enemyGrid[cropPos.x][cropPos.y + 1] = null;
-                    combat.enemyGrid[cropPos.x + 1][cropPos.y + 1] = null;
+        var stunningEnemies = false, hasAnimals = false, hasRecoil = false;
+        var hasKills = false, hasDestroys = false;
+        var avgDamage = 0, lastTargetName = "";
+        var targArr = this.targets.length > 1;
+        if(targArr) { combat.lastTarget = []; }
+        for(var i = 0; i < this.targets.length; i++) {
+            var targetidx = this.targets[i];
+            if(targetidx.x !== undefined) {
+                attackinfo.animals = [];
+                var cropPos = {x: targetidx.x - combat.enemydx, y: targetidx.y - combat.enemydy};
+                var crop = combat.enemyGrid[cropPos.x][cropPos.y];
+                if(crop === null) { return false; }
+                if(crop.x !== undefined) {
+                    cropPos = {x: crop.x, y: crop.y};
+                    crop = combat.enemyGrid[crop.x][crop.y];
                 }
-                combat.enemyGrid[cropPos.x][cropPos.y] = null;
-            }
-        } else {
-            combat.lastTarget = this.cursorx;
-            combat.lastTargetCrop = false;
-            var target = combat.enemies[this.cursorx];
-            if(attackinfo.numCrops > 3 && combat.enemies.length > 1) {
-                while((player.getRandomLuckyNumber(true) * attackinfo.numCrops--) > 0.9) {
-                    var idx = Range(0, combat.enemies.length);
-                    if(idx === this.cursorx) { idx = (idx + 1) % combat.enemies.length; }
-                    additionalTargets.push(idx);
+                combat.lastTarget = 0;
+                combat.lastTargetCrop = false;
+                var damage = Math.ceil(damage / 6);
+                avgDamage += damage;
+                lastTargetName = "the " + crop.displayname;
+                //damagetext += "You attack the " + crop.displayname + " for like " + damage + " damage";
+                if((crop.power - damage) <= 0) {
+                    hasDestroys = true;
+                    //damagetext += ", destroying it instantly."
+                    crop.hidden = true;
+                    combat.animHelper.DrawCrops();
+                    combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
+                }// else { damagetext += "."; }
+                crop.power -= damage;
+                if(crop.power <= 0) {
+                    if(crop.size == 2) {
+                        combat.enemyGrid[cropPos.x + 1][cropPos.y] = null;
+                        combat.enemyGrid[cropPos.x][cropPos.y + 1] = null;
+                        combat.enemyGrid[cropPos.x + 1][cropPos.y + 1] = null;
+                    }
+                    combat.enemyGrid[cropPos.x][cropPos.y] = null;
                 }
-            }
-            if(!criticalHit) { damage = Math.max(1, damage - target.def); }
-            if(attackinfo.animals.length > 0) {
-                damagetext += "Nature Strikes! You and your animal friends attack " + target.name + " for like " + damage + " damage";
             } else {
-                damagetext += "You attack " + target.name + " for like " + damage + " damage";
+                if(targArr) {
+                    combat.lastTarget.push(targetidx);
+                } else {
+                    combat.lastTarget = targetidx;
+                }
+                combat.lastTargetCrop = false;
+                var target = combat.enemies[this.cursorx];
+                if(attackinfo.numCrops > 3 && combat.enemies.length > 1) {
+                    while((player.getRandomLuckyNumber(true) * attackinfo.numCrops--) > 0.9) {
+                        var idx = Range(0, combat.enemies.length);
+                        if(idx === this.cursorx) { idx = (idx + 1) % combat.enemies.length; }
+                        additionalTargets.push(idx);
+                    }
+                }
+                if(!criticalHit) { damage = Math.max(1, damage - target.def); }
+                avgDamage += damage;
+                if(attackinfo.animals.length > 0) {
+                    hasAnimals = true;
+                    //damagetext += "Nature Strikes! You and your animal friends attack " + target.name + " for like " + damage + " damage";
+                } else {
+                    //damagetext += "You attack " + target.name + " for like " + damage + " damage";
+                }
+                lastTargetName = target.name;
+                if(additionalTargets.length > 0) { hasRecoil = true; } //damagetext += ", plus recoil"; }
+                if((target.health - damage) <= 0) {
+                    hasKills = true;
+                    //damagetext += ", killing them instantly."
+                } //else { damagetext += "."; }
+                combat.damageEnemy(targetidx, damage);
+                var recoilDamage = Math.ceil(damage * 0.15);
+                for(var j = 0; j < additionalTargets.length; j++) {
+                    combat.damageEnemy(additionalTargets[j], recoilDamage);
+                }
+                if(stunTurns > 0) {
+                    stunningEnemies = true;
+                    //damagetext += " Also they're all sticky now.";
+                    combat.stickEnemy(targetidx, stunTurns);
+                }
             }
-            if(additionalTargets.length > 0) { damagetext += ", plus recoil"; }
-            if((target.health - damage) <= 0) {
-                damagetext += ", killing them instantly."
-            } else { damagetext += "."; }
-            combat.damageEnemy(this.cursorx, damage);
-            var recoilDamage = Math.ceil(damage * 0.15);
-            for(var i = 0; i < additionalTargets.length; i++) {
-                combat.damageEnemy(additionalTargets[i], recoilDamage);
-            }
-            if(stunTurns > 0) { 
-                damagetext += " Also they're all sticky now.";
-                combat.stickEnemy(this.cursorx, stunTurns);
-            }
+            avgDamage = Math.floor(avgDamage / this.targets.length);
         }
+        if(hasAnimals) {
+            damagetext = "Nature Strikes! You and your animal friends";
+        } else {
+            damagetext = "You";
+        }
+        damagetext += " attack " + lastTargetName;
+        if(this.targets.length > 1) {
+            damagetext += " and others, for an average of " + avgDamage + " damage";
+            if(hasRecoil) { damagetext += ", with some recoil hitting even more enemies" }
+            if(hasKills || hasDestroys) { damagetext += ", leading to some casualties!"; } else { damagetext += "!"; }
+            if(stunningEnemies) { damagetext += " And now they're all sticky!" }
+        } else {
+            damagetext += " for " + avgDamage + " damage";
+            if(hasRecoil) { damagetext += ", plus recoil" }
+            if(hasKills) { damagetext += ", killing them instantly."; }
+            else if(hasDestroys) { damagetext += ", destroying it."; }
+            else { damagetext += "."; }
+            if(stunningEnemies) { damagetext += " And now they're all sticky!" }
+        }
+
         combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
         combat.flagFreshCrops(true, criticalHit, attackinfo.animals, additionalTargets);
         game.transition(this, combat.inbetween, {
