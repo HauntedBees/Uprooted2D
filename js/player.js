@@ -92,9 +92,9 @@ var player = {
         this.nextExp = Math.floor(this.level * this.level * 5 * Math.pow(1.02, this.level - 2));
         this.getLevelUpItemBonuses();
     },
-    canMelee: function() { // TODO: factor in weapons that can attack crops but not people
+    canMelee: function(numEnemyCrops) {
         if(player.equipment.weapon === null) { return false; }
-        if(GetEquipment(player.equipment.weapon).noEnemies) { return false; }
+        if(GetEquipment(player.equipment.weapon).noEnemies && numEnemyCrops === 0) { return false; }
         return true;
     },
     getArmorBalancedMultiplier: function(seasonVal) {
@@ -169,6 +169,11 @@ var player = {
         if(this.equipment.weapon === null) { return false; }
         var equipInfo = GetEquipment(this.equipment.weapon);
         return equipInfo.targetCrops;
+    },
+    canAttackPeople: function() {
+        if(this.equipment.weapon === null) { return true; }
+        var equipInfo = GetEquipment(this.equipment.weapon);
+        return !equipInfo.noEnemies;
     },
     getSickleAttackBonus: function(season) {
         if(this.equipment.weapon === null) { return 0; }
