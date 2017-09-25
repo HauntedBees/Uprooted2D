@@ -28,7 +28,7 @@ combat.menu = {
             case 1:
                 var count = this.highlightReadyCropsAndReturnCount();
                 if(count === 0) {
-                    if(player.canMelee()) {
+                    if(player.canMelee(this.getEnemyCropCount())) {
                         text = "Perform a Melee attack.";
                         charX = 2;
                     } else {
@@ -58,6 +58,17 @@ combat.menu = {
         gfx.drawInfobox(11, 2.5, this.dy + 1.5);
         gfx.drawWrappedText(text, 4.5 * 16, 11 + ((1.5 + this.dy) * 16), 170);
         combat.animHelper.DrawBottom();
+    },
+    getEnemyCropCount: function() {
+        var count = 0;
+        for(var x = 0; x < combat.enemywidth; x++) {
+            for(var y = 0; y < combat.enemyheight; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined) { continue; }
+                count++;
+            }
+        }
+        return count;
     },
     highlightReadyCropsAndReturnCount: function() {
         var count = 0;
@@ -99,10 +110,11 @@ combat.menu = {
             case 0: if(combat.numPlantTurns > 0) { game.transition(this, combat.plant); } break;
             case 1:
                 var count = this.highlightReadyCropsAndReturnCount();
-                if(count === 0 && !player.canMelee()) { return; }
+                var theircount = this.getEnemyCropCount();
+                if(count === 0 && !player.canMelee(theircount)) { return; }
                 var attackCount = 1;
                 if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
-                game.transition(this, combat.selectTarget, attackCount);
+                game.transition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
                 break;
             case 2: if(player.equipment.compost !== null) { game.transition(this, combat.compost); } break;
             case 3: this.tryFlee(); break;

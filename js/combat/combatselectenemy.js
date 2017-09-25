@@ -1,15 +1,18 @@
 combat.selectTarget = {
-    cursorx: 0, canSickle: false, dy: 8, 
+    cursorx: 0, canSickle: false, canHumans: true, dy: 8, 
     sicklePos: {x: -1, y: -1}, targets: [], maxTargets: 0, 
     layersToClear: ["menucursorA", "menucursorB", "menutext"], 
-    setup: function(numAttacks) {
+    setup: function(args) {
         this.cursorx = 0;
         this.sicklePos = {x: -1, y: -1};
         this.canSickle = player.canSickleCrops();
+        this.canHumans = !args.isMelee || player.canAttackPeople();
+        if(!this.canHumans) {
+            this.sicklePos = {x: combat.enemydx, y: (combat.enemyheight - 1 + combat.enemydy)};
+        }
         this.targets = [];
-        numAttacks = numAttacks || 1;
-        console.log(numAttacks + "/" + combat.enemies.length);
-        if(numAttacks >= combat.enemies.length && (!this.canSickle || this.enemyGridIsEmpty())) {
+        var numAttacks = args.numAttacks || 1;
+        if(this.canHumans && numAttacks >= combat.enemies.length && (!this.canSickle || this.enemyGridIsEmpty())) {
             for(var i = 0; i < combat.enemies.length; i++) { this.targets.push(i); }
             this.attack();
         } else {
@@ -88,6 +91,7 @@ combat.selectTarget = {
             pos.y = combat.enemyheight - 1 + combat.enemydy;
         }
         if(pos.y == (combat.enemyheight + combat.enemydy)) {
+            if(!this.canHumans) { return false; }
             this.sicklePos = { x: -1, y: -1 };
             pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 8 };
         }
@@ -100,6 +104,7 @@ combat.selectTarget = {
     mouseMove: function(pos) {
         var newx = pos.x - (11 - combat.enemies.length);
         if(pos.y === 8) {
+            if(!this.canHumans) { return false; }
             this.sicklePos = {x: -1, y: -1};
             if(newx < 0) { return false; }
             if(newx >= combat.enemies.length) { return false; }
@@ -184,14 +189,12 @@ combat.selectTarget = {
                 var damage = Math.ceil(damage / 6);
                 avgDamage += damage;
                 lastTargetName = "the " + crop.displayname;
-                //damagetext += "You attack the " + crop.displayname + " for like " + damage + " damage";
                 if((crop.power - damage) <= 0) {
                     hasDestroys = true;
-                    //damagetext += ", destroying it instantly."
                     crop.hidden = true;
                     combat.animHelper.DrawCrops();
                     combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
-                }// else { damagetext += "."; }
+                }
                 crop.power -= damage;
                 if(crop.power <= 0) {
                     if(crop.size == 2) {
@@ -218,18 +221,12 @@ combat.selectTarget = {
                 }
                 if(!criticalHit) { damage = Math.max(1, damage - target.def); }
                 avgDamage += damage;
-                if(attackinfo.animals.length > 0) {
-                    hasAnimals = true;
-                    //damagetext += "Nature Strikes! You and your animal friends attack " + target.name + " for like " + damage + " damage";
-                } else {
-                    //damagetext += "You attack " + target.name + " for like " + damage + " damage";
-                }
+                if(attackinfo.animals.length > 0) { hasAnimals = true; }
                 lastTargetName = target.name;
-                if(additionalTargets.length > 0) { hasRecoil = true; } //damagetext += ", plus recoil"; }
+                if(additionalTargets.length > 0) { hasRecoil = true; }
                 if((target.health - damage) <= 0) {
                     hasKills = true;
-                    //damagetext += ", killing them instantly."
-                } //else { damagetext += "."; }
+                }
                 combat.damageEnemy(targetidx, damage);
                 var recoilDamage = Math.ceil(damage * 0.15);
                 for(var j = 0; j < additionalTargets.length; j++) {
@@ -237,7 +234,6 @@ combat.selectTarget = {
                 }
                 if(stunTurns > 0) {
                     stunningEnemies = true;
-                    //damagetext += " Also they're all sticky now.";
                     combat.stickEnemy(targetidx, stunTurns);
                 }
             }
