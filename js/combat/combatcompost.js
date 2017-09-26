@@ -1,6 +1,6 @@
 combat.compost = {
     selectedCrops: [], 
-    cursor: {x: 1, y: 5}, dy: 7.5,
+    cursor: {x: 1, y: 5}, dy: 7.5, compostMultiplier: 1, 
     healButtonWidth: 0, healButtonSelected: false, 
     attackButtonWidth: 0, attackButtonSelected: false, 
     layersToClean: ["menuA", "menucursorA", "menucursorB", "menutext"],
@@ -9,6 +9,9 @@ combat.compost = {
         this.cursor = {x: combat.dx, y: combat.dy};
         this.healButtonSelected = false;
         this.attackButtonSelected = false;
+        if(player.equipment.compost !== "") {
+            compostMultiplier = 1 + (GetEquipment(player.equipment.compost).bonus || 0);
+        } else { compostMultiplier = 1; }
         this.mouseMove(this.cursor);
         this.drawAll();
     },
@@ -172,7 +175,7 @@ combat.compost = {
                 }
                 combat.animHelper.DrawBackground();
             }
-            healAmount = Math.ceil(healAmount);
+            healAmount = Math.ceil(healAmount * compostMultiplier);
             player.health = Math.min(player.maxhealth, player.health + healAmount);
             game.transition(this, combat.inbetween, {
                 next: function() { combat.endTurn(combat.inbetween) },
@@ -219,7 +222,7 @@ combat.compost = {
                 }
                 combat.animHelper.DrawBackground();
             }
-            damage = Math.ceil(damage / 3.5);
+            damage = Math.ceil(compostMultiplier * damage / 3.5);
             for(var i = combat.enemies.length - 1; i >= 0; i--) {
                 combat.damageEnemy(i, damage);
             }
