@@ -50,6 +50,7 @@ function GetEquipmentDesc(equipInfo) {
         if(equipInfo.canAttack) { str += "\n Can attack enemies with Compost."; }
         if(equipInfo.rotOnly) { str += "\n Can only compost rotten crops."; }
         if(equipInfo.bonus) { str += "\n Bonus Effect: " + (equipInfo.bonus * 100) + "%"; }
+        if(equipInfo.tech) { str += "\n May backfire."; }
     } else if(equipInfo.type === "gloves") {
         str += "Seeds Per Turn: " + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n Can Attack or Compost after planting seeds."; }
