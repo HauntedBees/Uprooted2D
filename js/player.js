@@ -135,11 +135,6 @@ var player = {
                 break;
         }
     },
-    getRotResist: function() {
-        if(this.equipment.soil === null) { return 0; }
-        var equipInfo = GetEquipment(this.equipment.soil);
-        return (equipInfo.rotResist || 0);
-    },
     canAttackAfterPlanting: function() {
         if(this.equipment.gloves === null) { return 0; }
         var equipInfo = GetEquipment(this.equipment.gloves);

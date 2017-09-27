@@ -58,7 +58,6 @@ function GetEquipmentDesc(equipInfo) {
         if(equipInfo.tech) { str += "\n May shock saplings and tech when planted. Will shock you when touching water."; }
     } else if(equipInfo.type === "soil") {
         str += "Speed Boost: " + (equipInfo.boost * 100) + "%";
-        if(equipInfo.rotResist !== undefined) { str += "\n Rot Resistance Turns: " + equipInfo.rotResist; }
     } else if(equipInfo.type === "armor") {
         str += player.getArmorDisplayString(equipInfo);
     }

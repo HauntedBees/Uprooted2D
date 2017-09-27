@@ -35,8 +35,6 @@ pausemenu.farmmod = {
             if(player.itemGrid[gridX][gridY] === null) {
                 var speed = player.getCropSpeedMultiplier() * 100;
                 text = "Dirt\n Growth Speed: " + speed + "%\n ";
-                var rotResist = player.getRotResist();
-                if(rotResist > 0) { text += "Rot Resist: " + rotResist + "\n "; }
                 var boostStr = player.getArmorDisplayString();
                 if(boostStr !== "") { text += boostStr + "\n "; }
                 if((player.skilltree.Sspring + player.skilltree.Ssummer + player.skilltree.Sautumn + player.skilltree.Swinter) > 0) {

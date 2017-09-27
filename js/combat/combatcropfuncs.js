@@ -35,15 +35,6 @@ combat.ageCrops = function() {
             if(crop.activeTime > 0) {
                 crop.activeTime -= 1;
             } else if(crop.activeTime == 0) {
-                var rotResist = player.getRotResist();
-                if(rotResist > 0) {
-                    if(crop.delay === undefined) {
-                        crop.delay = rotResist;
-                    } else {
-                        crop.delay--;
-                    }
-                    if(crop.delay > 0) { continue; }
-                }
                 if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = crop.respawn; }
                 else if(crop.type === "veg") { crop.rotten = true; }
                 else if(crop.type === "egg") { crop.power += 1; }
