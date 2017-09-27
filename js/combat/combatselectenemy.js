@@ -190,8 +190,8 @@ combat.selectTarget = {
                     combat.lastTarget = 0;
                 }
                 combat.lastTargetCrop = false;
-                var damage = Math.ceil(damage / 6);
-                avgDamage += damage;
+                var innerDamage = Math.ceil(damage / 6);
+                avgDamage += innerDamage;
                 lastTargetName = "the " + crop.displayname;
                 if((crop.power - damage) <= 0) {
                     hasDestroys = true;
@@ -199,7 +199,7 @@ combat.selectTarget = {
                     combat.animHelper.DrawCrops();
                     combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
                 }
-                crop.power -= damage;
+                crop.power -= innerDamage;
                 if(crop.power <= 0) {
                     if(crop.size == 2) {
                         combat.enemyGrid[cropPos.x + 1][cropPos.y] = null;
@@ -223,16 +223,17 @@ combat.selectTarget = {
                         additionalTargets.push(idx);
                     }
                 }
-                if(!criticalHit) { damage = Math.max(1, damage - target.def); }
-                avgDamage += damage;
+                var innerDamage = damage;
+                if(!criticalHit) { innerDamage = Math.max(1, innerDamage - target.def); }
+                avgDamage += innerDamage;
                 if(attackinfo.animals.length > 0) { hasAnimals = true; }
                 lastTargetName = target.name;
                 if(additionalTargets.length > 0) { hasRecoil = true; }
-                if((target.health - damage) <= 0) {
+                if((target.health - innerDamage) <= 0) {
                     hasKills = true;
                 }
-                combat.damageEnemy(targetidx, damage);
-                var recoilDamage = Math.ceil(damage * 0.15);
+                combat.damageEnemy(targetidx, innerDamage);
+                var recoilDamage = Math.ceil(innerDamage * 0.15);
                 for(var j = 0; j < additionalTargets.length; j++) {
                     combat.damageEnemy(additionalTargets[j], recoilDamage);
                 }
