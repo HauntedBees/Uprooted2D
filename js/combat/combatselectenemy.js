@@ -258,6 +258,11 @@ combat.selectTarget = {
             else { damagetext += "."; }
             if(stunningEnemies) { damagetext += " And now they're all sticky!" }
         }
+        if((player.health - attackinfo.selfHarm) <= 0) { attackinfo.selfHarm = player.health - 1; }
+        if(attackinfo.selfHarm > 0) {
+            damagetext += " Also, your gloves shock you for " + attackinfo.selfHarm + " damage!";
+            player.health -= attackinfo.selfHarm;
+        }
 
         combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
         combat.flagFreshCrops(true, criticalHit, attackinfo.animals, additionalTargets);
@@ -270,6 +275,8 @@ combat.selectTarget = {
     getAttackDetails: function() {
         var dmg = 0, numCrops = 0;
         var stickAmount = 0, potentialForStun = false;
+        var canHurt = (player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech);
+        var selHurt = 0;
         var animals = [];
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
@@ -292,6 +299,9 @@ combat.selectTarget = {
                         stickAmount = Math.max(stickAmount, 1.2 * Range(tile.stickRange[0], tile.stickRange[1]));
                     }
                 }
+                if(canHurt && ["water", "rice", "spear", "rod"].indexOf(tile.type) >= 0) {
+                    selHurt += tile.power * 0.25;
+                }
                 var addtlDamage = tile.power * reduction;
                 if(tile.animal !== undefined && player.getRandomLuckyNumber() <= tile.animalChance) {
                     animals.push({ crop: tile.name, animal: tile.animal });
@@ -306,7 +316,8 @@ combat.selectTarget = {
             stun: Math.round(stickAmount),
             stunPotential: potentialForStun,
             animals: animals,
-            numCrops: numCrops
+            numCrops: numCrops,
+            selfHarm: Math.ceil(selHurt)
         };
     }
 };

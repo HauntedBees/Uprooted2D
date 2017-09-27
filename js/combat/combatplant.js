@@ -145,7 +145,12 @@ combat.plant = {
             var px = pos.x - combat.dx, py = pos.y - combat.dy;
             var ppos = {x: px, y: py};
             if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
-            if(diff == 1) {
+            var newCrop = GetCrop(this.activeCrop.name);
+            var cropIsKill = false;
+            if(player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech) {
+                cropIsKill = ["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && Math.random() <= 0.1;
+            }
+            if(diff == 1 && !cropIsKill) {
                 combat.grid[px + 1][py] = ppos;
                 combat.grid[px][py + 1] = ppos;
                 combat.grid[px + 1][py + 1] = ppos;
@@ -162,8 +167,8 @@ combat.plant = {
                 this.throwSpear(px, py);
                 return true;
             }
-            var newCrop = GetCrop(this.activeCrop.name);
             if(player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") {
+                cropIsKill = false;
                 var cowIdx = combat.getCowIndex(px - 1, py - 1);
                 if(cowIdx >= 0) {
                     combat.happyCows[cowIdx].feed += newCrop.power;
@@ -175,28 +180,48 @@ combat.plant = {
                 newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
                 var effects = combat.effectGrid[px][py];
                 var divider = (player.itemGrid[px][py] !== null && player.itemGrid[px][py] === "_strongsoil") ? 1.25 : 2;
-                if(effects !== null) {
-                    if(effects.type === "shocked") {
-                        newCrop.power = 1;
-                    } else if(effects.type === "splashed" || effects.type === "burned") {
-                        newCrop.power = Math.ceil(newCrop.power / divider);
+                if(!cropIsKill) {
+                    if(effects !== null) {
+                        if(effects.type === "shocked") {
+                            newCrop.power = 1;
+                        } else if(effects.type === "splashed" || effects.type === "burned") {
+                            newCrop.power = Math.ceil(newCrop.power / divider);
+                        }
                     }
+                    combat.grid[px][py] = newCrop;
                 }
-                combat.grid[px][py] = newCrop;
             }
             this.cursor = { x: 0, y: this.dy };
             player.decreaseItem(this.activeCrop.name);
             this.activeCrop = null;
             combat.animHelper.DrawCrops();
-            if(--combat.numPlantTurns == 0) {
-                if(player.canAttackAfterPlanting()) {
-                    game.transition(this, combat.menu);
+            if(cropIsKill) {
+                var next;
+                if(--combat.numPlantTurns == 0) {
+                    if(player.canAttackAfterPlanting()) {
+                        next = function() { game.transition(combat.inbetween, combat.menu); };
+                    } else {
+                        next = function() { combat.endTurn(combat.inbetween); };
+                    }
                 } else {
-                    combat.endTurn(this);
+                    next = function() { game.transition(combat.inbetween, combat.plant); }
                 }
+                game.transition(this, combat.inbetween, {
+                    next: next,
+                    text: "You try to plant your " + newCrop.displayname + ", but your gloves shock it!"
+                });
                 return true;
             } else {
-                this.setup();
+                if(--combat.numPlantTurns == 0) {
+                    if(player.canAttackAfterPlanting()) {
+                        game.transition(this, combat.menu);
+                    } else {
+                        combat.endTurn(this);
+                    }
+                    return true;
+                } else {
+                    this.setup();
+                }
             }
         }
         this.drawAll();
