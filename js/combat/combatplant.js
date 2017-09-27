@@ -69,6 +69,10 @@ combat.plant = {
             if(combat.effectGrid[x][y] !== null && combat.effectGrid[x][y].type === "shocked") { return false; }
             return this.activeCrop.type === "tech";
         }
+        if(parent === "_charger") {
+            var okspot = y === (player.itemGrid[x][y].y + 1) && x === player.itemGrid[x][y].x;
+            return okspot && this.activeCrop.type == "sickle2";
+        }
         if(type.corner === "_cow") { return this.activeCrop.type === "food" || this.activeCrop.type === "veg"; }
     },
     getSprinklerMultiplier: function(x, y, size) {

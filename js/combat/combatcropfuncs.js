@@ -34,7 +34,8 @@ combat.ageCrops = function() {
             }
             if(crop.activeTime > 0) {
                 crop.activeTime -= 1;
-            } else if(crop.activeTime == 0) {
+                if(crop.activeTime === 0 && crop.type === "sickle2") { this.removeCrop({x: x, y: y}); }
+            } else if(crop.activeTime === 0) {
                 if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = crop.respawn; }
                 else if(crop.type === "veg") { crop.rotten = true; }
                 else if(crop.type === "egg") { crop.power += 1; }

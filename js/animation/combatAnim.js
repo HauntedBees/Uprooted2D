@@ -243,6 +243,7 @@ function CombatAnimHelper(enemies) {
         e.deadFrame = 0;
     };
     this.DisplayEnemyDamage = function(idx) {
+        if(idx.x !== undefined) { return; }
         if(idx >= combat.enemies.length) { return; }
         if(combat.enemies[idx].health <= 0) {
             this.MakeEnemyACorpse(idx);

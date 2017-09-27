@@ -12,6 +12,7 @@ var spriteData = {
             spriteData.names["goose" + i] = [26 + i, 6];
             spriteData.names["turkey" + i] = [22 + i, 7];
             spriteData.names["platypus" + i] = [26 + i, 7];
+            spriteData.names["sicklebattery" + i] = [15 + i, 21];
             if(i < 2) {
                 spriteData.names["apple" + i] = [3 + i, 0, true];
                 spriteData.names["banana" + i] = [5 + i, 0, true];
@@ -117,6 +118,8 @@ var spriteData = {
         "edgeSA": [8, 15],
         "edgeS": [9, 15],
         "edgeSD": [10, 15],
+        "sicklebattery3": [19, 21],
+        "sicklebatteryseed": [15, 21],
         "farmupgradeI-n": [21, 11],
         "farmupgrade_-I": [20, 12],
         "farmupgradeO-I": [21, 12],

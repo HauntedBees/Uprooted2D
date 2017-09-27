@@ -3,6 +3,20 @@ combat.menu = {
     layersToClean: ["menuA", "menucursorA", "menucursorB", "menutext"],
     setup: function(sel) {
         gfx.clearSome(this.layersToClean);
+        if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
+            var hasCharger = false;
+            for(var x = 0; x < player.gridWidth; x++) {
+                if(hasCharger) { break; }
+                for(var y = 0; y < player.gridHeight; y++) {
+                    var item = combat.grid[x][y]
+                    if(item !== null && item.type === "sickle2") {
+                        hasCharger = true;
+                        break;
+                    }
+                }
+            }
+            player.equipment.weapon = hasCharger ? "!sickle2" : "!sickle2_weak";
+        }
         this.options = [];
         this.cursorY = sel || 0;
         this.drawOption("Plant", 0, this.cursorY === 0);

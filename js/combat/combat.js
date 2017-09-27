@@ -20,12 +20,13 @@ var combat = {
         this.itemsEarned = [];
         this.happyCows = [];
         this.usedShooters = [];
-        if(player.equipment.weapon === "!sickle2") {
+        if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
             var hasCharger = false;
             for(var x = 0; x < player.gridWidth; x++) {
                 if(hasCharger) { break; }
                 for(var y = 0; y < player.gridHeight; y++) {
-                    if(player.itemGrid[x][y] === "_charger") {
+                    var item = combat.grid[x][y]
+                    if(item !== null && item.type === "sickle2") {
                         hasCharger = true;
                         break;
                     }

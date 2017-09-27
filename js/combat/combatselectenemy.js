@@ -184,7 +184,11 @@ combat.selectTarget = {
                     cropPos = {x: crop.x, y: crop.y};
                     crop = combat.enemyGrid[crop.x][crop.y];
                 }
-                combat.lastTarget = 0;
+                if(targArr) {
+                    combat.lastTarget.push(targetidx);
+                } else {
+                    combat.lastTarget = 0;
+                }
                 combat.lastTargetCrop = false;
                 var damage = Math.ceil(damage / 6);
                 avgDamage += damage;
