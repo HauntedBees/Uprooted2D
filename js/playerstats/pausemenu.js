@@ -12,8 +12,7 @@ var pausemenu = {
         pausemenu.drawOption("Items", 0, pausemenu.cursorY == 0);
         pausemenu.drawOption("Equipment", 1, pausemenu.cursorY == 1);
         pausemenu.drawOption("Farm", 2, pausemenu.cursorY == 2);
-        pausemenu.drawOption("Skills", 3, pausemenu.cursorY == 3);
-        pausemenu.drawOption("Save", 4, pausemenu.cursorY == 4);
+        pausemenu.drawOption("Save", 3, pausemenu.cursorY == 3);
         gfx.drawCursor(0, pausemenu.cursorY, pausemenu.options[pausemenu.cursorY], 0);
         pausemenu.addText("Lv." + player.level, 4, 0);
         pausemenu.addLabeledText("HP", player.health + "/" + player.maxhealth, 6, 0);
@@ -23,11 +22,6 @@ var pausemenu = {
         pausemenu.addLabeledText("Total EXP", player.totalExp, 4, 1.5);
         pausemenu.addLabeledText("Coins", player.monies, 4.5, 2.5);
         pausemenu.addLabeledText("Time Played", player.getPlayTimeString(), 2.5, 3);
-        var skills = ["Sspring", "Ssummer", "Sautumn", "Swinter", "season"];
-        for(var i = 0; i < skills.length; i++) {
-            var name = "skill_" + skills[i] + player.skilltree[skills[i]];
-            gfx.drawTileToGrid(name, 2 + i % 11, 4 + Math.floor(i / 11), "menuA");
-        }
     },
     addLabeledText: function(label, val, x, y) { gfx.drawText(label + ": " + val, 2 + x * 16, 10.5 + y * 16); },
     addText: function(t, x, y) { gfx.drawText(t, 2 + x * 16, 10.5 + y * 16); },
@@ -47,13 +41,12 @@ var pausemenu = {
         return true;
     },
     click: function(pos) {
-        if(pos.x > 4) { return false; }
+        if(pos.x > 3) { return false; }
         switch(pos.y) {
             case 0: game.transition(this, pausemenu.inventory); break;
             case 1: game.transition(this, pausemenu.equipment); break;
             case 2: game.transition(this, pausemenu.farmmod); break;
-            case 3: game.transition(this, pausemenu.skilltree); break;
-            case 4: game.transition(this, pausemenu.savemenu); break;
+            case 3: game.transition(this, pausemenu.savemenu); break;
             default: return false;
         }
         return true;

@@ -2,7 +2,7 @@ var player = {
     health: 25, maxhealth: 25, 
     atk: 3, def: 2, luck: 0.7,
     level: 1, exp: 0, nextExp: 4, totalExp: 0, 
-    eploids: 10, monies: 1000, playTime: 0,
+    monies: 1000, playTime: 0,
     clearedEntities: [], questsCleared: [], activeQuests: {}, 
     lastInn: "start",
     equipment: {
@@ -33,13 +33,6 @@ var player = {
     ],
     gridWidth: 3, gridHeight: 3, gridLevel: "n",
     itemGrid: null,
-    skilltree: {
-        Sspring: 0,
-        Ssummer: 0,
-        Sautumn: 1,
-        Swinter: 0,
-        season: 0
-    },
     hasQuest: function(q) { return player.activeQuests[q] !== undefined; },
     completedQuest: function(q) { return player.questsCleared.indexOf(q) >= 0; },
     hasItem: function(item, amount) {
@@ -87,7 +80,6 @@ var player = {
         this.health = this.maxhealth;
         this.atk = Math.ceil(this.atk + Math.log10(this.level));
         this.def = Math.ceil(this.def + Math.log10(this.level));
-        this.eploids += 1;
         this.luck = 0.7 - (this.level / 400);
         this.nextExp = Math.floor(this.level * this.level * 5 * Math.pow(1.02, this.level - 2));
         this.getLevelUpItemBonuses();

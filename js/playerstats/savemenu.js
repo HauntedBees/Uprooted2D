@@ -64,7 +64,7 @@ pausemenu.savemenu = {
         if(this.confirm) {
             this.setup(this.cursorY);
         } else {
-            game.transition(this, pausemenu, 4);
+            game.transition(this, pausemenu, 3);
         }
     },
     keyPress: function(key) {

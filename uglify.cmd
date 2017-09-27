@@ -27,7 +27,6 @@ uglifyjs ^
     js/playerstats/viewinventory.js ^
     js/playerstats/equipment.js ^
     js/playerstats/farmmod.js ^
-    js/playerstats/skilltrees.js ^
     js/playerstats/savemenu.js ^
     js/player.js^
     js/rendering.js ^
