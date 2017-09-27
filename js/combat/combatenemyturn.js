@@ -12,9 +12,7 @@ combat.enemyTurn = {
     doAttack: function(enemy) {
         var rand = Math.random();
         var attack = null;
-        if(enemy.stickTurns > 0) {
-            return { text: "glue gun son of a bitch" };
-        }
+        if(enemy.stickTurns > 0) { return { text: "glue gun son of a bitch" }; }
         if(enemy.attacks.length > 1) {
             for(var i = 0; i < enemy.attacks.length; i++) {
                 if(rand <= enemy.attacks[i][1]) {

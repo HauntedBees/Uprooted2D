@@ -54,6 +54,7 @@ function GetEquipmentDesc(equipInfo) {
     } else if(equipInfo.type === "gloves") {
         str += "Seeds Per Turn: " + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n Can Attack or Compost after planting seeds."; }
+        if(equipInfo.def) { str += "\n Damage Resistance: " + (equipInfo.def * 100) + "%"; }
     } else if(equipInfo.type === "soil") {
         str += "Speed Boost: " + (equipInfo.boost * 100) + "%";
         if(equipInfo.rotResist !== undefined) { str += "\n Rot Resistance Turns: " + equipInfo.rotResist; }

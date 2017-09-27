@@ -9,7 +9,7 @@ combat.compost = {
         this.cursor = {x: combat.dx, y: combat.dy};
         this.healButtonSelected = false;
         this.attackButtonSelected = false;
-        if(player.equipment.compost !== "") {
+        if(player.equipment.compost !== null) {
             compostMultiplier = 1 + (GetEquipment(player.equipment.compost).bonus || 0);
         } else { compostMultiplier = 1; }
         this.mouseMove(this.cursor);
@@ -170,7 +170,7 @@ combat.compost = {
         };
     },
     compostFailureCheck: function() {
-        if(player.equipment.compost === "") { return false; }
+        if(player.equipment.compost === null) { return false; }
         if(!GetEquipment(player.equipment.compost).tech) { return false; }
         if(Math.random() > 0.5) { return false; }
         this.addCompostAnimsAndGetValue({ cowMult: 0, beeMult: 0, beeFraction: 0, baseMult: 0 });

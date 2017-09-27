@@ -207,12 +207,12 @@ var enemyAttacks = {
     app: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is distracted by a hot new App."); },
     gear: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is thinking about the concept of gears."); },
     babySlap: function(e) {
-        combat.damagePlayer(1);
-        return { text: e.name + " slaps for 1 damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        var damage = combat.damagePlayer(1);
+        return { text: e.name + " slaps for " + damage + " damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
     },
     standardAttack: function(e) {
-        combat.damagePlayer(e.atk);
-        return { text: e.name + " attacks for " + e.atk + " damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        var damage = combat.damagePlayer(e.atk);
+        return { text: e.name + " attacks for " + damage + " damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
     },
     dumbbattery: function(e) {
         var atkData = enemyFuncs.GetAvailableCropsAndDamage(e);
@@ -221,10 +221,10 @@ var enemyAttacks = {
             if(doAttack) { return enemyAttacks[e.attacks[1][0]](e); }
             return enemyFuncs.GetGenericStandbyAttack(e.name + " started charging a battery.");
         } else {
-            combat.damagePlayer(atkData.damage);
+            var damage = combat.damagePlayer(atkData.damage);
             combat.flagFreshCrops(false);
             return {
-                text: e.name + " attacks for " + atkData.damage + " damage.",
+                text: e.name + " attacks for " + damage + " damage.",
                 animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ],
                 throwables: atkData.crops
             };
@@ -255,7 +255,7 @@ var enemyAttacks = {
     harvestOrAttack: function(e) {
         var atkData = enemyFuncs.GetAvailableCropsAndDamage(e);
         var dmg = atkData.crops.length === 0 ? Math.max(1, e.atk - player.def) : atkData.damage;
-        combat.damagePlayer(dmg);
+        dmg = combat.damagePlayer(dmg);
         return {
             text: e.name + " attacks for " + dmg + " damage.",
             animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ],

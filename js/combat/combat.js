@@ -106,7 +106,15 @@ var combat = {
         this.ageCrops();
         this.state = 0;
     },
-    damagePlayer: function(damage) { player.health = Math.max(0, player.health - damage); },
+    damagePlayer: function(damage) {
+        if(player.equipment.gloves !== null) {
+            var g = GetEquipment(player.equipment.gloves);
+            var mult = (g.def === undefined) ? 1 : (1 - g.def);
+            damage = Math.max(1, Math.floor(damage * mult));
+        }
+        player.health = Math.max(0, player.health - damage);
+        return damage;
+    },
     damageEnemy: function(enemyidx, damage) {
         this.enemies[enemyidx].health -= damage;
         if(this.enemies[enemyidx].health <= 0) {
