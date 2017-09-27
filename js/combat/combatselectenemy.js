@@ -284,11 +284,18 @@ combat.selectTarget = {
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.activeTime > 0 || tile.rotten) { continue; }
                 numCrops++;
-                var reduction = player.getArmorBalancedMultiplier(tile.seasons[combat.season]);
-                if(tile.seasons[combat.season] > 0.5) {
-                    if(combat.season == 0 && player.skilltree.Sspring == 1 || combat.season == 1 && player.skilltree.Ssummer == 1 ||
-                        combat.season == 2 && player.skilltree.Sautumn == 1 || combat.season == 3 && player.skilltree.Swinter == 1) {
-                        reduction *= 1.35;
+                var boost = 1, seasonVal = tile.seasons[combat.season];
+                if(seasonVal > 0.5) {
+                    boost *= 1 + (seasonVal - 0.5);
+                    if(player.equipment.soil !== null) {
+                        var equipInfo = GetEquipment(this.equipment.soil);
+                        boost *= 1 + (equipInfo.amplify || 0);
+                    }
+                } else if(seasonVal < 0.5) {
+                    boost *= 0.5 + seasonVal;
+                    if(player.equipment.soil !== null) {
+                        var equipInfo = GetEquipment(this.equipment.soil);
+                        boost *= 1 + (equipInfo.boost || 0);
                     }
                 }
                 if(tile.type === "bee") {
@@ -302,12 +309,12 @@ combat.selectTarget = {
                 if(canHurt && ["water", "rice", "spear", "rod"].indexOf(tile.type) >= 0) {
                     selHurt += tile.power * 0.25;
                 }
-                var addtlDamage = tile.power * reduction;
+                var thisCropsDamage = tile.power * boost;
                 if(tile.animal !== undefined && player.getRandomLuckyNumber() <= tile.animalChance) {
                     animals.push({ crop: tile.name, animal: tile.animal });
-                    addtlDamage *= tile.animalDamageMult;
+                    thisCropsDamage *= tile.animalDamageMult;
                 }
-                dmg += addtlDamage;
+                dmg += thisCropsDamage;
             }
         }
         dmg += (dmg === 0 ? Math.round((player.atk / 2) + player.getSickleAttackBonus(combat.season)) : player.atk);

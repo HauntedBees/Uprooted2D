@@ -35,15 +35,6 @@ pausemenu.farmmod = {
             if(player.itemGrid[gridX][gridY] === null) {
                 var speed = player.getCropSpeedMultiplier() * 100;
                 text = "Dirt\n Growth Speed: " + speed + "%\n ";
-                var boostStr = player.getArmorDisplayString();
-                if(boostStr !== "") { text += boostStr + "\n "; }
-                if((player.skilltree.Sspring + player.skilltree.Ssummer + player.skilltree.Sautumn + player.skilltree.Swinter) > 0) {
-                    text += "Boost:";
-                    if(player.skilltree.Sspring > 0) { text += " SP"; }
-                    if(player.skilltree.Ssummer > 0) { text += " SU"; }
-                    if(player.skilltree.Sautumn > 0) { text += " AU"; }
-                    if(player.skilltree.Swinter > 0) { text += " WI"; }
-                }
             } else {
                 var item = player.itemGrid[gridX][gridY];
                 if(item.coord) { item = player.itemGrid[item.x][item.y]; }

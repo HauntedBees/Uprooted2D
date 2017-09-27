@@ -57,9 +57,10 @@ function GetEquipmentDesc(equipInfo) {
         if(equipInfo.def) { str += "\n Damage Resistance: " + (equipInfo.def * 100) + "%"; }
         if(equipInfo.tech) { str += "\n May shock saplings and tech when planted. Will shock you when touching water."; }
     } else if(equipInfo.type === "soil") {
+        if(equipInfo.speed) { str += "\n Growth Speed Boost: " + (equipInfo.speed * 100) + "%"; }
+        if(equipInfo.boost) { str += "\n Seasonal Resistance: " + (equipInfo.boost * 100) + "%"; }
+        if(equipInfo.amplify) { str += "\n Seasonal Strength: " + (equipInfo.amplify * 100) + "%"; }
         str += "Speed Boost: " + (equipInfo.boost * 100) + "%";
-    } else if(equipInfo.type === "armor") {
-        str += player.getArmorDisplayString(equipInfo);
     }
     return str;
 }

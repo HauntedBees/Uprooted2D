@@ -97,31 +97,6 @@ var player = {
         if(GetEquipment(player.equipment.weapon).noEnemies && numEnemyCrops === 0) { return false; }
         return true;
     },
-    getArmorBalancedMultiplier: function(seasonVal) {
-        if(this.equipment.armor === null) { return 1; }
-        var equipInfo = GetEquipment(this.equipment.armor);
-        if(equipInfo.boost !== undefined) {
-            var newVal = 1 - ((1 - seasonVal) * equipInfo.boost);
-            return Math.min(newVal, 1);
-        } else {
-            if(seasonVal > 0.5) {
-                return (1 + equipInfo.amplify);
-            } else {
-                return (1 - equipInfo.amplify);
-            }
-        }
-    },
-    getArmorDisplayString: function(equipInfo) {
-        if(equipInfo === undefined) {
-            if(this.equipment.armor === null) { return ""; }
-            equipInfo = GetEquipment(this.equipment.armor);
-        }
-        if(equipInfo.boost !== undefined) {
-            return "Season Resist: " + (equipInfo.boost * 100) + "%";
-        } else {
-            return "Season Mult.: " + (equipInfo.amplify * 100) + "%";
-        }
-    },
     getLevelUpItemBonuses: function() {
         switch(this.level) {
             case 2:
@@ -148,7 +123,7 @@ var player = {
     getCropSpeedMultiplier: function() {
         if(this.equipment.soil === null) { return 1; }
         var equipInfo = GetEquipment(this.equipment.soil);
-        return (equipInfo.boost + 1);
+        return (equipInfo.speed + 1);
     },
     getPlantingTurns: function() {
         if(this.equipment.gloves === null) { return 1; }
