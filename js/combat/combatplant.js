@@ -146,9 +146,21 @@ combat.plant = {
             var ppos = {x: px, y: py};
             if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
             var newCrop = GetCrop(this.activeCrop.name);
-            var cropIsKill = false;
+            var cropIsKill = false, killType = 0;
             if(player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech) {
-                cropIsKill = ["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && Math.random() <= 0.1;
+                if(["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && Math.random() <= 0.1) {
+                    cropIsKill = true;
+                    killType = 1;
+                }
+            }
+            if(player.equipment.soil !== null && GetEquipment(player.equipment.soil).tech) {
+                if(["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && (newCrop.power <= 5 || newCrop.time <= 5)) {
+                    cropIsKill = true;
+                    killType = 2;
+                } else if(newCrop.type === "bee") {
+                    cropIsKill = true;
+                    killType = 3;
+                }
             }
             if(diff == 1 && !cropIsKill) {
                 combat.grid[px + 1][py] = ppos;
@@ -206,9 +218,16 @@ combat.plant = {
                 } else {
                     next = function() { game.transition(combat.inbetween, combat.plant); }
                 }
+                var killMsg = "You try to plant your " + newCrop.displayname + ", ";
+                switch(killType) {
+                    case 1: killMsg += "but your gloves shock it!"; break;
+                    case 2: killMsg += "but it is too weak to withstand your soil's pesticides!"; break;
+                    case 3: killMsg = "You try to put your bees in the beehive, but the pesticide scares them away, you dumbfuck."; break;
+                    default: killMsg += "but ERROR MESSAGE GOES HERE!"; break;
+                }
                 game.transition(this, combat.inbetween, {
                     next: next,
-                    text: "You try to plant your " + newCrop.displayname + ", but your gloves shock it!"
+                    text: killMsg
                 });
                 return true;
             } else {

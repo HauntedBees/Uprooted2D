@@ -60,7 +60,7 @@ function GetEquipmentDesc(equipInfo) {
         if(equipInfo.speed) { str += "\n Growth Speed Boost: " + (equipInfo.speed * 100) + "%"; }
         if(equipInfo.boost) { str += "\n Seasonal Resistance: " + (equipInfo.boost * 100) + "%"; }
         if(equipInfo.amplify) { str += "\n Seasonal Strength: " + (equipInfo.amplify * 100) + "%"; }
-        str += "Speed Boost: " + (equipInfo.boost * 100) + "%";
+        if(equipInfo.tech) { str += "\n Will kill crops that are too weak or grow too quickly. Bees will fly away."; }
     }
     return str;
 }
