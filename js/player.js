@@ -86,8 +86,12 @@ var player = {
     },
     canMelee: function(numEnemyCrops) {
         if(player.equipment.weapon === null) { return false; }
-        if(GetEquipment(player.equipment.weapon).noEnemies && numEnemyCrops === 0) { return false; }
-        return true;
+        var weapon = GetEquipment(player.equipment.weapon);
+        if(numEnemyCrops === 0) {
+            return !weapon.noEnemies;
+        } else {
+            return weapon.targetCrops;
+        }
     },
     getLevelUpItemBonuses: function() {
         switch(this.level) {
