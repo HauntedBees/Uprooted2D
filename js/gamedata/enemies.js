@@ -143,7 +143,7 @@ var enemyFuncs = {
         var crop = combat.grid[x][y];
         if(crop === null) { return { status: true, crop: false }; }
 
-        var dmg = enemyFuncs.GetCropDamage(e, x, y);
+        var dmg = enemyFuncs.GetCropDamage(e, x, y, 0);
         crop.power -= dmg;
         if(crop.rotten) { crop.power = 0; }
         if(crop.power <= 0) {
@@ -179,7 +179,7 @@ var enemyFuncs = {
             return { status: true, crop: hadTile, destroyed: true, special: itemTile };
         }
         if(crop === null) { return { status: true, crop: false }; }
-        var dmg = enemyFuncs.GetCropDamage(e, x, y);
+        var dmg = enemyFuncs.GetCropDamage(e, x, y, 1);
 
         crop.power -= dmg;
         if(crop.rotten) { crop.power = 0; }
@@ -191,10 +191,15 @@ var enemyFuncs = {
             return { status: true, crop: true, destroyed: false, special: "" };
         }
     },
-    GetCropDamage: function(e, x, y) {
+    GetCropDamage: function(e, x, y, type) { // type: 0 = water, 1 = fire
         var crop = combat.grid[x][y];
         var itemTile = player.itemGrid[x][y];
-        var dmg = Math.ceil(e.atk / 2); // TODO: water/fire resistance
+        var dmg = Math.ceil(e.atk / 2);
+        if(type === 0 && crop.waterResist) {
+            dmg *= crop.waterResist;
+        } else if(type === 1 && crop.fireResist) {
+            dmg *= crop.fireResist;
+        }
         if(crop.x !== undefined) {
             crop = combat.grid[crop.x][crop.y];
             dmg = Math.ceil(dmg / 2);

@@ -200,7 +200,11 @@ combat.plant = {
                     if(effects !== null) {
                         if(effects.type === "shocked") {
                             newCrop.power = 1;
-                        } else if(effects.type === "splashed" || effects.type === "burned") {
+                        } else if(effects.type === "splashed") {
+                            if(newCrop.waterResist) { divider /= 1 + newCrop.waterResist; }
+                            newCrop.power = Math.ceil(newCrop.power / divider);
+                        } else if(effects.type === "burned") {
+                            if(newCrop.fireResist) { divider /= 1 + newCrop.fireResist; }
                             newCrop.power = Math.ceil(newCrop.power / divider);
                         }
                     }
