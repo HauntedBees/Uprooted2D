@@ -125,9 +125,14 @@ combat.purgeFlaggedCrop = function(grid, x, y) {
         crop.flagged = false;
     } else {
         grid[x][y] = null;
+        if(crop.size === 2 && crop.type === "tech") {
+            grid[x+1][y] = null;
+            grid[x][y+1] = null;
+            grid[x+1][y+1] = null;
+        }
     }
     combat.animHelper.DrawCrops();
-    return (crop.size == 2);
+    return (crop.size === 2);
 };
 combat.removeCrop = function(pos) {
     var crop = this.grid[pos.x][pos.y];

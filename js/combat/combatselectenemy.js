@@ -245,9 +245,9 @@ combat.selectTarget = {
             avgDamage = Math.floor(avgDamage / this.targets.length);
         }
         if(hasAnimals) {
-            damagetext = "Nature Strikes! You and your animal friends";
+            damagetext += "Nature Strikes! You and your animal friends";
         } else {
-            damagetext = "You";
+            damagetext += "You";
         }
         damagetext += " attack " + lastTargetName;
         if(this.targets.length > 1) {

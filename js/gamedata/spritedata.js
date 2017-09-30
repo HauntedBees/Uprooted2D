@@ -13,6 +13,9 @@ var spriteData = {
             spriteData.names["turkey" + i] = [22 + i, 7];
             spriteData.names["platypus" + i] = [26 + i, 7];
             spriteData.names["sicklebattery" + i] = [15 + i, 21];
+            spriteData.names["app" + i] = [28 - i, 10];
+            spriteData.names["frogbot" + i] = [11 + i, 0, true];
+            spriteData.names["coffee" + i] = [11 + i, 1, true];
             if(i < 2) {
                 spriteData.names["apple" + i] = [3 + i, 0, true];
                 spriteData.names["banana" + i] = [5 + i, 0, true];
@@ -27,6 +30,10 @@ var spriteData = {
                 spriteData.names["beet" + i] = [5 + i, 7];
             }
             if(i < 3) {
+                spriteData.names["printer" + i] = [25 + i, 9];
+                spriteData.names["printer" + (i + 3)] = [28 + i, 9];
+                spriteData.names["drone" + i] = [29 + i, 10];
+                spriteData.names["headphones" + i] = [25 + i, 8];
                 spriteData.names["tree" + i] = [i, 0, true];
                 spriteData.names["garlic" + i] = [12 + i, 5];
                 spriteData.names["bellpepper" + i] = [1 + i, 6];
@@ -97,6 +104,19 @@ var spriteData = {
         }
     },
     names: {
+        "coffee4": [15, 1, true],
+        "appseed": [28, 10],
+        "app": [30, 8],
+        "frogbotseed": [31, 8],
+        "frogbot": [31, 8],
+        "headphones": [28, 8],
+        "headphonesseed": [28, 8],
+        "droneseed": [29, 10],
+        "drone": [31, 9],
+        "printerseed": [25, 9],
+        "printer": [29, 8],
+        "coffeeseed": [30, 6],
+        "coffee": [31, 6],
         "_sprinkler": [9, 17],
         "animalRabbit": [15, 12],
         "goopdrop": [15, 15],

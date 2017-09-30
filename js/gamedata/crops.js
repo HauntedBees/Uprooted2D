@@ -138,7 +138,6 @@ function GetCrop(name) {
         case "grapes": return new CropDetail(name, "Grapes", 10, "tree", 2, 20, 5, 6, 4, 0, 0, 1);
         case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 1);
         case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 6, 3, 0, 0, 1);
-        case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
         case "algae": return new CropDetail(name, "Algae", 10, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "kelp": return new CropDetail(name, "Kelp", 10, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "rock": return new CropDetail(name, "Rock", 10, "rock", 1, 5, 1, 0, 0);
@@ -157,6 +156,13 @@ function GetCrop(name) {
         case "turkey": return new CropDetail(name, "Turkey Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
         case "platypus": return new CropDetail(name, "Platypus Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
         /* Tech */
+        case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
+        case "headphones": return new CropDetail(name, "Wireless Headphones", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
+        case "printer": return new CropDetail(name, "3D Printer", 10, "tech", 1, 5, 6, 3, 4, 1, 1, 1, 1);
+        case "app": return new CropDetail(name, "App", 10, "tech", 1, 3, 4, 3, 0, 1, 1, 1, 1);
+        case "drone": return new CropDetail(name, "Drone", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
+        case "frogbot": return new CropDetail(name, "Fwoggybot", 10, "tech", 2, 5, 4, 3, 0, 1, 1, 1, 1);
+        case "coffee": return new CropDetail(name, "Coffee Machine", 10, "tech", 2, 5, 5, 3, 3, 1, 1, 1, 1);
         case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 10, "sickle2", 1, 5, 4, 0, 0);
     }
 }
