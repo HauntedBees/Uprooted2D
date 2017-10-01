@@ -90,7 +90,7 @@ var player = {
         if(numEnemyCrops === 0) {
             return !weapon.noEnemies;
         } else {
-            return weapon.targetCrops;
+            return weapon.targetCrops || !weapon.noEnemies;
         }
     },
     getLevelUpItemBonuses: function() {
