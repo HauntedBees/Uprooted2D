@@ -104,6 +104,10 @@ var spriteData = {
         }
     },
     names: {
+        "hbeeseed": [25, 11],
+        "hbee0": [26, 11],
+        "hbee1": [27, 11],
+        "hbee": [28, 11],
         "coffee4": [15, 1, true],
         "appseed": [28, 10],
         "app": [30, 8],

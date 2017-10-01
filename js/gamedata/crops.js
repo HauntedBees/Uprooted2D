@@ -122,6 +122,7 @@ function GetCrop(name) {
         case "beeR": return new CropDetail(name, "Killer Bee", 10, "bee", 1, 999, 2, 5, 999, 1, 1, 0, 1, { req: 0.1, stickChance: 1, stickRange: [1, 2] });
         case "beeG": return new CropDetail(name, "Stingless Bee", 10, "bee", 1, 999, 2, 5, 999, 1, 1, 0, 1, { req: 0.1, stickChance: 1, stickRange: [1, 2] });
         case "beeB": return new CropDetail(name, "Honey Bee", 10, "bee", 1, 999, 2, 5, 999, 1, 1, 0, 1, { req: 0.1, stickChance: 1, stickRange: [1, 2] });
+        case "hbee": return new CropDetail(name, "Haunted Bee", 10, "bee", 1, 999, 2, 5, 999, 1, 1, 0, 1, { req: 0.1, stickChance: 1, stickRange: [1, 2] });
         /* Rice */
         case "rice": return new CropDetail(name, "Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
         case "arborio": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
