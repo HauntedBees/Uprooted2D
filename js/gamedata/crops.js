@@ -118,17 +118,22 @@ function GetEquipment(name) {
 
 function GetCrop(name) {
     switch(name) {
+        /* Bees */
         case "beeB": return new CropDetail(name, "Honeybee", 10, "bee", 1, 999, 2, 5, 999, 1, 1, 0, 1, { req: 0.1, stickChance: 1, stickRange: [1, 2] });
+        /* Rice */
         case "rice": return new CropDetail(name, "Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
         case "arborio": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
         case "blackrice": return new CropDetail(name, "Black Rice", 10, "rice", 1, 5, 4, 5, 0, 0, 1, 1, 1);
+        /* Fishing */
         case "spear": return new CropDetail(name, "Fish Spear", 10, "spear", 1, 0, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.99, req: 0.5 });
         case "rod": return new CropDetail(name, "Fish Rod", 10, "rod", 1, 10, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.99, req: 0.15 });
         case "goodrod": return new CropDetail(name, "Better Rod", 10, "rod", 1, 10, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.7, req: 0.2 });
         case "metalrod": return new CropDetail(name, "Metal Rod", 10, "rod", 1, 20, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.8, req: 0.175 });
         case "net": return new CropDetail(name, "Fish Net", 10, "water", 1, -1, 2, 10, 0, 0, 0, 0, 0, { rotten: true, req: 0.05 });
+        /* Cow */
         case "fodder": return new CropDetail(name, "Fodder", 10, "food", 1, 0, 1, 4, 0, 0, 0, 0, 0);
-        case "beet": return new CropDetail(name, "Beet", 10, "veg", 1, 1, 2, 5, 0, 0, 0.66, 1, 1);
+        /* Veg */
+        case "beet": return new CropDetail(name, "Beet", 10, "veg", 1, 1, 2, 5, 0, 0, 0.66, 1, 1, { waterResist: 0.5 });
         case "apple": return new CropDetail(name, "Apple", 10, "tree", 2, 5, 5, 2, 2, 0.75, 0.75, 1, 0.75);
         case "carrot": return new CropDetail(name, "Carrot", 10, "veg", 1, 2, 2, 3, 0, 1, 0.66, 1, 0.66, { animal: "Rabbit", animalChance: 0.01, animalDamageMult: 2 });
         case "leek": return new CropDetail(name, "Leek", 10, "veg", 1, 2, 3, 8, 0, 0, 0, 0, 1);
@@ -138,6 +143,7 @@ function GetCrop(name) {
         case "grapes": return new CropDetail(name, "Grapes", 10, "tree", 2, 20, 5, 6, 4, 0, 0, 1);
         case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 1);
         case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 6, 3, 0, 0, 1);
+        /* only for enemies */
         case "algae": return new CropDetail(name, "Algae", 10, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "kelp": return new CropDetail(name, "Kelp", 10, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "rock": return new CropDetail(name, "Rock", 10, "rock", 1, 5, 1, 0, 0);
@@ -146,7 +152,7 @@ function GetCrop(name) {
         case "shiitake": return new CropDetail(name, "Shiitake", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "milkcap": return new CropDetail(name, "Milk Cap", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "portobello": return new CropDetail(name, "Portobello", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-        case "greenshroom": return new CropDetail(name, "Green Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+        case "greenshroom": return new CropDetail(name, "Parrot Toadstool", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "blackshroom": return new CropDetail(name, "Black Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "poisnshroom": return new CropDetail(name, "Definitely Poisonous Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         /* Eggs */
@@ -157,7 +163,7 @@ function GetCrop(name) {
         case "platypus": return new CropDetail(name, "Platypus Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
         /* Tech */
         case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
-        case "headphones": return new CropDetail(name, "Wireless Headphones", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
+        case "headphones": return new CropDetail(name, "Earbuds", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
         case "printer": return new CropDetail(name, "3D Printer", 10, "tech", 1, 5, 6, 3, 4, 1, 1, 1, 1);
         case "app": return new CropDetail(name, "App", 10, "tech", 1, 3, 4, 3, 0, 1, 1, 1, 1);
         case "drone": return new CropDetail(name, "Drone", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
