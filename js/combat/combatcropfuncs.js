@@ -16,7 +16,7 @@ combat.ageCrops = function() {
             var crop = this.grid[x][y];
             if(crop.type === "water" || crop.type === "rod") {
                 var success = (Math.random() * player.luck) < crop.req;
-                if(crop.name === "net" && crop.rotten && success) {
+                if((crop.name === "net" || crop.name === "bignet") && crop.rotten && success) {
                     crop.rotten = false;
                     crop.power += Range(0, 5);
                     crop.activeTime = crop.time;
@@ -125,7 +125,7 @@ combat.purgeFlaggedCrop = function(grid, x, y) {
         crop.flagged = false;
     } else {
         grid[x][y] = null;
-        if(crop.size === 2 && crop.type === "tech") {
+        if(crop.size === 2 && crop.type !== "tree") {
             grid[x+1][y] = null;
             grid[x][y+1] = null;
             grid[x+1][y+1] = null;

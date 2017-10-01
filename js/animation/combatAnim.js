@@ -299,14 +299,25 @@ function CombatAnimHelper(enemies) {
                 var ydy = y + dy;
                 var newFrame = Math.floor((crop.frames - 1) * ((crop.time - crop.activeTime) / crop.time));
                 if(crop.size == 2) {
-                    if(newFrame < 3) {
+                    var drawItemNum = true;
+                    if(crop.name === "bignet") {
+                        if(crop.rotten) {
+                            gfx.drawTileToGrid(crop.name + "0", xdx, ydy, "foreground");
+                        } else {
+                            gfx.drawTileToGrid(crop.name + "1", xdx, ydy, "foreground");
+                            gfx.drawItemNumber(0, xdx + 1, ydy, "foreground", true);
+                        }
+                        drawItemNum = false;
+                    } else if(crop.type !== "tree") {
+                        gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
+                    } else if(newFrame < 3) {
                         gfx.drawTileToGrid("tree" + newFrame, xdx, ydy, "foreground");
                     } else {
                         gfx.drawTileToGrid("tree2", xdx, ydy, "foreground");
                         newFrame -= 3;
                         gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
                     }
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx + 1, ydy, "foreground", true);
+                    if(drawItemNum) { gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx + 1, ydy, "foreground", true); }
                 } else if(crop.type === "water") {
                     if(crop.name === "net") {
                         if(crop.rotten) {

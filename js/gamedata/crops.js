@@ -133,6 +133,7 @@ function GetCrop(name) {
         case "goodrod": return new CropDetail(name, "Better Rod", 10, "rod", 1, 10, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.7, req: 0.2 });
         case "metalrod": return new CropDetail(name, "Metal Rod", 10, "rod", 1, 20, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.8, req: 0.175 });
         case "net": return new CropDetail(name, "Fish Net", 10, "water", 1, -1, 2, 10, 0, 0, 0, 0, 0, { rotten: true, req: 0.05 });
+        case "bignet": return new CropDetail(name, "Big Net", 10, "water", 2, -1, 2, 10, 0, 0, 0, 0, 0, { rotten: true, req: 0.05 });
         /* Cow */
         case "fodder": return new CropDetail(name, "Fodder", 10, "food", 1, 0, 1, 4, 0, 0, 0, 0, 0);
         /* Veg */
