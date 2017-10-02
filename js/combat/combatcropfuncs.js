@@ -66,7 +66,8 @@ combat.flagFreshCrops = function(isPlayer, isCritical, animals, additionalTarget
         for(var y = 0; y < grid[0].length; y++) {
             if(grid[x][y] === null || grid[x][y].name === undefined) { continue; }
             var crop = grid[x][y];
-            if(crop.rotten || crop.activeTime > 0) { continue; }
+            if(crop.name === "app") { if(crop.activeTime > 2) { continue; } }
+            else if(crop.rotten || crop.activeTime > 0) { continue; }
             crop.flagged = true;
             if(!isPlayer) { continue; }
             var animal = undefined;
@@ -96,7 +97,7 @@ combat.flagFreshCrops = function(isPlayer, isCritical, animals, additionalTarget
         }
     }
 };
-combat.flagCrop = function(pos) {
+combat.clearFlagAndReturnCrop = function(pos) {
     var crop = this.grid[pos.x][pos.y];
     this.grid[pos.x][pos.y] = null;
     crop.flagged = true;
@@ -119,7 +120,7 @@ combat.cleanFlaggedCrops = function() {
 combat.purgeFlaggedCrop = function(grid, x, y) {
     if(grid[x][y] === null || grid[x][y].name === undefined) { return false; }
     var crop = grid[x][y];
-    if(crop.rotten || crop.activeTime > 0) { return false; }
+    if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; }
     if(crop.respawn > 0) {
         crop.activeTime = crop.respawn;
         crop.flagged = false;

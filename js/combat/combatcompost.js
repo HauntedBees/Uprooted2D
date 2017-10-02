@@ -150,7 +150,7 @@ combat.compost = {
                 combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 250, "puff", 5));
                 combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 4, 6, 1000, "milk"));
             } else {
-                var crop = combat.flagCrop(croppos);
+                var crop = combat.clearFlagAndReturnCrop(croppos);
                 if(crop.type === "bee") {
                     if(crop.activeTime === 0) {
                         outputAmount += args.beeMult * crop.power;

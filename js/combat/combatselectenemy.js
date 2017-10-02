@@ -287,7 +287,8 @@ combat.selectTarget = {
             for(var y = 0; y < player.gridHeight; y++) {
                 var tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
-                if(tile.activeTime > 0 || tile.rotten) { continue; }
+                if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
+                else if(tile.rotten || tile.activeTime > 0) { continue; }
                 numCrops++;
                 var boost = 1, seasonVal = tile.seasons[combat.season];
                 if(seasonVal > 0.5) {
@@ -315,6 +316,7 @@ combat.selectTarget = {
                     selHurt += tile.power * 0.25;
                 }
                 var thisCropsDamage = tile.power * boost;
+                if(tile.name === "app") { thisCropsDamage *= 2 / (tile.activeTime + 1); }
                 if(tile.animal !== undefined && player.getRandomLuckyNumber() <= tile.animalChance) {
                     animals.push({ crop: tile.name, animal: tile.animal });
                     thisCropsDamage *= tile.animalDamageMult;

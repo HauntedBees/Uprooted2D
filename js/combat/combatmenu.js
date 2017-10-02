@@ -90,7 +90,8 @@ combat.menu = {
             for(var y = 0; y < player.gridHeight; y++) {
                 var tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
-                if(tile.activeTime > 0 || tile.rotten) { continue; }
+                if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
+                else if(tile.rotten || tile.activeTime > 0) { continue; }
                 count++;
                 var size = tile.size - 1;
                 gfx.drawCursor(x + combat.dx, y + combat.dy, size, size, "xcursor");
