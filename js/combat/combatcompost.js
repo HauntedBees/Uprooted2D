@@ -117,6 +117,7 @@ combat.compost = {
         this.selectedCrops.push(gridpos);
     },
     isCompostable: function(tile) {
+        if(tile.name === "coffee" && tile.activeTime === 0) { return true; }
         if(tile.type === "egg" || tile.type === "tech") { return false; }
         return (player.equipment.compost !== null && (!GetEquipment(player.equipment.compost).rotOnly || tile.rotten));
     },
@@ -156,6 +157,8 @@ combat.compost = {
                     } else {
                         outputAmount *= args.beeFraction;//0.75;
                     }
+                } else if(crop.name === "coffee") {
+                    outputAmount += args.coffeeMult * crop.power;
                 } else {
                     outputAmount += (args.baseMult - (crop.activeTime / crop.time)) * crop.power;
                 }
@@ -173,7 +176,7 @@ combat.compost = {
         if(player.equipment.compost === null) { return false; }
         if(!GetEquipment(player.equipment.compost).tech) { return false; }
         if(Math.random() > 0.5) { return false; }
-        this.addCompostAnimsAndGetValue({ cowMult: 0, beeMult: 0, beeFraction: 0, baseMult: 0 });
+        this.addCompostAnimsAndGetValue({ cowMult: 0, beeMult: 0, beeFraction: 0, baseMult: 0, coffeeMult: 0 });
         var anim = new NotAnAnim(4, 6, 1000, "compost");
         anim.finish = function() {
             var anim = new ShakeAnim(4, 6, 500, "compost", 0.25, 20);
@@ -189,63 +192,69 @@ combat.compost = {
         combat.animHelper.DrawCrops();
         return true;
     },
-    click: function(pos) {
-        if(pos.y == this.dy && pos.x < 3) { // heal
-            if(this.selectedCrops.length == 0) { return false; }
-            if(this.compostFailureCheck()) { return true; }
-            var res = this.addCompostAnimsAndGetValue({ cowMult: 1.5, beeMult: 1.45, beeFraction: 0.75, baseMult: 1.1 });
-            var healAmount = res.total, thereAreCows = res.cows;
+    healAction: function() {
+        if(this.selectedCrops.length == 0) { return false; }
+        if(this.compostFailureCheck()) { return true; }
+        var res = this.addCompostAnimsAndGetValue({ cowMult: 1.5, beeMult: 1.45, beeFraction: 0.75, baseMult: 1.1, coffeeMult: 2.5 });
+        var healAmount = res.total, thereAreCows = res.cows;
 
-            var anim = new NotAnAnim(4, 6, 1000, "compost");
-            anim.finish = function() { combat.animHelper.AddAnim(new ShakeAnim(4, 6, 500, "compost", 0.25, 20)); };
-            combat.animHelper.AddAnim(anim);
-            if(thereAreCows) {
-                for(var i = combat.happyCows.length - 1; i >= 0; i--) {
-                    if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
-                }
-                combat.animHelper.DrawBackground();
+        var anim = new NotAnAnim(4, 6, 1000, "compost");
+        anim.finish = function() { combat.animHelper.AddAnim(new ShakeAnim(4, 6, 500, "compost", 0.25, 20)); };
+        combat.animHelper.AddAnim(anim);
+        if(thereAreCows) {
+            for(var i = combat.happyCows.length - 1; i >= 0; i--) {
+                if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
             }
-            healAmount = Math.ceil(healAmount * compostMultiplier);
-            player.health = Math.min(player.maxhealth, player.health + healAmount);
-            game.transition(this, combat.inbetween, {
-                next: function() { combat.endTurn(combat.inbetween) },
-                text: "You compost your crops, recovering " + healAmount + " health."
-            });
-            combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
-            combat.animHelper.DrawCrops();
-            return true;
-        } else if(pos.y == (this.dy + 1) && pos.x < 3 && player.canAttackWithCompost()) { // attack
-            if(this.selectedCrops.length == 0) { return false; }
-            if(this.compostFailureCheck()) { return true; }
-            var damage = this.addCompostAnimsAndGetValue({ cowMult: 0.01, beeMult: 0.1, beeFraction: 1, baseMult: 0.1 }).total;
-            var anim = new NotAnAnim(4, 6, 1000, "compost");
+            combat.animHelper.DrawBackground();
+        }
+        healAmount = Math.ceil(healAmount * compostMultiplier);
+        player.health = Math.min(player.maxhealth, player.health + healAmount);
+        game.transition(this, combat.inbetween, {
+            next: function() { combat.endTurn(combat.inbetween) },
+            text: "You compost your crops, recovering " + healAmount + " health."
+        });
+        combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
+        combat.animHelper.DrawCrops();
+        return true;
+    },
+    attackAction: function() {
+        if(this.selectedCrops.length == 0) { return false; }
+        if(this.compostFailureCheck()) { return true; }
+        var damage = this.addCompostAnimsAndGetValue({ cowMult: 0.01, beeMult: 0.1, beeFraction: 1, baseMult: 0.1, coffeeMult: 0.5 }).total;
+        var anim = new NotAnAnim(4, 6, 1000, "compost");
+        anim.finish = function() {
+            var anim = new ShakeAnim(4, 6, 500, "compost", 0.25, 20);
             anim.finish = function() {
-                var anim = new ShakeAnim(4, 6, 500, "compost", 0.25, 20);
-                anim.finish = function() {
-                    combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
-                    for(var i = 0; i < combat.enemies.length; i++) {
-                        combat.animHelper.AddPlayerThrowable({name: "compostpile", x: -1, y: -1, customtarget: i});
-                    }
-                };
-                combat.animHelper.AddAnim(anim);
+                combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
+                for(var i = 0; i < combat.enemies.length; i++) {
+                    combat.animHelper.AddPlayerThrowable({name: "compostpile", x: -1, y: -1, customtarget: i});
+                }
             };
             combat.animHelper.AddAnim(anim);
-            if(thereAreCows) {
-                for(var i = combat.happyCows.length - 1; i >= 0; i--) {
-                    if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
-                }
-                combat.animHelper.DrawBackground();
+        };
+        combat.animHelper.AddAnim(anim);
+        if(thereAreCows) {
+            for(var i = combat.happyCows.length - 1; i >= 0; i--) {
+                if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
             }
-            damage = Math.ceil(compostMultiplier * damage / 3.5);
-            for(var i = combat.enemies.length - 1; i >= 0; i--) {
-                combat.damageEnemy(i, damage);
-            }
-            game.transition(this, combat.inbetween, {
-                next: function() { combat.endTurn(combat.inbetween) },
-                text: "You compost your crops and hurl them forward, dealing " + damage + " damage" + (combat.enemies.length > 1 ? " to everyone." : ".")
-            });
-            combat.animHelper.DrawCrops();
-            return true;
+            combat.animHelper.DrawBackground();
+        }
+        damage = Math.ceil(compostMultiplier * damage / 3.5);
+        for(var i = combat.enemies.length - 1; i >= 0; i--) {
+            combat.damageEnemy(i, damage);
+        }
+        game.transition(this, combat.inbetween, {
+            next: function() { combat.endTurn(combat.inbetween) },
+            text: "You compost your crops and hurl them forward, dealing " + damage + " damage" + (combat.enemies.length > 1 ? " to everyone." : ".")
+        });
+        combat.animHelper.DrawCrops();
+        return true;
+    },
+    click: function(pos) {
+        if(pos.y == this.dy && pos.x < 3) {
+            return this.healAction();
+        } else if(pos.y == (this.dy + 1) && pos.x < 3 && player.canAttackWithCompost()) {
+            return this.attackAction();
         }
         if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }
         if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight)) { return false; }
