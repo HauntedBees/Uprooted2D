@@ -68,7 +68,7 @@ var spriteData = {
             spriteData.names[bees[i] + "1"] = [11 + i, 14];
             spriteData.names[bees[i]] = [11 + i, 15];
         }
-        var rices = ["arborio", "blackrice", "rice"];
+        var rices = ["arborio", "blackrice", "rice", "shortgrain", "chestnut"];
         for(var i = 0; i < rices.length; i++) {
             var rice = rices[i];
             spriteData.names[rice + "0"] = [15, 20];

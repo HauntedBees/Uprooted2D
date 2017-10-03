@@ -385,5 +385,13 @@ var fulltext = {
 	"bignet": {
 		"en-us": "", 
 		"en-dm": "This net can catch much larger fish than a smaller net. It can also catch more fish than a smaller net. Pretty amazing."
+	},
+	"shortgrain": {
+		"en-us": "", 
+		"en-dm": "Short-grain rice is often used for rice pudding, a tasty treat that's fun to eat! It rhymes, so it has to be true."
+	},
+	"chestnut": {
+		"en-us": "", 
+		"en-dm": "The Chinese water chestnut is a grass-like vegetable with delicious starchy corms. Yep, that's what the edible part is called. The corm."
 	}
 };
