@@ -125,8 +125,8 @@ var gfx = {
         if(selected) { gfx.drawCursor(0, y - 0.5, 14, -0.25); }
         gfx.drawText(t, 8, y * 16);
     },
-    drawText: function(t, x, y, color) {
-        gfx.ctx["menutext"].font = "22px PressStart2P";
+    drawText: function(t, x, y, color, size) {
+        gfx.ctx["menutext"].font = (size || 22) + "px PressStart2P";
         gfx.ctx["menutext"].fillStyle = (color || "#000000");
         gfx.ctx["menutext"].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
     },

@@ -9,7 +9,6 @@ pausemenu.inventory = {
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
         this.actualIndexes = [];
-        gfx.drawInfobox(16, 5, 5);
         var j = 0;
         for(var i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
@@ -18,7 +17,7 @@ pausemenu.inventory = {
             j++;
         }
         gfx.drawCursor(this.cursor.x, this.cursor.y, 0, 0);
-        this.setText();
+        this.setCrop();
     },
     clean: function() { gfx.clearSome(this.layersToClear); },
     cancel: function() { game.transition(this, pausemenu); },
@@ -50,12 +49,36 @@ pausemenu.inventory = {
             return this.mouseMove(pos);
         }
     },
-    setText: function() {
+    setCrop: function() {
+        gfx.drawInfobox(16, 5, 5);
         var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
         var actIdx = this.actualIndexes[idx];
         var item = player.inventory[actIdx];
-        var iteminfo = GetCrop(item[0]);
-        var str = iteminfo.displayname + " (" + item[1] + ")\n " + GetCropDesc(iteminfo);
-        gfx.drawWrappedText(str, 4, 100, 235);
+        var crop = GetCrop(item[0]);
+        gfx.drawText(crop.displayname, 4, 105, undefined, 32);
+        
+        gfx.drawTileToGrid(crop.name, 0, 5, "menutext");
+
+        gfx.drawTileToGrid("inv_power", 2, 5, "menutext");
+        gfx.drawText(crop.power, 50, 93.5, undefined, 42);
+
+        gfx.drawTileToGrid("inv_time", 4.5, 5, "menutext");
+        var timeNum = crop.time;
+        if(crop.time === 999 || crop.time === -1) { timeNum = "?"; } // what is 999 for??
+        gfx.drawText(timeNum, 90, 93.5, undefined, 42);
+
+        if(crop.respawn > 0) {
+            timeNum = crop.respawn;
+            if(crop.respawn === 999) { timeNum = "?"; }
+            gfx.drawTileToGrid("inv_regrow", 7, 5, "menutext");
+            gfx.drawText(timeNum, 130, 93.5, undefined, 42);
+        }
+
+        var seasons = ["spring", "summer", "autumn", "winter"];
+        for(var i = 0; i < 4; i++) {
+            gfx.drawTileToGrid((crop.seasons[i] > 0.5 ? seasons[i] : "noSeason"), 11 + i, 5, "menutext");
+        }
+        
+        gfx.drawWrappedText(GetText(crop.name), 4, 115, 235);
     }
 };

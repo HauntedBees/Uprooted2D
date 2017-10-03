@@ -88,14 +88,6 @@ var spriteData = {
         for(var i = 0; i < items.length; i++) {
             spriteData.names[items[i]] = [6 + i, 10];
         }
-        var skills = ["Sspring", "Ssummer", "Sautumn", "Swinter"];
-        for(var i = 0; i < skills.length; i++) {
-            var item = skills[i];
-            for(var j = 0; j < 2; j++) {
-                spriteData.names["skill_" + item + j] = [i, 13 + j];
-                spriteData.names["skillD_" + item + j] = [4, 13];
-            }
-        }
         for(var i = 0; i < 13; i++) {
             spriteData.names["sickle_" + i] = [i, 16];
             if(i < 9) { spriteData.names["compost_" + i] = [i, 17]; }
@@ -104,6 +96,9 @@ var spriteData = {
         }
     },
     names: {
+        "inv_power": [31, 11],
+        "inv_time": [13, 21],
+        "inv_regrow": [30, 11],
         "hbeeseed": [25, 11],
         "hbee0": [26, 11],
         "hbee1": [27, 11],
@@ -144,6 +139,7 @@ var spriteData = {
         "edgeSD": [10, 15],
         "sicklebattery3": [19, 21],
         "sicklebatteryseed": [15, 21],
+        "sicklebattery": [12, 16],
         "farmupgradeI-n": [21, 11],
         "farmupgrade_-I": [20, 12],
         "farmupgradeO-I": [21, 12],
@@ -206,20 +202,7 @@ var spriteData = {
         "_log": [17, 7], 
         "_coop": [18, 7],
         "_cow": [20, 6],
-        "skill_season0": [4, 14],
-        "skillD_season0": [4, 13],
-        "skill_season10": [5, 13],
-        "skillD_season10": [4, 13],
-        "skill_season11": [6, 13],
-        "skillD_season11": [4, 13],
-        "skill_season12": [7, 13],
-        "skillD_season12": [4, 13],
-        "skill_season20": [5, 14],
-        "skillD_season20": [4, 13],
-        "skill_season21": [6, 14],
-        "skillD_season21": [4, 13],
-        "skill_season22": [7, 14],
-        "skillD_season22": [4, 13],
+        "noSeason": [4, 13],
         "dirt": [0, 11],
         "tech": [13, 17],
         "clock0": [13, 18],

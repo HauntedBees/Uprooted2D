@@ -213,5 +213,177 @@ var fulltext = {
 	"testA": {
 		"en-us": "", 
 		"en-dm": "it's battle"
+	},
+	"beeB": {
+		"en-us": "", 
+		"en-dm": "Honey bees are dying at an alarming rate, so do what you can to help save the bees! They are very important to our world!"
+	},
+	"rice": {
+		"en-us": "", 
+		"en-dm": "A worldwide staple food, rice is often known as \"the Grain of the East\" among people who are getting paid by the word to write flavor text."
+	},
+	"arborio": {
+		"en-us": "", 
+		"en-dm": "Firm, yet chewy. This Italian rice is often used in rice pudding and risotto, a creamy dish cooked in broth."
+	},
+	"blackrice": {
+		"en-us": "", 
+		"en-dm": "Popular in South Asia, black rice has lots of nutrients and is used as an ingredient in various desserts. Unlike white rice, it is black."
+	},
+	"spear": {
+		"en-us": "", 
+		"en-dm": "Spearfishing is one of the oldest methods of fishing. Sometimes just throwing a pointy stick at something is an effective strategy."
+	},
+	"rod": {
+		"en-us": "", 
+		"en-dm": "This fishing rod has a worm on the end to tempt fish to approach it. The early fish gets the worm, and the early fisherman gets the early fish!"
+	},
+	"goodrod": {
+		"en-us": "", 
+		"en-dm": "Sturdier than the average fishing rod, this rod is capable of catching big fish without snapping in half."
+	},
+	"metalrod": {
+		"en-us": "", 
+		"en-dm": "To catch a tough fish, you need a tough fishing rod. This is a tough fishing rod. So stop reading this and go catch some tough fish!"
+	},
+	"net": {
+		"en-us": "", 
+		"en-dm": "If you aren't picky, a good way of catching fish is just throwing a net out and settling for whatever gets caught in it. This also works for finding boyfriends."
+	},
+	"fodder": {
+		"en-us": "", 
+		"en-dm": "A plant-based feed for livestock like cows. Cows, much like humans, need food to live. Remember to respect your bovine friends!"
+	},
+	"beet": {
+		"en-us": "", 
+		"en-dm": "The compound that makes beets so red is not broken down during digestion, so if you eat enough beets, the red might come out the other end!"
+	},
+	"apple": {
+		"en-us": "", 
+		"en-dm": "An apple a day keeps the doctor away, but so does a gun."
+	},
+	"carrot": {
+		"en-us": "", 
+		"en-dm": "crunchy"
+	},
+	"leek": {
+		"en-us": "", 
+		"en-dm": "Why did the farmer call the plumber? Because her field sprung a leek!"
+	},
+	"lemon": {
+		"en-us": "", 
+		"en-dm": "When life gives you lemons, make sure you wash any pesticides off of them first because capitalism poisons us all."
+	},
+	"rhubarb": {
+		"en-us": "", 
+		"en-dm": "I don't know that much about rhubarb but when I visited some relatives in Wisconsin when I was a kid they loved this shit, so, there's that, I guess."
+	},
+	"pineapple": {
+		"en-us": "", 
+		"en-dm": "When life gives you pineapples, eat one every day to keep the pinedoctor away! That's how the old saying goes, right? Thanks."
+	},
+	"grapes": {
+		"en-us": "", 
+		"en-dm": "Tasty little purple eggs that you can smack on loudly in the waiting room of your therapist's office to piss off that guy who took your usual parking spot."
+	},
+	"ginger": {
+		"en-us": "", 
+		"en-dm": "Ginger stimulates the production of saliva, so if you ever want to drool or spit a lot for reasons I don't want to know about, just crunch on some ginger first."
+	},
+	"specialgrapes": {
+		"en-us": "", 
+		"en-dm": "Tasty little purple eggs that you can smack on loudly in the waiting room of your therapist's office to piss off that guy who took your usual parking spot."
+	},
+	"battery": {
+		"en-us": "", 
+		"en-dm": "Batteries are like food for technology. They need it to motivate them to go out and do their jobs. Their jobs like powering video game systems and toys."
+	},
+	"headphones": {
+		"en-us": "", 
+		"en-dm": "These fancy headphones are wireless, so you'll never have to untangle them! They will, however, burrow into your ears and install apps in your fucking brain."
+	},
+	"printer": {
+		"en-us": "", 
+		"en-dm": "This 3D printer is great for turning expensive prosthetics and equipment into affordable DIY projects! Or you can just make fucking action figures."
+	},
+	"app": {
+		"en-us": "", 
+		"en-dm": "This app will do more damage the longer you leave it on your field, as it generates more and more notifications. Clear your damn notifications already!"
+	},
+	"drone": {
+		"en-us": "", 
+		"en-dm": "This tiny flying machine is bringing you tomorrow's privacy and air traffic problems, today!"
+	},
+	"frogbot": {
+		"en-us": "", 
+		"en-dm": "A wind-up toy that resembles a frog. Not every new piece of technology has to shake up the entire industry, okay?!?"
+	},
+	"coffee": {
+		"en-us": "", 
+		"en-dm": "This machine can give you a proper cup of coffee with the press of a button! Too hot to drink, but you're too thirsty to wait!"
+	},
+	"sicklebattery": {
+		"en-us": "", 
+		"en-dm": "This battery will charge a Sickle2 Proprietary Charger Bay, allowing you to use your Sickle2 Proprietary Sickle-Type Product to its fullest proprietary potential!"
+	},
+	"egg": {
+		"en-us": "", 
+		"en-dm": "Over 50 million tons of chicken eggs are laid each year; that's enough for every person in the world to eat around half an egg a day, every day! Statistics are eggciting!"
+	},
+	"quail": {
+		"en-us": "", 
+		"en-dm": "Quail eggs are tiny and considered a delicacy in many parts of the world. In the Phillippines, skewered and battered quail eggs are a popular deep-fried treat!"
+	},
+	"goose": {
+		"en-us": "", 
+		"en-dm": "Goose eggs are quite a bit bigger than chicken eggs, which makes them good for people who like eating larger versions of common food items!"
+	},
+	"turkey": {
+		"en-us": "", 
+		"en-dm": "Turkeys lay eggs much less frequently than chickens, and it takes them much longer to start laying. This is why chickens beat turkeys in the Great Egg Race."
+	},
+	"platypus": {
+		"en-us": "", 
+		"en-dm": "Only two mammals lay eggs: platypi and echidnas. Baby platypi are referred to as \"puggles,\" because ha ha ha ha of course they are that shit's hilarious."
+	},
+	"shiitake": {
+		"en-us": "", 
+		"en-dm": "Native to East Asia, these mushrooms have been eaten since at least the 13th century. They are a common ingredient in miso soup."
+	},
+	"milkcap": {
+		"en-us": "", 
+		"en-dm": "When cut or bruised, the caps of these mushrooms release a white latex which gives them their name. For the same reason, humans are often called bloodfaces."
+	},
+	"portobello": {
+		"en-us": "", 
+		"en-dm": "There is no consensus as to where its name came from, so here's my theory: Megan \"Port\" Obello discovered them in her backyard. You can't prove I'm wrong!"
+	},
+	"greenshroom": {
+		"en-us": "", 
+		"en-dm": "It is covered in a sticky substance, but you can probably still eat them! Just don't eat too many at once unless you want some Tummy Troubles."
+	},
+	"blackshroom": {
+		"en-us": "", 
+		"en-dm": "Nobody knows how this mushroom got its distinctive black color, but one thing is for certain: this is absolutely a mushroom that is black and can be thrown at enemies!"
+	},
+	"poisnshroom": {
+		"en-us": "", 
+		"en-dm": "Some mushrooms are good for you, while others will rapidly kill you. This is why it's a good idea to get your mushrooms from a store and not from your basement."
+	},
+	"beeR": {
+		"en-us": "", 
+		"en-dm": "Africanized bees are what happens when mankind tries to play God. While their stings are no different from other honey bees, killer bees are much more defensive."
+	},
+	"beeG": {
+		"en-us": "", 
+		"en-dm": "These bees still have stingers, but they are too tiny to be used for stinging. They still have powerful mandibles, though, so their bites can really... sting!"
+	},
+	"hbee": {
+		"en-us": "", 
+		"en-dm": "A BEEEE!!"
+	},
+	"bignet": {
+		"en-us": "", 
+		"en-dm": "This net can catch much larger fish than a smaller net. It can also catch more fish than a smaller net. Pretty amazing."
 	}
 };
