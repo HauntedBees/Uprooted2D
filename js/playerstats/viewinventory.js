@@ -74,6 +74,21 @@ pausemenu.inventory = {
             gfx.drawText(timeNum, 130, 93.5, undefined, 42);
         }
 
+        var cropSprite = "dirt";
+        switch(crop.type) {
+            case "bee": cropSprite = "_beehive"; break;
+            case "spear":
+            case "water":
+            case "rod": cropSprite = "_lake"; break;
+            case "mush": cropSprite = "_log"; break;
+            case "egg": cropSprite = "_coop"; break;
+            case "food": cropSprite = "_cow"; break;
+            case "rice": cropSprite = "_paddy"; break;
+            case "tech": cropSprite = "_hotspot"; break;
+            case "sickle2": cropSprite = "_charger"; break;
+        }
+        gfx.drawTileToGrid(cropSprite, 9, 5, "menutext");
+
         var seasons = ["spring", "summer", "autumn", "winter"];
         for(var i = 0; i < 4; i++) {
             gfx.drawTileToGrid((crop.seasons[i] > 0.5 ? seasons[i] : "noSeason"), 11 + i, 5, "menutext");
