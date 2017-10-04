@@ -19,6 +19,7 @@ uglifyjs ^
     js/combat/combatinbetween.js ^
     js/combat/tutorial.js ^
     js/worldmap/worldmap.js ^
+    js/worldmap/title.js ^
     js/worldmap/shop.js ^
     js/worldmap/collisions.js ^
     js/worldmap/entityHelpers.js ^

@@ -25,6 +25,28 @@ var gfx = {
     clearSome: function(keys) { for(var i = 0; i < keys.length; i++) { gfx.clearLayer(keys[i]); } },
     clearAll: function() { for(var key in gfx.ctx) { gfx.clearLayer(key); } },
 
+    getSaveFileImage: function() {
+        var mapImg = gfx.spritesheets["maps/" + worldmap.mapName];
+        var offset = {
+            x: Math.min(collisions[worldmap.mapName][0].length - gfx.tileWidth, Math.max(worldmap.pos.x - (gfx.tileWidth / 2), 0)),
+            y: Math.min(collisions[worldmap.mapName].length - gfx.tileHeight, Math.max(worldmap.pos.x - (gfx.tileHeight / 2), 0))
+        };
+        offset.x = worldmap.pos.x - offset.x + 13;
+        offset.y = worldmap.pos.y - offset.y + 10;
+        var ctx = gfx.ctx["savegen"],  w = ctx.canvas.width, h = ctx.canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        var layersToDraw = ["background", "characters", "foreground"];
+        for(var i = 0; i < layersToDraw.length; i++) {
+            ctx.drawImage(gfx.canvas[layersToDraw[i]], offset.x * 16, offset.y * 16, w * 2, h * 2, 0, 0, w, h);
+        }
+        try { return ctx.canvas.toDataURL("image/png"); } catch(e) {  return null; } // toDataURL fails when running locally
+    },
+    drawSaveFileImage: function(encodedImg) {
+        var img = new Image();
+        img.src = encodedImg;
+        img.onload = function() { gfx.ctx["menutext"].drawImage(this, 700, 14, 192, 128); };
+    },
+
     drawTileToGrid: function(spritename, x, y, layer) {
         var data = spriteData.names[spritename];
         gfx.drawSprite("sheet", data[0], data[1], x * 16, y * 16, layer, data.length == 3);
@@ -130,6 +152,10 @@ var gfx = {
         gfx.ctx["menutext"].fillStyle = (color || "#000000");
         gfx.ctx["menutext"].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
     },
+    getTextLength: function(t, size) {
+        gfx.ctx["menutext"].font = (size || 22) + "px PressStart2P";
+        return gfx.ctx["menutext"].measureText(t).width;
+    },
     drawBottomFullText: function(t, color) {  gfx.drawFullText(t, 121, color); },
     drawFullText: function(t, y, color) { gfx.drawWrappedText(t, 4, 11 + (y || 0), 235, color); },
     drawWrappedText: function(t, x, y, maxWidth, color, layer) {
@@ -205,7 +231,7 @@ var gfx = {
         //gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["maps/" + map + "_fg"], offset.x * 16, midy + offset.y * 16, gfx.canvasWidth, midy, 0, midy, gfx.canvasWidth, midy);
         return offset;
     },
-    drawStore: function(store) {
+    drawFullImage: function(store) {
         var storeImg = gfx.spritesheets[store];
         gfx.drawImage(gfx.ctx["background"], storeImg, 0, 0, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
         return true;

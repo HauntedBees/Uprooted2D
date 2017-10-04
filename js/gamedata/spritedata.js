@@ -94,6 +94,10 @@ var spriteData = {
             if(i < 5) { spriteData.names["glove_" + i] = [i, 18]; }
             if(i < 11) { spriteData.names["can_" + i] = [i, 19]; }
         }
+        for(var i = 0; i < 3; i++) {
+            spriteData.names["titleSel" + i] = [4 + i, 21];
+            spriteData.names["titleSelActive" + i] = [7 + i, 21];
+        }
     },
     names: {
         "inv_power": [31, 11],

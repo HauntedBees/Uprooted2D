@@ -46,7 +46,7 @@ var pausemenu = {
             case 0: game.transition(this, pausemenu.inventory); break;
             case 1: game.transition(this, pausemenu.equipment); break;
             case 2: game.transition(this, pausemenu.farmmod); break;
-            case 3: game.transition(this, pausemenu.savemenu); break;
+            case 3: game.transition(this, pausemenu.savemenu, { saving: true }); break;
             default: return false;
         }
         return true;

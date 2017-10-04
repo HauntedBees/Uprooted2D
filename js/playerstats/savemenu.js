@@ -1,10 +1,12 @@
 pausemenu.savemenu = {
-    options: [], cursorY: 0, confirm: false,
+    options: [], cursorY: 0, confirm: false, isSave: false, 
     layersToClear: ["menuA", "menucursorA", "menutext"],
-    setup: function(sel, confirm) {
+    setup: function(args) {
         gfx.clearSome(this.layersToClear);
+        if(args === undefined) { args = {}; }
+        this.isSave = args.saving;
         this.options = [];
-        this.cursorY = sel || 0;
+        this.cursorY = args.sel || 0;
         this.drawOption("Slot 1", 0, this.cursorY === 0);
         this.drawOption("Slot 2", 1, this.cursorY === 1);
         this.drawOption("Slot 3", 2, this.cursorY === 2);
@@ -12,22 +14,25 @@ pausemenu.savemenu = {
         this.drawOption("Slot 5", 4, this.cursorY === 4);
         gfx.drawInfobox(11, 2.5);
         gfx.drawCursor(0, this.cursorY, this.options[this.cursorY], 0);
-        if(confirm) {
+        if(args.confirm) {
             this.confirm = true;
             gfx.drawWrappedText("Existing save data will be lost. Are you sure?", 4.5 * 16, 11, 155);
         } else {
             this.confirm = false;
-            gfx.drawWrappedText(this.getSaveDataString(this.cursorY), 4.5 * 16, 11, 155);
+            this.displaySaveDataInfo(this.cursorY);
         }
     },
-    getSaveDataString: function(savenum) {
+    displaySaveDataInfo: function(savenum) {
         var slotData = localStorage.getItem("file" + savenum);
-        if(slotData === null) { return "No Save Data"; }
+        if(slotData === null) { return this.drawSaveDataText("No Save Data"); }
         var loadedPlayer = JSON.parse(localStorage.getItem("file" + savenum));
         var text = "Lv." + loadedPlayer.level + " HP: " + loadedPlayer.health + "/" + loadedPlayer.maxhealth;
         text += "\n Coins: " + loadedPlayer.monies + "\n Time: " + player.getPlayTimeString(loadedPlayer.playTime);
-        return text;
+        var image = localStorage.getItem("fileImg" + savenum);
+        if(image !== null) { gfx.drawSaveFileImage(image); }
+        return this.drawSaveDataText(text);
     },
+    drawSaveDataText: function(t) { gfx.drawWrappedText(t, 4.5 * 16, 11, 155); return true; },
     clean: function() { gfx.clearAll(); },
     drawOption: function(text, y, selected) {
         var xi = 1;
@@ -47,24 +52,31 @@ pausemenu.savemenu = {
         if(this.confirm) { return false; }
         if(pos.y >= this.options.length) { return false; }
         if(pos.x > 4) { return false; }
-        this.setup(pos.y);
+        this.setup({ saving: this.isSave, sel: pos.y });
         return true;
     },
     click: function(pos) {
         if(pos.x > 4) { return false; }
         if(localStorage.getItem("file" + this.cursorY) === null || this.confirm) {
             game.save(pos.y);
-            this.setup(this.cursorY);
+            this.setup({ saving: true, sel: this.cursorY });
         } else {
-            this.setup(this.cursorY, true);
+            if(this.isSave) {
+                this.setup({ saving: true, sel: this.cursorY, confirm: true });
+            } else {
+                game.load(this.cursorY);
+                game.transition(this, worldmap, {  init: player.mapPos, map: player.mapName });
+            }
         }
         return true;
     },
     cancel: function() {
         if(this.confirm) {
-            this.setup(this.cursorY);
-        } else {
+            this.setup({ saving: true, sel: this.cursorY });
+        } else if(this.isSave) {
             game.transition(this, pausemenu, 3);
+        } else {
+            game.transition(this, worldmap.title, 1);
         }
     },
     keyPress: function(key) {

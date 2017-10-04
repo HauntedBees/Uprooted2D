@@ -12,8 +12,12 @@ var player = {
         soil: null, 
         armor: null
     },
-    getPlayTimeString: function() {
-        var time = this.playTime;
+    setMapPosition: function() {
+        player.mapName = worldmap.mapName;
+        player.mapPos = worldmap.pos;
+    },
+    getPlayTimeString: function(time) {
+        time = time || this.playTime;
         var hours = Math.floor(time / 3600);
         time -= hours * 3600;
         var minutes = Math.floor(time / 60);

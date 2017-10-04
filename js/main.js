@@ -15,10 +15,10 @@ if (typeof Object.assign != 'function') {
 }
 var game = {
     currentInputHandler: worldmap, target: null, language: "en-dm",
-    sheetsToLoad: ["sheet", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster",
+    sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster",
                     "maps/farmersmarket", "maps/farmpath", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
                     "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm"],
-    canvasLayers: ["background", "characters", "foreground", "menuA", "menuB", "menucursorA", "menucursorB", "menucursorC", "menutext", "tutorial"], 
+    canvasLayers: ["background", "characters", "foreground", "menuA", "menuB", "menucursorA", "menucursorB", "menucursorC", "menutext", "tutorial", "savegen"], 
     fullInit: function() {
         var canvasObj = {};
         for(var i = 0; i < game.canvasLayers.length; i++) {
@@ -53,6 +53,7 @@ var game = {
         from.clean();
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
         to.setup(arg);
+        return true;
     },
     initListeners: function() {
         //gfx.canvas["menutext"].addEventListener("mousemove", input.moveMouse);
@@ -65,11 +66,17 @@ var game = {
     incrementTime: function() { player.playTime++; },
     sheetsLoaded: function() {
         game.initListeners();
-        worldmap.setup({
+        game.currentInputHandler = worldmap.title;
+        worldmap.title.setup();
+        /*worldmap.setup({
             init: { x: 10,  y: 7 },
             map: "farmersmarket"
-        }); 
+        });*/ 
     },
-    save: function(savenum) { localStorage.setItem("file" + savenum, JSON.stringify(player)); },
+    save: function(savenum) {
+        player.setMapPosition();
+        localStorage.setItem("file" + savenum, JSON.stringify(player));
+        localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
+    },
     load: function(savenum) { var loadedPlayer = JSON.parse(localStorage.getItem("file" + savenum)); player = Object.assign(player, loadedPlayer); }
 };

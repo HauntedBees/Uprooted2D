@@ -21,7 +21,7 @@ worldmap.shop = {
         }
         this.cursorInitx = (this.hasTalk || this.details.doesSell) ? 2 : 1;
         this.cursorX = 0;
-        gfx.drawStore(this.details.img);
+        gfx.drawFullImage(this.details.img);
         this.drawDetails(GetText(this.details.opening), true);
     },
     resetTalk: function() {
