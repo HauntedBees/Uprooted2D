@@ -65,7 +65,6 @@ pausemenu.savemenu = {
                 this.setup({ saving: true, sel: this.cursorY, confirm: true });
             } else {
                 game.load(this.cursorY);
-                game.transition(this, worldmap, {  init: player.mapPos, map: player.mapName });
             }
         }
         return true;

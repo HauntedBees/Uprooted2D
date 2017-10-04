@@ -78,5 +78,13 @@ var game = {
         localStorage.setItem("file" + savenum, JSON.stringify(player));
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
     },
-    load: function(savenum) { var loadedPlayer = JSON.parse(localStorage.getItem("file" + savenum)); player = Object.assign(player, loadedPlayer); }
+    load: function(savenum) {
+        var loadedPlayer = JSON.parse(localStorage.getItem("file" + savenum));
+        player = Object.assign(player, loadedPlayer);
+        game.transition(game.currentInputHandler, worldmap, { 
+            init: player.mapPos,
+            map: player.mapName,
+            playerDir: player.mapDir
+        });
+    }
 };

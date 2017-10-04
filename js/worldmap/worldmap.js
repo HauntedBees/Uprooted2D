@@ -1,5 +1,6 @@
 var worldmap = {
     freeMovement: true,
+    freeMovement: true, savedImage: "",
     pos: {x: 0, y: 0}, playerDir: 2,
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0,
@@ -7,11 +8,13 @@ var worldmap = {
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
     waitForAnimation: false, animIdx: 0, 
     setup: function(args) {
+        this.savedImage = "";
         this.inDialogue = false;
         this.waitForAnimation = false;
         this.dialogState = 0;
         this.mapName = args.map;
         this.pos = args.init;
+        this.playerDir = args.playerDir || 2;
         this.dialogData = null;
         this.forceEndDialog = false;
         this.importantEntities = {};
@@ -212,6 +215,7 @@ var worldmap = {
             case "Enter": isEnter = true; break;
             case "q": 
                 if(this.inDialogue) { return; }
+                worldmap.savedImage = gfx.getSaveFileImage();
                 game.transition(this, pausemenu);
                 return;
         }
