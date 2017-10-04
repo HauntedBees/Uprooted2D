@@ -127,6 +127,8 @@ function GetCrop(name) {
         case "rice": return new CropDetail(name, "Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
         case "arborio": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
         case "blackrice": return new CropDetail(name, "Black Rice", 10, "rice", 1, 5, 4, 5, 0, 0, 1, 1, 1);
+        case "shortgrain": return new CropDetail(name, "Short-Grain Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
+        case "chestnut": return new CropDetail(name, "Water Chestnut", 10, "rice", 1, 5, 4, 5, 0, 0, 1, 1, 1);
         /* Fishing */
         case "spear": return new CropDetail(name, "Fish Spear", 10, "spear", 1, 0, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.99, req: 0.5 });
         case "rod": return new CropDetail(name, "Fish Rod", 10, "rod", 1, 10, 2, 5, 0, 0, 0, 0, 0, { catchLuck: 0.99, req: 0.15 });
