@@ -492,7 +492,7 @@ var fulltext = {
 	},
 	"opSaveQuit": {
 		"en-us": "", 
-		"en-dm": "Save and Return to Title"
+		"en-dm": "Save and Return"
 	},
 	"opQuit": {
 		"en-us": "", 

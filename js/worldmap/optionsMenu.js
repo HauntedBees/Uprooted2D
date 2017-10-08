@@ -1,14 +1,15 @@
 worldmap.optionsMenu = {
-    layersToClear: ["menutext", "menucursorA"],
-    cursory: 1, options: [], localControls: {},
+    cursory: 1, options: [], localControls: {}, localOptions: {}, fromPause: false,
     headingSize: 36, optionSize: 22, optionInfoSize: 12, inChange: false, 
-    setup: function() {
+    setup: function(fromPause) {
+        this.fromPause = fromPause;
         this.localControls = Object.assign({}, player.controls);
+        this.localOptions = Object.assign({}, player.options);
         this.options = []; this.cursory = 1; this.inChange = false;
         var y = 0;
         y = this.addHeading(y, "opGameOps");
-        y = this.addOption(y, "opDifficulty", 1, ["diffEasy", "diffNormal", "diffHard"], true);
-        y = this.addOption(y, "opGameplay", 0, ["opOff"]);
+        y = this.addOption(y, "opDifficulty", player.options.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
+        y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
         y = this.addHeading(y, "opControls");
         y = this.addButton(y, "ctrlUp", player.controls.up, "up");
         y = this.addButton(y, "ctrlLeft", player.controls.left, "left");
@@ -18,22 +19,10 @@ worldmap.optionsMenu = {
         y = this.addButton(y, "ctrlCancel", player.controls.cancel, "cancel");
         y = this.addButton(y, "ctrlPause", player.controls.pause, "pause");
         y = this.addHeading(y, "opAudio");
-        y = this.addOption(y, "opMusic", 1, ["opOff", "opOn"]);
-        y = this.addOption(y, "opSound", 1, ["opOff", "opOn"]);
+        y = this.addOption(y, "opMusic", player.options.music, "music", ["opOff", "opOn"]);
+        y = this.addOption(y, "opSound", player.options.sound, "sound", ["opOff", "opOn"]);
         y = this.addHeading(y, "opGraphics");
-        /*y = this.addOption(y, "opPlacehold", 1, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 1, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 1, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 1, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 1, ["opOff", "opOn"]);
-        y = this.addOption(y, "opPlacehold", 0, ["opOff", "opOn"]);*/
+        /*y = this.addOption(y, "opPlacehold", 1, false, ["opOff", "opOn"]);*/
         y += 5;
         y = this.addFinal(y, "opSaveQuit", this.SaveAndQuit);
         y = this.addFinal(y, "opQuit", this.QuitWithoutSaving);
@@ -112,7 +101,7 @@ worldmap.optionsMenu = {
         });
         return y + (this.optionSize / 3.3333);
     },
-    addOption: function(y, text, initVal, options, hasInfo) {
+    addOption: function(y, text, initVal, idx, options, hasInfo) {
         text = GetText(text);
         this.options.push({ 
             type: "option",
@@ -123,7 +112,8 @@ worldmap.optionsMenu = {
             text: text, 
             val: initVal,
             choices: options,
-            hasInfo: hasInfo
+            hasInfo: hasInfo,
+            idx: idx
         });
         return y + (this.optionSize / 3.3333) * (hasInfo ? 2 : 1);
     },
@@ -146,6 +136,9 @@ worldmap.optionsMenu = {
             if(pos.x !== 0) {
                 var newOp = this.options[this.cursory].val + pos.x;
                 this.options[this.cursory].val = Math.min(Math.max(newOp, 0), this.options[this.cursory].choices.length - 1);
+                if(this.options[this.cursory].idx) {
+                    this.localOptions[this.options[this.cursory].idx] = newOp;
+                }
                 this.drawEverything();
                 return true;
             } else if(pos.y !== this.cursory) {
@@ -184,10 +177,15 @@ worldmap.optionsMenu = {
     },
     SaveAndQuit: function() {
         player.controls = Object.assign(player.controls, worldmap.optionsMenu.localControls);
+        player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
         worldmap.optionsMenu.QuitWithoutSaving();
     },
     QuitWithoutSaving: function() {
-        game.transition(worldmap.optionsMenu, worldmap.title, 2);
+        if(this.fromPause) {
+            game.transition(this, pausemenu, 3);
+        } else {
+            game.transition(worldmap.optionsMenu, worldmap.title, 2);
+        }
         return true;
     },
     SaveNewButton: function(key)  {

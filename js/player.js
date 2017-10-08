@@ -5,6 +5,11 @@ var player = {
     monies: 1000, playTime: 0,
     clearedEntities: [], questsCleared: [], activeQuests: {}, 
     lastInn: "start",
+    options: {
+        difficulty: 1, 
+        music: 1, 
+        sound: 1
+    },
     controls: {
         up: "w",
         left: "a",

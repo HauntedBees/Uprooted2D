@@ -12,7 +12,8 @@ var pausemenu = {
         pausemenu.drawOption("Items", 0, pausemenu.cursorY == 0);
         pausemenu.drawOption("Equipment", 1, pausemenu.cursorY == 1);
         pausemenu.drawOption("Farm", 2, pausemenu.cursorY == 2);
-        pausemenu.drawOption("Save", 3, pausemenu.cursorY == 3);
+        pausemenu.drawOption("Options", 3, pausemenu.cursorY == 3);
+        pausemenu.drawOption("Save", 4, pausemenu.cursorY == 4);
         gfx.drawCursor(0, pausemenu.cursorY, pausemenu.options[pausemenu.cursorY], 0);
         pausemenu.addText("Lv." + player.level, 4, 0);
         pausemenu.addLabeledText("HP", player.health + "/" + player.maxhealth, 6, 0);
@@ -46,7 +47,8 @@ var pausemenu = {
             case 0: game.transition(this, pausemenu.inventory); break;
             case 1: game.transition(this, pausemenu.equipment); break;
             case 2: game.transition(this, pausemenu.farmmod); break;
-            case 3: game.transition(this, pausemenu.savemenu, { saving: true }); break;
+            case 3: game.transition(this, worldmap.optionsMenu, true); break;
+            case 4: game.transition(this, pausemenu.savemenu, { saving: true }); break;
             default: return false;
         }
         return true;
