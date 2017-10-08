@@ -1,18 +1,15 @@
 worldmap.title = {
-    cursory: 0, showContinue: false, state: 0,
+    cursory: 0, showContinue: false,
     layersToClear: ["menutext", "menucursorA"],
     menuItems: [],
     setup: function(cursy) {
-        this.cursory = cursy || 0; this.state = 0;
+        this.cursory = cursy || 0;
         this.showContinue = this.hasSaves();
         gfx.drawFullImage("title");
         this.menuItems = this.getMainMenuItems();
         this.drawMenu();
     },
     getMainMenuItems: function() {
-        if(this.state === 1) {
-            // another menu
-        }
         return (this.hasSaves() ? ["New Game", "Continue", "Options"] : ["New Game", "Options"]);
     },
     hasSaves: function() {
@@ -24,7 +21,9 @@ worldmap.title = {
     drawMenu: function() {
         gfx.clearSome(this.layersToClear);
         for(var i = 0; i < this.menuItems.length; i++) {
-            var spr = (this.cursory === i ? "titleSelActive" : "titleSel");
+            var selected = this.cursory === i;
+            var spr = (selected ? "titleSelActive" : "titleSel");
+            if(selected) { gfx.drawTileToGrid("carrotSel", 5, i + 6, "menutext"); }
             gfx.drawTileToGrid(spr + "0", 6, i + 6, "menutext");
             gfx.drawTileToGrid(spr + "1", 7, i + 6, "menutext");
             gfx.drawTileToGrid(spr + "2", 8, i + 6, "menutext");
@@ -39,16 +38,14 @@ worldmap.title = {
         return true;
     },
     click: function(pos) {
-        if(this.state === 0) {
-            switch(this.cursory) {
-                case 0:
-                    return game.transition(this, worldmap, {
-                        init: { x: 10,  y: 7 },
-                        map: "farmersmarket"
-                    });
-                case 1:
-                    return game.transition(this, pausemenu.savemenu, { saving: false });
-            }
+        switch(this.cursory) {
+            case 0:
+                return game.transition(this, worldmap, {
+                    init: { x: 10,  y: 7 },
+                    map: "farmersmarket"
+                });
+            case 1: return game.transition(this, pausemenu.savemenu, { saving: false });
+            case 2: return game.transition(this, worldmap.optionsMenu);
         }
     },
     clean: function() { gfx.clearAll(); },
@@ -56,11 +53,11 @@ worldmap.title = {
         var pos = { x: 0, y: this.cursory };
         var isEnter = false;
         switch(key) {
-            case "w": pos.y--; break;
-            case "s": pos.y++; break;
-            case " ":
-            case "Enter": isEnter = true; break;
-            //case "q": return this.cancel();
+            case player.controls.up: pos.y--; break;
+            case player.controls.down: pos.y++; break;
+            case player.controls.confirm:
+            case player.controls.pause: isEnter = true; break;
+            //case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.y > 2) { return false; }
         if(isEnter) {

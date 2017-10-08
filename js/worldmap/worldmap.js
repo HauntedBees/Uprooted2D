@@ -102,10 +102,10 @@ var worldmap = {
         }
         var animDir = this.playerDir, moving = true;
         if(input.mainKey !== undefined) { animDir = input.mainKey; }
-        else if(input.keys["w"] !== undefined) { animDir = 0; }
-        else if(input.keys["a"] !== undefined) { animDir = 1; }
-        else if(input.keys["s"] !== undefined) { animDir = 2; }
-        else if(input.keys["d"] !== undefined) { animDir = 3; }
+        else if(input.keys[player.controls.up] !== undefined) { animDir = directions.UP; }
+        else if(input.keys[player.controls.left] !== undefined) { animDir = directions.LEFT; }
+        else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
+        else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
         else { moving = false; }
         layers[Math.round(this.pos.y)].push(this.animData.getFrame(this.pos, animDir, moving));
         for(var y = 0; y < ymax; y++) {
@@ -170,10 +170,10 @@ var worldmap = {
     handleMenuChoices: function(key) {
         var dy = 0;
         switch(key) {
-            case "w": dy--; break;
-            case "s": dy++; break;
-            case " ":
-            case "Enter": return this.click(null);
+            case player.controls.up: dy--; break;
+            case player.controls.down: dy++; break;
+            case player.controls.confirm:
+            case player.controls.pause: return this.click(null);
         }
         var newchoice = worldmap.dialogData.idx + dy;
         if(newchoice < 0) { newchoice = 0; }
@@ -186,7 +186,7 @@ var worldmap = {
             this.freeMovement = false;
             input.clearAllKeys();
             if(this.dialogData === null) { 
-                return (key === " " || key === "Enter") ? this.click(null) : false;
+                return (key === player.controls.confirm || key === player.controls.pause) ? this.click(null) : false;
             }
             return this.handleMenuChoices(key);
         }

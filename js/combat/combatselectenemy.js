@@ -78,13 +78,13 @@ combat.selectTarget = {
         var isEnter = false;
         var prevy = pos.y;
         switch(key) {
-            case "a": pos.x--; break;
-            case "d": pos.x++; break;
-            case "w": pos.y--; break;
-            case "s": pos.y++; break;
-            case " ":
-            case "Enter": isEnter = true; break;
-            case "q": return this.cancel();
+            case player.controls.left: pos.x--; break;
+            case player.controls.right: pos.x++; break;
+            case player.controls.up: pos.y--; break;
+            case player.controls.down: pos.y++; break;
+            case player.controls.confirm:
+            case player.controls.pause: isEnter = true; break;
+            case player.controls.cancel: return this.cancel();
         }
         if(pos.y === 7 && prevy === 8) {
             pos.x = combat.enemydx;

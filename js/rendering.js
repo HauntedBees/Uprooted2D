@@ -137,8 +137,11 @@ var gfx = {
         }
         gfx.drawItemNumber(item[1], x, y, layer);
     },
-    getTextWidth: function(t) {
-        gfx.ctx["menutext"].font = "22px PressStart2P";
+    getTextRightAlignedX: function(text, size, x) { return x - gfx.getTextWidth(text, size); },
+    getTextFractionX: function(text, size, fraction) { return gfx.getFractionX(gfx.getTextWidth(text, size), (fraction || 0.5)); },
+    getFractionX: function(width, fraction) { return ((gfx.canvasWidth * fraction) - (width / 2)) / 4; },
+    getTextWidth: function(t, size) {
+        gfx.ctx["menutext"].font = (size || 22) + "px PressStart2P";
         return gfx.ctx["menutext"].measureText(t).width;
     },
     drawChoice: function(y, t, selected) {

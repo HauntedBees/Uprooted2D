@@ -11,13 +11,13 @@ var input = {
     keys: {}, mainKey: undefined,
     setMainKey: function(key) {
         if(key === undefined) {
-            if(input.keys["w"] !== undefined) { input.mainKey = 0; }
-            else if(input.keys["a"] !== undefined) { input.mainKey = 1; }
-            else if(input.keys["s"] !== undefined) { input.mainKey = 2; }
-            else if(input.keys["d"] !== undefined) { input.mainKey = 3; }
+            if(input.keys[player.controls.up] !== undefined) { input.mainKey = 0; }
+            else if(input.keys[player.controls.left] !== undefined) { input.mainKey = 1; }
+            else if(input.keys[player.controls.down] !== undefined) { input.mainKey = 2; }
+            else if(input.keys[player.controls.right] !== undefined) { input.mainKey = 3; }
             else { input.mainKey = undefined; }
         } else if(input.mainKey === undefined) {
-            input.mainKey = ["w", "a", "s", "d"].indexOf(key);
+            input.mainKey = [player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key);
         }
     },
     clearAllKeys: function() {
@@ -28,7 +28,7 @@ var input = {
         }
     },
     keyDown: function(e) {
-        if(["w", "a", "s", "d"].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
+        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             input.setMainKey(e.key);
             if(input.keys[e.key] !== undefined) { return; }
             input.keys[e.key] = setInterval(function() {
@@ -37,14 +37,14 @@ var input = {
         }
     },
     keyUp: function(e) {
-        if(["w", "a", "s", "d"].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
+        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             clearInterval(input.keys[e.key]);
             input.keys[e.key] = undefined;
             input.setMainKey();
         }
     },
     keyPress: function(e) {
-        if(["w", "a", "s", "d"].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
+        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             return;
         }
         game.currentInputHandler.keyPress(e.key);

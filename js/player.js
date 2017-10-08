@@ -5,6 +5,15 @@ var player = {
     monies: 1000, playTime: 0,
     clearedEntities: [], questsCleared: [], activeQuests: {}, 
     lastInn: "start",
+    controls: {
+        up: "w",
+        left: "a",
+        down: "s",
+        right: "d",
+        confirm: " ",
+        cancel: "q", 
+        pause: "Enter"
+    },
     equipment: {
         weapon: "!babySickle", 
         compost: "!weakCompost", 
@@ -15,6 +24,7 @@ var player = {
     setMapPosition: function() {
         player.mapName = worldmap.mapName;
         player.mapPos = worldmap.pos;
+        player.mapDir = worldmap.playerDir;
     },
     getPlayTimeString: function(time) {
         time = time || this.playTime;

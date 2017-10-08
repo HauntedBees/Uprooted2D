@@ -34,8 +34,8 @@ var tutorial = {
     },
     keyPress: function(key) {
         if(this.state === 39) { return this.currentInputHandler.keyPress(key); }
-        if(key === "q") { return false; }
-        var isEnter = (key === "Enter" || key === " ");
+        if(key === player.controls.cancel) { return false; }
+        var isEnter = (key === player.controls.pause || key === player.controls.confirm);
         if(isEnter) {
             var success = this.stateDetails[this.state].advance();
             if(!success) { return false; }

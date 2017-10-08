@@ -27,6 +27,6 @@ combat.enemyTurn = {
     },
     clean: function() { gfx.clearSome(["menuA", "menutext"]); },
     click: function(pos) { combat.endTurn(this); return true; },
-    keyPress: function(key) { if(key == "Enter" || key == " ") { return this.click(null); }  return true; },
+    keyPress: function(key) { if(key == player.controls.pause || key == player.controls.confirm) { return this.click(null); }  return true; },
     mouseMove: function(pos) { return true; }
 };

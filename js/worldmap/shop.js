@@ -400,11 +400,11 @@ worldmap.shop = {
         }
         var moveDir = 0;
         switch(key) {
-            case "a": pos.x -= actDx; moveDir = -1; break;
-            case "d": pos.x += actDx; moveDir = 1; break;
-            case " ":
-            case "Enter": isEnter = true; break;
-            case "q": return this.cancel();
+            case player.controls.left: pos.x -= actDx; moveDir = -1; break;
+            case player.controls.right: pos.x += actDx; moveDir = 1; break;
+            case player.controls.confirm:
+            case player.controls.pause: isEnter = true; break;
+            case player.controls.cancel: return this.cancel();
         }
         if(moveDir !== 0 && this.sellingState === 2) {
             if((moveDir === 1 && this.cursorX > this.actualIdxs.length) || (moveDir === -1 && this.sellOffset > 0 && this.cursorX === 0)) {

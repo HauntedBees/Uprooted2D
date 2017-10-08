@@ -100,6 +100,11 @@ var spriteData = {
         }
     },
     names: {
+        "opL": [18, 20],
+        "opR": [19, 20],
+        "nopL": [20, 20],
+        "nopR": [21, 20],
+        "carrotSel": [3, 21], 
         "inv_power": [31, 11],
         "inv_time": [13, 21],
         "inv_regrow": [30, 11],

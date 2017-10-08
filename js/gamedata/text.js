@@ -393,5 +393,109 @@ var fulltext = {
 	"chestnut": {
 		"en-us": "", 
 		"en-dm": "The Chinese water chestnut is a grass-like vegetable with delicious starchy corms. Yep, that's what the edible part is called. The corm."
+	},
+	"opGameOps": {
+		"en-us": "", 
+		"en-dm": "Accessibility"
+	},
+	"opDifficulty": {
+		"en-us": "", 
+		"en-dm": "Difficulty"
+	},
+	"diffEasy": {
+		"en-us": "", 
+		"en-dm": "Easy"
+	},
+	"diffNormal": {
+		"en-us": "", 
+		"en-dm": "Normal"
+	},
+	"diffHard": {
+		"en-us": "", 
+		"en-dm": "US GAMERS!"
+	},
+	"opControls": {
+		"en-us": "", 
+		"en-dm": "Controls"
+	},
+	"opGameplay": {
+		"en-us": "", 
+		"en-dm": "Gameplay"
+	},
+	"opOff": {
+		"en-us": "", 
+		"en-dm": "Off"
+	},
+	"opAudio": {
+		"en-us": "", 
+		"en-dm": "Audio"
+	},
+	"opGraphics": {
+		"en-us": "", 
+		"en-dm": "Graphics"
+	},
+	"opMusic": {
+		"en-us": "", 
+		"en-dm": "Music"
+	},
+	"opSound": {
+		"en-us": "", 
+		"en-dm": "Sound"
+	},
+	"diffEasy_i": {
+		"en-us": "", 
+		"en-dm": "You cannot die in combat. Enemies have less health. Items are cheaper."
+	},
+	"diffNormal_i": {
+		"en-us": "", 
+		"en-dm": "Everything is balanced for a fair and enjoyable experience for most players."
+	},
+	"diffHard_i": {
+		"en-us": "", 
+		"en-dm": "Seeds are much harder to come by. Enemies are JERKS. The RNG is meaner."
+	},
+	"ctrlUp": {
+		"en-us": "", 
+		"en-dm": "Up"
+	},
+	"ctrlDown": {
+		"en-us": "", 
+		"en-dm": "Down"
+	},
+	"ctrlLeft": {
+		"en-us": "", 
+		"en-dm": "Left"
+	},
+	"ctrlRight": {
+		"en-us": "", 
+		"en-dm": "Right"
+	},
+	"ctrlConfirm": {
+		"en-us": "", 
+		"en-dm": "Confirm"
+	},
+	"ctrlCancel": {
+		"en-us": "", 
+		"en-dm": "Cancel"
+	},
+	"ctrlPause": {
+		"en-us": "", 
+		"en-dm": "Pause"
+	},
+	"opOn": {
+		"en-us": "", 
+		"en-dm": "On"
+	},
+	"opPlacehold": {
+		"en-us": "", 
+		"en-dm": "Placeholder"
+	},
+	"opSaveQuit": {
+		"en-us": "", 
+		"en-dm": "Save and Return to Title"
+	},
+	"opQuit": {
+		"en-us": "", 
+		"en-dm": "Return without Saving"
 	}
 };

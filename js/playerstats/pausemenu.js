@@ -55,11 +55,11 @@ var pausemenu = {
         var pos = { x: 0, y: this.cursorY };
         var isEnter = false;
         switch(key) {
-            case "w": pos.y--; break;
-            case "s": pos.y++; break;
-            case " ":
-            case "Enter": isEnter = true; break;
-            case "q": return this.cancel();
+            case player.controls.up: pos.y--; break;
+            case player.controls.down: pos.y++; break;
+            case player.controls.confirm:
+            case player.controls.pause: isEnter = true; break;
+            case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0) { return false; }
         if(isEnter) {
