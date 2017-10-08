@@ -3,7 +3,7 @@ var tutorial = {
     isTutorial: true,
     state: 0, currentInputHandler: combat.menu,
     startBattle: function() {
-        combat.startBattle(["Beckett"]);
+        combat.startBattle(["Discussly"]);
         game.currentInputHandler = this;
         this.currentInputHandler = combat.menu;
         this.state = 0;

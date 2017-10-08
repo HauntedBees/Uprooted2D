@@ -15,8 +15,8 @@ if (typeof Object.assign != 'function') {
 }
 var game = {
     currentInputHandler: worldmap, target: null, language: "en-dm",
-    sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster",
-                    "maps/farmersmarket", "maps/farmpath", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
+    sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
+                    "maps/farmersmarket", "maps/farmpath", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
                     "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm"],
     canvasLayers: ["background", "characters", "foreground", "menuA", "menuB", "menucursorA", "menucursorB", "menucursorC", "menutext", "tutorial", "savegen"], 
     fullInit: function() {
@@ -68,10 +68,6 @@ var game = {
         game.initListeners();
         game.currentInputHandler = worldmap.title;
         worldmap.title.setup();
-        /*worldmap.setup({
-            init: { x: 10,  y: 7 },
-            map: "farmersmarket"
-        });*/ 
     },
     save: function(savenum) {
         player.setMapPosition();

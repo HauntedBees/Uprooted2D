@@ -41,8 +41,8 @@ worldmap.title = {
         switch(this.cursory) {
             case 0:
                 return game.transition(this, worldmap, {
-                    init: { x: 10,  y: 7 },
-                    map: "farmersmarket"
+                    //init: { x: 10,  y: 5 }, map: "farmersmarket"
+                    init: { x: 17,  y: 9 }, map: "farm_init"
                 });
             case 1: return game.transition(this, pausemenu.savemenu, { saving: false });
             case 2: return game.transition(this, worldmap.optionsMenu);

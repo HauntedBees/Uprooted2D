@@ -1,30 +1,152 @@
 var mapentities = {
+    "farm_init": [
+        GetCommonEntity("Eagle", 16, 9, 4, 0, undefined, undefined, { sheet: "assistant", sheetlen: 2, storageKey: "eagle" }),
+        GetCommonEntity("Nathan", 24, 11, 0, 1, undefined, undefined, { sheet: "assistant", sheetlen: 2, storageKey: "nathanIntro" }),
+        {
+            name: "CutscenePrompt", pos: { x: 0, y: 0 }, solid: false, autoplay: true,
+            interact: [
+                function() {
+                    worldmap.waitForAnimation = true;
+                    worldmap.forceMove = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.pos.y += 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.pos.y >= 10) { 
+                            worldmap.animData.width = 32;
+                            worldmap.animData.other.forceWide = true;
+                            FinishAnim();
+                        }
+                    }, 10);
+                },
+                GetSleep(500),
+                GetBasicPlayerFrame(2, 0, 1000),
+                GetBasicPlayerFrame(2, 1, 500),
+                GetBasicPlayerFrame(2, 2, 1500),
+                GetBasicPlayerFrame(2, 1, 250),
+                function() {
+                    worldmap.animData.width = 16;
+                    worldmap.animData.other.forceWide = false;
+                    worldmap.waitForAnimation = true;
+                    worldmap.forceMove = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.pos.y += 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.pos.y >= 11) { FinishAnim(); }
+                    }, 10);
+                },
+                GetSleep(500),
+                function() {
+                    worldmap.playerDir = 3;
+                    worldmap.waitForAnimation = true;
+                    worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 4, 0);
+                    worldmap.refreshMap();
+                    worldmap.animIdx = setTimeout(FinishAnim, 1500);
+                },
+                GetSpeak("intro1"),
+                function() {
+                    worldmap.waitForAnimation = true;
+                    worldmap.importantEntities["nathanIntro"].moving = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["nathanIntro"].pos.x -= 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["nathanIntro"].pos.x <= 21) {
+                            worldmap.importantEntities["nathanIntro"].moving = false;
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                function() {
+                    worldmap.writeText("intro2");
+                    worldmap.importantEntities["nathanIntro"].moving = true;
+                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(3, 2).setFPS(8);
+                },
+                GetSpeak("intro3"),
+                function() {
+                    gfx.clearSome(["menuA", "menutext"]);
+                    worldmap.importantEntities["nathanIntro"].moving = false;
+                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(3, 1).setFPS(0);
+                    worldmap.waitForAnimation = true;
+                    worldmap.animIdx = setTimeout(FinishAnim, 1000);
+                },
+                function() {
+                    worldmap.playerDir = 2;
+                    worldmap.waitForAnimation = true;
+                    worldmap.forceMove = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.pos.y += 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.pos.y >= 12) { FinishAnim(); }
+                    }, 10);
+                },
+                GetBasicPlayerFrame(4, 0, 1000),
+                function() {
+                    worldmap.playerDir = 3;
+                    worldmap.writeText("intro4");
+                    worldmap.importantEntities["nathanIntro"].moving = true;
+                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(4, 2).setFPS(8);
+                },
+                GetSpeak("intro5"),
+                GetSpeak("intro6"),
+                function() {
+                    worldmap.importantEntities["nathanIntro"].moving = false;
+                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(4, 1).setFPS(8);
+                    gfx.clearSome(["menuA", "menutext"]);
+                    worldmap.waitForAnimation = true;
+                    worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 4, 3);
+                    worldmap.refreshMap();
+                    worldmap.animIdx = setTimeout(FinishAnim, 1500);
+                },
+                function() {
+                    worldmap.playerDir = 3;
+                    worldmap.writeText("intro7");
+                    worldmap.importantEntities["nathanIntro"].moving = true;
+                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(4, 2).setFPS(8);
+                },
+                GetSpeak("intro8"),
+                function() {
+                    gfx.clearSome(["menuA", "menutext"]);
+                    worldmap.waitForAnimation = true;
+                    worldmap.importantEntities["nathanIntro"].anim.shiftX(2, 4).shiftY(0).setFPS(8);
+                    worldmap.importantEntities["nathanIntro"].moving = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["nathanIntro"].pos.x += 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["nathanIntro"].pos.x >= 24) {
+                            worldmap.importantEntities["nathanIntro"].moving = false;
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                // do a fade to black!
+                function() { game.transition(game.currentInputHandler, worldmap, { init: { x: 10,  y: 5 }, map: "farmersmarket" }); }
+            ]
+        }
+    ],
     "farmersmarket": [
         //EnterShop("ChickenCoop", 10, 6, "coop"),
         //EnterShop("UpgradeTest", 10, 5, "farmupgradeFull"),
-        GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "bike", visible: false }),
+        GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
+        GetCommonEntity("ConvinceATron", 10, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "convince", visible: false, solid: false }),
         GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
-        SwitchMap("ExitAreaSouth", 0, 13, true, false, 7, 4, "farmpath"),
+        SwitchMap("ExitAreaSouth", 0, 13, true, false, 40, 9, "bridge"),
+        //SwitchMap("ExitAreaSouth", 0, 13, true, false, 21.5, 15, "belowvillage"),
+        //SwitchMap("ExitAreaSouth", 0, 13, true, false, 7, 4, "farmpath"),
         GetInvisibleEntity("PostInitialBattle", [
-            GetSpeak("oops I killed a man. i should go kick his boss's ass, too. also his boss's ass,"),
-            GetSpeak("so on and so forth, all the way up to the top. I should head to my farm first to get supplies.") 
             GetSpeak("Pb0_0"),
             GetSpeak("Pb0_1") 
         ], { storageKey: "PostInitialBattle" }),
         {
+            name: "DemoCutscene", pos: {x: 10, y: 5}, solid: false,
+            interact: [ function() { worldmap.clearTarget(); game.target = worldmap.importantEntities["hipster"]; combat.startBattle(["Beckett", "Beckett", "Beckett"]); } ]
+        },
+        {
             name: "CutscenePrompt",
-            pos: {x: 10, y: 5}, // 10
+            pos: {x: 10, y: 5},
             solid: false,
-            //autoplay: true, 
+            autoplay: true, 
             interact: [
-                GetSpeak("testA"),
                 function() {
-                    worldmap.clearTarget();
-                    game.target = worldmap.importantEntities["hipster"];
-                    //tutorial.startBattle();
-                    combat.startBattle(["Beckett"]);
-                }
-                /*function() {
+                    worldmap.playerDir = 1;
                     worldmap.waitForAnimation = true;
                     worldmap.importantEntities["hipster"].moving = true;
                     worldmap.animIdx = setInterval(function() {
@@ -43,7 +165,7 @@ var mapentities = {
                     }, 500);
                 },
                 function() {
-                    worldmap.writeText("Beckett: Ah! This must be it! NAME's famous produce stand!");
+                    worldmap.writeText("intro9");
                     worldmap.importantEntities["hipster"].moving = true;
                     worldmap.importantEntities["hipster"].anim.shiftY(2).shiftX(3, 2).setFPS(8);
                 },
@@ -64,46 +186,99 @@ var mapentities = {
                 },
                 function() {
                     worldmap.importantEntities["hipster"].anim.shiftX(3, 2).setFPS(8);
-                    worldmap.writeText("Beckett: The guys back at the office were right -- all of this looks amazing!");
+                    worldmap.writeText("intro10");
                 },
                 function() {
                     worldmap.importantEntities["hipster"].moving = false;
                     worldmap.importantEntities["hipster"].anim.shiftX(2, 4);
-                    worldmap.writeText("Beckett: This carrot looks so nutritious!");
+                    worldmap.writeText("intro11");
                 },
                 function() {
                     worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.writeText("Beckett: ...");
+                    worldmap.writeText("intro12");
                 },
-                GetSpeak("Beckett: And it looks like this analysis confirms that suspicion!"),
+                GetSpeak("intro13"),
                 function() {
                     worldmap.importantEntities["hipster"].moving = false;
-                    worldmap.writeText("Beckett: Hm?");
+                    worldmap.writeText("intro14");
                 },
                 function() {
                     worldmap.importantEntities["hipster"].moving = true;
                     worldmap.importantEntities["hipster"].anim.shiftX(3, 2).setFPS(8);
-                    worldmap.writeText("Beckett: Oh. You're probably wondering what that was all about.");
+                    worldmap.writeText("intro15");
                 },
-                GetSpeak("Beckett: The startup I work for is going to use this carrot data to help us create PROPRIETARY FOOD SUBSTITUTES."),
-                GetSpeak("Beckett: The world will be so much better when people don't have to worry about what to eat!"),
-                GetSpeak("Beckett: But for that to work, we also need to make sure Food2 has no competition..."),
-                GetSpeak("Beckett: So, I'd like to make you an offer. Ten million coins to retire and never farm again."),
+                GetSpeak("intro16"),
+                GetSpeak("intro17"),
+                GetSpeak("intro18"),
+                GetSpeak("intro19"),
                 function() {
                     worldmap.importantEntities["hipster"].moving = false;
-                    worldmap.writeText("Beckett: ...");
+                    worldmap.writeText("intro20");
                 },
                 function() {
                     worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.writeText("Beckett: No? Guess it's time for you to die then!");
+                    worldmap.writeText("intro21");
+                },
+                GetSpeak("intro22"),
+                function() {
+                    gfx.clearSome(["menuA", "menutext"]);
+                    worldmap.waitForAnimation = true;
+                    worldmap.importantEntities["hipster"].moving = true;
+                    worldmap.importantEntities["hipster"].anim.shiftX(4, 4).shiftY(0).setFPS();
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["hipster"].pos.y -= 0.025;
+                        worldmap.importantEntities["hipster"].pos.x -= 0.05;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["hipster"].pos.x <= 6) {
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                function() {
+                    worldmap.importantEntities["hipster"].anim.shiftY(0).shiftX(0, 2).setFPS();
+                    worldmap.importantEntities["bike"].visible = false;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["hipster"].pos.x += 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["hipster"].pos.x >= 10) {
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                function() {
+                    worldmap.playerDir = 0;
+                    worldmap.importantEntities["convince"].anim.shiftY(3);
+                    worldmap.importantEntities["convince"].visible = true;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["hipster"].pos.x += 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["hipster"].pos.x >= 12) {
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                function() {
+                    worldmap.playerDir = 3;
+                    worldmap.animIdx = setInterval(function() {
+                        worldmap.importantEntities["hipster"].pos.x += 0.025;
+                        worldmap.refreshMap();
+                        if(worldmap.importantEntities["hipster"].pos.x >= 20) {
+                            worldmap.finishAnimation();
+                        }
+                    }, 10);
+                },
+                function() {
+                    worldmap.playerDir = 0;
+                    worldmap.writeText("intro23");
                 },
                 function() {
                     worldmap.clearTarget();
                     game.target = worldmap.importantEntities["hipster"];
+                    worldmap.importantEntities["convince"].visible = false;
                     tutorial.startBattle();
-                }*/
+                }
             ]
-        }
+        },
     ],
     "farmpath": [
         SwitchMap("ExitAreaNorth", 0, 3, true, false, 7, 12, "farmersmarket"), 

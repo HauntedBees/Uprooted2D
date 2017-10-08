@@ -150,13 +150,24 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen) {
     this.lastRan = +new Date();
     this.sheetlen = sheetlen || 4;
     this.frameRate = anim.timePerFrame;
-    this.setFPS = function(fps) { this.frameRate = (fps === undefined ? animController.frameRate : GetFrameRate(fps)); return this; };
+    this.other = {};
+    this.setFPS = function(fps) { this.frameRate = (fps === undefined ? anim.timePerFrame : GetFrameRate(fps)); return this; };
     this.shiftX = function(newX, newLen) {
         this.topx = newX * this.width;
         this.sheetlen = newLen || this.sheetlen;
         return this;
     };
     this.shiftY = function(newY) { this.topy = newY * this.height; return this; };
+    this.forceFrame = function(pos, sx, sy) {
+        return {
+            sheet: this.sheet,
+            sx: this.topx + (this.width * sx),
+            sy: this.topy + (this.height * sy),
+            pos: pos, dir: dir, big: this.big,
+            w: this.width, h: this.height,
+            other: this.other
+        };
+    }
     this.getFrame = function(pos, dir, moving) {
         var curTime = +new Date();
         var update = (curTime - this.lastRan) >= this.frameRate;
@@ -181,7 +192,8 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen) {
             sx: this.topx + (this.width * this.lastDir),
             sy: this.topy + (this.height * frame),
             pos: pos, dir: dir, big: this.big,
-            w: this.width, h: this.height
+            w: this.width, h: this.height,
+            other: this.other
         };
     };
 }

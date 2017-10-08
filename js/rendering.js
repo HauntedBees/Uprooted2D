@@ -113,9 +113,10 @@ var gfx = {
             }
         }
     },
-    drawAnimCharacter: function(sx, sy, pos, offset, sheet, big) {
+    drawAnimCharacter: function(sx, sy, pos, offset, sheet, big, other) {
         sheet = sheet || "mapchar";
         var w = (big ? 32 : 16), h = (big ? 40 : 20);
+        if(other !== undefined && other.forceWide) { w = 32; }
         gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - (big ? 8 : 4), w, h);
     },
     drawCursor: function(x, y, w, h, cursorName) {

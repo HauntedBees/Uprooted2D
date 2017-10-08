@@ -1,13 +1,14 @@
 var worldmap = {
-    freeMovement: true,
     freeMovement: true, savedImage: "",
-    pos: {x: 0, y: 0}, playerDir: 2,
+    pos: {x: 0, y: 0}, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0,
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
     waitForAnimation: false, animIdx: 0, 
     setup: function(args) {
+        this.forceMove = false;
+        this.forcedPlayerInfo = false;
         this.savedImage = "";
         this.inDialogue = false;
         this.waitForAnimation = false;
@@ -106,13 +107,13 @@ var worldmap = {
         else if(input.keys[player.controls.left] !== undefined) { animDir = directions.LEFT; }
         else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
         else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
-        else { moving = false; }
-        layers[Math.round(this.pos.y)].push(this.animData.getFrame(this.pos, animDir, moving));
+        else { moving = this.forceMove; }
+        layers[Math.round(this.pos.y)].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
         for(var y = 0; y < ymax; y++) {
             var funcs = layers[y];
             for(var i = 0; i < funcs.length; i++) {
                 var e = funcs[i];
-                gfx.drawAnimCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big);
+                gfx.drawAnimCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big, e.other);
             }
         }
     },
@@ -195,25 +196,25 @@ var worldmap = {
         var isEnter = false;
         var moveSpeed = 0.25;
         switch(key) {
-            case "w": 
+            case player.controls.up: 
                 pos.y -= moveSpeed;
                 this.playerDir = 0;
                 break;
-            case "a":
+            case player.controls.left:
                 pos.x -= moveSpeed;
                 this.playerDir = 1;
                 break;
-            case "s":
+            case player.controls.down:
                 pos.y += moveSpeed;
                 this.playerDir = 2;
                 break;
-            case "d":
+            case player.controls.right:
                 pos.x += moveSpeed;
                 this.playerDir = 3;
                 break;
-            case " ":
-            case "Enter": isEnter = true; break;
-            case "q": 
+            case player.controls.confirm:
+            case player.controls.pause: isEnter = true; break;
+            case player.controls.cancel: 
                 if(this.inDialogue) { return; }
                 worldmap.savedImage = gfx.getSaveFileImage();
                 game.transition(this, pausemenu);

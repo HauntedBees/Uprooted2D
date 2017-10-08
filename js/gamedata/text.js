@@ -497,5 +497,97 @@ var fulltext = {
 	"opQuit": {
 		"en-us": "", 
 		"en-dm": "Return without Saving"
+	},
+	"intro1": {
+		"en-us": "", 
+		"en-dm": "???: This must be the place!"
+	},
+	"intro2": {
+		"en-us": "", 
+		"en-dm": "???: Hello there, are you the owner of this farm? You are? Excellent!"
+	},
+	"intro3": {
+		"en-us": "", 
+		"en-dm": "???: My name is Nathan! I'm an apprentice farmer! Do you need an intern?"
+	},
+	"intro4": {
+		"en-us": "", 
+		"en-dm": "Nathan: Now hold on a second! I can be a valuable asset to your farm!"
+	},
+	"intro5": {
+		"en-us": "", 
+		"en-dm": "Nathan: You're running your produce stand today, right? I can go advertise for it!"
+	},
+	"intro6": {
+		"en-us": "", 
+		"en-dm": "Nathan: Or I can run some errands for you while you're busy with that! Come on, what's something you need to get done today?"
+	},
+	"intro7": {
+		"en-us": "", 
+		"en-dm": "Nathan: You need some seeds, do you? Well, I know a great bulk supplier! I'll go get them and bring them to you at the market!"
+	},
+	"intro8": {
+		"en-us": "", 
+		"en-dm": "Nathan: Be back soon! I won't disappoint you!"
+	},
+	"intro9": {
+		"en-us": "", 
+		"en-dm": "???: Ah! This must be it! The famous produce stand!"
+	},
+	"intro10": {
+		"en-us": "", 
+		"en-dm": "???: The guys back at the office were right -- all of this looks amazing!"
+	},
+	"intro11": {
+		"en-us": "", 
+		"en-dm": "???: This carrot looks so nutritious!"
+	},
+	"intro12": {
+		"en-us": "", 
+		"en-dm": "???: ..."
+	},
+	"intro13": {
+		"en-us": "", 
+		"en-dm": "???: And it looks like this analysis confirms that it is!"
+	},
+	"intro14": {
+		"en-us": "", 
+		"en-dm": "???: Hm?"
+	},
+	"intro15": {
+		"en-us": "", 
+		"en-dm": "???: Oh. You're probably wondering what that was all about."
+	},
+	"intro16": {
+		"en-us": "", 
+		"en-dm": "???: I'm Beckett. The startup I work for is going to use this carrot data to help us create PROPRIETARY FOOD SUBSTITUTES."
+	},
+	"intro17": {
+		"en-us": "", 
+		"en-dm": "Beckett: The world will be so much better when people don't have to worry about what to eat!"
+	},
+	"intro18": {
+		"en-us": "", 
+		"en-dm": "Beckett: But for that to work, we also need to make sure Food2 has no competition..."
+	},
+	"intro19": {
+		"en-us": "", 
+		"en-dm": "Beckett: So, I'd like to make you an offer. Ten million coins to retire and never farm again."
+	},
+	"intro20": {
+		"en-us": "", 
+		"en-dm": "Beckett: ..."
+	},
+	"intro21": {
+		"en-us": "", 
+		"en-dm": "Beckett: No? Hmm, I thought you'd be convinced by that amazing sales pitch..."
+	},
+	"intro22": {
+		"en-us": "", 
+		"en-dm": "Beckett: Well, I have things I need to do, so I'll let this Convince-a-tron change your mind! Give me a call when you're ready to accept our offer!"
+	},
+	"intro23": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron: Hello! Allow me to play the devil's advocate for a moment... what if that thing you don't want to do is actually a good thing?"
 	}
 };

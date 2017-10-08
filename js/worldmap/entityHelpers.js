@@ -1,3 +1,23 @@
+function GetSleep(time) {
+    return function() {
+        worldmap.waitForAnimation = true;
+        worldmap.animIdx = setTimeout(FinishAnim, time);
+    };
+}
+function GetBasicPlayerFrame(sx, sy, time) {
+    return function() {
+        worldmap.waitForAnimation = true;
+        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, sx, sy);
+        worldmap.refreshMap();
+        worldmap.animIdx = setTimeout(FinishAnim, time);
+    };
+}
+function FinishAnim() {
+    worldmap.forceMove = false;
+    worldmap.forcedPlayerInfo = false;
+    worldmap.refreshMap();
+    worldmap.finishAnimation();
+}
 function SwitchMap(name, x, y, row, column, newx, newy, map) {
     return {
         name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row,
