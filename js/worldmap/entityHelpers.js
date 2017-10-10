@@ -56,31 +56,11 @@ function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
 var commonInteractArrays = {
     robo: [
-        function() {
-            var text = "";
-            switch(Math.floor(Math.random() * 5)) {
-                case 0: text = "beep beep you stupid fuck"; break;
-                case 1: text = "hey kid\n i'm a compyoota\n stop all the downloadin'"; break;
-                case 2: text = "yo it's time to die motherufcker"; break;
-                case 3: text = "beep beep beep beep beep"; break;
-                case 4: text = "TODO: give this robot a witty one-liner"; break;
-            }
-            worldmap.writeText(text);
-        },
+        function() { worldmap.writeText("robo" + Math.floor(Math.random() * 5)); },
         function() { combat.startBattle(Math.random() < 0.2 ? ["robo", "robo"] : ["robo"]); }
     ],
     researchRobo: [
-        function() {
-            var text = "";
-            switch(Math.floor(Math.random() * 5)) {
-                case 0: text = "faculty only here. get the fuck out."; break;
-                case 1: text = "this is not your place you normie."; break;
-                case 2: text = "yo it's time to die motherufcker!"; break;
-                case 3: text = "beep beep beep beep beep"; break;
-                case 4: text = "YOU ARE A HUMAN WHO IS NOT MY BOSS SO I MUST DESTROY YOU"; break;
-            }
-            worldmap.writeText(text);
-        },
+        function() { worldmap.writeText("research" + Math.floor(Math.random() * 5)); },
         function() {
             var enemies = ["robo2"];
             if(Math.random() < 0.2) { enemies.push("robo2"); }

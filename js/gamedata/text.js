@@ -773,5 +773,45 @@ var fulltext = {
 	"quitTut": {
 		"en-us": "", 
 		"en-dm": "Don't want to Tutorial after all? Whatevs. Come back later!"
+	},
+	"robo0": {
+		"en-us": "", 
+		"en-dm": "beep beep you stupid fuck"
+	},
+	"robo1": {
+		"en-us": "", 
+		"en-dm": "hey kid\n i'm a compyoota\n stop all the downloadin'"
+	},
+	"robo2": {
+		"en-us": "", 
+		"en-dm": "yo it's time to die motherufcker"
+	},
+	"robo3": {
+		"en-us": "", 
+		"en-dm": "beep beep beep beep beep"
+	},
+	"robo4": {
+		"en-us": "", 
+		"en-dm": "TODO: give this robot a witty one-liner"
+	},
+	"research0": {
+		"en-us": "", 
+		"en-dm": "faculty only here. get the fuck out."
+	},
+	"research1": {
+		"en-us": "", 
+		"en-dm": "this is not your place you normie."
+	},
+	"research2": {
+		"en-us": "", 
+		"en-dm": "yo it's time to die motherufcker"
+	},
+	"research3": {
+		"en-us": "", 
+		"en-dm": "beep beep beep beep beep"
+	},
+	"research4": {
+		"en-us": "", 
+		"en-dm": "YOU ARE A HUMAN WHO IS NOT MY BOSS SO I MUST DESTROY YOU"
 	}
 };
