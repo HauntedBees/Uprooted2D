@@ -1,12 +1,14 @@
 function AnyPress() { return true; };
 var tutorial = {
-    isTutorial: true,
+    isTutorial: true, attemptingLeave: false, completed: false, 
     state: 0, currentInputHandler: combat.menu,
     startBattle: function() {
         combat.startBattle(["Discussly"]);
         game.currentInputHandler = this;
+        this.attemptingLeave = false;
         this.currentInputHandler = combat.menu;
         this.state = 0;
+        this.completed = false, 
         this.drawTutorial();
     },
     transition: function(from, to, arg) {
@@ -18,32 +20,56 @@ var tutorial = {
     drawTutorial: function() {
         gfx.clearLayer("tutorial");
         if(this.state === 39) {
+            this.completed = true;
             game.currentInputHandler = tutorial.currentInputHandler;
             return;
         }
-        var details = this.stateDetails[this.state];
-        gfx.drawInfobox(16, details.height, -0.5, "tutorial");
+        if(this.state === 999) {
+            gfx.drawInfobox(16, 3, -0.5, "tutorial");
+        } else {
+            gfx.drawInfobox(16, this.stateDetails[this.state].height, -0.5, "tutorial");
+        }
         gfx.drawWrappedText(GetText("tut" + this.state), 2, 8, 235, "#000000", "tutorial");
     },
     mouseMove: function(pos) { return this.currentInputHandler.mouseMove(pos); },
-    click: function(pos) { // TODO: refactor this?
-        var success = this.tryAdvance[this.state]();
-        if(!success) { return false; }
-        this.state++;
-        return this.currentInputHandler.click(pos);
-    },
+    click: function(pos) { return true; },
     keyPress: function(key) {
         if(this.state === 39) { return this.currentInputHandler.keyPress(key); }
         if(key === player.controls.cancel) { return false; }
         var isEnter = (key === player.controls.pause || key === player.controls.confirm);
         if(isEnter) {
+            var runCheck = (this.state === 0 && combat.menu.cursorY === 3);
             var success = this.stateDetails[this.state].advance();
-            if(!success) { return false; }
-            success = this.currentInputHandler.keyPress(key);
-            if(!success) { return false; }
+            if(!success && !runCheck) { return false; }
+            if(!runCheck) {
+                success = tutorial.currentInputHandler.keyPress(key);
+                if(!success) { return false; }
+            }
             this.state++;
             this.drawTutorial();
-            if(this.state < 38) {
+            if(runCheck) {
+                if(this.attemptingLeave) {
+                    this.clean();
+                    this.state = 100;
+                    game.currentInputHandler = tutorial.currentInputHandler;
+                    combat.wrapUpCombat();
+                    var postCombat = game.target.postBattle;
+                    clearInterval(combat.charAnimIdx);
+                    game.transition(combat.menu, worldmap, {
+                        init: worldmap.pos,
+                        map: worldmap.mapName,
+                        noEntityUpdate: true,
+                        postCombat: postCombat
+                    });
+                    return true;
+                } else {
+                    this.attemptingLeave = true;
+                    this.state = 999;
+                    this.drawTutorial();
+                    this.state = 0;
+                    return false;
+                }
+            } else if(this.state < 38) {
                 combat.enemies[0].health = 9999;
                 player.health = Math.max(5, player.health);
             } else {

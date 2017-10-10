@@ -126,22 +126,61 @@ var mapentities = {
         //EnterShop("ChickenCoop", 10, 6, "coop"),
         //EnterShop("UpgradeTest", 10, 5, "farmupgradeFull"),
         GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
-        GetCommonEntity("ConvinceATron", 10, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "convince", visible: false, solid: false }),
+        GetCommonEntity("ConvinceATron", 10, 4, 0, 0, undefined, [
+            function() { worldmap.writeText("wantTut", ["sYes", "sNo"]); },
+            function(idx) {
+                switch(idx) {
+                    case 0:
+                        worldmap.writeText("noTut");
+                        break;
+                    default:
+                        worldmap.writeText("noTut");
+                        worldmap.forceEndDialog = true;
+                        break;
+                }
+            }, function() { tutorial.startBattle(); }
+        ], { sheet: "hipster", storageKey: "convince", visible: false, solid: false, postBattle: "PostStandaloneTutorial" }),
         GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
-        SwitchMap("ExitAreaSouth", 0, 13, true, false, 40, 9, "bridge"),
-        //SwitchMap("ExitAreaSouth", 0, 13, true, false, 21.5, 15, "belowvillage"),
-        //SwitchMap("ExitAreaSouth", 0, 13, true, false, 7, 4, "farmpath"),
+        //SwitchMap("ExitAreaSouth", 0, 13, true, false, 40, 9, "bridge"),
+        SwitchMap("ExitAreaSouth", 0, 13, true, false, 21.5, 15, "belowvillage"),
+        SwitchMap("ExitAreaSouth", 0, 13, true, false, 7, 4, "farmpath"),
+        GetInvisibleEntity("PostStandaloneTutorial", [
+            function() {
+                if(tutorial.completed) {
+                    game.target = worldmap.importantEntities["convince"];
+                    worldmap.clearTarget();
+                    worldmap.writeText("finTut");
+                } else {
+                    worldmap.writeText("quitTut");
+                }
+            }
+        ], { storageKey: "PostStandaloneTutorial" }),
         GetInvisibleEntity("PostInitialBattle", [
-            GetSpeak("Pb0_0"),
-            GetSpeak("Pb0_1") 
+            function() {
+                worldmap.clearTarget();
+                if(tutorial.completed) {
+                    game.target = worldmap.importantEntities["convince"];
+                    worldmap.clearTarget();
+                }
+                worldmap.writeText("Pb0_0");
+            },
+            GetSpeak("Pb0_1")
         ], { storageKey: "PostInitialBattle" }),
-        {
-            name: "DemoCutscene", pos: {x: 10, y: 5}, solid: false,
-            interact: [ function() { worldmap.clearTarget(); game.target = worldmap.importantEntities["hipster"]; combat.startBattle(["Beckett", "Beckett", "Beckett"]); } ]
-        },
+        /*{
+            name: "DemoCutscene", pos: {x: 10, y: 0}, solid: false, autoplay: true, postBattle: "PostInitialBattle",
+            interact: [ 
+                GetSpeak("intro13"),
+                function() {
+                    worldmap.importantEntities["convince"].anim.shiftY(3);
+                    worldmap.importantEntities["convince"].visible = true;
+                    worldmap.importantEntities["convince"].solid = true;
+                    tutorial.startBattle();
+                }
+            ]
+        },*/
         {
             name: "CutscenePrompt",
-            pos: {x: 10, y: 5},
+            pos: {x: 0, y: 5},
             solid: false,
             autoplay: true, 
             interact: [
@@ -249,6 +288,7 @@ var mapentities = {
                     worldmap.playerDir = 0;
                     worldmap.importantEntities["convince"].anim.shiftY(3);
                     worldmap.importantEntities["convince"].visible = true;
+                    worldmap.importantEntities["convince"].solid = true;
                     worldmap.animIdx = setInterval(function() {
                         worldmap.importantEntities["hipster"].pos.x += 0.025;
                         worldmap.refreshMap();
@@ -274,7 +314,6 @@ var mapentities = {
                 function() {
                     worldmap.clearTarget();
                     game.target = worldmap.importantEntities["hipster"];
-                    worldmap.importantEntities["convince"].visible = false;
                     tutorial.startBattle();
                 }
             ]

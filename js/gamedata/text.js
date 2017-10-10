@@ -204,11 +204,11 @@ var fulltext = {
 	},
 	"Pb0_0": {
 		"en-us": "", 
-		"en-dm": "oops I killed a man. i should go kick his boss's ass, too. also his boss's ass,"
+		"en-dm": "That was a weird situation. I wonder why that guy sucked so much."
 	},
 	"Pb0_1": {
 		"en-us": "", 
-		"en-dm": "so on and so forth, all the way up to the top. I should head to my farm first to get supplies."
+		"en-dm": "Oh well, I should probably head back to my farm now."
 	},
 	"testA": {
 		"en-us": "", 
@@ -734,7 +734,7 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "Cool cool, coolcoolcool. Now select HEAL."
 	},
-	"tut35": {
+	"tut36": {
 		"en-us": "", 
 		"en-dm": "Bam. You can Compost Rotten Crops to recover health. Crops Rot when they age after becoming Ripe. Trees don't Rot, but their Ripe Fruit will fall off and they'll have to regrow."
 	},
@@ -745,5 +745,33 @@ var fulltext = {
 	"tut38": {
 		"en-us": "", 
 		"en-dm": "Now let's FINISH THIS FUTHER MUCKER OFF. You're on your own now, kid!"
+	},
+	"tut999": {
+		"en-us": "", 
+		"en-dm": "If you don't want to do the tutorial, you can run away to ignore this dumb robot! But if you get confused later you can come back and learn!"
+	},
+	"wantTut": {
+		"en-us": "", 
+		"en-dm": "Greetings, would you like to play through the tutorial?"
+	},
+	"sYes": {
+		"en-us": "", 
+		"en-dm": "Yes."
+	},
+	"sNo": {
+		"en-us": "", 
+		"en-dm": "No."
+	},
+	"noTut": {
+		"en-us": "", 
+		"en-dm": "Okie-dokie!"
+	},
+	"finTut": {
+		"en-us": "", 
+		"en-dm": "Congratulations on Tutorialing!"
+	},
+	"quitTut": {
+		"en-us": "", 
+		"en-dm": "Don't want to Tutorial after all? Whatevs. Come back later!"
 	}
 };

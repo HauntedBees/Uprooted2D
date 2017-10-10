@@ -123,9 +123,11 @@ var worldmap = {
         gfx.clearAll();
     },
     clearTarget: function() {
-        player.clearedEntities.push(game.target.name);
-        var idx = this.entities.indexOf(game.target);
-        if(idx >= 0) { this.entities.splice(idx, 1); }
+        if(game.target) {
+            player.clearedEntities.push(game.target.name);
+            var idx = this.entities.indexOf(game.target);
+            if(idx >= 0) { this.entities.splice(idx, 1); }
+        }
         game.target = null;
     },
     writeText: function(t, choices, isRefresh) {
