@@ -589,5 +589,161 @@ var fulltext = {
 	"intro23": {
 		"en-us": "", 
 		"en-dm": "Convince-a-tron: Hello! Allow me to play the devil's advocate for a moment... what if that thing you don't want to do is actually a good thing?"
+	},
+	"tut0": {
+		"en-us": "", 
+		"en-dm": "Oh shit, it's a throwdown! To start things off, select 'Plant' from the menu below!"
+	},
+	"tut1": {
+		"en-us": "", 
+		"en-dm": "Sick. Sick. You did it. Now select the Beet Seeds! Trust me, it's gonna be good."
+	},
+	"tut2": {
+		"en-us": "", 
+		"en-dm": "Next step is planting those Seeds on your Field. Plant them wherever you want!"
+	},
+	"tut3": {
+		"en-us": "", 
+		"en-dm": "Good job! You Planted a Beet! When something is Planted on your Field, you generally have to wait several turns for it to grow. Now it's the enemy's turn, so just advance when ready."
+	},
+	"tut4": {
+		"en-us": "", 
+		"en-dm": "Your Beet is Ripe! You can now Attack with it. Select 'Attack' from the menu!"
+	},
+	"tut5": {
+		"en-us": "", 
+		"en-dm": "When you select 'Attack', any Ripe Crops on your Field will be harvested and launched at your opponent!"
+	},
+	"tut6": {
+		"en-us": "", 
+		"en-dm": "Enemy's turn again. It wouldn't be fair if you were the only one who could do anything... :("
+	},
+	"tut7": {
+		"en-us": "", 
+		"en-dm": "Alright! Now time to Plant some more Seeds! Select 'Plant' again."
+	},
+	"tut8": {
+		"en-us": "", 
+		"en-dm": "This time we're gonna plant a tree! Select the Grape+ Seeds."
+	},
+	"tut9": {
+		"en-us": "", 
+		"en-dm": "Trees are big, so they take up more space on your Field! Plant the tree!"
+	},
+	"tut10": {
+		"en-us": "", 
+		"en-dm": "Looks like that tree will take four turns to grow. We can wait it out!"
+	},
+	"tut11": {
+		"en-us": "", 
+		"en-dm": "While we're waiting, let's try Attacking again. Select 'Attack' from the menu."
+	},
+	"tut12": {
+		"en-us": "", 
+		"en-dm": "You can still Attack with no Ripe Crops available, but it isn't going to be as effective."
+	},
+	"tut13": {
+		"en-us": "", 
+		"en-dm": "Now we're going to try something a little more interesting..."
+	},
+	"tut14": {
+		"en-us": "", 
+		"en-dm": "Select 'Plant' from the menu."
+	},
+	"tut15": {
+		"en-us": "", 
+		"en-dm": "Now select the Carrot Seeds. Notice the Time carrots take to grow... and how many turns your Grape Tree has left."
+	},
+	"tut16": {
+		"en-us": "", 
+		"en-dm": "Plant those Carrots!"
+	},
+	"tut17": {
+		"en-us": "", 
+		"en-dm": "This dumb son-of-a-fuck doesn't know how just how screwed they are."
+	},
+	"tut18": {
+		"en-us": "", 
+		"en-dm": "One more time now, select 'Plant'!"
+	},
+	"tut19": {
+		"en-us": "", 
+		"en-dm": "Now select those Beet Seeds!"
+	},
+	"tut20": {
+		"en-us": "", 
+		"en-dm": "Plant those Beet Seeds!"
+	},
+	"tut21": {
+		"en-us": "", 
+		"en-dm": "Do you see where this is going?"
+	},
+	"tut22": {
+		"en-us": "", 
+		"en-dm": "Everything's ready! THROW SOME FOOD AT THAT FUCKER!!"
+	},
+	"tut23": {
+		"en-us": "", 
+		"en-dm": "Fucking ZING! Ha ha ha, that shit is hilarious. Fuck that guy."
+	},
+	"tut24": {
+		"en-us": "", 
+		"en-dm": "Damn. That didn't kill him."
+	},
+	"tut25": {
+		"en-us": "", 
+		"en-dm": "Uhhh. Oh yeah, you can take damage too. Maybe select 'Plant'."
+	},
+	"tut26": {
+		"en-us": "", 
+		"en-dm": "Truust me on this one, but it's time to plant some Beet Seeds."
+	},
+	"tut27": {
+		"en-us": "", 
+		"en-dm": "Just drop 'em anywhere."
+	},
+	"tut28": {
+		"en-us": "", 
+		"en-dm": "Alright so you're gonna have to trust me on this one, okay?"
+	},
+	"tut29": {
+		"en-us": "", 
+		"en-dm": "Okay... do NOT attack with this Ripe Beet. Select 'Plant' again."
+	},
+	"tut30": {
+		"en-us": "", 
+		"en-dm": "Just pick something."
+	},
+	"tut31": {
+		"en-us": "", 
+		"en-dm": "Plant it."
+	},
+	"tut32": {
+		"en-us": "", 
+		"en-dm": "Alright, now it's time."
+	},
+	"tut33": {
+		"en-us": "", 
+		"en-dm": "Select 'Compost' from the menu."
+	},
+	"tut34": {
+		"en-us": "", 
+		"en-dm": "Now select your Rotten Beet."
+	},
+	"tut35": {
+		"en-us": "", 
+		"en-dm": "Cool cool, coolcoolcool. Now select HEAL."
+	},
+	"tut35": {
+		"en-us": "", 
+		"en-dm": "Bam. You can Compost Rotten Crops to recover health. Crops Rot when they age after becoming Ripe. Trees don't Rot, but their Ripe Fruit will fall off and they'll have to regrow."
+	},
+	"tut37": {
+		"en-us": "", 
+		"en-dm": "With the right Compost Bin you can even Compost Crops that aren't Rotten... or Attack enemies with your compost!"
+	},
+	"tut38": {
+		"en-us": "", 
+		"en-dm": "Now let's FINISH THIS FUTHER MUCKER OFF. You're on your own now, kid!"
 	}
 };
