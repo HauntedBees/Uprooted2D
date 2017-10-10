@@ -28,7 +28,7 @@ function GetDisplayName(name) {
 }
 function GetEnemy(name) {
     switch(name) {
-        case "Discussly": return new EnemyDetail(name, "sm", 0, { dx: 0, dy: 0.25, w: 0, h: 0.25 }, 10, 1, 1, 3, 2, true, [0, 0, 1, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [
+        case "Discussly": return new EnemyDetail(name, "sm", 0, { dx: 0, dy: 0.25, w: 0, h: 0.25 }, 10, 1, 1, 3, 2, true, [0, 0, 1, 0], [["ConvinceATron", 1], ["ConvinceATron"]], [
                 { money: true, min: 10, max: 10 },
                 { seed: "carrot", min: 2, max: 2 }
             ]);
@@ -209,6 +209,25 @@ var enemyFuncs = {
     }
 };
 var enemyAttacks = {
+    ConvinceATron: function(e) {
+        var attackSuffix = " would like to discuss ethics in farming journalism with you.";
+        switch(tutorial.state) {
+            case 23: 
+                var damage = combat.damagePlayer(1);
+                return { text: e.name + " headbutts you for " + damage + " damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            case 2: attackSuffix = " is prepared to lecture you on the importance of cryptocurrencies."; break;
+            case 5: attackSuffix = " wants you to know that the future of the world is in the hands of like 4 startups in California."; break;
+            case 9: attackSuffix = " thinks you should listen to its podcast."; break;
+            case 12: attackSuffix = " is just playing Devil's Advocate, it's not that big of a deal."; break;
+            case 16: attackSuffix = " is finding it hard to discuss things with you if you aren't willing to listen."; break;
+            case 20: attackSuffix = " wishes you'd cut that out."; break;
+            case 27: attackSuffix = " is sorry they hurt you."; break;
+            case 31: attackSuffix = " hopes you can see things through their perspective."; break;
+            case 36: attackSuffix = " is prepared to die."; break;
+        }
+        // 2, 5, 9, 12, 16, 20, 23!, 27, 31, 36
+        return enemyFuncs.GetGenericStandbyAttack(e.name + attackSuffix); 
+    },
     app: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is distracted by a hot new App."); },
     gear: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is thinking about the concept of gears."); },
     babySlap: function(e) {
