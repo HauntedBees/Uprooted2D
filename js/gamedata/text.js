@@ -813,5 +813,37 @@ var fulltext = {
 	"research4": {
 		"en-us": "", 
 		"en-dm": "YOU ARE A HUMAN WHO IS NOT MY BOSS SO I MUST DESTROY YOU"
+	},
+	"farmMush": {
+		"en-us": "", 
+		"en-dm": "I've been growing mushrooms on this log for years. It's what one might call... a mushroom log."
+	},
+	"farmTree": {
+		"en-us": "", 
+		"en-dm": "bananas tasty mmm yum"
+	},
+	"farmSprinkler": {
+		"en-us": "", 
+		"en-dm": "These sprinklers are good, but the don't always get things right."
+	},
+	"farmHay": {
+		"en-us": "", 
+		"en-dm": "This nice soft pile of yellow stuff is great for napping on."
+	},
+	"farmBin": {
+		"en-us": "", 
+		"en-dm": "A bin full of delicious fruits and veggietables."
+	},
+	"farmWater": {
+		"en-us": "", 
+		"en-dm": "Water you doing? Fuck off."
+	},
+	"farmVeggie": {
+		"en-us": "", 
+		"en-dm": "These are looking delicious!"
+	},
+	"hiveGet": {
+		"en-us": "", 
+		"en-dm": "You found a beehive! You can now place one more beehive on your farm, and you caught some bees, too!"
 	}
 };

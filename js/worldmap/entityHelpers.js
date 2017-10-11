@@ -36,6 +36,18 @@ function GetInvisibleEntity(name, interact, additional) {
     return Object.assign(res, additional);
 };
 function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: [ GetSpeak(text) ] }; };
+function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false}); };
+function GetBeehive(hiveId, x, y, beetype) {
+    return GetCommonEntity(hiveId, x, y, 2, 0, undefined, [
+        function() {
+            worldmap.writeText("hiveGet");
+            player.increaseItem("_beehive");
+            player.increaseItem((beetype || "beeB"), 5);
+            game.target = worldmap.importantEntities[hiveId];
+            worldmap.clearTarget();
+        }
+    ], { sy: 4, storageKey: hiveId });
+};
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
     var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");

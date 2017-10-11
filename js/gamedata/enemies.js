@@ -225,7 +225,6 @@ var enemyAttacks = {
             case 31: attackSuffix = " hopes you can see things through their perspective."; break;
             case 36: attackSuffix = " is prepared to die."; break;
         }
-        // 2, 5, 9, 12, 16, 20, 23!, 27, 31, 36
         return enemyFuncs.GetGenericStandbyAttack(e.name + attackSuffix); 
     },
     app: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is distracted by a hot new App."); },
