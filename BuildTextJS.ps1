@@ -33,5 +33,5 @@ ForEach($row in $csv) {
 		}
 	}
 }
-$out.WriteLine("};")
+$out.Write("};")
 $out.close();

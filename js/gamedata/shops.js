@@ -65,6 +65,11 @@ var stores = {
         buyMult: 1, doesSell: false,
         opening: "s_seed1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_purchased"
     },
+    "inn0": {
+        img: "shops/home", innId: "inn0",
+        wares: [ { product: "sleep", price: 0, type: "inn" } ],
+        opening: "s_home", leaving: "s_homeleave", purchased: "s_homesleep"
+    },
     "inn1": {
         img: "shops/dwarf2", innId: "inn1",
         wares: [ { product: "sleep", price: 6, type: "inn" } ],

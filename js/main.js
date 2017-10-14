@@ -22,7 +22,7 @@ var game = {
     currentInputHandler: worldmap, target: null, language: "en-dm",
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
                     "maps/farmersmarket", "maps/farmpath", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
-                    "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm"],
+                    "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home"],
     canvasLayers: ["background", "characters", "foreground", "menuA", "menuB", "menucursorA", "menucursorB", "menucursorC", "menutext", "tutorial", "savegen"], 
     fullInit: function() {
         var canvasObj = {};

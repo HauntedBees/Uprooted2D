@@ -149,6 +149,8 @@ function GetCrop(name) {
         case "grapes": return new CropDetail(name, "Grapes", 10, "tree", 2, 20, 5, 6, 4, 0, 0, 1);
         case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 1);
         case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 6, 3, 0, 0, 1);
+        case "garlic": return new CropDetail(name, "Garlic", 10, "veg", 1, 6, 3, 15, 0, 1, 1, 1);
+        case "banana": return new CropDetail(name, "Bananas", 10, "tree", 2, 7, 5, 3, 3, 1, 1, 1, 1);
         /* only for enemies */
         case "algae": return new CropDetail(name, "Algae", 10, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "kelp": return new CropDetail(name, "Kelp", 10, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { noRot: true });

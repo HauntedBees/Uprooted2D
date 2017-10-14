@@ -178,6 +178,10 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c"
 	},
+	"Pb1_2": {
+		"en-us": "", 
+		"en-dm": "Either way, he said he came from a research plant down south. I should check that out."
+	},
 	"B1_1": {
 		"en-us": "", 
 		"en-dm": "hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm."
@@ -824,7 +828,7 @@ var fulltext = {
 	},
 	"farmSprinkler": {
 		"en-us": "", 
-		"en-dm": "These sprinklers are good, but the don't always get things right."
+		"en-dm": "These sprinklers are good, but they don't always get things right."
 	},
 	"farmHay": {
 		"en-us": "", 
@@ -845,5 +849,25 @@ var fulltext = {
 	"hiveGet": {
 		"en-us": "", 
 		"en-dm": "You found a beehive! You can now place one more beehive on your farm, and you caught some bees, too!"
+	},
+	"garlic": {
+		"en-us": "", 
+		"en-dm": "Garlic is as good as ten mothers... because my mum is great and garlic is great yum yum crunch crunch give me that garlic."
+	},
+	"banana": {
+		"en-us": "", 
+		"en-dm": "A banana in the hand is worth one in the peel. Sure."
+	},
+	"s_home": {
+		"en-us": "", 
+		"en-dm": "Home sweet home... I can hardly believe that all these robot hijinks are happening."
+	},
+	"s_homesleep": {
+		"en-us": "", 
+		"en-dm": "A bit of rest should clear my mind."
+	},
+	"s_homeleave": {
+		"en-us": "", 
+		"en-dm": "I should get going. There's apparently a lot I need to do today."
 	}
 };
