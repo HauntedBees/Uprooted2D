@@ -13,6 +13,11 @@ if (typeof Object.assign != 'function') {
         return to;
     };
 }
+function InventoryCopy(arr) {
+    var copy = [];
+    for (var i = 0; i < arr.length; i++) { copy[i] = (typeof arr[i] === "object") ? InventoryCopy(arr[i]) : arr[i]; }
+    return copy;
+ }
 var game = {
     currentInputHandler: worldmap, target: null, language: "en-dm",
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",

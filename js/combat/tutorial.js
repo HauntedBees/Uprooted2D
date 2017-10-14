@@ -8,7 +8,9 @@ var tutorial = {
         this.attemptingLeave = false;
         this.currentInputHandler = combat.menu;
         this.state = 0;
-        this.completed = false, 
+        this.completed = false;
+        player.tempInventory = InventoryCopy(player.inventory);
+        player.inventory = InventoryCopy(player.tutorialInventory);
         this.drawTutorial();
     },
     transition: function(from, to, arg) {

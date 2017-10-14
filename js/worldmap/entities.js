@@ -146,6 +146,8 @@ var mapentities = {
         SwitchMap("ExitAreaSouth", 0, 13, true, false, 7, 4, "farmpath"),
         GetInvisibleEntity("PostStandaloneTutorial", [
             function() {
+                player.inventory = InventoryCopy(player.tempInventory);
+                player.tempInventory = undefined;
                 if(tutorial.completed) {
                     game.target = worldmap.importantEntities["convince"];
                     worldmap.clearTarget();
@@ -157,6 +159,10 @@ var mapentities = {
         ], { storageKey: "PostStandaloneTutorial" }),
         GetInvisibleEntity("PostInitialBattle", [
             function() {
+                player.inventory = InventoryCopy(player.tempInventory);
+                player.tempInventory = undefined;
+                worldmap.clearTarget();
+                game.target = worldmap.importantEntities["testCutscene"];
                 worldmap.clearTarget();
                 if(tutorial.completed) {
                     game.target = worldmap.importantEntities["convince"];
@@ -167,7 +173,7 @@ var mapentities = {
             GetSpeak("Pb0_1")
         ], { storageKey: "PostInitialBattle" }),
         /*{
-            name: "DemoCutscene", pos: {x: 10, y: 0}, solid: false, autoplay: true, postBattle: "PostInitialBattle",
+            name: "DemoCutscene", pos: {x: 10, y: 0}, solid: false, autoplay: true, postBattle: "PostInitialBattle", storageKey: "testCutscene",
             interact: [ 
                 GetSpeak("intro13"),
                 function() {
