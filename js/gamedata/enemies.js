@@ -29,10 +29,7 @@ function GetDisplayName(name) {
 }
 function GetEnemy(name) {
     switch(name) {
-        case "Discussly": return new EnemyDetail(name, "sm", 0, { dx: 0, dy: 0.25, w: 0, h: 0.25 }, 10, 1, 1, 3, 2, true, [0, 0, 1, 0], [["ConvinceATron", 1], ["ConvinceATron"]], [
-                { money: true, min: 10, max: 10 },
-                { seed: "carrot", min: 2, max: 2 }
-            ]);
+        case "Discussly": return new EnemyDetail(name, "sm", 0, { dx: 0, dy: 0.25, w: 0, h: 0.25 }, 10, 1, 1, 3, 2, false, [0, 0, 1, 0], [["ConvinceATron", 1], ["ConvinceATron"]], []);
         case "Beckett": return new EnemyDetail(name, "sm", 7, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 1, 1, 3, 2, true, [0, 0, 1, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [
                 { money: true, min: 10, max: 10 },
                 { seed: "carrot", min: 2, max: 2 }

@@ -64,8 +64,13 @@ combat.menu = {
                 }
                 break;
             case 3:
-                text = "Fuck off and cry to your mum, shitbird.";
-                charX = 5;
+                if(combat.isBossBattle) {
+                    text = "You can't run away from boss battles!";
+                    charX = 3;
+                } else {
+                    text = "Fuck off and cry to your mum, shitbird.";
+                    charX = 5;
+                }
                 break;
         }
         combat.animHelper.SetPlayerAnimInfo([[charX, charY]]);
@@ -132,42 +137,34 @@ combat.menu = {
                 game.transition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
                 break;
             case 2: if(player.equipment.compost !== null) { game.transition(this, combat.compost); } break;
-            case 3: this.tryFlee(); break;
+            case 3: if(!combat.isBossBattle) { this.tryFlee(); } break;
             default: return false;
         }
         return true;
     },
     tryFlee: function() {
-        if(combat.isBossBattle) {
-            combat.animHelper.SetPlayerAnimInfo([[3, 0]]);
+        if(Math.random() > (0.45 * player.luck)) {
+            combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [5, 3], [5, 2]]);
+            combat.animHelper.SetUpPlayerForRun();
+            worldmap.clearTarget();
             game.transition(this, combat.inbetween, {
-                next: function() { combat.endTurn(combat.inbetween) },
-                text: "You tried to run away, but you can't-- you can't fucking... DO that... in this battle, fucking hell."
+                next: function() {
+                    clearInterval(combat.charAnimIdx);
+                    game.transition(combat.inbetween, worldmap, {
+                        init: worldmap.pos,
+                        map: worldmap.mapName,
+                        noEntityUpdate: true
+                    });
+                },
+                text: "You ran away like a baby that runs which is actually pretty impressive for a baby so good job (y)"
             });
         } else {
-            if(Math.random() > (0.45 * player.luck)) {
-                combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [5, 3], [5, 2]]);
-                combat.animHelper.SetUpPlayerForRun();
-                worldmap.clearTarget();
-                game.transition(this, combat.inbetween, {
-                    next: function() {
-                        clearInterval(combat.charAnimIdx);
-                        game.transition(combat.inbetween, worldmap, {
-                            init: worldmap.pos,
-                            map: worldmap.mapName,
-                            noEntityUpdate: true
-                        });
-                    },
-                    text: "You ran away like a baby that runs which is actually pretty impressive for a baby so good job (y)"
-                });
-            } else {
-                combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [0, 3], [3, 2, true, true]]);
-                combat.animHelper.SetUpPlayerForRun();
-                game.transition(this, combat.inbetween, {
-                    next: function() { combat.endTurn(combat.inbetween) },
-                    text: "You tried to run away, but failed miserably, you stupid idiot. #lmao"
-                });
-            }
+            combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [0, 3], [3, 2, true, true]]);
+            combat.animHelper.SetUpPlayerForRun();
+            game.transition(this, combat.inbetween, {
+                next: function() { combat.endTurn(combat.inbetween) },
+                text: "You tried to run away, but failed miserably, you stupid idiot. #lmao"
+            });
         }
     },
     keyPress: function(key) {
