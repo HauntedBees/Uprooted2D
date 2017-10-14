@@ -17,6 +17,7 @@ function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldh
     this.seasonDistribution = seasonDistribution;
     this.attacks = attacks;
     this.exp = Math.ceil(health/10 + atk + def/2 + attacks.length*2);
+    if(this.name === "Discussly") { this.exp = 0; }
     this.drops = drops;
     this.boss = boss;
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
