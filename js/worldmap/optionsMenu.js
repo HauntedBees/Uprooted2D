@@ -181,8 +181,8 @@ worldmap.optionsMenu = {
         worldmap.optionsMenu.QuitWithoutSaving();
     },
     QuitWithoutSaving: function() {
-        if(this.fromPause) {
-            game.transition(this, pausemenu, 3);
+        if(worldmap.optionsMenu.fromPause) {
+            game.transition(worldmap.optionsMenu, pausemenu, 3);
         } else {
             game.transition(worldmap.optionsMenu, worldmap.title, 2);
         }

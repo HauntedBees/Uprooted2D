@@ -54,6 +54,7 @@ pausemenu.inventory = {
         var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
         var actIdx = this.actualIndexes[idx];
         var item = player.inventory[actIdx];
+        if(item === undefined) { return; }
         var crop = GetCrop(item[0]);
         gfx.drawText(crop.displayname, 4, 105, undefined, 32);
         
