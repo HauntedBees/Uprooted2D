@@ -132,8 +132,9 @@ var worldmap = {
     },
     writeText: function(t, choices, isRefresh) {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
-        gfx.drawFullbox();
-        gfx.drawFullText(GetText(t));
+        var drawY = (worldmap.pos.y <= 2.5) ? 7.5 : 0;
+        gfx.drawFullbox(drawY);
+        gfx.drawFullText(GetText(t), drawY * 16);
         if(choices === undefined) {
             worldmap.dialogData = null;
             return;
