@@ -241,7 +241,6 @@ var worldmap = {
                     }
                 }
             }
-        }
             if(!hasCollisions) { this.pos = pos; }
         }
         if(isEnter) {
