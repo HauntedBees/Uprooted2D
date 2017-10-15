@@ -38,15 +38,53 @@ function GetInvisibleEntity(name, interact, additional) {
 function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: [ GetSpeak(text) ] }; };
 function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false}); };
 function GetBeehive(hiveId, x, y, beetype) {
-    return GetCommonEntity(hiveId, x, y, 2, 0, undefined, [
-        function() {
-            worldmap.writeText("hiveGet");
-            player.increaseItem("_beehive");
-            player.increaseItem((beetype || "beeB"), 5);
-            game.target = worldmap.importantEntities[hiveId];
-            worldmap.clearTarget();
+    var interactArray = [];    
+    if(!HasText(hiveId + "0")) {
+        var interactArray = [
+            function() {
+                worldmap.writeText("hiveGet");
+                player.increaseItem("_beehive");
+                player.increaseItem((beetype || "beeB"), 5);
+                game.target = worldmap.importantEntities[hiveId];
+                worldmap.clearTarget();
+            }
+        ];
+    } else {
+        var interactArray = [
+            function() {
+                worldmap.writeText("hiveGet");
+                player.increaseItem("_beehive");
+                player.increaseItem((beetype || "beeB"), 5);
+                game.target = worldmap.importantEntities[hiveId];
+                game.target.visible = false;
+            },
+            function() {
+                worldmap.writeText(hiveId + "0");
+                game.target.visible = true;
+                var xshift = 0;
+                switch(worldmap.playerDir) {
+                    case 0: xshift = 10; break;
+                    case 1: xshift = 10; break;
+                    case 2: xshift = 12; break;
+                    case 3: xshift = 11; break;
+                }
+                game.target.anim.shiftX(xshift, 4).shiftY(0);
+                worldmap.refreshMap();
+            }
+        ];
+        var i = 1;
+        while(HasText(hiveId + i)) {
+            interactArray.push(GetSpeak(hiveId + i));
+            i++;
         }
-    ], { sy: 4, storageKey: hiveId });
+        interactArray.push(
+            function() {
+                worldmap.writeText("beeGoodbye");
+                worldmap.clearTarget();
+            }
+        );
+    }
+    return GetCommonEntity(hiveId, x, y, 2, 0, undefined, interactArray, { sy: 4, storageKey: hiveId });
 };
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);

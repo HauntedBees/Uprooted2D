@@ -1,3 +1,37 @@
+var beeQueen = { interact: [
+    function() {
+        worldmap.writeText("BeeGuard0");
+        worldmap.playerDir = 2;
+        worldmap.refreshMap();
+    },
+    function() {
+        worldmap.writeText("BeeGuard1");
+        worldmap.playerDir = 1;
+        worldmap.refreshMap();
+    },
+    function() {
+        worldmap.writeText("BeeGuard2");
+        worldmap.playerDir = 0;
+        worldmap.refreshMap();
+    },
+    function() {
+        worldmap.writeText("BeeGuard3");
+        worldmap.playerDir = 3;
+        worldmap.refreshMap();
+    },
+    function() {
+        worldmap.writeText("BeeGuard4");
+        worldmap.playerDir = 2;
+        worldmap.refreshMap();
+    },
+    function() {
+        game.target = null;
+        player.beeQueensFaced++;
+        worldmap.angryBees = false;
+        var enemy = player.beeQueensFaced < 2 ? "beeQueenA" : (player.beeQueensFaced < 5 ? "beeQueenB" : "beeQueenC");
+        combat.startBattle([enemy]);
+    }
+]};
 var mapentities = {
     "farm_init": [
         GetCommonEntity("Eagle", 16, 9, 4, 0, undefined, undefined, { sheet: "assistant", sheetlen: 2, storageKey: "eagle" }),
@@ -404,6 +438,7 @@ var mapentities = {
         GetCommonInvisibleSpeakingEntity("Crop", 19, 16, "farmVeggie"),
         GetBeehive("FarmHive", 3, 1),
         EnterShop("ChickenCoop", 18, 3, "coop"),
+        EnterShop("Inn", 10, 2, "inn0"),
         GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, [
             GetSpeak("B1_1"),
             GetSpeak("B1_2"),
@@ -422,7 +457,8 @@ var mapentities = {
             storageKey: "PostBoss",
             interact: [
                 GetSpeak("Pb1_0"),
-                GetSpeak("Pb1_1")
+                GetSpeak("Pb1_1"),
+                GetSpeak("Pb1_2")
             ]
         }
     ],

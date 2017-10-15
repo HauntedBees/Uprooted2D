@@ -230,7 +230,10 @@ combat.plant = {
                 switch(killType) {
                     case 1: killMsg += "but your gloves shock it!"; break;
                     case 2: killMsg += "but it is too weak to withstand your soil's pesticides!"; break;
-                    case 3: killMsg = "You try to put your bees in the beehive, but the pesticide scares them away, you dumbfuck."; break;
+                    case 3: 
+                        killMsg = "You try to put your bees in the beehive, but the pesticide scares them away, you dumbfuck.";
+                        worldmap.angryBees = true;
+                        break;
                     default: killMsg += "but ERROR MESSAGE GOES HERE!"; break;
                 }
                 game.transition(this, combat.inbetween, {

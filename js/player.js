@@ -2,7 +2,7 @@ var player = {
     health: 25, maxhealth: 25, 
     atk: 3, def: 2, luck: 0.7,
     level: 1, exp: 0, nextExp: 4, totalExp: 0, 
-    monies: 1000, playTime: 0,
+    monies: 1000, playTime: 0, beeQueensFaced: 0,
     clearedEntities: [], questsCleared: [], activeQuests: {}, 
     lastInn: "start",
     options: {
@@ -118,11 +118,20 @@ var player = {
             case 2:
                 this.increaseItem("carrot", 3);
                 this.increaseItem("beet", 3);
+                this.increaseItem("banana");
                 break;
             case 3:
-                this.increaseItem("carrot", 4);
-                this.increaseItem("beet", 2);
-                this.increaseItem("ginger");
+                this.increaseItem("carrot", 3);
+                this.increaseItem("beet", 3);
+                this.increaseItem("ginger", 4);
+                this.increaseItem("banana");
+                break;
+            case 4:
+                this.increaseItem("carrot", 3);
+                this.increaseItem("beet", 3);
+                this.increaseItem("ginger", 3);
+                this.increaseItem("banana", 2);
+                this.increaseItem("pineapple", 2);
                 break;
         }
     },

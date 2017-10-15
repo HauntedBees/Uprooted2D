@@ -6,6 +6,7 @@ function GetText(key) {
     if(d[game.language] !== undefined) { return d[game.language]; }
     return d["en-us"];
 }
+function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 '@);
 $i = 0;

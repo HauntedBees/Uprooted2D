@@ -17,7 +17,7 @@ function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldh
     this.seasonDistribution = seasonDistribution;
     this.attacks = attacks;
     this.exp = Math.ceil(health/10 + atk + def/2 + attacks.length*2);
-    if(this.name === "Discussly") { this.exp = 0; }
+    if(this.name === "Discussly" || this.name.indexOf("beeQueen") === 0) { this.exp = 0; }
     this.drops = drops;
     this.boss = boss;
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
@@ -76,6 +76,16 @@ function GetEnemy(name) {
         case "seaHandL":
             return new EnemyDetail(name, "lg", 3, { dx: 0, dy: 0, w: 1, h: 1.5 }, 60, 5, 2, 3, 3, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
                 { money: true, min: 20, max: 50 }
+            ], { tile: "watertile" });
+        case "beeQueenA": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 500, 50, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
+        case "beeQueenB": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 2000, 500, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
+        case "beeQueenC": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10000, 5000, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
+        // demo enemies
+        case "seaMonkD": return new EnemyDetail(name, "md", 6, { dx: 0, dy: -0.2, w: 0.5, h: 1.1 }, 60, 4, 3, 3, 2, false, [0, 1, 1, 0],
+            [["splashAttack", 0.9], ["kelpKelpKelpKELPKELPKELP", 0.95], ["harvestOrAttack", 1]],
+            [
+                { money: true, min: 0, max: 5 },
+                { seed: "carrot", min: -1, max: 1 }, 
             ], { tile: "watertile" });
     }
 }
@@ -224,6 +234,27 @@ var enemyAttacks = {
             case 36: attackSuffix = " is prepared to die."; break;
         }
         return enemyFuncs.GetGenericStandbyAttack(e.name + attackSuffix); 
+    },
+    BeeQueen: function(e) {
+        if(worldmap.angryBees) {
+            var damage = combat.damagePlayer(e.atk * 10);
+            worldmap.angryBees = false;
+            return { text: "The mysterious woman, furious that you dared harm bees right in front of her, attacks for a whopping " + damage + " damage!!!", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+        } else {
+            switch(Math.floor(Math.random() * 5)) {
+                case 0: 
+                case 1: 
+                case 2: return enemyFuncs.GetGenericStandbyAttack("The mysterious woman lovingly tends to her bees.");
+                case 3: 
+                    var healAmount = 25 + Math.floor(Math.random() * 200);
+                    e.health += healAmount;
+                    return enemyFuncs.GetGenericStandbyAttack("The mysterious woman eats some honey, recovering " + healAmount + " health.");
+                default: 
+                    var damage = combat.damagePlayer(e.atk);
+                    worldmap.angryBees = false;
+                    return { text: "The mysterious woman attacks for " + damage + " damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+            }
+        }
     },
     app: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is distracted by a hot new App."); },
     gear: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is thinking about the concept of gears."); },

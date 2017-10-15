@@ -3,6 +3,7 @@ function GetText(key) {
     if(d[game.language] !== undefined) { return d[game.language]; }
     return d["en-us"];
 }
+function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 	"s_co": {
 		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
@@ -869,5 +870,49 @@ var fulltext = {
 	"s_homeleave": {
 		"en-us": "", 
 		"en-dm": "I should get going. There's apparently a lot I need to do today."
+	},
+	"beeGoodbye": {
+		"en-us": "", 
+		"en-dm": "???: Goodbye, friend!"
+	},
+	"FarmHive0": {
+		"en-us": "", 
+		"en-dm": "???: Hello there!"
+	},
+	"FarmHive1": {
+		"en-us": "", 
+		"en-dm": "???: I see you've got some BEES there, am I correct?"
+	},
+	"FarmHive2": {
+		"en-us": "", 
+		"en-dm": "???: You can place a beehive on your farm from the Fixtures menu. Once you have a beehive on your farm, you can use bees in combat!"
+	},
+	"FarmHive3": {
+		"en-us": "", 
+		"en-dm": "???: Bees produce honey at random intervals, which recovers a lot of health when composted, and can stun some enemies when used as a weapon!"
+	},
+	"FarmHive4": {
+		"en-us": "", 
+		"en-dm": "???: Bees are very important, so please take care of them. Don't take more honey than you need, and don't do anything to hurt them!"
+	},
+	"BeeGuard0": {
+		"en-us": "", 
+		"en-dm": "???: I saw what you did..."
+	},
+	"BeeGuard1": {
+		"en-us": "", 
+		"en-dm": "???: You used pesticide..."
+	},
+	"BeeGuard2": {
+		"en-us": "", 
+		"en-dm": "???: And then exposed bees to that pesticide."
+	},
+	"BeeGuard3": {
+		"en-us": "", 
+		"en-dm": "???: DID YOU THINK I WOULDN'T NOTICE???"
+	},
+	"BeeGuard4": {
+		"en-us": "", 
+		"en-dm": "???: I CANNOT LET YOU GET AWAY WITH THIS!!"
 	}
 };
