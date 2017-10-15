@@ -243,6 +243,7 @@ var worldmap = {
             }
         }
             if(!hasCollisions) { this.pos = pos; }
+        }
         if(isEnter) {
             switch(this.playerDir) {
                 case 0: newPos.y--; break;
