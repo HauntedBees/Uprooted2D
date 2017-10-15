@@ -228,13 +228,17 @@ var worldmap = {
             y: Math.round(pos.y)
         }
         if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
-        var hasCollisions = collisions[this.mapName][newPos.y][newPos.x];
-        if(!hasCollisions) {
-            for(var i = 0; i < this.entities.length; i++) {
-                var e = this.entities[i];
-                if(worldmap.isCollision(e, newPos)) {
-                    hasCollisions = true;
-                    break;
+        if(worldmap.noClip) {
+            this.pos = pos;
+        } else {
+            var hasCollisions = collisions[this.mapName][newPos.y][newPos.x];
+            if(!hasCollisions) {
+                for(var i = 0; i < this.entities.length; i++) {
+                    var e = this.entities[i];
+                    if(worldmap.isCollision(e, newPos)) {
+                        hasCollisions = true;
+                        break;
+                    }
                 }
             }
         }
