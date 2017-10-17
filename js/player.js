@@ -189,7 +189,8 @@ var player = {
                 break;
             }
         }
-        if(player.inventory[idx][1] == 0) {
+        if(idx < 0) { return false; }
+        if(player.inventory[idx][1] <= 0) {
             player.inventory.splice(idx, 1);
             return false;
         }

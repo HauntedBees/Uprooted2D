@@ -914,5 +914,61 @@ var fulltext = {
 	"BeeGuard4": {
 		"en-us": "", 
 		"en-dm": "???: I CANNOT LET YOU GET AWAY WITH THIS!!"
+	},
+	"lakenoegg": {
+		"en-us": "", 
+		"en-dm": "What a beautiful lake."
+	},
+	"lakeegg": {
+		"en-us": "", 
+		"en-dm": "What a beautiful lake. Throw an egg into it?"
+	},
+	"lakeegg_reject": {
+		"en-us": "", 
+		"en-dm": "Good call. Why would you throw a perfectly good egg in a lake, anyway?"
+	},
+	"lakeegg_okay": {
+		"en-us": "", 
+		"en-dm": "You chuck an egg into the lake."
+	},
+	"dotdotdot": {
+		"en-us": "", 
+		"en-dm": "..."
+	},
+	"lakeegg1": {
+		"en-us": "", 
+		"en-dm": "???: DID SOMEONE JUST DROP AN EGGGGGG???"
+	},
+	"lakeegg2": {
+		"en-us": "", 
+		"en-dm": "???: You there... you're looking absolutely eggscellent today!"
+	},
+	"lakeegg3": {
+		"en-us": "", 
+		"en-dm": "???: Did you, perchance, drop this GOLDEN EGG into my beautiful leggke?"
+	},
+	"lakeeggLie": {
+		"en-us": "", 
+		"en-dm": "???: You lying motherfucker son of a bitch how fucking dare you eat shit you jackass you don't get ANY eggs. Give me all your eggs you don't deserve them anymore."
+	},
+	"lakeeggTruth": {
+		"en-us": "", 
+		"en-dm": "???: Your honesty is admirable! Here is the egg you dropped, as well as a BONUS GOLDEN EGG just for being such an honest little cutie! Stay eggscellent, sweetie!"
+	},
+	"lakeFinish": {
+		"en-us": "", 
+		"en-dm": "The mysterious lake spirit vanishes as quickly as they came."
+	},
+	"badEggTry": {
+		"en-us": "", 
+		"en-dm": "A mysterious voice from beneath the lake tells you to fuck off."
+	},
+	"goldegg": {
+		"en-us": "", 
+		"en-dm": "A strange fairy from the lake by your farm gave you this egg. It looks like it's pretty one-of-a-kind so you should definitely hold onto it until the final battle and then forget to use it."
+	},
+	"goodEggTry": {
+		"en-us": "", 
+		"en-dm": "What a beautiful lake. Pretty fucked up that there's some weird egg spirit living down there, though. People DRINK from this lake!"
 	}
 };

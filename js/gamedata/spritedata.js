@@ -100,6 +100,12 @@ var spriteData = {
         }
     },
     names: {
+        "goldegg": [25, 12],
+        "goldeggseed": [25, 12],
+        "goldegg0": [25, 12],
+        "goldegg1": [26, 12],
+        "goldegg2": [27, 12],
+        "goldegg3": [28, 12],
         "opL": [18, 20],
         "opR": [19, 20],
         "nopL": [20, 20],

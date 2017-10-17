@@ -212,7 +212,71 @@ var mapentities = {
                     tutorial.startBattle();
                 }
             ]
-        },*/
+        },
+        {
+            name: "eggFairy", pos: {x: 24, y: 19}, visible: false, storageKey: "eggFairy",
+            anim: new MapAnim("mapchar", 13, 0, 16, 20, 1, 1), 
+            interact: [
+                function() {
+                    if(player.completedQuest("badEgg")) {
+                        worldmap.writeText("badEggTry");
+                        worldmap.forceEndDialog = true;
+                    } else if(player.completedQuest("goodEgg")) {
+                        worldmap.writeText("goodEggTry");
+                        worldmap.forceEndDialog = true;
+                    } else if(player.hasItem("egg")) {
+                        worldmap.writeText("lakeegg", ["sYes", "sNo"]);
+                    } else {
+                        worldmap.writeText("lakenoegg");
+                        worldmap.forceEndDialog = true;
+                    }
+                },
+                function(idx) {
+                    switch(idx) {
+                        case 0:
+                            worldmap.writeText("lakeegg_okay");
+                            player.decreaseItem("egg");
+                            break;
+                        default:
+                            worldmap.writeText("lakeegg_reject");
+                            worldmap.forceEndDialog = true;
+                            break;
+                    }
+                },
+                GetSpeak("dotdotdot"),
+                function() {
+                    worldmap.importantEntities["eggFairy"].visible = true;
+                    worldmap.refreshMap();
+                    worldmap.writeText("lakeegg1");
+                },
+                GetSpeak("lakeegg2"),
+                GetSpeak("lakeegg3", ["sYes", "sNo"]),
+                function(idx) {
+                    switch(idx) {
+                        case 0:
+                            worldmap.writeText("lakeeggLie");
+                            player.decreaseItem("egg", 999);
+                            player.decreaseItem("quail", 999);
+                            player.decreaseItem("goose", 999);
+                            player.decreaseItem("turkey", 999);
+                            player.decreaseItem("platypus", 999);
+                            player.questsCleared.push("badEgg");
+                            break;
+                        default:
+                            worldmap.writeText("lakeeggTruth");
+                            player.increaseItem("egg");
+                            player.increaseItem("goldegg");
+                            player.questsCleared.push("goodEgg");
+                            break;
+                    }
+                },
+                function() {
+                    worldmap.writeText("lakeFinish");
+                    worldmap.importantEntities["eggFairy"].visible = false;
+                    worldmap.refreshMap();
+                }
+            ]
+        },
         {
             name: "CutscenePrompt",
             pos: {x: 0, y: 5},
