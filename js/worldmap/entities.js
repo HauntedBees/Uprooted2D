@@ -152,13 +152,11 @@ var mapentities = {
                     }, 10);
                 },
                 // do a fade to black!
-                function() { game.transition(game.currentInputHandler, worldmap, { init: { x: 10,  y: 5 }, map: "farmersmarket" }); }
+                function() { game.transition(game.currentInputHandler, worldmap, { init: { x: 10,  y: 5 }, map: "producestand" }); }
             ]
         }
     ],
-    "farmersmarket": [
-        //EnterShop("ChickenCoop", 10, 6, "coop"),
-        //EnterShop("UpgradeTest", 10, 5, "farmupgradeFull"),
+    "producestand": [
         GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
         GetCommonEntity("ConvinceATron", 10, 4, 0, 0, undefined, [
             function() { worldmap.writeText("wantTut", ["sYes", "sNo"]); },
@@ -175,9 +173,6 @@ var mapentities = {
             }, function() { tutorial.startBattle(); }
         ], { sheet: "hipster", storageKey: "convince", visible: false, solid: false, postBattle: "PostStandaloneTutorial" }),
         GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
-        //SwitchMap("ExitAreaSouth", 0, 13, true, false, 40, 9, "bridge"),
-        SwitchMap("ExitAreaSouth", 0, 13, true, false, 21.5, 15, "belowvillage"),
-        SwitchMap("ExitAreaSouth", 0, 13, true, false, 7, 4, "farmpath"),
         GetInvisibleEntity("PostStandaloneTutorial", [
             function() {
                 player.inventory = InventoryCopy(player.tempInventory);
@@ -358,14 +353,11 @@ var mapentities = {
                 }
             ]
         },
-    ],
-    "farmpath": [
-        SwitchMap("ExitAreaNorth", 0, 3, true, false, 7, 12, "farmersmarket"), 
         SwitchMap("ExitAreaWest", 0, 0, false, true, 22, 12, "farm"),
-        SwitchMap("ExitAreaSouth", 0, 15, true, false, 21.5, 1, "firstvillage")
+        SwitchMap("ExitAreaSouth", 0, 23, true, false, 21.5, 1, "firstvillage")
     ],
     "farm": [
-        SwitchMap("ExitAreaWest", 23, 0, false, true, 1, 11, "farmpath"),
+        SwitchMap("ExitAreaWest", 23, 0, false, true, 1, 20, "producestand"),
         GetCommonEntity("Robo1", 20, 8, 4, 2, commonMovementDatas.robo(20), commonInteractArrays.robo), 
         GetCommonEntity("Robo2", 17, 10, 4, 2, commonMovementDatas.robo(17), commonInteractArrays.robo), 
         GetCommonEntity("Robo3", 16, 12, 4, 2, commonMovementDatas.robo(16), commonInteractArrays.robo), 
@@ -463,7 +455,7 @@ var mapentities = {
         }
     ],
     "firstvillage": [
-        SwitchMap("ExitAreaNorth", 0, 0, true, false, 14, 14, "farmpath"),
+        SwitchMap("ExitAreaNorth", 0, 0, true, false, 16, 22, "producestand"),
         //ExitAreaWest to forest
         SwitchMap("ExitAreaSouth", 0, 30, true, false, 21.5, 1, "belowvillage"),
         EnterShop("EquipmentShop", 17, 12, "equip1"),
