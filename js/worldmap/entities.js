@@ -523,17 +523,17 @@ var mapentities = {
         //ExitAreaWest to forest
         SwitchMap("ExitAreaSouth", 0, 30, true, false, 21.5, 1, "belowvillage"),
         EnterShop("EquipmentShop", 17, 12, "equip1"),
-        GetSign(18, 13, "Equipment Shop"),
+        GetSign(18, 13, "SignWeapon0"),
         EnterShop("UpgradeShop", 18, 20, "upgrade1"),
-        GetSign(17, 21, "Farm Expansion Shop"),
+        GetSign(17, 21, "SignExpand0"),
         EnterShop("FixtureShop", 3, 6, "fixture1"),
-        GetSign(4, 7, "Fixture Shop"),
+        GetSign(4, 7, "SignFixture0"),
         EnterShop("SeedShopL", 5, 17, "seed1"),
         EnterShop("SeedShopR", 6, 17, "seed1"),
-        GetSign(7, 18, "Seed Shop"),
+        GetSign(7, 18, "SignSeeds0"),
         EnterShop("Inn", 16, 4, "inn1"),
-        GetSign(15, 5, "Inn"),
-        GetSign(1, 24, "Shitblossom Forest")
+        GetSign(15, 5, "SignInn0"),
+        GetSign(1, 24, "SignForest")
     ],
     "belowvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 21.5, 28, "firstvillage"),
@@ -565,7 +565,7 @@ var mapentities = {
     ],
     "bridge": [
         SwitchMap("GoUnderwater", 10, 17, false, false, 41, 20, "underwater"),
-        GetSign(15, 16, "Mermaid Shoppe"),
+        GetSign(15, 16, "SignMermaid"),
         EnterShop("Mermaid Shoppe", 16, 16, "mermaid"),
         GetCommonEntity("Worker1", 28, 8, 0, 3, undefined, [
             function() {

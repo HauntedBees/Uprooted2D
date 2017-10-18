@@ -1,5 +1,5 @@
 var worldmap = {
-    freeMovement: true, savedImage: "",
+    freeMovement: true, savedImage: "", angryBees: false,
     pos: {x: 0, y: 0}, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0,
@@ -47,7 +47,13 @@ var worldmap = {
             game.target.interact[0]();
             return;
         }
-        this.fullAnimIdx = setInterval(worldmap.moveEntities, 10);
+        this.fullAnimIdx = setInterval(worldmap.moveEntities, timers.FULLANIM);
+        if(worldmap.angryBees) {
+            this.dialogState = 0;
+            this.inDialogue = true;
+            game.target = beeQueen;
+            beeQueen.interact[0]()
+        }
     },
     moveEntities: function() {
         for(var i = 0; i < worldmap.entities.length; i++) {

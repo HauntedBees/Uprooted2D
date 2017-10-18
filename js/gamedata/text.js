@@ -970,5 +970,29 @@ var fulltext = {
 	"goodEggTry": {
 		"en-us": "", 
 		"en-dm": "What a beautiful lake. Pretty fucked up that there's some weird egg spirit living down there, though. People DRINK from this lake!"
+	},
+	"SignInn0": {
+		"en-us": "", 
+		"en-dm": "Frothybarf Inn"
+	},
+	"SignForest": {
+		"en-us": "", 
+		"en-dm": "Shitblossom Forest"
+	},
+	"SignSeeds0": {
+		"en-us": "", 
+		"en-dm": "Seedy Pete's Questionable Seeds"
+	},
+	"SignFixture0": {
+		"en-us": "", 
+		"en-dm": "Fuckster's Fixtures"
+	},
+	"SignExpand0": {
+		"en-us": "", 
+		"en-dm": "Andrew D's Farm Expansions"
+	},
+	"SignWeapon0": {
+		"en-us": "", 
+		"en-dm": "Dave's Hoes and Sickles"
 	}
 };
