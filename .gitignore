@@ -55,4 +55,10 @@ todo.txt
 out.js
 out.min.js
 template.js
-.~lock.raw_text.csv#
+pdn/forestTestBench2.png
+pdn/forestTestBench.pdn
+pdn/forestTestBench.png
+pdn/forest.pdn
+pdn/forestLabeled.png
+*_old.png
+.~lock*
