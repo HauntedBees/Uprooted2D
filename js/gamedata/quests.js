@@ -34,7 +34,16 @@ var quests = {
                 quests.completeQuest("quest1");
             }
         },
-        { text: "quest1_c", next: function() { player.activeQuests["quest1"] = 1 } }
+        { text: "quest1_c", next: function() { player.activeQuests["quest1"] = 1 } },
+        {
+            text: "quest1_d", 
+            next: function() {
+                worldmap.shop.resetTalk();
+                player.increaseItem("_log", 1);
+                player.decreaseItem("shiitake");
+                quests.completeQuest("quest1");
+            }
+        }
     ],
     "questM": [
         { text: "questM_a", next: function() { player.activeQuests["questM"] = 1 } },

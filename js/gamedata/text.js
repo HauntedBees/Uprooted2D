@@ -62,7 +62,7 @@ var fulltext = {
 	},
 	"quest1_a": {
 		"en-us": "", 
-		"en-dm": "A lovable squirrel ran off with some of my mushroom seeds. Bring them back to me and I'll be happy."
+		"en-dm": "I heard pray tell quite right what-ho rumors eh wot yes quite that there's a golden mushroom in the forest west of here. Find it for me, and there'll be something in it for you!"
 	},
 	"quest1_b": {
 		"en-us": "", 
@@ -70,7 +70,7 @@ var fulltext = {
 	},
 	"quest1_c": {
 		"en-us": "", 
-		"en-dm": "yo lass what i NEED is my SHIITAKE MUSHROOM SEEDS. give the fuck."
+		"en-dm": "are you daft, lass? Golden mushroom. Forest. West of here. Hop it to it. it."
 	},
 	"s_seed1": {
 		"en-us": "", 
@@ -1139,5 +1139,9 @@ var fulltext = {
 	"ForestHive3": {
 		"en-us": "", 
 		"en-dm": "!!FIGHT:bear"
+	},
+	"quest1_d": {
+		"en-us": "", 
+		"en-dm": "hly faulk lass is that a fucken golden mushroom? I'll trade you for this log! AND I'll start selling you my special mushroom selection!"
 	}
 };
