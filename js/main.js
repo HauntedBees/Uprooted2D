@@ -21,7 +21,7 @@ function InventoryCopy(arr) {
 var game = {
     currentInputHandler: worldmap, target: null, language: "en-dm",
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
-                    "maps/producestand", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
+                    "maps/producestand","maps/forest", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
                     "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home"],
     canvasLayers: ["background", "characters", "foreground", "menuA", "menuB", "menucursorA", "menucursorB", "menucursorC", "menutext", "tutorial", "savegen"], 
     fullInit: function() {

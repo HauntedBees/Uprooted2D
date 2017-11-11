@@ -294,13 +294,13 @@ combat.selectTarget = {
                 if(seasonVal > 0.5) {
                     boost *= 1 + (seasonVal - 0.5);
                     if(player.equipment.soil !== null) {
-                        var equipInfo = GetEquipment(this.equipment.soil);
+                        var equipInfo = GetEquipment(player.equipment.soil);
                         boost *= 1 + (equipInfo.amplify || 0);
                     }
                 } else if(seasonVal < 0.5) {
                     boost *= 0.5 + seasonVal;
                     if(player.equipment.soil !== null) {
-                        var equipInfo = GetEquipment(this.equipment.soil);
+                        var equipInfo = GetEquipment(player.equipment.soil);
                         boost *= 1 + (equipInfo.boost || 0);
                     }
                 }

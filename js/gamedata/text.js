@@ -1,6 +1,7 @@
 function GetText(key) {
+	var lang = (game !== undefined) ? game.language : "en-dm";
     var d = fulltext[key];
-    if(d[game.language] !== undefined) { return d[game.language]; }
+    if(d[lang] !== undefined) { return d[lang]; }
     return d["en-us"];
 }
 function HasText(key) { return fulltext[key] !== undefined; }
@@ -957,7 +958,7 @@ var fulltext = {
 	},
 	"lakeFinish": {
 		"en-us": "", 
-		"en-dm": "The mysterious lake spirit vanishes as quickly as they came."
+		"en-dm": "The mysterious lake spirit takes all your eggs and vanishes as quickly as they came."
 	},
 	"badEggTry": {
 		"en-us": "", 
@@ -994,5 +995,149 @@ var fulltext = {
 	"SignWeapon0": {
 		"en-us": "", 
 		"en-dm": "Dave's Hoes and Sickles"
+	},
+	"SignMermaid": {
+		"en-us": "", 
+		"en-dm": "Mermaid Shoppe"
+	},
+	"foundShroom": {
+		"en-us": "", 
+		"en-dm": "Oh hey, a golden mushroom! I'm sure somebody would want this!"
+	},
+	"foundShroomQ": {
+		"en-us": "", 
+		"en-dm": "Oh hey, a golden mushroom! That shopkeeper was looking for one of these!"
+	},
+	"foundTurkey": {
+		"en-us": "", 
+		"en-dm": "You found some turkey eggs! Gobble gobble, you dumb fuck!"
+	},
+	"carrotseeds0": {
+		"en-us": "", 
+		"en-dm": "Rabbit: oi you limey fucknugget, yeu want some carrot seeds? Help yourself!"
+	},
+	"carrotseeds1": {
+		"en-us": "", 
+		"en-dm": "Rabbit: oi lass I think you've had a bit too many focken seeds. Save some for the rest of the focken forest!"
+	},
+	"rabbit0": {
+		"en-us": "", 
+		"en-dm": "Rabbit: Th'fuck you want? Th'fuck you doin' here?"
+	},
+	"rabbit1": {
+		"en-us": "", 
+		"en-dm": "Rabbit: Oh oh, a farmer are yae? Well I have some nice FERTILIZER here if you want sumfink special! What do you say?"
+	},
+	"buyfertilizer": {
+		"en-us": "", 
+		"en-dm": "Yes (500 coins)"
+	},
+	"rabbit2": {
+		"en-us": "", 
+		"en-dm": "Rabbit: Well fuck off then."
+	},
+	"rabbit3": {
+		"en-us": "", 
+		"en-dm": "Rabbit: What the hell are you tryin' to pull here, lass? You don't have enough money! Feck off!"
+	},
+	"rabbit4": {
+		"en-us": "", 
+		"en-dm": "Rabbit: Sick. Sick. Alright, hold out your hands and close your eyes."
+	},
+	"rabbit5": {
+		"en-us": "", 
+		"en-dm": "You feel your hands filling up. When you open your eyes, you find a nice pile of fertilizer."
+	},
+	"rabbit6": {
+		"en-us": "", 
+		"en-dm": "Rabbit: Heh heh. Enjoy. You can replace a tile of regular soil on your farm with Strong Soil now in the Fixtures Menu."
+	},
+	"rabbit7": {
+		"en-us": "", 
+		"en-dm": "Rabbit: Pleasure doing business with you, lass."
+	},
+	"rabbitOut": {
+		"en-us": "", 
+		"en-dm": "Rabbit: I don't have any more fertilizer for you, lady. Come back after I've had another meal."
+	},
+	"fishyFriend0": {
+		"en-us": "", 
+		"en-dm": "Fish: Oh, hello there. You're that farmer going around taking care of business, right?"
+	},
+	"fishyFriend1": {
+		"en-us": "", 
+		"en-dm": "Fish: I have one request for you. If you ever find the opportunity to use fish in combat, please don't. I don't want my friends to be hurt."
+	},
+	"fishyFriend2": {
+		"en-us": "", 
+		"en-dm": "Fish: There are plenty of ways to defeat your foes without using animals. Please keep this in mind."
+	},
+	"fishyFriendX": {
+		"en-us": "", 
+		"en-dm": "Fish: Please be nice to my friends."
+	},
+	"mouse0": {
+		"en-us": "", 
+		"en-dm": "Mouse: squeak squeak"
+	},
+	"mouse1": {
+		"en-us": "", 
+		"en-dm": "Mouse: squork!"
+	},
+	"mouse2": {
+		"en-us": "", 
+		"en-dm": "Mouse: hey kid, you wanna buy some drugs?"
+	},
+	"sqorl0": {
+		"en-us": "", 
+		"en-dm": "Squirrel: Oh nuts! A human!"
+	},
+	"sqorl1": {
+		"en-us": "", 
+		"en-dm": "Squirrel: blep"
+	},
+	"sqorl2": {
+		"en-us": "", 
+		"en-dm": "Squirrel: you tryna fuck with me?"
+	},
+	"sqorl3": {
+		"en-us": "", 
+		"en-dm": "Squirrel: hi mom"
+	},
+	"turky0": {
+		"en-us": "", 
+		"en-dm": "Turkey: Gobble gobble."
+	},
+	"turky1": {
+		"en-us": "", 
+		"en-dm": "Turkey: GOBBLE GOBBLE GOBBLE."
+	},
+	"turky2": {
+		"en-us": "", 
+		"en-dm": "Turkey: hi"
+	},
+	"bossturky0": {
+		"en-us": "", 
+		"en-dm": "Turkey: I see you want to steal my child."
+	},
+	"bossturky1": {
+		"en-us": "", 
+		"en-dm": "Turkey: Over my dead body you fucker."
+	},
+	"ForestHive0": {
+		"en-us": "", 
+		"en-dm": "You hear some rumbling behind you."
+	},
+	"ForestHive1": {
+		"en-us": "", 
+		"en-dm": "A loud roar is heard."
+	},
+	"ForestHive2": {
+		"en-us": "", 
+		"en-dm": "Oh fuck it's a bear."
+	},
+	"ForestHive3": {
+		"en-us": "", 
+		"en-dm": "!!FIGHT:bear"
 	}
 };

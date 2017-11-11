@@ -34,6 +34,12 @@ function GetEnemy(name) {
                 { money: true, min: 10, max: 10 },
                 { seed: "carrot", min: 2, max: 2 }
             ]);
+        case "Worker": return new EnemyDetail(GetDisplayName(name), "md", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        // Farm
+        case "robo": return new EnemyDetail(name, "sm", 1, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 2, 1, 3, 2, false, [0, 0, 1, 0], [["dumbbattery", 1], ["gear"]], [
+                { money: true, min: 0, max: 5 },
+                { seed: "carrot", min: -1, max: 1 }
+            ]);
         case "bigBot":
             return new EnemyDetail(name, "lg", 0, { dx: 0, dy: 0, w: 1, h: 1.5 }, 100, 5, 2, 3, 3, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
                 { money: true, min: 20, max: 50 },
@@ -43,16 +49,33 @@ function GetEnemy(name) {
                 { seed: "grapes", min: 2, max: 3 },
                 { seed: "ginger", min: 4, max: 6 }
             ]);
-        case "Worker": return new EnemyDetail(GetDisplayName(name), "md", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
-        case "ScienceMan": return new EnemyDetail(name, "md", 3, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
-        case "robo": return new EnemyDetail(name, "sm", 1, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 2, 1, 3, 2, false, [0, 0, 1, 0], [["dumbbattery", 1], ["gear"]], [
-                { money: true, min: 0, max: 5 },
-                { seed: "carrot", min: -1, max: 1 }
-            ]);
+        // Research Lab
         case "robo2": return new EnemyDetail(name, "sm", 2, { dx: 0, dy: 0, w: 0, h: 0 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0], [["dumbbattery", 1], ["gear"]], [
                 { money: true, min: 0, max: 5 },
                 { seed: "carrot", min: -1, max: 1 }
             ]);
+        case "ScienceMan": return new EnemyDetail(name, "md", 3, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);    
+        // Forest
+        case "mouse": return new EnemyDetail(name, "sm", 2, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 2, 1, 1, 1, false, [0, 1, 1, 0], [["standardAttack", 0.5], ["rodent", 1], ["rodent"]], [
+            { money: true, min: 0, max: 5 },
+            { seed: "carrot", min: -1, max: 1 }
+        ], {tile: "dirt"});
+        case "sqorl": return new EnemyDetail(name, "sm", 3, { dx: 0, dy: 0, w: 0, h: 0 }, 20, 3, 2, 2, 2, false, [0, 1, 1, 0], [["acornTree", 0.75], ["rodent", 0.9], ["standardAttack", 1]], [
+            { money: true, min: 0, max: 5 },
+            { seed: "carrot", min: -1, max: 1 }
+        ], {tile: "dirt"});
+        case "turky": return new EnemyDetail(name, "md", 5, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 8, 2, 1, 1, false, [0, 0, 1, 0], [["standardAttack", 0.5], ["rodent", 1], ["rodent"]], [
+            { money: true, min: 0, max: 5 },
+            { seed: "turkey", min: -1, max: 1 }
+        ], {tile: "dirt"});
+        case "bossturky": return new EnemyDetail(name, "md", 5, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 10, 2, 1, 1, true, [0, 0, 1, 0], [["standardAttack", 0.5], ["rodent", 1], ["rodent"]], [
+            { money: true, min: 0, max: 5 },
+            { seed: "turkey", min: -1, max: 1 }
+        ], {tile: "dirt"});
+        case "bear": return new EnemyDetail(name, "md", 4, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 10, 2, 1, 1, true, [0, 0, 1, 0], [["standardAttack", 0.5], ["rodent", 1], ["rodent"]], [
+            { money: true, min: 0, max: 5 }
+        ], {tile: "dirt"});
+        // Water
         case "fishFace": return new EnemyDetail(name, "md", 5, { dx: 0.25, dy: 0.2, w: 0, h: 0.55 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0],
             [["wellAlgae", 0.45], ["kelpKelpKelpKELPKELPKELP", 0.95], ["harvestOrAttack", 1]], 
             [
@@ -66,7 +89,7 @@ function GetEnemy(name) {
                 { seed: "carrot", min: -1, max: 1 }, 
             ], { tile: "watertile" });
         case "seaHandR":
-            return new EnemyDetail(name, "lg", 1, { dx: 0, dy: 0, w: 1, h: 1.5 }, 60, 5, 2, 3, 3, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
+            return new EnemyDetail(name, "lg", 1, { dx: 0, dy: 0, w: 1, h: 1.5 }, 60, 5, 2, 3, 3, true, [0, 0, 1, 0], [["babySlap", 1], ["babySlap"]], [
                 { money: true, min: 20, max: 50 }
             ], { tile: "watertile" });
         case "seaMan":
@@ -109,17 +132,23 @@ var enemyFuncs = {
     TryPlantCrop: function(cropName) {
         var pos = {x: -1, y: -1};
         var attempts = 5;
+        var newCrop = GetCrop(cropName);
+        var delta = newCrop.size === 2 ? 1 : 0;
         while(attempts-- >= 0 && pos.x < 0) {
-            var x = Math.floor(Math.random() * combat.enemyGrid.length);
-            var y = Math.floor(Math.random() * combat.enemyGrid[0].length);
+            var x = Math.floor(Math.random() * (combat.enemyGrid.length - delta));
+            var y = Math.floor(Math.random() * (combat.enemyGrid[0].length - delta));
             if(combat.enemyGrid[x][y] === null) {
                 pos = { x: x, y: y };
             }
         }
         if(pos.x < 0) { return false; }
-        var newCrop = GetCrop(cropName);
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
+        if(newCrop.size === 2) {        
+            combat.enemyGrid[pos.x + 1][pos.y] = pos;
+            combat.enemyGrid[pos.x][pos.y + 1] = pos;
+            combat.enemyGrid[pos.x + 1][pos.y + 1] = pos;
+        }
         combat.animHelper.DrawCrops();
         combat.animHelper.DrawBottom();
         return true;
@@ -258,6 +287,7 @@ var enemyAttacks = {
     },
     app: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is distracted by a hot new App."); },
     gear: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " is thinking about the concept of gears."); },
+    rodent: function(e) { return enemyFuncs.GetGenericStandbyAttack(e.name + " dicks around like a dumb forest animal."); },
     babySlap: function(e) {
         var damage = combat.damagePlayer(1);
         return { text: e.name + " slaps for " + damage + " damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
@@ -265,6 +295,18 @@ var enemyAttacks = {
     standardAttack: function(e) {
         var damage = combat.damagePlayer(e.atk);
         return { text: e.name + " attacks for " + damage + " damage.", animFPS: 12, animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ] };
+    },
+    acornTree: function(e) {
+        var atkData = enemyFuncs.GetAvailableCropsAndDamage(e);
+        if(atkData.crops.length > 0) { return enemyAttacks.harvestOrAttack(e); }
+        var planted = enemyFuncs.TryPlantCrop("acorn");
+        if(planted) {
+            return enemyFuncs.GetGenericStandbyAttack(e.name + " plants an acorn tree.");
+        } else if(Math.random() > 0.4) {
+            return enemyAttacks.harvestOrAttack(e);
+        } else {
+            return enemyFuncs.GetGenericStandbyAttack(e.name + " tries to plant some acorns, but fails.");
+        }
     },
     dumbbattery: function(e) {
         var atkData = enemyFuncs.GetAvailableCropsAndDamage(e);

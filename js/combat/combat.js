@@ -261,7 +261,7 @@ var combat = {
             });
         } else {
             combat.wrapUpCombat();
-            var postCombat = game.target.postBattle;
+            var postCombat = (game.target !== null ? game.target.postBattle : undefined);
             worldmap.clearTarget();
             clearInterval(combat.charAnimIdx);
             game.transition(combat.inbetween, worldmap, {

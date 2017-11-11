@@ -156,6 +156,7 @@ function GetCrop(name) {
         case "kelp": return new CropDetail(name, "Kelp", 10, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { noRot: true });
         case "rock": return new CropDetail(name, "Rock", 10, "rock", 1, 5, 1, 0, 0);
         case "salt": return new CropDetail(name, "Salt", 10, "rock", 1, 30, 1, 0, 0);
+        case "acorn": return new CropDetail(name, "Acorn", 10, "tree", 2, 6, 4, 6, 2, 0, 1, 1);
         /* Mushrooms */
         case "shiitake": return new CropDetail(name, "Shiitake", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "milkcap": return new CropDetail(name, "Milk Cap", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);

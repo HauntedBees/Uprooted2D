@@ -15,7 +15,7 @@ var worldmap = {
         this.dialogState = 0;
         this.mapName = args.map;
         this.pos = args.init;
-        this.playerDir = args.playerDir || 2;
+        this.playerDir = args.playerDir || this.playerDir || 2;
         this.dialogData = null;
         this.forceEndDialog = false;
         this.importantEntities = {};
@@ -37,14 +37,14 @@ var worldmap = {
             if(e.autoplay) {
                 this.inDialogue = true;
                 game.target = e;
-                if(e.interact[0]()) { return; }
+                if(e.interact[0](0, e)) { return; }
             }
         }
         this.refreshMap();
         if(args.postCombat !== undefined) {
             this.inDialogue = true;
             game.target = this.importantEntities[args.postCombat];
-            game.target.interact[0]();
+            game.target.interact[0](0, game.target);
             return;
         }
         this.fullAnimIdx = setInterval(worldmap.moveEntities, timers.FULLANIM);
@@ -52,7 +52,7 @@ var worldmap = {
             this.dialogState = 0;
             this.inDialogue = true;
             game.target = beeQueen;
-            beeQueen.interact[0]()
+            beeQueen.interact[0](0, beeQueen);
         }
     },
     moveEntities: function() {
@@ -80,7 +80,7 @@ var worldmap = {
                 clearInterval(worldmap.fullAnimIdx);
                 worldmap.dialogState = 0;
                 game.target = e;
-                if(e.interact[0]()) {
+                if(e.interact[0](0, e)) {
                     worldmap.finishDialog();
                 }
                 break;
@@ -165,9 +165,9 @@ var worldmap = {
             return true;
         }
         if(game.target.failed && game.target.failedInteract !== undefined) {
-            return game.target.failedInteract[this.dialogState](idx);
+            return game.target.failedInteract[this.dialogState](idx, game.target);
         } else {
-            return game.target.interact[this.dialogState](idx);
+            return game.target.interact[this.dialogState](idx, game.target);
         }
     },
     finishDialog: function() {
@@ -268,7 +268,7 @@ var worldmap = {
                     if(e.failed && e.failedInteract !== undefined) {
                         if(e.failedInteract[0](true)) { return; }
                     } else {
-                        if(e.interact[0](true)) { return; }
+                        if(e.interact[0](true, e)) { return; }
                     }
                     break;
                 }
@@ -277,14 +277,18 @@ var worldmap = {
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];
                 if(!e.solid && (e.pos.x == newPos.x || e.isRow) && (e.pos.y == newPos.y || e.isColumn) && e.interact !== undefined) {
-                    this.inDialogue = true;
-                    this.forceEndDialog = false;
-                    this.dialogState = 0;
-                    game.target = e;
-                    if(e.failed && e.failedInteract !== undefined) {
-                        if(e.failedInteract[0]()) { return; }
+                    if(e.seamlessMap) {
+                        e.interact[0](0, e);
                     } else {
-                        if(e.interact[0]()) { return; }
+                        this.inDialogue = true;
+                        this.forceEndDialog = false;
+                        this.dialogState = 0;
+                        game.target = e;
+                        if(e.failed && e.failedInteract !== undefined) {
+                            if(e.failedInteract[0]()) { return; }
+                        } else {
+                            if(e.interact[0](0, e)) { return; }
+                        }
                     }
                     break;
                 }
@@ -302,6 +306,7 @@ var worldmap = {
         }
     },
     isCollision: function(e, newPos) {
+        if(e.seamlessMap) { return false; }
         if(Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y) === newPos.y) { return true; }
         return e.big && (
             ((e.pos.x + 1) == newPos.x && e.pos.y == newPos.y)

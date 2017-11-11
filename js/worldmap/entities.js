@@ -524,7 +524,7 @@ var mapentities = {
     ],
     "firstvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 16, 22, "producestand"),
-        //ExitAreaWest to forest
+        SwitchMap("ExitAreaWest", 0, 0, false, true, 44, 49, "forest"),
         SwitchMap("ExitAreaSouth", 0, 30, true, false, 21.5, 1, "belowvillage"),
         EnterShop("EquipmentShop", 17, 12, "equip1"),
         GetSign(18, 13, "SignWeapon0"),
@@ -538,6 +538,136 @@ var mapentities = {
         EnterShop("Inn", 16, 4, "inn1"),
         GetSign(15, 5, "SignInn0"),
         GetSign(1, 24, "SignForest")
+    ],
+    "forest": [
+        SwitchMap("ExitAreaEast", 46, 49, false, false, 1, 22.5, "firstvillage"),
+        SwitchMapSeamless("JoinBlue", 32, 35, 0, 70, 31),
+        SwitchMapSeamless("JoinAqua", 74, 36, 2, 111, 58),
+        SwitchMapSeamless("JoinMaroon", 111, 57, 0, 36, 31),
+        SwitchMapSeamless("JoinLightBlue", 54, 35, 2, 36, 42),
+        SwitchMapSeamless("JoinYellow", 17, 24, 1, 83, 33),
+        SwitchMapSeamless("JoinYellow2", 17, 25, 1, 83, 34),
+        SwitchMapSeamless("JoinGreen", 92, 33, 3, 23, 40), 
+        SwitchMapSeamless("JoinGreen2", 92, 34, 3, 23, 41), 
+        SwitchMapSeamless("JoinDarkBlue", 31, 59, 2, 74, 17),
+        SwitchMapSeamless("JoinDarkBlue2", 32, 59, 2, 75, 17),
+        SwitchMapSeamless("JoinGrey", 100, 53, 0, 9, 46),
+        SwitchMapSeamless("JoinGrey2", 101, 53, 0, 10, 46),
+        GetCommonEntity("Rat1", 32, 46, 0, 2, commonMovementDatas.rectangle(32, 46, 4, 3), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Rat2", 23, 47, 0, 2, commonMovementDatas.rectangle(23, 47, 4, 2), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Rat3", 100, 71, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Rat4", 106, 71, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 1), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Rat5", 106, 73, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 2), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Rat6", 100, 73, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 3), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Sqorl1", 2, 40, 8, 2, commonMovementDatas.rectangle(2, 40, 10, 1), commonInteractArrays.sqorl, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Sqorl2", 110, 65, 8, 2, commonMovementDatas.rectangle(110, 65, 3, 6), commonInteractArrays.sqorl, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Sqorl3", 113, 71, 8, 2, commonMovementDatas.rectangle(110, 65, 3, 6, 2), commonInteractArrays.sqorl, { sy: 5, sheetlen: 2 }),
+        GetCommonEntity("Turkey1", 2, 56, 0, 0, undefined, commonInteractArrays.turky, { sy: 7 }),
+        GetCommonEntity("Turkey2", 7, 57, 0, 0, undefined, commonInteractArrays.turky, { sy: 7 }),
+        GetCommonEntity("Turkey3", 10, 62, 0, 0, undefined, commonInteractArrays.turky, { sy: 7 }),
+        GetCommonEntity("Turkey4", 12, 60, 0, 0, undefined, [ 
+            GetSpeak("bossturky0"),
+            GetSpeak("bossturky1"),
+            GetFight(["bossturky", "turky", "turky"])], { sy: 7 }),
+        GetBeehive("ForestHive", 54, 24),
+        GetCommonEntity("GoldenShroom", 36, 24, 8, 0, undefined, [
+            function() {
+                if(player.hasQuest("quest1")) {
+                    worldmap.writeText("foundShroomQ");
+                    player.activeQuests["quest1"] = 2;
+                } else {
+                    worldmap.writeText("foundShroom");
+                    player.activeQuests["quest1"] = 3;
+                }
+                worldmap.clearTarget();
+            }
+        ], { noChange: true, sy: 7 }),
+        GetCommonEntity("TurkeyEggs", 12, 59, 9, 0, undefined, [
+            function() {
+                worldmap.writeText("foundTurkey");
+                player.increaseItem("turkey", 5);
+                worldmap.clearTarget();
+            }
+        ], { noChange: true, sy: 7 }),
+        GetCommonEntity("CarrotSeeds", 83, 25, 3, 0, undefined, [
+            function() {
+                if(player.hasQuest("freeCarrotSeeds") && player.activeQuests["freeCarrotSeeds"] > 4) {
+                    worldmap.writeText("carrotseeds1");
+                } else {
+                    worldmap.writeText("carrotseeds0");
+                    player.increaseItem("carrot", 3);
+                    if(player.hasQuest("freeCarrotSeeds")) {
+                        player.activeQuests["freeCarrotSeeds"] += 1;
+                    } else {
+                        player.activeQuests["freeCarrotSeeds"] = 1;
+                    }
+                }
+            },
+        ], { noChange: true, sy: 4 }),
+        GetCommonEntity("BadInfluenceRabbit", 83, 26, 12, 0, undefined, [
+            function() {
+                if(player.completedQuest("rabbitShit")) {
+                    worldmap.writeText("rabbitOut");
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.writeText("rabbit0");
+                }
+            },
+            GetSpeak("rabbit1", ["buyfertilizer", "sNo"]),
+            function(idx) {
+                if(idx === 1) {
+                    worldmap.writeText("rabbit2");
+                    worldmap.forceEndDialog = true;
+                } else if(player.monies < 500) {
+                    worldmap.writeText("rabbit3");
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.writeText("rabbit4");
+                    player.monies -= 500;
+                    player.increaseItem("_strongsoil");
+                    player.questsCleared.push("rabbitShit");
+                }
+            }, 
+            GetSpeak("rabbit5"), 
+            GetSpeak("rabbit6"), 
+            GetSpeak("rabbit7")
+        ], { noChange: true, sy: 4, moving: true, sheetlen: 2 }),
+        GetCommonEntity("FishyLeft", 72, 24, 12, 0, undefined, [
+            function(i, me) { me.visible = true; worldmap.refreshMap(); worldmap.writeText(player.completedQuest("fishyTalk") ? "fishyFriendX" : "fishyFriend0"); },
+            function(i, me) {
+                if(player.completedQuest("fishyTalk")) {
+                    me.visible = false;
+                    worldmap.refreshMap();
+                    worldmap.finishDialog();
+                } else { worldmap.writeText("fishyFriend1"); }
+            },
+            function(i, me) { worldmap.writeText("fishyFriend2"); player.questsCleared.push("fishyTalk"); me.visible = false; worldmap.refreshMap(); }
+        ], { noChange: true, sy: 6, visible: false }),
+        GetCommonEntity("FishyRight", 73, 24, 12, 0, undefined, [
+            function(i, me) { me.visible = true; worldmap.refreshMap(); worldmap.writeText(player.completedQuest("fishyTalk") ? "fishyFriendX" : "fishyFriend0"); },
+            function(i, me) {
+                if(player.completedQuest("fishyTalk")) {
+                    me.visible = false;
+                    worldmap.refreshMap();
+                    worldmap.finishDialog();
+                } else { worldmap.writeText("fishyFriend1"); }
+            },
+            function(i, me) { worldmap.writeText("fishyFriend2"); player.questsCleared.push("fishyTalk"); me.visible = false; worldmap.refreshMap(); }
+        ], { noChange: true, sy: 6, visible: false }),
+        GetCommonEntity("FishyTop", 73, 23, 12, 0, undefined, [
+            function(i, me) { me.visible = true; worldmap.refreshMap(); worldmap.writeText(player.completedQuest("fishyTalk") ? "fishyFriendX" : "fishyFriend0"); },
+            function(i, me) {
+                if(player.completedQuest("fishyTalk")) {
+                    me.visible = false;
+                    worldmap.refreshMap();
+                    worldmap.finishDialog();
+                } else { worldmap.writeText("fishyFriend1"); }
+            },
+            function(i, me) { worldmap.writeText("fishyFriend2"); player.questsCleared.push("fishyTalk"); me.visible = false; worldmap.refreshMap(); }
+        ], { noChange: true, sy: 6, visible: false }),
+        GetCommonEntity("Lime", 103, 66, 10, 0, undefined, [
+            function() { console.log("weh"); }
+        ], { noChange: true, sy: 7 })
     ],
     "belowvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 21.5, 28, "firstvillage"),
