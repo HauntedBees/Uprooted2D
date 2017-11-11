@@ -29,7 +29,9 @@ gulp.task("buildcollisions", function() {
                 }
                 res.push(row);
             }
-            fs.appendFile("js/worldmap/collisions.js", "\"" + name + "\": " + JSON.stringify(res) + ", \r\n");
+            var str = JSON.stringify(res);
+            str = str.replace(/(?:[^\,]*\,){500}/g, "$&\n");
+            fs.appendFile("js/worldmap/collisions.js", "\"" + name + "\": " + str + ", \r\n");
         });
         return stream;
     }));
