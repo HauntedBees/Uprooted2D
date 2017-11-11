@@ -255,6 +255,8 @@ var mapentities = {
                     switch(idx) {
                         case 0:
                             worldmap.writeText("lakeeggLie");
+                            game.target.anim.shiftY(2);
+                            worldmap.refreshMap();
                             player.decreaseItem("egg", 999);
                             player.decreaseItem("quail", 999);
                             player.decreaseItem("goose", 999);
@@ -264,6 +266,8 @@ var mapentities = {
                             break;
                         default:
                             worldmap.writeText("lakeeggTruth");
+                            game.target.anim.shiftY(1);
+                            worldmap.refreshMap();
                             player.increaseItem("egg");
                             player.increaseItem("goldegg");
                             player.questsCleared.push("goodEgg");
