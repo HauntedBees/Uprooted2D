@@ -24,6 +24,7 @@ var spriteData = {
                 spriteData.names["lemon" + i] = [5 + i, 1, true];
                 spriteData.names["apricot" + i] = [1 + i, 2, true];
                 spriteData.names["kiwi" + i] = [3 + i, 2, true];
+                spriteData.names["coconut" + i] = [13 + i, 2, true];
                 spriteData.names["spinach" + i] = [14 + i, 4];
                 spriteData.names["tomato" + i] = [10 + i, 5];
                 spriteData.names["radish" + i] = [11 + i, 6];
@@ -100,6 +101,8 @@ var spriteData = {
         }
     },
     names: {
+        "coconut": [23, 13],
+        "coconutseed": [22, 13],
         "goldegg": [25, 12],
         "goldeggseed": [25, 12],
         "goldegg0": [25, 12],

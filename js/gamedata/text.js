@@ -1143,5 +1143,109 @@ var fulltext = {
 	"quest1_d": {
 		"en-us": "", 
 		"en-dm": "hly faulk lass is that a fucken golden mushroom? I'll trade you for this log! AND I'll start selling you my special mushroom selection!"
+	},
+	"lime0": {
+		"en-us": "", 
+		"en-dm": "???: hmmmmyessss hello there. My name is Lime."
+	},
+	"lime1": {
+		"en-us": "", 
+		"en-dm": "Lime: I'm looking for something... tasty."
+	},
+	"lime2": {
+		"en-us": "", 
+		"en-dm": "Lime: Something tasty... and yellow."
+	},
+	"lime3": {
+		"en-us": "", 
+		"en-dm": "Lime: Bring me something tasty and yellow, or seeds to grow something tasty and yellow, and I may just reward you!"
+	},
+	"lime4": {
+		"en-us": "", 
+		"en-dm": "Lime: Oh oh, you have something for me, I can sense it."
+	},
+	"lime_lemon": {
+		"en-us": "", 
+		"en-dm": "Give Lemon Seeds."
+	},
+	"lime_banana": {
+		"en-us": "", 
+		"en-dm": "Give Banana Seeds."
+	},
+	"lime_corn": {
+		"en-us": "", 
+		"en-dm": "Give Corn Seeds."
+	},
+	"lime_goldegg": {
+		"en-us": "", 
+		"en-dm": "Give Golden Egg."
+	},
+	"lime_lemon1": {
+		"en-us": "", 
+		"en-dm": "Lime: Lemons? What the fuck?! Who the fuck just EATS LEMONS?!"
+	},
+	"lime_lemon2": {
+		"en-us": "", 
+		"en-dm": "Lime: I want a tasty TREAT, not something to squeeze into my fucking aioli!"
+	},
+	"lime_lemon3": {
+		"en-us": "", 
+		"en-dm": "Lime: Come back when you learn what TASTY means, asshole!"
+	},
+	"lime_banana1": {
+		"en-us": "", 
+		"en-dm": "Lime: Bananas, eh? I mean the peel is yellow, so that counts I guess."
+	},
+	"lime_banana2": {
+		"en-us": "", 
+		"en-dm": "Lime: Bananas ARE pretty tasty, too... so, thank you, mysterious stranger! I will use these banana seeds wisely!"
+	},
+	"lime_banana3": {
+		"en-us": "", 
+		"en-dm": "Lime: In exchange, have some other tasty yellow food seeds: corn!"
+	},
+	"lime_corn1": {
+		"en-us": "", 
+		"en-dm": "Lime: Corn, eh? Yellow. Crunchy. Tasty. You nailed it!"
+	},
+	"lime_corn2": {
+		"en-us": "", 
+		"en-dm": "Lime: Thank you, mysterious stranger! I will use these corn seeds wisely!"
+	},
+	"lime_corn3": {
+		"en-us": "", 
+		"en-dm": "Lime: In exchange, have some other tasty yellow food seeds: bananas!"
+	},
+	"lime_egg1": {
+		"en-us": "", 
+		"en-dm": "Lime: A golden egg... wow. You found such a rare and valuable item and you're just giving it to me?"
+	},
+	"lime_egg2": {
+		"en-us": "", 
+		"en-dm": "Lime: But alas... gold isn't REALLY yellow... and I'm a vegan, so this is definitely not a tasty yellow food."
+	},
+	"lime_egg3": {
+		"en-us": "", 
+		"en-dm": "Lime: But I cannot just dismiss such a generous gift! Here, take these coconut seeds. You won't find these anywhere else around here!"
+	},
+	"lime_complete": {
+		"en-us": "", 
+		"en-dm": "Lime: Thank you again for your generosity."
+	},
+	"lime_nope": {
+		"en-us": "", 
+		"en-dm": "Give nothing."
+	},
+	"lime_denied": {
+		"en-us": "", 
+		"en-dm": "Lime: It seems my senses were wrong! Let me know if you do come across anything!"
+	},
+	"coconut": {
+		"en-us": "", 
+		"en-dm": "A strange citrus man from the forest gave you these seeds. They look like they're pretty rare so you should definitely hold onto them until the final battle and then forget to use them."
+	},
+	"corn": {
+		"en-us": "", 
+		"en-dm": "really tasty really crunchy yum yum in my tum tum holy fuck"
 	}
 };

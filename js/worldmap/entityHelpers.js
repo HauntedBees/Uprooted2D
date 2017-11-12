@@ -1,3 +1,15 @@
+var specialtyHelpers = {
+    storedLimeChoice: "",
+    getLimeItems: function() {
+        var items = [];
+        if(player.hasItem("lemon")) { items.push("lime_lemon"); }
+        if(player.hasItem("banana")) { items.push("lime_banana"); }
+        if(player.hasItem("corn")) { items.push("lime_corn"); }
+        if(player.hasItem("goldegg")) { items.push("lime_goldegg"); }
+        if(items.length > 0) { items.push("lime_nope"); }
+        return items;
+    }
+};
 function GetSleep(time) {
     return function() {
         worldmap.waitForAnimation = true;

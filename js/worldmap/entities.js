@@ -577,7 +577,7 @@ var mapentities = {
                     player.activeQuests["quest1"] = 2;
                 } else {
                     worldmap.writeText("foundShroom");
-                    player.activeQuests["quest1"] = 3;
+                    player.activeQuests["quest1"] = 4;
                 }
                 worldmap.clearTarget();
             }
@@ -666,7 +666,76 @@ var mapentities = {
             function(i, me) { worldmap.writeText("fishyFriend2"); player.questsCleared.push("fishyTalk"); me.visible = false; worldmap.refreshMap(); }
         ], { noChange: true, sy: 6, visible: false }),
         GetCommonEntity("Lime", 103, 66, 10, 0, undefined, [
-            function() { console.log("weh"); }
+            function() {
+                if(player.completedQuest("limeAndTheCoconut")) {
+                    worldmap.writeText("lime_complete");
+                    worldmap.forceEndDialog = true;
+                } else if(player.hasQuest("limeAndTheCoconut")) {
+                    var items = specialtyHelpers.getLimeItems();
+                    if(items.length === 0) {
+                        worldmap.writeText("lime3");
+                        worldmap.forceEndDialog = true;
+                    } else {
+                        worldmap.writeText("lime4", items);
+                    }
+                } else {
+                    worldmap.writeText("lime0");
+                }
+            }, 
+            function(i) {
+                if(player.hasQuest("limeAndTheCoconut")) {
+                    specialtyHelpers.storedLimeChoice = specialtyHelpers.getLimeItems()[i];
+                    switch(specialtyHelpers.storedLimeChoice) {
+                        case "lime_lemon": worldmap.writeText("lime_lemon1"); break;
+                        case "lime_banana": worldmap.writeText("lime_banana1"); break;
+                        case "lime_corn": worldmap.writeText("lime_corn1"); break;
+                        case "lime_goldegg": worldmap.writeText("lime_egg1"); break;
+                        case "lime_nope":
+                            worldmap.writeText("lime_denied");
+                            worldmap.forceEndDialog = true;
+                            break;
+                    }
+                } else {
+                    specialtyHelpers.storedLimeChoice = "";
+                    worldmap.writeText("lime1");
+                }
+            }, 
+            function() {
+                switch(specialtyHelpers.storedLimeChoice) {
+                    case "lime_lemon": worldmap.writeText("lime_lemon2"); break;
+                    case "lime_banana": worldmap.writeText("lime_banana2"); break;
+                    case "lime_corn": worldmap.writeText("lime_corn2"); break;
+                    case "lime_goldegg": worldmap.writeText("lime_egg2"); break;
+                    default: worldmap.writeText("lime2"); break;
+                }
+            }, 
+            function() {
+                switch(specialtyHelpers.storedLimeChoice) {
+                    case "lime_lemon": worldmap.writeText("lime_lemon3"); break;
+                    case "lime_banana":
+                        worldmap.writeText("lime_banana3");
+                        quests.completeQuest("limeAndTheCoconut");
+                        player.decreaseItem("banana");
+                        player.increaseItem("corn", 10);
+                        break;
+                    case "lime_corn":
+                        worldmap.writeText("lime_corn3");
+                        quests.completeQuest("limeAndTheCoconut");
+                        player.decreaseItem("corn");
+                        player.increaseItem("banana", 10);
+                        break;
+                    case "lime_goldegg":
+                        worldmap.writeText("lime_egg3");
+                        quests.completeQuest("limeAndTheCoconut");
+                        player.decreaseItem("goldegg");
+                        player.increaseItem("coconut", 2);
+                        break;
+                    default:
+                        worldmap.writeText("lime3");
+                        player.activeQuests["limeAndTheCoconut"] = 1;
+                        break;
+                }
+            }
         ], { noChange: true, sy: 7 })
     ],
     "belowvillage": [

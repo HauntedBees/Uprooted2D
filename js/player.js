@@ -180,11 +180,11 @@ var player = {
         else if(season === 3 && equipInfo.wi) { bonus += equipInfo.wi; }
         return bonus;
     },
-    decreaseItem: function(name) {
+    decreaseItem: function(name, amount) {
         var idx = -1;
         for(var i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0] === name) {
-                player.inventory[i][1] -= 1;
+                player.inventory[i][1] -= (amount || 1);
                 idx = i;
                 break;
             }

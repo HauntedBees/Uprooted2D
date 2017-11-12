@@ -148,6 +148,7 @@ function GetCrop(name) {
         case "pineapple": return new CropDetail(name, "Pineapple", 10, "veg", 1, 12, 4, 10, 0, 1, 0, 0.66, 0.66);
         case "grapes": return new CropDetail(name, "Grapes", 10, "tree", 2, 20, 5, 6, 4, 0, 0, 1);
         case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 1);
+        case "corn": return new CropDetail(name, "Corn", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 1);
         case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 6, 3, 0, 0, 1);
         case "garlic": return new CropDetail(name, "Garlic", 10, "veg", 1, 6, 3, 15, 0, 1, 1, 1);
         case "banana": return new CropDetail(name, "Bananas", 10, "tree", 2, 7, 5, 3, 3, 1, 1, 1, 1);
@@ -165,7 +166,6 @@ function GetCrop(name) {
         case "blackshroom": return new CropDetail(name, "Black Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         case "poisnshroom": return new CropDetail(name, "Definitely Poisonous Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
         /* Eggs */
-        case "goldegg": return new CropDetail(name, "Golden Egg", 10, "egg", 1, 4, 4, 9999, 0, 1, 1, 1, 1);
         case "egg": return new CropDetail(name, "Chicken Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
         case "quail": return new CropDetail(name, "Quail Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
         case "goose": return new CropDetail(name, "Goose Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
@@ -180,6 +180,9 @@ function GetCrop(name) {
         case "frogbot": return new CropDetail(name, "Fwoggybot", 10, "tech", 2, 5, 4, 3, 0, 1, 1, 1, 1);
         case "coffee": return new CropDetail(name, "Coffee Machine", 10, "tech", 2, 5, 5, 3, 3, 1, 1, 1, 1);
         case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 10, "sickle2", 1, 5, 4, 0, 0);
+        /* Rare */
+        case "goldegg": return new CropDetail(name, "Golden Egg", 10, "egg", 1, 4, 4, 9999, 0, 1, 1, 1, 1);
+        case "coconut": return new CropDetail(name, "Coconut", 10, "tree", 2, 10, 5, 200, 3, 0, 1);
     }
 }
 function GetFarmInfo(name) {
