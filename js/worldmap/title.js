@@ -1,3 +1,16 @@
+var debug = {
+    MapTextTest: function(skip) {
+        var allText = [];
+        var doSkip = (skip !== undefined);
+        for(var i in fulltext) { 
+            if(fulltext[i].type !== "map") { continue; }
+            if(doSkip) { if(i === skip) { doSkip = false; } else { continue; } }
+            allText.push(function(x) { return function() { console.log(x); worldmap.writeText(x); }; }(i));
+        }
+        mapentities["farm"].push({ name: "DebugFriend", pos: { x: 0, y: 0 }, solid: false, autoplay: true, interact: allText });
+        game.transition(game.currentInputHandler, worldmap, { init: { x: 1, y: 1 }, map: "farm" });
+    }
+};
 worldmap.title = {
     cursory: 0, showContinue: false,
     layersToClear: ["menutext", "menucursorA"],

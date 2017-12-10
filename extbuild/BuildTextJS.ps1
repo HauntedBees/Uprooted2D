@@ -16,12 +16,14 @@ ForEach($row in $csv) {
 	$key = $row.Key;
 	$us = ($row."en-us").Trim().Replace("`"", "\`"");
 	$dm = ($row."en-dm").Trim().Replace("`"", "\`"");
+	$typ = ($row."type");
 	$hasdm = $dm -ne "";
 	$i += 1;
 	if($hasdm) {
 		$out.WriteLine("	`"" + $key + "`": {");
 		$out.WriteLine("		`"en-us`": `"$us`", ");
-		$out.WriteLine("		`"en-dm`": `"$dm`"");
+		$out.WriteLine("		`"en-dm`": `"$dm`", ");
+		$out.WriteLine("		`"type`": `"$typ`"");
 		if($i -eq $maxlen) {
 			$out.WriteLine("	}");
 		} else {
