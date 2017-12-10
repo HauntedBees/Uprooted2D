@@ -50,11 +50,15 @@ function GetEnemy(name) {
                 { seed: "ginger", min: 4, max: 6 }
             ]);
         // Research Lab
-        case "robo2": return new EnemyDetail(name, "sm", 2, { dx: 0, dy: 0, w: 0, h: 0 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0], [["dumbbattery", 1], ["gear"]], [
+        case "robo2": return new EnemyDetail(name, "sm", 6, { dx: 0, dy: 0, w: 0, h: 0 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0], [["dumbbattery", 1], ["gear"]], [
                 { money: true, min: 0, max: 5 },
                 { seed: "carrot", min: -1, max: 1 }
             ]);
-        case "ScienceMan": return new EnemyDetail(name, "md", 3, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);    
+        case "robo3": return new EnemyDetail(name, "md", 8, { dx: 0, dy: 0, w: 0, h: 0 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0], [["dumbbattery", 1], ["gear"]], [
+                { money: true, min: 0, max: 5 },
+                { seed: "carrot", min: -1, max: 1 }
+            ]);
+        case "ScienceMan": return new EnemyDetail(name, "md", 7, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10, 1, 1, 3, 1, true, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);    
         // Forest
         case "mouse": return new EnemyDetail(name, "sm", 2, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 2, 1, 1, 1, false, [0, 1, 1, 0], [["standardAttack", 0.5], ["rodent", 1], ["rodent"]], [
             { money: true, min: 0, max: 5 },

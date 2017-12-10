@@ -183,6 +183,20 @@ function GetCrop(name) {
         /* Rare */
         case "goldegg": return new CropDetail(name, "Golden Egg", 10, "egg", 1, 4, 4, 9999, 0, 1, 1, 1, 1);
         case "coconut": return new CropDetail(name, "Coconut", 10, "tree", 2, 10, 5, 200, 3, 0, 1);
+        case "gmocorn": return new CropDetail(name, "GMO CORN", 10, "veg", 2, 10, 5, 200, 3, 1, 1, 1, 1);
+    }
+}
+function GetItemDisplayName(name, plural) {
+    var pluralSuf = plural ? "s" : "";
+    switch(name[0]) {
+        case "_": return GetFarmInfo(name).displayname + pluralSuf; break;
+        case "!": return GetEquipment(name).displayname + pluralSuf; break;
+        default: 
+            var cropInfo = GetCrop(name);
+            var nam = cropInfo.displayname;
+            if(["veg", "tree", "mush"].indexOf(cropInfo.type) >= 0) { nam += " Seed"; }
+            return nam + pluralSuf;
+            break;
     }
 }
 function GetFarmInfo(name) {

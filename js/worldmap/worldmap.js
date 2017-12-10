@@ -136,11 +136,13 @@ var worldmap = {
         }
         game.target = null;
     },
-    writeText: function(t, choices, isRefresh) {
+    writeText: function(t, choices, isRefresh, formatting) {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
         var drawY = (worldmap.pos.y <= 2.5) ? 7.5 : 0;
         gfx.drawFullbox(drawY);
-        gfx.drawFullText(GetText(t), drawY * 16);
+        var actualText = GetText(t);
+        if(formatting) { actualText = actualText.replace("{0}", formatting); }
+        gfx.drawFullText(actualText, drawY * 16);
         if(choices === undefined) {
             worldmap.dialogData = null;
             return;
@@ -266,7 +268,7 @@ var worldmap = {
                     this.dialogState = 0;
                     game.target = e;
                     if(e.failed && e.failedInteract !== undefined) {
-                        if(e.failedInteract[0](true)) { return; }
+                        if(e.failedInteract[0](true, e)) { return; }
                     } else {
                         if(e.interact[0](true, e)) { return; }
                     }
@@ -279,11 +281,12 @@ var worldmap = {
                 if(!e.solid && (e.pos.x == newPos.x || e.isRow) && (e.pos.y == newPos.y || e.isColumn) && e.interact !== undefined) {
                     if(e.seamlessMap) {
                         e.interact[0](0, e);
-                    } else {
+                    } else if(e.interact !== undefined) {
                         this.inDialogue = true;
                         this.forceEndDialog = false;
                         this.dialogState = 0;
                         game.target = e;
+                        clearInterval(this.fullAnimIdx);
                         if(e.failed && e.failedInteract !== undefined) {
                             if(e.failedInteract[0]()) { return; }
                         } else {
@@ -306,7 +309,7 @@ var worldmap = {
         }
     },
     isCollision: function(e, newPos) {
-        if(e.seamlessMap) { return false; }
+        if(e.seamlessMap || !e.solid) { return false; }
         if(Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y) === newPos.y) { return true; }
         return e.big && (
             ((e.pos.x + 1) == newPos.x && e.pos.y == newPos.y)

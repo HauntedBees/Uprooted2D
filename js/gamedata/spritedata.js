@@ -49,6 +49,8 @@ var spriteData = {
                 spriteData.names["greenshroom" + i] = [22 + i, 8];
                 spriteData.names["blackshroom" + i] = [22 + i, 9];
                 spriteData.names["poisnshroom" + i] = [22 + i, 10];
+                
+                spriteData.names["gmocorn" + i] = [7 + i, 20];
             }
         }
         var mush = ["shiitake", "milkcap", "portobello"];
@@ -101,6 +103,8 @@ var spriteData = {
         }
     },
     names: {
+        "gmocorn": [10, 20],
+        "gmocornseed": [24, 13],
         "coconut": [23, 13],
         "coconutseed": [22, 13],
         "goldegg": [25, 12],

@@ -740,10 +740,16 @@ var mapentities = {
     ],
     "belowvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 21.5, 28, "firstvillage"),
-        SwitchMap("EnterFacilitySide", 13, 16, false, false, 30, 3, "researchfacility"),
-        SwitchMap("EnterFacilityL", 7, 18, false, false, 15.5, 26, "researchfacility"),
-        SwitchMap("EnterFacilityR", 8, 18, false, false, 15.5, 26, "researchfacility"),
-        GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), commonInteractArrays.researchRobo, {sy: 4})
+        SwitchMap("EnterFacilitySide", 13, 16, false, false, 30, 2, "researchfacilitynew"),
+        SwitchMap("EnterFacilityL", 7, 18, false, false, 12, 36, "researchfacilitynew"),
+        SwitchMap("EnterFacilityR", 8, 18, false, false, 13, 36, "researchfacilitynew"),
+        GetBeehive("BelowHive", 4, 36),
+        GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo2", 10, 38, 4, 2, GetStdMovement([ [10, 38, 3], [11, 38, 3], [11, 39, 2], [10, 39, 1], [10, 38, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo3", 10, 31, 4, 2, GetStdMovement([ [10, 31, 3], [14, 31, 3], [10, 31, 1] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo4", 8, 28, 4, 2, GetStdMovement([ [8, 28, 3], [13, 28, 3], [8, 28, 1] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo5", 3, 23, 4, 2, GetStdMovement([ [3, 23, 3], [13, 23, 3], [3, 23, 1] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo6", 22, 36, 4, 3, undefined, commonInteractArrays.researchRobo, {sy: 4})
     ],
     "researchfacility": [
         SwitchMap("ExitAreaSouth", 0, 27, true, false, 7.5, 19, "belowvillage"),
@@ -765,6 +771,261 @@ var mapentities = {
                 GetSpeak("Pb2_1")
             ]
         }
+    ],
+    "researchfacilitynew": [
+        GetCommonEntity("Robo1", 1, 15, 4, 2, GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo2", 25, 14, 4, 2, GetStdMovement([ [25, 14, 3], [30, 14, 3], [30, 22, 2], [25, 22, 1], [25, 14, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo3", 14, 7, 4, 2, GetStdMovement([ [14, 7, 3], [23, 7, 3], [23, 13, 2], [14, 13, 1], [14, 7, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo4", 16, 9, 4, 2, GetStdMovement([ [16, 9, 3], [21, 9, 3], [21, 11, 2], [16, 11, 1], [16, 9, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo5", 22, 2, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo6", 23, 2, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo7", 24, 2, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo8", 25, 2, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo9", 22, 3, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo10", 23, 3, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo11", 24, 3, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo12", 25, 3, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo13", 20, 4, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo14", 21, 4, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo15", 22, 4, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo16", 23, 4, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo17", 24, 4, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo18", 25, 4, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo19", 20, 1, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo20", 21, 1, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo21", 22, 1, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo22", 23, 1, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo23", 24, 1, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo24", 25, 1, 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}),
+        GetCommonEntity("Robo25", 14, 1, 4, 2, GetStdMovement([ [14, 1, 3], [18, 1, 3], [18, 5, 2], [14, 5, 1], [14, 1, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+        SwitchMap("ExitAreaSouth", 0, 37, true, false, 7.5, 19, "belowvillage"),
+        SwitchMap("ExitAreaEast", 31, 2, false, false, 13, 15, "belowvillage"),
+        GetRFDoorButton("RedBtn1", 2, 35, 0, false),
+        GetRFDoorButton("RedBtn2", 12, 7, 0, false),
+        GetRFDoor("Red1", 5, 31, 0, false),
+        GetRFDoor("Red2", 5, 32, 0, false),
+        GetRFDoor("Red3", 10, 28, 0, true),
+        GetRFDoor("Red4", 10, 29, 0, true),
+        GetRFDoor("Red5", 6, 17, 0, true),
+        GetRFDoor("Red6", 6, 18, 0, true),
+        GetRFDoor("Red7", 6, 19, 0, true),
+        GetRFDoor("Red8", 6, 20, 0, true),
+        GetRFDoor("Red8", 28, 23, 0, false),
+        GetRFDoor("Red9", 29, 23, 0, false),
+        GetRFDoor("Red10", 30, 23, 0, false),
+        GetRFDoor("Red11", 27, 3, 0, false),
+        GetRFDoor("Red12", 28, 3, 0, false),
+        GetRFDoor("Red13", 29, 3, 0, false),
+        GetRFDoor("Red14", 30, 3, 0, false),
+        GetRFDoor("Red15", 13, 11, 0, false),
+        GetRFDoor("Red16", 7, 14, 0, false),
+        GetRFDoorButton("BlueBtn1", 18, 32, 1, false),
+        GetRFDoorButton("BlueBtn2", 22, 8, 1, false),
+        GetRFDoor("Blue1", 20, 35, 1, false),
+        GetRFDoor("Blue2", 20, 36, 1, false),
+        GetRFDoor("Blue3", 14, 14, 1, false),
+        GetRFDoor("Blue4", 15, 14, 1, false),
+        GetRFDoor("Blue5", 16, 14, 1, false),
+        GetRFDoor("Blue6", 20, 14, 1, true),
+        GetRFDoor("Blue7", 21, 14, 1, true),
+        GetRFDoor("Blue8", 19, 2, 1, true),
+        GetRFDoor("Blue9", 19, 3, 1, true),
+        GetRFDoor("Blue10", 27, 4, 1, false),
+        GetRFDoor("Blue11", 28, 4, 1, false),
+        GetRFDoor("Blue12", 29, 4, 1, false),
+        GetRFDoor("Blue13", 30, 4, 1, false),
+        GetRFDoor("Blue14", 25, 6, 1, true),
+        GetRFDoorButton("GreenBtn1", 4, 13, 2, false),
+        GetRFDoorButton("GreenBtn2", 29, 15, 2, false),
+        GetRFDoor("Green1", 13, 28, 2, false),
+        GetRFDoor("Green2", 13, 29, 2, false),
+        GetRFDoor("Green3", 13, 9, 2, true),
+        GetRFDoor("Green4", 26, 24, 2, false),
+        GetRFDoor("Green5", 25, 24, 2, false),
+        GetRFDoor("Green6", 25, 13, 2, true),
+        GetRFDoor("Green7", 26, 13, 2, true),
+        GetRFDoor("Green8", 27, 13, 2, true),
+        GetRFDoor("Green9", 27, 5, 2, false),
+        GetRFDoor("Green10", 28, 5, 2, false),
+        GetRFDoor("Green11", 29, 5, 2, false),
+        GetRFDoor("Green12", 30, 5, 2, false),
+        GetRFDoor("Green13", 17, 6, 2, false),
+        GetRFDoor("Green14", 18, 6, 2, false),
+        GetCommonInvisibleSpeakingEntity("Peppie1", 28, 9, "growingpeppie"),
+        GetCommonInvisibleSpeakingEntity("Peppie2", 28, 11, "growingpeppie"),
+        GetCommonInvisibleSpeakingEntity("Peppie3", 29, 11, "rottencrop"),
+        GetCommonInvisibleSpeakingEntity("Peppie4", 28, 10, "rottencrop"),
+        GetCommonInvisibleSpeakingEntity("Shooter1", 18, 17, "seedshooter"),
+        GetCommonInvisibleSpeakingEntity("Shooter2", 18, 16, "seedshooter"),
+        GetCommonInvisibleSpeakingEntity("Shooter3", 23, 17, "seedshooter"),
+        GetCommonInvisibleSpeakingEntity("Shooter4", 23, 16, "seedshooter"),
+        GetCommonInvisibleSpeakingEntity("Modulator1", 12, 16, "seasmod"),
+        GetCommonInvisibleSpeakingEntity("Modulator2", 13, 16, "seasmod"),
+        GetCommonInvisibleSpeakingEntity("Modulator3", 12, 15, "seasmod"),
+        GetCommonInvisibleSpeakingEntity("Modulator4", 13, 15, "seasmod"),
+        GetCommonInvisibleSpeakingEntity("Flask", 2, 13, "flask"),
+        GetCommonInvisibleSpeakingEntity("SinkL", 2, 11, "sink"),
+        GetCommonInvisibleSpeakingEntity("SinkR", 3, 11, "sink"),
+        GetCommonInvisibleSpeakingEntity("Printer", 6, 24, "labprinter"),
+        GetCommonInvisibleSpeakingEntity("Shelf1", 16, 26, "bookshelf_left"),
+        GetCommonInvisibleSpeakingEntity("Shelf2", 17, 26, "bookshelf_left"),
+        GetCommonInvisibleSpeakingEntity("Shelf3", 18, 26, "bookshelf_mid"),
+        GetCommonInvisibleSpeakingEntity("Shelf4", 19, 26, "bookshelf_mid"),
+        GetCommonInvisibleSpeakingEntity("Shelf5", 20, 26, "bookshelf_mid"),
+        GetCommonInvisibleSpeakingEntity("Shelf6", 21, 26, "bookshelf_mid"),
+        GetCommonInvisibleSpeakingEntity("Shelf7", 22, 26, "bookshelf_mid"),
+        GetCommonInvisibleSpeakingEntity("Shelf8", 23, 26, "bookshelf_right"),
+        GetCommonInvisibleSpeakingEntity("Shelf9", 24, 26, "bookshelf_right"),
+        GetCommonInvisibleSpeakingEntity("DeadBot1", 10, 32, "broken_robot"),
+        GetCommonInvisibleSpeakingEntity("DeadBot2", 11, 32, "broken_robot"),
+        GetCommonInvisibleSpeakingEntity("DeadBot3", 12, 32, "broken_robot"),
+        GetCommonInvisibleSpeakingEntity("DeadBot4", 13, 32, "broken_robot"),
+        GetCommonInvisibleSpeakingEntity("DeadBot5", 12, 31, "broken_robot"),
+        GetCommonInvisibleSpeakingEntity("DeadBot6", 13, 31, "broken_robot"),
+        GetCommonInvisibleSpeakingEntity("BedL", 1, 7, "devbed"),
+        GetCommonInvisibleSpeakingEntity("BedR", 2, 7, "devbed"),
+        GetCommonInvisibleSpeakingEntity("Compy1", 1, 3, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy2", 2, 3, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy3", 3, 2, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("CompyMonitor", 4, 1, "devmonitor"),
+        GetCommonInvisibleSpeakingEntity("Compy4", 5, 1, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy5", 6, 1, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy6", 7, 1, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy7", 8, 1, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy8", 9, 1, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy9", 10, 2, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy10", 11, 3, "devmachines"),
+        GetCommonInvisibleSpeakingEntity("Compy11", 12, 3, "devmachines"),
+        GetInvisibleEntity("SeedShotArea1", specialtyHelpers.seedShotArray, { pos: { x: 20, y: 16 }, hasShot: 0 }),
+        GetInvisibleEntity("SeedShotArea2", specialtyHelpers.seedShotArray, { pos: { x: 21, y: 16 }, hasShot: 0 }),
+        GetInvisibleEntity("SeedShotArea3", specialtyHelpers.seedShotArray, { pos: { x: 20, y: 17 }, hasShot: 0 }),
+        GetInvisibleEntity("SeedShotArea4", specialtyHelpers.seedShotArray, { pos: { x: 21, y: 17 }, hasShot: 0 }),
+        GetTreasureChest("Chest1", 21, 3, [["carrot", 20]]),
+        GetTreasureChest("Chest2", 21, 2, [["carrot", 20]]),
+        GetTreasureChest("Chest3", 29, 27, [["carrot", 20]]),
+        GetTreasureChest("Chest4", 8, 12, [["carrot", 20]]),
+        GetTreasureChest("Chest5", 9, 12, [["carrot", 20]]),
+        GetTreasureChest("Chest6", 10, 12, [["carrot", 20]]),
+        GetTreasureChest("Chest7", 11, 12, [["carrot", 20]]),
+        GetTreasureChest("Chest8", 27, 6, [["carrot", 20]]),
+        GetTreasureChest("Chest9", 28, 6, [["carrot", 20]]),
+        GetTreasureChest("Chest10", 29, 6, [["carrot", 20]]),
+        GetTreasureChest("Chest11", 30, 6, [["carrot", 20]]),
+        GetCommonEntity("Chair", 8, 4, 14, 0, undefined, [
+            function() {
+                game.target.swapped = !game.target.swapped;
+                game.target.anim.shiftY(game.target.swapped ? 4 : 3);
+                worldmap.finishDialog();
+            }
+        ], { sy: 3, noChange: true, swapped: false }),
+        GetCommonEntity("Fucker", 7, 2, 0, 0, undefined, [
+            GetSpeak("B2_0"),
+            GetFight(["robo3", "ScienceMan", "robo3"])
+        ], { sy: 4, postBattle: "PostBoss2", noChange: true, failedInteract: [
+            GetSpeak("B2_1"),
+            GetFight(["robo3", "ScienceMan", "robo3"])
+        ] }),
+        {
+            name: "PostBoss2",
+            pos: {x: -1, y: -1},
+            solid: false,
+            storageKey: "PostBoss2",
+            interact: [
+                GetSpeak("Pb2_0"),
+                GetSpeak("Pb2_1")
+            ]
+        },
+        GetCommonEntity("RAPBATTLE", 28, 8, 11, 0, undefined, [
+            function() {
+                if(player.completedQuest("rapbattle")) {
+                    worldmap.writeText("rap_thanks");
+                    worldmap.forceEndDialog = true;
+                } else if(player.hasQuest("rapbattle")) {
+                    var items = specialtyHelpers.getRapItems();
+                    if(items.length === 0) {
+                        worldmap.writeText("rap4");
+                        worldmap.forceEndDialog = true;
+                    } else {
+                        worldmap.writeText("rap5", items);
+                    }
+                } else {
+                    worldmap.writeText("rap0");
+                }
+            }, 
+            function(i) {
+                if(player.hasQuest("rapbattle")) {
+                    specialtyHelpers.storedRapChoice = specialtyHelpers.getRapItems()[i];
+                    switch(specialtyHelpers.storedRapChoice) {
+                        case "rap_garlic": worldmap.writeText("rap_garlic1"); break;
+                        case "rap_rice": worldmap.writeText("rap_rice1"); break;
+                        case "rap_coconut": worldmap.writeText("rap_coconut1"); break;
+                        case "lime_nope":
+                            worldmap.writeText("rap4");
+                            worldmap.forceEndDialog = true;
+                            break;
+                    }
+                } else {
+                    specialtyHelpers.storedRapChoice = "";
+                    worldmap.writeText("rap1");
+                }
+            }, 
+            function() {
+                switch(specialtyHelpers.storedRapChoice) {
+                    case "rap_garlic": worldmap.writeText("rap_garlic2"); break;
+                    case "rap_rice": worldmap.writeText("rap_rice2"); break;
+                    case "rap_coconut": worldmap.writeText("rap_coconut2"); break;
+                    default: worldmap.writeText("rap2"); break;
+                }
+            }, 
+            function() {
+                switch(specialtyHelpers.storedRapChoice) {
+                    case "rap_garlic": worldmap.writeText("rap_garlic3"); break;
+                    case "rap_rice": worldmap.writeText("rap_rice3"); break;
+                    case "rap_coconut": worldmap.writeText("rap_coconut3"); break;
+                    default: 
+                        worldmap.writeText("rap3"); 
+                        worldmap.forceEndDialog = true;
+                        player.activeQuests["rapbattle"] = 1;
+                        break;
+                }
+            }, 
+            function() {
+                switch(specialtyHelpers.storedRapChoice) {
+                    case "rap_garlic": worldmap.writeText("rap_garlic4"); break;
+                    case "rap_rice":
+                        worldmap.writeText("rap_rice4");
+                        player.decreaseItem("rice");
+                        player.increaseItem("battery", 10);
+                        quests.completeQuest("rapbattle");
+                        break;
+                    case "rap_coconut": worldmap.writeText("rap_coconut4"); break;
+                }
+            }, 
+            function() {
+                switch(specialtyHelpers.storedRapChoice) {
+                    case "rap_garlic":
+                        worldmap.writeText("rap_garlic5");
+                        player.decreaseItem("garlic");
+                        player.increaseItem("battery", 10);
+                        quests.completeQuest("rapbattle");
+                        break;
+                    case "rap_coconut": worldmap.writeText("rap_coconut5"); break;
+                    default: worldmap.writeText("rap_normalgift"); worldmap.forceEndDialog = true; break;
+                }
+            },
+            function() {
+                switch(specialtyHelpers.storedRapChoice) {
+                    case "rap_coconut": worldmap.writeText("rap_coconut6"); break;
+                    default: worldmap.writeText("rap_normalgift"); worldmap.forceEndDialog = true; break;
+                }
+            },
+            function() {
+                worldmap.writeText("rap_coconut7");
+                player.decreaseItem("coconut");
+                player.increaseItem("gmocorn", 2);
+                quests.completeQuest("rapbattle");
+            }
+        ], { noChange: true, sy: 7 })
     ],
     "bridge": [
         SwitchMap("GoUnderwater", 10, 17, false, false, 41, 20, "underwater"),

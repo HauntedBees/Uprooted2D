@@ -8,7 +8,42 @@ var specialtyHelpers = {
         if(player.hasItem("goldegg")) { items.push("lime_goldegg"); }
         if(items.length > 0) { items.push("lime_nope"); }
         return items;
-    }
+    },
+    storedRapChoice: "",
+    getRapItems: function() {
+        var items = [];
+        if(player.hasItem("garlic")) { items.push("rap_garlic"); }
+        if(player.hasItem("rice")) { items.push("rap_rice"); }
+        if(player.hasItem("coconut")) { items.push("rap_coconut"); }
+        if(items.length > 0) { items.push("lime_nope"); }
+        return items;
+    },
+    seedShotArray: [
+        function() {
+            if(game.target.hasShot-- > 0) { worldmap.finishDialog(); return; }
+            worldmap.writeText("seedshot");
+            player.health -= 2;
+            game.target.hasShot = 5;
+            if(player.health > 0) { worldmap.forceEndDialog = true; return; }
+        },
+        GetSpeak("seedshotdeath"),
+        function() {
+            player.health = player.maxhealth;
+            for(var i = 0; i < worldmap.entities.length; i++) {
+                if(worldmap.entities[i].rfd) {
+                    var newActive = worldmap.entities[i].initActive;
+                    worldmap.entities[i].active = newActive;
+                    worldmap.entities[i].anim.shiftY(newActive ? 3 : 2);
+                    worldmap.entities[i].solid = !newActive;
+                } else if(worldmap.entities[i].rf) {
+                    var newActive = worldmap.entities[i].initActive;
+                    worldmap.entities[i].active = newActive;
+                    worldmap.entities[i].anim.shiftY(newActive ? 1 : 0);
+                }
+            }
+            game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
+        }
+    ]
 };
 function GetSleep(time) {
     return function() {
@@ -129,6 +164,56 @@ function GetBeehive(hiveId, x, y, beetype) {
     }
     return GetCommonEntity(hiveId, x, y, 2, 0, undefined, interactArray, { sy: 4, storageKey: hiveId });
 };
+function ToggleRFDoors(type) {
+    for(var i = 0; i < worldmap.entities.length; i++) {
+        if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
+            var newActive = !worldmap.entities[i].active;
+            worldmap.entities[i].active = newActive;
+            worldmap.entities[i].anim.shiftY(newActive ? 3 : 2);
+            worldmap.entities[i].solid = !newActive;
+        }
+    }
+}
+function GetRFDoorButton(name, x, y, type, isDown) {
+    return GetCommonEntity(name, x, y, 15 + type, 0, undefined, [ function() { 
+        game.target.active = !game.target.active;
+        game.target.anim.shiftY(game.target.active ? 1 : 0);
+        ToggleRFDoors(game.target.type);
+        worldmap.finishDialog();
+    } ], { sy: (isDown ? 1 : 0), active: isDown, initActive: isDown, type: type, noChange: true, rf: true });
+}
+function GetRFDoor(name, x, y, type, isDown) {
+    return GetCommonEntity(name, x, y, 15 + type, 0, undefined, undefined, { sy: (isDown ? 3 : 2), active: isDown, initActive: isDown, type: type, solid: !isDown, rfd: true });
+}
+function GetTreasureChest(name, x, y, contents) {
+    return GetCommonEntity(name, x, y, 13, 0, undefined, [function() {
+        if(game.target.open) {
+            worldmap.writeText("openchest");
+        } else {
+            game.target.open = true;
+            game.target.anim.shiftY(5);
+            var conts = game.target.contents;
+            var clen = conts.length - 1;
+            var contentString = "";
+            if(clen === 0) {
+                contentString = conts[0][1] + " " + GetItemDisplayName(conts[0][0], conts[0][1] > 1);
+                player.increaseItem(conts[0][0], conts[0][1]);
+            } else {
+                for(var i = clen; i >= 0; i--) {
+                    var itdata = conts[i]; // format = [itemname, amount]
+                    if(i === 0) {
+                        contentString += " and ";
+                    } else if(i !== clen) {
+                        contentString += ", ";
+                    }
+                    contentString += itdata[1] + " " + GetItemDisplayName(itdata[0], itdata[1] > 1);
+                    player.increaseItem(itdata[0], itdata[1]);
+                }
+            }
+            worldmap.writeText("closedchest", undefined, false, contentString);
+        }
+    }], { sy: 4, open: false, contents: contents, noChange: true });
+}
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
     var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
