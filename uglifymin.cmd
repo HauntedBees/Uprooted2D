@@ -1,4 +1,5 @@
 uglifyjs ^
+    js/gamedata/consts.js ^
     js/gamedata/crops.js ^
     js/gamedata/enemies.js ^
     js/gamedata/shops.js ^

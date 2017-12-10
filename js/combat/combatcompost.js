@@ -17,7 +17,7 @@ combat.compost = {
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClean);
-        gfx.drawInfobox(6.5, 2, this.dy);
+        gfx.drawInfobox(me.INFOBOXWIDTH, 2, this.dy);
         for(var i = 0; i < this.selectedCrops.length; i++) {
             var pos = this.selectedCrops[i];
             if(pos.cow !== undefined) {

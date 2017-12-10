@@ -1,14 +1,24 @@
+me.sellStates = {
+    BUYING: 0,
+    SELLSELECT: 1, 
+    SELLING: 2
+};
+me.sellTypes = {
+    CROPS: "", CROPSIDX: 1, 
+    EQUIPMENT: "!", EQUIPIDX: 2, 
+    FIXTURES: "_", FIXIDX: 3
+};
 worldmap.shop = {
     details: null, cursorX: 0,
     initx: 1, dx: 2, yPos: 5, cursorInitx: 0,
-    sellingState: 0, sellingType: "", actualIdxs: [],
+    sellingState: me.sellStates.BUYING, sellingType: me.sellTypes.CROPS, actualIdxs: [],
     maxSell: 12, sellOffset: 0, numArrows: 0, isUpgradeShop: false,
     layersToClear: ["characters", "menutext", "menucursorA"],
     availableIndexes: [], hasTalk: "",
     setup: function(shopName) {
         this.details = stores[shopName];
-        this.sellingState = 0;
-        this.sellingType = "";
+        this.sellingState = me.sellStates.BUYING;
+        this.sellingType = me.sellTypes.CROPS;
         this.hasTalk = (this.details.talk && player.questsCleared.indexOf(this.details.talk) < 0) ? this.details.talk : "";
         this.sellOffset = 0;
         this.numArrows = 0;
@@ -37,23 +47,23 @@ worldmap.shop = {
     drawDetails: function(text, isopening) {
         gfx.clearSome(this.layersToClear);
         switch(this.sellingState) {
-            case 2: this.drawDetailsSelling(); break;
-            case 1: this.drawDetailsSellingSelect(); break;
-            default: this.drawDetailsBuying(); break;
+            case me.sellStates.SELLING: this.drawDetailsSelling(); break;
+            case me.sellStates.SELLSELECT: this.drawDetailsSellingSelect(); break;
+            case me.sellStates.BUYING: this.drawDetailsBuying(); break;
         }
         if(this.isUpgradeShop && this.availableIndexes.length === 0 && isopening) { text = GetText(this.details.empty); }
         gfx.drawText("Coins: " + player.monies, 2, 16 * 6.75, "#FFFFFF");
         gfx.drawWrappedText(text, 2, 16 * 7.25, 235, "#FFFFFF");
     },
     isValidSellIdx: function(i) {
-        if(this.sellingType === "") {
-            if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") {
+        if(this.sellingType === me.sellTypes.CROPS) {
+            if(player.inventory[i][0][0] === me.sellTypes.FIXTURES || player.inventory[i][0][0] === me.sellTypes.EQUIPMENT) {
                 return false;
             }
         } else if(player.inventory[i][0][0] !== this.sellingType) {
             return false;
         }
-        if(this.sellingType === "!" && player.isEquipped(player.inventory[i][0])) { return false; }
+        if(this.sellingType === me.sellTypes.EQUIPMENT && player.isEquipped(player.inventory[i][0])) { return false; }
         return true;
     },
     getNthMatchingIdx: function(n) {
@@ -145,9 +155,9 @@ worldmap.shop = {
     mouseMove: function(pos) {
         if(pos.y < this.yPos || pos.y > this.yPos) { return false; }
         switch(this.sellingState) {
-            case 2: return this.mouseMoveSelling(pos);
-            case 1: return this.mouseMoveSellSelect(pos);
-            default: return this.mouseMoveBuying(pos);
+            case me.sellStates.SELLING: return this.mouseMoveSelling(pos);
+            case me.sellStates.SELLSELECT: return this.mouseMoveSellSelect(pos);
+            case me.sellStates.BUYING: return this.mouseMoveBuying(pos);
         }
     },
     mouseMoveSelling: function(pos) {
@@ -172,15 +182,15 @@ worldmap.shop = {
             var actualIdx = this.actualIdxs[this.cursorX - 1];
             var item = player.inventory[actualIdx][0];
             switch(this.sellingType) {
-                case "":
+                case me.sellTypes.CROPS:
                     var itemInfo = GetCrop(item);
                     text = itemInfo.displayname + " (" + Math.floor(itemInfo.price * this.details.sellMult) + " coins)\n " + GetCropDesc(itemInfo);
                     break;
-                case "!":
+                case me.sellTypes.EQUIPMENT:
                     var itemInfo = GetEquipment(item);
                     text = itemInfo.displayname + " (" + Math.floor(itemInfo.price * this.details.sellMult) + " coins)\n " + GetEquipmentDesc(itemInfo);
                     break;
-                case "_":
+                case me.sellTypes.FIXTURES:
                     var itemInfo = GetFarmInfo(item);
                     text = itemInfo.displayname + " (" + Math.floor(itemInfo.price * this.details.sellMult) + " coins)\n " + itemInfo.desc;
                     break;
@@ -195,9 +205,9 @@ worldmap.shop = {
         this.cursorX = newCursorX;
         var text = "";
         switch(this.cursorX) {
-            case 1: text = GetText("s_sellseed"); break;
-            case 2: text = GetText("s_selltool"); break;
-            case 3: text = GetText("s_sellfixture");; break;
+            case me.sellTypes.CROPSIDX: text = GetText("s_sellseed"); break;
+            case me.sellTypes.EQUIPIDX: text = GetText("s_selltool"); break;
+            case me.sellTypes.FIXIDX: text = GetText("s_sellfixture");; break;
             default: text = GetText(this.details.leaveSell); break;
         }
         this.drawDetails(text);
@@ -260,7 +270,7 @@ worldmap.shop = {
     },
     click: function(pos) {
         if(this.cursorX == 0) {
-            if(this.sellingState === 2 && this.sellOffset > 0) {
+            if(this.sellingState === me.sellStates.SELLING && this.sellOffset > 0) {
                 this.sellOffset--;
                 this.drawDetails("");
                 this.mouseMove({x: this.cursorX, y: this.yPos });
@@ -270,9 +280,9 @@ worldmap.shop = {
             }
         }
         switch(this.sellingState) {
-            case 2: return this.clickSelling(pos);
-            case 1: return this.clickSellSelect(pos);
-            default: return this.clickBuying(pos);
+            case me.sellStates.SELLING: return this.clickSelling(pos);
+            case me.sellStates.SELLSELECT: return this.clickSellSelect(pos);
+            case me.sellStates.BUYING: return this.clickBuying(pos);
         }
     },
     clickSelling: function(pos) {
@@ -291,9 +301,9 @@ worldmap.shop = {
         if(actualItem[1] <= 0) { return false; }
         var price = 10;
         switch(this.sellingType) {
-            case "": price = Math.floor(GetCrop(actualItem[0]).price * this.details.sellMult); break;
-            case "!": price = Math.floor(GetEquipment(actualItem[0]).price * this.details.sellMult); break;
-            case "_": price = Math.floor(GetFarmInfo(actualItem[0]).price * this.details.sellMult); break;
+            case me.sellTypes.CROPS: price = Math.floor(GetCrop(actualItem[0]).price * this.details.sellMult); break;
+            case me.sellTypes.EQUIPMENT: price = Math.floor(GetEquipment(actualItem[0]).price * this.details.sellMult); break;
+            case me.sellTypes.FIXTURES: price = Math.floor(GetFarmInfo(actualItem[0]).price * this.details.sellMult); break;
         }
         player.monies += price;
         player.decreaseItem(actualItem[0]);
@@ -302,12 +312,12 @@ worldmap.shop = {
     },
     clickSellSelect: function(pos) {
         switch(this.cursorX) {
-            case 1: this.sellingType = ""; break;
-            case 2: this.sellingType = "!"; break;
-            case 3: this.sellingType = "_"; break;
+            case me.sellTypes.CROPSIDX: this.sellingType = me.sellTypes.CROPS; break;
+            case me.sellTypes.EQUIPIDX: this.sellingType = me.sellTypes.EQUIPMENT; break;
+            case me.sellTypes.FIXIDX: this.sellingType = me.sellTypes.FIXTURES; break;
             default: return false;
         }
-        this.sellingState = 2;
+        this.sellingState = me.sellStates.SELLING;
         this.cursorX = 1;
         this.drawDetails("");
         this.mouseMove({x: this.cursorX + 1, y: this.yPos});
@@ -318,7 +328,7 @@ worldmap.shop = {
             this.drawDetails(quests.getQuestText(this.hasTalk));
             return true;
         } else if(this.details.doesSell && this.cursorX === 1) {
-            this.sellingState = 1;
+            this.sellingState = me.sellStates.SELLSELECT;
             this.drawDetails(GetText("s_sellseed"));
             return true;
         }
@@ -363,22 +373,22 @@ worldmap.shop = {
     cancel: function() {
         this.sellOffset = 0; this.numArrows = 0;
         switch(this.sellingState) {
-            case 2: 
-                this.sellingState = 1;
+            case me.sellStates.SELLING: 
+                this.sellingState = me.sellStates.SELLSELECT;
                 switch(this.sellingType) {
-                    case "": this.cursorX = 1; break;
-                    case "!": this.cursorX = 2; break;
-                    case "_": this.cursorX = 3; break;
+                    case me.sellTypes.CROPS: this.cursorX = me.sellTypes.CROPSIDX; break;
+                    case me.sellTypes.EQUIPMENT: this.cursorX = me.sellTypes.EQUIPIDX; break;
+                    case me.sellTypes.FIXTURES: this.cursorX = me.sellTypes.FIXIDX; break;
                 }
                 this.drawDetails("");
                 this.mouseMove({ x: 2 * this.cursorX + 4, y: this.yPos });
                 break;
-            case 1:
-                this.sellingState = 0;
+            case me.sellStates.SELLSELECT:
+                this.sellingState = me.sellStates.BUYING;
                 this.cursorX = 1;
                 this.drawDetails(GetText(this.details.selling));
                 break;
-            default: 
+            case me.sellStates.BUYING: 
                 game.transition(this, worldmap, {
                     init: worldmap.pos,
                     map: worldmap.mapName,
@@ -391,10 +401,10 @@ worldmap.shop = {
         var pos = {x: (this.cursorX * this.dx) + 1, y: this.yPos};
         var isEnter = false;
         var actDx = this.dx;
-        if(this.sellingState == 1) {
+        if(this.sellingState === me.sellStates.SELLSELECT) {
             pos.x = (this.cursorX * 2) + 4;
             actDx = 2;
-        } else if(this.sellingState == 2) {
+        } else if(this.sellingState === me.sellStates.SELLING) {
             pos.x = this.cursorX + 1;
             actDx = 1;
         }
@@ -406,7 +416,7 @@ worldmap.shop = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(moveDir !== 0 && this.sellingState === 2) {
+        if(moveDir !== 0 && this.sellingState === me.sellStates.SELLING) {
             if((moveDir === 1 && this.cursorX > this.actualIdxs.length) || (moveDir === -1 && this.sellOffset > 0 && this.cursorX === 0)) {
                 isEnter = true;
             }

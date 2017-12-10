@@ -67,13 +67,13 @@ var worldmap = {
                 y: e.pos.y + pointinfo.dy * em.speed
             }
             if(pointinfo.dy > 0) {
-                worldmap.entities[i].dir = 2;
+                worldmap.entities[i].dir = directions.DOWN;
             } else if(pointinfo.dy < 0) {
-                worldmap.entities[i].dir = 0;
+                worldmap.entities[i].dir = directions.UP;
             } else if(pointinfo.dx < 0) {
-                worldmap.entities[i].dir = 1;
+                worldmap.entities[i].dir = directions.LEFT;
             } else if(pointinfo.dx > 0) {
-                worldmap.entities[i].dir = 3;
+                worldmap.entities[i].dir = directions.RIGHT;
             }
             if(Math.round(newPos.x) == Math.round(worldmap.pos.x) && Math.round(newPos.y) == Math.round(worldmap.pos.y) && e.interact !== undefined) {
                 worldmap.inDialogue = true;
@@ -177,7 +177,7 @@ var worldmap = {
         this.forceEndDialog = false;
         this.inDialogue = false;
         this.freeMovement = true;
-        this.fullAnimIdx = setInterval(worldmap.moveEntities, 10);
+        this.fullAnimIdx = setInterval(worldmap.moveEntities, timers.FULLANIM);
     },
     handleMenuChoices: function(key) {
         var dy = 0;
@@ -205,23 +205,23 @@ var worldmap = {
         this.freeMovement = true;
         var pos = { x: this.pos.x, y: this.pos.y };
         var isEnter = false;
-        var moveSpeed = 0.25;
+        var moveSpeed = me.PLAYERMOVESPEED;
         switch(key) {
             case player.controls.up: 
                 pos.y -= moveSpeed;
-                this.playerDir = 0;
+                this.playerDir = directions.UP;
                 break;
             case player.controls.left:
                 pos.x -= moveSpeed;
-                this.playerDir = 1;
+                this.playerDir = directions.LEFT;
                 break;
             case player.controls.down:
                 pos.y += moveSpeed;
-                this.playerDir = 2;
+                this.playerDir = directions.DOWN;
                 break;
             case player.controls.right:
                 pos.x += moveSpeed;
-                this.playerDir = 3;
+                this.playerDir = directions.RIGHT;
                 break;
             case player.controls.confirm:
             case player.controls.pause: isEnter = true; break;
@@ -253,10 +253,10 @@ var worldmap = {
         }
         if(isEnter) {
             switch(this.playerDir) {
-                case 0: newPos.y--; break;
-                case 1: newPos.x--; break;
-                case 2: newPos.y++; break;
-                case 3: newPos.x++; break;
+                case directions.UP: newPos.y--; break;
+                case directions.LEFT: newPos.x--; break;
+                case directions.DOWN: newPos.y++; break;
+                case directions.RIGHT: newPos.x++; break;
             }
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];
@@ -302,10 +302,10 @@ var worldmap = {
     },
     invertDir: function(dir) {
         switch(dir) {
-            case 0: return 2;
-            case 1: return 3;
-            case 2: return 0;
-            case 3: return 1;
+            case directions.UP: return directions.DOWN;
+            case directions.LEFT: return directions.RIGHT;
+            case directions.DOWN: return directions.UP;
+            case directions.RIGHT: return directions.LEFT;
         }
     },
     isCollision: function(e, newPos) {

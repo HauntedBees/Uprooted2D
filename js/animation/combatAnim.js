@@ -273,7 +273,7 @@ function CombatAnimHelper(enemies) {
                 t.finish();
                 anims.splice(i, 1);
             } else {
-                t.getFrame(combat.dt);
+                t.getFrame(timers.CHARANIM);
             }
         }
     };

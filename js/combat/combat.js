@@ -1,5 +1,5 @@
 var combat = {
-    enemies: [], state: 0, season: 0, numPlantTurns: 0, dt: 50,
+    enemies: [], state: 0, season: 0, numPlantTurns: 0,
     lastTarget: 0, lastTargetCrop: false,
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
@@ -65,7 +65,7 @@ var combat = {
         this.enemydy = this.dy + Math.floor((player.gridHeight - this.enemyheight) / 2);
         combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
-        combat.charAnimIdx = setInterval(function() { combat.animHelper.Animate() }, this.dt);
+        combat.charAnimIdx = setInterval(function() { combat.animHelper.Animate() }, timers.CHARANIM);
         this.startRound();
         this.menu.setup();
     },

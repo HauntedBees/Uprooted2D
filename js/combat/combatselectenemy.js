@@ -57,12 +57,12 @@ combat.selectTarget = {
         if(this.sicklePos.x >= 0) {
             var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
-                gfx.drawWrappedText("", 6.5 * 16, 11 + (this.dy * 16), 85);
+                gfx.drawWrappedText("", me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
             } else {
-                gfx.drawWrappedText(Capitalize(crop.name), 6.5 * 16, 11 + (this.dy * 16), 85);
+                gfx.drawWrappedText(Capitalize(crop.name), me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
             }
         } else {
-            gfx.drawWrappedText(combat.enemies[this.cursorx].name, 6.5 * 16, 11 + (this.dy * 16), 85);
+            gfx.drawWrappedText(combat.enemies[this.cursorx].name, me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
         }
         combat.animHelper.DrawBottom();
     },
