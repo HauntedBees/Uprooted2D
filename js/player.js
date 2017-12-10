@@ -8,7 +8,8 @@ var player = {
     options: {
         difficulty: 1, 
         music: 1, 
-        sound: 1
+        sound: 1,
+        font: 0
     },
     controls: {
         up: "w",

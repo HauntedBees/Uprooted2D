@@ -1,14 +1,16 @@
 worldmap.optionsMenu = {
     cursory: 1, options: [], localControls: {}, localOptions: {}, fromPause: false,
-    headingSize: 36, optionSize: 22, optionInfoSize: 12, inChange: false, 
+    headingSize: 36, optionSize: 22, optionInfoSize: 12, inChange: false, origFont: 0,
     setup: function(fromPause) {
         this.fromPause = fromPause;
         this.localControls = Object.assign({}, player.controls);
         this.localOptions = Object.assign({}, player.options);
         this.options = []; this.cursory = 1; this.inChange = false;
+        this.origFont = player.options.font;
         var y = 0;
         y = this.addHeading(y, "opGameOps");
         y = this.addOption(y, "opDifficulty", player.options.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
+        y = this.addOption(y, "opFont", player.options.font, "font", ["fontStandard", "fontDyslexic"], false);
         y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
         y = this.addHeading(y, "opControls");
         y = this.addButton(y, "ctrlUp", player.controls.up, "up");
@@ -138,6 +140,7 @@ worldmap.optionsMenu = {
                 this.options[this.cursory].val = Math.min(Math.max(newOp, 0), this.options[this.cursory].choices.length - 1);
                 if(this.options[this.cursory].idx) {
                     this.localOptions[this.options[this.cursory].idx] = newOp;
+                    //if(this.options[this.cursory].idx === "font") { player.options.font = newOp; }
                 }
                 this.drawEverything();
                 return true;
@@ -177,10 +180,13 @@ worldmap.optionsMenu = {
     },
     SaveAndQuit: function() {
         player.controls = Object.assign(player.controls, worldmap.optionsMenu.localControls);
+        //var f = player.options.font;
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
-        worldmap.optionsMenu.QuitWithoutSaving();
+        //player.options.font = f;
+        worldmap.optionsMenu.QuitWithoutSaving(true);
     },
-    QuitWithoutSaving: function() {
+    QuitWithoutSaving: function(dontFont) {
+        //if(!dontFont) { player.options.font = this.origFont; }
         if(worldmap.optionsMenu.fromPause) {
             game.transition(worldmap.optionsMenu, pausemenu, 3);
         } else {

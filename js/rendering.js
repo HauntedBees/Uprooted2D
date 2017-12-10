@@ -21,6 +21,8 @@ var gfx = {
             f(path, paths.length);
         });
     },
+    GetFont: function() { return player.options.font === 1 ? "OpenDyslexic" : "PressStart2P" },
+
     clearLayer: function(key) { gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasWidth); },
     clearSome: function(keys) { for(var i = 0; i < keys.length; i++) { gfx.clearLayer(keys[i]); } },
     clearAll: function() { for(var key in gfx.ctx) { gfx.clearLayer(key); } },
@@ -142,7 +144,7 @@ var gfx = {
     getTextFractionX: function(text, size, fraction) { return gfx.getFractionX(gfx.getTextWidth(text, size), (fraction || 0.5)); },
     getFractionX: function(width, fraction) { return ((gfx.canvasWidth * fraction) - (width / 2)) / 4; },
     getTextWidth: function(t, size) {
-        gfx.ctx["menutext"].font = (size || 22) + "px PressStart2P";
+        gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
     drawChoice: function(y, t, selected) {
@@ -152,12 +154,12 @@ var gfx = {
         gfx.drawText(t, 8, y * 16);
     },
     drawText: function(t, x, y, color, size) {
-        gfx.ctx["menutext"].font = (size || 22) + "px PressStart2P";
+        gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
         gfx.ctx["menutext"].fillStyle = (color || "#000000");
         gfx.ctx["menutext"].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
     },
     getTextLength: function(t, size) {
-        gfx.ctx["menutext"].font = (size || 22) + "px PressStart2P";
+        gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
     drawBottomFullText: function(t, color) {  gfx.drawFullText(t, 121, color); },
@@ -167,7 +169,7 @@ var gfx = {
         maxWidth *= gfx.scale;
         var ctx = gfx.ctx[layer];
         ctx.fillStyle = (color || "#000000");
-        ctx.font = "22px PressStart2P";
+        ctx.font = "22px " + gfx.GetFont();
         var ts = t.split(" ");
         var row = ts[0];
         var dy = 0;
