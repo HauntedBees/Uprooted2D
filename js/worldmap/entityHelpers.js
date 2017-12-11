@@ -214,6 +214,19 @@ function GetTreasureChest(name, x, y, contents) {
         }
     }], { sy: 4, open: false, contents: contents, noChange: true });
 }
+function GetItemDisplayName(name, plural) {
+    var pluralSuf = plural ? "s" : "";
+    switch(name[0]) {
+        case "_": return GetFarmInfo(name).displayname + pluralSuf; break;
+        case "!": return GetEquipment(name).displayname + pluralSuf; break;
+        default: 
+            var cropInfo = GetCrop(name);
+            var nam = cropInfo.displayname;
+            if(["veg", "tree", "mush"].indexOf(cropInfo.type) >= 0) { nam += " Seed"; }
+            return nam + pluralSuf;
+            break;
+    }
+}
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
     var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");

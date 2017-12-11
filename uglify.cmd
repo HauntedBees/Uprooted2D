@@ -1,6 +1,8 @@
 uglifyjs ^
     js/gamedata/consts.js ^
-    js/gamedata/crops.js ^
+    js/gamedata/veggies.js ^
+    js/gamedata/equipment.js ^
+    js/gamedata/fixtures.js ^
     js/gamedata/enemies.js ^
     js/gamedata/shops.js ^
     js/gamedata/quests.js ^
