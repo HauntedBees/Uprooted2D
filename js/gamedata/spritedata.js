@@ -101,6 +101,7 @@ var spriteData = {
             spriteData.names["titleSel" + i] = [4 + i, 21];
             spriteData.names["titleSelActive" + i] = [7 + i, 21];
         }
+        for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
         "gmocorn": [10, 20],

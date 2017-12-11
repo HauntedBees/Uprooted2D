@@ -54,10 +54,11 @@ var game = {
     },
     transition: function(from, to, arg) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
-        this.currentInputHandler = to;
+        game.startTransitionAnim(1, from, to, arg);
+        /*this.currentInputHandler = to;
         from.clean();
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
-        to.setup(arg);
+        to.setup(arg);*/
         return true;
     },
     initListeners: function() {

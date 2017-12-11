@@ -25,8 +25,12 @@ var gfx = {
 
     clearLayer: function(key) { gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasWidth); },
     clearSome: function(keys) { for(var i = 0; i < keys.length; i++) { gfx.clearLayer(keys[i]); } },
-    clearAll: function() { for(var key in gfx.ctx) { gfx.clearLayer(key); } },
-
+    clearAll: function(includingTutorial) {
+        for(var key in gfx.ctx) {
+            if(key === "tutorial" && !includingTutorial) { continue; } 
+            gfx.clearLayer(key);
+        }
+    },
     getSaveFileImage: function() {
         var mapImg = gfx.spritesheets["maps/" + worldmap.mapName];
         var offset = {
@@ -48,7 +52,14 @@ var gfx = {
         img.src = encodedImg;
         img.onload = function() { gfx.ctx["menutext"].drawImage(this, 700, 14, 192, 128); };
     },
-
+    drawTransitionImage: function(spritename, x, y, mult) {
+        var data = spriteData.names[spritename];
+        var sheet = gfx.spritesheets["sheet"];
+        var size = 16;
+        var delta = size * mult * 0.5;
+        gfx.drawImage(gfx.ctx["tutorial"], sheet, data[0] * size, data[1] * size, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
+        //gfx.drawSprite("sheet", data[0], data[1], x * 16, y * 16, "tutorial" data.length ,== 3);
+    },
     drawTileToGrid: function(spritename, x, y, layer) {
         var data = spriteData.names[spritename];
         gfx.drawSprite("sheet", data[0], data[1], x * 16, y * 16, layer, data.length == 3);
