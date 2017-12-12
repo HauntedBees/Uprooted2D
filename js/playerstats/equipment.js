@@ -25,7 +25,7 @@ pausemenu.equipment = {
         this.setText();
     },
     clean: function() { gfx.clearSome(this.layersToClear); },
-    cancel: function() { game.transition(this, pausemenu, 1); },
+    cancel: function() { game.innerTransition(this, pausemenu, 1); },
     mouseMove: function(pos) {
         if(pos.x < 0 || pos.y < 0 || pos.x >= this.inventoryWidth) { return false; }
         var idx = pos.y * this.inventoryWidth + pos.x;

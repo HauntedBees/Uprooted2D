@@ -173,7 +173,7 @@ var worldmap = {
         }
     },
     finishDialog: function() {
-        gfx.clearSome(["menuA", "menutext"]);
+        gfx.clearSome(["menuA", "menutext", "menucursorA"]);
         this.forceEndDialog = false;
         this.inDialogue = false;
         this.freeMovement = true;

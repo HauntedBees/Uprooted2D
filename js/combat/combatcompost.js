@@ -104,7 +104,7 @@ combat.compost = {
         combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
-    cancel: function() { game.transition(this, combat.menu); return true; },
+    cancel: function() { game.innerTransition(this, combat.menu); return true; },
     toggleCrop: function(gridpos) {
         for(var i = 0; i < this.selectedCrops.length; i++) {
             var old = this.selectedCrops[i];
@@ -184,7 +184,7 @@ combat.compost = {
             combat.animHelper.AddAnim(anim);
         };
         combat.animHelper.AddAnim(anim);
-        game.transition(this, combat.inbetween, {
+        game.innerTransition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: "You attempt to compost your crops, but your compost bin backfires!"
         });
@@ -209,7 +209,7 @@ combat.compost = {
         }
         healAmount = Math.ceil(healAmount * compostMultiplier);
         player.health = Math.min(player.maxhealth, player.health + healAmount);
-        game.transition(this, combat.inbetween, {
+        game.innerTransition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: "You compost your crops, recovering " + healAmount + " health."
         });
@@ -243,7 +243,7 @@ combat.compost = {
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
             combat.damageEnemy(i, damage);
         }
-        game.transition(this, combat.inbetween, {
+        game.innerTransition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: "You compost your crops and hurl them forward, dealing " + damage + " damage" + (combat.enemies.length > 1 ? " to everyone." : ".")
         });

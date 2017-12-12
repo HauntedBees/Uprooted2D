@@ -44,11 +44,11 @@ var pausemenu = {
     click: function(pos) {
         if(pos.x > 3) { return false; }
         switch(pos.y) {
-            case 0: game.transition(this, pausemenu.inventory); break;
-            case 1: game.transition(this, pausemenu.equipment); break;
-            case 2: game.transition(this, pausemenu.farmmod); break;
-            case 3: game.transition(this, worldmap.optionsMenu, true); break;
-            case 4: game.transition(this, pausemenu.savemenu, { saving: true }); break;
+            case 0: game.innerTransition(this, pausemenu.inventory); break;
+            case 1: game.innerTransition(this, pausemenu.equipment); break;
+            case 2: game.innerTransition(this, pausemenu.farmmod); break;
+            case 3: game.innerTransition(this, worldmap.optionsMenu, true); break;
+            case 4: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
             default: return false;
         }
         return true;

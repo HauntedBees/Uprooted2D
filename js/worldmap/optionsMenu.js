@@ -188,9 +188,9 @@ worldmap.optionsMenu = {
     QuitWithoutSaving: function(dontFont) {
         //if(!dontFont) { player.options.font = this.origFont; }
         if(worldmap.optionsMenu.fromPause) {
-            game.transition(worldmap.optionsMenu, pausemenu, 3);
+            game.innerTransition(worldmap.optionsMenu, pausemenu, 3);
         } else {
-            game.transition(worldmap.optionsMenu, worldmap.title, 2);
+            game.innerTransition(worldmap.optionsMenu, worldmap.title, 2);
         }
         return true;
     },

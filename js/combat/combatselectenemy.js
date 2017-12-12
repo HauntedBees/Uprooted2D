@@ -68,7 +68,7 @@ combat.selectTarget = {
     },
 
     clean: function() { gfx.clearSome(this.layersToClear); },
-    cancel: function() { game.transition(this, combat.menu); return true; },
+    cancel: function() { game.innerTransition(this, combat.menu); return true; },
     
     keyPress: function(key) {
         var pos = { 
@@ -271,7 +271,7 @@ combat.selectTarget = {
 
         combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
         combat.flagFreshCrops(true, criticalHit, attackinfo.animals, additionalTargets);
-        game.transition(this, combat.inbetween, {
+        game.innerTransition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: damagetext
         });

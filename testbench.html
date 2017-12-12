@@ -67,10 +67,10 @@
                         }
                         return true;
                     });
-                    Test("game.transition", function() {
+                    Test("game.innerTransition", function() {
                         game.currentInputHandler = combat.plant;
                         combat.plant.wompos = true;
-                        game.transition(combat.plant, pausemenu.inventory);
+                        game.innerTransition(combat.plant, pausemenu.inventory);
                         var result = game.currentInputHandler.wompos === undefined;
                         combat.plant.wompos = undefined;
                         return result;

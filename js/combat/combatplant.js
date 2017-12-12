@@ -18,12 +18,12 @@ combat.plant = {
         if(this.activeCrop === null) {
             if(combat.numPlantTurns != player.getPlantingTurns()) {
                 if(player.canAttackAfterPlanting()) {
-                    game.transition(this, combat.menu);
+                    game.innerTransition(this, combat.menu);
                 } else {
                     combat.endTurn(this);
                 }
             } else {
-                game.transition(this, combat.menu);
+                game.innerTransition(this, combat.menu);
             }
         } else {
             this.activeCrop = null;
@@ -219,12 +219,12 @@ combat.plant = {
                 var next;
                 if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting()) {
-                        next = function() { game.transition(combat.inbetween, combat.menu); };
+                        next = function() { game.innerTransition(combat.inbetween, combat.menu); };
                     } else {
                         next = function() { combat.endTurn(combat.inbetween); };
                     }
                 } else {
-                    next = function() { game.transition(combat.inbetween, combat.plant); }
+                    next = function() { game.innerTransition(combat.inbetween, combat.plant); }
                 }
                 var killMsg = "You try to plant your " + newCrop.displayname + ", ";
                 switch(killType) {
@@ -236,7 +236,7 @@ combat.plant = {
                         break;
                     default: killMsg += "but ERROR MESSAGE GOES HERE!"; break;
                 }
-                game.transition(this, combat.inbetween, {
+                game.innerTransition(this, combat.inbetween, {
                     next: next,
                     text: killMsg
                 });
@@ -244,7 +244,7 @@ combat.plant = {
             } else {
                 if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting()) {
-                        game.transition(this, combat.menu);
+                        game.innerTransition(this, combat.menu);
                     } else {
                         combat.endTurn(this);
                     }
@@ -301,16 +301,16 @@ combat.plant = {
     },
     finishTurn: function(t) {
         this.activeCrop = null;
-        game.transition(this, combat.inbetween, {
+        game.innerTransition(this, combat.inbetween, {
             next: function() {
                 if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting()) {
-                        game.transition(this, combat.menu);
+                        game.innerTransition(this, combat.menu);
                     } else {
                         combat.endTurn(this);
                     }
                 } else {
-                    game.transition(combat.inbetween, combat.plant);
+                    game.innerTransition(combat.inbetween, combat.plant);
                 }
             },
             text: t

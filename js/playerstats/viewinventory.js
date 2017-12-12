@@ -20,7 +20,7 @@ pausemenu.inventory = {
         this.setCrop();
     },
     clean: function() { gfx.clearSome(this.layersToClear); },
-    cancel: function() { game.transition(this, pausemenu); },
+    cancel: function() { game.innerTransition(this, pausemenu); },
     mouseMove: function(pos) {
         if(pos.x < 0 || pos.y < 0 || pos.x >= this.inventoryWidth) { return false; }
         var idx = pos.y * this.inventoryWidth + pos.x;

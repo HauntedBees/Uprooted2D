@@ -151,7 +151,7 @@ var combat = {
         combat.animHelper.DrawCrops();
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
             combat.animHelper.SetPlayerAnimInfo([[3, 1, false, true]]);
-            game.transition(game.currentInputHandler, combat.inbetween, {
+            game.innerTransition(game.currentInputHandler, combat.inbetween, {
                 next: combat.fuckingDead,
                 text: "i can't believe the protagonist is fucking dead."
             });
@@ -196,7 +196,7 @@ var combat = {
             } else {
                 text += "!";
             }
-            game.transition(game.currentInputHandler, combat.inbetween, {
+            game.innerTransition(game.currentInputHandler, combat.inbetween, {
                 next: combat.checkForLevelUp,
                 text: text
             });
@@ -205,10 +205,10 @@ var combat = {
         this.state++;
         if(this.state > combat.enemies.length) {
             this.startRound();
-            game.transition(caller, combat.menu);
+            game.innerTransition(caller, combat.menu);
         } else {
             var idx = this.state - 1;
-            game.transition(caller, combat.enemyTurn, { enemy: this.enemies[idx], idx: idx });
+            game.innerTransition(caller, combat.enemyTurn, { enemy: this.enemies[idx], idx: idx });
         }
     },
     cleanUpEffects: function() {
@@ -255,7 +255,7 @@ var combat = {
         if(player.exp >= player.nextExp) {
             player.levelUp();
             combat.animHelper.SetPlayerAnimInfo([[2, 2], [2, 3]]);
-            game.transition(game.currentInputHandler, combat.inbetween, {
+            game.innerTransition(game.currentInputHandler, combat.inbetween, {
                 next: combat.checkForLevelUp,
                 text: "Whoah [gamer voice] nice! You hit level " + player.level + "!"
             });

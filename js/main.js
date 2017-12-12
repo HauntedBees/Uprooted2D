@@ -55,11 +55,55 @@ var game = {
     transition: function(from, to, arg) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
         game.startTransitionAnim(1, from, to, arg);
-        /*this.currentInputHandler = to;
+        return true;
+    },
+    innerTransition: function(from, to, arg) {
+        console.log("WAH");
+        game.currentInputHandler = to;
         from.clean();
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
-        to.setup(arg);*/
-        return true;
+        to.setup(arg);
+    },
+    transitionInfo: { crop: "trns0", size: 0.5, time: 0 },
+    startTransitionAnim: function(dir, from, to, arg) {
+        clearInterval(game.transitionInfo.animIdx);
+        game.transitionInfo = {
+            crop: "trns" + Math.floor(Math.random() * 20), size: (dir > 0 ? 0.5 : 5), dir: dir,
+            from: from, to: to, arg: arg, 
+            animIdx: setInterval(game.drawTransitionAnim, 10)
+        };
+    },
+    midTransitionPoint: function() {
+        clearInterval(game.transitionInfo.animIdx);
+        game.innerTransition(game.transitionInfo.from, game.transitionInfo.to, game.transitionInfo.arg);
+        game.startTransitionAnim(-1);
+    },
+    finishTransition: function() {
+        clearInterval(game.transitionInfo.animIdx);
+        gfx.clearLayer("tutorial");
+    },
+    drawTransitionAnim: function() {
+        gfx.clearLayer("tutorial");
+        if(game.transitionInfo.size > 0) {
+            for(var y = 0; y < 12; y += 2) {
+                for(var x = 0; x < 18; x += 2) {
+                    gfx.drawTransitionImage(game.transitionInfo.crop, x - (y % 4 ? 1 : 0), y + 0.5, game.transitionInfo.size);
+                }
+            }
+        }
+        if(game.transitionInfo.dir === 1) {
+            if(game.transitionInfo.size >= 5) {
+                game.midTransitionPoint();
+            } else {
+                game.transitionInfo.size += 0.1;
+            }
+        } else {
+            if(game.transitionInfo.size <= 0) {
+                game.finishTransition();
+            } else {
+                game.transitionInfo.size -= 0.1;
+            }
+        }
     },
     initListeners: function() {
         //gfx.canvas["menutext"].addEventListener("mousemove", input.moveMouse);

@@ -109,7 +109,7 @@ pausemenu.farmmod = {
         }
     },
     clean: function() { gfx.clearAll(); },
-    cancel: function() { game.transition(this, pausemenu, 2); },
+    cancel: function() { game.innerTransition(this, pausemenu, 2); },
     removeFromField: function(x, y) {
         var item = player.itemGrid[x][y];
         if(item === null) { return null; }

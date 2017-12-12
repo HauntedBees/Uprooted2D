@@ -127,16 +127,16 @@ combat.menu = {
     click: function(pos) {
         if(pos.x > 4) { return false; }
         switch(pos.y - this.dy) {
-            case 0: if(combat.numPlantTurns > 0) { game.transition(this, combat.plant); } break;
+            case 0: if(combat.numPlantTurns > 0) { game.innerTransition(this, combat.plant); } break;
             case 1:
                 var count = this.highlightReadyCropsAndReturnCount();
                 var theircount = this.getEnemyCropCount();
                 if(count === 0 && !player.canMelee(theircount)) { return; }
                 var attackCount = 1;
                 if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
-                game.transition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
+                game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
                 break;
-            case 2: if(player.equipment.compost !== null) { game.transition(this, combat.compost); } break;
+            case 2: if(player.equipment.compost !== null) { game.innerTransition(this, combat.compost); } break;
             case 3: if(!combat.isBossBattle) { this.tryFlee(); } break;
             default: return false;
         }
@@ -147,7 +147,7 @@ combat.menu = {
             combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [5, 3], [5, 2]]);
             combat.animHelper.SetUpPlayerForRun();
             worldmap.clearTarget();
-            game.transition(this, combat.inbetween, {
+            game.innerTransition(this, combat.inbetween, {
                 next: function() {
                     clearInterval(combat.charAnimIdx);
                     game.transition(combat.inbetween, worldmap, {
@@ -161,7 +161,7 @@ combat.menu = {
         } else {
             combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [0, 3], [3, 2, true, true]]);
             combat.animHelper.SetUpPlayerForRun();
-            game.transition(this, combat.inbetween, {
+            game.innerTransition(this, combat.inbetween, {
                 next: function() { combat.endTurn(combat.inbetween) },
                 text: "You tried to run away, but failed miserably, you stupid idiot. #lmao"
             });

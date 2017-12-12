@@ -8,7 +8,7 @@ var debug = {
             allText.push(function(x) { return function() { console.log(x); worldmap.writeText(x); }; }(i));
         }
         mapentities["farm"].push({ name: "DebugFriend", pos: { x: 0, y: 0 }, solid: false, autoplay: true, interact: allText });
-        game.transition(game.currentInputHandler, worldmap, { init: { x: 1, y: 1 }, map: "farm" });
+        game.innerTransition(game.currentInputHandler, worldmap, { init: { x: 1, y: 1 }, map: "farm" });
     }
 };
 worldmap.title = {
@@ -57,8 +57,8 @@ worldmap.title = {
                     //init: { x: 10,  y: 5 }, map: "farmersmarket"
                     init: { x: 17,  y: 9 }, map: "farm_init"
                 });
-            case 1: return game.transition(this, pausemenu.savemenu, { saving: false });
-            case 2: return game.transition(this, worldmap.optionsMenu);
+            case 1: return game.innerTransition(this, pausemenu.savemenu, { saving: false }); // this is probably wrong
+            case 2: return game.innerTransition(this, worldmap.optionsMenu);
         }
     },
     clean: function() { gfx.clearAll(); },

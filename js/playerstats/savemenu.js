@@ -73,9 +73,9 @@ pausemenu.savemenu = {
         if(this.confirm) {
             this.setup({ saving: true, sel: this.cursorY });
         } else if(this.isSave) {
-            game.transition(this, pausemenu, 4);
+            game.innerTransition(this, pausemenu, 4);
         } else {
-            game.transition(this, worldmap.title, 1);
+            game.innerTransition(this, worldmap.title, 1);
         }
     },
     keyPress: function(key) {
