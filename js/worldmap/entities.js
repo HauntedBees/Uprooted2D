@@ -753,27 +753,6 @@ var mapentities = {
         GetCommonEntity("Robo5", 3, 23, 4, 2, GetStdMovement([ [3, 23, 3], [13, 23, 3], [3, 23, 1] ]), commonInteractArrays.researchRobo, {sy: 4}),
         GetCommonEntity("Robo6", 22, 36, 4, 3, undefined, commonInteractArrays.researchRobo, {sy: 4})
     ],
-    "researchfacility": [
-        SwitchMap("ExitAreaSouth", 0, 27, true, false, 7.5, 19, "belowvillage"),
-        SwitchMap("ExitAreaEast", 31, 3, false, false, 13, 15, "belowvillage"),
-        GetCommonEntity("Fucker", 17, 1, 0, 0, undefined, [
-            GetSpeak("B2_0"),
-            GetFight(["ScienceMan"])
-        ], { sy: 4, postBattle: "PostBoss2", failedInteract: [
-            GetSpeak("B2_1"),
-            GetFight(["ScienceMan"])
-        ] }),
-        {
-            name: "PostBoss2",
-            pos: {x: -1, y: -1},
-            solid: false,
-            storageKey: "PostBoss2",
-            interact: [
-                GetSpeak("Pb2_0"),
-                GetSpeak("Pb2_1")
-            ]
-        }
-    ],
     "researchfacilitynew": function() {
 		var x = [
 			GetCommonEntity("Robo1", 1, 15, 4, 2, GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
