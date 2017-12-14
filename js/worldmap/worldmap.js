@@ -5,7 +5,7 @@ var worldmap = {
     mapName: "", fullAnimIdx: 0,
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
-    waitForAnimation: false, animIdx: 0, 
+    waitForAnimation: false, animIdx: 0, inWaterfall: false,
     setup: function(args) {
         this.forceMove = false;
         this.forcedPlayerInfo = false;
@@ -18,6 +18,7 @@ var worldmap = {
         this.playerDir = args.playerDir || this.playerDir || 2;
         this.dialogData = null;
         this.forceEndDialog = false;
+        this.inWaterfall = false;
         this.importantEntities = {};
         if(!args.noEntityUpdate) {
             if(mapentities[this.mapName] !== undefined) {
@@ -144,7 +145,7 @@ var worldmap = {
         if(formatting) { actualText = actualText.replace("{0}", formatting); }
         gfx.drawFullText(actualText, drawY * 16);
         if(choices === undefined) {
-            worldmap.dialogData = null;
+            worldmap.dialogData = { };
             return;
         }
         if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
@@ -161,7 +162,11 @@ var worldmap = {
     click: function(pos) {
         if(!this.inDialogue || this.waitForAnimation) { return false; }
         var idx = (this.dialogData === null ? undefined : this.dialogData.idx);
-        this.dialogState++;
+        if(this.dialogData !== null && this.dialogData.nextDialogState !== undefined) {
+            this.dialogState = this.dialogData.nextDialogState;
+        } else {
+            this.dialogState++;
+        }
         if(worldmap.forceEndDialog || game.target == null || this.dialogState >= game.target.interact.length) {
             this.finishDialog();
             return true;
@@ -187,6 +192,7 @@ var worldmap = {
             case player.controls.confirm:
             case player.controls.pause: return this.click(null);
         }
+        if(worldmap.dialogData.choices === undefined) { return; }
         var newchoice = worldmap.dialogData.idx + dy;
         if(newchoice < 0) { newchoice = 0; }
         if(newchoice >= worldmap.dialogData.choices.length) { newchoice = worldmap.dialogData.choices.length - 1; }
@@ -194,6 +200,7 @@ var worldmap = {
         worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true);
     },
     keyPress: function(key) {
+        if(this.inWaterfall)  { return false; }
         if(this.inDialogue) {
             this.freeMovement = false;
             input.clearAllKeys();

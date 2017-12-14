@@ -138,7 +138,7 @@ PlayerThrowAnim.prototype.finish = function() {
 }
 
 
-function MapAnim(sheet, sx, sy, w, h, dir, sheetlen) {
+function MapAnim(sheet, sx, sy, w, h, dir, sheetlen, dontDoThat) {
     this.sheet = sheet;
     this.topx = sx * w;
     this.topy = sy * h;
@@ -151,6 +151,7 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen) {
     this.sheetlen = sheetlen || 4;
     this.frameRate = anim.timePerFrame;
     this.other = {};
+    this.dontDoThat = dontDoThat || false;
     this.setFPS = function(fps) { this.frameRate = (fps === undefined ? anim.timePerFrame : GetFrameRate(fps)); return this; };
     this.shiftX = function(newX, newLen) {
         this.topx = newX * this.width;
@@ -181,7 +182,7 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen) {
                 this.state = (this.state + 1) % this.sheetlen;
                 this.lastRan = curTime;
             }
-            if(this.sheetlen == 4) {
+            if(this.sheetlen == 4 && !this.dontDoThat) {
                 frame = 1 + ((this.state === 3) ? 1 : this.state);
             } else {
                 frame = this.state;

@@ -55,6 +55,7 @@ var player = {
     gridWidth: 3, gridHeight: 3, gridLevel: "n",
     itemGrid: null,
     hasQuest: function(q) { return player.activeQuests[q] !== undefined; },
+    hasQuestState: function(q, states) { return player.activeQuests[q] !== undefined && states.indexOf(player.activeQuests[q]) >= 0; },
     completedQuest: function(q) { return player.questsCleared.indexOf(q) >= 0; },
     hasItem: function(item, amount) {
         amount = amount || 1;

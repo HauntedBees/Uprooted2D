@@ -118,9 +118,11 @@ var combat = {
     },
     damageEnemy: function(enemyidx, damage) {
         this.enemies[enemyidx].health -= damage;
+        var isFinalKill = false;
         if(this.enemies[enemyidx].health <= 0) {
             var e = this.enemies[enemyidx];
             this.expEarned += e.exp;
+            if(e.soleKill) { isFinalKill = true; }
             for(var i = 0; i < e.drops.length; i++) {
                 var dropInfo = e.drops[i];
                 if(dropInfo.money) {
@@ -128,6 +130,12 @@ var combat = {
                 } else {
                     this.addDroppedSeedToItemsEarned(dropInfo.seed, Math.max(0, Range(dropInfo.min, dropInfo.max)));
                 }
+            }
+        }
+        if(isFinalKill) {
+            for(var i = 0; i < this.enemies.length; i++) {
+                if(i === enemyidx) { continue; }
+                this.damageEnemy(i, this.enemies[i].health + 1);
             }
         }
     },

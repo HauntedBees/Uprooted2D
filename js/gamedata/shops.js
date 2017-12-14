@@ -1,4 +1,5 @@
 var stores = {
+    // Debug
     "farmupgradeFull": {
         img: "shops/cock",
         wares: [
@@ -10,6 +11,7 @@ var stores = {
         ],
         opening: "s_up1o", empty: "s_upempty", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_up1p"
     },
+    // Area 1: Farm
     "coop": {
         img: "shops/cock",
         wares: [
@@ -24,6 +26,12 @@ var stores = {
         buyMult: 1, sellMult: 0.5, doesSell: true,
         opening: "s_co", selling: "s_sell", didSell: "s_didsell", leaveSell: "s_leavesell", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_cpurch"
     },
+    "inn0": {
+        img: "shops/home", innId: "inn0",
+        wares: [ { product: "sleep", price: 0, type: "inn" } ],
+        opening: "s_home", leaving: "s_homeleave", purchased: "s_homesleep"
+    },
+    // Area 1: Town
     "equip1": {
         img: "shops/dwarf",
         wares: [
@@ -65,26 +73,41 @@ var stores = {
         buyMult: 1, doesSell: false,
         opening: "s_seed1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_purchased"
     },
-    "inn0": {
-        img: "shops/home", innId: "inn0",
-        wares: [ { product: "sleep", price: 0, type: "inn" } ],
-        opening: "s_home", leaving: "s_homeleave", purchased: "s_homesleep"
-    },
     "inn1": {
         img: "shops/dwarf2", innId: "inn1",
         wares: [ { product: "sleep", price: 6, type: "inn" } ],
         opening: "s_inn1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_innpurch"
     },
+    // Area 2: Bridge
     "mermaid": {
         img: "shops/merm",
         wares: [
             { product: "_paddy", price: 100, type: "farm" },
             { product: "rice", price: 20, type: "seed" },
+            { product: "arborio", price: 20, type: "seed" },
             { product: "_lake", price: 100, type: "farm" },
             { product: "rod", price: 20, type: "seed" },
             { product: "net", price: 20, type: "seed" }
         ],
-        opening: "s_mermhello", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased", talk: "questM"
+        opening: "s_mermhello", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
+    },
+    "cworker": {
+        img: "shops/dwarf",
+        wares: [
+            { product: "carrot", price: 5, type: "seed" },
+            { product: "beet", price: 6, type: "seed" },
+            { product: "pineapple", price: 12, type: "seed" },
+            { product: "!weakGloves", price: 50, type: "equipment" },
+            { product: "!weakSoil", price: 50, type: "equipment" },
+            { product: "!strongCompost", price: 50, type: "equipment" },
+            { product: "!sturdyCompost", price: 50, type: "equipment" },
+            { product: "!spSickle", price: 50, type: "equipment" },
+            { product: "!suSickle", price: 50, type: "equipment" },
+            { product: "!auSickle", price: 50, type: "equipment" },
+            { product: "!wiSickle", price: 50, type: "equipment" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: true,
+        opening: "cwk_co", selling: "s_sell", didSell: "s_didsell", leaveSell: "s_leavesell", leaving: "cwk_leave", notEnough: "s_notenough", purchased: "s_cpurch"
     },
     "template": {
         img: "",

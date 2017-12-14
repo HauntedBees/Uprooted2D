@@ -34,7 +34,6 @@ function GetEnemy(name) {
                 { money: true, min: 10, max: 10 },
                 { seed: "carrot", min: 2, max: 2 }
             ]);
-        case "Worker": return new EnemyDetail(GetDisplayName(name), "md", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
         // Farm
         case "robo": return new EnemyDetail(name, "sm", 1, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 2, 1, 3, 2, false, [0, 0, 1, 0], [["dumbbattery", 1], ["gear"]], [
                 { money: true, min: 0, max: 5 },
@@ -79,14 +78,18 @@ function GetEnemy(name) {
         case "bear": return new EnemyDetail(name, "md", 4, { dx: 0, dy: 0, w: 0, h: 0 }, 10, 10, 2, 1, 1, true, [0, 0, 1, 0], [["standardAttack", 0.5], ["rodent", 1], ["rodent"]], [
             { money: true, min: 0, max: 5 }
         ], {tile: "dirt"});
+        // Bridge
+        case "Worker": return new EnemyDetail(GetDisplayName(name), "md", 9, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "BossWorker": return new EnemyDetail(GetDisplayName(name), "md", 12, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, true, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
         // Water
-        case "fishFace": return new EnemyDetail(name, "md", 5, { dx: 0.25, dy: 0.2, w: 0, h: 0.55 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0],
+        case "kelpBoy": return new EnemyDetail(GetDisplayName(name), "md", 13, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, true, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "fishFace": return new EnemyDetail(name, "md", 10, { dx: 0.25, dy: 0.2, w: 0, h: 0.55 }, 24, 4, 3, 3, 2, false, [0, 1, 1, 0],
             [["wellAlgae", 0.45], ["kelpKelpKelpKELPKELPKELP", 0.95], ["harvestOrAttack", 1]], 
             [
                 { money: true, min: 0, max: 5 },
                 { seed: "carrot", min: -1, max: 1 }
             ], { tile: "watertile" });
-        case "seaMonk": return new EnemyDetail(name, "md", 6, { dx: 0, dy: -0.2, w: 0.5, h: 1.1 }, 60, 4, 3, 3, 2, false, [0, 1, 1, 0],
+        case "seaMonk": return new EnemyDetail(name, "md", 11, { dx: 0, dy: -0.2, w: 0.5, h: 1.1 }, 60, 4, 3, 3, 2, false, [0, 1, 1, 0],
             [["splashAttack", 0.15], ["wellAlgae", 0.45], ["kelpKelpKelpKELPKELPKELP", 0.95], ["harvestOrAttack", 1]],
             [
                 { money: true, min: 0, max: 5 },
@@ -99,11 +102,12 @@ function GetEnemy(name) {
         case "seaMan":
             return new EnemyDetail(name, "lg", 2, { dx: 0, dy: 0, w: 1, h: 1.5 }, 60, 5, 2, 3, 3, true, [0, 0, 1, 0], [["wellAlgae", 1], ["standardAttack"]], [
                 { money: true, min: 20, max: 50 }
-            ], { tile: "watertile" });
+            ], { tile: "watertile", soleKill: true });
         case "seaHandL":
             return new EnemyDetail(name, "lg", 3, { dx: 0, dy: 0, w: 1, h: 1.5 }, 60, 5, 2, 3, 3, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
                 { money: true, min: 20, max: 50 }
             ], { tile: "watertile" });
+        // bees
         case "beeQueenA": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 500, 50, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
         case "beeQueenB": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 2000, 500, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
         case "beeQueenC": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 10000, 5000, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });

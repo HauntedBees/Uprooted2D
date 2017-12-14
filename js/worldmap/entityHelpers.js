@@ -18,6 +18,18 @@ var specialtyHelpers = {
         if(items.length > 0) { items.push("lime_nope"); }
         return items;
     },
+    storedDowelChoice: "",
+    getDowelItems: function() {
+        var items = [];
+        if(player.hasItem("gmocorn")) { items.push("pirateMonkC5"); }
+        if(player.hasItem("rice")) { items.push("rap_rice"); }
+        if(player.hasItem("chestnut")) { items.push("pirateMonkC4"); }
+        if(player.hasItem("shortgrain")) { items.push("pirateMonkC3"); }
+        if(player.hasItem("blackrice")) { items.push("pirateMonkC2"); }
+        if(player.hasItem("arborio")) { items.push("pirateMonkC1"); }
+        if(items.length > 0) { items.push("lime_nope"); }
+        return items;
+    },
     seedShotArray: [
         function() {
             if(game.target.hasShot-- > 0) { worldmap.finishDialog(); return; }
@@ -42,6 +54,37 @@ var specialtyHelpers = {
                 }
             }
             game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
+        }
+    ],
+    getTruckOptions: function() {
+        var options = [];
+        if(worldmap.mapName !== "producestand") { options.push("truck_home"); }
+        for(var i = 0; i < player.questsCleared.length; i++) {
+            switch(player.questsCleared[i]) {
+                case "researchLab": if(worldmap.mapName !== "bridge") { options.push("truck_bridge"); } break;
+                case "helpSeaMonster": if(worldmap.mapName !== "fakefarm") { options.push("truck_city"); } break;
+            }
+        }
+        options.push("truck_nm");
+        return options;
+    },
+    truckArray: [
+        function() {
+            var options = specialtyHelpers.getTruckOptions();
+            if(options.length === 1) {
+                worldmap.writeText("truck_none");
+                worldmap.forceEndDialog = true;
+                return;
+            }
+            worldmap.writeText("truck_where", options);
+        },
+        function(i) {
+            var selOption = specialtyHelpers.getTruckOptions()[i];
+            switch(selOption) {
+                case "truck_home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 6 }, map: "producestand" }); return;
+                case "truck_bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge" }); return;
+                default: worldmap.finishDialog(); return;
+            }
         }
     ]
 };
@@ -83,7 +126,6 @@ function SwitchMapSeamless(name, x, y, requiredDir, newx, newy) {
                 case 2: dy -= 0.25; break;
             }
             worldmap.pos = { x: newx + dx, y: newy + dy };
-            //game.transition(game.currentInputHandler, worldmap, { init: { x: newx + dx,  y: newy + dy }, map: map });
         } ]
     }
 };
@@ -227,6 +269,81 @@ function GetItemDisplayName(name, plural) {
             break;
     }
 }
+function AdvanceWaterfall() {
+    for(var i = 0; i < worldmap.entities.length; i++) {
+        var e = worldmap.entities[i];
+        if(!e.solid && e.pos.x == Math.round(worldmap.pos.x) && e.pos.y == Math.round(worldmap.pos.y)) {
+            game.target = e;
+            if(game.target.isEnd) {
+                ExitWaterfall();
+                return;
+            }
+            break;
+        }
+    }
+    var x = 0, y = 0;
+    switch(game.target.dir) {
+        case 0: y--; break;
+        case 1: x--; break;
+        case 2: y++; break;
+        case 3: x++; break;
+    }
+    worldmap.pos.x += x / 4;
+    worldmap.pos.y += y / 4;
+    worldmap.playerDir = (worldmap.playerDir + 1) % 3;
+    worldmap.refreshMap();
+}
+function EnterWaterfall() {
+    worldmap.inWaterfall = true;
+    worldmap.waterfallIdx = setInterval(AdvanceWaterfall, timers.FULLANIM * 4);
+}
+function ExitWaterfall() {
+    clearInterval(worldmap.waterfallIdx);
+    worldmap.finishDialog();
+    worldmap.inWaterfall = false;
+}
+function PushRock() {
+    if(game.target.donePushing) {
+        worldmap.finishDialog();
+        return;
+    }
+    if(worldmap.playerDir !== game.target.pushDir) {
+        worldmap.writeText("rockwrong");
+        return;
+    }
+    worldmap.animIdx = setInterval(function() {
+        var success = false;
+        switch(game.target.pushDir) {
+            case 0: game.target.pos.y -= 0.025; success = game.target.pos.y <= (game.target.inity - 1); break;
+            case 1: game.target.pos.x -= 0.025; success = game.target.pos.x <= (game.target.initx - 1); break;
+            case 2: game.target.pos.y += 0.025; success = game.target.pos.y >= (game.target.inity + 1); break;
+            case 3: game.target.pos.x += 0.025; success = game.target.pos.x >= (game.target.initx + 1); break;
+        }
+        worldmap.refreshMap();
+        if(success) {
+            game.target.donePushing = true;
+            for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+                if(worldmap.entities[i].wfid === game.target.killid) {
+                    player.clearedEntities.push(worldmap.entities[i].name);
+                    worldmap.entities.splice(i, 1);
+                } else if(worldmap.entities[i].wfid === (game.target.killid + "X")) {
+                    player.clearedEntities.push(worldmap.entities[i].name);
+                    worldmap.entities[i].interact = undefined;
+                }
+            }
+            FinishAnim();
+        }
+    }, 10);
+}
+function GetRock(name, x, y, dir, wfid) {
+    return new GetCommonEntity(name, x, y, 12, 0, undefined, [PushRock], { noChange: true, pushDir: dir, sy: 7, killid: wfid, initx: x, inity: y });
+}
+function GetWaterfall(name, x, y, dir, wfid) {
+    return new GetCommonEntity(name, x, y, 18, dir, undefined, [EnterWaterfall], { moving: true, dontDoThat: true, solid: false, wfid: wfid });
+}
+function GetWaterfallEnd(name, x, y, dir, wfid) {
+    return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: 4, sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid });
+}
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
     var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
@@ -234,7 +351,7 @@ function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional
     var res = {
         name: name, visible: true, 
         pos: {x: x, y: y}, solid: true, 
-        anim: new MapAnim(sheet, firstx, (additional === undefined ? 0 : (additional.sy || 0)), (big ? 32 : 16), (big ? 40 : 20), dir, len),
+        anim: new MapAnim(sheet, firstx, (additional === undefined ? 0 : (additional.sy || 0)), (big ? 32 : 16), (big ? 40 : 20), dir, len, additional !== undefined ? additional.dontDoThat : false),
         moving: false,
         sx: firstx * (big ? 32 : 16), dir: dir,
         movement: movement, interact: interact
@@ -257,10 +374,8 @@ function CreateCommonInteractArray(name, dialogMax, enemies, min, max) {
     ];
 };
 var commonInteractArrays = {
-    /*robo: [
-        function() { worldmap.writeText("robo" + Math.floor(Math.random() * 5)); },
-        function() { combat.startBattle(Math.random() < 0.2 ? ["robo", "robo"] : ["robo"]); }
-    ],*/
+    smonk: CreateCommonInteractArray("seamonk", 8, ["seaMonk", "seaMonk", "seaMonk"], 1, 4),
+    fish: CreateCommonInteractArray("fish", 3, ["fishFace", "fishFace", "fishFace", "fishFace", "seaMonk"], 1, 4),
     robo: CreateCommonInteractArray("robo", 5, ["robo"], 1, 2),
     mouse: CreateCommonInteractArray("mouse", 3, ["mouse"], 2, 4),
     sqorl: CreateCommonInteractArray("sqorl", 4, ["sqorl", "sqorl", "sqorl", "mouse"], 1, 3),
@@ -279,7 +394,9 @@ var commonInteractArrays = {
 var commonMovementDatas = {
     robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 },  { x: x, y: 8, dx: 0, dy: -1 } ] } },
     rectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
-        points: [ { x: x + w, y: y, dx: 1, dy: 0 }, { x: x + w, y: y + h, dx: 0, dy: 1 }, { x: x, y: y + h, dx: -1, dy: 0 }, { x: x, y: y, dx: 0, dy: -1 } ] } }
+        points: [ { x: x + w, y: y, dx: 1, dy: 0 }, { x: x + w, y: y + h, dx: 0, dy: 1 }, { x: x, y: y + h, dx: -1, dy: 0 }, { x: x, y: y, dx: 0, dy: -1 } ] } },
+    downrectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
+        points: [ { x: x, y: y + h, dx: 0, dy: 1 }, { x: x + w, y: y + h, dx: 1, dy: 0 }, { x: x + w, y: y, dx: 0, dy: -1 }, { x: x, y: y, dx: -1, dy: 0 } ] } }
 };
 function GetStdMovement(points) {
     var newPoints = [];

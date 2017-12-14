@@ -143,42 +143,67 @@ var fulltext = {
 	},
 	"sm1": {
 		"en-us": "", 
-		"en-dm": "hi do you want to help me", 
+		"en-dm": "Sea Monster: ANOTHER HUMAN!! Was my egg not enough for you!? Are you here to kill me again?!", 
 		"type": "map"
-	},
-	"sm1c1": {
-		"en-us": "", 
-		"en-dm": "sure why the fuck", 
-		"type": "choice"
-	},
-	"sm1c2": {
-		"en-us": "", 
-		"en-dm": "eat shit or die trying, poopslut", 
-		"type": "choice"
-	},
-	"sm1c3": {
-		"en-us": "", 
-		"en-dm": "I'll think about it.", 
-		"type": "choice"
 	},
 	"sm2": {
 		"en-us": "", 
-		"en-dm": "sick thanks man", 
+		"en-dm": "Sea Monster: Hmm... wait, you are different from the others, aren't you?", 
 		"type": "map"
 	},
 	"sm3": {
 		"en-us": "", 
-		"en-dm": "you first asshole", 
+		"en-dm": "Sea Monster: Some humans stole my egg earlier. If you could recover it for me, I would gladly help you with anything you need.", 
 		"type": "map"
 	},
 	"sm4": {
 		"en-us": "", 
-		"en-dm": "hey thanks for helping me out crombro", 
+		"en-dm": "Sea Monster: Will you recover my egg for me?", 
+		"type": "map"
+	},
+	"sm4c1": {
+		"en-us": "", 
+		"en-dm": "I'll get your egg back!", 
+		"type": "choice"
+	},
+	"sm4c2": {
+		"en-us": "", 
+		"en-dm": "Prepare to die, you vile beast!", 
+		"type": "choice"
+	},
+	"sm4c3": {
+		"en-us": "", 
+		"en-dm": "I'll think about it.", 
+		"type": "choice"
+	},
+	"smA1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Thank you! The human with the grey hair on their face is the one who stole it from me. Please bring it back to me!", 
+		"type": "map"
+	},
+	"smA2": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Please bring my egg back to me once you have taken it back from the gray haired human.", 
+		"type": "map"
+	},
+	"smB1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: So you are with them after all... so be it. Prepare yourself, human!", 
+		"type": "map"
+	},
+	"smB2": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Back for more, are you? Feel my wrath, human!", 
+		"type": "map"
+	},
+	"smC1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Yeah okay that's fair.", 
 		"type": "map"
 	},
 	"sm5": {
 		"en-us": "", 
-		"en-dm": "yeah that's fair", 
+		"en-dm": "Sea Monster: Ah, you're back. Have you made your decision?", 
 		"type": "map"
 	},
 	"w21": {
@@ -1800,5 +1825,495 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "OpenDyslexic", 
 		"type": "opts"
+	},
+	"truck_where": {
+		"en-us": "", 
+		"en-dm": "Where would you like to drive to?", 
+		"type": "map"
+	},
+	"truck_none": {
+		"en-us": "", 
+		"en-dm": "You have things to do here before driving off!", 
+		"type": "map"
+	},
+	"truck_nm": {
+		"en-us": "", 
+		"en-dm": "Stay here for now.", 
+		"type": "choice"
+	},
+	"truck_home": {
+		"en-us": "", 
+		"en-dm": "Drive home.", 
+		"type": "choice"
+	},
+	"truck_bridge": {
+		"en-us": "", 
+		"en-dm": "Drive to the bridge.", 
+		"type": "choice"
+	},
+	"truck_city": {
+		"en-us": "", 
+		"en-dm": "Drive to the city.", 
+		"type": "choice"
+	},
+	"bworker1": {
+		"en-us": "", 
+		"en-dm": "Worker: Sorry lady, but this bridge is under construction... we can't let anyone through.", 
+		"type": "map"
+	},
+	"bworker2": {
+		"en-us": "", 
+		"en-dm": "Worker: What do you mean \"all we're doing is tossing wood around and walking in circles?\" We're working very hard on... uh... construction.", 
+		"type": "map"
+	},
+	"bworker3": {
+		"en-us": "", 
+		"en-dm": "Worker: ...Okay, look, lady, we aren't really doing any construction. The bridge is fine. But we've been hired to keep this bridge closed off by a private company.", 
+		"type": "map"
+	},
+	"bworker4": {
+		"en-us": "", 
+		"en-dm": "Worker: I'd say \"if you got a problem with that, take it up with them\" but I guess you can't, really, because they're on the other side of this bridge.", 
+		"type": "map"
+	},
+	"bworker5": {
+		"en-us": "", 
+		"en-dm": "Worker: But, uh, I think we might be able to make way for your truck if you're willing to help us out.", 
+		"type": "map"
+	},
+	"bworker6": {
+		"en-us": "", 
+		"en-dm": "Worker: See, Dr. RealActualDoctor on the TV said that there's a Sea Monster in this river whose heart has healing properties.", 
+		"type": "map"
+	},
+	"bworker7": {
+		"en-us": "", 
+		"en-dm": "Worker: Some of my boys tried to fight that thing themselves, but we were only able to steal this egg from it.", 
+		"type": "map"
+	},
+	"bworker8": {
+		"en-us": "", 
+		"en-dm": "Worker: An egg's fine and all, but it's gonna take a while to hatch, and I would prefer a cure for my butt rash sooner than later.", 
+		"type": "map"
+	},
+	"bworker9": {
+		"en-us": "", 
+		"en-dm": "Worker: So if you can get me a Sea Monster Heart, we'll give you full access to this bridge, no questions asked. Sound good?", 
+		"type": "map"
+	},
+	"bworker10": {
+		"en-us": "", 
+		"en-dm": "Worker: Let me know when you get that sea monster heart.", 
+		"type": "map"
+	},
+	"rockwrong": {
+		"en-us": "", 
+		"en-dm": "You can't push the rock from this direction!", 
+		"type": "map"
+	},
+	"bworkerMad1": {
+		"en-us": "", 
+		"en-dm": "Worker: Hey there, lady--- what? You want the Sea Monster egg back?", 
+		"type": "map"
+	},
+	"bworkerMad2": {
+		"en-us": "", 
+		"en-dm": "Worker: Don't tell me you're gonna side with that creature!! It's just a dumb fish!!!", 
+		"type": "map"
+	},
+	"bworkerMad3": {
+		"en-us": "", 
+		"en-dm": "Worker: Well, if you insist, you can have the egg... but I'm not giving it back without a fight!", 
+		"type": "map"
+	},
+	"bworkerMad4": {
+		"en-us": "", 
+		"en-dm": "Worker: Back for more, are you? You'll never get this egg!", 
+		"type": "map"
+	},
+	"bworkerMad5": {
+		"en-us": "", 
+		"en-dm": "Worker: Yowza chowza! Come on, boys! Let's get out of here! Dis broad packs a punch!!", 
+		"type": "map"
+	},
+	"bworkerMad6": {
+		"en-us": "", 
+		"en-dm": "Worker: Here's your stupid egg, but good luck clearing off this bridge all on your own!!", 
+		"type": "map"
+	},
+	"smD1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: I smell something eggscellent!", 
+		"type": "map"
+	},
+	"smD2": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Ah!! Is that my baby? It is! You got my egg back! Thank you! Thank you!!", 
+		"type": "map"
+	},
+	"smD3": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Now that you've held up your end of the bargain, I'll hold up mine! What do you need from me?", 
+		"type": "map"
+	},
+	"smD4": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Those workers left a bunch of junk on the bridge, huh? Well, I can take care of that!", 
+		"type": "map"
+	},
+	"smD5": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Here we go! GROAAAAAAAAAR!!!!", 
+		"type": "map"
+	},
+	"smD6": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: There we go! How's that? All clear!", 
+		"type": "map"
+	},
+	"smD7": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Good luck on your travels!", 
+		"type": "map"
+	},
+	"bworkerA1": {
+		"en-us": "", 
+		"en-dm": "The Sea Monster's body slumps over.", 
+		"type": "map"
+	},
+	"bworkerA2": {
+		"en-us": "", 
+		"en-dm": "*dig dig dig*", 
+		"type": "map"
+	},
+	"bworkerA3": {
+		"en-us": "", 
+		"en-dm": "You got the Sea Monster's heart! Gross!", 
+		"type": "map"
+	},
+	"bworkerB1": {
+		"en-us": "", 
+		"en-dm": "Worker: Hey lady! I smell something fishy! And I mean that in the \"it smells like you killed a fish\" way, not in the \"something is suspicious\" way!", 
+		"type": "map"
+	},
+	"bworkerB2": {
+		"en-us": "", 
+		"en-dm": "Worker: Oh ho ho! The Sea Monster's heart! You really pulled through!", 
+		"type": "map"
+	},
+	"bworkerB3": {
+		"en-us": "", 
+		"en-dm": "Worker: Well, you held up your end of the bargain, so I guess I'll hold up mine!", 
+		"type": "map"
+	},
+	"bworkerB4": {
+		"en-us": "", 
+		"en-dm": "Worker: LET'S PACK THINGS UP, BOYS! WE'RE MOVIN' OUT!", 
+		"type": "map"
+	},
+	"bworkerB5": {
+		"en-us": "", 
+		"en-dm": "Worker: Pleasure doin' business with ya, lady!", 
+		"type": "map"
+	},
+	"bworkerC1": {
+		"en-us": "", 
+		"en-dm": "Worker: Sorry lady, but this bridge is under constr--oh yeesh what is that SMELL? You ever heard of a shower?!", 
+		"type": "map"
+	},
+	"bworkerC2": {
+		"en-us": "", 
+		"en-dm": "Worker: Th-that's a... that looks like a Sea Monster Heart! Why do you even have that?!", 
+		"type": "map"
+	},
+	"bworkerC3": {
+		"en-us": "", 
+		"en-dm": "Worker: I tell ya what, lady. We got paid to sort of meander around this bridge by some fancy white collar boys up north.", 
+		"type": "map"
+	},
+	"bworkerC4": {
+		"en-us": "", 
+		"en-dm": "Worker: But if you need to get through here, I think we's can work out some sort of deal. Whattaya say? You give me that heart and we'll let you through!", 
+		"type": "map"
+	},
+	"bworkerCY": {
+		"en-us": "", 
+		"en-dm": "Worker: Beautiful! This heart will definitely cure my butt rash!", 
+		"type": "map"
+	},
+	"bworkerCN": {
+		"en-us": "", 
+		"en-dm": "Worker: Alright, whatever. But if you ever decide you want to get through this bridge, you know what I want!", 
+		"type": "map"
+	},
+	"bworkerC5": {
+		"en-us": "", 
+		"en-dm": "Worker: Hey lady, have you changed your mind yet? If you give me that Sea Monster Heart we'll let you through!", 
+		"type": "map"
+	},
+	"pirateMonk1": {
+		"en-us": "", 
+		"en-dm": "???: Yarr! Shiver me timb--eh, no one actually talks like that. S'up? I'm Dowel the pirate.", 
+		"type": "map"
+	},
+	"pirateMonk2": {
+		"en-us": "", 
+		"en-dm": "Dowel: It's a bit hard to loot ships when nobody sails down this river, so I'm trying to start a DIY kind of thing.", 
+		"type": "map"
+	},
+	"pirateMonk3": {
+		"en-us": "", 
+		"en-dm": "Dowel: Unfortunately, it's hard to start my own veggie garden down here under the sea. Nothing grows except algae and kelp!", 
+		"type": "map"
+	},
+	"pirateMonk4": {
+		"en-us": "", 
+		"en-dm": "Dowel: I'd like something a bit tastier than fish food, so if you can find anything that grows well in water, send it my way and I'll reward you handsomely!", 
+		"type": "map"
+	},
+	"pirateMonkW": {
+		"en-us": "", 
+		"en-dm": "Dowel: I'm looking for some sort of crop that is durable and can grow in tough conditions - like underwater! If you find anything like that, I'll trade you for it!", 
+		"type": "map"
+	},
+	"pirateMonkH": {
+		"en-us": "", 
+		"en-dm": "Dowel: Hello again! Do you have any fancy crops I can grow?", 
+		"type": "map"
+	},
+	"pirateMonkC1": {
+		"en-us": "", 
+		"en-dm": "Give Arborio Rice Seeds.", 
+		"type": "choice"
+	},
+	"pirateMonkC2": {
+		"en-us": "", 
+		"en-dm": "Give Black Rice Seeds.", 
+		"type": "choice"
+	},
+	"pirateMonkC3": {
+		"en-us": "", 
+		"en-dm": "Give Short-Grain Rice Seeds.", 
+		"type": "choice"
+	},
+	"pirateMonkC4": {
+		"en-us": "", 
+		"en-dm": "Give Water Chestnut Seeds.", 
+		"type": "choice"
+	},
+	"pirateMonkC5": {
+		"en-us": "", 
+		"en-dm": "Give GMO Corn Seeds.", 
+		"type": "choice"
+	},
+	"pirateMonkR1": {
+		"en-us": "", 
+		"en-dm": "Dowel: Hmm... paddy crops. I can probably set up some sort of paddy around here!", 
+		"type": "map"
+	},
+	"pirateMonkR2": {
+		"en-us": "", 
+		"en-dm": "Dowel: I think this will do nicely, thank you!", 
+		"type": "map"
+	},
+	"pirateMonkR3": {
+		"en-us": "", 
+		"en-dm": "Dowel: To thank you, I will give you all these leftover seeds that definitely CANNOT grow underwater!", 
+		"type": "map"
+	},
+	"pirateMonkR4": {
+		"en-us": "", 
+		"en-dm": "You got 5 Tomato Seeds, 4 Ginger Seeds, 3 Pineapple Seeds, 2 Bell Pepper Seeds, and Parrot Toadstool Seeds.", 
+		"type": "map"
+	},
+	"pirateMonkR5": {
+		"en-us": "", 
+		"en-dm": "Dowel: Pleasure doing business with you, ma'am! I mean, landlubber!", 
+		"type": "map"
+	},
+	"pirateMonkG1": {
+		"en-us": "", 
+		"en-dm": "Dowel: What the heckaroonie are these? GMO Corn?? These seeds... don't look natural!", 
+		"type": "map"
+	},
+	"pirateMonkG2": {
+		"en-us": "", 
+		"en-dm": "Dowel: Hmm... so they were genetically engineered to be incredibly durable, but also mostly inedible to humans.", 
+		"type": "map"
+	},
+	"pirateMonkG3": {
+		"en-us": "", 
+		"en-dm": "Dowel: Well, I'm sure my razor sharp Sea Monk teeth will be able to give them some good crunching!", 
+		"type": "map"
+	},
+	"pirateMonkG4": {
+		"en-us": "", 
+		"en-dm": "Dowel: Thank you for these! In exchange, I will give you my Buried Treasure... if you can find it!", 
+		"type": "map"
+	},
+	"pirateMonkG5": {
+		"en-us": "", 
+		"en-dm": "Dowel: Honestly I don't know where it is - it's somewhere east of here... the currents kind of blew it around.", 
+		"type": "map"
+	},
+	"pirateMonkG6": {
+		"en-us": "", 
+		"en-dm": "Dowel: But with this Sea Monk Key I'm giving you, you'll be able to open it when you find it!", 
+		"type": "map"
+	},
+	"pirateMonkNo": {
+		"en-us": "", 
+		"en-dm": "Dowel: Darn. If you find any durable crops that can grow underwater or just in tough conditions in general, let me know!", 
+		"type": "map"
+	},
+	"chestLocked": {
+		"en-us": "", 
+		"en-dm": "This treasure chest is locked. It doesn't look like you'll be able to open it without a key.", 
+		"type": "map"
+	},
+	"chestUnlock1": {
+		"en-us": "", 
+		"en-dm": "This treasure chest is locked, but it looks like the Sea Monk Key that Dowel gave you can open it!", 
+		"type": "map"
+	},
+	"chestUnlock2": {
+		"en-us": "", 
+		"en-dm": "*click*", 
+		"type": "map"
+	},
+	"chestUnlock3": {
+		"en-us": "", 
+		"en-dm": "Inside you found 4 pieces of Master Bait!", 
+		"type": "map"
+	},
+	"ultrarod": {
+		"en-us": "", 
+		"en-dm": "This fishing rod has the best bait ever! It looks like it's pretty rare so you should definitely hold onto it until the final battle and then forget to use it.", 
+		"type": "item"
+	},
+	"vaseFound": {
+		"en-us": "", 
+		"en-dm": "This looks like a pretty nice vase... but you'll need to break it if you want to reach that beehive. Break the vase?", 
+		"type": "map"
+	},
+	"vaseDont": {
+		"en-us": "", 
+		"en-dm": "Yeah... it's mean to break other people's vases so you can rob them.", 
+		"type": "map"
+	},
+	"vaseDo0": {
+		"en-us": "", 
+		"en-dm": "You smack the vase, shattering it into several pieces.", 
+		"type": "map"
+	},
+	"vaseDo1": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: My vase! My beautiful vase! Why would you do such a cruel thing?!", 
+		"type": "map"
+	},
+	"vaseDo2": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: I must react to your destruction of property with VIOLENCE! PREPARE YOURSELF!!!", 
+		"type": "map"
+	},
+	"kelpBoy1": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: Hi. I'm Kelp Boy. I like bees and pottery, I guess.", 
+		"type": "map"
+	},
+	"vaseWon0": {
+		"en-us": "", 
+		"en-dm": "The Kelp Boy scampers off, hooting and hollering like a fool, leaving his beehive unguarded!", 
+		"type": "map"
+	},
+	"vaseDo3": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: Do you think I forgot what you did to my beautiful vase!? How dare you show your face here again!!", 
+		"type": "map"
+	},
+	"vaseDo4": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: Still after my beehive, are you!? I'll never let you take it!!", 
+		"type": "map"
+	},
+	"vaseDo5": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: Huh--what?! How did you get there?! That's my beehive! You can't take it from me!!", 
+		"type": "map"
+	},
+	"vaseFoundBee": {
+		"en-us": "", 
+		"en-dm": "You already stole Kelp Boy's bees. Somehow. Breaking his vase now would just be salt in the wound.", 
+		"type": "map"
+	},
+	"fish0": {
+		"en-us": "", 
+		"en-dm": "Fish: Blub.", 
+		"type": "map"
+	},
+	"fish1": {
+		"en-us": "", 
+		"en-dm": "The fish swims menacingly towards you.", 
+		"type": "map"
+	},
+	"fish2": {
+		"en-us": "", 
+		"en-dm": "Fish: Bwubwubuwbwubwubwuwb.", 
+		"type": "map"
+	},
+	"seamonk0": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: it is my duty to fight you.", 
+		"type": "map"
+	},
+	"seamonk1": {
+		"en-us": "", 
+		"en-dm": "The Sea Monk lunges at you.", 
+		"type": "map"
+	},
+	"seamonk2": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: hey you wanna buy some smokes?", 
+		"type": "map"
+	},
+	"seamonk3": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: FIGHT TIME!", 
+		"type": "map"
+	},
+	"seamonk4": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: This is my turf, landwalker.", 
+		"type": "map"
+	},
+	"seamonk5": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: aaaaaaaaaa AAAAAAAAAAAA AAAAAAAAAAAA!!!!!!!!", 
+		"type": "map"
+	},
+	"seamonk6": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: what the fuck is a sea monk", 
+		"type": "map"
+	},
+	"seamonk7": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: yes let us duel", 
+		"type": "map"
+	},
+	"SignConstWork": {
+		"en-us": "", 
+		"en-dm": "Lazy Construction Worker Shoppe", 
+		"type": "map"
+	},
+	"cwk_co": {
+		"en-us": "", 
+		"en-dm": "Hey there. I'm too lazy to do any construction work so I'm just... running a shop. Whatever.", 
+		"type": "shop"
+	},
+	"cwk_leave": {
+		"en-us": "", 
+		"en-dm": "Thanks for the whatever.", 
+		"type": "shop"
 	}
 };
