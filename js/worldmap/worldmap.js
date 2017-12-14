@@ -76,7 +76,9 @@ var worldmap = {
             } else if(pointinfo.dx > 0) {
                 worldmap.entities[i].dir = directions.RIGHT;
             }
+            var isBlocked = false;
             if(Math.round(newPos.x) == Math.round(worldmap.pos.x) && Math.round(newPos.y) == Math.round(worldmap.pos.y) && e.interact !== undefined) {
+                isBlocked = true;
                 worldmap.inDialogue = true;
                 clearInterval(worldmap.fullAnimIdx);
                 worldmap.dialogState = 0;
@@ -84,8 +86,8 @@ var worldmap = {
                 if(e.interact[0](0, e)) {
                     worldmap.finishDialog();
                 }
-                break;
             }
+            if(isBlocked) { continue; }
             worldmap.entities[i].pos = newPos;
             if(Math.round(newPos.x) == pointinfo.x && Math.round(newPos.y) == pointinfo.y) {
                 newPos.x = pointinfo.x;
