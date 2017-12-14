@@ -9,7 +9,9 @@ var debug = {
         }
         mapentities["farm"].push({ name: "DebugFriend", pos: { x: 0, y: 0 }, solid: false, autoplay: true, interact: allText });
         game.innerTransition(game.currentInputHandler, worldmap, { init: { x: 1, y: 1 }, map: "farm" });
-    }
+    },
+    QuickTest: function() { worldmap.noClip = true; me.PLAYERMOVESPEED = 0.5; }, 
+    UndoQuickTest: function() { worldmap.noClip = false; me.PLAYERMOVESPEED = 0.25; }
 };
 worldmap.title = {
     cursory: 0, showContinue: false,
