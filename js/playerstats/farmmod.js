@@ -33,7 +33,7 @@ pausemenu.farmmod = {
             var gridX = this.cursor.x - this.dx;
             var gridY = this.cursor.y - this.dy;
             if(player.itemGrid[gridX][gridY] === null) {
-                var speed = player.getCropSpeedMultiplier() * 100;
+                var speed = Math.round(player.getCropSpeedMultiplier() * 100);
                 text = "Dirt\n Growth Speed: " + speed + "%\n ";
             } else {
                 var item = player.itemGrid[gridX][gridY];
