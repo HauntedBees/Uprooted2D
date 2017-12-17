@@ -32,6 +32,7 @@ var worldmap = {
                 this.entities = [];
             }
         }
+        var targetToAutoplay = null;
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
