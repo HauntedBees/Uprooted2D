@@ -2700,5 +2700,10 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "A super tasty and healthy feed for animals. Feeding a cow this will lead to milk that recovers LOTS of health, so you should definitely hold onto it until the final battle and then forget to use it.", 
 		"type": "item"
+	},
+	"SignMermaidInn": {
+		"en-us": "", 
+		"en-dm": "Mermaid Inn", 
+		"type": "map"
 	}
 };

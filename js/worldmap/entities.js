@@ -933,6 +933,8 @@ var mapentities = {
         SwitchMap("GoUnderwater", 4, 14, false, false, 41, 20, "underwaternew"),
         GetSign(9, 13, "SignMermaid"),
         GetSign(26, 3, "SignConstWork"),
+        GetSign(20, 12, "SignMermaidInn"),
+        EnterShop("Mermaid Inn", 20, 11, "mermaidinn"),
         EnterShop("Construction Shoppe", 25, 3, "cworker"),
         GetCommonEntity("ConstructionManShop", 25, 3, 15, 0, undefined, undefined, { sy: 4, solid: false, noChange: true }),
         EnterShop("Mermaid Shoppe", 10, 13, "mermaid"),

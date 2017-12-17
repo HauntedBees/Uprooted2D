@@ -231,7 +231,7 @@ worldmap.shop = {
         if(productInfo.type == "farm") { return this.getFarmText(productInfo); }
         if(productInfo.type == "equipment") { return this.getEquipText(productInfo); }
         if(productInfo.type == "upgrade") { return this.getUpgradeText(productInfo); }
-        if(productInfo.type == "inn") { return "Take a Sleepsy Nappsy (" + productInfo.price + " coins)\n Recovers all of your health."; }
+        if(productInfo.type == "inn") { return "Take a Sleepsy Nappsy (" + productInfo.price + " coins)\n You get some bonus health, and will wake up here if you lose a battle."; }
         return "i don't know what this is";
     },
     getUpgradeText: function(productInfo) {
@@ -352,7 +352,7 @@ worldmap.shop = {
 
         if(productInfo.type === "inn") {
             player.lastInn = this.details.innId;
-            player.health = player.maxhealth;
+            player.health = player.maxhealth + 5;
         } else if(productInfo.type === "upgrade") {
             var dims = {x: 0, y: 0, new: "n"};
             switch(productInfo.product) {
