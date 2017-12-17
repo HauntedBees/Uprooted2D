@@ -107,6 +107,41 @@ function GetEnemy(name) {
             return new EnemyDetail(name, "lg", 3, { dx: 0, dy: 0, w: 1, h: 1.5 }, 60, 5, 2, 3, 3, true, [0, 0, 1, 0], [["dumbbattery", 1], ["standardAttack"]], [
                 { money: true, min: 20, max: 50 }
             ], { tile: "watertile" });
+        // Fake Farm
+        case "chickBot": return new EnemyDetail(GetDisplayName(name), "md", 15, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "piggun": return new EnemyDetail(GetDisplayName(name), "md", 16, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "golem": return new EnemyDetail(GetDisplayName(name), "md", 17, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "lawnmower": return new EnemyDetail(GetDisplayName(name), "md", 18, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        
+        case "machineA": return new EnemyDetail(GetDisplayName(name), "md", 14, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }],
+            { addtlHitCheck: function(cropInfo, damage) {
+                var hasSpringSummer = false;
+                for(var i = 0; i < cropInfo.length; i++) { hasSpringSummer |= (cropInfo[i].seasons[0] >= 0.5 || cropInfo[i].seasons[1] >= 0.5); }
+                return hasSpringSummer ? (damage * 50) : 0;
+            } } );
+        case "machineB": return new EnemyDetail(GetDisplayName(name), "md", 22, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }],
+            { addtlHitCheck: function(cropInfo, damage) {
+                var hasFallWinter = false;
+                for(var i = 0; i < cropInfo.length; i++) { hasFallWinter |= (cropInfo[i].seasons[2] >= 0.5 || cropInfo[i].seasons[3] >= 0.5); }
+                return hasFallWinter ? (damage * 50) : 0;
+            } } );
+        case "machineC": return new EnemyDetail(GetDisplayName(name), "md", 23, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }],
+            { addtlHitCheck: function(cropInfo, damage) {
+                var hasMushroom = false;
+                for(var i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type == "mush"; }
+                return hasMushroom ? (damage * 50) : 0;
+            } } );
+        case "machineD": return new EnemyDetail(GetDisplayName(name), "md", 24, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }],
+            { addtlHitCheck: function(cropInfo, damage) {
+                var hasFish = false;
+                for(var i = 0; i < cropInfo.length; i++) { hasFish |= (cropInfo[i].type == "spear" || cropInfo[i].type == "rod" || cropInfo[i].type == "water"); }
+                return hasFish ? (damage * 50) : 0;
+            } } );
+        
+        case "router": return new EnemyDetail(GetDisplayName(name), "sm", 19, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "server": return new EnemyDetail(GetDisplayName(name), "md", 20, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "housekeeper": return new EnemyDetail(GetDisplayName(name), "lg", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, true, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }], { soleKill: true } );
+        case "outlet": return new EnemyDetail(GetDisplayName(name), "sm", 21, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
         // bees
         case "beeQueenA": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 500, 50, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
         case "beeQueenB": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 2000, 500, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });

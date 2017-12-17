@@ -225,6 +225,9 @@ combat.selectTarget = {
                 }
                 var innerDamage = damage;
                 if(!criticalHit) { innerDamage = Math.max(1, innerDamage - target.def); }
+                if(target.addtlHitCheck !== undefined) {
+                    innerDamage = target.addtlHitCheck(attackinfo.cropInfo, innerDamage);
+                }
                 avgDamage += innerDamage;
                 if(attackinfo.animals.length > 0) { hasAnimals = true; }
                 lastTargetName = target.name;
@@ -283,12 +286,14 @@ combat.selectTarget = {
         var canHurt = (player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech);
         var selHurt = 0;
         var animals = [];
+        var cropInfo = [];
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 var tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
                 else if(tile.rotten || tile.activeTime > 0) { continue; }
+                cropInfo.push({ type: tile.type, seasons: tile.seasons });
                 numCrops++;
                 var boost = 1, seasonVal = tile.seasons[combat.season];
                 if(seasonVal > 0.5) {
@@ -331,6 +336,7 @@ combat.selectTarget = {
             stunPotential: potentialForStun,
             animals: animals,
             numCrops: numCrops,
+            cropInfo: cropInfo,
             selfHarm: Math.ceil(selHurt)
         };
     }

@@ -15,7 +15,7 @@ var worldmap = {
         this.dialogState = 0;
         this.mapName = args.map;
         this.pos = args.init;
-        this.playerDir = (args.playerDir === undefined ? (this.playerDir || 2) : args.playerDir);
+        this.playerDir = (args.playerDir === undefined ? (this.playerDir === undefined ? 2 : this.playerDir) : args.playerDir);
         this.dialogData = null;
         this.forceEndDialog = false;
         this.inWaterfall = false;
@@ -52,6 +52,9 @@ var worldmap = {
             this.inDialogue = true;
             game.target = beeQueen;
             beeQueen.interact[0](0, beeQueen);
+        }
+        if(args.isInn && worldmap.entities[0].innCheck) {
+            worldmap.entities[0].action();
         }
     },
     moveEntities: function() {

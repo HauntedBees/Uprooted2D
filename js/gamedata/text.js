@@ -1856,6 +1856,11 @@ var fulltext = {
 		"en-dm": "Drive to the city.", 
 		"type": "choice"
 	},
+	"truck_fake": {
+		"en-us": "", 
+		"en-dm": "Drive to the fake farm.", 
+		"type": "choice"
+	},
 	"bworker1": {
 		"en-us": "", 
 		"en-dm": "Worker: Sorry lady, but this bridge is under construction... we can't let anyone through.", 
@@ -2315,5 +2320,385 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "Thanks for the whatever.", 
 		"type": "shop"
+	},
+	"barndoorChick": {
+		"en-us": "", 
+		"en-dm": "You can't see too well through the door, but there appears to be some of ridiculously large chicken behind it.", 
+		"type": "map"
+	},
+	"barndoorPig": {
+		"en-us": "", 
+		"en-dm": "You can't see too well through the door, but it looks like there's a pig with something tied to its back in there.", 
+		"type": "map"
+	},
+	"barndoorCrop": {
+		"en-us": "", 
+		"en-dm": "You can't see too well through the door, but you can make out a pile of fruits and veggies in it.", 
+		"type": "map"
+	},
+	"barndoorEmpty": {
+		"en-us": "", 
+		"en-dm": "You can't see too well through the door, but this stall seems to be empty.", 
+		"type": "map"
+	},
+	"barndoorShop": {
+		"en-us": "", 
+		"en-dm": "You can't see too well through the door, but I think I see a shopkeeper in there.", 
+		"type": "map"
+	},
+	"chickbot0": {
+		"en-us": "", 
+		"en-dm": "Robot: Yes hello I am a chicken. I mean, uh, \"quack.\"", 
+		"type": "map"
+	},
+	"chickbot1": {
+		"en-us": "", 
+		"en-dm": "Robot: I'm gonna cluck you up.", 
+		"type": "map"
+	},
+	"chickbot2": {
+		"en-us": "", 
+		"en-dm": "Robot: ChickenNoise.ogg not found.", 
+		"type": "map"
+	},
+	"pig0": {
+		"en-us": "", 
+		"en-dm": "That pig has a fucking gun tied to its back.", 
+		"type": "map"
+	},
+	"golem0": {
+		"en-us": "", 
+		"en-dm": "The pile of fruits and veggies begins shaking as you approach it. It's alive!!!", 
+		"type": "map"
+	},
+	"farmTV0": {
+		"en-us": "", 
+		"en-dm": "Farmer Jeff: Ha ha haha!!! You fool!!", 
+		"type": "map"
+	},
+	"farmTV1": {
+		"en-us": "", 
+		"en-dm": "Farmer Jeff: You walked right into my trap!! This whole farm is a fake! A ruse!", 
+		"type": "map"
+	},
+	"farmTV2": {
+		"en-us": "", 
+		"en-dm": "Farmer Jeff: I'm not even a real farmer! My name is actually just Jeff!", 
+		"type": "map"
+	},
+	"farmTV3": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: You managed to get past our roadblock at the bridge, but you'll NEVER make it out of HERE alive!!!", 
+		"type": "map"
+	},
+	"farmTV4": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: This fake farm is full of the most elaborate traps and obstacles that technology can offer us!", 
+		"type": "map"
+	},
+	"farmTV5": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: Good luck, you imbecile!!", 
+		"type": "map"
+	},
+	"farmTVunplug0": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: hey wait what are you doing don't touch that", 
+		"type": "map"
+	},
+	"farmTVunplug1": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: wait NO YOU SON OF A B--", 
+		"type": "map"
+	},
+	"farmTVunplug2": {
+		"en-us": "", 
+		"en-dm": "You pull the cable out of the outlet, powering down the TV and all of the other elaborate traps in the building.", 
+		"type": "map"
+	},
+	"farmTVunplug3": {
+		"en-us": "", 
+		"en-dm": "Pretty sweet that just unplugging one cable powered down all of that guy's plans. Geniuses truly are the dumbest people.", 
+		"type": "map"
+	},
+	"lawnmower": {
+		"en-us": "", 
+		"en-dm": "This lawnmower looks brand new.", 
+		"type": "map"
+	},
+	"mower0": {
+		"en-us": "", 
+		"en-dm": "Lawnmower: VROOOM-BRBRBRBRBRBRRRRR! I'M GONNA RUN YOU OVER!!!", 
+		"type": "map"
+	},
+	"mower1": {
+		"en-us": "", 
+		"en-dm": "Lawnmower: YOUR ASS IS GRASS. AND I'M A LAWNMOWER. D-...do you see where I'm going with this?", 
+		"type": "map"
+	},
+	"hotbox3": {
+		"en-us": "", 
+		"en-dm": "Having solved the machine's puzzle, the energy field blocking the stairs vanishes.", 
+		"type": "map"
+	},
+	"hotboxX": {
+		"en-us": "", 
+		"en-dm": "The machine is powered off.", 
+		"type": "map"
+	},
+	"hotbox1": {
+		"en-us": "", 
+		"en-dm": "This machine can disable the energy field blocking off the stairs.", 
+		"type": "map"
+	},
+	"hotbox2": {
+		"en-us": "", 
+		"en-dm": "You already disabled the energy field.", 
+		"type": "map"
+	},
+	"tireget": {
+		"en-us": "", 
+		"en-dm": "You got the Spare Tire!", 
+		"type": "map"
+	},
+	"bustedTruck0": {
+		"en-us": "", 
+		"en-dm": "It looks like there are some nails in the tire... these must have been on the road. Strange...", 
+		"type": "map"
+	},
+	"bustedTruck1": {
+		"en-us": "", 
+		"en-dm": "You quickly change the tire.", 
+		"type": "map"
+	},
+	"fakeFarmS": {
+		"en-us": "", 
+		"en-dm": "...*BRBRPRPRPDTTUTTTTTDTT*", 
+		"type": "map"
+	},
+	"fakeFarm0": {
+		"en-us": "", 
+		"en-dm": "Well this doesn't look good.", 
+		"type": "map"
+	},
+	"fakeFarm1": {
+		"en-us": "", 
+		"en-dm": "???: Howdy there, buckaroo! Boy howdy, looks like you got a flat tire!", 
+		"type": "map"
+	},
+	"fakeFarm2": {
+		"en-us": "", 
+		"en-dm": "???: I'm Farmer Jeff! Pleased ta' make your acquaintance!", 
+		"type": "map"
+	},
+	"fakeFarm3": {
+		"en-us": "", 
+		"en-dm": "Farmer Jeff: I've got a spare tire in the back of my barn! Because I'm a farmer! Who owns a barn! I'll go get it for ya!", 
+		"type": "map"
+	},
+	"fakeFarm4": {
+		"en-us": "", 
+		"en-dm": "Farmer Jeff: Make yourself comfortable, I'll be back in a jiffy! Yee-haw! Farmin'!", 
+		"type": "map"
+	},
+	"fakeFarm5": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: NOT SO FAST, YOU GOBLIN!", 
+		"type": "map"
+	},
+	"fakeFarm6": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: IF YOU THINK I'M GOING TO LET YOU OUT OF HERE WITH THAT TIRE, YOU ARE MISTAKEN!", 
+		"type": "map"
+	},
+	"fakeFarm7": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: HOUSEKEEPER! TURN ON!", 
+		"type": "map"
+	},
+	"fakeFarm8": {
+		"en-us": "", 
+		"en-dm": "???: Now calibrating... ... ...", 
+		"type": "map"
+	},
+	"fakeFarm9": {
+		"en-us": "", 
+		"en-dm": "???: Hello. HOUSEKEEPER is now active. Welcome back, Sexy Jeff.", 
+		"type": "map"
+	},
+	"fakeFarm10": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: Er, I, uh, I didn't tell it to call me that.", 
+		"type": "map"
+	},
+	"fakeFarm11": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: ...DON'T LOOK AT ME LIKE THAT! HOUSEKEEPER! Kill this woman!", 
+		"type": "map"
+	},
+	"fakeFarm12": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Understood, Sexy Jeff. Now attacking.", 
+		"type": "map"
+	},
+	"fakeFarm13": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: Ugh... how did you defeat HOUSEKEEPER??!", 
+		"type": "map"
+	},
+	"fakeFarm14": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: No matter! You may have beaten me, but you're still stuck here!", 
+		"type": "map"
+	},
+	"fakeFarm15": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: The nearest tire changing station is dozens of miles away! You'll never make it there just by walking!", 
+		"type": "map"
+	},
+	"fakeFarm16": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: ...What do you mean you can just change the tire yourself?! That's impossible!! People can't just CHANGE TIRES!!", 
+		"type": "map"
+	},
+	"fakeFarm17": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: You... bastard...", 
+		"type": "map"
+	},
+	"HK_s0": {
+		"en-us": "", 
+		"en-dm": "I don't know what this is.", 
+		"type": "map"
+	},
+	"HK_s1": {
+		"en-us": "", 
+		"en-dm": "This is a \"HOUSEKEEPER\" model smart speaker.", 
+		"type": "map"
+	},
+	"HK_s2": {
+		"en-us": "", 
+		"en-dm": "You can talk to it and it'll turn on lights in your house, or set the thermostat temperature, or send your personal data to advertisers.", 
+		"type": "map"
+	},
+	"fakeFarm18": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff: I'll never let you out of here!", 
+		"type": "map"
+	},
+	"s_up2": {
+		"en-us": "", 
+		"en-dm": "Do you wish you had more tiles to plant crops in? Wish no more! I can give you more tiles to work with!", 
+		"type": "shop"
+	},
+	"s_up2p": {
+		"en-us": "", 
+		"en-dm": "Excellent! Now you'll have more tiles to plant crops and place fixtures on!", 
+		"type": "shop"
+	},
+	"upgradeBarn": {
+		"en-us": "", 
+		"en-dm": "Bert's Expansion Barn", 
+		"type": "map"
+	},
+	"arf0": {
+		"en-us": "", 
+		"en-dm": "Crouton: Hey.", 
+		"type": "map"
+	},
+	"arf1": {
+		"en-us": "", 
+		"en-dm": "Crouton: I have a bit of a \"situation\" here, as it were.", 
+		"type": "map"
+	},
+	"arf2": {
+		"en-us": "", 
+		"en-dm": "Crouton: I love fish, but, the fish don't love me. Or my bait. They aren't biting, you see.", 
+		"type": "map"
+	},
+	"arf3": {
+		"en-us": "", 
+		"en-dm": "Crouton: If you have some other way to get fish, or you have some really good bait, let me know.", 
+		"type": "map"
+	},
+	"arf4": {
+		"en-us": "", 
+		"en-dm": "Crouton: You got anything for me?", 
+		"type": "map"
+	},
+	"arf_none": {
+		"en-us": "", 
+		"en-dm": "Crouton: Damn. If you have any fishing tools or good bait, holler at me.", 
+		"type": "map"
+	},
+	"arf_spear": {
+		"en-us": "", 
+		"en-dm": "Give Fish Spear.", 
+		"type": "choice"
+	},
+	"arf_net": {
+		"en-us": "", 
+		"en-dm": "Give Fish Net.", 
+		"type": "choice"
+	},
+	"arf_bignet": {
+		"en-us": "", 
+		"en-dm": "Give Big Net.", 
+		"type": "choice"
+	},
+	"arf_metalrod": {
+		"en-us": "", 
+		"en-dm": "Give Metal Rod.", 
+		"type": "choice"
+	},
+	"arf_ultrarod": {
+		"en-us": "", 
+		"en-dm": "Give Master Bait.", 
+		"type": "choice"
+	},
+	"arf_spear0": {
+		"en-us": "", 
+		"en-dm": "Crouton: A spear, eh? I dunno if I'd be able to work that with my tiny doggy paws.", 
+		"type": "map"
+	},
+	"arf_spear1": {
+		"en-us": "", 
+		"en-dm": "Crouton: I appreciate the sentiment, but I may need something a little more hands-off.", 
+		"type": "map"
+	},
+	"arf_good0": {
+		"en-us": "", 
+		"en-dm": "Crouton: Bow-WOW! Now THIS could catch me some fishies!", 
+		"type": "map"
+	},
+	"arf_good1": {
+		"en-us": "", 
+		"en-dm": "Crouton: Thanks, buddy! Here's some fodder as a reward. You can feed it to a cow to get plenty of health-recovering milk!", 
+		"type": "map"
+	},
+	"arf_good2": {
+		"en-us": "", 
+		"en-dm": "Crouton: Don't have a cow? Don't have a cow! There's a shop in one of the stalls inside this fake-ass barn that sells them!", 
+		"type": "map"
+	},
+	"arf_ultra0": {
+		"en-us": "", 
+		"en-dm": "Crouton: Oh wow, now THAT is some fish bait! I'll definitely catch some amazing fish with this!", 
+		"type": "map"
+	},
+	"arf_ultra1": {
+		"en-us": "", 
+		"en-dm": "Crouton: Thanks a million! Here's some premium food as a reward! You can feed it to a cow to get super powerful health-recovering milk!", 
+		"type": "map"
+	},
+	"arf_thanks": {
+		"en-us": "", 
+		"en-dm": "Crouton: You give a dog a fish, you feed him for a day. You teach a dog to fish, you're gonna win some fucking dog shows.", 
+		"type": "map"
+	},
+	"goodfood": {
+		"en-us": "", 
+		"en-dm": "A super tasty and healthy feed for animals. Feeding a cow this will lead to milk that recovers LOTS of health, so you should definitely hold onto it until the final battle and then forget to use it.", 
+		"type": "item"
 	}
 };

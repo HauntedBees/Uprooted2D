@@ -109,6 +109,26 @@ var stores = {
         buyMult: 1, sellMult: 0.5, doesSell: true,
         opening: "cwk_co", selling: "s_sell", didSell: "s_didsell", leaveSell: "s_leavesell", leaving: "cwk_leave", notEnough: "s_notenough", purchased: "s_cpurch"
     },
+    // Area 3: Fake Farm
+    "upgrade2": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "farmupgradeI", price: 2000, type: "upgrade" },
+            { product: "farmupgradeO", price: 0, type: "upgrade" },
+            { product: "farmupgrade_", price: 0, type: "upgrade" }
+        ],
+        opening: "s_up2", empty: "s_upempty", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_up2p"
+    },
+    "fixture2": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "_cow", price: 100, type: "farm" },
+            { product: "fodder", price: 20, type: "seed" },
+            { product: "_strongsoil", price: 150, type: "farm" },
+            { product: "_hotspot", price: 20, type: "farm" }
+        ],
+        opening: "s_fi1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
+    },
     "template": {
         img: "",
         wares: [

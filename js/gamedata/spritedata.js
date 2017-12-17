@@ -196,6 +196,8 @@ var spriteData = {
         "cowready": [9, 0, true],
         "fodder": [19, 6],
         "fodderseed": [19, 6],
+        "goodfood": [26, 14],
+        "goodfoodseed": [26, 14],
         "egg": [16, 6],
         "eggseed": [16, 6],
         "egg3": [16, 7],

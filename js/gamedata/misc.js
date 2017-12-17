@@ -19,5 +19,6 @@ var miscText = {
 };
 var inns = {
     "start": { x: 21, y: 5.25, map: "farm" },
-    "inn1": { x : 16, y: 5, map: "firstvillage" }
+    "inn1": { x : 16, y: 5, map: "firstvillage" },
+    "fakefarm": { x: 17, y: 5.5, map: "fakefarm" }
 };

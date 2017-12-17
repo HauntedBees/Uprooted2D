@@ -201,8 +201,8 @@ var mapentities = {
             },
             GetSpeak("Pb0_1")
         ], { storageKey: "PostInitialBattle" }),
-        /*{
-            name: "DemoCutscene", pos: {x: 10, y: 0}, solid: false, autoplay: true, postBattle: "PostInitialBattle", storageKey: "testCutscene",
+        {
+            name: "DemoCutscene", pos: {x: 10, y: 0}, solid: false, autoplay: false, postBattle: "PostInitialBattle", storageKey: "testCutscene",
             interact: [ 
                 GetSpeak("intro13"),
                 function() {
@@ -285,7 +285,7 @@ var mapentities = {
             name: "CutscenePrompt",
             pos: {x: 0, y: 5},
             solid: false,
-            autoplay: true, 
+            //autoplay: true, 
             interact: [
                 function() {
                     worldmap.playerDir = 1;
@@ -1127,385 +1127,808 @@ var mapentities = {
     ],
     "underwaternew": function() {
         var x = [
-        SwitchMap("GoAboveGround", 42, 20, false, false, 5, 14, "bridge"),
-        GetCommonEntity("FishFace1", 34, 5, 0, 3, commonMovementDatas.rectangle(34, 5, 4, 4), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace2", 38, 24, 0, 2, commonMovementDatas.downrectangle(38, 24, 4, 5), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace3", 39, 25, 0, 2, commonMovementDatas.rectangle(39, 25, 2, 3), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace4", 3, 24, 0, 2, commonMovementDatas.rectangle(3, 24, 8, 1), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace5", 9, 23, 0, 2, commonMovementDatas.downrectangle(9, 23, 2, 3), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace6", 7, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace7", 9, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace8", 11, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace9", 13, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace10", 15, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace11", 14, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace12", 12, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace13", 10, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace14", 8, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("FishFace15", 6, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("SeaMonk1", 34, 18, 4, 2, commonMovementDatas.rectangle(34, 18, 0, 10), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("SeaMonk2", 16, 24, 4, 2, commonMovementDatas.downrectangle(16, 24, 11, 2), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("SeaMonk3", 31, 27, 4, 3, GetStdMovement([[31, 27, 0], [32, 27, 3], [32, 29, 2], [25, 29, 1], [25, 27, 0], [28, 27, 3], [28, 28, 2], [31, 28, 3]]), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("SeaMonk4", 2, 9, 4, 2, commonMovementDatas.rectangle(2, 9, 1, 14), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("SeaMonk5", 32, 9, 4, 2, commonMovementDatas.rectangle(32, 9, 0, 10), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
-        GetCommonEntity("ShipLeft", 16, 17, 1, 0, undefined, undefined, { big: true, sy: 1 }),
-        GetCommonEntity("ShipMiddle", 18, 17, 1, 1, undefined, undefined, { big: true, sy: 1 }),
-        GetCommonEntity("ShipRight", 20, 17, 1, 2, undefined, undefined, { big: true, sy: 1 }),
-        GetCommonEntity("SeaCreatureLeft", 16, 17, 1, 0, undefined, undefined, { big: true, sy: 2 }),
-        GetCommonEntity("SeaCreatureMiddle", 18, 17, 1, 1, undefined, [
-            function() { // 0
-                if(player.completedQuest("helpSeaMonster")) {
-                    worldmap.writeText("smD7");
-                    worldmap.forceEndDialog = true;
-                } else if(player.hasQuest("helpSeaMonster")) {
-                    switch(player.activeQuests["helpSeaMonster"]) {
-                        case "gotEgg":
-                            worldmap.writeText("smD1");
-                            worldmap.dialogData.nextDialogState = 6;
-                            break;
-                        case "help":
-                            worldmap.writeText("smA2");
+            SwitchMap("GoAboveGround", 42, 20, false, false, 5, 14, "bridge"),
+            GetCommonEntity("FishFace1", 34, 5, 0, 3, commonMovementDatas.rectangle(34, 5, 4, 4), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace2", 38, 24, 0, 2, commonMovementDatas.downrectangle(38, 24, 4, 5), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace3", 39, 25, 0, 2, commonMovementDatas.rectangle(39, 25, 2, 3), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace4", 3, 24, 0, 2, commonMovementDatas.rectangle(3, 24, 8, 1), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace5", 9, 23, 0, 2, commonMovementDatas.downrectangle(9, 23, 2, 3), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace6", 7, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace7", 9, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace8", 11, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace9", 13, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace10", 15, 3, 0, 3, commonMovementDatas.rectangle(6, 3, 9, 2, 0), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace11", 14, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace12", 12, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace13", 10, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace14", 8, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("FishFace15", 6, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("SeaMonk1", 34, 18, 4, 2, commonMovementDatas.rectangle(34, 18, 0, 10), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("SeaMonk2", 16, 24, 4, 2, commonMovementDatas.downrectangle(16, 24, 11, 2), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("SeaMonk3", 31, 27, 4, 3, GetStdMovement([[31, 27, 0], [32, 27, 3], [32, 29, 2], [25, 29, 1], [25, 27, 0], [28, 27, 3], [28, 28, 2], [31, 28, 3]]), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("SeaMonk4", 2, 9, 4, 2, commonMovementDatas.rectangle(2, 9, 1, 14), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("SeaMonk5", 32, 9, 4, 2, commonMovementDatas.rectangle(32, 9, 0, 10), commonInteractArrays.smonk, { sy: 8, sheetlen: 2 }),
+            GetCommonEntity("ShipLeft", 16, 17, 1, 0, undefined, undefined, { big: true, sy: 1 }),
+            GetCommonEntity("ShipMiddle", 18, 17, 1, 1, undefined, undefined, { big: true, sy: 1 }),
+            GetCommonEntity("ShipRight", 20, 17, 1, 2, undefined, undefined, { big: true, sy: 1 }),
+            GetCommonEntity("SeaCreatureLeft", 16, 17, 1, 0, undefined, undefined, { big: true, sy: 2 }),
+            GetCommonEntity("SeaCreatureMiddle", 18, 17, 1, 1, undefined, [
+                function() { // 0
+                    if(player.completedQuest("helpSeaMonster")) {
+                        worldmap.writeText("smD7");
+                        worldmap.forceEndDialog = true;
+                    } else if(player.hasQuest("helpSeaMonster")) {
+                        switch(player.activeQuests["helpSeaMonster"]) {
+                            case "gotEgg":
+                                worldmap.writeText("smD1");
+                                worldmap.dialogData.nextDialogState = 6;
+                                break;
+                            case "help":
+                                worldmap.writeText("smA2");
+                                worldmap.forceEndDialog = true;
+                                break;
+                            case "fight":
+                                worldmap.writeText("smB2");
+                                worldmap.dialogData.nextDialogState = 5;
+                                break;
+                            case "wait":
+                                worldmap.writeText("sm5", ["sm4c1", "sm4c2", "sm4c3"]);
+                                worldmap.dialogData.nextDialogState = 4;
+                                break;
+                        }
+                    } else {
+                        worldmap.writeText("sm1");
+                    }
+                },
+                GetSpeak("sm2"), // 1
+                GetSpeak("sm3"), // 2
+                GetSpeak("sm4", ["sm4c1", "sm4c2", "sm4c3"]), // 3
+                function(idx) { // 4
+                    switch(idx) {
+                        case 0:
+                            worldmap.writeText("smA1");
+                            player.activeQuests["helpSeaMonster"] = "help";
                             worldmap.forceEndDialog = true;
                             break;
-                        case "fight":
-                            worldmap.writeText("smB2");
-                            worldmap.dialogData.nextDialogState = 5;
+                        case 1:
+                            worldmap.writeText("smB1");
+                            player.activeQuests["helpSeaMonster"] = "fight";
                             break;
-                        case "wait":
-                            worldmap.writeText("sm5", ["sm4c1", "sm4c2", "sm4c3"]);
-                            worldmap.dialogData.nextDialogState = 4;
+                        default:
+                            worldmap.writeText("smC1");
+                            player.activeQuests["helpSeaMonster"] = "wait";
+                            worldmap.forceEndDialog = true;
                             break;
                     }
-                } else {
-                    worldmap.writeText("sm1");
-                }
-            },
-            GetSpeak("sm2"), // 1
-            GetSpeak("sm3"), // 2
-            GetSpeak("sm4", ["sm4c1", "sm4c2", "sm4c3"]), // 3
-            function(idx) { // 4
-                switch(idx) {
-                    case 0:
-                        worldmap.writeText("smA1");
-                        player.activeQuests["helpSeaMonster"] = "help";
-                        worldmap.forceEndDialog = true;
-                        break;
-                    case 1:
-                        worldmap.writeText("smB1");
-                        player.activeQuests["helpSeaMonster"] = "fight";
-                        break;
-                    default:
-                        worldmap.writeText("smC1");
-                        player.activeQuests["helpSeaMonster"] = "wait";
-                        worldmap.forceEndDialog = true;
-                        break;
-                }
-            }, function() { // 5
-                combat.startBattle(["seaHandR", "seaMan", "seaHandL"]);
-                worldmap.forceEndDialog = true;
-            },
-            GetSpeak("smD2"), // 6
-            GetSpeak("smD3"), // 7
-            GetSpeak("smD4"), // 8
-            function() { game.transition(game.currentInputHandler, worldmap, { init: { x: 8,  y: 4.5 }, map: "bridge", postCombat: "FishMoved" }); }
-        ], { big: true, sy: 2, noChange: true, postBattle: "FishKilled" }),
-        {
-            name: "FishKilled", storageKey: "FishKilled", pos: {x: -1, y: -1}, solid: false,
-            interact: [
-                function() {
-                    for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-                        var e = worldmap.entities[i].name;
-                        if(e.indexOf("SeaCreature") === 0) { 
-                            player.clearedEntities.push(e);
-                            worldmap.entities.splice(i, 1);
-                        }
-                    }
-                    worldmap.refreshMap();
-                    if(player.hasQuest("getHeart")) {
-                        player.activeQuests["getHeart"] = "heart";
-                    } else {
-                        player.activeQuests["getHeart"] = "weirdheart";
-                    }
-                    worldmap.writeText("bworkerA1");
+                }, function() { // 5
+                    combat.startBattle(["seaHandR", "seaMan", "seaHandL"]);
+                    worldmap.forceEndDialog = true;
                 },
-                GetSpeak("bworkerA2"),
-                GetSpeak("bworkerA3")
-            ]
-        },
-        GetCommonEntity("PirateFriend", 30, 11, 14, 0, undefined, [
-            function() { // 0
-                if(player.completedQuest("seamonkey") || player.hasQuestState("seamonkey", ["looking"])) {
-                    worldmap.writeText("pirateMonkR5");
+                GetSpeak("smD2"), // 6
+                GetSpeak("smD3"), // 7
+                GetSpeak("smD4"), // 8
+                function() { game.transition(game.currentInputHandler, worldmap, { init: { x: 8,  y: 4.5 }, map: "bridge", postCombat: "FishMoved" }); }
+            ], { big: true, sy: 2, noChange: true, postBattle: "FishKilled" }),
+            {
+                name: "FishKilled", storageKey: "FishKilled", pos: {x: -1, y: -1}, solid: false,
+                interact: [
+                    function() {
+                        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+                            var e = worldmap.entities[i].name;
+                            if(e.indexOf("SeaCreature") === 0) { 
+                                player.clearedEntities.push(e);
+                                worldmap.entities.splice(i, 1);
+                            }
+                        }
+                        worldmap.refreshMap();
+                        if(player.hasQuest("getHeart")) {
+                            player.activeQuests["getHeart"] = "heart";
+                        } else {
+                            player.activeQuests["getHeart"] = "weirdheart";
+                        }
+                        worldmap.writeText("bworkerA1");
+                    },
+                    GetSpeak("bworkerA2"),
+                    GetSpeak("bworkerA3")
+                ]
+            },
+            GetCommonEntity("PirateFriend", 30, 11, 14, 0, undefined, [
+                function() { // 0
+                    if(player.completedQuest("seamonkey") || player.hasQuestState("seamonkey", ["looking"])) {
+                        worldmap.writeText("pirateMonkR5");
+                        worldmap.forceEndDialog = true;
+                    } else if(player.hasQuest("seamonkey")) {
+                        var items = specialtyHelpers.getDowelItems();
+                        if(items.length === 0) {
+                            worldmap.writeText("pirateMonkW");
+                            worldmap.forceEndDialog = true;
+                        } else {
+                            worldmap.writeText("pirateMonkH", items);
+                        }
+                    } else {
+                        worldmap.writeText("pirateMonk1");
+                        worldmap.dialogData.nextDialogState = 7;
+                    }
+                },
+                function(i) { // 1
+                    specialtyHelpers.storedDowelChoice = specialtyHelpers.getDowelItems()[i];
+                    switch(specialtyHelpers.storedDowelChoice) {
+                        case "pirateMonkC5": worldmap.writeText("pirateMonkG1"); break;
+                        case "lime_nope":
+                            worldmap.writeText("pirateMonkNo");
+                            worldmap.forceEndDialog = true;
+                            break;
+                        default: worldmap.writeText("pirateMonkR1"); break;
+                    }
+                },
+                function() { // 2
+                    switch(specialtyHelpers.storedDowelChoice) {
+                        case "pirateMonkC5": worldmap.writeText("pirateMonkG2"); break;
+                        default: worldmap.writeText("pirateMonkR2"); break;
+                    }
+                },
+                function() { // 3
+                    switch(specialtyHelpers.storedDowelChoice) {
+                        case "pirateMonkC5": worldmap.writeText("pirateMonkG3"); break;
+                        default: worldmap.writeText("pirateMonkR3"); break;
+                    }
+                },
+                function() { // 4
+                    switch(specialtyHelpers.storedDowelChoice) {
+                        case "pirateMonkC5": worldmap.writeText("pirateMonkG4"); break;
+                        default: worldmap.writeText("pirateMonkR4"); break;
+                    }
+                },
+                function() { // 5
+                    switch(specialtyHelpers.storedDowelChoice) {
+                        case "pirateMonkC5": worldmap.writeText("pirateMonkG5"); break;
+                        default:
+                            worldmap.writeText("pirateMonkR5");
+                            player.increaseItem("tomato", 5);
+                            player.increaseItem("ginger", 4);
+                            player.increaseItem("pineapple", 3);
+                            player.increaseItem("bellpepper", 2);
+                            player.increaseItem("greenshroom");
+                            worldmap.forceEndDialog = true;
+                            break;
+                    }
+                    switch(specialtyHelpers.storedDowelChoice) {
+                        case "rap_rice": player.decreaseItem("rice"); break;
+                        case "pirateMonkC4": player.decreaseItem("chestnut"); break;
+                        case "pirateMonkC3": player.decreaseItem("shortgrain"); break;
+                        case "pirateMonkC2": player.decreaseItem("blackrice"); break;
+                        case "pirateMonkC1": player.decreaseItem("arborio"); break;
+                    }
+                },
+                function() { // 6
+                    worldmap.writeText("pirateMonkG6");
+                    player.activeQuests["seamonkey"] = "looking";
+                    player.decreaseItem("gmocorn");
                     worldmap.forceEndDialog = true;
-                } else if(player.hasQuest("seamonkey")) {
-                    var items = specialtyHelpers.getDowelItems();
-                    if(items.length === 0) {
-                        worldmap.writeText("pirateMonkW");
+                },
+                GetSpeak("pirateMonk2"),
+                GetSpeak("pirateMonk3"),
+                function() {
+                    worldmap.writeText("pirateMonk4");
+                    player.activeQuests["seamonkey"] = "waitingForItem";
+                }
+                
+            ], { sy: 5, noChange: true } ),
+            GetCommonEntity("PiratesTreasure", 45, 13, 13, 0, undefined, [
+                function() {
+                    if(game.target.open) {
+                        worldmap.writeText("openchest");
+                        worldmap.forceEndDialog = true;
+                    }else if(player.hasQuestState("seamonkey", ["looking"])) {
+                        worldmap.writeText("chestUnlock1");
+                    } else {
+                        worldmap.writeText("chestLocked");
+                        worldmap.forceEndDialog = true;
+                    }
+                },
+                GetSpeak("chestUnlock2"),
+                function() {
+                    game.target.open = true;
+                    game.target.anim.shiftY(5);
+                    player.increaseItem("ultrarod", 4);
+                    worldmap.writeText("chestUnlock3");
+                }
+            ], { sy: 4, open: false, noChange: true }),
+            GetCommonEntity("Vase", 45, 28, 14, 0, undefined, [
+                function() {
+                    if(player.completedQuest("kelpBoy")) {
+                        worldmap.writeText("vaseFoundBee");
                         worldmap.forceEndDialog = true;
                     } else {
-                        worldmap.writeText("pirateMonkH", items);
+                        worldmap.writeText("vaseFound", ["sYes", "sNo"]);
                     }
-                } else {
-                    worldmap.writeText("pirateMonk1");
-                    worldmap.dialogData.nextDialogState = 7;
-                }
-            },
-            function(i) { // 1
-                specialtyHelpers.storedDowelChoice = specialtyHelpers.getDowelItems()[i];
-                switch(specialtyHelpers.storedDowelChoice) {
-                    case "pirateMonkC5": worldmap.writeText("pirateMonkG1"); break;
-                    case "lime_nope":
-                        worldmap.writeText("pirateMonkNo");
+                },
+                function(i) {
+                    if(i == 0) {
+                        worldmap.writeText("vaseDo0");
+                        game.target.anim.shiftY(7);
+                        worldmap.importantEntities["KelpBoy"].anim.shiftY(7);
+                        game.target.solid = false;
+                        player.clearedEntities.push("Vase");
+                        player.activeQuests["kelpBoy"] = "fuck";
+                        worldmap.refreshMap();
+                    } else {
+                        worldmap.writeText("vaseDont");
                         worldmap.forceEndDialog = true;
-                        break;
-                    default: worldmap.writeText("pirateMonkR1"); break;
-                }
-            },
-            function() { // 2
-                switch(specialtyHelpers.storedDowelChoice) {
-                    case "pirateMonkC5": worldmap.writeText("pirateMonkG2"); break;
-                    default: worldmap.writeText("pirateMonkR2"); break;
-                }
-            },
-            function() { // 3
-                switch(specialtyHelpers.storedDowelChoice) {
-                    case "pirateMonkC5": worldmap.writeText("pirateMonkG3"); break;
-                    default: worldmap.writeText("pirateMonkR3"); break;
-                }
-            },
-            function() { // 4
-                switch(specialtyHelpers.storedDowelChoice) {
-                    case "pirateMonkC5": worldmap.writeText("pirateMonkG4"); break;
-                    default: worldmap.writeText("pirateMonkR4"); break;
-                }
-            },
-            function() { // 5
-                switch(specialtyHelpers.storedDowelChoice) {
-                    case "pirateMonkC5": worldmap.writeText("pirateMonkG5"); break;
-                    default:
-                        worldmap.writeText("pirateMonkR5");
-                        player.increaseItem("tomato", 5);
-                        player.increaseItem("ginger", 4);
-                        player.increaseItem("pineapple", 3);
-                        player.increaseItem("bellpepper", 2);
-                        player.increaseItem("greenshroom");
-                        worldmap.forceEndDialog = true;
-                        break;
-                }
-                switch(specialtyHelpers.storedDowelChoice) {
-                    case "rap_rice": player.decreaseItem("rice"); break;
-                    case "pirateMonkC4": player.decreaseItem("chestnut"); break;
-                    case "pirateMonkC3": player.decreaseItem("shortgrain"); break;
-                    case "pirateMonkC2": player.decreaseItem("blackrice"); break;
-                    case "pirateMonkC1": player.decreaseItem("arborio"); break;
-                }
-            },
-            function() { // 6
-                worldmap.writeText("pirateMonkG6");
-                player.activeQuests["seamonkey"] = "looking";
-                player.decreaseItem("gmocorn");
-                worldmap.forceEndDialog = true;
-            },
-            GetSpeak("pirateMonk2"),
-            GetSpeak("pirateMonk3"),
-            function() {
-                worldmap.writeText("pirateMonk4");
-                player.activeQuests["seamonkey"] = "waitingForItem";
-            }
-            
-        ], { sy: 5, noChange: true } ),
-        GetCommonEntity("PiratesTreasure", 45, 13, 13, 0, undefined, [
-            function() {
-                if(game.target.open) {
-                    worldmap.writeText("openchest");
-                    worldmap.forceEndDialog = true;
-                }else if(player.hasQuestState("seamonkey", ["looking"])) {
-                    worldmap.writeText("chestUnlock1");
-                } else {
-                    worldmap.writeText("chestLocked");
-                    worldmap.forceEndDialog = true;
-                }
-            },
-            GetSpeak("chestUnlock2"),
-            function() {
-                game.target.open = true;
-                game.target.anim.shiftY(5);
-                player.increaseItem("ultrarod", 4);
-                worldmap.writeText("chestUnlock3");
-            }
-        ], { sy: 4, open: false, noChange: true }),
-        GetCommonEntity("Vase", 45, 28, 14, 0, undefined, [
-            function() {
-                if(player.completedQuest("kelpBoy")) {
-                    worldmap.writeText("vaseFoundBee");
-                    worldmap.forceEndDialog = true;
-                } else {
-                    worldmap.writeText("vaseFound", ["sYes", "sNo"]);
-                }
-            },
-            function(i) {
-                if(i == 0) {
-                    worldmap.writeText("vaseDo0");
-                    game.target.anim.shiftY(7);
-                    worldmap.importantEntities["KelpBoy"].anim.shiftY(7);
-                    game.target.solid = false;
-                    player.clearedEntities.push("Vase");
-                    player.activeQuests["kelpBoy"] = "fuck";
-                    worldmap.refreshMap();
-                } else {
-                    worldmap.writeText("vaseDont");
-                    worldmap.forceEndDialog = true;
-                }
-            },
-            GetSpeak("vaseDo1"),
-            GetSpeak("vaseDo2"),
-            function() { combat.startBattle(["kelpBoy"]); }
-        ], { sy: 6, noChange: true, postBattle: "kelpBeat" }),
-        GetCommonEntity("KelpBoy", 46, 27, 13, 0, undefined, [
-            function() {
-                if(player.hasQuest("kelpBoy")) {
-                    worldmap.writeText("vaseDo3");
-                } else {
-                    worldmap.writeText("kelpBoy1");
-                    worldmap.forceEndDialog = true;
-                }
-            },
-            function() { combat.startBattle(["kelpBoy"]); }
-        ], { sy: 6, noChange: true, storageKey: "KelpBoy", postBattle: "kelpBeat" }),
-        {
-            name: "kelpBeat", storageKey: "kelpBeat", pos: {x: -1, y: -1}, solid: false,
-            interact: [
+                    }
+                },
+                GetSpeak("vaseDo1"),
+                GetSpeak("vaseDo2"),
+                function() { combat.startBattle(["kelpBoy"]); }
+            ], { sy: 6, noChange: true, postBattle: "kelpBeat" }),
+            GetCommonEntity("KelpBoy", 46, 27, 13, 0, undefined, [
                 function() {
-                    player.clearedEntities.push("KelpBoy");
-                    player.activeQuests["kelpBoy"] = "deadass";
-                    if(worldmap.importantEntities["KelpBoy"] !== undefined) {
+                    if(player.hasQuest("kelpBoy")) {
+                        worldmap.writeText("vaseDo3");
+                    } else {
+                        worldmap.writeText("kelpBoy1");
+                        worldmap.forceEndDialog = true;
+                    }
+                },
+                function() { combat.startBattle(["kelpBoy"]); }
+            ], { sy: 6, noChange: true, storageKey: "KelpBoy", postBattle: "kelpBeat" }),
+            {
+                name: "kelpBeat", storageKey: "kelpBeat", pos: {x: -1, y: -1}, solid: false,
+                interact: [
+                    function() {
+                        player.clearedEntities.push("KelpBoy");
+                        player.activeQuests["kelpBoy"] = "deadass";
+                        if(worldmap.importantEntities["KelpBoy"] !== undefined) {
+                            worldmap.importantEntities["KelpBoy"].solid = false;
+                            worldmap.importantEntities["KelpBoy"].visible = false;
+                            worldmap.importantEntities["KelpBoy"].interact = undefined;
+                        }
+                        worldmap.refreshMap();
+                        worldmap.writeText("vaseWon0");
+                    }
+                ]
+            },
+            GetCommonEntity("KelpBeehive", 45, 27, 2, 0, undefined, [
+                function() {
+                    if(player.hasQuest("kelpBoy")) {
+                        if(player.activeQuests["kelpBoy"] === "deadass") { // you have killed kelp boy and broken his vase
+                            worldmap.writeText("hiveGet");
+                            player.increaseItem("_beehive");
+                            player.increaseItem("beeB", 5);
+                            worldmap.clearTarget();
+                            quests.completeQuest("kelpBoy");
+                            worldmap.forceEndDialog = true;
+                        } else { // you have broken kelp boy's vase, lost in battle to him, and are now trying to just hijack his beehive
+                            worldmap.writeText("vaseDo4");
+                        }
+                    } else { // you are cheating and managed to get to the beehive without breaking kelp boy's vase
+                        worldmap.writeText("vaseDo5");
+                    }
+                }, 
+                function() { combat.startBattle(["kelpBoy"]); }
+            ], { sy: 4, postBattle: "beeBeat", noChange: true } ),
+            {
+                name: "beeBeat", storageKey: "beeBeat", pos: {x: -1, y: -1}, solid: false,
+                interact: [
+                    function() {
+                        player.clearedEntities.push("KelpBoy");
                         worldmap.importantEntities["KelpBoy"].solid = false;
                         worldmap.importantEntities["KelpBoy"].visible = false;
                         worldmap.importantEntities["KelpBoy"].interact = undefined;
-                    }
-                    worldmap.refreshMap();
-                    worldmap.writeText("vaseWon0");
-                }
-            ]
-        },
-        GetCommonEntity("KelpBeehive", 45, 27, 2, 0, undefined, [
-            function() {
-                if(player.hasQuest("kelpBoy")) {
-                    if(player.activeQuests["kelpBoy"] === "deadass") { // you have killed kelp boy and broken his vase
+                        worldmap.refreshMap();
+                        worldmap.writeText("vaseWon0");
+                    },
+                    function() {
                         worldmap.writeText("hiveGet");
                         player.increaseItem("_beehive");
                         player.increaseItem("beeB", 5);
                         worldmap.clearTarget();
                         quests.completeQuest("kelpBoy");
-                        worldmap.forceEndDialog = true;
-                    } else { // you have broken kelp boy's vase, lost in battle to him, and are now trying to just hijack his beehive
-                        worldmap.writeText("vaseDo4");
                     }
-                } else { // you are cheating and managed to get to the beehive without breaking kelp boy's vase
-                    worldmap.writeText("vaseDo5");
+                ]
+            },
+            GetCommonEntity("SeaCreatureRight", 20, 17, 1, 2, undefined, undefined, { big: true, sy: 2 }),
+            GetWaterfall("waterfallAS", 36, 22, 0, "AX"),
+            GetWaterfallEnd("wfendA", 36, 16, 0, "A"),
+            GetWaterfall("waterfallBS", 32, 21, 0, "BX"),
+            GetWaterfallEnd("wfendB", 32, 8, 0, "B"),
+            GetWaterfall("waterfallCS", 13, 16, 2, "CX"),
+            GetWaterfallEnd("wfendC", 27, 23, 3, "C"),
+            GetWaterfall("waterfallDS", 8, 20, 0, "DX"),
+            GetWaterfallEnd("wfendD", 15, 10, 3, "D"),
+            GetWaterfall("waterfallES", 26, 14, 1, "EX"),
+            GetWaterfallEnd("wfendE", 7, 14, 1, "E"),
+            GetWaterfall("waterfallFS", 39, 11, 2, "FX"),
+            GetWaterfallEnd("wfendF", 39, 18, 2, "F"),
+            GetWaterfall("waterfallGS", 48, 20, 1, "GX"),
+            GetWaterfallEnd("wfendG", 43, 20, 1, "G"),
+            GetWaterfall("waterfallHS", 34, 3, 1, "HX"),
+            GetWaterfallEnd("wfendH", 20, 3, 1, "H"),
+            GetWaterfall("waterfallIS", 20, 5, 3, "IX"),
+            GetWaterfallEnd("wfendI", 31, 5, 3, "I"),
+            GetWaterfall("waterfallJS", 39, 1, 3, "JX"),
+            GetWaterfallEnd("wfendJ", 40, 2, 1, "J"),
+            GetWaterfall("waterfallKS", 46, 3, 2, "KX"),
+            GetWaterfallEnd("wfendK", 46, 6, 2, "K"),
+            GetWaterfall("waterfallLS", 46, 10, 0, "LX"),
+            GetWaterfallEnd("wfendL", 48, 12, 2, "L"),
+            GetWaterfall("waterfallMS", 43, 13, 0, "MX"),
+            GetWaterfall("waterfallMSB", 44, 4, 2, "MX"),
+            GetWaterfall("waterfallMSB0", 44, 5, 1, "M"),
+            GetWaterfall("waterfallMSB1", 43, 5, 2, "M"),
+            GetWaterfall("waterfallMSB2", 43, 6, 2, "M"),
+            GetWaterfall("waterfallMSB3", 43, 7, 1, "M"),
+            GetWaterfall("waterfallMSB4", 42, 7, 0, "M"),
+            GetWaterfallEnd("wfendM", 39, 6, 1, "M"),
+            GetTreasureChest("UWChestLeftFriend", 10, 12, [["carrot", 20]]),
+            GetTreasureChest("UWChestRightFriend", 13, 12, [["carrot", 20]]),
+            GetTreasureChest("UWChestByBoat", 21, 18, [["carrot", 20]]),
+            GetTreasureChest("UWChestHiddenByCurrent", 34, 13, [["carrot", 20]])
+        ];
+        for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallA" + i, 36, 21 - i, 0, "A")); }
+        x.push(GetRock("rockA", 37, 21, 1, "A"));
+
+        for(var i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallB" + i, 32, 21 - i, 0, "B")); }
+        x.push(GetRock("rockB", 31, 20, 3, "B"));
+        
+        for(var i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallC" + i, 13, 17 + i, 2, "C")); }
+        for(var i = 0; i < 14; i++) { x.push(GetWaterfall("waterfallCL" + i, 13 + i, 23, 3, "C")); }
+        x.push(GetRock("rockC", 12, 17, 3, "C"));
+        
+        for(var i = 0; i < 9; i++) { x.push(GetWaterfall("waterfallD" + i, 8, 19 - i, 0, "D")); }
+        for(var i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallDR" + i, 8 + i, 10, 3, "D")); }
+        x.push(GetRock("rockD", 7, 19, 3, "D"));
+
+        for(var i = 0; i < 18; i++) { x.push(GetWaterfall("waterfallE" + i, 25 - i, 14, 1, "E")); }
+        x.push(GetRock("rockE", 25, 15, 0, "E"));
+
+        for(var i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallF" + i, 39, 12 + i, 2, "F")); }
+        x.push(GetRock("rockF", 40, 12, 1, "F"));
+
+        for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallG" + i, 47 - i, 20, 1, "G")); }
+        x.push(GetRock("rockG", 48, 19, 2, "G"));
+        
+        for(var i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallH" + i, 33 - i, 3, 1, "H")); }
+        for(var i = 0; i < 10; i++) { x.push(GetWaterfall("waterfallI" + i, 21 + i, 5, 3, "I")); }
+        
+        for(var i = 0; i < 8; i++) { x.push(GetWaterfall("waterfallJ" + i, 40 + i, 1, 3, "I")); }
+        for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallJD" + i, 48, 1 + i, 2, "I")); }
+        x.push(GetWaterfall("waterfallJLA", 48, 6, 1, "I"));
+        for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallJU" + i, 47, 6 - i, 0, "I")); }
+        for(var i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallJL" + i, 47 - i, 2, 1, "I")); }
+        
+        for(var i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallK" + i, 46, 4 + i, 2, "K")); }
+        
+        x.push(GetWaterfall("waterfallLU", 46, 9, 0, "L"));
+        for(var i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallLR" + i, 46 + i, 8, 3, "L")); }
+        for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallLD" + i, 48, 8 + i, 2, "L")); }
+        
+        for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallM" + i, 43, 12 - i, 0, "M")); }
+        for(var i = 0; i < 3; i++) { x.push(GetWaterfall("waterfallML" + i, 42 - i, 6, 1, "M")); }
+
+        return x;
+    }(),
+    "fakefarm": [
+        { pos: { x: -1, y: -1 }, innCheck: true, action: function() {
+            worldmap.importantEntities["barnCover"].visible = false;
+            worldmap.importantEntities["FarmerJeff"].visible = true;
+            worldmap.importantEntities["FarmerJeff"].pos = { x: 14.5, y: 31.5 };
+            worldmap.importantEntities["FarmerJeff"].dir = 0;
+        }},
+        GetSign(4, 30, "upgradeBarn"),
+        EnterShop("Upgrade Barn", 3, 30, "upgrade2"),
+        EnterShop("Fixture Stall", 19, 21, "fixture2"),
+        GetCommonEntity("FakeFarmFlatTire", 15, 35.5, 8, 3, undefined, [
+            function() {
+                worldmap.writeText("fakeFarmS", undefined, undefined, undefined, true);
+                return true;
+            },
+            function() {
+                game.startTransitionAnim(-1);
+                worldmap.writeText("fakeFarm0");
+            },
+            function() {
+                worldmap.waitForAnimation = true;
+                game.target.moving = true;
+                worldmap.animIdx = setInterval(function() {
+                    game.target.pos.x += 0.025;
+                    worldmap.refreshMap();
+                    if(game.target.pos.x >= 22) {
+                        game.target.moving = false;
+                        worldmap.finishAnimation();
+                    }
+                }, 10);
+            },
+            function() {
+                worldmap.playerDir = 1;
+                worldmap.refreshMap();
+                worldmap.writeText("fakeFarm1");
+            },
+            GetSpeak("fakeFarm2"),
+            GetSpeak("fakeFarm3"),
+            GetSpeak("fakeFarm4"),
+            function() {
+                worldmap.waitForAnimation = true;
+                game.target.moving = true;
+                game.target.dir = 1;
+                worldmap.animIdx = setInterval(function() {
+                    game.target.pos.x -= 0.025;
+                    worldmap.refreshMap();
+                    if(game.target.pos.x <= 13) {
+                        worldmap.finishAnimation();
+                        game.target.moving = false;
+                        game.target.visible = false;
+                        game.target.pos = { x: -1, y: -1 };
+                        worldmap.clearTarget();
+                    }
+                }, 10);
+            }
+        ], { sy: 10, solid: false, autoplay: false, storageKey: "FarmerJeff" }),
+        GetCommonEntity("AFuckingTruckL", 24, 34, 4, 0, undefined, [
+            function() {
+                if(player.completedQuest("gotTire")) {
+                    worldmap.writeText("bustedTruck1");
+                    game.target.anim.shiftY(0);
+                    game.target.interact = specialtyHelpers.truckArray;
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.writeText("bustedTruck0");
+                }
+            }
+        ], { sy: 3, big: true, noChange: true }),
+        GetCommonEntity("AFuckingTruckR", 26, 34, 5, 0, undefined, undefined, { big: true, noChange: true }),
+        { name: "barnCover", storageKey: "barnCover", jumbo: true, filename: "barncover", visible: true, w: 1036, h: 900, offset: { x: 1, y: 0 }, pos: { x: 7, y: 18 } },
+        GetCommonEntity("TireRack", 11, 3, 8, 0, undefined, [
+            function() {
+                if(player.hasQuest("gotTire") || player.completedQuest("gotTire")) {
+                    worldmap.finishDialog();
+                    return;
+                }
+                game.target.anim.shiftY(9);
+                worldmap.writeText("tireget");
+                worldmap.importantEntities["HK"].visible = true;
+                worldmap.importantEntities["HK"].solid = true;
+                player.activeQuests["gotTire"] = 0;
+            }
+        ], { sy: 8, noChange: true }),
+        GetCommonEntity("EnterBarnL", 14, 30, 0, 0, undefined, [
+            function() {
+                worldmap.importantEntities["barnCover"].visible = false;
+                worldmap.forceEndDialog = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
+                worldmap.finishDialog();
+            }
+        ], { visible: false, solid: false }),
+        GetCommonEntity("EnterBarnR", 15, 30, 0, 0, undefined, [
+            function() {
+                worldmap.importantEntities["barnCover"].visible = false;
+                worldmap.forceEndDialog = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
+                worldmap.finishDialog();
+            }
+        ], { visible: false, solid: false }),
+        GetCommonEntity("ExitBarnL", 14, 31, 0, 0, undefined, [
+            function() {
+                if(player.hasQuest("gotTire")) {
+                    game.target = worldmap.importantEntities["ExitBarnL"];
+                    if(player.hasQuestState("gotTire", [1])) {
+                        worldmap.writeText("fakeFarm18");
+                        worldmap.dialogData.nextDialogState = 9;
+                    } else {
+                        worldmap.writeText("fakeFarm5");
+                    }
+                    return;
+                }
+                worldmap.importantEntities["barnCover"].visible = true;
+                worldmap.forceEndDialog = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+                worldmap.finishDialog();
+            },
+            function() {
+                worldmap.playerDir = 0;
+                worldmap.waitForAnimation = true;
+                player.activeQuests["gotTire"] = 1;
+                player.lastInn = "fakefarm";
+                worldmap.importantEntities["FarmerJeff"].dir = 2;
+                worldmap.importantEntities["FarmerJeff"].pos = { x: worldmap.pos.x, y: 25 };
+                worldmap.importantEntities["FarmerJeff"].visible = true;
+                worldmap.importantEntities["FarmerJeff"].moving = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["FarmerJeff"].pos.y += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["FarmerJeff"].pos.y >= 29) {
+                        worldmap.importantEntities["FarmerJeff"].moving = false;
+                        worldmap.finishAnimation();
+                        worldmap.refreshMap();
+                    }
+                }, 10);
+            },
+            GetSpeak("fakeFarm6"),
+            GetSpeak("fakeFarm7"),
+            function() {
+                worldmap.importantEntities["HK"].moving = true;
+                worldmap.refreshMap();
+                worldmap.writeText("fakeFarm8");
+            },
+            function() { worldmap.refreshMap(); worldmap.writeText("fakeFarm9"); },
+            GetSpeak("fakeFarm10"),
+            GetSpeak("fakeFarm11"),
+            function() { worldmap.refreshMap(); worldmap.writeText("fakeFarm12"); },
+            function() { combat.startBattle(["router", "housekeeper", "outlet", "server"]); } // 9
+        ], { visible: false, solid: false, storageKey: "ExitBarnL", postBattle: "beatDweeb" }),
+        GetCommonEntity("ExitBarnR", 15, 31, 0, 0, undefined, [
+            function() {
+                if(player.hasQuest("gotTire")) {
+                    game.target = worldmap.importantEntities["ExitBarnL"];
+                    if(player.hasQuestState("gotTire", [1])) {
+                        worldmap.writeText("fakeFarm18");
+                        worldmap.dialogData.nextDialogState = 9;
+                    } else {
+                        worldmap.writeText("fakeFarm5");
+                    }
+                    return;
+                }
+                worldmap.importantEntities["barnCover"].visible = true;
+                worldmap.forceEndDialog = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+                worldmap.finishDialog();
+            }
+        ], { visible: false, solid: false }),
+        { name: "beatDweeb", storageKey: "beatDweeb", pos: { x: -1, y: -1 }, solid: false,
+        interact: [
+            GetSpeak("fakeFarm13"),
+            GetSpeak("fakeFarm14"),
+            GetSpeak("fakeFarm15"),
+            GetSpeak("fakeFarm16"),
+            function() {
+                worldmap.writeText("fakeFarm17");
+                game.target = worldmap.importantEntities["FarmerJeff"];
+                worldmap.clearTarget();
+                game.target = worldmap.importantEntities["HK"];
+                worldmap.clearTarget();
+                quests.completeQuest("gotTire");
+            }
+        ]},
+        GetCommonEntity("HOUSEKEEPER", 13, 30, 12, 0, undefined, [
+            function() {
+                if(player.hasQuestState("gotTire", [1])) {
+                    worldmap.writeText("HK_s1");
+                } else if(game.target.solid) {
+                    worldmap.writeText("HK_s0");
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.finishDialog();
+                }
+            },
+            GetSpeak("HK_s2")
+        ], { visible: false, solid: false, storageKey: "HK", sy: 10, noChange: true } ),
+        GetCommonEntity("CoveredDoorL1", 11, 15, 6, 0, undefined, [ GetSpeak("barndoorChick") ], { sy: 12, noChange: true, solid: true, changeType: 0 }), // 0 = open door
+        GetCommonEntity("CoveredDoorL2", 11, 18, 6, 0, undefined, [ GetSpeak("barndoorPig") ], { sy: 12, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorL3", 11, 21, 6, 0, undefined, [ GetSpeak("barndoorChick") ], { sy: 12, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorL4", 11, 24, 6, 0, undefined, [ GetSpeak("barndoorCrop") ], { sy: 12, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR1", 18, 15, 6, 0, undefined, [ GetSpeak("barndoorEmpty") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR2", 18, 18, 6, 0, undefined, [ GetSpeak("barndoorChick") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR3", 18, 21, 6, 0, undefined, [ GetSpeak("barndoorShop") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR4", 18, 24, 6, 0, undefined, [ GetSpeak("barndoorPig") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("Chicky1", 10, 15, 0, 3, undefined, commonInteractArrays.chick, { sy: 10, changeType: 1 }), // 1 = full left to right
+        GetCommonEntity("Chicky2", 19, 18, 0, 1, undefined, commonInteractArrays.chick, { sy: 10, changeType: 2 }), // 2 = half right to left
+        GetCommonEntity("Chicky3", 10, 21, 0, 3, undefined, commonInteractArrays.chick, { sy: 10, changeType: 3 }), // 3 = half left to right 
+        GetCommonEntity("Pig1", 10, 18, 3, 3, undefined, commonInteractArrays.piggn, { sy: 10, changeType: 3, sheetlen: 2, noChange: true }), 
+        GetCommonEntity("Pig2", 19, 24, 3, 1, undefined, commonInteractArrays.piggn, { sy: 10, changeType: 4, sheetlen: 2, noChange: true }), // 4 = 3/4 right to left
+        GetCommonEntity("Golem1", 10, 24, 4, 0, undefined, commonInteractArrays.golem, { sy: 12, noChange: true }),
+        GetCommonEntity("Golem2", 9, 24, 4, 0, undefined, commonInteractArrays.golem, { sy: 12, noChange: true }),
+        GetCommonEntity("Golem3", 8, 24, 4, 0, undefined, commonInteractArrays.golem, { sy: 12, noChange: true }),
+        GetCommonEntity("LawnMower1", 9, 27, 4, 3, undefined, commonInteractArrays.mower, { sy: 10, noChange: true, changeType: 5, sheetlen: 2, visible: false, inside: true }), // 5 = bigger LtR
+        GetCommonEntity("LawnMower2", 20, 28, 4, 1, undefined, commonInteractArrays.mower, { sy: 10, noChange: true, changeType: 6, sheetlen: 2, visible: false, inside: true }), // 6 = bigger RtL
+        GetCommonEntity("FarmTV", 14, 2, 5, 0, undefined, undefined, { sy: 1, big: true, sheetlen: 2, moving: true, storageKey: "FarmTV" } ),
+        GetCommonEntity("MrShocky", 10, 9, 7, 0, undefined, undefined, { sy: 12, sheetlen: 2, moving: true, visible: false, solid: false, storageKey: "MrShocky", changeType: 7 }), // 7 = becomes visible/solid
+        GetCommonEntity("Hotbox", 9, 8, 4, 0, undefined, [
+            function() {
+                if(player.hasQuestState("fakeFarm", [1])) {
+                    worldmap.writeText("hotboxX");
+                    worldmap.forceEndDialog = true;
+                } else if(player.hasQuestState("fakeFarm", [2])) {
+                    worldmap.writeText("hotbox2");
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.writeText("hotbox1");
+                }
+            },
+            function() { combat.startBattle(["machineA", "machineB", "machineC", "machineD"]); }
+        ], { sy: 13, noChange: true, noRunKill: true, postBattle: "fucko" }),
+        { name: "fucko", storageKey: "fucko", pos: {x: -1, y: -1}, interact: [
+            function() {
+                worldmap.importantEntities["MrShocky"].pos = { x: -1, y: -1 };
+                worldmap.importantEntities["MrShocky"].moving = false;
+                player.clearedEntities.push("MrShocky");
+                player.activeQuests["fakeFarm"] = 2;
+                worldmap.refreshMap();
+                worldmap.writeText("hotbox3");
+            }
+        ] },
+        GetCommonEntity("Outlet", 13, 2, 5, 0, undefined, [
+            function() {
+                if(player.hasQuestState("fakeFarm", [1])) {
+                    worldmap.writeText("farmTVunplug3");
+                    worldmap.forceEndDialog = true;
+                } else {
+                    worldmap.writeText("farmTVunplug0");
+                }
+            },
+            GetSpeak("farmTVunplug1"),
+            function() {
+                game.target.anim.shiftY(13);
+                worldmap.importantEntities["MrShocky"].pos = { x: -1, y: -1 };
+                worldmap.importantEntities["MrShocky"].moving = false;
+                player.clearedEntities.push("MrShocky");
+                worldmap.importantEntities["FarmTV"].moving = false;
+                worldmap.importantEntities["FarmTV"].anim.shiftY(3);
+                player.activeQuests["fakeFarm"] = 1;
+                worldmap.refreshMap();
+                worldmap.writeText("farmTVunplug2");
+            }
+        ], { sy: 12, noChange: true } ),
+        GetCommonEntity("FarmTVEntrance", 10, 8, 0, 0, undefined, [
+            GetSpeak("farmTV0"),
+            function() {
+                gfx.clearSome(["menuA", "menutext"]);
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y <= 6) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.playerDir = 3;
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.x += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.x >= 14.5) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.playerDir = 0;
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y <= 3.75) { FinishAnim(); }
+                }, 10); 
+            },
+            GetSpeak("farmTV1"),
+            GetSpeak("farmTV2"),
+            GetSpeak("farmTV3"),
+            GetSpeak("farmTV4"),
+            function() {
+                worldmap.writeText("farmTV5");
+                game.target.pos = { x: -1, y: -1 };
+                player.activeQuests["fakeFarm"] = 0;
+                for(var i = 0; i < worldmap.entities.length; i++) {
+                    if(worldmap.entities[i].changeType === undefined) { continue; }
+                    switch(worldmap.entities[i].changeType) {
+                        case 0:
+                            worldmap.entities[i].interact = undefined;
+                            worldmap.entities[i].solid = false;
+                            worldmap.entities[i].visible = false;
+                            break;
+                        case 1:
+                            var p = worldmap.entities[i].pos;
+                            worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 9, 0);
+                            break;
+                        case 2:
+                            var p = worldmap.entities[i].pos;
+                            worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 4, p.y, 4, 0, 1);
+                            break;
+                        case 3:
+                            var p = worldmap.entities[i].pos;
+                            worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 4, 0);
+                            break;
+                        case 4:
+                            var p = worldmap.entities[i].pos;
+                            worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 7, p.y, 7, 0, 1);
+                            break;
+                        case 5:
+                            var p = worldmap.entities[i].pos;
+                            worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 11, 0);
+                            break;
+                        case 6:
+                            var p = worldmap.entities[i].pos;
+                            worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 11, p.y, 11, 0, 1);
+                            break;
+                        case 7:
+                            worldmap.entities[i].solid = true;
+                            worldmap.entities[i].visible = true;
+                            break;
+                    }
+                }
+            }
+        ], { solid: false, visible: false } ),
+        GetCommonEntity("Crouton", 26, 30, 0, 0, undefined, [
+            function() {
+                if(player.completedQuest("croutonsFishingAdventure")) {
+                    worldmap.writeText("arf_thanks");
+                    worldmap.forceEndDialog = true;
+                } else if(player.hasQuest("croutonsFishingAdventure")) {
+                    var items = specialtyHelpers.getCroutonItems();
+                    if(items.length === 0) {
+                        worldmap.writeText("arf3");
+                        worldmap.forceEndDialog = true;
+                    } else {
+                        worldmap.writeText("arf4", items);
+                    }
+                } else {
+                    worldmap.writeText("arf0");
                 }
             }, 
-            function() { combat.startBattle(["kelpBoy"]); }
-        ], { sy: 4, postBattle: "beeBeat", noChange: true } ),
-        {
-            name: "beeBeat", storageKey: "beeBeat", pos: {x: -1, y: -1}, solid: false,
-            interact: [
-                function() {
-                    player.clearedEntities.push("KelpBoy");
-                    worldmap.importantEntities["KelpBoy"].solid = false;
-                    worldmap.importantEntities["KelpBoy"].visible = false;
-                    worldmap.importantEntities["KelpBoy"].interact = undefined;
-                    worldmap.refreshMap();
-                    worldmap.writeText("vaseWon0");
-                },
-                function() {
-                    worldmap.writeText("hiveGet");
-                    player.increaseItem("_beehive");
-                    player.increaseItem("beeB", 5);
-                    worldmap.clearTarget();
-                    quests.completeQuest("kelpBoy");
+            function(i) {
+                if(player.hasQuest("croutonsFishingAdventure")) {
+                    specialtyHelpers.storedCroutonChoice = specialtyHelpers.getCroutonItems()[i];
+                    switch(specialtyHelpers.storedCroutonChoice) {
+                        case "arf_spear": worldmap.writeText("arf_spear0"); break;
+                        case "arf_net":
+                            player.decreaseItem("net");
+                            worldmap.writeText("arf_good0");
+                            break;
+                        case "arf_bignet":
+                            player.decreaseItem("bignet");
+                            worldmap.writeText("arf_good0");
+                            break;
+                        case "arf_metalrod":
+                            player.decreaseItem("metalrod");
+                            worldmap.writeText("arf_good0");
+                            break;
+                        case "arf_ultrarod":
+                            player.decreaseItem("ultrarod");
+                            worldmap.writeText("arf_ultra0");
+                            break;
+                        case "lime_nope":
+                            worldmap.writeText("arf_none");
+                            worldmap.forceEndDialog = true;
+                            break;
+                    }
+                } else {
+                    specialtyHelpers.storedCroutonChoice = "";
+                    worldmap.writeText("arf1");
                 }
-            ]
-        },
-        GetCommonEntity("SeaCreatureRight", 20, 17, 1, 2, undefined, undefined, { big: true, sy: 2 }),
-        GetWaterfall("waterfallAS", 36, 22, 0, "AX"),
-        GetWaterfallEnd("wfendA", 36, 16, 0, "A"),
-        GetWaterfall("waterfallBS", 32, 21, 0, "BX"),
-        GetWaterfallEnd("wfendB", 32, 8, 0, "B"),
-        GetWaterfall("waterfallCS", 13, 16, 2, "CX"),
-        GetWaterfallEnd("wfendC", 27, 23, 3, "C"),
-        GetWaterfall("waterfallDS", 8, 20, 0, "DX"),
-        GetWaterfallEnd("wfendD", 15, 10, 3, "D"),
-        GetWaterfall("waterfallES", 26, 14, 1, "EX"),
-        GetWaterfallEnd("wfendE", 7, 14, 1, "E"),
-        GetWaterfall("waterfallFS", 39, 11, 2, "FX"),
-        GetWaterfallEnd("wfendF", 39, 18, 2, "F"),
-        GetWaterfall("waterfallGS", 48, 20, 1, "GX"),
-        GetWaterfallEnd("wfendG", 43, 20, 1, "G"),
-        GetWaterfall("waterfallHS", 34, 3, 1, "HX"),
-        GetWaterfallEnd("wfendH", 20, 3, 1, "H"),
-        GetWaterfall("waterfallIS", 20, 5, 3, "IX"),
-        GetWaterfallEnd("wfendI", 31, 5, 3, "I"),
-        GetWaterfall("waterfallJS", 39, 1, 3, "JX"),
-        GetWaterfallEnd("wfendJ", 40, 2, 1, "J"),
-        GetWaterfall("waterfallKS", 46, 3, 2, "KX"),
-        GetWaterfallEnd("wfendK", 46, 6, 2, "K"),
-        GetWaterfall("waterfallLS", 46, 10, 0, "LX"),
-        GetWaterfallEnd("wfendL", 48, 12, 2, "L"),
-        GetWaterfall("waterfallMS", 43, 13, 0, "MX"),
-        GetWaterfall("waterfallMSB", 44, 4, 2, "MX"),
-        GetWaterfall("waterfallMSB0", 44, 5, 1, "M"),
-        GetWaterfall("waterfallMSB1", 43, 5, 2, "M"),
-        GetWaterfall("waterfallMSB2", 43, 6, 2, "M"),
-        GetWaterfall("waterfallMSB3", 43, 7, 1, "M"),
-        GetWaterfall("waterfallMSB4", 42, 7, 0, "M"),
-        GetWaterfallEnd("wfendM", 39, 6, 1, "M"),
-        GetTreasureChest("UWChestLeftFriend", 10, 12, [["carrot", 20]]),
-        GetTreasureChest("UWChestRightFriend", 13, 12, [["carrot", 20]]),
-        GetTreasureChest("UWChestByBoat", 21, 18, [["carrot", 20]]),
-        GetTreasureChest("UWChestHiddenByCurrent", 34, 13, [["carrot", 20]])
-    ];
-    for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallA" + i, 36, 21 - i, 0, "A")); }
-    x.push(GetRock("rockA", 37, 21, 1, "A"));
-
-    for(var i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallB" + i, 32, 21 - i, 0, "B")); }
-    x.push(GetRock("rockB", 31, 20, 3, "B"));
-    
-    for(var i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallC" + i, 13, 17 + i, 2, "C")); }
-    for(var i = 0; i < 14; i++) { x.push(GetWaterfall("waterfallCL" + i, 13 + i, 23, 3, "C")); }
-    x.push(GetRock("rockC", 12, 17, 3, "C"));
-    
-    for(var i = 0; i < 9; i++) { x.push(GetWaterfall("waterfallD" + i, 8, 19 - i, 0, "D")); }
-    for(var i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallDR" + i, 8 + i, 10, 3, "D")); }
-    x.push(GetRock("rockD", 7, 19, 3, "D"));
-
-    for(var i = 0; i < 18; i++) { x.push(GetWaterfall("waterfallE" + i, 25 - i, 14, 1, "E")); }
-    x.push(GetRock("rockE", 25, 15, 0, "E"));
-
-    for(var i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallF" + i, 39, 12 + i, 2, "F")); }
-    x.push(GetRock("rockF", 40, 12, 1, "F"));
-
-    for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallG" + i, 47 - i, 20, 1, "G")); }
-    x.push(GetRock("rockG", 48, 19, 2, "G"));
-    
-    for(var i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallH" + i, 33 - i, 3, 1, "H")); }
-    for(var i = 0; i < 10; i++) { x.push(GetWaterfall("waterfallI" + i, 21 + i, 5, 3, "I")); }
-    
-    for(var i = 0; i < 8; i++) { x.push(GetWaterfall("waterfallJ" + i, 40 + i, 1, 3, "I")); }
-    for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallJD" + i, 48, 1 + i, 2, "I")); }
-    x.push(GetWaterfall("waterfallJLA", 48, 6, 1, "I"));
-    for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallJU" + i, 47, 6 - i, 0, "I")); }
-    for(var i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallJL" + i, 47 - i, 2, 1, "I")); }
-    
-    for(var i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallK" + i, 46, 4 + i, 2, "K")); }
-    
-    x.push(GetWaterfall("waterfallLU", 46, 9, 0, "L"));
-    for(var i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallLR" + i, 46 + i, 8, 3, "L")); }
-    for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallLD" + i, 48, 8 + i, 2, "L")); }
-    
-    for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallM" + i, 43, 12 - i, 0, "M")); }
-    for(var i = 0; i < 3; i++) { x.push(GetWaterfall("waterfallML" + i, 42 - i, 6, 1, "M")); }
-
-    return x;
-    }()
+            }, 
+            function() {
+                switch(specialtyHelpers.storedCroutonChoice) {
+                    case "arf_spear":
+                        worldmap.writeText("arf_spear1");
+                        worldmap.forceEndDialog = true;
+                        break;
+                    case "arf_net": worldmap.writeText("arf_good1"); break;
+                    case "arf_bignet": worldmap.writeText("arf_good1"); break;
+                    case "arf_metalrod": worldmap.writeText("arf_good1"); break;
+                    case "arf_ultrarod": worldmap.writeText("arf_ultra1"); break;
+                    default: worldmap.writeText("arf2"); break;
+                }
+            }, 
+            function() {
+                switch(specialtyHelpers.storedCroutonChoice) {
+                    case "arf_net": 
+                    case "arf_bignet": 
+                    case "arf_metalrod":
+                        player.increaseItem("fodder", 20);
+                        quests.completeQuest("croutonsFishingAdventure");
+                        worldmap.writeText("arf_good2");
+                        break;
+                    case "arf_ultrarod":
+                        player.increaseItem("goodfood", 20);
+                        quests.completeQuest("croutonsFishingAdventure");
+                        worldmap.writeText("arf_good2");
+                        break;
+                    default:
+                        worldmap.writeText("arf3");
+                        player.activeQuests["croutonsFishingAdventure"] = 0;
+                        break;
+                }
+            }
+        ], { visible: false })
+    ]
 };

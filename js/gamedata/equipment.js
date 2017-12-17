@@ -4,7 +4,7 @@ function EquipmentDetail(name, displayname, price, sprite, type, addtl) {
     this.price = price;
     this.displayname = displayname;
     this.sprite = sprite;
-	if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
 }
 function GetEquipmentDesc(equipInfo) {
     var str = "";
@@ -71,11 +71,11 @@ function GetEquipment(name) {
 		case "!vitaminCompost": return new EquipmentDetail(name, "Vitamin-Enriched Compost Bin", 50, "compost_7", "compost", { noEnemies: true, amount: 8, bonus: 0.3 });
 		case "!compost2": return new EquipmentDetail(name, "Compost2", 50, "compost_8", "compost", { tech: true, noEnemies: true, amount: 50, canAttack: true, bonus: 0.2 });
 		/* Gloves */
-		case "!weakGloves": return new EquipmentDetail(name, "Gloves", 50, "glove_0", "gloves", { noEnemies: true, amount: 3, bonus: 0.25 });
-		case "!pairGloves": return new EquipmentDetail(name, "Slapping Gloves", 50, "glove_1", "gloves", { noEnemies: true, amount: 2, canAttack: true, bonus: 0.25 });
-		case "!gardenGloves": return new EquipmentDetail(name, "Gardening Gloves", 50, "glove_2", "gloves", { noEnemies: true, amount: 6, bonus: 0.5 });
-		case "!sbGloves": return new EquipmentDetail(name, "Boxing Gloves", 50, "glove_3", "gloves", { noEnemies: true, amount: 3, canAttack: true, bonus: 0.5 });
-		case "!gloves2": return new EquipmentDetail(name, "Gloves2", 50, "glove_4", "gloves", { tech: true, noEnemies: true, amount: 5, canAttack: true, bonus: 0.5 });
+		case "!weakGloves": return new EquipmentDetail(name, "Gloves", 50, "glove_0", "gloves", { noEnemies: true, amount: 3, def: 0.25 });
+		case "!pairGloves": return new EquipmentDetail(name, "Slapping Gloves", 50, "glove_1", "gloves", { noEnemies: true, amount: 2, canAttack: true, def: 0.25 });
+		case "!gardenGloves": return new EquipmentDetail(name, "Gardening Gloves", 50, "glove_2", "gloves", { noEnemies: true, amount: 6, def: 0.5 });
+		case "!sbGloves": return new EquipmentDetail(name, "Boxing Gloves", 50, "glove_3", "gloves", { noEnemies: true, amount: 3, canAttack: true, def: 0.5 });
+		case "!gloves2": return new EquipmentDetail(name, "Gloves2", 50, "glove_4", "gloves", { tech: true, noEnemies: true, amount: 5, canAttack: true, def: 0.5 });
 		/* Watering Cans */
 		case "!weakSoil": return new EquipmentDetail(name, "Watering Can", 50, "can", "soil", { noEnemies: true, speed: 0.15 });
 		case "!fortSoil": return new EquipmentDetail(name, "Fortifying Water", 50, "can_0", "soil", { noEnemies: true, boost: 0.2 });

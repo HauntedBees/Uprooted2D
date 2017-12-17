@@ -30,6 +30,17 @@ var specialtyHelpers = {
         if(items.length > 0) { items.push("lime_nope"); }
         return items;
     },
+    storedCroutonChoice: "",
+    getCroutonItems: function() {
+        var items = [];
+        if(player.hasItem("spear")) { items.push("arf_spear"); }
+        if(player.hasItem("net")) { items.push("arf_net"); }
+        if(player.hasItem("bignet")) { items.push("arf_bignet"); }
+        if(player.hasItem("metalrod")) { items.push("arf_metalrod"); }
+        if(player.hasItem("ultrarod")) { items.push("arf_ultrarod"); }
+        if(items.length > 0) { items.push("lime_nope"); }
+        return items;
+    },
     seedShotArray: [
         function() {
             if(game.target.hasShot-- > 0) { worldmap.finishDialog(); return; }
@@ -62,7 +73,8 @@ var specialtyHelpers = {
         for(var i = 0; i < player.questsCleared.length; i++) {
             switch(player.questsCleared[i]) {
                 case "researchLab": if(worldmap.mapName !== "bridge") { options.push("truck_bridge"); } break;
-                case "helpSeaMonster": if(worldmap.mapName !== "fakefarm") { options.push("truck_city"); } break;
+                case "gotTire": if(worldmap.mapName !== "fakefarm") { options.push("truck_fake"); } break;
+                case "helpSeaMonster": if(worldmap.mapName !== "outerCity") { options.push("truck_city"); } break;
             }
         }
         options.push("truck_nm");
@@ -81,8 +93,16 @@ var specialtyHelpers = {
         function(i) {
             var selOption = specialtyHelpers.getTruckOptions()[i];
             switch(selOption) {
+                case "truck_fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm" }); return;
                 case "truck_home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 6 }, map: "producestand" }); return;
                 case "truck_bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge" }); return;
+                case "truck_city":
+                    if(player.completedQuest("gotTire")) { // todo: make this the city
+                        game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge" });
+                    } else {
+                        game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, playerDir: 0, map: "fakefarm", stayBlack: true });
+                    }
+                    break;
                 default: worldmap.finishDialog(); return;
             }
         }
@@ -374,12 +394,32 @@ function CreateCommonInteractArray(name, dialogMax, enemies, min, max) {
     ];
 };
 var commonInteractArrays = {
+    chick: CreateCommonInteractArray("chickbot", 3, ["chickBot"], 1, 3),
+    piggn: CreateCommonInteractArray("pig", 1, ["piggun", "piggun", "piggun", "chickBot"], 2, 4),
+    golem: CreateCommonInteractArray("golem", 1, ["golem"], 1, 1),
     smonk: CreateCommonInteractArray("seamonk", 8, ["seaMonk", "seaMonk", "seaMonk"], 1, 4),
     fish: CreateCommonInteractArray("fish", 3, ["fishFace", "fishFace", "fishFace", "fishFace", "seaMonk"], 1, 4),
     robo: CreateCommonInteractArray("robo", 5, ["robo"], 1, 2),
     mouse: CreateCommonInteractArray("mouse", 3, ["mouse"], 2, 4),
     sqorl: CreateCommonInteractArray("sqorl", 4, ["sqorl", "sqorl", "sqorl", "mouse"], 1, 3),
     turky: CreateCommonInteractArray("turky", 3, ["turky"], 1, 1),
+    mower: [
+        function() {
+            if(player.hasQuest("fakeFarm") || player.completedQuest("fakeFarm")) {
+                worldmap.writeText("mower" + Math.floor(Math.random() * 2));
+            } else {
+                worldmap.writeText("lawnmower");     
+                worldmap.forceEndDialog = true;           
+            }
+        },
+        function() {
+            var enemies = ["lawnmower"];
+            if(Math.random() < 0.4) { enemies.push("lawnmower"); }
+            if(Math.random() < 0.3) { enemies.push("lawnmower"); }
+            if(Math.random() < 0.1) { enemies.push("piggun"); }
+            combat.startBattle(enemies);
+        }
+    ],
     researchRobo: [
         function() { worldmap.writeText("research" + Math.floor(Math.random() * 5)); },
         function() {

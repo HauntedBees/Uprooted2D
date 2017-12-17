@@ -100,6 +100,7 @@ function GetCrop(name) {
 		case "coconut": return new CropDetail(name, "Coconut", 500, "tree", 2, 10, 5, 200, 3, 0, 1, 0, 0);
 		case "gmocorn": return new CropDetail(name, "GMO Corn", 500, "veg", 1, 5, 4, 200, 0, 1, 1, 1, 1);
 		case "ultrarod": return new CropDetail(name, "Master Bait", 500, "rod", 1, 20, 2, 5000, 0, 1, 1, 1, 1, { catchLuck: 0.99, req: 0.5 });
+		case "goodfood": return new CropDetail(name, "Delicious Food", 500, "food", 1, 0, 1, 5000, 0, 0, 0, 0, 0);
 		/* Enemies */
 		case "algae": return new CropDetail(name, "Algae", 0, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { rotten: true });
 		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { rotten: true });
