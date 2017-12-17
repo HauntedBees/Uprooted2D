@@ -91,6 +91,11 @@ var stores = {
         ],
         opening: "s_mermhello", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
     },
+    "mermaidinn": {
+        img: "shops/merm", innId: "mermaidinn",
+        wares: [ { product: "sleep", price: 6, type: "inn" } ],
+        opening: "s_inn1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_innpurch"
+    },
     "cworker": {
         img: "shops/dwarf",
         wares: [
