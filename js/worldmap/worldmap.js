@@ -15,7 +15,7 @@ var worldmap = {
         this.dialogState = 0;
         this.mapName = args.map;
         this.pos = args.init;
-        this.playerDir = args.playerDir || this.playerDir || 2;
+        this.playerDir = (args.playerDir === undefined ? (this.playerDir || 2) : args.playerDir);
         this.dialogData = null;
         this.forceEndDialog = false;
         this.inWaterfall = false;
