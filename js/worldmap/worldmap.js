@@ -139,13 +139,13 @@ var worldmap = {
         }
         game.target = null;
     },
-    writeText: function(t, choices, isRefresh, formatting) {
-        gfx.clearSome(["menuA", "menutext", "menucursorA"]);
-        var drawY = (worldmap.pos.y <= 2.5) ? 7.5 : 0;
-        gfx.drawFullbox(drawY);
+    writeText: function(t, choices, isRefresh, formatting, overBlack) {
+        gfx.clearSome(["menuA", "menutext", "menucursorA", "menuOverBlack", "menutextOverBlack"]);
+        var drawY = (worldmap.pos.y <= 3) ? 7.5 : 0;
+        gfx.drawFullbox(drawY, overBlack);
         var actualText = GetText(t);
         if(formatting) { actualText = actualText.replace("{0}", formatting); }
-        gfx.drawFullText(actualText, drawY * 16);
+        gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
         if(choices === undefined) {
             worldmap.dialogData = { };
             return;

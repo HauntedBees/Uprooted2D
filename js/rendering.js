@@ -176,7 +176,7 @@ var gfx = {
         return gfx.ctx["menutext"].measureText(t).width;
     },
     drawBottomFullText: function(t, color) {  gfx.drawFullText(t, 121, color); },
-    drawFullText: function(t, y, color) { gfx.drawWrappedText(t, 4, 11 + (y || 0), 235, color); },
+    drawFullText: function(t, y, color, overBlack) { gfx.drawWrappedText(t, 4, 11 + (y || 0), 235, color, (overBlack ? "menutextOverBlack" : undefined)); },
     drawWrappedText: function(t, x, y, maxWidth, color, layer) {
         layer = layer || "menutext";
         maxWidth *= gfx.scale;
@@ -198,7 +198,7 @@ var gfx = {
         ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
     },
     setAlpha: function(layer, value) { gfx.ctx[layer].globalAlpha = value; },
-    drawFullbox: function(y) { gfx.drawInfobox(16, 2.5, y || 0); },
+    drawFullbox: function(y, overBlack) { gfx.drawInfobox(16, 2.5, y || 0, (overBlack ? "menuOverBlack" : undefined)); },
     drawInfobox: function(w, h, y, layer) {
         y = (y || 0) * 16;
         layer = layer || "menuA";

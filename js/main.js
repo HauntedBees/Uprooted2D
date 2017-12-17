@@ -22,8 +22,10 @@ var game = {
     currentInputHandler: worldmap, target: null, language: "en-dm",
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
                     "maps/producestand","maps/forest", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacilitynew",
-                    "maps/bridge", "maps/underwaternew", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home"],
-    canvasLayers: ["background", "characters", "foreground", "menuA", "menuB", "menucursorA", "menucursorB", "menucursorC", "menutext", "tutorial", "savegen"], 
+                    "maps/bridge", "maps/underwaternew", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home",
+                    "maps/fakefarm", "barncover"],
+    canvasLayers: ["background", "background2", "characters", "foreground", "menuA", "menuB", "menucursorA", 
+                    "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
         var canvasObj = {};
         for(var i = 0; i < game.canvasLayers.length; i++) {
@@ -75,6 +77,7 @@ var game = {
     midTransitionPoint: function() {
         clearInterval(game.transitionInfo.animIdx);
         game.innerTransition(game.transitionInfo.from, game.transitionInfo.to, game.transitionInfo.arg);
+        if(game.transitionInfo.arg.stayBlack) { return; }
         game.startTransitionAnim(-1);
     },
     finishTransition: function() {
