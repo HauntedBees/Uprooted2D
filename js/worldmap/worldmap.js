@@ -35,16 +35,13 @@ var worldmap = {
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
-            if(e.autoplay) {
-                this.inDialogue = true;
-                game.target = e;
-                if(e.interact[0](0, e)) { return; }
-            }
+            if(e.autoplay) { targetToAutoplay = e; }
         }
         this.refreshMap();
-        if(args.postCombat !== undefined) {
+        if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
+        if(targetToAutoplay !== null) {
             this.inDialogue = true;
-            game.target = this.importantEntities[args.postCombat];
+            game.target = targetToAutoplay;
             game.target.interact[0](0, game.target);
             return;
         }
