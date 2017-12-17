@@ -96,9 +96,7 @@ var worldmap = {
         worldmap.refreshMap();
     },
     refreshMap: function() {
-        gfx.clearLayer("background");
-        gfx.clearLayer("characters");
-        gfx.clearLayer("foreground"); // TODO: actually put things on the foreground
+        gfx.clearSome(["background", "background2", "characters", "foreground"]); // TODO: actually put things on the foreground
         var offset = gfx.drawMap(this.mapName, this.pos.x, this.pos.y);
         var layers = [];
         var ymax = collisions[this.mapName].length;
@@ -106,6 +104,10 @@ var worldmap = {
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
             if(!e.visible || e.pos.y < 0 || e.pos.y >= ymax) { continue; }
+            if(e.jumbo) {
+                gfx.drawJumbo(e.filename, (offset.x - e.pos.x), (offset.y - e.pos.y), e.w, e.h, e.offset.x, e.offset.y);
+                continue;
+            }
             layers[Math.round(e.pos.y)].push(e.anim.getFrame(e.pos, e.dir, e.moving));
         }
         var animDir = this.playerDir, moving = true;
