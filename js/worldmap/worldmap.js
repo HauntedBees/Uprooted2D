@@ -2,12 +2,13 @@ var worldmap = {
     freeMovement: true, savedImage: "", angryBees: false,
     pos: {x: 0, y: 0}, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
-    mapName: "", fullAnimIdx: 0,
+    mapName: "", fullAnimIdx: 0, forcedY: -1, 
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
     waitForAnimation: false, animIdx: 0, inWaterfall: false,
     setup: function(args) {
         this.forceMove = false;
+        this.forcedY = -1;
         this.forcedPlayerInfo = false;
         this.savedImage = "";
         this.inDialogue = false;
@@ -120,7 +121,9 @@ var worldmap = {
         else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
         else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
         else { moving = this.forceMove; }
-        layers[Math.round(this.pos.y)].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
+        if(this.mapName !== "gameover") {
+            layers[this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
+        }
         for(var y = 0; y < ymax; y++) {
             var funcs = layers[y];
             for(var i = 0; i < funcs.length; i++) {

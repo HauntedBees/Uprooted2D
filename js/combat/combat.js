@@ -251,6 +251,19 @@ var combat = {
     fuckingDead: function() {
         var inn = inns[player.lastInn];
         if(game.target !== null) {
+            if(game.target.nonStandardGameOver !== undefined) {
+                combat.wrapUpCombat();
+                var postCombat = game.target.nonStandardGameOver;
+                worldmap.clearTarget();
+                clearInterval(combat.charAnimIdx);
+                game.transition(combat.inbetween, worldmap, {
+                    init: { x: 8.5, y: 9 },
+                    map: "gameover",
+                    noEntityUpdate: true,
+                    postCombat: postCombat
+                });
+                return;
+            }
             game.target.failed = true;
             game.target = null;
         }
