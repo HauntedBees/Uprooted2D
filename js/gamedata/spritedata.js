@@ -104,6 +104,11 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "notdrugs": [28, 13],
+        "notdrugsseed": [27, 13],
+        "notdrugs0": [29, 13],
+        "notdrugs1": [30, 13],
+        "notdrugs2": [31, 13],
         "gmocorn": [10, 20],
         "gmocornseed": [24, 13],
         "coconut": [23, 13],

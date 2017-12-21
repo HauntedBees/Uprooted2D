@@ -3050,5 +3050,115 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "*click*", 
 		"type": "map"
+	},
+	"kindLady0": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Oh, hello, dearie! Looks like you're not too afraid of these bad men either, are you?", 
+		"type": "map"
+	},
+	"kindLady1": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Me? They may be criminals, but even they aren't going to bother an old lady like me.", 
+		"type": "map"
+	},
+	"kindLady2": {
+		"en-us": "", 
+		"en-dm": "Old Lady: As long as I keep to myself, feeding the birds and not insulting them too much, they leave me alone.", 
+		"type": "map"
+	},
+	"kindLady3": {
+		"en-us": "", 
+		"en-dm": "Old Lady: But I have run into a bit of a snag there... I've run out of birdseed!", 
+		"type": "map"
+	},
+	"kindLady4": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Normally I'd just go buy more, but with these mobsters here nobody is delivering any shipments to the stores!", 
+		"type": "map"
+	},
+	"kindLady5": {
+		"en-us": "", 
+		"en-dm": "Old Lady: So if you could find some food to feed these birds, I'd be ever so grateful!", 
+		"type": "map"
+	},
+	"kindLadyX": {
+		"en-us": "", 
+		"en-dm": "Old Lady: If you have any food for birds, I'd be ever so grateful if you could share some with me!", 
+		"type": "map"
+	},
+	"kindLadyQ": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Do you have any bird food for me?", 
+		"type": "map"
+	},
+	"lady_fodder": {
+		"en-us": "", 
+		"en-dm": "Give Fodder.", 
+		"type": "map"
+	},
+	"lady_corn": {
+		"en-us": "", 
+		"en-dm": "Give Corn.", 
+		"type": "map"
+	},
+	"lady_rice": {
+		"en-us": "", 
+		"en-dm": "Give Rice.", 
+		"type": "map"
+	},
+	"lady_goodfood": {
+		"en-us": "", 
+		"en-dm": "Give Delicious Food.", 
+		"type": "map"
+	},
+	"kindLadyNorm0": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Oh, oh! This is perfect! Thank you very much, dearie!", 
+		"type": "map"
+	},
+	"kindLadyNorm1": {
+		"en-us": "", 
+		"en-dm": "Old Lady: I know it's not much, but I can't let this good deed go unrewarded!", 
+		"type": "map"
+	},
+	"kindLadyNorm2": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Now, now, don't give me that! I'm rewarding you, whether you like it or not!", 
+		"type": "map"
+	},
+	"kindLadyNorm3": {
+		"en-us": "", 
+		"en-dm": "You got 10,000G and 20 Asparagus Seeds.", 
+		"type": "map"
+	},
+	"kindLadyThanks": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Thank you again for the food, dearie. The birds are much happier now!", 
+		"type": "map"
+	},
+	"kindLadyGood0": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Oh dearie dearie me! This is some very fancy animal food! Are you sure you're okay with giving it to me?", 
+		"type": "map"
+	},
+	"kindLadyGood1": {
+		"en-us": "", 
+		"en-dm": "Old Lady: Well, thank you VERY much, dear! If the birds could talk, they'd be thanking you, too!", 
+		"type": "map"
+	},
+	"kindLadyGood2": {
+		"en-us": "", 
+		"en-dm": "Old Lady: But I can't accept such a wonderful gift without rewarding you, too! Please, take this! No, no, I insist!", 
+		"type": "map"
+	},
+	"kindLadyGood3": {
+		"en-us": "", 
+		"en-dm": "You got 20,000G and 6 Funny Mushroom Seeds.", 
+		"type": "map"
+	},
+	"notdrugs": {
+		"en-us": "", 
+		"en-dm": "Totally ordinary mushroom seeds. Their spores can stun enemies. They look pretty rare so you should definitely hold onto them until the final battle and then forget to use them.", 
+		"type": "item"
 	}
 };

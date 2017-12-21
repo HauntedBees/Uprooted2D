@@ -2275,6 +2275,10 @@ var mapentities = {
         GetCommonEntity("Bruno", 44, 33, 13, 2, undefined, undefined, { sy: 10, moving: true, solid: false, storageKey: "bruno", inside: true }),
         GetCommonEntity("BarL", 39, 39.875, 15, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
         GetCommonEntity("BarM", 40, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
-        GetCommonEntity("BarR", 41, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false })
+        GetCommonEntity("BarR", 41, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
+        GetCommonEntity("Pigeon1", 30, 22, 14, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true }),
+        GetCommonEntity("Pigeon2", 36, 21, 13, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true }),
+        GetCommonEntity("Pigeon3", 33, 22, 14, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true }),
+        GetCommonEntity("Abuela", 34, 20, 17, 0, undefined, [], { sy: 4, noChange: true })
     ]
 };
