@@ -10,8 +10,13 @@ var debug = {
         mapentities["farm"].push({ name: "DebugFriend", pos: { x: 0, y: 0 }, solid: false, autoplay: true, interact: allText });
         game.innerTransition(game.currentInputHandler, worldmap, { init: { x: 1, y: 1 }, map: "farm" });
     },
-    QuickTest: function() { worldmap.noClip = true; me.PLAYERMOVESPEED = 0.5; }, 
-    UndoQuickTest: function() { worldmap.noClip = false; me.PLAYERMOVESPEED = 0.25; }
+    QuickTest: function() { worldmap.noClip = true; me.PLAYERMOVESPEED = 0.5; },
+    UndoQuickTest: function() { worldmap.noClip = false; me.PLAYERMOVESPEED = 0.25; },
+    UnlockTruck: function(i) { 
+        if(i >= 1) { player.questsCleared.push("researchLab"); }
+        if(i >= 2) { player.questsCleared.push("helpSeaMonster"); }
+        if(i >= 3) { player.questsCleared.push("gotTire"); }
+    }
 };
 worldmap.title = {
     cursory: 0, showContinue: false,
