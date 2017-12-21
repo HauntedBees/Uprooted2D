@@ -93,12 +93,12 @@ var specialtyHelpers = {
         function(i) {
             var selOption = specialtyHelpers.getTruckOptions()[i];
             switch(selOption) {
-                case "truck_fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm" }); return;
-                case "truck_home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 6 }, map: "producestand" }); return;
-                case "truck_bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge" }); return;
+                case "truck_fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm", playerDir: 2 }); return;
+                case "truck_home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 6 }, map: "producestand", playerDir: 2 }); return;
+                case "truck_bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge", playerDir: 2 }); return;
                 case "truck_city":
-                    if(player.completedQuest("gotTire")) { // todo: make this the city
-                        game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge" });
+                    if(player.completedQuest("gotTire")) {
+                        game.transition(game.currentInputHandler, worldmap, { init: { x: 52,  y: 50 }, map: "southcity", playerDir: 2 });
                     } else {
                         game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, playerDir: 0, map: "fakefarm", stayBlack: true });
                     }

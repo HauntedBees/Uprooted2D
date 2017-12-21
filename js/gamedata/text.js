@@ -2705,5 +2705,350 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "Mermaid Inn", 
 		"type": "map"
+	},
+	"entercity0": {
+		"en-us": "", 
+		"en-dm": "!!!: Hey! Who's that over there??!", 
+		"type": "map"
+	},
+	"entercity1": {
+		"en-us": "", 
+		"en-dm": "???: Psst! Over here! Come quick!", 
+		"type": "map"
+	},
+	"entercity2": {
+		"en-us": "", 
+		"en-dm": "???: Quick, hide behind the bar! I'll explain later!", 
+		"type": "map"
+	},
+	"entercity3": {
+		"en-us": "", 
+		"en-dm": "???: Ah, ah! Mr. Bruno! Welcome! What can I--", 
+		"type": "map"
+	},
+	"entercity4": {
+		"en-us": "", 
+		"en-dm": "Bruno: I just saw someone run in here. Who was it?", 
+		"type": "map"
+	},
+	"entercity5": {
+		"en-us": "", 
+		"en-dm": "???: Oh that--", 
+		"type": "map"
+	},
+	"entercity6": {
+		"en-us": "", 
+		"en-dm": "Bruno: Was it the farmer?", 
+		"type": "map"
+	},
+	"entercity7": {
+		"en-us": "", 
+		"en-dm": "???: What? No! Don't be silly! That was just me! I was chasing a rat out!", 
+		"type": "map"
+	},
+	"entercity8": {
+		"en-us": "", 
+		"en-dm": "Bruno: ...you got rats?", 
+		"type": "map"
+	},
+	"entercity9": {
+		"en-us": "", 
+		"en-dm": "???: Oh, no, no, no! Just one or two from time to time!", 
+		"type": "map"
+	},
+	"entercity10": {
+		"en-us": "", 
+		"en-dm": "Bruno: I called out when I saw you... why didn't you answer?", 
+		"type": "map"
+	},
+	"entercity11": {
+		"en-us": "", 
+		"en-dm": "???: Oh, I'm very very sorry, Mr. Bruno! I didn't hear you! My apologies!", 
+		"type": "map"
+	},
+	"entercity12": {
+		"en-us": "", 
+		"en-dm": "Bruno: ...", 
+		"type": "map"
+	},
+	"entercity13": {
+		"en-us": "", 
+		"en-dm": "Bruno: I'll have a drink. On the house. No rats.", 
+		"type": "map"
+	},
+	"entercity14": {
+		"en-us": "", 
+		"en-dm": "???: One drink, coming right up!", 
+		"type": "map"
+	},
+	"entercity15": {
+		"en-us": "", 
+		"en-dm": "Bruno: You know, if you've got rats, that might be a health code violation.", 
+		"type": "map"
+	},
+	"entercity16": {
+		"en-us": "", 
+		"en-dm": "???: Oh, don't worry, Mr. Bruno! This building is very clean! We just passed our last inspection a few months ago! I--", 
+		"type": "map"
+	},
+	"entercity17": {
+		"en-us": "", 
+		"en-dm": "Bruno: I think I might know a health inspector and uh, Mr. Ferrante might not agree with you, there.", 
+		"type": "map"
+	},
+	"entercity18": {
+		"en-us": "", 
+		"en-dm": "???: ...What are you trying to say, Bruno?", 
+		"type": "map"
+	},
+	"entercity19": {
+		"en-us": "", 
+		"en-dm": "Bruno: I'm just saying that it'd be unfortunate for your little lemonade stand here to go under because of a few rats.", 
+		"type": "map"
+	},
+	"entercity20": {
+		"en-us": "", 
+		"en-dm": "Bruno: I don't, ah, HAVE to tell Mr. Ferrante about it, though. Just something to think about.", 
+		"type": "map"
+	},
+	"entercity21": {
+		"en-us": "", 
+		"en-dm": "It sounds like this mobster is trying to extort this bartender! What will you do?", 
+		"type": "map"
+	},
+	"mobchoice0": {
+		"en-us": "", 
+		"en-dm": "Stand up for the bartender.", 
+		"type": "choice"
+	},
+	"mobchoice1": {
+		"en-us": "", 
+		"en-dm": "Stay hidden for now.", 
+		"type": "choice"
+	},
+	"entercity0_0": {
+		"en-us": "", 
+		"en-dm": "Bruno: Hey, what the--?!", 
+		"type": "map"
+	},
+	"entercity0_1": {
+		"en-us": "", 
+		"en-dm": "???: I told you to-- I mean, EGADS! THAT'S NOT A RAT! THAT'S A HUMAN WOMAN!", 
+		"type": "map"
+	},
+	"entercity0_2": {
+		"en-us": "", 
+		"en-dm": "Bruno: THAT'S THE FARMER!!", 
+		"type": "map"
+	},
+	"entercity0_3": {
+		"en-us": "", 
+		"en-dm": "???: RATS CAN'T BE FARMERS!! THEIR TINY HANDS CAN'T HOLD TOOLS!! THIS IS ALL VERY SURPRISING TO ME!!", 
+		"type": "map"
+	},
+	"entercity0_4": {
+		"en-us": "", 
+		"en-dm": "Bruno: Shut up! I'll deal with YOU later!", 
+		"type": "map"
+	},
+	"entercity0_5": {
+		"en-us": "", 
+		"en-dm": "Bruno: You're goin' down, lady!", 
+		"type": "map"
+	},
+	"entercity1_0": {
+		"en-us": "", 
+		"en-dm": "???: ...I think I understand what you're getting at.", 
+		"type": "map"
+	},
+	"entercity1_1": {
+		"en-us": "", 
+		"en-dm": "The bartender opens the cash register, pulls out some money, and hands it to the mobster.", 
+		"type": "map"
+	},
+	"entercity1_2": {
+		"en-us": "", 
+		"en-dm": "Bruno: Hmm, yeah, I think I can forget about those rats now.", 
+		"type": "map"
+	},
+	"entercity1_3": {
+		"en-us": "", 
+		"en-dm": "Bruno: Keep up the good work, and if you see that farmer, TELL ONE OF US IMMEDIATELY.", 
+		"type": "map"
+	},
+	"entercity1_4": {
+		"en-us": "", 
+		"en-dm": "???: Of course I will! Absolutely!", 
+		"type": "map"
+	},
+	"entercity1_5": {
+		"en-us": "", 
+		"en-dm": "???: ... ... ...", 
+		"type": "map"
+	},
+	"entercity1_6": {
+		"en-us": "", 
+		"en-dm": "???: ...Okay, I think it's safe for you to come out now.", 
+		"type": "map"
+	},
+	"entercity1_7": {
+		"en-us": "", 
+		"en-dm": "???: I'm sorry you had to see that.", 
+		"type": "map"
+	},
+	"entercity0_pb0": {
+		"en-us": "", 
+		"en-dm": "Bruno: Ugh! Why I oughta...", 
+		"type": "map"
+	},
+	"entercity0_pb1": {
+		"en-us": "", 
+		"en-dm": "The mobster collapses on the ground.", 
+		"type": "map"
+	},
+	"entercity0_pb2": {
+		"en-us": "", 
+		"en-dm": "???: Wow... we're lucky he's one of the dumber ones. If I tell him he just drank too much and passed out, he'll probably buy it.", 
+		"type": "map"
+	},
+	"entercity0_pb3": {
+		"en-us": "", 
+		"en-dm": "???: ...Thank you. Thank you very much. You really helped me out just now.", 
+		"type": "map"
+	},
+	"entercity0_pb4": {
+		"en-us": "", 
+		"en-dm": "???: If you need to stay here, you can stay the night any time. No charge for you.", 
+		"type": "map"
+	},
+	"entercity2_0": {
+		"en-us": "", 
+		"en-dm": "???: Anyway, I'm Skumpy, the owner of this inn. As you might have guessed, we have a bit of a mob problem.", 
+		"type": "map"
+	},
+	"entercity2_1": {
+		"en-us": "", 
+		"en-dm": "Skumpy: A few days ago a bunch of mobsters showed up and said they'd been hired to monitor the neighborhood.", 
+		"type": "map"
+	},
+	"entercity2_2": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Apparently some farmer would be probably be coming through here to get to the city, and they were going to cut her off.", 
+		"type": "map"
+	},
+	"entercity2_3": {
+		"en-us": "", 
+		"en-dm": "Skumpy: I think it's safe to say that you're the farmer they're looking for.", 
+		"type": "map"
+	},
+	"entercity2_4": {
+		"en-us": "", 
+		"en-dm": "Skumpy: I can't say I know what they'll do to you if they catch you, or why they were even hired.", 
+		"type": "map"
+	},
+	"entercity2_5": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Maybe you have some idea, but I think the less I know about this, the better.", 
+		"type": "map"
+	},
+	"entercity2_6": {
+		"en-us": "", 
+		"en-dm": "Skumpy: But whoever you pissed off, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
+		"type": "map"
+	},
+	"entercity2_7": {
+		"en-us": "", 
+		"en-dm": "Skumpy: They haven't hurt anybody, but they make it pretty clear that the best way to keep it that way is by paying their \"fees.\"", 
+		"type": "map"
+	},
+	"entercity2_8": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Either way, the city is swarming with them, so if you're still determined to get into the city, you'd better be careful.", 
+		"type": "map"
+	},
+	"entercity2_9": {
+		"en-us": "", 
+		"en-dm": "Skumpy: They've set up a sort of home base just west of here, so if stealth isn't your thing, you can try to deal with them directly.", 
+		"type": "map"
+	},
+	"entercity2_10": {
+		"en-us": "", 
+		"en-dm": "Skumpy: That's all hypothetical of course. I'm sure you're pretty tough if someone thought hiring the mob was necessary to take care of you...", 
+		"type": "map"
+	},
+	"entercity2_11": {
+		"en-us": "", 
+		"en-dm": "Skumpy: ...but trying to storm a building full of armed criminals all by yourself is a suicide mission.", 
+		"type": "map"
+	},
+	"entercity2_12": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Maybe if you could find a way to sneak in through the back or something and take on their boss directly..", 
+		"type": "map"
+	},
+	"entercity2_13": {
+		"en-us": "", 
+		"en-dm": "Skumpy: ...no no, I need to stop giving you ideas. Stay to the east of town. That's where most of the shops are, anyway.", 
+		"type": "map"
+	},
+	"entercity2_14": {
+		"en-us": "", 
+		"en-dm": "Skumpy: You can hide in them if you need to, and if you feel like buying any supplies, I'm sure you can find something you need.", 
+		"type": "map"
+	},
+	"entercity2_15": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Good luck, stranger.", 
+		"type": "map"
+	},
+	"entercityBAD0": {
+		"en-us": "", 
+		"en-dm": "Bruno: ... ... Yeah, hey boss. It's me.", 
+		"type": "map"
+	},
+	"entercityBAD1": {
+		"en-us": "", 
+		"en-dm": "Bruno: Yeah, I found the farmer at Skumpy's. She's been, ah, \"taken care of.\"", 
+		"type": "map"
+	},
+	"entercityBAD2": {
+		"en-us": "", 
+		"en-dm": "Bruno: ...Yes, by \"taken care of\" I mean she is dead. She is a dead corpse who isn't alive no more because I shot her a lot with bullets.", 
+		"type": "map"
+	},
+	"entercityBAD3": {
+		"en-us": "", 
+		"en-dm": "Bruno: Yes, bullets from my gun, boss. Gun bullets.", 
+		"type": "map"
+	},
+	"entercityBAD4": {
+		"en-us": "", 
+		"en-dm": "Bruno: Boss, your complete and utter inability to understand metaphors or read between the lines is really a burden to this mob.", 
+		"type": "map"
+	},
+	"entercityBAD5": {
+		"en-us": "", 
+		"en-dm": "Bruno: Yes, yes, she is DEAD. NOT ALIVE. SHE HAS CEASED TO BE. SHE IS SOON TO BE BURIED.", 
+		"type": "map"
+	},
+	"entercityBAD6": {
+		"en-us": "", 
+		"en-dm": "Bruno: ...Yes, I suppose she could also be cremated but I feel like you are missing the point here, boss.", 
+		"type": "map"
+	},
+	"entercityBAD7": {
+		"en-us": "", 
+		"en-dm": "Bruno: Yes, yes, there are many ways to dispose of a dead body, boss. That's not what is important right now.", 
+		"type": "map"
+	},
+	"entercityBAD8": {
+		"en-us": "", 
+		"en-dm": "Bruno: Boss... BOSS... Boss I'm hanging up now. Boss-- ah, screw it.", 
+		"type": "map"
+	},
+	"entercityBAD9": {
+		"en-us": "", 
+		"en-dm": "*click*", 
+		"type": "map"
 	}
 };

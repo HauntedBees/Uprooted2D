@@ -1932,5 +1932,349 @@ var mapentities = {
                 }
             }
         ], { visible: false })
+    ],
+    "southcity": [
+        { name: "mobCover", storageKey: "mobCover", jumbo: true, filename: "mobcover", visible: true, w: 772, h: 512, offset: { x: 0, y: 0 }, pos: { x: 9, y: 27 } },
+        { name: "skumpyCover", storageKey: "skumpyCover", jumbo: true, filename: "skumpycover", visible: true, w: 396, h: 256, offset: { x: 1, y: 1 }, pos: { x: 36, y: 39 } },
+        GetCommonEntity("EnterMob", 15, 33, 0, 0, undefined, [
+            function() {
+                worldmap.importantEntities["mobCover"].visible = false;
+                worldmap.forceEndDialog = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
+                worldmap.finishDialog();
+            }
+        ], { visible: false, solid: false }),
+        GetCommonEntity("ExitMob", 15, 34, 0, 0, undefined, [
+            function() {
+                worldmap.importantEntities["mobCover"].visible = true;
+                worldmap.forceEndDialog = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+                worldmap.finishDialog();
+            }
+        ], { visible: false, solid: false }),
+        GetCommonEntity("IntroSkumpyCutscene", 43, 40, 0, 0, undefined, [
+            GetSpeak("entercity0"), // 0
+            function() {
+                worldmap.playerDir = 2;
+                worldmap.writeText("entercity1");
+                worldmap.importantEntities["skumpy"].visible = true;
+                worldmap.refreshMap();
+            },
+            function() {
+                gfx.clearSome(["menuA", "menutext", "menucursorA"]);
+                worldmap.importantEntities["skumpy"].visible = false;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y >= 43) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.playerDir = 1;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.x -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.x <= 41) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.playerDir = 0;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y <= 42) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.importantEntities["skumpyCover"].visible = false;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
+                worldmap.importantEntities["skumpy"].visible = true;
+                worldmap.importantEntities["skumpy"].pos = { x: 40, y: 39 };
+                worldmap.importantEntities["skumpy"].anim.shiftX(10);
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y <= 40.75) { FinishAnim(); }
+                }, 10); 
+            }, // 5
+            GetSpeak("entercity2"),
+            function() {
+                gfx.clearSome(["menuA", "menutext", "menucursorA"]);
+                worldmap.playerDir = 1;
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.x -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.x <= 38) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.forcedY = 0;
+                worldmap.playerDir = 0;
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y <= 39) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.playerDir = 3;
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.x += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.x >= 41) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.playerDir = 2;
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y >= 39.75) { FinishAnim(); }
+                }, 10);
+            }, // 10
+            function() {
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.y += 0.05;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.y >= 43) { FinishAnim(); }
+                }, 10);
+            },
+            function() {
+                worldmap.importantEntities["bruno"].dir = 1;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.x -= 0.05;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.x <= 41) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.importantEntities["bruno"].dir = 0;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.y -= 0.05;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.y <= 40.75) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.importantEntities["bruno"].dir = 1;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.x -= 0.05;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.x <= 40) { FinishAnim(); }
+                }, 10); 
+            }, // 15
+            function() {
+                worldmap.importantEntities["bruno"].dir = 0;
+                worldmap.importantEntities["bruno"].moving = false;
+                worldmap.refreshMap();
+                worldmap.writeText("entercity3");
+            },
+            GetSpeak("entercity4"),
+            GetSpeak("entercity5"),
+            GetSpeak("entercity6"),
+            GetSpeak("entercity7"), // 20
+            GetSpeak("entercity8"),
+            GetSpeak("entercity9"),
+            GetSpeak("entercity10"),
+            GetSpeak("entercity11"),
+            GetSpeak("entercity12"),
+            GetSpeak("entercity13"),
+            GetSpeak("entercity14"),
+            GetSpeak("entercity15"),
+            GetSpeak("entercity16"),
+            GetSpeak("entercity17"), // 30
+            GetSpeak("entercity18"),
+            GetSpeak("entercity19"),
+            GetSpeak("entercity20"),
+            GetSpeak("entercity21", ["mobchoice0", "mobchoice1"]),
+            function(i) {
+                if(i === 0) {
+                    worldmap.pos.y = 39.25;
+                    worldmap.importantEntities["bruno"].dir = 3;
+                    worldmap.importantEntities["skumpy"].anim.shiftX(9);
+                    worldmap.refreshMap();
+                    worldmap.writeText("entercity0_0");
+                    worldmap.dialogData.nextDialogState = 63;
+                } else {
+                    worldmap.writeText("entercity1_0");
+                }
+            }, // 35
+            GetSpeak("entercity1_1"),
+            GetSpeak("entercity1_2"),
+            GetSpeak("entercity1_3"),
+            GetSpeak("entercity1_4"),
+            GetSpeak("entercity1_5"), // 40
+            function() {
+                worldmap.importantEntities["bruno"].dir = 3;
+                worldmap.importantEntities["bruno"].moving = true;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.x += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.x >= 41) { FinishAnim(); }
+                }, 10);
+            },
+            function() {
+                worldmap.importantEntities["bruno"].dir = 2;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.y += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.y >= 42) { FinishAnim(); }
+                }, 10); 
+            },
+            function() {
+                worldmap.importantEntities["bruno"].dir = 3;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.x += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.x >= 44) { FinishAnim(); }
+                }, 10);
+            },
+            function() {
+                worldmap.importantEntities["bruno"].dir = 0;
+                worldmap.refreshMap();
+                worldmap.waitForAnimation = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.importantEntities["bruno"].pos.y -= 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.importantEntities["bruno"].pos.y <= 33) { FinishAnim(); }
+                }, 10);
+            },
+            function() {
+                var temp = game.target;
+                game.target = worldmap.importantEntities["bruno"];
+                worldmap.clearTarget();
+                game.target = temp;
+                worldmap.writeText("entercity1_6");
+            }, // 45
+            function() {
+                worldmap.writeText("entercity1_7");
+                worldmap.pos.y = 39.25;
+                worldmap.playerDir = 1;
+                worldmap.refreshMap();
+            },
+            GetSpeak("entercity2_0"),
+            GetSpeak("entercity2_1"),
+            GetSpeak("entercity2_2"),
+            GetSpeak("entercity2_3"),
+            GetSpeak("entercity2_4"), // 51
+            GetSpeak("entercity2_5"),
+            GetSpeak("entercity2_6"),
+            GetSpeak("entercity2_7"),
+            GetSpeak("entercity2_8"),
+            GetSpeak("entercity2_9"), // 56
+            GetSpeak("entercity2_10"),
+            GetSpeak("entercity2_11"),
+            GetSpeak("entercity2_12"),
+            GetSpeak("entercity2_13"),
+            GetSpeak("entercity2_14"), // 61
+            GetSpeak("entercity2_15"),
+            function() {
+                worldmap.forceEndDialog = true;
+                worldmap.clearTarget();
+                worldmap.importantEntities["skumpyCover"].visible = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+                game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
+            },
+            GetSpeak("entercity0_1"),
+            GetSpeak("entercity0_2"),
+            GetSpeak("entercity0_3"),
+            GetSpeak("entercity0_4"), // 65
+            GetSpeak("entercity0_5"),
+            function() { combat.startBattle(["mobsty1"]); }
+        ], { visible: false, solid: false, isRow: true, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene" }),
+        { name: "beatBruno", storageKey: "beatBruno", pos: { x: -1, y: -1}, interact: [
+            function() {
+                worldmap.writeText("entercity0_pb0");
+                worldmap.importantEntities["bruno"].anim.shiftX(16);
+                worldmap.importantEntities["bruno"].anim.shiftY(4);
+                worldmap.importantEntities["bruno"].dir = 0;
+                worldmap.refreshMap();
+            },
+            GetSpeak("entercity0_pb1"),
+            GetSpeak("entercity0_pb2"),
+            GetSpeak("entercity0_pb3"),
+            GetSpeak("entercity0_pb4"),
+            GetSpeak("entercity2_0"),
+            GetSpeak("entercity2_1"),
+            GetSpeak("entercity2_2"),
+            GetSpeak("entercity2_3"),
+            GetSpeak("entercity2_4"),
+            GetSpeak("entercity2_5"),
+            GetSpeak("entercity2_6"),
+            GetSpeak("entercity2_7"),
+            GetSpeak("entercity2_8"),
+            GetSpeak("entercity2_9"),
+            function() {
+                game.target = worldmap.importantEntities["introCutscene"];
+                worldmap.clearTarget();
+                worldmap.importantEntities["skumpyCover"].visible = true;
+                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+                game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
+            }
+        ]},
+        { name: "brunoKill", storageKey: "brunoKill", pos: { x: -1, y: -1}, interact: [
+            GetSpeak("entercityBAD0"),
+            GetSpeak("entercityBAD1"),
+            GetSpeak("entercityBAD2"),
+            GetSpeak("entercityBAD3"),
+            GetSpeak("entercityBAD4"),
+            GetSpeak("entercityBAD5"),
+            GetSpeak("entercityBAD6"),
+            GetSpeak("entercityBAD7"),
+            GetSpeak("entercityBAD8"),
+            GetSpeak("entercityBAD9"),
+            function() {
+                gfx.clearSome(["menuA", "menutext", "menucursorA"]);
+                worldmap.waitForAnimation = true;
+                worldmap.forceMove = true;
+                worldmap.animIdx = setInterval(function() {
+                    worldmap.pos.y += 0.025;
+                    worldmap.refreshMap();
+                    if(worldmap.pos.y >= 21) { FinishAnim(); }
+                }, 10); 
+            },
+            function() { console.log("wait for confirmation"); },
+            function() { game.transition(game.currentInputHandler, worldmap.title); }
+        ]},
+        GetCommonEntity("AFuckingTruckL", 52, 48, 4, 0, undefined, specialtyHelpers.truckArray, { big: true, noChange: true }),
+        GetCommonEntity("AFuckingTruckR", 54, 48, 5, 0, undefined, specialtyHelpers.truckArray, { big: true, noChange: true }),
+        GetCommonEntity("Skumpy", 41, 42, 12, 0, undefined, undefined, { sy: 8, moving: true, sheetlen: 2, solid: false, storageKey: "skumpy", inside: true, visible: false }),
+        GetCommonEntity("Bruno", 44, 33, 13, 2, undefined, undefined, { sy: 10, moving: true, solid: false, storageKey: "bruno", inside: true }),
+        GetCommonEntity("BarL", 39, 39.875, 15, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
+        GetCommonEntity("BarM", 40, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
+        GetCommonEntity("BarR", 41, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false })
     ]
 };

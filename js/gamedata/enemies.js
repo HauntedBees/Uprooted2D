@@ -142,6 +142,9 @@ function GetEnemy(name) {
         case "server": return new EnemyDetail(GetDisplayName(name), "md", 20, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
         case "housekeeper": return new EnemyDetail(GetDisplayName(name), "lg", 4, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, true, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }], { soleKill: true } );
         case "outlet": return new EnemyDetail(GetDisplayName(name), "sm", 21, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        // south city
+        case "mobsty1": return new EnemyDetail(GetDisplayName(name), "md", 25, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
+        case "mobsty2": return new EnemyDetail(GetDisplayName(name), "md", 26, { dx: 0.25, dy: 0.5, w: 0, h: 0.25 }, 10, 1, 1, 3, 1, false, [0, 1, 0, 0], [["dumbbattery", 0.75], ["babySlap", 0.8], ["app", 1]], [{ money: true, min: 5, max: 10 }]);
         // bees
         case "beeQueenA": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 500, 50, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
         case "beeQueenB": return new EnemyDetail(name, "md", 30, { dx: 0.25, dy: 0.15, w: 0, h: 0.6 }, 2000, 500, 50, 0, 0, true, [1, 0, 0, 0], [["BeeQueen", 1], ["BeeQueen"]], undefined, { tile: "_beehive" });
