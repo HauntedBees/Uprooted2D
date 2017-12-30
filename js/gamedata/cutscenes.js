@@ -73,7 +73,7 @@ var scripts = {
 	"eggfairy13": "_TEXT:lakeFinish&eggFairy_VISIBLE:false&_COMPLETEQUEST:badEgg&_END",
 	"eggfairy14": "_TEXT:lakeeggTruth&eggFairy_SHIFTY:1&_GIVE:egg,1&_GIVE:goldegg,1",
 	"eggfairy15": "_TEXT:lakeFinish&eggFairy_VISIBLE:false&_COMPLETEQUEST:goodEgg",
-	// Farm: Big Bot (First Boss)
+	// Farm: First Boss (Big Bot)
 	"bigBot0": "_TEXT:B1.(0-4)",
 	"bigBot1": "_FIGHT:bigBot",
 	"bigBotL0": "_TEXT:B1.5",
@@ -91,7 +91,7 @@ var scripts = {
 	"FarmHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
 	"FarmHive1": "_CUSTOM:BEEGUARDIANAPPEAR&_TEXT:FarmHive(0-3)",
 	"FarmHive2": "_TEXT:FarmHive4&_CLEARTARGET",
-	// Forest: Turkey Boss
+	// Forest: Optional Boss (Turkey)
 	"turky0": "_TEXT:bossturky(0-1)",
 	"turky1": "_FIGHT:bossturky,turky,turky",
 	// Forest: Beehive
@@ -150,4 +150,16 @@ var scripts = {
 	"rap9": "_TEXT:rap.rice4&_SETSTATE:7",
 	"rap10": "_TEXT:rap.coconut(2-6)",
 	"rap11": "_COMPLETEQUEST:rapbattle&_TAKE:coconut,1&_GIVE:gmocorn,2&_TEXT:rap.coconut7&_END",
+	// Research Lab: Second Boss (Jeff)
+	"jeff0": "_TEXT:B2.(0-11)",
+	"jeff1": "_FIGHT:ScienceMan",
+	"jeffL0": "_TEXT:B2.12",
+	"jeffL1": "_FIGHT:ScienceMan",
+	"jeffW0": "_COMPLETEQUEST:researchLab&_TEXT:Pb2.(0-9)",
+	"jeffW1": "_TEXT:Pb2.10,Pb2.10a,Pb2.10b,Pb2.10c",
+	"jeffW2": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":4},{\"q\":\"d===2\",\"v\":5}]",
+	"jeffW3": "_TEXT:Pb2.10a0&_SETSTATE:6&_GIVE:~shooter,1",
+	"jeffW4": "_TEXT:Pb2.10b0&_SETSTATE:6&_GIVE:apple,10&_GIVE:apricot,10&_GIVE:kiwi,5&_GIVE:mango,5&_GIVE:lemon,5",
+	"jeffW5": "_TEXT:Pb2.10c0&_LEVELUP&_LEVELUP&_LEVELUP",
+	"jeffW6": "_TEXT:Pb2.(11-13)",
 };

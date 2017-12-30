@@ -99,6 +99,7 @@ var CommandParser = {
                 case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
                 case "SETSTATE": iHandler.state.idx = parseInt(actSuffix); break;
                 case "MONEY": player.monies += parseInt(actSuffix); break;
+                case "LEVELUP": player.addExp(player.nextExp); player.levelUp(); break;
                 case "QUIT": iHandler.state.done = true; worldmap.finishDialog(); break;
             }
         }

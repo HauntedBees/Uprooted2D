@@ -252,16 +252,8 @@ var mapentities = {
                 
             GetCommonEntity("RAPBATTLE", 28, 8, 11, 0, undefined, Cutscene("rap"), { noChange: true, sy: 7 }),
 
-            // TODO: this fuckstain
-            GetCommonEntity("Fucker", 7, 2, 0, 0, undefined, [ GetSpeak("B2_0"), GetFight(["robo3", "ScienceMan", "robo3"]) ],
-                { sy: 4, postBattle: "PostBoss2", noChange: true, failedInteract: [ GetSpeak("B2_1"), GetFight(["robo3", "ScienceMan", "robo3"]) ] }),
-			{ name: "PostBoss2", storageKey: "PostBoss2", pos: {x: -1, y: -1}, solid: false, interact: [ 
-                GetSpeak("Pb2_0"),
-                function() {
-                    worldmap.writeText("Pb2_1");
-                    player.questsCleared.push("researchLab");
-                }
-            ] }
+            GetCommonEntity("Jeff", 7, 2, 0, 0, undefined, Cutscene("jeff"), { sy: 4, postBattle: "PostBoss2", noChange: true, failedInteract: Cutscene("jeffL") }),
+            GetInvisibleEntity("PostBoss2", Cutscene("jeffW"), { storageKey: "PostBoss2" })
 		];
 		var doors = [
 			[5, 31, 0, false], [5, 32, 0, false], [10, 28, 0, true], [10, 29, 0, true], [6, 17, 0, true], [6, 18, 0, true], [6, 19, 0, true], [6, 20, 0, true],

@@ -1681,22 +1681,167 @@ var fulltext = {
 	},
 	"B2.0": {
 		"en-us": "", 
-		"en-dm": "Don't interfere with my stuff you baka.", 
+		"en-dm": "???: Yes, yes. Interesting, this is very good data.", 
 		"type": "map"
 	},
 	"B2.1": {
 		"en-us": "", 
-		"en-dm": "Fuck off.", 
+		"en-dm": "???: You! Get out of my laboratory! I am very busy right now!", 
+		"type": "map"
+	},
+	"B2.2": {
+		"en-us": "", 
+		"en-dm": "???: Hmmm, wait a minute. Stay. I recognize you. You're the one who destroyed my research robot.", 
+		"type": "map"
+	},
+	"B2.3": {
+		"en-us": "", 
+		"en-dm": "???: My name is Jeff Smith, Ph.D. One of the smartest minds in the world. Too smart to waste time being humble, mind you.", 
+		"type": "map"
+	},
+	"B2.4": {
+		"en-us": "", 
+		"en-dm": "Jeff: I am helping--- ahem. That's DOCTOR Jeff, thank you.", 
+		"type": "map"
+	},
+	"B2.5": {
+		"en-us": "", 
+		"en-dm": "Dr. Jeff: I am helping an old friend by doing some groundbreaking research answering the age old question of \"what is food?\"", 
+		"type": "map"
+	},
+	"B2.6": {
+		"en-us": "", 
+		"en-dm": "Dr. Jeff: An apple is good for you. Is a baked apple just as good for you? What about apple sauce?", 
+		"type": "map"
+	},
+	"B2.7": {
+		"en-us": "", 
+		"en-dm": "Dr. Jeff: What about a proprietary mulch made from apple and apple byproducts? Are cars food?", 
+		"type": "map"
+	},
+	"B2.8": {
+		"en-us": "", 
+		"en-dm": "Dr. Jeff: If the answer to any of those questions is \"no,\" then the followup question is \"why?\" That is what I intend to answer.", 
+		"type": "map"
+	},
+	"B2.9": {
+		"en-us": "", 
+		"en-dm": "Dr. Jeff: With this knowledge, my friend's startup will be able to create the perfect food substitute, and will change the world forever!", 
+		"type": "map"
+	},
+	"B2.10": {
+		"en-us": "", 
+		"en-dm": "\"Dr.\" Jeff: And, of course, people who change the world are often rewarded handsomely for it. I would know, I've read a history book before.", 
+		"type": "map"
+	},
+	"B2.11": {
+		"en-us": "", 
+		"en-dm": "\"Dr.\" Jeff: But it seems you are intent on thwarting the evolution of food. And for that, I must thwart you.", 
+		"type": "map"
+	},
+	"B2.12": {
+		"en-us": "", 
+		"en-dm": "Jeff: Still not convinced? I will just have to beat some more sense into you! And that's DOCTOR Jeff!!!!", 
 		"type": "map"
 	},
 	"Pb2.0": {
 		"en-us": "", 
-		"en-dm": "ha that guy got killed", 
+		"en-dm": "Jeff: Ugh... it seems I underestimated you... do you also have a Ph.D?", 
 		"type": "map"
 	},
 	"Pb2.1": {
 		"en-us": "", 
-		"en-dm": "because I killed him", 
+		"en-dm": "Jeff: Wh-what?! I lost to someone... who never even went to college... ugh...", 
+		"type": "map"
+	},
+	"Pb2.2": {
+		"en-us": "", 
+		"en-dm": "Jeff: Going to college, then being too smart for it and dropping out is one thing... but never going at all? Ugh... insulting.", 
+		"type": "map"
+	},
+	"Pb2.3": {
+		"en-us": "", 
+		"en-dm": "Jeff: I'm sorry, Beckett... I'm sorry, Food2... I've failed you... all my research... for nothing...", 
+		"type": "map"
+	},
+	"Pb2.4": {
+		"en-us": "", 
+		"en-dm": "Beckett... that's the man who was at my produce stand earlier. \"Food2\" must be his start-up!", 
+		"type": "map"
+	},
+	"Pb2.5": {
+		"en-us": "", 
+		"en-dm": "Jeff: You may have beaten me... but you'll never stop Food2... not without grabbing exactly one of those three things over there, at least...", 
+		"type": "map"
+	},
+	"Pb2.6": {
+		"en-us": "", 
+		"en-dm": "You turn to what Jeff is pointing at. In the corner of the room are three items: a Seed Shooter, a large bag of seeds, and a healthy drink.", 
+		"type": "map"
+	},
+	"Pb2.7": {
+		"en-us": "", 
+		"en-dm": "The Seed Shooter is a Fixture that can be placed on your Field to instantly damage all enemies.", 
+		"type": "map"
+	},
+	"Pb2.8": {
+		"en-us": "", 
+		"en-dm": "The large bag of seeds contains lots of fruit tree seeds, some of which you haven't been able to find or grow yourself.", 
+		"type": "map"
+	},
+	"Pb2.9": {
+		"en-us": "", 
+		"en-dm": "The healthy drink will level you up, giving you more health, attack power, and defense.", 
+		"type": "map"
+	},
+	"Pb2.10": {
+		"en-us": "", 
+		"en-dm": "Which will you grab?", 
+		"type": "map"
+	},
+	"Pb2.10a": {
+		"en-us": "", 
+		"en-dm": "Grab the Seed Shooter.", 
+		"type": "choice"
+	},
+	"Pb2.10b": {
+		"en-us": "", 
+		"en-dm": "Grab the bag of seeds.", 
+		"type": "choice"
+	},
+	"Pb2.10c": {
+		"en-us": "", 
+		"en-dm": "Grab the healthy drink.", 
+		"type": "choice"
+	},
+	"Pb2.10a0": {
+		"en-us": "", 
+		"en-dm": "You grab the Seed Shooter. You can add it to your Field from the Fixtures menu in your Inventory.", 
+		"type": "map"
+	},
+	"Pb2.10b0": {
+		"en-us": "", 
+		"en-dm": "You grab the bag of seeds. You can see your seeds in the Seeds menu in your Inventory.", 
+		"type": "map"
+	},
+	"Pb2.10c0": {
+		"en-us": "", 
+		"en-dm": "You guzzle down the healthy drink. You gained three levels! *gamer voice* Nice!", 
+		"type": "map"
+	},
+	"Pb2.11": {
+		"en-us": "", 
+		"en-dm": "Jeff: I'm not sure... why I told you... to do that... ughh.....", 
+		"type": "map"
+	},
+	"Pb2.12": {
+		"en-us": "", 
+		"en-dm": "Jeff falls to the ground, unconscious.", 
+		"type": "map"
+	},
+	"Pb2.13": {
+		"en-us": "", 
+		"en-dm": "Looks like it's time to get in my truck and head to the city. These Food2 goons need to be taught a lesson.", 
 		"type": "map"
 	},
 	// Area 5: Bridge / Underwater
