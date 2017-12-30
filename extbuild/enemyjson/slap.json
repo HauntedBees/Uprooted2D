@@ -1,0 +1,1 @@
+{"nodes":[{"id":"node0","data":{"message":"INIT"},"next":"node4"},{"id":"node4","data":{"textID":"standardAttack","message":"WEAK_ATTACK","animData":[[0,2],[0,2],[0,3],[0,0,true]]}}]}

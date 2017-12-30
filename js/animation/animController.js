@@ -152,7 +152,7 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen, dontDoThat) {
     this.frameRate = anim.timePerFrame;
     this.other = {};
     this.dontDoThat = dontDoThat || false;
-    this.setFPS = function(fps) { this.frameRate = (fps === undefined ? anim.timePerFrame : GetFrameRate(fps)); return this; };
+    this.setFPS = function(fps) { this.frameRate = ((fps === undefined || fps < 0) ? anim.timePerFrame : GetFrameRate(fps)); return this; };
     this.shiftX = function(newX, newLen) {
         this.topx = newX * this.width;
         this.sheetlen = newLen || this.sheetlen;

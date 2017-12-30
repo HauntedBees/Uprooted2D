@@ -146,9 +146,7 @@ combat.menu = {
         if(Math.random() > (0.45 * player.luck)) {
             combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [5, 3], [5, 2]]);
             combat.animHelper.SetUpPlayerForRun();
-            if(game.target !== null && !game.target.noRunKill) {
-                worldmap.clearTarget();
-            }
+            if(game.target !== null && !game.target.noRunKill) { worldmap.clearTarget(); }
             game.innerTransition(this, combat.inbetween, {
                 next: function() {
                     clearInterval(combat.charAnimIdx);

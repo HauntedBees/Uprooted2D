@@ -1,301 +1,17 @@
 function GetText(key) {
-	var lang = (game !== undefined) ? game.language : "en-dm";
-    var d = fulltext[key];
-    if(d[lang] !== undefined) { return d[lang]; }
-    return d["en-us"];
+	try {
+		var lang = (game !== undefined) ? game.language : "en-dm";
+		var d = fulltext[key];
+		if(d[lang] !== undefined) { return d[lang]; }
+		return d["en-us"];
+	} catch(e) {
+		console.log("Couldn't find key: " + key);
+		return "fucko"; //throw e;
+	}
 }
 function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
-	"s_co": {
-		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
-		"en-dm": "Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow!", 
-		"type": "shop"
-	},
-	"s_sell": {
-		"en-us": "What're you selling?", 
-		"en-dm": "WOT'RE YA SELLIN'???", 
-		"type": "shop"
-	},
-	"s_eq1o": {
-		"en-us": "Welcome to my Equipment Shop! Please, buy many things.", 
-		"en-dm": "Hello I am a public domain dwarf and I sell equipment. You can equip it from the Menu, which is probably a good choice.", 
-		"type": "shop"
-	},
-	"s_leave": {
-		"en-us": "Thank you, come again!", 
-		"en-dm": "fuck off", 
-		"type": "shop"
-	},
-	"s_leave2": {
-		"en-us": "Bye.", 
-		"en-dm": "bye fucker", 
-		"type": "shop"
-	},
-	"s_notenough": {
-		"en-us": "You can't afford that...", 
-		"en-dm": "Hey fuckface this is a store not charity. Have the money or have a gofuckyourself.", 
-		"type": "shop"
-	},
-	"s_purchased": {
-		"en-us": "Thank you!", 
-		"en-dm": "thanks mom", 
-		"type": "shop"
-	},
-	"s_up1p": { "en-us": "Excellent! Now you'll have a 4x3 grid of tiles to plant crops and place fixtures on!" }, 
-	"s_didsell": {
-		"en-us": "Thank you for the goods!", 
-		"en-dm": "Thanks for the shit, fucfkace.", 
-		"type": "shop"
-	},
-	"s_leavesell": {
-		"en-us": "Anything else?", 
-		"en-dm": "stop giving me THINGS and start giving me MONEY.", 
-		"type": "shop"
-	},
-	"s_cpurch": {
-		"en-us": "Bu-GAW! Thank you for your patronage!", 
-		"en-dm": "Bu-GAWK!! Good shit, good shit. Thank you for your patronage!", 
-		"type": "shop"
-	},
-	"s_up1o": { "en-us": "Are you tired of only having 9 tiles to plant crops in? Tire no more! For just 2000 coins I can give you three more tiles to plant on!" }, 
-	"s_upempty": { "en-us": "Welcome. Unfortunately, I have no other upgrades for you." }, 
-	"s_sellseed": { "en-us": "Seeds & Consumables\n Sell your seeds, eggs, and other consumable supplies." }, 
-	"s_selltool": { "en-us": "Tools & Equipment\n Sell your equipment, like sickles, gloves, and compost bins." }, 
-	"s_sellfixture": { "en-us": "Field Fixtures\n Sell your Fixtures, like chicken coops and mushroom logs." }, 
-	"s_fieldI": { "en-us": "This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat." }, 
-	"s_fieldO": { "en-us": "This configuration gives room for more large Fixtures and Trees." }, 
-	"s_field_": { "en-us": "This configuration gives additional space, but less room for large Fixtures and Trees." }, 
-	"s_fi1o": { "en-us": "Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!" }, 
-	"quest1": {
-		"en-us": "", 
-		"en-dm": "oi u fuck", 
-		"type": "shop"
-	},
-	"quest1_a": {
-		"en-us": "", 
-		"en-dm": "I heard pray tell quite right what-ho rumors eh wot yes quite that there's a golden mushroom in the forest west of here. Find it for me, and there'll be something in it for you!", 
-		"type": "shop"
-	},
-	"quest1_b": {
-		"en-us": "", 
-		"en-dm": "sick thanks. Have a mushroom log.", 
-		"type": "shop"
-	},
-	"quest1_c": {
-		"en-us": "", 
-		"en-dm": "are you daft, lass? Golden mushroom. Forest. West of here. Hop it to it. it.", 
-		"type": "shop"
-	},
-	"s_seed1": {
-		"en-us": "", 
-		"en-dm": "hi I got seeds", 
-		"type": "shop"
-	},
-	"s_inn1": {
-		"en-us": "", 
-		"en-dm": "hey hey hey my inn is in... business. It's in business. That's a thing people say. Fuck off.", 
-		"type": "shop"
-	},
-	"s_innpurch": {
-		"en-us": "", 
-		"en-dm": "enjoy your sleep", 
-		"type": "shop"
-	},
-	"s_mermhello": {
-		"en-us": "", 
-		"en-dm": "this is a mermaid... hello!!", 
-		"type": "shop"
-	},
-	"questM": {
-		"en-us": "", 
-		"en-dm": "hey there", 
-		"type": "map"
-	},
-	"questM_a": {
-		"en-us": "", 
-		"en-dm": "there's some sort of creature underwater that keeps moving my construction equipment with relative ease! Please calm it.", 
-		"type": "map"
-	},
-	"questM_b": {
-		"en-us": "", 
-		"en-dm": "gee thanks friend. Now I can build more underwater drills or something. Fuck I duno.", 
-		"type": "map"
-	},
-	"questM_c": {
-		"en-us": "", 
-		"en-dm": "please take care of the sea creature underwater. Just head west of here.", 
-		"type": "map"
-	},
-	"constr1_foe": {
-		"en-us": "", 
-		"en-dm": "gonna fuck you up", 
-		"type": "map"
-	},
-	"constr1_fr1": {
-		"en-us": "", 
-		"en-dm": "hey there. We under construction, so you can't drive through here.", 
-		"type": "map"
-	},
-	"constr1_fr2": {
-		"en-us": "", 
-		"en-dm": "talk to the boss-man if you got qustions. He on the bridge.", 
-		"type": "map"
-	},
-	"sm1": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: ANOTHER HUMAN!! Was my egg not enough for you!? Are you here to kill me again?!", 
-		"type": "map"
-	},
-	"sm2": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Hmm... wait, you are different from the others, aren't you?", 
-		"type": "map"
-	},
-	"sm3": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Some humans stole my egg earlier. If you could recover it for me, I would gladly help you with anything you need.", 
-		"type": "map"
-	},
-	"sm4": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Will you recover my egg for me?", 
-		"type": "map"
-	},
-	"sm4c1": {
-		"en-us": "", 
-		"en-dm": "I'll get your egg back!", 
-		"type": "choice"
-	},
-	"sm4c2": {
-		"en-us": "", 
-		"en-dm": "Prepare to die, you vile beast!", 
-		"type": "choice"
-	},
-	"sm4c3": {
-		"en-us": "", 
-		"en-dm": "I'll think about it.", 
-		"type": "choice"
-	},
-	"smA1": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Thank you! The human with the grey hair on their face is the one who stole it from me. Please bring it back to me!", 
-		"type": "map"
-	},
-	"smA2": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Please bring my egg back to me once you have taken it back from the gray haired human.", 
-		"type": "map"
-	},
-	"smB1": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: So you are with them after all... so be it. Prepare yourself, human!", 
-		"type": "map"
-	},
-	"smB2": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Back for more, are you? Feel my wrath, human!", 
-		"type": "map"
-	},
-	"smC1": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Yeah okay that's fair.", 
-		"type": "map"
-	},
-	"sm5": {
-		"en-us": "", 
-		"en-dm": "Sea Monster: Ah, you're back. Have you made your decision?", 
-		"type": "map"
-	},
-	"w21": {
-		"en-us": "", 
-		"en-dm": "get fucked four eyes", 
-		"type": "map"
-	},
-	"w22": {
-		"en-us": "", 
-		"en-dm": "hi im paul", 
-		"type": "map"
-	},
-	"Pb2_0": {
-		"en-us": "", 
-		"en-dm": "ha that guy got killed", 
-		"type": "map"
-	},
-	"Pb2_1": {
-		"en-us": "", 
-		"en-dm": "because I killed him", 
-		"type": "map"
-	},
-	"B2_0": {
-		"en-us": "", 
-		"en-dm": "Don't interfere with my stuff you baka.", 
-		"type": "map"
-	},
-	"B2_1": {
-		"en-us": "", 
-		"en-dm": "Fuck off.", 
-		"type": "map"
-	},
-	"Pb1_0": {
-		"en-us": "", 
-		"en-dm": "I bet if that robot was still alive it'd be saying \"aw nuts\" right now, ha ha.", 
-		"type": "map"
-	},
-	"Pb1_1": {
-		"en-us": "", 
-		"en-dm": "Get it because it exploded and bolts and NUTS flew everywhere. Is very funny joke :3c", 
-		"type": "map"
-	},
-	"Pb1_2": {
-		"en-us": "", 
-		"en-dm": "Either way, he said he came from a research plant down south. I should check that out.", 
-		"type": "map"
-	},
-	"B1_1": {
-		"en-us": "", 
-		"en-dm": "hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm.", 
-		"type": "map"
-	},
-	"B1_2": {
-		"en-us": "", 
-		"en-dm": "aLso bY \"rEsearch\" i mEan \"lOot aNd pIllage.\"", 
-		"type": "map"
-	},
-	"B1_3": {
-		"en-us": "", 
-		"en-dm": "oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies?", 
-		"type": "map"
-	},
-	"B1_4": {
-		"en-us": "", 
-		"en-dm": "...", 
-		"type": "map"
-	},
-	"B1_5": {
-		"en-us": "", 
-		"en-dm": "...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn.", 
-		"type": "map"
-	},
-	"B1_6": {
-		"en-us": "", 
-		"en-dm": "bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain!", 
-		"type": "map"
-	},
-	"Pb0_0": {
-		"en-us": "", 
-		"en-dm": "That was a weird situation. I wonder why that guy sucked so much.", 
-		"type": "map"
-	},
-	"Pb0_1": {
-		"en-us": "", 
-		"en-dm": "Oh well, I should probably head back to my farm now.", 
-		"type": "map"
-	},
-	"testA": {
-		"en-us": "", 
-		"en-dm": "it's battle", 
-		"type": "map"
-	},
+	// Items
 	"beeB": {
 		"en-us": "", 
 		"en-dm": "Honey bees are dying at an alarming rate, so do what you can to help save the bees! They are very important to our world!", 
@@ -521,6 +237,102 @@ var fulltext = {
 		"en-dm": "The Chinese water chestnut is a grass-like vegetable with delicious starchy corms. Yep, that's what the edible part is called. The corm.", 
 		"type": "item"
 	},
+	"garlic": {
+		"en-us": "", 
+		"en-dm": "Garlic is as good as ten mothers... because my mum is great and garlic is great yum yum crunch crunch give me that garlic.", 
+		"type": "item"
+	},
+	"banana": {
+		"en-us": "", 
+		"en-dm": "A banana in the hand is worth one in the peel. Sure.", 
+		"type": "item"
+	},
+	"goldegg": {
+		"en-us": "", 
+		"en-dm": "A strange fairy from the lake by your farm gave you this egg. It looks like it's pretty one-of-a-kind so you should definitely hold onto it until the final battle and then forget to use it.", 
+		"type": "item"
+	},
+	"coconut": {
+		"en-us": "", 
+		"en-dm": "A strange citrus man from the forest gave you these seeds. They look like they're pretty rare so you should definitely hold onto them until the final battle and then forget to use them.", 
+		"type": "item"
+	},
+	"corn": {
+		"en-us": "", 
+		"en-dm": "really tasty really crunchy yum yum in my tum tum holy fuck", 
+		"type": "item"
+	},
+	"gmocorn": {
+		"en-us": "", 
+		"en-dm": "A quirky robot gave you these questionable seeds. They look like they're pretty rare so you should definitely hold onto them until the final battle and then forget to use them.", 
+		"type": "item"
+	},
+	"ultrarod": {
+		"en-us": "", 
+		"en-dm": "This fishing rod has the best bait ever! It looks like it's pretty rare so you should definitely hold onto it until the final battle and then forget to use it.", 
+		"type": "item"
+	},
+	"goodfood": {
+		"en-us": "", 
+		"en-dm": "A super tasty and healthy feed for animals. Feeding a cow this will lead to milk that recovers LOTS of health, so you should definitely hold onto it until the final battle and then forget to use it.", 
+		"type": "item"
+	},
+	"notdrugs": {
+		"en-us": "", 
+		"en-dm": "Totally ordinary mushroom seeds. Their spores can stun enemies. They look pretty rare so you should definitely hold onto them until the final battle and then forget to use them.", 
+		"type": "item"
+	},
+	"asparagus": {
+		"en-us": "", 
+		"en-dm": "When Gus eats a lot of pears, then shits, this is what you get. Ass Pear a'Gus.", 
+		"type": "item"
+	},
+	"bellpepper": {
+		"en-us": "", 
+		"en-dm": "Bell Peppies are great.", 
+		"type": "item"
+	},
+	"radish": {
+		"en-us": "", 
+		"en-dm": "Not quite rad.", 
+		"type": "item"
+	},
+	"spinach": {
+		"en-us": "", 
+		"en-dm": "Is that one cartoon sailor's motto in the public domain yet? I'll play it safe and assume it isn't, so just IMAGINE that it's here.", 
+		"type": "item"
+	},
+	"tomato": {
+		"en-us": "", 
+		"en-dm": "You say \"tomato,\" I say \"this expression doesn't translate too well to a text-based format.\"", 
+		"type": "item"
+	},
+	"apricot": {
+		"en-us": "", 
+		"en-dm": "Pretend you know some rude fellow named \"Ott.\" You could say to him, \"ey prick! Ott!\" and if he gets mad you can just pretend you were loudly identifying a fruit, not insulting him.", 
+		"type": "item"
+	},
+	"avocado": {
+		"en-us": "", 
+		"en-dm": "How dare you. Avocados? Now you'll never be a homeowner, you fucking millenial.", 
+		"type": "item"
+	},
+	"blackberry": {
+		"en-us": "", 
+		"en-dm": "These sweet and juicy berries taste as good as they look. Unless you think they look bad. In that case, they taste better than they look!", 
+		"type": "item"
+	},
+	"kiwi": {
+		"en-us": "", 
+		"en-dm": "Not the bird.", 
+		"type": "item"
+	},
+	"mango": {
+		"en-us": "", 
+		"en-dm": "Man go \"beep beep!\"", 
+		"type": "item"
+	},
+	// Options
 	"opGameOps": {
 		"en-us": "", 
 		"en-dm": "Accessibility", 
@@ -581,17 +393,32 @@ var fulltext = {
 		"en-dm": "Sound", 
 		"type": "opts"
 	},
-	"diffEasy_i": {
+	"opFont": {
+		"en-us": "", 
+		"en-dm": "Font", 
+		"type": "opts"
+	},
+	"fontStandard": {
+		"en-us": "", 
+		"en-dm": "Standard", 
+		"type": "opts"
+	},
+	"fontDyslexic": {
+		"en-us": "", 
+		"en-dm": "OpenDyslexic", 
+		"type": "opts"
+	},
+	"diffEasy.i": {
 		"en-us": "", 
 		"en-dm": "You cannot die in combat. Enemies have less health. Items are cheaper.", 
 		"type": "opts"
 	},
-	"diffNormal_i": {
+	"diffNormal.i": {
 		"en-us": "", 
 		"en-dm": "Everything is balanced for a fair and enjoyable experience for most players.", 
 		"type": "opts"
 	},
-	"diffHard_i": {
+	"diffHard.i": {
 		"en-us": "", 
 		"en-dm": "Seeds are much harder to come by. Enemies are JERKS. The RNG is meaner.", 
 		"type": "opts"
@@ -651,6 +478,7 @@ var fulltext = {
 		"en-dm": "Return without Saving", 
 		"type": "opts"
 	},
+	// Area 0: Opening Cutscene
 	"intro1": {
 		"en-us": "", 
 		"en-dm": "???: This must be the place!", 
@@ -766,6 +594,17 @@ var fulltext = {
 		"en-dm": "Convince-a-tron: Hello! Allow me to play the devil's advocate for a moment... what if that thing you don't want to do is actually a good thing?", 
 		"type": "map"
 	},
+	"Pb0.0": {
+		"en-us": "", 
+		"en-dm": "That was a weird situation. I wonder why that guy sucked so much.", 
+		"type": "map"
+	},
+	"Pb0.1": {
+		"en-us": "", 
+		"en-dm": "Oh well, I should probably head back to my farm now.", 
+		"type": "map"
+	},
+	// Area 0: Tutorial
 	"tut0": {
 		"en-us": "", 
 		"en-dm": "Oh shit, it's a throwdown! To start things off, select 'Plant' from the menu below!", 
@@ -966,6 +805,56 @@ var fulltext = {
 		"en-dm": "If you don't want to do the tutorial, you can run away to ignore this dumb robot! But if you get confused later you can come back and learn!", 
 		"type": "tut"
 	},
+	"tutEnemy2": {
+		"en-us": "", 
+		"en-dm": "{0} is prepared to lecture you on the importance of cryptocurrencies.", 
+		"type": "combat"
+	},
+	"tutEnemy5": {
+		"en-us": "", 
+		"en-dm": "{0} wants you to know that the future of the world is in the hands of like 4 startups in California.", 
+		"type": "combat"
+	},
+	"tutEnemy9": {
+		"en-us": "", 
+		"en-dm": "{0} thinks you should listen to its podcast.", 
+		"type": "combat"
+	},
+	"tutEnemy12": {
+		"en-us": "", 
+		"en-dm": "{0} is just playing Devil's Advocate, it's not that big of a deal.", 
+		"type": "combat"
+	},
+	"tutEnemy16": {
+		"en-us": "", 
+		"en-dm": "{0} is finding it hard to discuss things with you if you aren't willing to listen.", 
+		"type": "combat"
+	},
+	"tutEnemy20": {
+		"en-us": "", 
+		"en-dm": "{0} wishes you'd cut that out.", 
+		"type": "combat"
+	},
+	"tutEnemy23": {
+		"en-us": "", 
+		"en-dm": "{0} headbutts you for {1} damage.", 
+		"type": "combat"
+	},
+	"tutEnemy27": {
+		"en-us": "", 
+		"en-dm": "{0} is sorry they hurt you.", 
+		"type": "combat"
+	},
+	"tutEnemy31": {
+		"en-us": "", 
+		"en-dm": "{0} hopes you can see things through their perspective.", 
+		"type": "combat"
+	},
+	"tutEnemy36": {
+		"en-us": "", 
+		"en-dm": "{0} is prepared to die.", 
+		"type": "combat"
+	},
 	"wantTut": {
 		"en-us": "", 
 		"en-dm": "Greetings, would you like to play through the tutorial?", 
@@ -996,6 +885,7 @@ var fulltext = {
 		"en-dm": "Don't want to Tutorial after all? Whatevs. Come back later!", 
 		"type": "map"
 	},
+	// Area 1: Farm
 	"robo0": {
 		"en-us": "", 
 		"en-dm": "beep beep you stupid fuck", 
@@ -1019,31 +909,6 @@ var fulltext = {
 	"robo4": {
 		"en-us": "", 
 		"en-dm": "TODO: give this robot a witty one-liner", 
-		"type": "map"
-	},
-	"research0": {
-		"en-us": "", 
-		"en-dm": "faculty only here. get the fuck out.", 
-		"type": "map"
-	},
-	"research1": {
-		"en-us": "", 
-		"en-dm": "this is not your place you normie.", 
-		"type": "map"
-	},
-	"research2": {
-		"en-us": "", 
-		"en-dm": "yo it's time to die motherufcker", 
-		"type": "map"
-	},
-	"research3": {
-		"en-us": "", 
-		"en-dm": "beep beep beep beep beep", 
-		"type": "map"
-	},
-	"research4": {
-		"en-us": "", 
-		"en-dm": "YOU ARE A HUMAN WHO IS NOT MY BOSS SO I MUST DESTROY YOU", 
 		"type": "map"
 	},
 	"farmMush": {
@@ -1081,91 +946,102 @@ var fulltext = {
 		"en-dm": "These are looking delicious!", 
 		"type": "map"
 	},
-	"hiveGet": {
+	"B1.0": {
 		"en-us": "", 
-		"en-dm": "You found a beehive! You can now place one more beehive on your farm, and you caught some bees, too!", 
+		"en-dm": "Robot: hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm.", 
 		"type": "map"
 	},
-	"garlic": {
+	"B1.1": {
 		"en-us": "", 
-		"en-dm": "Garlic is as good as ten mothers... because my mum is great and garlic is great yum yum crunch crunch give me that garlic.", 
-		"type": "item"
+		"en-dm": "Robot: aLso bY \"rEsearch\" i mEan \"lOot aNd pIllage.\"", 
+		"type": "map"
 	},
-	"banana": {
+	"B1.2": {
 		"en-us": "", 
-		"en-dm": "A banana in the hand is worth one in the peel. Sure.", 
-		"type": "item"
+		"en-dm": "Robot: oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies?", 
+		"type": "map"
 	},
-	"s_home": {
+	"B1.3": {
+		"en-us": "", 
+		"en-dm": "Robot: ...", 
+		"type": "map"
+	},
+	"B1.4": {
+		"en-us": "", 
+		"en-dm": "Robot: ...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn.", 
+		"type": "map"
+	},
+	"B1.5": {
+		"en-us": "", 
+		"en-dm": "Robot: bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain!", 
+		"type": "map"
+	},
+	"Pb1.0": {
+		"en-us": "", 
+		"en-dm": "The remains of the robot are ticking, as if they are about to explode.", 
+		"type": "map"
+	},
+	"Pb1.1": {
+		"en-us": "", 
+		"en-dm": "Inside of it, you can see a large bag of seeds the robot stole from your farm and a \"Season Modulator.\"", 
+		"type": "map"
+	},
+	"Pb1.2": {
+		"en-us": "", 
+		"en-dm": "You suspect you only have time to grab one of them before it explodes. Which will you grab?", 
+		"type": "map"
+	},
+	"Pb1.2a": {
+		"en-us": "", 
+		"en-dm": "Grab the bag of seeds.", 
+		"type": "choice"
+	},
+	"Pb1.2b": {
+		"en-us": "", 
+		"en-dm": "Grab the Season Modulator.", 
+		"type": "choice"
+	},
+	"Pb1.2a0": {
+		"en-us": "", 
+		"en-dm": "You grab the bag of seeds. Wow, that's a lot of seeds! You can check them out in your inventory!", 
+		"type": "map"
+	},
+	"Pb1.2b0": {
+		"en-us": "", 
+		"en-dm": "You pry the Season Modulator out of the machine. You can add it to your Field in the Fixtures menu!", 
+		"type": "map"
+	},
+	"Pb1.3": {
+		"en-us": "", 
+		"en-dm": "As soon as your hands are out, the machine collapses in front of you, letting out a quiet farting noise.", 
+		"type": "map"
+	},
+	"Pb1.4": {
+		"en-us": "", 
+		"en-dm": "It doesn't look like you'll be able to recover anything else from this pile of junk; it's too heavy to move.", 
+		"type": "map"
+	},
+	"Pb1.5": {
+		"en-us": "", 
+		"en-dm": "Either way, he said he came from a research plant down south. I should check that out.", 
+		"type": "map"
+	},
+	"s.home": {
 		"en-us": "", 
 		"en-dm": "Home sweet home... I can hardly believe that all these robot hijinks are happening.", 
 		"type": "shop"
 	},
-	"s_homesleep": {
+	"s.homesleep": {
 		"en-us": "", 
 		"en-dm": "A bit of rest should clear my mind.", 
 		"type": "shop"
 	},
-	"s_homeleave": {
+	"s.homeleave": {
 		"en-us": "", 
 		"en-dm": "I should get going. There's apparently a lot I need to do today.", 
 		"type": "shop"
 	},
-	"beeGoodbye": {
-		"en-us": "", 
-		"en-dm": "???: Goodbye, friend!", 
-		"type": "map"
-	},
-	"FarmHive0": {
-		"en-us": "", 
-		"en-dm": "???: Hello there!", 
-		"type": "map"
-	},
-	"FarmHive1": {
-		"en-us": "", 
-		"en-dm": "???: I see you've got some BEES there, am I correct?", 
-		"type": "map"
-	},
-	"FarmHive2": {
-		"en-us": "", 
-		"en-dm": "???: You can place a beehive on your farm from the Fixtures menu. Once you have a beehive on your farm, you can use bees in combat!", 
-		"type": "map"
-	},
-	"FarmHive3": {
-		"en-us": "", 
-		"en-dm": "???: Bees produce honey at random intervals, which recovers a lot of health when composted, and can stun some enemies when used as a weapon!", 
-		"type": "map"
-	},
-	"FarmHive4": {
-		"en-us": "", 
-		"en-dm": "???: Bees are very important, so please take care of them. Don't take more honey than you need, and don't do anything to hurt them!", 
-		"type": "map"
-	},
-	"BeeGuard0": {
-		"en-us": "", 
-		"en-dm": "???: I saw what you did...", 
-		"type": "map"
-	},
-	"BeeGuard1": {
-		"en-us": "", 
-		"en-dm": "???: You used pesticide...", 
-		"type": "map"
-	},
-	"BeeGuard2": {
-		"en-us": "", 
-		"en-dm": "???: And then exposed bees to that pesticide.", 
-		"type": "map"
-	},
-	"BeeGuard3": {
-		"en-us": "", 
-		"en-dm": "???: DID YOU THINK I WOULDN'T NOTICE???", 
-		"type": "map"
-	},
-	"BeeGuard4": {
-		"en-us": "", 
-		"en-dm": "???: I CANNOT LET YOU GET AWAY WITH THIS!!", 
-		"type": "map"
-	},
+	// Area 2: Produce Stand / First Village
 	"lakenoegg": {
 		"en-us": "", 
 		"en-dm": "What a beautiful lake.", 
@@ -1176,12 +1052,12 @@ var fulltext = {
 		"en-dm": "What a beautiful lake. Throw an egg into it?", 
 		"type": "map"
 	},
-	"lakeegg_reject": {
+	"lakeegg.reject": {
 		"en-us": "", 
 		"en-dm": "Good call. Why would you throw a perfectly good egg in a lake, anyway?", 
 		"type": "map"
 	},
-	"lakeegg_okay": {
+	"lakeegg.okay": {
 		"en-us": "", 
 		"en-dm": "You chuck an egg into the lake.", 
 		"type": "map"
@@ -1226,14 +1102,14 @@ var fulltext = {
 		"en-dm": "A mysterious voice from beneath the lake tells you to fuck off.", 
 		"type": "map"
 	},
-	"goldegg": {
-		"en-us": "", 
-		"en-dm": "A strange fairy from the lake by your farm gave you this egg. It looks like it's pretty one-of-a-kind so you should definitely hold onto it until the final battle and then forget to use it.", 
-		"type": "item"
-	},
 	"goodEggTry": {
 		"en-us": "", 
 		"en-dm": "What a beautiful lake. Pretty fucked up that there's some weird egg spirit living down there, though. People DRINK from this lake!", 
+		"type": "map"
+	},
+	"farmFirst": {
+		"en-us": "", 
+		"en-dm": "I should go to my farm first before I head into town.", 
 		"type": "map"
 	},
 	"SignInn0": {
@@ -1266,11 +1142,27 @@ var fulltext = {
 		"en-dm": "Dave's Hoes and Sickles", 
 		"type": "map"
 	},
-	"SignMermaid": {
+	"villager0": {
 		"en-us": "", 
-		"en-dm": "Mermaid Shoppe", 
+		"en-dm": "Dean: Be careful in the forest west of town; it's way too easy to get lost in there!", 
 		"type": "map"
 	},
+	"villager1": {
+		"en-us": "", 
+		"en-dm": "June: Rumor has it if you throw a chicken egg in the lake north of here, something amazing will happen!", 
+		"type": "map"
+	},
+	"villager2": {
+		"en-us": "", 
+		"en-dm": "Aiko: There've been a lot of robots wandering through here since that lab got set up south of here. I wonder what that's all about.", 
+		"type": "map"
+	},
+	"villager3": {
+		"en-us": "", 
+		"en-dm": "Tanner: How's your truck doin'? Cool, cool. Take care of that bad boy, I feel like you're gonna need it.", 
+		"type": "map"
+	},
+	// Area 3: Forest
 	"foundShroom": {
 		"en-us": "", 
 		"en-dm": "Oh hey, a golden mushroom! I'm sure somebody would want this!", 
@@ -1426,31 +1318,6 @@ var fulltext = {
 		"en-dm": "Turkey: Over my dead body you fucker.", 
 		"type": "map"
 	},
-	"ForestHive0": {
-		"en-us": "", 
-		"en-dm": "You hear some rumbling behind you.", 
-		"type": "map"
-	},
-	"ForestHive1": {
-		"en-us": "", 
-		"en-dm": "A loud roar is heard.", 
-		"type": "map"
-	},
-	"ForestHive2": {
-		"en-us": "", 
-		"en-dm": "Oh fuck it's a bear.", 
-		"type": "map"
-	},
-	"ForestHive3": {
-		"en-us": "", 
-		"en-dm": "!!FIGHT:bear", 
-		"type": "cmd"
-	},
-	"quest1_d": {
-		"en-us": "", 
-		"en-dm": "hly faulk lass is that a fucken golden mushroom? I'll trade you for this log! AND I'll start selling you my special mushroom selection!", 
-		"type": "shop"
-	},
 	"lime0": {
 		"en-us": "", 
 		"en-dm": "???: hmmmmyessss hello there. My name is Lime.", 
@@ -1476,110 +1343,126 @@ var fulltext = {
 		"en-dm": "Lime: Oh oh, you have something for me, I can sense it.", 
 		"type": "map"
 	},
-	"lime_lemon": {
+	"lime.lemon": {
 		"en-us": "", 
 		"en-dm": "Give Lemon Seeds.", 
 		"type": "choice"
 	},
-	"lime_banana": {
+	"lime.banana": {
 		"en-us": "", 
 		"en-dm": "Give Banana Seeds.", 
 		"type": "choice"
 	},
-	"lime_corn": {
+	"lime.corn": {
 		"en-us": "", 
 		"en-dm": "Give Corn Seeds.", 
 		"type": "choice"
 	},
-	"lime_goldegg": {
+	"lime.goldegg": {
 		"en-us": "", 
 		"en-dm": "Give Golden Egg.", 
 		"type": "choice"
 	},
-	"lime_lemon1": {
+	"lime.lemon1": {
 		"en-us": "", 
 		"en-dm": "Lime: Lemons? What the fuck?! Who the fuck just EATS LEMONS?!", 
 		"type": "map"
 	},
-	"lime_lemon2": {
+	"lime.lemon2": {
 		"en-us": "", 
 		"en-dm": "Lime: I want a tasty TREAT, not something to squeeze into my fucking aioli!", 
 		"type": "map"
 	},
-	"lime_lemon3": {
+	"lime.lemon3": {
 		"en-us": "", 
 		"en-dm": "Lime: Come back when you learn what TASTY means, asshole!", 
 		"type": "map"
 	},
-	"lime_banana1": {
+	"lime.banana1": {
 		"en-us": "", 
 		"en-dm": "Lime: Bananas, eh? I mean the peel is yellow, so that counts I guess.", 
 		"type": "map"
 	},
-	"lime_banana2": {
+	"lime.banana2": {
 		"en-us": "", 
 		"en-dm": "Lime: Bananas ARE pretty tasty, too... so, thank you, mysterious stranger! I will use these banana seeds wisely!", 
 		"type": "map"
 	},
-	"lime_banana3": {
+	"lime.banana3": {
 		"en-us": "", 
 		"en-dm": "Lime: In exchange, have some other tasty yellow food seeds: corn!", 
 		"type": "map"
 	},
-	"lime_corn1": {
+	"lime.corn1": {
 		"en-us": "", 
 		"en-dm": "Lime: Corn, eh? Yellow. Crunchy. Tasty. You nailed it!", 
 		"type": "map"
 	},
-	"lime_corn2": {
+	"lime.corn2": {
 		"en-us": "", 
 		"en-dm": "Lime: Thank you, mysterious stranger! I will use these corn seeds wisely!", 
 		"type": "map"
 	},
-	"lime_corn3": {
+	"lime.corn3": {
 		"en-us": "", 
 		"en-dm": "Lime: In exchange, have some other tasty yellow food seeds: bananas!", 
 		"type": "map"
 	},
-	"lime_egg1": {
+	"lime.egg1": {
 		"en-us": "", 
 		"en-dm": "Lime: A golden egg... wow. You found such a rare and valuable item and you're just giving it to me?", 
 		"type": "map"
 	},
-	"lime_egg2": {
+	"lime.egg2": {
 		"en-us": "", 
 		"en-dm": "Lime: But alas... gold isn't REALLY yellow... and I'm a vegan, so this is definitely not a tasty yellow food.", 
 		"type": "map"
 	},
-	"lime_egg3": {
+	"lime.egg3": {
 		"en-us": "", 
 		"en-dm": "Lime: But I cannot just dismiss such a generous gift! Here, take these coconut seeds. You won't find these anywhere else around here!", 
 		"type": "map"
 	},
-	"lime_complete": {
+	"lime.complete": {
 		"en-us": "", 
 		"en-dm": "Lime: Thank you again for your generosity.", 
 		"type": "map"
 	},
-	"lime_nope": {
+	"lime.nope": {
 		"en-us": "", 
 		"en-dm": "Give nothing.", 
 		"type": "choice"
 	},
-	"lime_denied": {
+	"lime.denied": {
 		"en-us": "", 
 		"en-dm": "Lime: It seems my senses were wrong! Let me know if you do come across anything!", 
 		"type": "map"
 	},
-	"coconut": {
+	// Area 4: Research Lab
+	"research0": {
 		"en-us": "", 
-		"en-dm": "A strange citrus man from the forest gave you these seeds. They look like they're pretty rare so you should definitely hold onto them until the final battle and then forget to use them.", 
-		"type": "item"
+		"en-dm": "faculty only here. get the fuck out.", 
+		"type": "map"
 	},
-	"corn": {
+	"research1": {
 		"en-us": "", 
-		"en-dm": "really tasty really crunchy yum yum in my tum tum holy fuck", 
-		"type": "item"
+		"en-dm": "this is not your place you normie.", 
+		"type": "map"
+	},
+	"research2": {
+		"en-us": "", 
+		"en-dm": "yo it's time to die motherufcker", 
+		"type": "map"
+	},
+	"research3": {
+		"en-us": "", 
+		"en-dm": "beep beep beep beep beep", 
+		"type": "map"
+	},
+	"research4": {
+		"en-us": "", 
+		"en-dm": "YOU ARE A HUMAN WHO IS NOT MY BOSS SO I MUST DESTROY YOU", 
+		"type": "map"
 	},
 	"rap0": {
 		"en-us": "", 
@@ -1611,132 +1494,127 @@ var fulltext = {
 		"en-dm": "RAPBATTLE: Do you have something for me?", 
 		"type": "map"
 	},
-	"rap_garlic": {
+	"rap.garlic": {
 		"en-us": "", 
 		"en-dm": "Give Garlic Seeds.", 
 		"type": "choice"
 	},
-	"rap_coconut": {
+	"rap.coconut": {
 		"en-us": "", 
 		"en-dm": "Give Coconut Seeds.", 
 		"type": "choice"
 	},
-	"rap_rice": {
+	"rap.rice": {
 		"en-us": "", 
 		"en-dm": "Give Rice Seeds.", 
 		"type": "choice"
 	},
-	"rap_garlic1": {
+	"rap.garlic1": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: This is... \"garlic?\"", 
 		"type": "map"
 	},
-	"rap_garlic2": {
+	"rap.garlic2": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: Let me see... it appears to have preservative qualities, as well as various health benefits.", 
 		"type": "map"
 	},
-	"rap_garlic3": {
+	"rap.garlic3": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: It seems parts of it have insecticide properties, and some of its juices an be used for adhesive purposes.", 
 		"type": "map"
 	},
-	"rap_garlic4": {
+	"rap.garlic4": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: It can be stored warm for longer periods than many crops... it has antiseptic qualities... hm, yes, yes, this is all very good.", 
 		"type": "map"
 	},
-	"rap_garlic5": {
+	"rap.garlic5": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: I will accept this \"garlic,\" thank you muchly!", 
 		"type": "map"
 	},
-	"rap_normalgift": {
+	"rap.normalgift": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: In return for this crop, I will give you some delicious delicious batteries. Enjoy!", 
 		"type": "map"
 	},
-	"rap_thanks": {
+	"rap.thanks": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: Thank you again for your help.", 
 		"type": "map"
 	},
-	"rap_rice1": {
+	"rap.rice1": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: This is... \"rice?\"", 
 		"type": "map"
 	},
-	"rap_rice2": {
+	"rap.rice2": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: This appears to have many interesting properties... this is a good starchy grain.", 
 		"type": "map"
 	},
-	"rap_rice3": {
+	"rap.rice3": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: I predict this can be used to create flour, a milk-like liquid, alcohol, and other useful materials.", 
 		"type": "map"
 	},
-	"rap_rice4": {
+	"rap.rice4": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: I will accept this \"rice,\" thank you muchly!", 
 		"type": "map"
 	},
-	"rap_coconut1": {
+	"rap.coconut1": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: This is... \"coconut?\"", 
 		"type": "map"
 	},
-	"rap_coconut2": {
+	"rap.coconut2": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: Its fibrous husk looks like it can be used in many ways, as can its hard shell.", 
 		"type": "map"
 	},
-	"rap_coconut3": {
+	"rap.coconut3": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: It also appears to produce various useful liquids - coconut water, coconut oil, and coconut milk.", 
 		"type": "map"
 	},
-	"rap_coconut4": {
+	"rap.coconut4": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: And its meat, of course, can be used in many different recipes.", 
 		"type": "map"
 	},
-	"rap_coconut5": {
+	"rap.coconut5": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: Hmm, yes, yes, this is an excellent crop. This is exactly what I needed, thank you.", 
 		"type": "map"
 	},
-	"rap_coconut6": {
+	"rap.coconut6": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: To thank you for this exceptional crop, I will give you these Genetically Modified Corn Seeds.", 
 		"type": "map"
 	},
-	"rap_coconut7": {
+	"rap.coconut7": {
 		"en-us": "", 
 		"en-dm": "RAPBATTLE: They may be a bit... TOO genetically modified for human consumption, but I am sure you can find some use for them.", 
 		"type": "map"
 	},
-	"gmocorn": {
-		"en-us": "", 
-		"en-dm": "A quirky robot gave you these questionable seeds. They look like they're pretty rare so you should definitely hold onto them until the final battle and then forget to use them.", 
-		"type": "item"
-	},
-	"bookshelf_left": {
+	"bookshelf.left": {
 		"en-us": "", 
 		"en-dm": "This shelf has lots of science textbooks on it, as well as a globe with various regions circled.", 
 		"type": "map"
 	},
-	"bookshelf_mid": {
+	"bookshelf.mid": {
 		"en-us": "", 
 		"en-dm": "This shelf contains several volumes of the \"Mr. History and his Time-Travelling Mysteries\" series, as well as many books with woodcut animals on them.", 
 		"type": "map"
 	},
-	"bookshelf_right": {
+	"bookshelf.right": {
 		"en-us": "", 
 		"en-dm": "A mildly broken robot is being repaired on the bottom shelf, while the top shelf holds a replica sword and a figurine of a cartoon character.", 
 		"type": "map"
 	},
-	"broken_robot": {
+	"broken.robot": {
 		"en-us": "", 
 		"en-dm": "This big robot looks a lot like the one that was at your farm. Seeing it already broken puts you at ease.", 
 		"type": "map"
@@ -1801,65 +1679,31 @@ var fulltext = {
 		"en-dm": "This monitor is displaying the contents of an online encyclopedia article on water.", 
 		"type": "map"
 	},
-	"openchest": {
+	"B2.0": {
 		"en-us": "", 
-		"en-dm": "This treasure chest is empty.", 
+		"en-dm": "Don't interfere with my stuff you baka.", 
 		"type": "map"
 	},
-	"closedchest": {
+	"B2.1": {
 		"en-us": "", 
-		"en-dm": "You open the chest. Inside you find {0}!", 
+		"en-dm": "Fuck off.", 
 		"type": "map"
 	},
-	"opFont": {
+	"Pb2.0": {
 		"en-us": "", 
-		"en-dm": "Font", 
-		"type": "opts"
-	},
-	"fontStandard": {
-		"en-us": "", 
-		"en-dm": "Standard", 
-		"type": "opts"
-	},
-	"fontDyslexic": {
-		"en-us": "", 
-		"en-dm": "OpenDyslexic", 
-		"type": "opts"
-	},
-	"truck_where": {
-		"en-us": "", 
-		"en-dm": "Where would you like to drive to?", 
+		"en-dm": "ha that guy got killed", 
 		"type": "map"
 	},
-	"truck_none": {
+	"Pb2.1": {
 		"en-us": "", 
-		"en-dm": "You have things to do here before driving off!", 
+		"en-dm": "because I killed him", 
 		"type": "map"
 	},
-	"truck_nm": {
+	// Area 5: Bridge / Underwater
+	"SignMermaid": {
 		"en-us": "", 
-		"en-dm": "Stay here for now.", 
-		"type": "choice"
-	},
-	"truck_home": {
-		"en-us": "", 
-		"en-dm": "Drive home.", 
-		"type": "choice"
-	},
-	"truck_bridge": {
-		"en-us": "", 
-		"en-dm": "Drive to the bridge.", 
-		"type": "choice"
-	},
-	"truck_city": {
-		"en-us": "", 
-		"en-dm": "Drive to the city.", 
-		"type": "choice"
-	},
-	"truck_fake": {
-		"en-us": "", 
-		"en-dm": "Drive to the fake farm.", 
-		"type": "choice"
+		"en-dm": "Mermaid Shoppe", 
+		"type": "map"
 	},
 	"bworker1": {
 		"en-us": "", 
@@ -2191,11 +2035,6 @@ var fulltext = {
 		"en-dm": "Inside you found 4 pieces of Master Bait!", 
 		"type": "map"
 	},
-	"ultrarod": {
-		"en-us": "", 
-		"en-dm": "This fishing rod has the best bait ever! It looks like it's pretty rare so you should definitely hold onto it until the final battle and then forget to use it.", 
-		"type": "item"
-	},
 	"vaseFound": {
 		"en-us": "", 
 		"en-dm": "This looks like a pretty nice vase... but you'll need to break it if you want to reach that beehive. Break the vase?", 
@@ -2311,16 +2150,102 @@ var fulltext = {
 		"en-dm": "Lazy Construction Worker Shoppe", 
 		"type": "map"
 	},
-	"cwk_co": {
+	"SignMermaidInn": {
 		"en-us": "", 
-		"en-dm": "Hey there. I'm too lazy to do any construction work so I'm just... running a shop. Whatever.", 
-		"type": "shop"
+		"en-dm": "Mermaid Inn", 
+		"type": "map"
 	},
-	"cwk_leave": {
+	"constr1.foe": {
 		"en-us": "", 
-		"en-dm": "Thanks for the whatever.", 
-		"type": "shop"
+		"en-dm": "gonna fuck you up", 
+		"type": "map"
 	},
+	"constr1.fr1": {
+		"en-us": "", 
+		"en-dm": "hey there. We under construction, so you can't drive through here.", 
+		"type": "map"
+	},
+	"constr1.fr2": {
+		"en-us": "", 
+		"en-dm": "talk to the boss-man if you got qustions. He on the bridge.", 
+		"type": "map"
+	},
+	"sm1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: ANOTHER HUMAN!! Was my egg not enough for you!? Are you here to kill me again?!", 
+		"type": "map"
+	},
+	"sm2": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Hmm... wait, you are different from the others, aren't you?", 
+		"type": "map"
+	},
+	"sm3": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Some humans stole my egg earlier. If you could recover it for me, I would gladly help you with anything you need.", 
+		"type": "map"
+	},
+	"sm4": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Will you recover my egg for me?", 
+		"type": "map"
+	},
+	"sm4c1": {
+		"en-us": "", 
+		"en-dm": "I'll get your egg back!", 
+		"type": "choice"
+	},
+	"sm4c2": {
+		"en-us": "", 
+		"en-dm": "Prepare to die, you vile beast!", 
+		"type": "choice"
+	},
+	"sm4c3": {
+		"en-us": "", 
+		"en-dm": "I'll think about it.", 
+		"type": "choice"
+	},
+	"smA1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Thank you! The human with the grey hair on their face is the one who stole it from me. Please bring it back to me!", 
+		"type": "map"
+	},
+	"smA2": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Please bring my egg back to me once you have taken it back from the gray haired human.", 
+		"type": "map"
+	},
+	"smB1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: So you are with them after all... so be it. Prepare yourself, human!", 
+		"type": "map"
+	},
+	"smB2": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Back for more, are you? Feel my wrath, human!", 
+		"type": "map"
+	},
+	"smC1": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Yeah okay that's fair.", 
+		"type": "map"
+	},
+	"sm5": {
+		"en-us": "", 
+		"en-dm": "Sea Monster: Ah, you're back. Have you made your decision?", 
+		"type": "map"
+	},
+	"w21": {
+		"en-us": "", 
+		"en-dm": "get fucked four eyes", 
+		"type": "map"
+	},
+	"w22": {
+		"en-us": "", 
+		"en-dm": "hi im paul", 
+		"type": "map"
+	},
+	// Area 6: Fake Farm
 	"barndoorChick": {
 		"en-us": "", 
 		"en-dm": "You can't see too well through the door, but there appears to be some of ridiculously large chicken behind it.", 
@@ -2566,17 +2491,17 @@ var fulltext = {
 		"en-dm": "Actually Just Jeff: You... bastard...", 
 		"type": "map"
 	},
-	"HK_s0": {
+	"HK.s0": {
 		"en-us": "", 
 		"en-dm": "I don't know what this is.", 
 		"type": "map"
 	},
-	"HK_s1": {
+	"HK.s1": {
 		"en-us": "", 
 		"en-dm": "This is a \"HOUSEKEEPER\" model smart speaker.", 
 		"type": "map"
 	},
-	"HK_s2": {
+	"HK.s2": {
 		"en-us": "", 
 		"en-dm": "You can talk to it and it'll turn on lights in your house, or set the thermostat temperature, or send your personal data to advertisers.", 
 		"type": "map"
@@ -2586,12 +2511,12 @@ var fulltext = {
 		"en-dm": "Actually Just Jeff: I'll never let you out of here!", 
 		"type": "map"
 	},
-	"s_up2": {
+	"s.up2": {
 		"en-us": "", 
 		"en-dm": "Do you wish you had more tiles to plant crops in? Wish no more! I can give you more tiles to work with!", 
 		"type": "shop"
 	},
-	"s_up2p": {
+	"s.up2p": {
 		"en-us": "", 
 		"en-dm": "Excellent! Now you'll have more tiles to plant crops and place fixtures on!", 
 		"type": "shop"
@@ -2626,86 +2551,77 @@ var fulltext = {
 		"en-dm": "Crouton: You got anything for me?", 
 		"type": "map"
 	},
-	"arf_none": {
+	"arf.none": {
 		"en-us": "", 
 		"en-dm": "Crouton: Damn. If you have any fishing tools or good bait, holler at me.", 
 		"type": "map"
 	},
-	"arf_spear": {
+	"arf.spear": {
 		"en-us": "", 
 		"en-dm": "Give Fish Spear.", 
 		"type": "choice"
 	},
-	"arf_net": {
+	"arf.net": {
 		"en-us": "", 
 		"en-dm": "Give Fish Net.", 
 		"type": "choice"
 	},
-	"arf_bignet": {
+	"arf.bignet": {
 		"en-us": "", 
 		"en-dm": "Give Big Net.", 
 		"type": "choice"
 	},
-	"arf_metalrod": {
+	"arf.metalrod": {
 		"en-us": "", 
 		"en-dm": "Give Metal Rod.", 
 		"type": "choice"
 	},
-	"arf_ultrarod": {
+	"arf.ultrarod": {
 		"en-us": "", 
 		"en-dm": "Give Master Bait.", 
 		"type": "choice"
 	},
-	"arf_spear0": {
+	"arf.spear0": {
 		"en-us": "", 
 		"en-dm": "Crouton: A spear, eh? I dunno if I'd be able to work that with my tiny doggy paws.", 
 		"type": "map"
 	},
-	"arf_spear1": {
+	"arf.spear1": {
 		"en-us": "", 
 		"en-dm": "Crouton: I appreciate the sentiment, but I may need something a little more hands-off.", 
 		"type": "map"
 	},
-	"arf_good0": {
+	"arf.good0": {
 		"en-us": "", 
 		"en-dm": "Crouton: Bow-WOW! Now THIS could catch me some fishies!", 
 		"type": "map"
 	},
-	"arf_good1": {
+	"arf.good1": {
 		"en-us": "", 
 		"en-dm": "Crouton: Thanks, buddy! Here's some fodder as a reward. You can feed it to a cow to get plenty of health-recovering milk!", 
 		"type": "map"
 	},
-	"arf_good2": {
+	"arf.good2": {
 		"en-us": "", 
 		"en-dm": "Crouton: Don't have a cow? Don't have a cow! There's a shop in one of the stalls inside this fake-ass barn that sells them!", 
 		"type": "map"
 	},
-	"arf_ultra0": {
+	"arf.ultra0": {
 		"en-us": "", 
 		"en-dm": "Crouton: Oh wow, now THAT is some fish bait! I'll definitely catch some amazing fish with this!", 
 		"type": "map"
 	},
-	"arf_ultra1": {
+	"arf.ultra1": {
 		"en-us": "", 
 		"en-dm": "Crouton: Thanks a million! Here's some premium food as a reward! You can feed it to a cow to get super powerful health-recovering milk!", 
 		"type": "map"
 	},
-	"arf_thanks": {
+	"arf.thanks": {
 		"en-us": "", 
 		"en-dm": "Crouton: You give a dog a fish, you feed him for a day. You teach a dog to fish, you're gonna win some fucking dog shows.", 
 		"type": "map"
 	},
-	"goodfood": {
-		"en-us": "", 
-		"en-dm": "A super tasty and healthy feed for animals. Feeding a cow this will lead to milk that recovers LOTS of health, so you should definitely hold onto it until the final battle and then forget to use it.", 
-		"type": "item"
-	},
-	"SignMermaidInn": {
-		"en-us": "", 
-		"en-dm": "Mermaid Inn", 
-		"type": "map"
-	},
+	// Area 7: South City
 	"entercity0": {
 		"en-us": "", 
 		"en-dm": "!!!: Hey! Who's that over there??!", 
@@ -2826,177 +2742,177 @@ var fulltext = {
 		"en-dm": "Stay hidden for now.", 
 		"type": "choice"
 	},
-	"entercity0_0": {
+	"entercity0.0": {
 		"en-us": "", 
 		"en-dm": "Bruno: Hey, what the--?!", 
 		"type": "map"
 	},
-	"entercity0_1": {
+	"entercity0.1": {
 		"en-us": "", 
 		"en-dm": "???: I told you to-- I mean, EGADS! THAT'S NOT A RAT! THAT'S A HUMAN WOMAN!", 
 		"type": "map"
 	},
-	"entercity0_2": {
+	"entercity0.2": {
 		"en-us": "", 
 		"en-dm": "Bruno: THAT'S THE FARMER!!", 
 		"type": "map"
 	},
-	"entercity0_3": {
+	"entercity0.3": {
 		"en-us": "", 
 		"en-dm": "???: RATS CAN'T BE FARMERS!! THEIR TINY HANDS CAN'T HOLD TOOLS!! THIS IS ALL VERY SURPRISING TO ME!!", 
 		"type": "map"
 	},
-	"entercity0_4": {
+	"entercity0.4": {
 		"en-us": "", 
 		"en-dm": "Bruno: Shut up! I'll deal with YOU later!", 
 		"type": "map"
 	},
-	"entercity0_5": {
+	"entercity0.5": {
 		"en-us": "", 
 		"en-dm": "Bruno: You're goin' down, lady!", 
 		"type": "map"
 	},
-	"entercity1_0": {
+	"entercity1.0": {
 		"en-us": "", 
 		"en-dm": "???: ...I think I understand what you're getting at.", 
 		"type": "map"
 	},
-	"entercity1_1": {
+	"entercity1.1": {
 		"en-us": "", 
 		"en-dm": "The bartender opens the cash register, pulls out some money, and hands it to the mobster.", 
 		"type": "map"
 	},
-	"entercity1_2": {
+	"entercity1.2": {
 		"en-us": "", 
 		"en-dm": "Bruno: Hmm, yeah, I think I can forget about those rats now.", 
 		"type": "map"
 	},
-	"entercity1_3": {
+	"entercity1.3": {
 		"en-us": "", 
 		"en-dm": "Bruno: Keep up the good work, and if you see that farmer, TELL ONE OF US IMMEDIATELY.", 
 		"type": "map"
 	},
-	"entercity1_4": {
+	"entercity1.4": {
 		"en-us": "", 
 		"en-dm": "???: Of course I will! Absolutely!", 
 		"type": "map"
 	},
-	"entercity1_5": {
+	"entercity1.5": {
 		"en-us": "", 
 		"en-dm": "???: ... ... ...", 
 		"type": "map"
 	},
-	"entercity1_6": {
+	"entercity1.6": {
 		"en-us": "", 
 		"en-dm": "???: ...Okay, I think it's safe for you to come out now.", 
 		"type": "map"
 	},
-	"entercity1_7": {
+	"entercity1.7": {
 		"en-us": "", 
 		"en-dm": "???: I'm sorry you had to see that.", 
 		"type": "map"
 	},
-	"entercity0_pb0": {
+	"entercity0.pb0": {
 		"en-us": "", 
 		"en-dm": "Bruno: Ugh! Why I oughta...", 
 		"type": "map"
 	},
-	"entercity0_pb1": {
+	"entercity0.pb1": {
 		"en-us": "", 
 		"en-dm": "The mobster collapses on the ground.", 
 		"type": "map"
 	},
-	"entercity0_pb2": {
+	"entercity0.pb2": {
 		"en-us": "", 
 		"en-dm": "???: Wow... we're lucky he's one of the dumber ones. If I tell him he just drank too much and passed out, he'll probably buy it.", 
 		"type": "map"
 	},
-	"entercity0_pb3": {
+	"entercity0.pb3": {
 		"en-us": "", 
 		"en-dm": "???: ...Thank you. Thank you very much. You really helped me out just now.", 
 		"type": "map"
 	},
-	"entercity0_pb4": {
+	"entercity0.pb4": {
 		"en-us": "", 
 		"en-dm": "???: If you need to stay here, you can stay the night any time. No charge for you.", 
 		"type": "map"
 	},
-	"entercity2_0": {
+	"entercity2.0": {
 		"en-us": "", 
 		"en-dm": "???: Anyway, I'm Skumpy, the owner of this inn. As you might have guessed, we have a bit of a mob problem.", 
 		"type": "map"
 	},
-	"entercity2_1": {
+	"entercity2.1": {
 		"en-us": "", 
 		"en-dm": "Skumpy: A few days ago a bunch of mobsters showed up and said they'd been hired to monitor the neighborhood.", 
 		"type": "map"
 	},
-	"entercity2_2": {
+	"entercity2.2": {
 		"en-us": "", 
 		"en-dm": "Skumpy: Apparently some farmer would be probably be coming through here to get to the city, and they were going to cut her off.", 
 		"type": "map"
 	},
-	"entercity2_3": {
+	"entercity2.3": {
 		"en-us": "", 
 		"en-dm": "Skumpy: I think it's safe to say that you're the farmer they're looking for.", 
 		"type": "map"
 	},
-	"entercity2_4": {
+	"entercity2.4": {
 		"en-us": "", 
 		"en-dm": "Skumpy: I can't say I know what they'll do to you if they catch you, or why they were even hired.", 
 		"type": "map"
 	},
-	"entercity2_5": {
+	"entercity2.5": {
 		"en-us": "", 
 		"en-dm": "Skumpy: Maybe you have some idea, but I think the less I know about this, the better.", 
 		"type": "map"
 	},
-	"entercity2_6": {
+	"entercity2.6": {
 		"en-us": "", 
 		"en-dm": "Skumpy: But whoever you pissed off, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
 		"type": "map"
 	},
-	"entercity2_7": {
+	"entercity2.7": {
 		"en-us": "", 
 		"en-dm": "Skumpy: They haven't hurt anybody, but they make it pretty clear that the best way to keep it that way is by paying their \"fees.\"", 
 		"type": "map"
 	},
-	"entercity2_8": {
+	"entercity2.8": {
 		"en-us": "", 
 		"en-dm": "Skumpy: Either way, the city is swarming with them, so if you're still determined to get into the city, you'd better be careful.", 
 		"type": "map"
 	},
-	"entercity2_9": {
+	"entercity2.9": {
 		"en-us": "", 
 		"en-dm": "Skumpy: They've set up a sort of home base just west of here, so if stealth isn't your thing, you can try to deal with them directly.", 
 		"type": "map"
 	},
-	"entercity2_10": {
+	"entercity2.10": {
 		"en-us": "", 
 		"en-dm": "Skumpy: That's all hypothetical of course. I'm sure you're pretty tough if someone thought hiring the mob was necessary to take care of you...", 
 		"type": "map"
 	},
-	"entercity2_11": {
+	"entercity2.11": {
 		"en-us": "", 
 		"en-dm": "Skumpy: ...but trying to storm a building full of armed criminals all by yourself is a suicide mission.", 
 		"type": "map"
 	},
-	"entercity2_12": {
+	"entercity2.12": {
 		"en-us": "", 
 		"en-dm": "Skumpy: Maybe if you could find a way to sneak in through the back or something and take on their boss directly..", 
 		"type": "map"
 	},
-	"entercity2_13": {
+	"entercity2.13": {
 		"en-us": "", 
 		"en-dm": "Skumpy: ...no no, I need to stop giving you ideas. Stay to the east of town. That's where most of the shops are, anyway.", 
 		"type": "map"
 	},
-	"entercity2_14": {
+	"entercity2.14": {
 		"en-us": "", 
 		"en-dm": "Skumpy: You can hide in them if you need to, and if you feel like buying any supplies, I'm sure you can find something you need.", 
 		"type": "map"
 	},
-	"entercity2_15": {
+	"entercity2.15": {
 		"en-us": "", 
 		"en-dm": "Skumpy: Good luck, stranger.", 
 		"type": "map"
@@ -3091,22 +3007,22 @@ var fulltext = {
 		"en-dm": "Old Lady: Do you have any bird food for me?", 
 		"type": "map"
 	},
-	"lady_fodder": {
+	"lady.fodder": {
 		"en-us": "", 
 		"en-dm": "Give Fodder.", 
 		"type": "map"
 	},
-	"lady_corn": {
+	"lady.corn": {
 		"en-us": "", 
 		"en-dm": "Give Corn.", 
 		"type": "map"
 	},
-	"lady_rice": {
+	"lady.rice": {
 		"en-us": "", 
 		"en-dm": "Give Rice.", 
 		"type": "map"
 	},
-	"lady_goodfood": {
+	"lady.goodfood": {
 		"en-us": "", 
 		"en-dm": "Give Delicious Food.", 
 		"type": "map"
@@ -3156,9 +3072,519 @@ var fulltext = {
 		"en-dm": "You got 20,000G and 6 Funny Mushroom Seeds.", 
 		"type": "map"
 	},
-	"notdrugs": {
+	// Shops
+	"s.co": {
+		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
+		"en-dm": "Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow!", 
+		"type": "shop"
+	},
+	"s.sell": {
+		"en-us": "What're you selling?", 
+		"en-dm": "WOT'RE YA SELLIN'???", 
+		"type": "shop"
+	},
+	"s.eq1o": {
+		"en-us": "Welcome to my Equipment Shop! Please, buy many things.", 
+		"en-dm": "Hello I am a public domain dwarf and I sell equipment. You can equip it from the Menu, which is probably a good choice.", 
+		"type": "shop"
+	},
+	"s.leave": {
+		"en-us": "Thank you, come again!", 
+		"en-dm": "fuck off", 
+		"type": "shop"
+	},
+	"s.leave2": {
+		"en-us": "Bye.", 
+		"en-dm": "bye fucker", 
+		"type": "shop"
+	},
+	"s.notenough": {
+		"en-us": "You can't afford that...", 
+		"en-dm": "Hey fuckface this is a store not charity. Have the money or have a gofuckyourself.", 
+		"type": "shop"
+	},
+	"s.purchased": {
+		"en-us": "Thank you!", 
+		"en-dm": "thanks mom", 
+		"type": "shop"
+	},
+	"s.up1p": {
+		"en-us": "Excellent! Now you'll have a 4x3 grid of tiles to plant crops and place fixtures on!", 
+		"type": "shop"
+	},
+	"s.didsell": {
+		"en-us": "Thank you for the goods!", 
+		"en-dm": "Thanks for the shit, fucfkace.", 
+		"type": "shop"
+	},
+	"s.leavesell": {
+		"en-us": "Anything else?", 
+		"en-dm": "stop giving me THINGS and start giving me MONEY.", 
+		"type": "shop"
+	},
+	"s.cpurch": {
+		"en-us": "Bu-GAW! Thank you for your patronage!", 
+		"en-dm": "Bu-GAWK!! Good shit, good shit. Thank you for your patronage!", 
+		"type": "shop"
+	},
+	"s.up1o": {
+		"en-us": "Are you tired of only having 9 tiles to plant crops in? Tire no more! For just 2000 coins I can give you three more tiles to plant on!", 
+		"type": "shop"
+	},
+	"s.upempty": {
+		"en-us": "Welcome. Unfortunately, I have no other upgrades for you.", 
+		"type": "shop"
+	},
+	"s.sellseed": {
+		"en-us": "Seeds & Consumables\n Sell your seeds, eggs, and other consumable supplies.", 
+		"type": "shop"
+	},
+	"s.selltool": {
+		"en-us": "Tools & Equipment\n Sell your equipment, like sickles, gloves, and compost bins.", 
+		"type": "shop"
+	},
+	"s.sellfixture": {
+		"en-us": "Field Fixtures\n Sell your Fixtures, like chicken coops and mushroom logs.", 
+		"type": "shop"
+	},
+	"s.fieldI": {
+		"en-us": "This will expand your Combat Field, allowing you to place more Fixtures and plant more Crops during combat.", 
+		"type": "shop"
+	},
+	"s.fieldO": {
+		"en-us": "This configuration gives room for more large Fixtures and Trees.", 
+		"type": "shop"
+	},
+	"s.field.": {
+		"en-us": "This configuration gives additional space, but less room for large Fixtures and Trees.", 
+		"type": "shop"
+	},
+	"s.fi1o": {
+		"en-us": "Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!", 
+		"type": "shop"
+	},
+	"quest1": {
 		"en-us": "", 
-		"en-dm": "Totally ordinary mushroom seeds. Their spores can stun enemies. They look pretty rare so you should definitely hold onto them until the final battle and then forget to use them.", 
-		"type": "item"
-	}
+		"en-dm": "oi u fuck", 
+		"type": "shop"
+	},
+	"quest1.a": {
+		"en-us": "", 
+		"en-dm": "I heard pray tell quite right what-ho rumors eh wot yes quite that there's a golden mushroom in the forest west of here. Find it for me, and there'll be something in it for you!", 
+		"type": "shop"
+	},
+	"quest1.b": {
+		"en-us": "", 
+		"en-dm": "sick thanks. Have a mushroom log.", 
+		"type": "shop"
+	},
+	"quest1.c": {
+		"en-us": "", 
+		"en-dm": "are you daft, lass? Golden mushroom. Forest. West of here. Hop it to it. it.", 
+		"type": "shop"
+	},
+	"s.seed1": {
+		"en-us": "", 
+		"en-dm": "hi I got seeds", 
+		"type": "shop"
+	},
+	"s.inn1": {
+		"en-us": "", 
+		"en-dm": "hey hey hey my inn is in... business. It's in business. That's a thing people say. Fuck off.", 
+		"type": "shop"
+	},
+	"s.innpurch": {
+		"en-us": "", 
+		"en-dm": "enjoy your sleep", 
+		"type": "shop"
+	},
+	"s.mermhello": {
+		"en-us": "", 
+		"en-dm": "this is a mermaid... hello!!", 
+		"type": "shop"
+	},
+	"cwk.co": {
+		"en-us": "", 
+		"en-dm": "Hey there. I'm too lazy to do any construction work so I'm just... running a shop. Whatever.", 
+		"type": "shop"
+	},
+	"cwk.leave": {
+		"en-us": "", 
+		"en-dm": "Thanks for the whatever.", 
+		"type": "shop"
+	},
+	"quest1.d": {
+		"en-us": "", 
+		"en-dm": "hly faulk lass is that a fucken golden mushroom? I'll trade you for this log! AND I'll start selling you my special mushroom selection!", 
+		"type": "shop"
+	},
+	// Bees
+	"hiveGet": {
+		"en-us": "", 
+		"en-dm": "You found a beehive! You can now place one more beehive on your farm, and you caught some bees, too!", 
+		"type": "map"
+	},
+	"beeGoodbye": {
+		"en-us": "", 
+		"en-dm": "???: Goodbye, friend!", 
+		"type": "map"
+	},
+	"FarmHive0": {
+		"en-us": "", 
+		"en-dm": "???: Hello there!", 
+		"type": "map"
+	},
+	"FarmHive1": {
+		"en-us": "", 
+		"en-dm": "???: I see you've got some BEES there, am I correct?", 
+		"type": "map"
+	},
+	"FarmHive2": {
+		"en-us": "", 
+		"en-dm": "???: You can place a beehive on your farm from the Fixtures menu. Once you have a beehive on your farm, you can use bees in combat!", 
+		"type": "map"
+	},
+	"FarmHive3": {
+		"en-us": "", 
+		"en-dm": "???: Bees produce honey at random intervals, which recovers a lot of health when composted, and can stun some enemies when used as a weapon!", 
+		"type": "map"
+	},
+	"FarmHive4": {
+		"en-us": "", 
+		"en-dm": "???: Bees are very important, so please take care of them. Don't take more honey than you need, and don't do anything to hurt them!", 
+		"type": "map"
+	},
+	"BeeGuard0": {
+		"en-us": "", 
+		"en-dm": "???: I saw what you did...", 
+		"type": "map"
+	},
+	"BeeGuard1": {
+		"en-us": "", 
+		"en-dm": "???: You used pesticide...", 
+		"type": "map"
+	},
+	"BeeGuard2": {
+		"en-us": "", 
+		"en-dm": "???: And then exposed bees to that pesticide.", 
+		"type": "map"
+	},
+	"BeeGuard3": {
+		"en-us": "", 
+		"en-dm": "???: DID YOU THINK I WOULDN'T NOTICE???", 
+		"type": "map"
+	},
+	"BeeGuard4": {
+		"en-us": "", 
+		"en-dm": "???: I CANNOT LET YOU GET AWAY WITH THIS!!", 
+		"type": "map"
+	},
+	"ForestHive0": {
+		"en-us": "", 
+		"en-dm": "You hear some rumbling behind you.", 
+		"type": "map"
+	},
+	"ForestHive1": {
+		"en-us": "", 
+		"en-dm": "A loud roar is heard.", 
+		"type": "map"
+	},
+	"ForestHive2": {
+		"en-us": "", 
+		"en-dm": "Oh fuck it's a bear.", 
+		"type": "map"
+	},
+	// Reoccuring
+	"openchest": {
+		"en-us": "", 
+		"en-dm": "This treasure chest is empty.", 
+		"type": "map"
+	},
+	"closedchest": {
+		"en-us": "", 
+		"en-dm": "You open the chest. Inside you find {0}!", 
+		"type": "map"
+	},
+	"truck.where": {
+		"en-us": "", 
+		"en-dm": "Where would you like to drive to?", 
+		"type": "map"
+	},
+	"truck.none": {
+		"en-us": "", 
+		"en-dm": "You have things to do here before driving off!", 
+		"type": "map"
+	},
+	"truck.nm": {
+		"en-us": "", 
+		"en-dm": "Stay here for now.", 
+		"type": "choice"
+	},
+	"truck.home": {
+		"en-us": "", 
+		"en-dm": "Drive home.", 
+		"type": "choice"
+	},
+	"truck.bridge": {
+		"en-us": "", 
+		"en-dm": "Drive to the bridge.", 
+		"type": "choice"
+	},
+	"truck.city": {
+		"en-us": "", 
+		"en-dm": "Drive to the city.", 
+		"type": "choice"
+	},
+	"truck.fake": {
+		"en-us": "", 
+		"en-dm": "Drive to the fake farm.", 
+		"type": "choice"
+	},
+	// Combat
+	"standardAttack": {
+		"en-us": "", 
+		"en-dm": "{0} attacks for {1} damage.", 
+		"type": "combat"
+	},
+	"plantAttack": {
+		"en-us": "", 
+		"en-dm": "{0} plants {2}.", 
+		"type": "combat"
+	},
+	"modulateAttack": {
+		"en-us": "", 
+		"en-dm": "{0} uses a Season Modulator to change the season to {2}.", 
+		"type": "combat"
+	},
+	"babyToss": {
+		"en-us": "", 
+		"en-dm": "{0}'s {2} harvest is ready!", 
+		"type": "combat"
+	},
+	"fishSuccess": {
+		"en-us": "", 
+		"en-dm": "{0} reaches into the river and pulls out a fish, eating it and recovering {1} health.", 
+		"type": "combat"
+	},
+	"fishFail": {
+		"en-us": "", 
+		"en-dm": "{0} reaches into the river, but fails to catch any fish.", 
+		"type": "combat"
+	},
+	// Enemy Names
+	"e.robo0": {
+		"en-us": "", 
+		"en-dm": "Byte Buddy", 
+		"type": "enemy"
+	},
+	"e.Discussly0": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron", 
+		"type": "enemy"
+	},
+	"e.bigBot0": {
+		"en-us": "", 
+		"en-dm": "MegaByte Buddy", 
+		"type": "enemy"
+	},
+	"e.robo20": {
+		"en-us": "", 
+		"en-dm": "KiloByte Buddy", 
+		"type": "enemy"
+	},
+	"e.robo30": {
+		"en-us": "", 
+		"en-dm": "Bit Buddy", 
+		"type": "enemy"
+	},
+	"e.ScienceMan0": {
+		"en-us": "", 
+		"en-dm": "Jeff", 
+		"type": "enemy"
+	},
+	"e.mouse0": {
+		"en-us": "", 
+		"en-dm": "Mouse", 
+		"type": "enemy"
+	},
+	"e.sqorl0": {
+		"en-us": "", 
+		"en-dm": "Sqorl", 
+		"type": "enemy"
+	},
+	"e.bear0": {
+		"en-us": "", 
+		"en-dm": "Bear", 
+		"type": "enemy"
+	},
+	"e.turky0": {
+		"en-us": "", 
+		"en-dm": "Turkey", 
+		"type": "enemy"
+	},
+	"e.bossturky0": {
+		"en-us": "", 
+		"en-dm": "Boss Turkey", 
+		"type": "enemy"
+	},
+	"e.Worker0": {
+		"en-us": "", 
+		"en-dm": "Carl", 
+		"type": "enemy"
+	},
+	"e.Worker1": {
+		"en-us": "", 
+		"en-dm": "Dave", 
+		"type": "enemy"
+	},
+	"e.Worker2": {
+		"en-us": "", 
+		"en-dm": "Chunk", 
+		"type": "enemy"
+	},
+	"e.Worker3": {
+		"en-us": "", 
+		"en-dm": "Brett", 
+		"type": "enemy"
+	},
+	"e.BossWorker0": {
+		"en-us": "", 
+		"en-dm": "James", 
+		"type": "enemy"
+	},
+	"e.kelpBoy0": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy", 
+		"type": "enemy"
+	},
+	"e.fishFace0": {
+		"en-us": "", 
+		"en-dm": "Fish Face", 
+		"type": "enemy"
+	},
+	"e.seaMonk0": {
+		"en-us": "", 
+		"en-dm": "Sea Monk", 
+		"type": "enemy"
+	},
+	"e.seaHandR0": {
+		"en-us": "", 
+		"en-dm": "Sea Monster", 
+		"type": "enemy"
+	},
+	"e.seaMan0": {
+		"en-us": "", 
+		"en-dm": "Sea Monster", 
+		"type": "enemy"
+	},
+	"e.seaHandL0": {
+		"en-us": "", 
+		"en-dm": "Sea Monster", 
+		"type": "enemy"
+	},
+	"e.chickBot0": {
+		"en-us": "", 
+		"en-dm": "Totally A Chicken", 
+		"type": "enemy"
+	},
+	"e.piggun0": {
+		"en-us": "", 
+		"en-dm": "Gun Pig", 
+		"type": "enemy"
+	},
+	"e.golem0": {
+		"en-us": "", 
+		"en-dm": "Veggie Golem", 
+		"type": "enemy"
+	},
+	"e.lawnmower0": {
+		"en-us": "", 
+		"en-dm": "Lawn Mower", 
+		"type": "enemy"
+	},
+	"e.machineA0": {
+		"en-us": "", 
+		"en-dm": "Machine A", 
+		"type": "enemy"
+	},
+	"e.machineB0": {
+		"en-us": "", 
+		"en-dm": "Machine B", 
+		"type": "enemy"
+	},
+	"e.machineC0": {
+		"en-us": "", 
+		"en-dm": "Machine C", 
+		"type": "enemy"
+	},
+	"e.machineD0": {
+		"en-us": "", 
+		"en-dm": "Machine D", 
+		"type": "enemy"
+	},
+	"e.router0": {
+		"en-us": "", 
+		"en-dm": "Router", 
+		"type": "enemy"
+	},
+	"e.server0": {
+		"en-us": "", 
+		"en-dm": "Server", 
+		"type": "enemy"
+	},
+	"e.housekeeper0": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER", 
+		"type": "enemy"
+	},
+	"e.outlet0": {
+		"en-us": "", 
+		"en-dm": "Outlet", 
+		"type": "enemy"
+	},
+	"e.mobsty10": {
+		"en-us": "", 
+		"en-dm": "Mr. Ferrante", 
+		"type": "enemy"
+	},
+	"e.mobsty11": {
+		"en-us": "", 
+		"en-dm": "Mr. Bruno", 
+		"type": "enemy"
+	},
+	"e.mobsty12": {
+		"en-us": "", 
+		"en-dm": "Mr. Randazzo", 
+		"type": "enemy"
+	},
+	"e.mobsty20": {
+		"en-us": "", 
+		"en-dm": "Mr. Linetti", 
+		"type": "enemy"
+	},
+	"e.mobsty21": {
+		"en-us": "", 
+		"en-dm": "Mr. Lucido", 
+		"type": "enemy"
+	},
+	"e.mobsty22": {
+		"en-us": "", 
+		"en-dm": "Mr. Martinazzi", 
+		"type": "enemy"
+	},
+	"e.beeQueenA0": {
+		"en-us": "", 
+		"en-dm": "???", 
+		"type": "enemy"
+	},
+	"e.beeQueenB0": {
+		"en-us": "", 
+		"en-dm": "???", 
+		"type": "enemy"
+	},
+	"e.beeQueenC0": {
+		"en-us": "", 
+		"en-dm": "???", 
+		"type": "enemy"
+	},
 };

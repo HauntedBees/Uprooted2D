@@ -4,6 +4,7 @@ uglifyjs ^
     js/gamedata/equipment.js ^
     js/gamedata/fixtures.js ^
     js/gamedata/enemies.js ^
+    js/gamedata/enemy_patterns.js ^
     js/gamedata/shops.js ^
     js/gamedata/quests.js ^
     js/gamedata/spritedata.js ^
@@ -12,6 +13,7 @@ uglifyjs ^
     js/animation/animController.js ^
     js/input.js ^
     js/combat/combat.js ^
+    js/combat/enemyParser.js ^
     js/combat/combatcropfuncs.js ^
     js/animation/combatAnim.js ^
     js/combat/combatmenu.js ^

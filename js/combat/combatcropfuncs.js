@@ -52,7 +52,7 @@ combat.ageCrops = function() {
             } else if(crop.activeTime == 0) {
                 if(crop.respawn > 0) {
                     crop.activeTime = crop.respawn;
-                } else if(!crop.noRot) {
+                } else if(!crop.noRot && crop.type !== "tech" && crop.type !== "babby") {
                     crop.rotten = true;
                 }
             }

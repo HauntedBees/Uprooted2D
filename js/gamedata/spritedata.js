@@ -16,6 +16,7 @@ var spriteData = {
             spriteData.names["app" + i] = [28 - i, 10];
             spriteData.names["frogbot" + i] = [11 + i, 0, true];
             spriteData.names["coffee" + i] = [11 + i, 1, true];
+            spriteData.names["robobabby" + i] = [12, 18 + i];
             if(i < 2) {
                 spriteData.names["apple" + i] = [3 + i, 0, true];
                 spriteData.names["banana" + i] = [5 + i, 0, true];
@@ -104,6 +105,7 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "robobabby": [12, 21],
         "notdrugs": [28, 13],
         "notdrugsseed": [27, 13],
         "notdrugs0": [29, 13],

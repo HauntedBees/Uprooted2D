@@ -1,4 +1,4 @@
-param ([string]$which="CEF")
+param ([string]$which="CEFX")
 function NullOrEmpty($a) { return ($a -ne $null -and $a -ne ""); }
 function Coalesce($a, $b) { if (NullOrEmpty $a) { $a } else { $b } }
 New-Alias "??" Coalesce;
@@ -43,12 +43,17 @@ function GetCrop(name) {
 '@);
 	$formatStr = "		case `"{name}`": return new CropDetail(name, `"{displayname}`", {price}, `"{type}`", {size}, {time}, {frames}, {power}, {re}, {sp}, {su}, {au}, {wi}{addtl});";
 	$count = 0;
+	$allCrops = @();
+	$keepCropping = $true;
 	ForEach($row in $csv) {
-		if($row.Crop -eq "" -or $row.Crop -eq "Crop") { continue; }
-		if($row.Id -eq "*") {
+		$id = $row.Id;
+		if($id -eq "") { continue; }
+		if($id -eq "*") {
 			$out.WriteLine("		/* _ */".replace("_", $row.Name));
+			if($row.Name -eq "Enemy-Only") { $keepCropping = $false; }
 			continue;
 		}
+		if($keepCropping) { $allCrops += "`"$id`""; }
 		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{type}", $row.Type).replace("{size}", $row.Size);
 		$endStr = $endStr.replace("{time}", $row.Time).replace("{frames}", $row.AnimFrames).replace("{power}", $row.Power).replace("{re}", (?? $row.Re 0));
 		$endStr = $endStr.replace("{sp}", (?? $row.Sp 0)).replace("{su}", (?? $row.Su 0)).replace("{au}", (?? $row.Au 0)).replace("{wi}", (?? $row.Wi 0));
@@ -66,6 +71,7 @@ function GetCrop(name) {
 		if($row.Req) { $addtl += "req: _".replace("_", $row.Req); }
 		if($row.StkChance) { $addtl += "stickChance: _".replace("_", $row.StkChance); }
 		if($row.StkRange) { $addtl += "stickRange: _".replace("_", $row.StkRange); }
+		if($row.Baby) { $addtl += "baby: `"_`"".replace("_", $row.Baby); }
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
 			$endStr = $endStr.replace("{addtl}", ", { $folded }");
@@ -76,7 +82,9 @@ function GetCrop(name) {
 		$count++;
 	}
 	$out.WriteLine("	}");
-	$out.Write("}")
+	$out.WriteLine("}");
+	$allCropsStr = $allCrops -join ", ";
+	$out.Write("debug.AllCrops = [$allCropsStr];");
 	$out.close();
 	Write-Host "Converted $count crops";
 }
@@ -206,7 +214,7 @@ function GetFarmInfo(name) {
 			continue;
 		}
 		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{shortdesc}", $row.ShortDesc).replace("{desc}", $row.Desc);
-		$addtl = @();
+		#$addtl = @();
 		if($row.DisplaySprite) { 
 			$endStr = $endStr.replace("{addtl}", ", `"" + $row.DisplaySprite + "`"");
 		} else {
@@ -220,6 +228,104 @@ function GetFarmInfo(name) {
 	$out.close();
 	Write-Host "Converted $count fixtures";
 }
-
+if($which.Contains("X")) {
+	Write-Host "Converting Details_Enemies.ods to enemies.js";
+	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Enemies.ods" | Out-Null;
+	$csv = Import-CSV ".\temp\Details_Enemies.csv";
+	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\enemies.js";
+	$out.WriteLine(@'
+function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldheight, fieldwidth, boss, seasonDistribution, atkType, args, drops, addtl) {
+    this.name = name;
+    this.health = health;
+	this.maxhealth = health;
+    this.atk = atk;
+    this.def = def;
+    this.cursorinfo = cursorinfo;
+    this.fieldheight = fieldheight;
+    this.fieldwidth = fieldwidth;
+    this.size = size;
+    this.spriteidx = spriteidx;
+    switch(this.size) {
+        case "sm": 
+        case "md": this.sheet = "charsheet"; break;
+        case "lg": this.sheet = "charsheetbig"; break;
+    }
+    this.stickTurns = 0;
+    this.seasonDistribution = seasonDistribution;
+    this.attackType = atkType;
+	this.args = (args || "").split(",");
+	
+    this.exp = Math.ceil(health/10 + atk + def/2);
+    if(this.name === "Discussly" || this.name.indexOf("beeQueen") === 0) { this.exp = 0; }
+    this.drops = drops;
+    this.boss = boss;
+    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+	this.GetRandomArg = function() { return this.args[Math.floor(Math.random() * this.args.length)]; };
+}
+function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math.floor(Math.random() * max)); }
+function GetEnemy(name) {
+    switch(name) {
+'@);
+	$formatStr = "		case `"{name}`": return new EnemyDetail(GetDisplayName(name, {dsl}), `"{size}`", {spriteidx}, { dx: {dx}, dy: {dy}, w: {w}, h: {h} }, {health}, {atk}, {def}, {fheight}, {fwidth}, {boss}, [{sp}, {su}, {au}, {wi}], `"{atkid}`", `"{args}`"{drops}{addtl});";
+	$count = 0;
+	$allEnemies = @();
+	ForEach($row in $csv) {
+		$id = $row.Id;
+		if($id -eq "") { continue; }
+		if($id -eq "*") {
+			$out.WriteLine("		/* _ */".replace("_", $row.Names));
+			continue;
+		}
+		$allEnemies += "`"$id`"";
+		$endStr = $formatStr.replace("{name}", $id).replace("{dsl}", $row.Names).replace("{size}", $row.Size).replace("{spriteidx}", $row.sI).replace("{dx}", $row.cdx).replace("{dy}", $row.cdy).replace("{w}", $row.cw).replace("{h}", $row.ch).replace("{health}", $row.HP).replace("{atk}", $row.Atk).replace("{def}", $row.Def).replace("{fheight}", $row.FH).replace("{fwidth}", $row.FW).replace("{sp}", (?? $row.Sp 0)).replace("{su}", (?? $row.Su 0)).replace("{au}", (?? $row.Au 0)).replace("{wi}", (?? $row.Wi 0)).replace("{atkid}", $row.atkId).replace("{args}", $row.args);
+		if($row.Boss -eq "Y") {
+			$endStr = $endStr.replace("{boss}", "true");
+		} else {
+			$endStr = $endStr.replace("{boss}", "false");
+		}
+		$drops = @();
+		if($row.money -ne "") {
+			$i = $row.money.split(",");
+			$drops += "{ money: true, min: A, max: B }".replace("A", $i[0]).replace("B", $i[1]);
+		}
+		if($row.drop0 -ne "") {
+			$i = $row.drop0.split(",");
+			$drops += "{ seed: `"A`", min: B, max: C }".replace("A", $i[0]).replace("B", $i[1]).replace("C", $i[2]);
+		}
+		if($row.drop1 -ne "") {
+			$i = $row.drop1.split(",");
+			$drops += "{ seed: `"A`", min: B, max: C }".replace("A", $i[0]).replace("B", $i[1]).replace("C", $i[2]);
+		}
+		if($row.drop2 -ne "") {
+			$i = $row.drop2.split(",");
+			$drops += "{ seed: `"A`", min: B, max: C }".replace("A", $i[0]).replace("B", $i[1]).replace("C", $i[2]);
+		}
+		if($drops.Count -gt 0) {
+			$folded = $drops -join ", ";
+			$endStr = $endStr.replace("{drops}", ", [ $folded ]");
+		} else {
+			$endStr = $endStr.replace("{drops}", ", []");
+		}
+		
+		$addtl = @();
+		if($row.Tile) { $addtl += "tile: `"_`"".replace("_", $row.Tile); }
+		if($row.addtlHitCheck) { $addtl += "addtlHitCheck: `"_`"".replace("_", $row.addtlHitCheck); }
+		
+		if($addtl.Count -gt 0) {
+			$folded = $addtl -join ", ";
+			$endStr = $endStr.replace("{addtl}", ", { $folded }");
+		} else {
+			$endStr = $endStr.replace("{addtl}", "");
+		}
+		$out.WriteLine($endStr);
+		$count++;
+	}
+	$out.WriteLine("	}");
+	$out.WriteLine("}");
+	$allEnemiesStr = $allEnemies -join ", ";
+	$out.Write("debug.AllEnemies = [$allEnemiesStr];");
+	$out.close();
+	Write-Host "Converted $count enemies";
+}
 
 Remove-Item .\temp -recurse;
