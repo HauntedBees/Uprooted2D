@@ -19,14 +19,14 @@ var quests = {
         player.questsCleared.push(name);
     },
     "quest1": [
-        { text: "quest1_a", next: function() { player.activeQuests["quest1"] = 1 } },
+        { text: "quest1.a", next: function() { player.activeQuests["quest1"] = 1 } },
         {
             condition: function() { return player.hasItem("shiitake"); },
             success: function() { player.activeQuests["quest1"] = 2 },
             failure: function() { player.activeQuests["quest1"] = 3 }
         },
         {
-            text: "quest1_b",
+            text: "quest1.b",
             next: function() {
                 worldmap.shop.resetTalk();
                 player.increaseItem("_log", 1);
@@ -34,9 +34,9 @@ var quests = {
                 quests.completeQuest("quest1");
             }
         },
-        { text: "quest1_c", next: function() { player.activeQuests["quest1"] = 1 } },
+        { text: "quest1.c", next: function() { player.activeQuests["quest1"] = 1 } },
         {
-            text: "quest1_d", 
+            text: "quest1.d", 
             next: function() {
                 worldmap.shop.resetTalk();
                 player.increaseItem("_log", 1);
@@ -44,21 +44,5 @@ var quests = {
                 quests.completeQuest("quest1");
             }
         }
-    ],
-    "questM": [
-        { text: "questM_a", next: function() { player.activeQuests["questM"] = 1 } },
-        {
-            condition: function() { return (player.clearedEntities.indexOf("helpSeaMonster") >= 0); },
-            success: function() { player.activeQuests["questM"] = 2 },
-            failure: function() { player.activeQuests["questM"] = 3 }
-        },
-        {
-            text: "questM_b",
-            next: function() {
-                worldmap.shop.resetTalk();
-                quests.completeQuest("questM");
-            }
-        },
-        { text: "questM_c", next: function() { player.activeQuests["questM"] = 1 } }
     ]
 };

@@ -9,7 +9,7 @@ var stores = {
             { product: "farmupgradeOO", price: 0, type: "upgrade" },
             { product: "farmupgrade__", price: 0, type: "upgrade" }
         ],
-        opening: "s_up1o", empty: "s_upempty", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_up1p"
+        opening: "s.up1o", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up1p"
     },
     // Area 1: Farm
     "coop": {
@@ -24,12 +24,12 @@ var stores = {
             //{ product: "!baseSickle", price: 50, type: "equipment" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: true,
-        opening: "s_co", selling: "s_sell", didSell: "s_didsell", leaveSell: "s_leavesell", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_cpurch"
+        opening: "s.co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.cpurch"
     },
     "inn0": {
         img: "shops/home", innId: "inn0",
         wares: [ { product: "sleep", price: 0, type: "inn" } ],
-        opening: "s_home", leaving: "s_homeleave", purchased: "s_homesleep"
+        opening: "s.home", leaving: "s.homeleave", purchased: "s.homesleep"
     },
     // Area 1: Town
     "equip1": {
@@ -39,14 +39,14 @@ var stores = {
             { product: "!goodSickle", price: 50, type: "equipment" },
             { product: "!baseCompost", price: 50, type: "equipment" }
         ],
-        opening: "s_eq1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
+        opening: "s.eq1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "upgrade1": {
         img: "shops/dwarf2",
         wares: [
             { product: "farmupgradeI", price: 2000, type: "upgrade" }
         ],
-        opening: "s_up1o", empty: "s_upempty", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_up1p"
+        opening: "s.up1o", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up1p"
     },
     "fixture1": {
         img: "shops/dwarf3",
@@ -58,7 +58,7 @@ var stores = {
             { product: "milkcap", price: 20, type: "seed", locked: "quest1" },
             { product: "portobello", price: 20, type: "seed", locked: "quest1" }
         ],
-        opening: "s_fi1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased", talk: "quest1"
+        opening: "s.fi1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased", talk: "quest1"
     },
     "seed1": {
         img: "shops/dwarf",
@@ -71,12 +71,12 @@ var stores = {
             { product: "rhubarb", price: 10, type: "seed" }
         ],
         buyMult: 1, doesSell: false,
-        opening: "s_seed1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_purchased"
+        opening: "s.seed1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "inn1": {
         img: "shops/dwarf2", innId: "inn1",
         wares: [ { product: "sleep", price: 6, type: "inn" } ],
-        opening: "s_inn1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_innpurch"
+        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     // Area 2: Bridge
     "mermaid": {
@@ -89,12 +89,12 @@ var stores = {
             { product: "rod", price: 20, type: "seed" },
             { product: "net", price: 20, type: "seed" }
         ],
-        opening: "s_mermhello", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
+        opening: "s.mermhello", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "mermaidinn": {
         img: "shops/merm", innId: "mermaidinn",
         wares: [ { product: "sleep", price: 6, type: "inn" } ],
-        opening: "s_inn1", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_innpurch"
+        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     "cworker": {
         img: "shops/dwarf",
@@ -112,7 +112,7 @@ var stores = {
             { product: "!wiSickle", price: 50, type: "equipment" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: true,
-        opening: "cwk_co", selling: "s_sell", didSell: "s_didsell", leaveSell: "s_leavesell", leaving: "cwk_leave", notEnough: "s_notenough", purchased: "s_cpurch"
+        opening: "cwk_co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "cwk_leave", notEnough: "s.notenough", purchased: "s.cpurch"
     },
     // Area 3: Fake Farm
     "upgrade2": {
@@ -122,7 +122,7 @@ var stores = {
             { product: "farmupgradeO", price: 0, type: "upgrade" },
             { product: "farmupgrade_", price: 0, type: "upgrade" }
         ],
-        opening: "s_up2", empty: "s_upempty", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_up2p"
+        opening: "s.up2", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up2p"
     },
     "fixture2": {
         img: "shops/dwarf2",
@@ -132,7 +132,7 @@ var stores = {
             { product: "_strongsoil", price: 150, type: "farm" },
             { product: "_hotspot", price: 20, type: "farm" }
         ],
-        opening: "s_fi1o", leaving: "s_leave2", notEnough: "s_notenough", purchased: "s_purchased"
+        opening: "s.fi1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "template": {
         img: "",
@@ -141,7 +141,7 @@ var stores = {
             { product: "", price: 0, type: "" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s_leave", notEnough: "s_notenough", purchased: "s_purchased"
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
         /*selling: "", didSell: "", leaveSell: "",*/
     }
 };

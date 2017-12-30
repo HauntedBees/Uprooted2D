@@ -11,6 +11,7 @@ uglifyjs ^
     js/gamedata/spritedata.js ^
     js/gamedata/misc.js ^
     js/gamedata/text.js ^
+    js/gamedata/cutscenes.js ^
     js/animation/animController.js ^
     js/input.js ^
     js/combat/combat.js ^
@@ -31,6 +32,7 @@ uglifyjs ^
     js/worldmap/collisions.js ^
     js/worldmap/entityHelpers.js ^
     js/worldmap/entities.js ^
+    js/worldmap/newentities.js ^
     js/playerstats/pausemenu.js ^
     js/playerstats/viewinventory.js ^
     js/playerstats/equipment.js ^

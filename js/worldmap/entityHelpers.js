@@ -1,21 +1,19 @@
 var specialtyHelpers = {
-    storedLimeChoice: "",
     getLimeItems: function() {
         var items = [];
-        if(player.hasItem("lemon")) { items.push("lime_lemon"); }
-        if(player.hasItem("banana")) { items.push("lime_banana"); }
-        if(player.hasItem("corn")) { items.push("lime_corn"); }
-        if(player.hasItem("goldegg")) { items.push("lime_goldegg"); }
-        if(items.length > 0) { items.push("lime_nope"); }
+        if(player.hasItem("lemon")) { items.push("lime.lemon"); }
+        if(player.hasItem("banana")) { items.push("lime.banana"); }
+        if(player.hasItem("corn")) { items.push("lime.corn"); }
+        if(player.hasItem("goldegg")) { items.push("lime.goldegg"); }
+        if(items.length > 0) { items.push("lime.nope"); }
         return items;
     },
-    storedRapChoice: "",
     getRapItems: function() {
         var items = [];
-        if(player.hasItem("garlic")) { items.push("rap_garlic"); }
-        if(player.hasItem("rice")) { items.push("rap_rice"); }
-        if(player.hasItem("coconut")) { items.push("rap_coconut"); }
-        if(items.length > 0) { items.push("lime_nope"); }
+        if(player.hasItem("garlic")) { items.push("rap.garlic"); }
+        if(player.hasItem("rice")) { items.push("rap.rice"); }
+        if(player.hasItem("coconut")) { items.push("rap.coconut"); }
+        if(items.length > 0) { items.push("lime.nope"); }
         return items;
     },
     storedDowelChoice: "",
@@ -41,32 +39,6 @@ var specialtyHelpers = {
         if(items.length > 0) { items.push("lime_nope"); }
         return items;
     },
-    seedShotArray: [
-        function() {
-            if(game.target.hasShot-- > 0) { worldmap.finishDialog(); return; }
-            worldmap.writeText("seedshot");
-            player.health -= 2;
-            game.target.hasShot = 5;
-            if(player.health > 0) { worldmap.forceEndDialog = true; return; }
-        },
-        GetSpeak("seedshotdeath"),
-        function() {
-            player.health = player.maxhealth;
-            for(var i = 0; i < worldmap.entities.length; i++) {
-                if(worldmap.entities[i].rfd) {
-                    var newActive = worldmap.entities[i].initActive;
-                    worldmap.entities[i].active = newActive;
-                    worldmap.entities[i].anim.shiftY(newActive ? 3 : 2);
-                    worldmap.entities[i].solid = !newActive;
-                } else if(worldmap.entities[i].rf) {
-                    var newActive = worldmap.entities[i].initActive;
-                    worldmap.entities[i].active = newActive;
-                    worldmap.entities[i].anim.shiftY(newActive ? 1 : 0);
-                }
-            }
-            game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
-        }
-    ],
     getTruckOptions: function() {
         var options = [];
         if(worldmap.mapName !== "producestand") { options.push("truck_home"); }
@@ -138,8 +110,7 @@ function SwitchMapSeamless(name, x, y, requiredDir, newx, newy) {
     return {
         name: name, solid: false, pos: {x: x, y: y}, seamlessMap: true, 
         interact: [ function() {
-            if(worldmap.playerDir !== requiredDir) { console.log("y"); return true; }
-            console.log(name);
+            if(worldmap.playerDir !== requiredDir) { return true; }
             var dx = worldmap.pos.x - x, dy = worldmap.pos.y - y;
             switch(requiredDir) {
                 case 0: dy += 4; break;
@@ -162,70 +133,7 @@ function GetInvisibleEntity(name, interact, additional) {
 };
 function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: [ GetSpeak(text) ] }; };
 function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false}); };
-function GetBeehive(hiveId, x, y, beetype) {
-    var interactArray = [];    
-    if(!HasText(hiveId + "0")) {
-        var interactArray = [
-            function() {
-                worldmap.writeText("hiveGet");
-                player.increaseItem("_beehive");
-                player.increaseItem((beetype || "beeB"), 5);
-                game.target = worldmap.importantEntities[hiveId];
-                worldmap.clearTarget();
-            }
-        ];
-    } else {
-        var interactArray = [
-            function() {
-                worldmap.writeText("hiveGet");
-                player.increaseItem("_beehive");
-                player.increaseItem((beetype || "beeB"), 5);
-                game.target = worldmap.importantEntities[hiveId];
-                game.target.visible = false;
-            }
-        ];
-        if(["ForestHive"].indexOf(hiveId) < 0) {
-            interactArray.push(function() {
-                worldmap.writeText(hiveId + "0");
-                game.target.visible = true;
-                var xshift = 0;
-                switch(worldmap.playerDir) {
-                    case 0: xshift = 10; break;
-                    case 1: xshift = 10; break;
-                    case 2: xshift = 12; break;
-                    case 3: xshift = 11; break;
-                }
-                game.target.anim.shiftX(xshift, 4).shiftY(0);
-                worldmap.refreshMap();
-            });
-        } else {
-            interactArray.push(GetSpeak(hiveId + "0"));
-        }
-        var i = 1;
-        var skipEnd = false;
-        while(HasText(hiveId + i)) {
-            var speakie = GetText(hiveId + i);
-            if(speakie.indexOf("!!FIGHT:") === 0) {
-                speakie = speakie.replace("!!FIGHT:", "");
-                interactArray.push(GetFight([speakie]));
-                skipEnd = true;
-                break;
-            } else {
-                interactArray.push(GetSpeak(hiveId + i));
-                i++;
-            }
-        }
-        if(!skipEnd) {
-            interactArray.push(
-                function() {
-                    worldmap.writeText("beeGoodbye");
-                    worldmap.clearTarget();
-                }
-            );
-        }
-    }
-    return GetCommonEntity(hiveId, x, y, 2, 0, undefined, interactArray, { sy: 4, storageKey: hiveId });
-};
+function GetBeehive(hiveId, x, y, beetype) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true }); };
 function ToggleRFDoors(type) {
     for(var i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
@@ -382,26 +290,22 @@ function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional
 function GetSpeak(t, choices) { return function() { worldmap.writeText(t, choices); }  }
 function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
-function CreateCommonInteractArray(name, dialogMax, enemies, min, max) {
-    return [
-        function() { worldmap.writeText(name + Math.floor(Math.random() * dialogMax)); },
-        function() {
-            var numEnemies = min + Math.floor(Math.random() * (max - min));
-            var actualEnemies = [enemies[0]];
-            while(--numEnemies > 0) { actualEnemies.push(enemies[Math.floor(Math.random() * enemies.length)]); }
-            combat.startBattle(actualEnemies);
-        }
-    ];
+function Cutscene(s) { return [ function() { iHandler.Start(s); } ]; }
+
+var enemyMetadata = {
+    robo: { interactname: "robo", dialogMax: 5, enemies: ["robo"], min: 1, max: 2 },
+    mouse: { interactname: "mouse", dialogMax: 3, enemies: ["mouse"], min: 2, max: 4, sy: 5, sheetlen: 2 },
+    sqorl: { interactname: "sqorl", dialogMax: 4, enemies: ["sqorl", "sqorl", "sqorl", "mouse"], min: 1, max: 3, sy: 5, sheetlen: 2 },
+    turky: { interactname: "turky", dialogMax: 3, enemies: ["turky"], min: 1, max: 1, sy: 7 },
+    robo2: { interactname: "research", dialogMax: 5, enemies: ["robo2", "robo", "robo"], min: 1, max: 2, sy: 4 }
 };
+// To Deprecate
 var commonInteractArrays = {
     chick: CreateCommonInteractArray("chickbot", 3, ["chickBot"], 1, 3),
     piggn: CreateCommonInteractArray("pig", 1, ["piggun", "piggun", "piggun", "chickBot"], 2, 4),
     golem: CreateCommonInteractArray("golem", 1, ["golem"], 1, 1),
     smonk: CreateCommonInteractArray("seamonk", 8, ["seaMonk", "seaMonk", "seaMonk"], 1, 4),
     fish: CreateCommonInteractArray("fish", 3, ["fishFace", "fishFace", "fishFace", "fishFace", "seaMonk"], 1, 4),
-    robo: CreateCommonInteractArray("robo", 5, ["robo"], 1, 2),
-    mouse: CreateCommonInteractArray("mouse", 3, ["mouse"], 2, 4),
-    sqorl: CreateCommonInteractArray("sqorl", 4, ["sqorl", "sqorl", "sqorl", "mouse"], 1, 3),
     turky: CreateCommonInteractArray("turky", 3, ["turky"], 1, 1),
     mower: [
         function() {
@@ -419,18 +323,20 @@ var commonInteractArrays = {
             if(Math.random() < 0.1) { enemies.push("piggun"); }
             combat.startBattle(enemies);
         }
-    ],
-    researchRobo: [
-        function() { worldmap.writeText("research" + Math.floor(Math.random() * 5)); },
-        function() {
-            var enemies = ["robo2"];
-            if(Math.random() < 0.2) { enemies.push("robo2"); }
-            if(Math.random() < 0.1) { enemies.push("robo"); }
-            if(Math.random() < 0.1) { enemies.push("robo"); }
-            combat.startBattle(enemies);
-        }
     ]
 };
+function CreateCommonInteractArray(name, dialogMax, enemies, min, max) {
+    return [
+        function() { worldmap.writeText(name + Math.floor(Math.random() * dialogMax)); },
+        function() {
+            var numEnemies = min + Math.floor(Math.random() * (max - min));
+            var actualEnemies = [enemies[0]];
+            while(--numEnemies > 0) { actualEnemies.push(enemies[Math.floor(Math.random() * enemies.length)]); }
+            combat.startBattle(actualEnemies);
+        }
+    ];
+};
+// End To Deprecate
 var commonMovementDatas = {
     robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 },  { x: x, y: 8, dx: 0, dy: -1 } ] } },
     rectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 

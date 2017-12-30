@@ -55,7 +55,7 @@ worldmap.optionsMenu = {
                         gfx.drawTileToGrid((op.val === (op.choices.length - 1) ? "nopR" : "opR"), (op.optx + len / 4) / 16, y - tileyoffset, "menutext");
                     }
                     if(op.hasInfo) {
-                        var infotext = GetText(op.choices[op.val] + "_i");
+                        var infotext = GetText(op.choices[op.val] + ".i");
                         var infox = gfx.getTextFractionX(infotext, this.optionInfoSize);
                         gfx.drawText(infotext, infox, op.y2 - yoffset, "#000000", this.optionInfoSize);
                     }

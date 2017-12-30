@@ -55,11 +55,11 @@ var game = {
         gfx.loadSpriteSheets(this.sheetsToLoad, this.sheetsLoaded);
     },
     transition: function(from, to, arg) {
-        if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
         game.startTransitionAnim(1, from, to, arg);
         return true;
     },
     innerTransition: function(from, to, arg) {
+        if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
         game.currentInputHandler = to;
         from.clean();
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }

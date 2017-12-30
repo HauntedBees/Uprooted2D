@@ -34,406 +34,43 @@ var beeQueen = { interact: [
 ]};
 var mapentities = {
     "farm_init": [
-        GetCommonEntity("Eagle", 16, 9, 4, 0, undefined, undefined, { sheet: "assistant", sheetlen: 2, storageKey: "eagle" }),
-        GetCommonEntity("Nathan", 24, 11, 0, 1, undefined, undefined, { sheet: "assistant", sheetlen: 2, storageKey: "nathanIntro" }),
-        {
-            name: "CutscenePrompt", pos: { x: 0, y: 0 }, solid: false, autoplay: true,
-            interact: [
-                function() {
-                    worldmap.waitForAnimation = true;
-                    worldmap.forceMove = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.pos.y += 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.pos.y >= 10) { 
-                            worldmap.animData.width = 32;
-                            worldmap.animData.other.forceWide = true;
-                            FinishAnim();
-                        }
-                    }, 10);
-                },
-                GetSleep(500),
-                GetBasicPlayerFrame(2, 0, 1000),
-                GetBasicPlayerFrame(2, 1, 500),
-                GetBasicPlayerFrame(2, 2, 1500),
-                GetBasicPlayerFrame(2, 1, 250),
-                function() {
-                    worldmap.animData.width = 16;
-                    worldmap.animData.other.forceWide = false;
-                    worldmap.waitForAnimation = true;
-                    worldmap.forceMove = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.pos.y += 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.pos.y >= 11) { FinishAnim(); }
-                    }, 10);
-                },
-                GetSleep(500),
-                function() {
-                    worldmap.playerDir = 3;
-                    worldmap.waitForAnimation = true;
-                    worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 4, 0);
-                    worldmap.refreshMap();
-                    worldmap.animIdx = setTimeout(FinishAnim, 1500);
-                },
-                GetSpeak("intro1"),
-                function() {
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["nathanIntro"].moving = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["nathanIntro"].pos.x -= 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["nathanIntro"].pos.x <= 21) {
-                            worldmap.importantEntities["nathanIntro"].moving = false;
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.writeText("intro2");
-                    worldmap.importantEntities["nathanIntro"].moving = true;
-                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(3, 2).setFPS(8);
-                },
-                GetSpeak("intro3"),
-                function() {
-                    gfx.clearSome(["menuA", "menutext"]);
-                    worldmap.importantEntities["nathanIntro"].moving = false;
-                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(3, 1).setFPS(0);
-                    worldmap.waitForAnimation = true;
-                    worldmap.animIdx = setTimeout(FinishAnim, 1000);
-                },
-                function() {
-                    worldmap.playerDir = 2;
-                    worldmap.waitForAnimation = true;
-                    worldmap.forceMove = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.pos.y += 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.pos.y >= 12) { FinishAnim(); }
-                    }, 10);
-                },
-                GetBasicPlayerFrame(4, 0, 1000),
-                function() {
-                    worldmap.playerDir = 3;
-                    worldmap.writeText("intro4");
-                    worldmap.importantEntities["nathanIntro"].moving = true;
-                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(4, 2).setFPS(8);
-                },
-                GetSpeak("intro5"),
-                GetSpeak("intro6"),
-                function() {
-                    worldmap.importantEntities["nathanIntro"].moving = false;
-                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(4, 1).setFPS(8);
-                    gfx.clearSome(["menuA", "menutext"]);
-                    worldmap.waitForAnimation = true;
-                    worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 4, 3);
-                    worldmap.refreshMap();
-                    worldmap.animIdx = setTimeout(FinishAnim, 1500);
-                },
-                function() {
-                    worldmap.playerDir = 3;
-                    worldmap.writeText("intro7");
-                    worldmap.importantEntities["nathanIntro"].moving = true;
-                    worldmap.importantEntities["nathanIntro"].anim.shiftY(2).shiftX(4, 2).setFPS(8);
-                },
-                GetSpeak("intro8"),
-                function() {
-                    gfx.clearSome(["menuA", "menutext"]);
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["nathanIntro"].anim.shiftX(2, 4).shiftY(0).setFPS(8);
-                    worldmap.importantEntities["nathanIntro"].moving = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["nathanIntro"].pos.x += 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["nathanIntro"].pos.x >= 24) {
-                            worldmap.importantEntities["nathanIntro"].moving = false;
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                // do a fade to black!
-                function() { game.transition(game.currentInputHandler, worldmap, { init: { x: 10,  y: 5 }, map: "producestand" }); }
-            ]
-        }
+        GetInvisibleEntity("CS_farminit", Cutscene("farminit"), { autoplay: true }),
+        GetCommonEntity("Nathan", 24, 11, 0, 1, undefined, undefined, { sheet: "assistant", storageKey: "nathanA" }),
+        GetCommonEntity("Eagle", 16, 9, 4, 0, undefined, undefined, { sheet: "assistant" })
     ],
     "producestand": [
-        GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
-        GetCommonEntity("ConvinceATron", 10, 4, 0, 0, undefined, [
-            function() { worldmap.writeText("wantTut", ["sYes", "sNo"]); },
-            function(idx) {
-                switch(idx) {
-                    case 0:
-                        worldmap.writeText("noTut");
-                        break;
-                    default:
-                        worldmap.writeText("noTut");
-                        worldmap.forceEndDialog = true;
-                        break;
-                }
-            }, function() { tutorial.startBattle(); }
-        ], { sheet: "hipster", storageKey: "convince", visible: false, solid: false, postBattle: "PostStandaloneTutorial" }),
-        GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
-        GetInvisibleEntity("PostStandaloneTutorial", [
-            function() {
-                player.inventory = InventoryCopy(player.tempInventory);
-                player.tempInventory = undefined;
-                if(tutorial.completed) {
-                    game.target = worldmap.importantEntities["convince"];
-                    worldmap.clearTarget();
-                    worldmap.writeText("finTut");
-                } else {
-                    worldmap.writeText("quitTut");
-                }
-            }
-        ], { storageKey: "PostStandaloneTutorial" }),
-        GetInvisibleEntity("PostInitialBattle", [
-            function() {
-                player.inventory = InventoryCopy(player.tempInventory);
-                player.tempInventory = undefined;
-                worldmap.clearTarget();
-                game.target = worldmap.importantEntities["testCutscene"];
-                worldmap.clearTarget();
-                if(tutorial.completed) {
-                    game.target = worldmap.importantEntities["convince"];
-                    worldmap.clearTarget();
-                }
-                worldmap.writeText("Pb0_0");
-            },
-            GetSpeak("Pb0_1")
-        ], { storageKey: "PostInitialBattle" }),
-        {
-            name: "DemoCutscene", pos: {x: 10, y: 0}, solid: false, autoplay: false, postBattle: "PostInitialBattle", storageKey: "testCutscene",
-            interact: [ 
-                GetSpeak("intro13"),
-                function() {
-                    worldmap.importantEntities["convince"].anim.shiftY(3);
-                    worldmap.importantEntities["convince"].visible = true;
-                    worldmap.importantEntities["convince"].solid = true;
-                    tutorial.startBattle();
-                }
-            ]
-        },
-        {
-            name: "eggFairy", pos: {x: 24, y: 19}, visible: false, storageKey: "eggFairy",
-            anim: new MapAnim("mapchar", 13, 0, 16, 20, 1, 1), 
-            interact: [
-                function() {
-                    if(player.completedQuest("badEgg")) {
-                        worldmap.writeText("badEggTry");
-                        worldmap.forceEndDialog = true;
-                    } else if(player.completedQuest("goodEgg")) {
-                        worldmap.writeText("goodEggTry");
-                        worldmap.forceEndDialog = true;
-                    } else if(player.hasItem("egg")) {
-                        worldmap.writeText("lakeegg", ["sYes", "sNo"]);
-                    } else {
-                        worldmap.writeText("lakenoegg");
-                        worldmap.forceEndDialog = true;
-                    }
-                },
-                function(idx) {
-                    switch(idx) {
-                        case 0:
-                            worldmap.writeText("lakeegg_okay");
-                            player.decreaseItem("egg");
-                            break;
-                        default:
-                            worldmap.writeText("lakeegg_reject");
-                            worldmap.forceEndDialog = true;
-                            break;
-                    }
-                },
-                GetSpeak("dotdotdot"),
-                function() {
-                    worldmap.importantEntities["eggFairy"].visible = true;
-                    worldmap.refreshMap();
-                    worldmap.writeText("lakeegg1");
-                },
-                GetSpeak("lakeegg2"),
-                GetSpeak("lakeegg3", ["sYes", "sNo"]),
-                function(idx) {
-                    switch(idx) {
-                        case 0:
-                            worldmap.writeText("lakeeggLie");
-                            game.target.anim.shiftY(2);
-                            worldmap.refreshMap();
-                            player.decreaseItem("egg", 999);
-                            player.decreaseItem("quail", 999);
-                            player.decreaseItem("goose", 999);
-                            player.decreaseItem("turkey", 999);
-                            player.decreaseItem("platypus", 999);
-                            player.questsCleared.push("badEgg");
-                            break;
-                        default:
-                            worldmap.writeText("lakeeggTruth");
-                            game.target.anim.shiftY(1);
-                            worldmap.refreshMap();
-                            player.increaseItem("egg");
-                            player.increaseItem("goldegg");
-                            player.questsCleared.push("goodEgg");
-                            break;
-                    }
-                },
-                function() {
-                    worldmap.writeText("lakeFinish");
-                    worldmap.importantEntities["eggFairy"].visible = false;
-                    worldmap.refreshMap();
-                }
-            ]
-        },
-        {
-            name: "CutscenePrompt",
-            pos: {x: 0, y: 5},
-            solid: false,
-            //autoplay: true, 
-            interact: [
-                function() {
-                    worldmap.playerDir = 1;
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["hipster"].pos.x += 0.025;//0.2;//0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["hipster"].pos.x >= 6) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["hipster"].moving = false;
-                    worldmap.animIdx = setTimeout(function() {
-                        worldmap.finishAnimation();
-                    }, 500);
-                },
-                function() {
-                    worldmap.writeText("intro9");
-                    worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.importantEntities["hipster"].anim.shiftY(2).shiftX(3, 2).setFPS(8);
-                },
-                function() {
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.importantEntities["hipster"].anim.shiftX(1, 4).shiftY(0).setFPS();
-                    worldmap.importantEntities["bike"].anim.shiftY(2);
-                    worldmap.importantEntities["bike"].visible = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["hipster"].pos.y += 0.025;
-                        worldmap.importantEntities["hipster"].pos.x += 0.05;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["hipster"].pos.x >= 8) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.importantEntities["hipster"].anim.shiftX(3, 2).setFPS(8);
-                    worldmap.writeText("intro10");
-                },
-                function() {
-                    worldmap.importantEntities["hipster"].moving = false;
-                    worldmap.importantEntities["hipster"].anim.shiftX(2, 4);
-                    worldmap.writeText("intro11");
-                },
-                function() {
-                    worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.writeText("intro12");
-                },
-                GetSpeak("intro13"),
-                function() {
-                    worldmap.importantEntities["hipster"].moving = false;
-                    worldmap.writeText("intro14");
-                },
-                function() {
-                    worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.importantEntities["hipster"].anim.shiftX(3, 2).setFPS(8);
-                    worldmap.writeText("intro15");
-                },
-                GetSpeak("intro16"),
-                GetSpeak("intro17"),
-                GetSpeak("intro18"),
-                GetSpeak("intro19"),
-                function() {
-                    worldmap.importantEntities["hipster"].moving = false;
-                    worldmap.writeText("intro20");
-                },
-                function() {
-                    worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.writeText("intro21");
-                },
-                GetSpeak("intro22"),
-                function() {
-                    gfx.clearSome(["menuA", "menutext"]);
-                    worldmap.waitForAnimation = true;
-                    worldmap.importantEntities["hipster"].moving = true;
-                    worldmap.importantEntities["hipster"].anim.shiftX(4, 4).shiftY(0).setFPS();
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["hipster"].pos.y -= 0.025;
-                        worldmap.importantEntities["hipster"].pos.x -= 0.05;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["hipster"].pos.x <= 6) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.importantEntities["hipster"].anim.shiftY(0).shiftX(0, 2).setFPS();
-                    worldmap.importantEntities["bike"].visible = false;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["hipster"].pos.x += 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["hipster"].pos.x >= 10) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.playerDir = 0;
-                    worldmap.importantEntities["convince"].anim.shiftY(3);
-                    worldmap.importantEntities["convince"].visible = true;
-                    worldmap.importantEntities["convince"].solid = true;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["hipster"].pos.x += 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["hipster"].pos.x >= 12) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.playerDir = 3;
-                    worldmap.animIdx = setInterval(function() {
-                        worldmap.importantEntities["hipster"].pos.x += 0.025;
-                        worldmap.refreshMap();
-                        if(worldmap.importantEntities["hipster"].pos.x >= 20) {
-                            worldmap.finishAnimation();
-                        }
-                    }, 10);
-                },
-                function() {
-                    worldmap.playerDir = 0;
-                    worldmap.writeText("intro23");
-                },
-                function() {
-                    worldmap.clearTarget();
-                    game.target = worldmap.importantEntities["hipster"];
-                    tutorial.startBattle();
-                }
-            ]
-        },
+        GetInvisibleEntity("CS_produce", Cutscene("pstand"), { autoplay: false }),
+        GetInvisibleEntity("PostInitialBattle", Cutscene("finTut"), { storageKey: "PostInitialBattle" }), 
+        GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sy: 2, sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
+        GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", moving: true, sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
+        GetCommonEntity("ConvinceATron", 10, 4, 0, 0, undefined, Cutscene("tutBuddy"), { sy: 3, noChange: true, sheet: "hipster", noRunKill: true, storageKey: "convince", visible: false, postBattle: "PostStandaloneTutorial" }),
+        GetInvisibleEntity("PostStandaloneTutorial", Cutscene("finStTut"), { storageKey: "PostStandaloneTutorial" }),
+        
         SwitchMap("ExitAreaWest", 0, 0, false, true, 22, 12, "farm"),
-        SwitchMap("ExitAreaSouth", 0, 23, true, false, 21.5, 1, "firstvillage"),
-        GetCommonEntity("AFuckingTruckL", 16, 4, 4, 0, undefined, specialtyHelpers.truckArray, { big: true, noChange: true }),
-        GetCommonEntity("AFuckingTruckR", 18, 4, 5, 0, undefined, specialtyHelpers.truckArray, { big: true, noChange: true })
+        { name: "ExitAreaSouth", pos: { x: 0, y: 23}, isRow: true, interact: Cutscene("farmFirst"), solid: false, visible: false },
+
+        GetCommonEntity("AFuckingTruckL", 16, 5, 4, 0, undefined, specialtyHelpers.truckArray, { big: true, noChange: true }),
+        GetCommonEntity("AFuckingTruckR", 18, 5, 5, 0, undefined, specialtyHelpers.truckArray, { big: true, noChange: true }),
+
+        GetCommonEntity("EggFairy", 24, 19, 13, 1, undefined, Cutscene("eggfairy"), { visible: false, storageKey: "eggFairy" })
     ],
     "farm": [
         SwitchMap("ExitAreaWest", 23, 0, false, true, 1, 20, "producestand"),
-        GetCommonEntity("Robo1", 20, 8, 4, 2, commonMovementDatas.robo(20), commonInteractArrays.robo), 
-        GetCommonEntity("Robo2", 17, 10, 4, 2, commonMovementDatas.robo(17), commonInteractArrays.robo), 
-        GetCommonEntity("Robo3", 16, 12, 4, 2, commonMovementDatas.robo(16), commonInteractArrays.robo), 
-        GetCommonEntity("Robo4", 13, 14, 4, 2, commonMovementDatas.robo(13), commonInteractArrays.robo), 
-        GetCommonEntity("Robo5", 12, 11, 4, 2, commonMovementDatas.robo(12, 1), commonInteractArrays.robo), 
-        GetCommonEntity("Robo6", 9, 15, 4, 2, commonMovementDatas.robo(9, 1), commonInteractArrays.robo),
+
+        GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, Cutscene("bigBot"), { big: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
+        GetInvisibleEntity("PostBoss", Cutscene("bigBotW"), { storageKey: "PostBoss" }),
+        
+        GetBeehive("FarmHive", 3, 1),
+        EnterShop("ChickenCoop", 18, 3, "coop"),
+        EnterShop("Inn", 10, 2, "inn0"),
+
+        GetCommonEntity("Robo1", 20, 8, 4, 2, commonMovementDatas.robo(20), Cutscene("enemy"), enemyMetadata.robo), 
+        GetCommonEntity("Robo2", 17, 10, 4, 2, commonMovementDatas.robo(17), Cutscene("enemy"), enemyMetadata.robo), 
+        GetCommonEntity("Robo3", 16, 12, 4, 2, commonMovementDatas.robo(16), Cutscene("enemy"), enemyMetadata.robo), 
+        GetCommonEntity("Robo4", 13, 14, 4, 2, commonMovementDatas.robo(13), Cutscene("enemy"), enemyMetadata.robo), 
+        GetCommonEntity("Robo5", 12, 11, 4, 2, commonMovementDatas.robo(12, 1), Cutscene("enemy"), enemyMetadata.robo), 
+        GetCommonEntity("Robo6", 9, 15, 4, 2, commonMovementDatas.robo(9, 1), Cutscene("enemy"), enemyMetadata.robo),
+
         GetCommonInvisibleSpeakingEntity("MushroomLog", 4, 6, "farmMush"),
         GetCommonInvisibleSpeakingEntity("TreeLL", 6, 8, "farmTree"),
         GetCommonInvisibleSpeakingEntity("TreeLR", 7, 8, "farmTree"),
@@ -497,37 +134,16 @@ var mapentities = {
         GetCommonInvisibleSpeakingEntity("Crop", 14, 16, "farmVeggie"),
         GetCommonInvisibleSpeakingEntity("Crop", 15, 16, "farmVeggie"),
         GetCommonInvisibleSpeakingEntity("Crop", 18, 16, "farmVeggie"),
-        GetCommonInvisibleSpeakingEntity("Crop", 19, 16, "farmVeggie"),
-        GetBeehive("FarmHive", 3, 1),
-        EnterShop("ChickenCoop", 18, 3, "coop"),
-        EnterShop("Inn", 10, 2, "inn0"),
-        GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, [
-            GetSpeak("B1_1"),
-            GetSpeak("B1_2"),
-            GetSpeak("B1_3"),
-            GetSpeak("B1_4"),
-            GetSpeak("B1_5"),
-            GetFight(["bigBot"])
-        ], { big: true, postBattle: "PostBoss", failedInteract: [
-            GetSpeak("B1_6"),
-            GetFight(["bigBot"])
-        ] }),
-        {
-            name: "PostBoss",
-            pos: {x: -1, y: -1},
-            solid: false,
-            storageKey: "PostBoss",
-            interact: [
-                GetSpeak("Pb1_0"),
-                GetSpeak("Pb1_1"),
-                GetSpeak("Pb1_2")
-            ]
-        }
+        GetCommonInvisibleSpeakingEntity("Crop", 19, 16, "farmVeggie")
     ],
     "firstvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 16, 22, "producestand"),
         SwitchMap("ExitAreaWest", 0, 0, false, true, 44, 49, "forest"),
         SwitchMap("ExitAreaSouth", 0, 30, true, false, 21.5, 1, "belowvillage"),
+        GetCommonEntity("Dean", 10, 13, 15, 3, undefined, [GetSpeak("villager0")], { sy: 6 }),
+        GetCommonEntity("June", 20, 5, 19, 2, undefined, [GetSpeak("villager1")], { sy: 6 }),
+        GetCommonEntity("Aiko", 27, 10, 15, 3, undefined, [GetSpeak("villager2")], { sy: 7 }),
+        GetCommonEntity("Tanner", 3, 18, 19, 0, undefined, [GetSpeak("villager3")], { sy: 7 }),
         EnterShop("EquipmentShop", 17, 12, "equip1"),
         GetSign(18, 13, "SignWeapon0"),
         EnterShop("UpgradeShop", 18, 20, "upgrade1"),
@@ -543,6 +159,48 @@ var mapentities = {
     ],
     "forest": [
         SwitchMap("ExitAreaEast", 46, 49, false, false, 1, 22.5, "firstvillage"),
+        
+        GetCommonEntity("Rat1", 32, 46, 0, 2, commonMovementDatas.rectangle(32, 46, 4, 3), Cutscene("enemy"), enemyMetadata.mouse),
+        GetCommonEntity("Rat2", 23, 47, 0, 2, commonMovementDatas.rectangle(23, 47, 4, 2), Cutscene("enemy"), enemyMetadata.mouse),
+        GetCommonEntity("Rat3", 100, 71, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2), Cutscene("enemy"), enemyMetadata.mouse),
+        GetCommonEntity("Rat4", 106, 71, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 1), Cutscene("enemy"), enemyMetadata.mouse),
+        GetCommonEntity("Rat5", 106, 73, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 2), Cutscene("enemy"), enemyMetadata.mouse),
+        GetCommonEntity("Rat6", 100, 73, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 3), Cutscene("enemy"), enemyMetadata.mouse),
+        GetCommonEntity("Sqorl1", 2, 40, 8, 2, commonMovementDatas.rectangle(2, 40, 10, 1), Cutscene("enemy"), enemyMetadata.sqorl),
+        GetCommonEntity("Sqorl2", 110, 65, 8, 2, commonMovementDatas.rectangle(110, 65, 3, 6), Cutscene("enemy"), enemyMetadata.sqorl),
+        GetCommonEntity("Sqorl3", 113, 71, 8, 2, commonMovementDatas.rectangle(110, 65, 3, 6, 2), Cutscene("enemy"), enemyMetadata.sqorl),
+        GetCommonEntity("Turkey1", 2, 56, 0, 0, undefined, Cutscene("enemy"), enemyMetadata.turky),
+        GetCommonEntity("Turkey2", 7, 57, 0, 0, undefined, Cutscene("enemy"), enemyMetadata.turky),
+        GetCommonEntity("Turkey3", 10, 62, 0, 0, undefined, Cutscene("enemy"), enemyMetadata.turky),
+        GetCommonEntity("Turkey4", 12, 60, 0, 0, undefined, Cutscene("turky"), { sy: 7 }),
+        GetCommonEntity("TurkeyEggs", 12, 59, 9, 0, undefined, [function() { worldmap.writeText("foundTurkey"); player.increaseItem("turkey", 5); worldmap.clearTarget(); }], { noChange: true, sy: 7 }),
+        
+        GetCommonEntity("GoldenShroom", 36, 24, 8, 0, undefined, [
+            function() {
+                if(player.hasQuest("quest1")) { worldmap.writeText("foundShroomQ"); player.activeQuests["quest1"] = 2; }
+                else { worldmap.writeText("foundShroom"); player.activeQuests["quest1"] = 4; }
+                worldmap.clearTarget();
+            }
+        ], { noChange: true, sy: 7 }),
+        GetBeehive("ForestHive", 54, 24),
+        GetCommonEntity("Lime", 103, 66, 10, 0, undefined, Cutscene("lime"), { noChange: true, sy: 7 }),
+
+        GetCommonEntity("CarrotSeeds", 83, 25, 3, 0, undefined, [
+            function() {
+                if(player.hasQuest("freeCarrotSeeds") && player.activeQuests["freeCarrotSeeds"] > 4) { worldmap.writeText("carrotseeds1"); }
+                else {
+                    worldmap.writeText("carrotseeds0"); player.increaseItem("carrot", 3);
+                    if(player.hasQuest("freeCarrotSeeds")) { player.activeQuests["freeCarrotSeeds"] += 1; }
+                    else { player.activeQuests["freeCarrotSeeds"] = 1; }
+                }
+            },
+        ], { noChange: true, sy: 4 }),
+        GetCommonEntity("BadInfluenceRabbit", 83, 26, 12, 0, undefined, Cutscene("rabbit"), { noChange: true, sy: 4, moving: true, sheetlen: 2 }),
+
+        GetCommonEntity("FishyLeft", 72, 24, 12, 0, undefined, Cutscene("sadfish"), { noChange: true, sy: 6, visible: false }),
+        GetCommonEntity("FishyRight", 73, 24, 12, 0, undefined, Cutscene("sadfish"), { noChange: true, sy: 6, visible: false }),
+        GetCommonEntity("FishyTop", 73, 23, 12, 0, undefined, Cutscene("sadfish"), { noChange: true, sy: 6, visible: false }),
+
         SwitchMapSeamless("JoinBlue", 32, 35, 0, 70, 31),
         SwitchMapSeamless("JoinAqua", 74, 36, 2, 111, 58),
         SwitchMapSeamless("JoinMaroon", 111, 57, 0, 36, 31),
@@ -554,191 +212,7 @@ var mapentities = {
         SwitchMapSeamless("JoinDarkBlue", 31, 59, 2, 74, 17),
         SwitchMapSeamless("JoinDarkBlue2", 32, 59, 2, 75, 17),
         SwitchMapSeamless("JoinGrey", 100, 53, 0, 9, 46),
-        SwitchMapSeamless("JoinGrey2", 101, 53, 0, 10, 46),
-        GetCommonEntity("Rat1", 32, 46, 0, 2, commonMovementDatas.rectangle(32, 46, 4, 3), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Rat2", 23, 47, 0, 2, commonMovementDatas.rectangle(23, 47, 4, 2), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Rat3", 100, 71, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Rat4", 106, 71, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 1), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Rat5", 106, 73, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 2), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Rat6", 100, 73, 0, 2, commonMovementDatas.rectangle(100, 71, 6, 2, 3), commonInteractArrays.mouse, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Sqorl1", 2, 40, 8, 2, commonMovementDatas.rectangle(2, 40, 10, 1), commonInteractArrays.sqorl, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Sqorl2", 110, 65, 8, 2, commonMovementDatas.rectangle(110, 65, 3, 6), commonInteractArrays.sqorl, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Sqorl3", 113, 71, 8, 2, commonMovementDatas.rectangle(110, 65, 3, 6, 2), commonInteractArrays.sqorl, { sy: 5, sheetlen: 2 }),
-        GetCommonEntity("Turkey1", 2, 56, 0, 0, undefined, commonInteractArrays.turky, { sy: 7 }),
-        GetCommonEntity("Turkey2", 7, 57, 0, 0, undefined, commonInteractArrays.turky, { sy: 7 }),
-        GetCommonEntity("Turkey3", 10, 62, 0, 0, undefined, commonInteractArrays.turky, { sy: 7 }),
-        GetCommonEntity("Turkey4", 12, 60, 0, 0, undefined, [ 
-            GetSpeak("bossturky0"),
-            GetSpeak("bossturky1"),
-            GetFight(["bossturky", "turky", "turky"])], { sy: 7 }),
-        GetBeehive("ForestHive", 54, 24),
-        GetCommonEntity("GoldenShroom", 36, 24, 8, 0, undefined, [
-            function() {
-                if(player.hasQuest("quest1")) {
-                    worldmap.writeText("foundShroomQ");
-                    player.activeQuests["quest1"] = 2;
-                } else {
-                    worldmap.writeText("foundShroom");
-                    player.activeQuests["quest1"] = 4;
-                }
-                worldmap.clearTarget();
-            }
-        ], { noChange: true, sy: 7 }),
-        GetCommonEntity("TurkeyEggs", 12, 59, 9, 0, undefined, [
-            function() {
-                worldmap.writeText("foundTurkey");
-                player.increaseItem("turkey", 5);
-                worldmap.clearTarget();
-            }
-        ], { noChange: true, sy: 7 }),
-        GetCommonEntity("CarrotSeeds", 83, 25, 3, 0, undefined, [
-            function() {
-                if(player.hasQuest("freeCarrotSeeds") && player.activeQuests["freeCarrotSeeds"] > 4) {
-                    worldmap.writeText("carrotseeds1");
-                } else {
-                    worldmap.writeText("carrotseeds0");
-                    player.increaseItem("carrot", 3);
-                    if(player.hasQuest("freeCarrotSeeds")) {
-                        player.activeQuests["freeCarrotSeeds"] += 1;
-                    } else {
-                        player.activeQuests["freeCarrotSeeds"] = 1;
-                    }
-                }
-            },
-        ], { noChange: true, sy: 4 }),
-        GetCommonEntity("BadInfluenceRabbit", 83, 26, 12, 0, undefined, [
-            function() {
-                if(player.completedQuest("rabbitShit")) {
-                    worldmap.writeText("rabbitOut");
-                    worldmap.forceEndDialog = true;
-                } else {
-                    worldmap.writeText("rabbit0");
-                }
-            },
-            GetSpeak("rabbit1", ["buyfertilizer", "sNo"]),
-            function(idx) {
-                if(idx === 1) {
-                    worldmap.writeText("rabbit2");
-                    worldmap.forceEndDialog = true;
-                } else if(player.monies < 500) {
-                    worldmap.writeText("rabbit3");
-                    worldmap.forceEndDialog = true;
-                } else {
-                    worldmap.writeText("rabbit4");
-                    player.monies -= 500;
-                    player.increaseItem("_strongsoil");
-                    player.questsCleared.push("rabbitShit");
-                }
-            }, 
-            GetSpeak("rabbit5"), 
-            GetSpeak("rabbit6"), 
-            GetSpeak("rabbit7")
-        ], { noChange: true, sy: 4, moving: true, sheetlen: 2 }),
-        GetCommonEntity("FishyLeft", 72, 24, 12, 0, undefined, [
-            function(i, me) { me.visible = true; worldmap.refreshMap(); worldmap.writeText(player.completedQuest("fishyTalk") ? "fishyFriendX" : "fishyFriend0"); },
-            function(i, me) {
-                if(player.completedQuest("fishyTalk")) {
-                    me.visible = false;
-                    worldmap.refreshMap();
-                    worldmap.finishDialog();
-                } else { worldmap.writeText("fishyFriend1"); }
-            },
-            function(i, me) { worldmap.writeText("fishyFriend2"); player.questsCleared.push("fishyTalk"); me.visible = false; worldmap.refreshMap(); }
-        ], { noChange: true, sy: 6, visible: false }),
-        GetCommonEntity("FishyRight", 73, 24, 12, 0, undefined, [
-            function(i, me) { me.visible = true; worldmap.refreshMap(); worldmap.writeText(player.completedQuest("fishyTalk") ? "fishyFriendX" : "fishyFriend0"); },
-            function(i, me) {
-                if(player.completedQuest("fishyTalk")) {
-                    me.visible = false;
-                    worldmap.refreshMap();
-                    worldmap.finishDialog();
-                } else { worldmap.writeText("fishyFriend1"); }
-            },
-            function(i, me) { worldmap.writeText("fishyFriend2"); player.questsCleared.push("fishyTalk"); me.visible = false; worldmap.refreshMap(); }
-        ], { noChange: true, sy: 6, visible: false }),
-        GetCommonEntity("FishyTop", 73, 23, 12, 0, undefined, [
-            function(i, me) { me.visible = true; worldmap.refreshMap(); worldmap.writeText(player.completedQuest("fishyTalk") ? "fishyFriendX" : "fishyFriend0"); },
-            function(i, me) {
-                if(player.completedQuest("fishyTalk")) {
-                    me.visible = false;
-                    worldmap.refreshMap();
-                    worldmap.finishDialog();
-                } else { worldmap.writeText("fishyFriend1"); }
-            },
-            function(i, me) { worldmap.writeText("fishyFriend2"); player.questsCleared.push("fishyTalk"); me.visible = false; worldmap.refreshMap(); }
-        ], { noChange: true, sy: 6, visible: false }),
-        GetCommonEntity("Lime", 103, 66, 10, 0, undefined, [
-            function() {
-                if(player.completedQuest("limeAndTheCoconut")) {
-                    worldmap.writeText("lime_complete");
-                    worldmap.forceEndDialog = true;
-                } else if(player.hasQuest("limeAndTheCoconut")) {
-                    var items = specialtyHelpers.getLimeItems();
-                    if(items.length === 0) {
-                        worldmap.writeText("lime3");
-                        worldmap.forceEndDialog = true;
-                    } else {
-                        worldmap.writeText("lime4", items);
-                    }
-                } else {
-                    worldmap.writeText("lime0");
-                }
-            }, 
-            function(i) {
-                if(player.hasQuest("limeAndTheCoconut")) {
-                    specialtyHelpers.storedLimeChoice = specialtyHelpers.getLimeItems()[i];
-                    switch(specialtyHelpers.storedLimeChoice) {
-                        case "lime_lemon": worldmap.writeText("lime_lemon1"); break;
-                        case "lime_banana": worldmap.writeText("lime_banana1"); break;
-                        case "lime_corn": worldmap.writeText("lime_corn1"); break;
-                        case "lime_goldegg": worldmap.writeText("lime_egg1"); break;
-                        case "lime_nope":
-                            worldmap.writeText("lime_denied");
-                            worldmap.forceEndDialog = true;
-                            break;
-                    }
-                } else {
-                    specialtyHelpers.storedLimeChoice = "";
-                    worldmap.writeText("lime1");
-                }
-            }, 
-            function() {
-                switch(specialtyHelpers.storedLimeChoice) {
-                    case "lime_lemon": worldmap.writeText("lime_lemon2"); break;
-                    case "lime_banana": worldmap.writeText("lime_banana2"); break;
-                    case "lime_corn": worldmap.writeText("lime_corn2"); break;
-                    case "lime_goldegg": worldmap.writeText("lime_egg2"); break;
-                    default: worldmap.writeText("lime2"); break;
-                }
-            }, 
-            function() {
-                switch(specialtyHelpers.storedLimeChoice) {
-                    case "lime_lemon": worldmap.writeText("lime_lemon3"); break;
-                    case "lime_banana":
-                        worldmap.writeText("lime_banana3");
-                        quests.completeQuest("limeAndTheCoconut");
-                        player.decreaseItem("banana");
-                        player.increaseItem("corn", 10);
-                        break;
-                    case "lime_corn":
-                        worldmap.writeText("lime_corn3");
-                        quests.completeQuest("limeAndTheCoconut");
-                        player.decreaseItem("corn");
-                        player.increaseItem("banana", 10);
-                        break;
-                    case "lime_goldegg":
-                        worldmap.writeText("lime_egg3");
-                        quests.completeQuest("limeAndTheCoconut");
-                        player.decreaseItem("goldegg");
-                        player.increaseItem("coconut", 2);
-                        break;
-                    default:
-                        worldmap.writeText("lime3");
-                        player.activeQuests["limeAndTheCoconut"] = 1;
-                        break;
-                }
-            }
-        ], { noChange: true, sy: 7 })
+        SwitchMapSeamless("JoinGrey2", 101, 53, 0, 10, 46)
     ],
     "belowvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 21.5, 28, "firstvillage"),
@@ -746,35 +220,39 @@ var mapentities = {
         SwitchMap("EnterFacilityL", 7, 18, false, false, 12, 36, "researchfacilitynew"),
         SwitchMap("EnterFacilityR", 8, 18, false, false, 13, 36, "researchfacilitynew"),
         GetBeehive("BelowHive", 4, 36),
-        GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
-        GetCommonEntity("Robo2", 10, 38, 4, 2, GetStdMovement([ [10, 38, 3], [11, 38, 3], [11, 39, 2], [10, 39, 1], [10, 38, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
-        GetCommonEntity("Robo3", 10, 31, 4, 2, GetStdMovement([ [10, 31, 3], [14, 31, 3], [10, 31, 1] ]), commonInteractArrays.researchRobo, {sy: 4}),
-        GetCommonEntity("Robo4", 8, 28, 4, 2, GetStdMovement([ [8, 28, 3], [13, 28, 3], [8, 28, 1] ]), commonInteractArrays.researchRobo, {sy: 4}),
-        GetCommonEntity("Robo5", 3, 23, 4, 2, GetStdMovement([ [3, 23, 3], [13, 23, 3], [3, 23, 1] ]), commonInteractArrays.researchRobo, {sy: 4}),
-        GetCommonEntity("Robo6", 22, 36, 4, 3, undefined, commonInteractArrays.researchRobo, {sy: 4})
+        
+        GetCommonEntity("Rat1", 32, 46, 0, 2, commonMovementDatas.rectangle(32, 46, 4, 3), Cutscene("enemy"), enemyMetadata.mouse),
+        GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("Robo2", 10, 38, 4, 2, GetStdMovement([ [10, 38, 3], [11, 38, 3], [11, 39, 2], [10, 39, 1], [10, 38, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("Robo3", 10, 31, 4, 2, GetStdMovement([ [10, 31, 3], [14, 31, 3], [10, 31, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("Robo4", 8, 28, 4, 2, GetStdMovement([ [8, 28, 3], [13, 28, 3], [8, 28, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("Robo5", 3, 23, 4, 2, GetStdMovement([ [3, 23, 3], [13, 23, 3], [3, 23, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("Robo6", 22, 36, 4, 3, undefined, Cutscene("enemy"), enemyMetadata.robo2)
     ],
     "researchfacilitynew": function() {
 		var x = [
-			GetCommonEntity("Robo1", 1, 15, 4, 2, GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
-			GetCommonEntity("Robo2", 25, 14, 4, 2, GetStdMovement([ [25, 14, 3], [30, 14, 3], [30, 22, 2], [25, 22, 1], [25, 14, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
-			GetCommonEntity("Robo3", 14, 7, 4, 2, GetStdMovement([ [14, 7, 3], [23, 7, 3], [23, 13, 2], [14, 13, 1], [14, 7, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
-			GetCommonEntity("Robo4", 16, 9, 4, 2, GetStdMovement([ [16, 9, 3], [21, 9, 3], [21, 11, 2], [16, 11, 1], [16, 9, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
-			GetCommonEntity("Robo25", 14, 1, 4, 2, GetStdMovement([ [14, 1, 3], [18, 1, 3], [18, 5, 2], [14, 5, 1], [14, 1, 0] ]), commonInteractArrays.researchRobo, {sy: 4}),
+			GetCommonEntity("Robo1", 1, 15, 4, 2, GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+			GetCommonEntity("Robo2", 25, 14, 4, 2, GetStdMovement([ [25, 14, 3], [30, 14, 3], [30, 22, 2], [25, 22, 1], [25, 14, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+			GetCommonEntity("Robo3", 14, 7, 4, 2, GetStdMovement([ [14, 7, 3], [23, 7, 3], [23, 13, 2], [14, 13, 1], [14, 7, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+			GetCommonEntity("Robo4", 16, 9, 4, 2, GetStdMovement([ [16, 9, 3], [21, 9, 3], [21, 11, 2], [16, 11, 1], [16, 9, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+			GetCommonEntity("Robo25", 14, 1, 4, 2, GetStdMovement([ [14, 1, 3], [18, 1, 3], [18, 5, 2], [14, 5, 1], [14, 1, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
 			SwitchMap("ExitAreaSouth", 0, 37, true, false, 7.5, 19, "belowvillage"),
-			SwitchMap("ExitAreaEast", 31, 2, false, false, 13, 15, "belowvillage"),
-			GetRFDoorButton("RedBtn1", 2, 35, 0, false),
-			GetRFDoorButton("RedBtn2", 12, 7, 0, false),
-			
-			GetInvisibleEntity("SeedShotArea1", specialtyHelpers.seedShotArray, { pos: { x: 20, y: 16 }, hasShot: 0 }),
-			GetInvisibleEntity("SeedShotArea2", specialtyHelpers.seedShotArray, { pos: { x: 21, y: 16 }, hasShot: 0 }),
-			GetInvisibleEntity("SeedShotArea3", specialtyHelpers.seedShotArray, { pos: { x: 20, y: 17 }, hasShot: 0 }),
-			GetInvisibleEntity("SeedShotArea4", specialtyHelpers.seedShotArray, { pos: { x: 21, y: 17 }, hasShot: 0 }),
+            SwitchMap("ExitAreaEast", 31, 2, false, false, 13, 15, "belowvillage"),
+            
+			GetInvisibleEntity("SeedShotArea1", Cutscene("seedShot"), { pos: { x: 20, y: 16 }, hasShot: 0 }),
+			GetInvisibleEntity("SeedShotArea2", Cutscene("seedShot"), { pos: { x: 21, y: 16 }, hasShot: 0 }),
+			GetInvisibleEntity("SeedShotArea3", Cutscene("seedShot"), { pos: { x: 20, y: 17 }, hasShot: 0 }),
+			GetInvisibleEntity("SeedShotArea4", Cutscene("seedShot"), { pos: { x: 21, y: 17 }, hasShot: 0 }),
 
 			GetCommonEntity("Chair", 8, 4, 14, 0, undefined, [ function() {
 					game.target.swapped = !game.target.swapped;
 					game.target.anim.shiftY(game.target.swapped ? 4 : 3);
 					worldmap.finishDialog();
-				} ], { sy: 3, noChange: true, swapped: false }),
+                } ], { sy: 3, noChange: true, swapped: false }),
+                
+            GetCommonEntity("RAPBATTLE", 28, 8, 11, 0, undefined, Cutscene("rap"), { noChange: true, sy: 7 }),
+
+            // TODO: this fuckstain
             GetCommonEntity("Fucker", 7, 2, 0, 0, undefined, [ GetSpeak("B2_0"), GetFight(["robo3", "ScienceMan", "robo3"]) ],
                 { sy: 4, postBattle: "PostBoss2", noChange: true, failedInteract: [ GetSpeak("B2_1"), GetFight(["robo3", "ScienceMan", "robo3"]) ] }),
 			{ name: "PostBoss2", storageKey: "PostBoss2", pos: {x: -1, y: -1}, solid: false, interact: [ 
@@ -783,98 +261,7 @@ var mapentities = {
                     worldmap.writeText("Pb2_1");
                     player.questsCleared.push("researchLab");
                 }
-            ] },
-			GetCommonEntity("RAPBATTLE", 28, 8, 11, 0, undefined, [
-				function() {
-					if(player.completedQuest("rapbattle")) {
-						worldmap.writeText("rap_thanks");
-						worldmap.forceEndDialog = true;
-					} else if(player.hasQuest("rapbattle")) {
-						var items = specialtyHelpers.getRapItems();
-						if(items.length === 0) {
-							worldmap.writeText("rap4");
-							worldmap.forceEndDialog = true;
-						} else {
-							worldmap.writeText("rap5", items);
-						}
-					} else {
-						worldmap.writeText("rap0");
-					}
-				}, 
-				function(i) {
-					if(player.hasQuest("rapbattle")) {
-						specialtyHelpers.storedRapChoice = specialtyHelpers.getRapItems()[i];
-						switch(specialtyHelpers.storedRapChoice) {
-							case "rap_garlic": worldmap.writeText("rap_garlic1"); break;
-							case "rap_rice": worldmap.writeText("rap_rice1"); break;
-							case "rap_coconut": worldmap.writeText("rap_coconut1"); break;
-							case "lime_nope":
-								worldmap.writeText("rap4");
-								worldmap.forceEndDialog = true;
-								break;
-						}
-					} else {
-						specialtyHelpers.storedRapChoice = "";
-						worldmap.writeText("rap1");
-					}
-				}, 
-				function() {
-					switch(specialtyHelpers.storedRapChoice) {
-						case "rap_garlic": worldmap.writeText("rap_garlic2"); break;
-						case "rap_rice": worldmap.writeText("rap_rice2"); break;
-						case "rap_coconut": worldmap.writeText("rap_coconut2"); break;
-						default: worldmap.writeText("rap2"); break;
-					}
-				}, 
-				function() {
-					switch(specialtyHelpers.storedRapChoice) {
-						case "rap_garlic": worldmap.writeText("rap_garlic3"); break;
-						case "rap_rice": worldmap.writeText("rap_rice3"); break;
-						case "rap_coconut": worldmap.writeText("rap_coconut3"); break;
-						default: 
-							worldmap.writeText("rap3"); 
-							worldmap.forceEndDialog = true;
-							player.activeQuests["rapbattle"] = 1;
-							break;
-					}
-				}, 
-				function() {
-					switch(specialtyHelpers.storedRapChoice) {
-						case "rap_garlic": worldmap.writeText("rap_garlic4"); break;
-						case "rap_rice":
-							worldmap.writeText("rap_rice4");
-							player.decreaseItem("rice");
-							player.increaseItem("battery", 10);
-							quests.completeQuest("rapbattle");
-							break;
-						case "rap_coconut": worldmap.writeText("rap_coconut4"); break;
-					}
-				}, 
-				function() {
-					switch(specialtyHelpers.storedRapChoice) {
-						case "rap_garlic":
-							worldmap.writeText("rap_garlic5");
-							player.decreaseItem("garlic");
-							player.increaseItem("battery", 10);
-							quests.completeQuest("rapbattle");
-							break;
-						case "rap_coconut": worldmap.writeText("rap_coconut5"); break;
-						default: worldmap.writeText("rap_normalgift"); worldmap.forceEndDialog = true; break;
-					}
-				},
-				function() {
-					switch(specialtyHelpers.storedRapChoice) {
-						case "rap_coconut": worldmap.writeText("rap_coconut6"); break;
-						default: worldmap.writeText("rap_normalgift"); worldmap.forceEndDialog = true; break;
-					}
-				},
-				function() {
-					worldmap.writeText("rap_coconut7");
-					player.decreaseItem("coconut");
-					player.increaseItem("gmocorn", 2);
-					quests.completeQuest("rapbattle");
-				}
-			], { noChange: true, sy: 7 })
+            ] }
 		];
 		var doors = [
 			[5, 31, 0, false], [5, 32, 0, false], [10, 28, 0, true], [10, 29, 0, true], [6, 17, 0, true], [6, 18, 0, true], [6, 19, 0, true], [6, 20, 0, true],
@@ -884,16 +271,10 @@ var mapentities = {
 			[13, 29, 2, false], [13, 9, 2, true], [26, 24, 2, false], [25, 24, 2, false], [25, 13, 2, true], [26, 13, 2, true], [27, 13, 2, true], [27, 5, 2, false],
 			[28, 5, 2, false], [29, 5, 2, false], [30, 5, 2, false], [17, 6, 2, false], [18, 6, 2, false]
 		];
-		for(var i = 0; i < doors.length; i++) {
-			var d = doors[i];
-			x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3]));
-		}
+		for(var i = 0; i < doors.length; i++) { var d = doors[i]; x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3])); }
 		
 		var buttons = [ [2, 35, 0, false], [12, 7, 0, false], [18, 32, 1, false], [22, 8, 1, false], [4, 13, 2, false], [29, 15, 2, false] ];
-		for(var i = 0; i < buttons.length; i++) {
-			var b = buttons[i];
-			x.push(GetRFDoorButton("Btn" + i, b[0], b[1], b[2], b[3]));
-		}
+		for(var i = 0; i < buttons.length; i++) { var b = buttons[i]; x.push(GetRFDoorButton("Btn" + i, b[0], b[1], b[2], b[3])); }
 		
 		var invisSpeaks = [
 			[28, 9, "growingpeppie"], [28, 11, "growingpeppie"], [29, 11, "rottencrop"], [28, 10, "rottencrop"], [18, 17, "seedshooter"], [18, 16, "seedshooter"], [23, 17, "seedshooter"], 
@@ -903,29 +284,20 @@ var mapentities = {
 			[12, 31, "broken_robot"], [13, 31, "broken_robot"], [1, 7, "devbed"], [2, 7, "devbed"], [1, 3, "devmachines"], [2, 3, "devmachines"], [3, 2, "devmachines"], [4, 1, "devmonitor"],
 			[5, 1, "devmachines"], [6, 1, "devmachines"], [7, 1, "devmachines"], [8, 1, "devmachines"], [9, 1, "devmachines"], [10, 2, "devmachines"], [11, 3, "devmachines"], [12, 3, "devmachines"]
 		];
-		for(var i = 0; i < invisSpeaks.length; i++) {
-			var s = invisSpeaks[i];
-			x.push(GetCommonInvisibleSpeakingEntity("Spk" + i, s[0], s[1], s[2]));
-		}
+		for(var i = 0; i < invisSpeaks.length; i++) { var s = invisSpeaks[i]; x.push(GetCommonInvisibleSpeakingEntity("Spk" + i, s[0], s[1], s[2])); }
 		
 		var chests = [
 			[21, 3, [["carrot", 20]]], [21, 2, [["carrot", 20]]], [29, 27, [["carrot", 20]]], [8, 12, [["carrot", 20]]], [9, 12, [["carrot", 20]]],
 			[10, 12, [["carrot", 20]]], [11, 12, [["carrot", 20]]], [27, 6, [["carrot", 20]]], [28, 6, [["carrot", 20]]], [29, 6, [["carrot", 20]]], 
 			[30, 6, [["carrot", 20]]] 
 		];
-		for(var i = 0; i < chests.length; i++) {
-			var c = chests[i];
-			x.push(GetTreasureChest("RLChest" + i, c[0], c[1], c[2]));
-		}
+		for(var i = 0; i < chests.length; i++) { var c = chests[i]; x.push(GetTreasureChest("RLChest" + i, c[0], c[1], c[2])); }
 		
 		var stationaryRobos = [
 			[22, 2], [23, 2], [24, 2], [25, 2], [22, 3], [23, 3], [24, 3], [25, 3], [20, 4], [21, 4],
 			[22, 4], [23, 4], [24, 4], [25, 4], [20, 1], [21, 1], [22, 1], [23, 1], [24, 1], [25, 1]
 		]
-		for(var i = 0; i < stationaryRobos.length; i++) {
-			var r = stationaryRobos[i];
-			x.push(GetCommonEntity("StRobo" + i, r[0], r[1], 4, 2, undefined, commonInteractArrays.researchRobo, {sy: 4}));
-		}
+		for(var i = 0; i < stationaryRobos.length; i++) { var r = stationaryRobos[i]; x.push(GetCommonEntity("StRobo" + i, r[0], r[1], 4, 2, undefined, Cutscene("enemy"), enemyMetadata.robo2)); }
 		
 		return x;
 	}(),
@@ -2214,7 +1586,7 @@ var mapentities = {
             GetSpeak("entercity0_4"), // 65
             GetSpeak("entercity0_5"),
             function() { combat.startBattle(["mobsty1"]); }
-        ], { visible: false, solid: false, isRow: true, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene" }),
+        ], { visible: false, solid: false, isRow: false, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene" }), // TODO: change back to isRow!
         { name: "beatBruno", storageKey: "beatBruno", pos: { x: -1, y: -1}, interact: [
             function() {
                 worldmap.writeText("entercity0_pb0");

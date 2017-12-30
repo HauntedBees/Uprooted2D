@@ -42,7 +42,6 @@ var worldmap = {
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {
-            this.inDialogue = true;
             game.target = targetToAutoplay;
             game.target.interact[0](0, game.target);
             worldmap.toggleMovement(false);
@@ -153,6 +152,7 @@ var worldmap = {
         var drawY = (worldmap.pos.y <= 3) ? 7.5 : 0;
         gfx.drawFullbox(drawY, overBlack);
         var actualText = GetText(t);
+        if(actualText === "") { return; }
         if(formatting) { actualText = actualText.replace("{0}", formatting); }
         gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
         if(choices === undefined) {
@@ -171,22 +171,9 @@ var worldmap = {
         this.click(null);
     },
     click: function(pos) {
-        if(!this.inDialogue || this.waitForAnimation) { return false; }
-        var idx = (this.dialogData === null ? undefined : this.dialogData.idx);
-        if(this.dialogData !== null && this.dialogData.nextDialogState !== undefined) {
-            this.dialogState = this.dialogData.nextDialogState;
-        } else {
-            this.dialogState++;
-        }
-        if(worldmap.forceEndDialog || game.target == null || this.dialogState >= game.target.interact.length) {
-            this.finishDialog();
-            return true;
-        }
-        if(game.target.failed && game.target.failedInteract !== undefined) {
-            return game.target.failedInteract[this.dialogState](idx, game.target);
-        } else {
-            return game.target.interact[this.dialogState](idx, game.target);
-        }
+        if(!this.inDialogue) { return false; }
+        if(this.waitForAnimation) { iHandler.SpeedUpAnimation(); }
+        else { iHandler.Advance(); }
     },
     finishDialog: function() {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);

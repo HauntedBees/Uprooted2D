@@ -205,9 +205,9 @@ worldmap.shop = {
         this.cursorX = newCursorX;
         var text = "";
         switch(this.cursorX) {
-            case me.sellTypes.CROPSIDX: text = GetText("s_sellseed"); break;
-            case me.sellTypes.EQUIPIDX: text = GetText("s_selltool"); break;
-            case me.sellTypes.FIXIDX: text = GetText("s_sellfixture");; break;
+            case me.sellTypes.CROPSIDX: text = GetText("s.sellseed"); break;
+            case me.sellTypes.EQUIPIDX: text = GetText("s.selltool"); break;
+            case me.sellTypes.FIXIDX: text = GetText("s.sellfixture");; break;
             default: text = GetText(this.details.leaveSell); break;
         }
         this.drawDetails(text);
@@ -245,11 +245,11 @@ worldmap.shop = {
         }
         var str = size + " Upgrade (" + productInfo.price + " coins)\n ";
         if(productInfo.product.slice(-1) === "I") {
-            str += GetText("s_fieldI");
+            str += GetText("s.fieldI");
         } else if(productInfo.product.slice(-1) === "O") {
-            str += GetText("s_fieldO");
+            str += GetText("s.fieldO");
         } else if(productInfo.product.slice(-1) === "_") {
-            str += GetText("s_field_");
+            str += GetText("s.field_");
         }
         return str;
     },
@@ -329,7 +329,7 @@ worldmap.shop = {
             return true;
         } else if(this.details.doesSell && this.cursorX === 1) {
             this.sellingState = me.sellStates.SELLSELECT;
-            this.drawDetails(GetText("s_sellseed"));
+            this.drawDetails(GetText("s.sellseed"));
             return true;
         }
         var cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
