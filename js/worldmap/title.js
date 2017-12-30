@@ -52,14 +52,14 @@ worldmap.title = {
                     //init: { x: 103,  y: 65 }, map: "forest" // by lime
                     //init: { x: 25, y: 25}, map: "belowvillage" // by crater
                     //init: { x: 4, y: 37}, map: "belowvillage" // by beehive
-                    //init: { x: 20, y: 19}, map: "researchfacilitynew" // by seed shooters
-                    //init: { x: 27, y: 8}, map: "researchfacilitynew" // by RAPBATTLE
+                    //init: { x: 20, y: 19}, map: "researchfacility" // by seed shooters
+                    //init: { x: 27, y: 8}, map: "researchfacility" // by RAPBATTLE
                     //init: { x: 44, y: 44 }, map: "southcity" // by Skumpy's
                     //init: { x: 15, y: 36 }, map: "southcity" // by mob base
                     //init: { x: 5, y: 5 }, map: "fakefarm"
                     //init: { x: 24.75, y: 35.5 }, map: "fakefarm"
-                    //init: { x: 5, y: 3 }, map: "underwaternew"
-                    //init: { x: 41, y: 20 }, map: "underwaternew"
+                    //init: { x: 5, y: 3 }, map: "underwater"
+                    //init: { x: 41, y: 20 }, map: "underwater"
                     //init: { x: 27, y: 5 }, map: "bridge"
                     //init: { x: 3, y: 7 }, map: "firstvillage"
                     //init: { x: 103,  y: 65 }, map: "forest"

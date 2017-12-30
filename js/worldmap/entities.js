@@ -216,9 +216,9 @@ var mapentities = {
     ],
     "belowvillage": [
         SwitchMap("ExitAreaNorth", 0, 0, true, false, 21.5, 28, "firstvillage"),
-        SwitchMap("EnterFacilitySide", 13, 16, false, false, 30, 2, "researchfacilitynew"),
-        SwitchMap("EnterFacilityL", 7, 18, false, false, 12, 36, "researchfacilitynew"),
-        SwitchMap("EnterFacilityR", 8, 18, false, false, 13, 36, "researchfacilitynew"),
+        SwitchMap("EnterFacilitySide", 13, 16, false, false, 30, 2, "researchfacility"),
+        SwitchMap("EnterFacilityL", 7, 18, false, false, 12, 36, "researchfacility"),
+        SwitchMap("EnterFacilityR", 8, 18, false, false, 13, 36, "researchfacility"),
         GetBeehive("BelowHive", 4, 36),
         
         GetCommonEntity("Rat1", 32, 46, 0, 2, commonMovementDatas.rectangle(32, 46, 4, 3), Cutscene("enemy"), enemyMetadata.mouse),
@@ -229,7 +229,7 @@ var mapentities = {
         GetCommonEntity("Robo5", 3, 23, 4, 2, GetStdMovement([ [3, 23, 3], [13, 23, 3], [3, 23, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
         GetCommonEntity("Robo6", 22, 36, 4, 3, undefined, Cutscene("enemy"), enemyMetadata.robo2)
     ],
-    "researchfacilitynew": function() {
+    "researchfacility": function() {
 		var x = [
 			GetCommonEntity("Robo1", 1, 15, 4, 2, GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
 			GetCommonEntity("Robo2", 25, 14, 4, 2, GetStdMovement([ [25, 14, 3], [30, 14, 3], [30, 22, 2], [25, 22, 1], [25, 14, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
@@ -302,7 +302,7 @@ var mapentities = {
 		return x;
 	}(),
     "bridge": [
-        SwitchMap("GoUnderwater", 4, 14, false, false, 41, 20, "underwaternew"),
+        SwitchMap("GoUnderwater", 4, 14, false, false, 41, 20, "underwater"),
         GetSign(9, 13, "SignMermaid"),
         GetSign(26, 3, "SignConstWork"),
         GetSign(20, 12, "SignMermaidInn"),
@@ -499,7 +499,7 @@ var mapentities = {
             ]
         }
     ],
-    "underwaternew": function() {
+    "underwater": function() {
         var x = [
             SwitchMap("GoAboveGround", 42, 20, false, false, 5, 14, "bridge"),
             GetCommonEntity("FishFace1", 34, 5, 0, 3, commonMovementDatas.rectangle(34, 5, 4, 4), commonInteractArrays.fish, { sy: 8, sheetlen: 2 }),
