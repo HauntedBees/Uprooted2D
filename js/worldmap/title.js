@@ -41,8 +41,28 @@ worldmap.title = {
         switch(this.cursory) {
             case 0:
                 return game.transition(this, worldmap, {
-                    //init: { x: 10,  y: 5 }, map: "farmersmarket"
-                    init: { x: 17,  y: 9 }, map: "farm_init"
+                    init: { x: 17,  y: 9 }, map: "farm_init" // beginning of game
+                    //init: { x: 10,  y: 5 }, map: "producestand" // cutscene position
+                    //init: { x: 12,  y: 4 }, map: "farm" // by boss
+                    //init: { x: 2,  y: 1 }, map: "farm" // by beehive
+                    //init: { x: 19, y: 5}, map: "firstvillage" // top of village
+                    //init: { x: 44,  y: 49 }, map: "forest" // start of forest
+                    //init: { x: 11,  y: 60 }, map: "forest" // by boss turkey
+                    //init: { x: 82,  y: 25 }, map: "forest" // by rabbit
+                    //init: { x: 103,  y: 65 }, map: "forest" // by lime
+                    //init: { x: 25, y: 25}, map: "belowvillage" // by crater
+                    //init: { x: 4, y: 37}, map: "belowvillage" // by beehive
+                    //init: { x: 20, y: 19}, map: "researchfacilitynew" // by seed shooters
+                    //init: { x: 27, y: 8}, map: "researchfacilitynew" // by RAPBATTLE
+                    //init: { x: 44, y: 44 }, map: "southcity" // by Skumpy's
+                    //init: { x: 15, y: 36 }, map: "southcity" // by mob base
+                    //init: { x: 5, y: 5 }, map: "fakefarm"
+                    //init: { x: 24.75, y: 35.5 }, map: "fakefarm"
+                    //init: { x: 5, y: 3 }, map: "underwaternew"
+                    //init: { x: 41, y: 20 }, map: "underwaternew"
+                    //init: { x: 27, y: 5 }, map: "bridge"
+                    //init: { x: 3, y: 7 }, map: "firstvillage"
+                    //init: { x: 103,  y: 65 }, map: "forest"
                 });
             case 1: return game.innerTransition(this, pausemenu.savemenu, { saving: false }); // this is probably wrong
             case 2: return game.innerTransition(this, worldmap.optionsMenu);

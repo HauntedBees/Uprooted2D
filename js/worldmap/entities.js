@@ -39,7 +39,7 @@ var mapentities = {
         GetCommonEntity("Eagle", 16, 9, 4, 0, undefined, undefined, { sheet: "assistant" })
     ],
     "producestand": [
-        GetInvisibleEntity("CS_produce", Cutscene("pstand"), { autoplay: false }),
+        GetInvisibleEntity("CS_produce", Cutscene("pstand"), { autoplay: true }),
         GetInvisibleEntity("PostInitialBattle", Cutscene("finTut"), { storageKey: "PostInitialBattle" }), 
         GetCommonEntity("HipsterBike", 6, 4, 0, 0, undefined, undefined, { sy: 2, sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
         GetCommonEntity("Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", moving: true, sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
