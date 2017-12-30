@@ -1,4 +1,5 @@
 uglifyjs ^
+    js/debug/enemyCursorTest.js ^
     js/gamedata/consts.js ^
     js/gamedata/veggies.js ^
     js/gamedata/equipment.js ^
