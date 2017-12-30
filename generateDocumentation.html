@@ -1,0 +1,300 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+        <style>
+            @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
+            @font-face { font-family: "OpenDyslexic"; src: url("styles/OpenDyslexic3-Regular.ttf") }
+            .font_PS2P { font-family: "PressStart2P" }
+            .font_OD { font-family: "OpenDyslexic" }
+            body { padding-top: 3.5rem; }
+            .sidebar {
+                position: fixed;
+                top: 51px;
+                bottom: 0;
+                left: 0;
+                z-index: 1000;
+                padding: 20px 0;
+                overflow-x: hidden;
+                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+                border-right: 1px solid #eee;
+                }
+            .sidebar .nav { margin-bottom: 20px }
+            .sidebar .nav-item { width: 100% }
+            .sidebar .nav-item + .nav-item { margin-left: 0 }
+            .sidebar .nav-link { border-radius: 0 }
+            .sprite {
+                background: url("img_half/sheet.png");
+                display: inline-block;
+                height: 32px;
+                width: 32px;
+            }
+            .spriteDouble { height: 64px !important; width: 64px !important }
+            .spriteTiny {
+                background: url("img_quarter/sheet.png");
+                display: inline-block;
+                height: 16px;
+                width: 16px;
+            }
+            .spriteTinyDouble { height: 32px !important; width: 32px !important }
+            .enemySprite {
+                background: url("img_half/enemies.png");
+                display: inline-block;
+                height: 60px;
+                width: 48px;
+            }
+            .enemySpriteBig {
+                background: url("img_half/enemies_big.png");
+                display: inline-block;
+                height: 80px;
+                width: 64px;
+            }
+            .inline { margin: 0 -3px -3px 0 }
+            .inline2 { margin-bottom: -3px }
+            .template { display: none }
+            .card { margin: 10px }
+            label { font-weight: bold }
+            .treeFill { display: inline-block; position: relative; width: 32px; height: 32px }
+            .treeFill > span { position: absolute; top: 0; left: 0 }
+        </style>
+        <title>Farming Fantasy Guide</title>
+    </head>
+    <body>
+        <header><nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"><a class="navbar-brand" href="#">Farming Fantasy Official Guide</a></nav></header>
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+                    <ul id="sidebar" class="nav nav-pills flex-column">
+                        <li class="nav-item"><a class="nav-link" href="#top">Return to Top</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#crops">Crops</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#enemies">Enemies</a></li>
+                    </ul>
+                </nav>
+                <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+                    <h1>Farming Fantasy<a name="top"></a></h1>
+                    <div id="crops">
+                        <h2>Crops<a name="crops"></a></h2>
+                        <div class="content row">
+                            <div id="cropTemplate" class="card col-3 template">
+                                <div class="text-center"><span class="sprite sp_seed"></span><span class="sprite sp_final"></span></div>
+                                <div class="text-center txt_stages"></div>
+                                <div class="text-center font-weight-bold txt_name"></div>
+                                <div class="text-center txt_info"></div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div><label>Type:</label> <span class="spriteTiny inline2 sp_type"></span> <span class="txt_type"></div>
+                                        <div><label>Seasons:</label> <span class="spriteTiny sp_sp"></span><span class="spriteTiny sp_su"></span><span class="spriteTiny sp_au"></span><span class="spriteTiny sp_wi"></span></div>
+                                        <div><label>Size:</label> <span class="txt_size"></span></div>
+                                        <div><label>Price:</label> <span class="txt_price"></span></div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div><label><span class="spriteTiny inline stinv_power" title="Crop Power"></span> Power: </label> <span class="txt_power"></span></div>
+                                        <div><label><span class="spriteTiny inline stinv_time" title="Time to Grow"></span> Time: </label> <span class="txt_time"></span></div>
+                                        <div><label><span class="spriteTiny inline stinv_regrow" title="Time to Regrow"></span> Regrow: </label> <span class="txt_regrow"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="enemies">
+                        <h2>Enemies<a name="enemies"></a></h2>
+                        <div class="content row">
+                            <div id="enemyTemplate" class="card col-3 template">
+                                <div class="text-center"><span class="sp_final"></span></div>
+                                <div class="text-center font-weight-bold txt_name"></div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div><label>Health:</label> <span class="txt_hp"></span></div>
+                                        <div><label>Attack:</label> <span class="txt_atk"></span></div>
+                                        <div><label>Defense:</label> <span class="txt_def"></span></div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div><label>Seasons:</label> <span class="spriteTiny sp_sp"></span><span class="spriteTiny sp_su"></span><span class="spriteTiny sp_au"></span><span class="spriteTiny sp_wi"></span></div>
+                                        <div><label>Field Size:</label> <span class="txt_size"></span></div>
+                                        <div><label>EXP:</label> <span class="txt_exp"></span></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div><label>Attacks:</label> <span class="txt_attacks"></span></div>
+                                        <div><label>Drops:</label> <span class="txt_drops"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script src="out.js"></script>
+        <script type="text/javascript">
+            var patternText = {};
+            function SameSprites(a, b) { var aa = spriteData.names[a]; var bb = spriteData.names[b]; return (aa[0] === bb[0] && aa[1] === bb[1]); }
+            function GetDocumentationAttackPatterns(name) {
+                if(patternText[name] !== undefined) { return patternText[name]; }
+                var pattern = enemyPatterns[name].nodes;
+                var results = [];
+                for(var i = 0; i < pattern.length; i++) {
+                    if(pattern[i].data === undefined || pattern[i].data.message === undefined) { continue; }
+                    switch(pattern[i].data.message) {
+                        case "CONVINCEATRON": results.push("Mining for Cryptocurrencies"); break;
+                        case "WEAK_ATTACK": results.push("Standard Attack"); break;
+                        case "LAUNCH_CROPS": results.push("Grow Crops"); break;
+                        case "THROW_BABY": results.push("Summon Allies"); break;
+                        case "HEAL_RANGE": results.push("Recover Health"); break;
+                        case "MODULATE": results.push("Season Modulator"); break;
+                    }
+                }
+                patternText[name] = results.join(", ");
+                return patternText[name];
+            }
+            document.addEventListener("DOMContentLoaded", function() {
+                var generatedCSSSprites = [];
+                spriteData.populate();
+                for(var i in spriteData.names) { 
+                    var sd = spriteData.names[i];
+                    if(sd[2] === true) {
+                        generatedCSSSprites.push(".s" + i + " { background-position: " + (sd[0] * -64) + "px " + (sd[1] * -64) + "px }");
+                        generatedCSSSprites.push(".st" + i + " { background-position: " + (sd[0] * -32) + "px " + (sd[1] * -32) + "px }");
+                    } else {
+                        generatedCSSSprites.push(".s" + i + " { background-position: " + (sd[0] * -32) + "px " + (sd[1] * -32) + "px }");
+                        generatedCSSSprites.push(".st" + i + " { background-position: " + (sd[0] * -16) + "px " + (sd[1] * -16) + "px }");
+                    }
+                }
+                var $style = $("style");
+                for(var i = 0; i < generatedCSSSprites.length; i++) { $style.append(generatedCSSSprites[i]); }
+
+                // Crop Generation
+                var $crops = $("#crops > .content");
+                for(var i = 0; i < debug.AllCrops.length; i++) {
+                    var $template = $("#cropTemplate").clone();
+                    $template.removeClass("template").removeAttr("id");
+                    var crop = GetCrop(debug.AllCrops[i]);
+                    $template.find(".txt_name").text(crop.displayname);
+                    $template.find(".txt_info").text(GetText(crop.name));
+                    var typeName = ""; var typeClass = "";
+                    switch(crop.type) {
+                        case "veg": typeName = "Vegetable"; typeClass = "dirt"; break;
+                        case "tree": typeName = "Fruit"; typeClass = "dirt"; break;
+                        case "bee": typeName = "Bee"; typeClass = "_beehive"; break;
+                        case "rice": typeName = "Paddy Crop"; typeClass = "_paddy"; break;
+                        case "spear":
+                        case "rod": 
+                        case "water": typeName = "Water"; typeClass = "_lake"; break;
+                        case "food": typeName = "Feed"; typeClass = "_cow"; break;
+                        case "mush": typeName = "Mushroom"; typeClass = "_log"; break;
+                        case "egg": typeName = "Egg"; typeClass = "_coop"; break;
+                        case "tech": 
+                        case "sickle2": typeName = "Technology"; typeClass = "_hotspot"; break;
+                    }
+                    $template.find(".txt_type").text(typeName);
+                    $template.find(".txt_size").text(crop.size === 1 ? "Small" : "Large");
+                    $template.find(".txt_size").attr("title", crop.size === 1 ? "1x1 tiles" : "2x2 tiles");
+                    $template.find(".sp_type").addClass("st" + typeClass);
+                    
+                    if(SameSprites(crop.name, crop.name + "seed")) {
+                        $template.find(".sp_seed").remove();
+                    } else {
+                        $template.find(".sp_seed").addClass("s" + crop.name + "seed");
+                    }
+                    $template.find(".sp_final").addClass("s" + crop.name);
+                    
+                    if(["veg", "tree", "rice", "water", "mush", "egg", "tech"].indexOf(crop.type) >= 0) {
+                        var $stages = $template.find(".txt_stages");
+                        if(crop.type === "tree") {
+                            $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree0'></span>"));
+                            $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree1'></span>"));
+                            $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree2'></span>"));
+                            for(var j = 3; j < crop.frames; j++) {
+                                $stages.append($("<span class='treeFill'><span class = 'spriteTiny spriteTinyDouble sttree2'></span><span class = 'spriteTiny spriteTinyDouble st" + crop.name + (j - 3) + "'></span></span>"));
+                            }
+                        } else {
+                            for(var j = 0; j < crop.frames; j++) {
+                                if(crop.size === 2) {
+                                    $stages.append($("<span class = 'spriteTiny spriteTinyDouble st" + crop.name + j + "'></span>"));
+                                } else {
+                                    $stages.append($("<span class = 'spriteTiny st" + crop.name + j + "'></span>"));
+                                }
+                            }
+                        }
+                    }
+
+                    $template.find(".sp_sp").addClass( crop.seasons[0] > 0.5 ? "stspring" : "stnoSeason" ).attr("title", "Spring Power: " + crop.seasons[0]);
+                    $template.find(".sp_su").addClass( crop.seasons[1] > 0.5 ? "stsummer" : "stnoSeason" ).attr("title", "Summer Power: " + crop.seasons[1]);
+                    $template.find(".sp_au").addClass( crop.seasons[2] > 0.5 ? "stautumn" : "stnoSeason" ).attr("title", "Autumn Power: " + crop.seasons[2]);
+                    $template.find(".sp_wi").addClass( crop.seasons[3] > 0.5 ? "stwinter" : "stnoSeason" ).attr("title", "Winter Power: " + crop.seasons[3]);
+
+                    $template.find(".txt_price").text(crop.price + "G");
+                    $template.find(".txt_power").text(crop.power);
+                    $template.find(".txt_time").text(crop.time);
+                    if(crop.respawn === 0) {
+                        $template.find(".txt_regrow").parent().remove();
+                    } else {
+                        $template.find(".txt_regrow").text(crop.respawn);
+                    }
+                    $crops.append($template);
+                }
+
+                var $enemies = $("#enemies > .content");
+                for(var i = 0; i < debug.AllEnemies.length; i++) {
+                    var $template = $("#enemyTemplate").clone();
+                    $template.removeClass("template").removeAttr("id");
+                    var enemy = GetEnemy(debug.AllEnemies[i]);
+                    $template.find(".txt_name").text(enemy.name);
+                    
+                    if(enemy.size === "lg") {
+                        $template.find(".sp_final").addClass("enemySpriteBig").css("background-position", "-" + (enemy.spriteidx * 64) + "px 0");
+                    } else {
+                        $template.find(".sp_final").addClass("enemySprite").css("background-position", "-" + (enemy.spriteidx * 48) + "px 0");
+                    }
+                    
+                    $template.find(".sp_sp").addClass( enemy.seasonDistribution[0] > 0.5 ? "stspring" : "stnoSeason" ).attr("title", "Spring Chance: " + enemy.seasonDistribution[0]);
+                    $template.find(".sp_su").addClass( enemy.seasonDistribution[1] > 0.5 ? "stsummer" : "stnoSeason" ).attr("title", "Summer Chance: " + enemy.seasonDistribution[1]);
+                    $template.find(".sp_au").addClass( enemy.seasonDistribution[2] > 0.5 ? "stautumn" : "stnoSeason" ).attr("title", "Autumn Chance: " + enemy.seasonDistribution[2]);
+                    $template.find(".sp_wi").addClass( enemy.seasonDistribution[3] > 0.5 ? "stwinter" : "stnoSeason" ).attr("title", "Winter Chance: " + enemy.seasonDistribution[3]);
+
+                    $template.find(".txt_hp").text(enemy.health);
+                    $template.find(".txt_atk").text(enemy.atk);
+                    $template.find(".txt_def").text(enemy.def);
+                    $template.find(".txt_size").text(enemy.fieldwidth + "x" + enemy.fieldheight);
+                    $template.find(".txt_exp").text(enemy.exp);
+
+                    var drops = [];
+                    if(enemy.drops !== undefined) {
+                        for(var j = 0; j < enemy.drops.length; j++) {
+                            var drop = enemy.drops[j];
+                            if(drop.money) {
+                                if(drop.min === drop.max) {
+                                    drops.push(drop.min + "G");
+                                } else {
+                                    drops.push(drop.min + "-" + drop.max + "G");
+                                }
+                            } else {
+                                var name = GetCrop(drop.seed).displayname;
+                                if(drop.min === drop.max) {
+                                    drops.push(drop.min + " " + name);
+                                } else {
+                                    drops.push(drop.min + "-" + drop.max + " " + name);
+                                }
+                            }
+                        }
+                    }
+                    $template.find(".txt_attacks").text(GetDocumentationAttackPatterns(enemy.attackType));
+                    if(drops.length === 0) {
+                        $template.find(".txt_drops").text("None");
+                    } else {
+                        $template.find(".txt_drops").text(drops.join(", "));
+                    }
+
+                    $enemies.append($template);
+                }
+
+                var generatedSections = [];
+                var $sb = $("#sidebar");
+                for(var i = 0; i < generatedSections.length; i++) {
+                    $sb.append($("<li class='nav-item'><a class='nav-link' href='#" + generatedSections[i].id + "'>" + generatedSections[i].txt + "</a></li>"));
+                }
+            });
+        </script>
+    </body>
+</html>
