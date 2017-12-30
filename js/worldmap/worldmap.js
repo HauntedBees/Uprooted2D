@@ -45,9 +45,10 @@ var worldmap = {
             this.inDialogue = true;
             game.target = targetToAutoplay;
             game.target.interact[0](0, game.target);
+            worldmap.toggleMovement(false);
             return;
         }
-        this.fullAnimIdx = setInterval(worldmap.moveEntities, timers.FULLANIM);
+        worldmap.toggleMovement(true);
         if(worldmap.angryBees) {
             this.dialogState = 0;
             this.inDialogue = true;
@@ -57,6 +58,10 @@ var worldmap = {
         if(args.isInn && worldmap.entities[0].innCheck) {
             worldmap.entities[0].action();
         }
+    },
+    toggleMovement: function(moving) {
+        clearInterval(worldmap.fullAnimIdx);
+        this.fullAnimIdx = setInterval((moving ? worldmap.moveEntities : function() { worldmap.refreshMap(); }), timers.FULLANIM);
     },
     moveEntities: function() {
         for(var i = 0; i < worldmap.entities.length; i++) {
@@ -82,12 +87,10 @@ var worldmap = {
             if(Math.round(newPos.x) == Math.round(worldmap.pos.x) && Math.round(newPos.y) == Math.round(worldmap.pos.y) && e.interact !== undefined) {
                 isBlocked = true;
                 worldmap.inDialogue = true;
-                clearInterval(worldmap.fullAnimIdx);
+                worldmap.toggleMovement(false);
                 worldmap.dialogState = 0;
                 game.target = e;
-                if(e.interact[0](0, e)) {
-                    worldmap.finishDialog();
-                }
+                if(e.interact[0](0, e)) { worldmap.finishDialog(); }
             }
             if(isBlocked) { continue; }
             worldmap.entities[i].pos = newPos;
@@ -190,7 +193,7 @@ var worldmap = {
         this.forceEndDialog = false;
         this.inDialogue = false;
         this.freeMovement = true;
-        this.fullAnimIdx = setInterval(worldmap.moveEntities, timers.FULLANIM);
+        worldmap.toggleMovement(true);
     },
     handleMenuChoices: function(key) {
         var dy = 0;
@@ -279,7 +282,7 @@ var worldmap = {
                     if(!e.noChange) { e.dir = this.invertDir(this.playerDir); }
                     this.inDialogue = true;
                     this.forceEndDialog = false;
-                    clearInterval(this.fullAnimIdx);
+                    worldmap.toggleMovement(false);
                     this.dialogState = 0;
                     game.target = e;
                     if(e.failed && e.failedInteract !== undefined) {
@@ -301,7 +304,7 @@ var worldmap = {
                         this.forceEndDialog = false;
                         this.dialogState = 0;
                         game.target = e;
-                        clearInterval(this.fullAnimIdx);
+                        worldmap.toggleMovement(false);
                         if(e.failed && e.failedInteract !== undefined) {
                             if(e.failedInteract[0]()) { return; }
                         } else {
