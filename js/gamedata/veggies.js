@@ -29,11 +29,11 @@ function GetCropDesc(cropInfo) {
 function GetCrop(name) {
     switch(name) {
 		/* Veggies */
-		case "asparagus": return new CropDetail(name, "Asparagus", 10, "veg", 1, 18, 2, 12, 3, 1, 0, 0, 0);
+		case "asparagus": return new CropDetail(name, "Asparagus", 10, "veg", 1, 18, 4, 12, 3, 1, 0, 0, 0);
 		case "beet": return new CropDetail(name, "Beet", 10, "veg", 1, 1, 2, 5, 0, 0, 0.66, 1, 1, { waterResist: 0.5 });
-		case "bellpepper": return new CropDetail(name, "Bell Pepper", 10, "veg", 1, 2, 2, 3, 0, 0, 0.66, 1, 0);
+		case "bellpepper": return new CropDetail(name, "Bell Pepper", 10, "veg", 1, 2, 3, 3, 0, 0, 0.66, 1, 0);
 		case "carrot": return new CropDetail(name, "Carrot", 10, "veg", 1, 2, 2, 3, 0, 1, 0.66, 1, 0.66, { animal: "Rabbit", animalChance: 0.01, animalDamageMult: 2 });
-		case "corn": return new CropDetail(name, "Corn", 10, "veg", 1, 5, 4, 4, 0, 0, 1, 0, 0);
+		case "corn": return new CropDetail(name, "Corn", 10, "veg", 1, 5, 3, 4, 0, 0, 1, 0, 0);
 		case "garlic": return new CropDetail(name, "Garlic", 10, "veg", 1, 6, 3, 15, 0, 1, 1, 1, 0);
 		case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 1, 0);
 		case "leek": return new CropDetail(name, "Leek", 10, "veg", 1, 3, 3, 8, 0, 0, 0, 0, 1);
@@ -88,7 +88,7 @@ function GetCrop(name) {
 		case "platypus": return new CropDetail(name, "Platypus Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
 		/* Technology */
 		case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
-		case "headphones": return new CropDetail(name, "Earbuds", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
+		case "headphones": return new CropDetail(name, "Earbuds", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
 		case "printer": return new CropDetail(name, "3D Printer", 10, "tech", 1, 5, 6, 3, 0, 1, 1, 1, 1);
 		case "app": return new CropDetail(name, "App", 10, "tech", 1, 3, 4, 3, 0, 1, 1, 1, 1);
 		case "drone": return new CropDetail(name, "Drone", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
@@ -98,15 +98,17 @@ function GetCrop(name) {
 		/* Rare */
 		case "goldegg": return new CropDetail(name, "Golden Egg", 500, "egg", 1, 4, 4, 9999, 0, 1, 1, 1, 1);
 		case "coconut": return new CropDetail(name, "Coconut", 500, "tree", 2, 10, 5, 200, 3, 0, 1, 0, 0);
-		case "gmocorn": return new CropDetail(name, "GMO Corn", 500, "veg", 1, 5, 4, 200, 0, 1, 1, 1, 1);
+		case "gmocorn": return new CropDetail(name, "GMO Corn", 500, "veg", 1, 5, 3, 200, 0, 1, 1, 1, 1);
 		case "ultrarod": return new CropDetail(name, "Master Bait", 500, "rod", 1, 20, 2, 5000, 0, 1, 1, 1, 1, { catchLuck: 0.99, req: 0.5 });
 		case "goodfood": return new CropDetail(name, "Delicious Food", 500, "food", 1, 0, 1, 5000, 0, 0, 0, 0, 0);
 		case "notdrugs": return new CropDetail(name, "Funny Mushroom", 500, "mush", 1, 5, 3, 200, 3, 1, 1, 1, 1, { stickChance: 0.25, stickRange: [1, 4] });
-		/* Enemies */
+		/* Enemy-Only */
 		case "algae": return new CropDetail(name, "Algae", 0, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { rotten: true });
 		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { rotten: true });
 		case "rock": return new CropDetail(name, "Rock", 0, "rock", 1, 5, 1, 0, 0, 1, 1, 1, 1);
 		case "salt": return new CropDetail(name, "Salt", 0, "rock", 1, 30, 1, 0, 0, 1, 1, 1, 1);
 		case "acorn": return new CropDetail(name, "Acorn", 0, "tree", 2, 6, 4, 6, 2, 0, 1, 1, 0);
+		case "robobabby": return new CropDetail(name, "Byte Baby", 0, "babby", 1, 4, 4, 0, 0, 1, 1, 1, 1, { baby: "robo" });
 	}
 }
+debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs"];
