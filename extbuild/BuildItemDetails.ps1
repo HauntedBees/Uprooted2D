@@ -309,6 +309,7 @@ function GetEnemy(name) {
 		
 		$addtl = @();
 		if($row.Tile) { $addtl += "tile: `"_`"".replace("_", $row.Tile); }
+		if($row.soleKill) { $addtl += "soleKill: true"; }
 		if($row.addtlHitCheck) { $addtl += "addtlHitCheck: `"_`"".replace("_", $row.addtlHitCheck); }
 		
 		if($addtl.Count -gt 0) {
