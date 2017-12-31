@@ -4,7 +4,7 @@ combat.plant = {
     inventoryWidth: 9, dy: 6, addHalf: true, 
     layersToClean: ["menuA", "menuB", "menucursorA", "menucursorB", "menutext"],
     setup: function() {
-        this.cursor = {x: 0, y: this.dy};
+        this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy };
         this.actualIndexes = [];
         this.isValid = true;
         for(var i = 0; i < player.inventory.length; i++) {
@@ -27,7 +27,7 @@ combat.plant = {
             }
         } else {
             this.activeCrop = null;
-            this.cursor = {x: 0, y: this.dy};
+            this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy };
             this.drawAll();
         }
         return true;
@@ -140,6 +140,7 @@ combat.plant = {
             var actualIdx = this.actualIndexes[idx];
             if(player.inventory[actualIdx][1] === 0) { return false; }
             this.activeCrop = GetCrop(player.inventory[actualIdx][0]);
+            combat.lastSelectedSeed = { x: this.cursor.x, y: this.cursor.y - this.dy };
             this.cursor = { x: combat.dx, y: combat.dy };
             this.isValid = this.isValidPlantingLocation(0, 0, this.activeCrop.size - 1);
         } else {

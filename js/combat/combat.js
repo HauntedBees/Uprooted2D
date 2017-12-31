@@ -1,6 +1,6 @@
 var combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0,
-    lastTarget: 0, lastTargetCrop: false,
+    lastTarget: 0, lastTargetCrop: false, lastSelectedSeed: { x: 0, y: 0 }, 
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
@@ -14,6 +14,7 @@ var combat = {
         game.currentInputHandler = this.menu;
         this.lastTargetCrop = false;
         this.lastTarget = 0;
+        this.lastSelectedSeed = { x: 0, y: 0 };
         this.setSeason(enemies);
         this.expEarned = 0;
         this.moniesEarned = 0;
