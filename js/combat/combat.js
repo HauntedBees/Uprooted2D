@@ -56,7 +56,7 @@ var combat = {
             this.isBossBattle = this.isBossBattle || enemy.boss;
             this.enemywidth += enemy.fieldwidth;
             this.enemyheight = Math.max(this.enemyheight, enemy.fieldheight);
-            if(enemy.tile) { this.enemyTile = enemy.tile; }
+            if(enemy.tile) { this.enemyTile = enemy.tile; } else { this.enemyTile = "tech"; }
             this.enemies.push(enemy);
         }
         this.animHelper = new CombatAnimHelper(this.enemies);
