@@ -126,9 +126,9 @@ var combat = {
             for(var i = 0; i < e.drops.length; i++) {
                 var dropInfo = e.drops[i];
                 if(dropInfo.money) {
-                    this.moniesEarned += Range(dropInfo.min, dropInfo.max);
+                    this.moniesEarned += InclusiveRange(dropInfo.min, dropInfo.max);
                 } else {
-                    this.addDroppedSeedToItemsEarned(dropInfo.seed, Math.max(0, Range(dropInfo.min, dropInfo.max)));
+                    this.addDroppedSeedToItemsEarned(dropInfo.seed, Math.max(0, InclusiveRange(dropInfo.min, dropInfo.max)));
                 }
             }
         }

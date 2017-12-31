@@ -44,6 +44,53 @@ var enemyHelpers = {
         newCrop.activeTime = newCrop.time;
         combat.grid[x][y] = newCrop;
         return true;
+    },
+    TrySplashTile: function(e, x, y, noRecursion) {
+        var itemPos = player.itemGrid[x][y];
+        var initx = x, inity = y;
+        if(itemPos !== null && itemPos.x !== undefined) {
+            initx = itemPos.x; inity = itemPos.y;
+            itemPos = player.itemGrid[itemPos.x][itemPos.y];
+        }
+        if(["_sprinkler", "_paddy", "_lake", "_cow", "_log", "_coop", "_beehive"].indexOf(itemPos) >= 0) { return { status: false }; }
+        if(itemPos === "_strongsoil" && (Math.random() * player.luck) > 0.75) { return { status: false }; }
+
+        if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
+            if(!noRecursion && itemPos !== "_shooter") {
+                combat.effectGrid[initx][inity] = { type: "shocked", duration: e.atk };
+                enemyHelpers.TrySplashTile(e, initx + 1, inity, true);
+                enemyHelpers.TrySplashTile(e, initx, inity + 1, true);
+                enemyHelpers.TrySplashTile(e, initx + 1, inity + 1, true);
+            } else {
+                combat.effectGrid[x][y] = { type: "shocked", duration: e.atk };
+            }
+        } else {
+            combat.effectGrid[x][y] = { type: "splashed", duration: e.atk };
+        }
+        combat.animHelper.DrawBackground();
+        var crop = combat.grid[x][y];
+        if(crop === null) { return { status: true, crop: false }; }
+
+        var dmg = enemyHelpers.GetCropDamage(e, x, y, 0);
+        crop.power -= dmg;
+        if(crop.rotten) { crop.power = 0; }
+        if(crop.power <= 0) {
+            combat.grid[x][y] = null;
+            combat.animHelper.DrawCrops();
+            return { status: true, crop: true, destroyed: true };
+        } else {
+            return { status: true, crop: true, destroyed: false };
+        }
+    },
+    GetCropDamage: function(e, x, y, type) { // type: 0 = water, 1 = fire
+        var crop = combat.grid[x][y];
+        var itemTile = player.itemGrid[x][y];
+        var dmg = Math.ceil(e.atk / 2);
+        if(type === 0 && crop.waterResist) { dmg *= crop.waterResist; }
+        else if(type === 1 && crop.fireResist) { dmg *= crop.fireResist; }
+        if(crop.x !== undefined) { crop = combat.grid[crop.x][crop.y]; dmg = Math.ceil(dmg / 2); }
+        if(itemTile === "_strongsoil") { dmg = Math.round(dmg / 2); }
+        return dmg;
     }
 };
 var EnemyParser = {
@@ -127,6 +174,20 @@ var actions = {
     "TRY_THROW_ROCK": function(e) { 
         var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "rock");
         if(!res) { return false; }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    "SPLASH_TILE": function(e) {
+        var res = enemyHelpers.TrySplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+        if(!res.status) {
+            EnemyParser.current.data.textID = "splashFail";
+        } else if(!res.crop) {
+            EnemyParser.current.data.textID = "splashSucc";
+        } else if(!res.destroyed) {
+            EnemyParser.current.data.textID = "splashDamage";
+        } else {
+            EnemyParser.current.data.textID = "splashKill";
+        }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     },

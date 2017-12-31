@@ -68,6 +68,7 @@ function GetCrop(name) {
 		}
 		if($row.Catch) { $addtl += "catchLuck: _".replace("_", $row.Catch); }
 		if($row.Rot) { $addtl += "rotten: true"; }
+		if($row.NoRot) { $addtl += "noRot: true"; }
 		if($row.Req) { $addtl += "req: _".replace("_", $row.Req); }
 		if($row.StkChance) { $addtl += "stickChance: _".replace("_", $row.StkChance); }
 		if($row.StkRange) { $addtl += "stickRange: _".replace("_", $row.StkRange); }

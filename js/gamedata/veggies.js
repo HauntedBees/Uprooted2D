@@ -103,8 +103,8 @@ function GetCrop(name) {
 		case "goodfood": return new CropDetail(name, "Delicious Food", 500, "food", 1, 0, 1, 5000, 0, 0, 0, 0, 0);
 		case "notdrugs": return new CropDetail(name, "Funny Mushroom", 500, "mush", 1, 5, 3, 200, 3, 1, 1, 1, 1, { stickChance: 0.25, stickRange: [1, 4] });
 		/* Enemy-Only */
-		case "algae": return new CropDetail(name, "Algae", 0, "rice", 1, 2, 2, 3, 0, 1, 1, 1, 1, { rotten: true });
-		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 3, 0, 1, 1, 1, 1, { rotten: true });
+		case "algae": return new CropDetail(name, "Algae", 0, "rice", 1, 2, 2, 10, 0, 0.6, 1, 0.2, 0, { noRot: true });
+		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 30, 0, 1, 1, 0.5, 0.05, { noRot: true });
 		case "rock": return new CropDetail(name, "Rock", 0, "rock", 1, 5, 1, 0, 0, 1, 1, 1, 1);
 		case "salt": return new CropDetail(name, "Salt", 0, "rock", 1, 30, 1, 0, 0, 1, 1, 1, 1);
 		case "acorn": return new CropDetail(name, "Acorn", 0, "tree", 2, 6, 4, 6, 2, 0, 1, 1, 0);

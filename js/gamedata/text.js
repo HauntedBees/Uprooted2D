@@ -3536,6 +3536,26 @@ var fulltext = {
 		"en-dm": "{0} tried to throw a rock onto your field, but missed.", 
 		"type": "combat"
 	},
+	"splashFail": {
+		"en-us": "", 
+		"en-dm": "{0} splashes some water, but it does nothing.", 
+		"type": "combat"
+	},
+	"splashSucc": {
+		"en-us": "", 
+		"en-dm": "{0} splashes some water on your field.", 
+		"type": "combat"
+	},
+	"splashDamage": {
+		"en-us": "", 
+		"en-dm": "{0} splashes some water on your field, damaging a crop!", 
+		"type": "combat"
+	},
+	"splashKill": {
+		"en-us": "", 
+		"en-dm": "{0} splashes some water on your field, destroying a crop!", 
+		"type": "combat"
+	},
 	// Enemy Names
 	"e.robo0": {
 		"en-us": "", 
