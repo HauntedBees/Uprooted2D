@@ -13,11 +13,11 @@ var enemyHelpers = {
                 } else {
                     if(tile.type === "babby") { continue; }
                 }
-                dmg += tile.power;
+                dmg += tile.power * Math.max(0.75, Math.log10(e.atk));
                 crops.push([tile.name, x, y, tile.type]);
             }
         }
-        dmg += dmg == 0 ? (e.atk / 1.5) : e.atk;
+        if(dmg === 0) { dmg = (e.atk / 1.5); }
         dmg = Math.max(1, Math.round(dmg - player.def));
         return { crops: crops, damage: dmg };
     },
@@ -57,15 +57,15 @@ var enemyHelpers = {
 
         if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
             if(!noRecursion && itemPos !== "_shooter") {
-                combat.effectGrid[initx][inity] = { type: "shocked", duration: e.atk };
+                combat.effectGrid[initx][inity] = { type: "shocked", duration: Math.max(1, Math.round(e.atk)) };
                 enemyHelpers.TrySplashTile(e, initx + 1, inity, true);
                 enemyHelpers.TrySplashTile(e, initx, inity + 1, true);
                 enemyHelpers.TrySplashTile(e, initx + 1, inity + 1, true);
             } else {
-                combat.effectGrid[x][y] = { type: "shocked", duration: e.atk };
+                combat.effectGrid[x][y] = { type: "shocked", duration: Math.max(1, Math.round(e.atk)) };
             }
         } else {
-            combat.effectGrid[x][y] = { type: "splashed", duration: e.atk };
+            combat.effectGrid[x][y] = { type: "splashed", duration: Math.max(1, Math.round(e.atk)) };
         }
         combat.animHelper.DrawBackground();
         var crop = combat.grid[x][y];
@@ -279,7 +279,7 @@ var actions = {
         return true;
     },
     "WEAK_ATTACK": function(e) {
-        var damage = combat.damagePlayer(e.atk);
+        var damage = combat.damagePlayer(Math.max(1, Math.round(e.atk)));
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
     },

@@ -326,7 +326,7 @@ combat.selectTarget = {
                     animals.push({ crop: tile.name, animal: tile.animal });
                     thisCropsDamage *= tile.animalDamageMult;
                 }
-                dmg += thisCropsDamage;
+                dmg += thisCropsDamage * Math.max(1, Math.log10(player.atk));
             }
         }
         dmg += (dmg === 0 ? Math.round((player.atk / 2) + player.getSickleAttackBonus(combat.season)) : player.atk);
