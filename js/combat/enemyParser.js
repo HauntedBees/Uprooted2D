@@ -34,6 +34,16 @@ var enemyHelpers = {
         var node = EnemyParser.current;
         var outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg).replace(/\{2\}/g, secondArg).replace(/\{3\}/g, thirdArg);
         return { text: outputText, animFPS: node.data.animFPS, animData: node.data.animData };
+    },
+    TryDisturbTile: function(x, y, type) {
+        var itemTile = player.itemGrid[x][y];
+        if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
+        if((itemTile !== null && itemTile !== "_hotspot") || combat.grid[x][y] !== null) { return false; }
+        // TODO: destroy weaker crops with rocks?
+        var newCrop = GetCrop(type);
+        newCrop.activeTime = newCrop.time;
+        combat.grid[x][y] = newCrop;
+        return true;
     }
 };
 var EnemyParser = {
@@ -112,6 +122,16 @@ var actions = {
         var damage = combat.damagePlayer(fieldData.damage);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         EnemyParser.outputData.throwables = fieldData.crops;
+        return true;
+    },
+    "TRY_THROW_ROCK": function(e) { 
+        var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "rock");
+        if(!res) { return false; }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    "IDLE": function(e) {
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     },
     "THROW_BABY": function(e) {

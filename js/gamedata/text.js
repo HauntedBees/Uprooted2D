@@ -3516,6 +3516,26 @@ var fulltext = {
 		"en-dm": "{0} reaches into the river, but fails to catch any fish.", 
 		"type": "combat"
 	},
+	"fileBPermit": {
+		"en-us": "", 
+		"en-dm": "{0} files for a Building Permit.", 
+		"type": "combat"
+	},
+	"buildHouse": {
+		"en-us": "", 
+		"en-dm": "{0} begins constructing a house.", 
+		"type": "combat"
+	},
+	"throwRockSucc": {
+		"en-us": "", 
+		"en-dm": "{0} throws a rock onto your field.", 
+		"type": "combat"
+	},
+	"throwRockFail": {
+		"en-us": "", 
+		"en-dm": "{0} tried to throw a rock onto your field, but missed.", 
+		"type": "combat"
+	},
 	// Enemy Names
 	"e.robo0": {
 		"en-us": "", 

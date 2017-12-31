@@ -105,6 +105,17 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "bpermit": [30, 14],
+        "bpermit0": [27, 14],
+        "bpermit1": [28, 14],
+        "bpermit2": [29, 14],
+        "bpermit3": [30, 14],
+        "house": [29, 12],
+        "house0": [16, 0, true],
+        "house1": [17, 0, true],
+        "house2": [18, 0, true],
+        "house3": [19, 0, true],
+        "house4": [20, 0, true],
         "robobabby": [12, 21],
         "notdrugs": [28, 13],
         "notdrugsseed": [27, 13],
