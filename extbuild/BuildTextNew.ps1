@@ -31,16 +31,12 @@ var fulltext = {
 		if($key -eq "*") { $out.WriteLine("	// " + ($row."en-dm")); continue; }
 		$us = ($row."en-us").Trim().Replace("`"", "\`"");
 		$dm = ($row."en-dm").Trim().Replace("`"", "\`"");
-		#$cmd = ($row."cmd").Trim();
-		#$choices = ($row."choices").Trim();
 		$typ = ($row."type");
 		$hasdm = $dm -ne "";
 		$i += 1;
 		$out.WriteLine("	`"" + $key + "`": {");
 		$out.WriteLine("		`"en-us`": `"$us`", ");
-		if($dm -ne "") { $out.WriteLine("		`"en-dm`": `"$dm`", "); }
-		#if($cmd -ne "") { $out.WriteLine("		`"cmd`": `"$cmd`", "); }
-		#if($choices -ne "") { $out.WriteLine("		`"choices`": `"$choices`", "); }
+		if($dm -ne "") { $out.WriteLine("		`"en-dm`": `"$dm`", "); }	
 		$out.WriteLine("		`"type`": `"$typ`"");
 		if($i -eq $maxlen) {
 			$out.WriteLine("	}");
