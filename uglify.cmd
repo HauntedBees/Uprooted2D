@@ -30,9 +30,9 @@ uglifyjs ^
     js/worldmap/optionsMenu.js ^
     js/worldmap/shop.js ^
     js/worldmap/collisions.js ^
+    js/worldmap/cutsceneParser.js ^
     js/worldmap/entityHelpers.js ^
     js/worldmap/entities.js ^
-    js/worldmap/newentities.js ^
     js/playerstats/pausemenu.js ^
     js/playerstats/viewinventory.js ^
     js/playerstats/equipment.js ^

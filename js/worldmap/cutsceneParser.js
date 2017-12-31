@@ -83,24 +83,31 @@ var CommandParser = {
                 case "PLANIM": CommandParser.Parse_BasicPlayerFrame(actSuffix.split(",")); break;
                 case "SETDIR": if(isPlayer) { target.playerDir = parseInt(actSuffix); } else { target.dir = parseInt(actSuffix); } break;
                 case "TEXT": CommandParser.Parse_Text(actSuffix.split(",")); break;
+                case "BLACKTEXT": CommandParser.Parse_BlackText(actSuffix); break;
                 case "ANIMSTATE": CommandParser.Parse_ShiftsAndFPS(target, JSON.parse(actSuffix)); break;
                 case "ISMOVING": target.moving = (actSuffix === "true"); break;
                 case "CLEARTEXT": gfx.clearSome(["menuA", "menutext"]);break;
                 case "GO2": CommandParser.Parse_Transition(JSON.parse(actSuffix)); break;
                 case "VISIBLE": target.visible = (actSuffix === "true"); break;
+                case "SOLID": target.solid = (actSuffix === "true"); break;
                 case "CLEARTARGET": worldmap.clearTarget(); break;
+                case "PUSHCLEAREDTARGET": player.clearedEntities.push(actSuffix); break;
                 case "SETTARGET": game.target = target; break;
                 case "END": iHandler.state.done = true; break;
                 case "GIVE": var a = actSuffix.split(","); player.increaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
                 case "TAKE": var a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
                 case "SHIFTY": target.anim.shiftY(parseInt(actSuffix)); break;
-                case "COMPLETEQUEST": player.questsCleared.push(actSuffix); break;
+                case "COMPLETEQUEST": quests.completeQuest(actSuffix); break;
                 case "STARTQUEST": player.activeQuests[actSuffix] = 1; break;
+                case "SETQUEST": var args = actSuffix.split(","); player.activeQuests[args[0]] = args[1]; break;
                 case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
                 case "SETSTATE": iHandler.state.idx = parseInt(actSuffix); break;
                 case "MONEY": player.monies += parseInt(actSuffix); break;
                 case "LEVELUP": player.addExp(player.nextExp); player.levelUp(); break;
                 case "QUIT": iHandler.state.done = true; worldmap.finishDialog(); break;
+                case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
+                case "CLEARINTERACT": target.interact = undefined; break;
+                case "SETTARGETTONOTHING": game.target = null; break;
             }
         }
     },
@@ -109,8 +116,13 @@ var CommandParser = {
         if(args[4] !== undefined) { target.moving = args[4]; }
     },
     Parse_Transition: function(args) {
-        game.transition(game.currentInputHandler, worldmap, { init: { x: args[1],  y: args[2] }, map: args[0] });
+        if(args[3] === undefined) {
+            game.transition(game.currentInputHandler, worldmap, { init: { x: args[1],  y: args[2] }, map: args[0] });
+        } else {
+            game.transition(game.currentInputHandler, worldmap, { init: { x: args[1],  y: args[2] }, map: args[0], postCombat: args[3] });
+        }
     },
+    Parse_BlackText: function(args) { worldmap.writeText(args, undefined, undefined, undefined, true); },
     Parse_Text: function(args) {
         var text = args.splice(0, 1)[0];
         if(text.indexOf("(") >= 0) {
@@ -139,10 +151,10 @@ var CommandParser = {
     Parse_Movement: function(target, isPlayer, moveData) {
         var dx = 0; var dy = 0;
         if(moveData[0] === "y") {
-            moveData = parseInt(moveData.substring(1));
+            moveData = parseFloat(moveData.substring(1));
             dy = (moveData > target.pos.y) ? 1 : -1;
         } else {
-            moveData = parseInt(moveData.substring(1));
+            moveData = parseFloat(moveData.substring(1));
             dx = (moveData > target.pos.x) ? 1 : -1;
         }
         iHandler.state.activeAnim = { target: target, isPlayer: isPlayer, dx: dx, dy: dy, dest: moveData };
@@ -163,6 +175,177 @@ var CommandParser = {
 };
 
 var SpecialFunctions = {
+    "SETUPJEFF": function() {
+        worldmap.playerDir = 0;
+        worldmap.waitForAnimation = true;
+        player.activeQuests["gotTire"] = 1;
+        player.lastInn = "fakefarm";
+        worldmap.importantEntities["FarmerJeff"].dir = 2;
+        worldmap.importantEntities["FarmerJeff"].pos = { x: worldmap.pos.x, y: 25 };
+        worldmap.importantEntities["FarmerJeff"].visible = true;
+        worldmap.importantEntities["FarmerJeff"].moving = true;
+    },
+    "ENTERBARN": function() {
+        worldmap.importantEntities["barnCover"].visible = false;
+        worldmap.forceEndDialog = true;
+        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
+        worldmap.finishDialog();
+    },
+    "EXITBARN": function() {
+        worldmap.importantEntities["barnCover"].visible = true;
+        worldmap.forceEndDialog = true;
+        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+        worldmap.finishDialog();
+    },
+    "FIXTIRE": function() {
+        worldmap.writeText("bustedTruck1");
+        game.target.anim.shiftY(0);
+        game.target.interact = Cutscene("truck");
+    },
+    "MOWER0": function() {
+        if(player.hasQuest("fakeFarm") || player.completedQuest("fakeFarm")) { worldmap.writeText("mower" + Math.floor(Math.random() * 2)); }
+        else { worldmap.writeText("lawnmower"); iHandler.state.done = true; }
+    },
+    "MOWER1": function() {
+        var enemies = ["lawnmower"];
+        if(Math.random() < 0.4) { enemies.push("lawnmower"); }
+        if(Math.random() < 0.3) { enemies.push("lawnmower"); }
+        if(Math.random() < 0.1) { enemies.push("piggun"); }
+        combat.startBattle(enemies);
+    },
+    "HOTBOXBEAT": function() {
+        worldmap.importantEntities["MrShocky"].pos = { x: -1, y: -1 };
+        worldmap.importantEntities["MrShocky"].moving = false;
+        player.clearedEntities.push("MrShocky");
+        player.activeQuests["fakeFarm"] = 2;
+        worldmap.refreshMap();
+        worldmap.writeText("hotbox3");
+    },
+    "UNPLUGOUTLET": function() {
+        game.target.anim.shiftY(13);
+        worldmap.importantEntities["MrShocky"].pos = { x: -1, y: -1 };
+        worldmap.importantEntities["MrShocky"].moving = false;
+        player.clearedEntities.push("MrShocky");
+        worldmap.importantEntities["FarmTV"].moving = false;
+        worldmap.importantEntities["FarmTV"].anim.shiftY(3);
+        player.activeQuests["fakeFarm"] = 1;
+        worldmap.refreshMap();
+        worldmap.writeText("farmTVunplug2");
+    },
+    "FARMTVEND": function() {
+        worldmap.writeText("farmTV5");
+        game.target.pos = { x: -1, y: -1 };
+        player.activeQuests["fakeFarm"] = 0;
+        for(var i = 0; i < worldmap.entities.length; i++) {
+            if(worldmap.entities[i].changeType === undefined) { continue; }
+            switch(worldmap.entities[i].changeType) {
+                case 0:
+                    worldmap.entities[i].interact = undefined;
+                    worldmap.entities[i].solid = false;
+                    worldmap.entities[i].visible = false;
+                    break;
+                case 1:
+                    var p = worldmap.entities[i].pos;
+                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 9, 0);
+                    break;
+                case 2:
+                    var p = worldmap.entities[i].pos;
+                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 4, p.y, 4, 0, 1);
+                    break;
+                case 3:
+                    var p = worldmap.entities[i].pos;
+                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 4, 0);
+                    break;
+                case 4:
+                    var p = worldmap.entities[i].pos;
+                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 7, p.y, 7, 0, 1);
+                    break;
+                case 5:
+                    var p = worldmap.entities[i].pos;
+                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 11, 0);
+                    break;
+                case 6:
+                    var p = worldmap.entities[i].pos;
+                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 11, p.y, 11, 0, 1);
+                    break;
+                case 7:
+                    worldmap.entities[i].solid = true;
+                    worldmap.entities[i].visible = true;
+                    break;
+            }
+        }
+    },
+    "KELPDEAD": function() {
+        player.clearedEntities.push("KelpBoy");
+        player.activeQuests["kelpBoy"] = "deadass";
+        if(worldmap.importantEntities["KelpBoy"] !== undefined) {
+            worldmap.importantEntities["KelpBoy"].solid = false;
+            worldmap.importantEntities["KelpBoy"].visible = false;
+            worldmap.importantEntities["KelpBoy"].interact = undefined;
+        }
+        worldmap.refreshMap();
+        worldmap.writeText("vaseWon0");
+    },
+    "SEAHELP0": function() {
+        worldmap.playerDir = 0;
+        worldmap.importantEntities["slt"].visible = true;
+        worldmap.importantEntities["smt"].visible = true;
+        worldmap.importantEntities["smt"].pos.y = 3;
+        worldmap.importantEntities["srt"].visible = true;
+        worldmap.refreshMap();
+        worldmap.writeText("smD5");
+    },
+    "SEAHELP1": function() {
+        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+            var e = worldmap.entities[i].name;
+            if(e.indexOf("H_") === 0) { 
+                player.clearedEntities.push(e);
+                worldmap.entities.splice(i, 1);
+            }
+        }
+        worldmap.refreshMap();
+        worldmap.writeText("smD6");
+    },
+    "DEADFISH": function() {
+        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+            var e = worldmap.entities[i].name;
+            if(e.indexOf("SeaCreature") === 0) { 
+                player.clearedEntities.push(e);
+                worldmap.entities.splice(i, 1);
+            }
+        }
+        worldmap.refreshMap();
+        if(player.hasQuest("getHeart")) {
+            player.activeQuests["getHeart"] = "heart";
+        } else {
+            player.activeQuests["getHeart"] = "weirdheart";
+        }
+        worldmap.writeText("bworkerA1");
+    },
+    "CONSTWORKWIN": function() {
+        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+            var e = worldmap.entities[i].name;
+            if(e.indexOf("H_") === 0 || e.indexOf("Worker") >= 0) { 
+                player.clearedEntities.push(e);
+                worldmap.entities.splice(i, 1);
+            }
+        }
+        worldmap.refreshMap();
+        quests.completeQuest("helpSeaMonster");
+        quests.completeQuest("getHeart");
+        worldmap.writeText("bworkerB5");
+    },
+    "CONSTWORKFIGHT": function() {
+        worldmap.writeText("bworkerMad6");
+        player.activeQuests["helpSeaMonster"] = "gotEgg";
+        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+            var e = worldmap.entities[i].name;
+            if(e.indexOf("Worker") >= 0) { 
+                player.clearedEntities.push(e);
+                worldmap.entities.splice(i, 1);
+            }
+        }
+    },
     "SEEDSHOT": function() { player.health -= 2; game.target.hasShot = 5; },
     "SEEDSHOTKILL": function() {
         player.health = player.maxhealth;
@@ -179,6 +362,65 @@ var SpecialFunctions = {
             }
         }
         game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
+    },
+    "TRUCKSTART": function() {
+        var items = specialtyHelpers.getTruckOptions();
+        if(items.length === 1) { worldmap.writeText("truck.none"); iHandler.state.done = true; }
+        else { worldmap.writeText("truck.where", items); }
+    },
+    "TRUCKNEXT": function(idx) {
+        switch(specialtyHelpers.getTruckOptions()[idx]) {
+            case "truck.fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm", playerDir: 2 }); break;
+            case "truck.home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 7 }, map: "producestand", playerDir: 2 }); break;
+            case "truck.bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge", playerDir: 2 }); break;
+            case "truck.city":
+                if(player.completedQuest("gotTire")) {
+                    game.transition(game.currentInputHandler, worldmap, { init: { x: 52,  y: 50 }, map: "southcity", playerDir: 2 });
+                } else {
+                    game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, playerDir: 0, map: "fakefarm", stayBlack: true });
+                }
+                break;
+        }
+        iHandler.state.done = true;
+        worldmap.finishDialog();
+    },
+    "CROUTONSTART": function() {
+        var items = specialtyHelpers.getCroutonItems();
+        if(items.length === 0) { worldmap.writeText("arf3"); iHandler.state.done = true; }
+        else { worldmap.writeText("arf4", items); }
+    },
+    "CROUTONNEXT": function(idx) {
+        switch(specialtyHelpers.getCroutonItems()[idx]) {
+            case "arf.spear": worldmap.writeText("arf.spear0"); iHandler.state.idx = 6; break;
+            case "arf.net": player.decreaseItem("net"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
+            case "arf.bignet": player.decreaseItem("bignet"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
+            case "arf.metalrod": player.decreaseItem("metalrod"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
+            case "arf.ultrarod": player.decreaseItem("ultrarod"); worldmap.writeText("arf.ultra0"); iHandler.state.idx = 9; break;
+            case "lime.nope": worldmap.writeText("arf.none"); iHandler.state.done = true; break;
+        }
+    },
+    "PIRATESTART": function() {
+        var items = specialtyHelpers.getDowelItems();
+        if(items.length === 0) { worldmap.writeText("pirateMonkW"); iHandler.state.done = true; }
+        else { worldmap.writeText("pirateMonkH", items); }
+    },
+    "PIRATENEXT": function(idx) {
+        switch(specialtyHelpers.getDowelItems()[idx]) {
+            case "pirateMonkC5": worldmap.writeText("pirateMonkG1"); iHandler.state.idx = 10; break; // gmocorn
+            case "rap.rice": player.decreaseItem("rice"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC4": player.decreaseItem("chestnut"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC3": player.decreaseItem("shortgrain"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC2": player.decreaseItem("blackrice"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC1": player.decreaseItem("arborio"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "lime.nope": worldmap.writeText("pirateMonkNo"); iHandler.state.done = true; break;
+        }
+    },
+    "PIRATETREASURE": function() {
+        game.target.open = true;
+        game.target.anim.shiftY(5);
+        player.increaseItem("ultrarod", 4);
+        quests.completeQuest("seamonkey");
+        worldmap.writeText("chestUnlock3");
     },
     "RAPSTART": function() {
         var items = specialtyHelpers.getRapItems();

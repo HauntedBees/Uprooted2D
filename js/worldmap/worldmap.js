@@ -43,9 +43,11 @@ var worldmap = {
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {
             game.target = targetToAutoplay;
-            game.target.interact[0](0, game.target);
-            worldmap.toggleMovement(false);
-            return;
+            if(game.target !== null && game.target.interact !== undefined) {
+                game.target.interact[0](0, game.target);
+                worldmap.toggleMovement(false);
+                return;
+            }
         }
         worldmap.toggleMovement(true);
         if(worldmap.angryBees) {
@@ -85,11 +87,13 @@ var worldmap = {
             var isBlocked = false;
             if(Math.round(newPos.x) == Math.round(worldmap.pos.x) && Math.round(newPos.y) == Math.round(worldmap.pos.y) && e.interact !== undefined) {
                 isBlocked = true;
-                worldmap.inDialogue = true;
-                worldmap.toggleMovement(false);
-                worldmap.dialogState = 0;
-                game.target = e;
-                if(e.interact[0](0, e)) { worldmap.finishDialog(); }
+                if(!e.onlyActiveInteracts) {
+                    worldmap.inDialogue = true;
+                    worldmap.toggleMovement(false);
+                    worldmap.dialogState = 0;
+                    game.target = e;
+                    if(e.interact[0](0, e)) { worldmap.finishDialog(); }
+                }
             }
             if(isBlocked) { continue; }
             worldmap.entities[i].pos = newPos;

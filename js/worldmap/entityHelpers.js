@@ -16,69 +16,40 @@ var specialtyHelpers = {
         if(items.length > 0) { items.push("lime.nope"); }
         return items;
     },
-    storedDowelChoice: "",
     getDowelItems: function() {
         var items = [];
         if(player.hasItem("gmocorn")) { items.push("pirateMonkC5"); }
-        if(player.hasItem("rice")) { items.push("rap_rice"); }
+        if(player.hasItem("rice")) { items.push("rap.rice"); }
         if(player.hasItem("chestnut")) { items.push("pirateMonkC4"); }
         if(player.hasItem("shortgrain")) { items.push("pirateMonkC3"); }
         if(player.hasItem("blackrice")) { items.push("pirateMonkC2"); }
         if(player.hasItem("arborio")) { items.push("pirateMonkC1"); }
-        if(items.length > 0) { items.push("lime_nope"); }
+        if(items.length > 0) { items.push("lime.nope"); }
         return items;
     },
-    storedCroutonChoice: "",
     getCroutonItems: function() {
         var items = [];
-        if(player.hasItem("spear")) { items.push("arf_spear"); }
-        if(player.hasItem("net")) { items.push("arf_net"); }
-        if(player.hasItem("bignet")) { items.push("arf_bignet"); }
-        if(player.hasItem("metalrod")) { items.push("arf_metalrod"); }
-        if(player.hasItem("ultrarod")) { items.push("arf_ultrarod"); }
-        if(items.length > 0) { items.push("lime_nope"); }
+        if(player.hasItem("spear")) { items.push("arf.spear"); }
+        if(player.hasItem("net")) { items.push("arf.net"); }
+        if(player.hasItem("bignet")) { items.push("arf.bignet"); }
+        if(player.hasItem("metalrod")) { items.push("arf.metalrod"); }
+        if(player.hasItem("ultrarod")) { items.push("arf.ultrarod"); }
+        if(items.length > 0) { items.push("lime.nope"); }
         return items;
     },
     getTruckOptions: function() {
         var options = [];
-        if(worldmap.mapName !== "producestand") { options.push("truck_home"); }
+        if(worldmap.mapName !== "producestand") { options.push("truck.home"); }
         for(var i = 0; i < player.questsCleared.length; i++) {
             switch(player.questsCleared[i]) {
-                case "researchLab": if(worldmap.mapName !== "bridge") { options.push("truck_bridge"); } break;
-                case "gotTire": if(worldmap.mapName !== "fakefarm") { options.push("truck_fake"); } break;
-                case "helpSeaMonster": if(worldmap.mapName !== "outerCity") { options.push("truck_city"); } break;
+                case "researchLab": if(worldmap.mapName !== "bridge") { options.push("truck.bridge"); } break;
+                case "gotTire": if(worldmap.mapName !== "fakefarm") { options.push("truck.fake"); } break;
+                case "helpSeaMonster": if(worldmap.mapName !== "outerCity") { options.push("truck.city"); } break;
             }
         }
-        options.push("truck_nm");
+        options.push("truck.nm");
         return options;
-    },
-    truckArray: [
-        function() {
-            var options = specialtyHelpers.getTruckOptions();
-            if(options.length === 1) {
-                worldmap.writeText("truck_none");
-                worldmap.forceEndDialog = true;
-                return;
-            }
-            worldmap.writeText("truck_where", options);
-        },
-        function(i) {
-            var selOption = specialtyHelpers.getTruckOptions()[i];
-            switch(selOption) {
-                case "truck_fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm", playerDir: 2 }); return;
-                case "truck_home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 6 }, map: "producestand", playerDir: 2 }); return;
-                case "truck_bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge", playerDir: 2 }); return;
-                case "truck_city":
-                    if(player.completedQuest("gotTire")) {
-                        game.transition(game.currentInputHandler, worldmap, { init: { x: 52,  y: 50 }, map: "southcity", playerDir: 2 });
-                    } else {
-                        game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, playerDir: 0, map: "fakefarm", stayBlack: true });
-                    }
-                    break;
-                default: worldmap.finishDialog(); return;
-            }
-        }
-    ]
+    }
 };
 function GetSleep(time) {
     return function() {
@@ -297,46 +268,14 @@ var enemyMetadata = {
     mouse: { interactname: "mouse", dialogMax: 3, enemies: ["mouse"], min: 2, max: 4, sy: 5, sheetlen: 2 },
     sqorl: { interactname: "sqorl", dialogMax: 4, enemies: ["sqorl", "sqorl", "sqorl", "mouse"], min: 1, max: 3, sy: 5, sheetlen: 2 },
     turky: { interactname: "turky", dialogMax: 3, enemies: ["turky"], min: 1, max: 1, sy: 7 },
-    robo2: { interactname: "research", dialogMax: 5, enemies: ["robo2", "robo", "robo"], min: 1, max: 2, sy: 4 }
+    robo2: { interactname: "research", dialogMax: 5, enemies: ["robo2", "robo", "robo"], min: 1, max: 2, sy: 4 },
+    fish: { interactname: "fish", dialogMax: 3, enemies: ["fishFace", "fishFace", "fishFace", "seaMonk"], min: 1, max: 4, sy: 8, sheetlen: 2 },
+    smonk: { interactname: "seamonk", dialogMax: 8, enemies: ["seaMonk"], min: 1, max: 3, sy: 8, sheetlen: 2 },
+    golem: { interactname: "golem", dialogMax: 1, enemies: ["golem"], min: 1, max: 1, sy: 12, noChange: true },
+    piggn: function(ct) { return { interactname: "pig", dialogMax: 1, enemies: ["piggun", "piggun", "piggun", "chickBot"], min: 2, max: 4, sy: 10, changeType: ct, sheetlen: 2, noChange: true } },
+    chick: function(ct) { return { interactname: "chickbot", dialogMax: 3, enemies: ["chickBot"], min: 1, max: 3, sy: 10, changeType: ct } },
+    mower: function(ct) { return { sy: 10, noChange: true, changeType: ct, sheetlen: 2, visible: false, inside: true } }
 };
-// To Deprecate
-var commonInteractArrays = {
-    chick: CreateCommonInteractArray("chickbot", 3, ["chickBot"], 1, 3),
-    piggn: CreateCommonInteractArray("pig", 1, ["piggun", "piggun", "piggun", "chickBot"], 2, 4),
-    golem: CreateCommonInteractArray("golem", 1, ["golem"], 1, 1),
-    smonk: CreateCommonInteractArray("seamonk", 8, ["seaMonk", "seaMonk", "seaMonk"], 1, 4),
-    fish: CreateCommonInteractArray("fish", 3, ["fishFace", "fishFace", "fishFace", "fishFace", "seaMonk"], 1, 4),
-    turky: CreateCommonInteractArray("turky", 3, ["turky"], 1, 1),
-    mower: [
-        function() {
-            if(player.hasQuest("fakeFarm") || player.completedQuest("fakeFarm")) {
-                worldmap.writeText("mower" + Math.floor(Math.random() * 2));
-            } else {
-                worldmap.writeText("lawnmower");     
-                worldmap.forceEndDialog = true;           
-            }
-        },
-        function() {
-            var enemies = ["lawnmower"];
-            if(Math.random() < 0.4) { enemies.push("lawnmower"); }
-            if(Math.random() < 0.3) { enemies.push("lawnmower"); }
-            if(Math.random() < 0.1) { enemies.push("piggun"); }
-            combat.startBattle(enemies);
-        }
-    ]
-};
-function CreateCommonInteractArray(name, dialogMax, enemies, min, max) {
-    return [
-        function() { worldmap.writeText(name + Math.floor(Math.random() * dialogMax)); },
-        function() {
-            var numEnemies = min + Math.floor(Math.random() * (max - min));
-            var actualEnemies = [enemies[0]];
-            while(--numEnemies > 0) { actualEnemies.push(enemies[Math.floor(Math.random() * enemies.length)]); }
-            combat.startBattle(actualEnemies);
-        }
-    ];
-};
-// End To Deprecate
 var commonMovementDatas = {
     robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 },  { x: x, y: 8, dx: 0, dy: -1 } ] } },
     rectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 

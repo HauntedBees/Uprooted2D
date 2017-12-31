@@ -112,7 +112,7 @@ var stores = {
             { product: "!wiSickle", price: 50, type: "equipment" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: true,
-        opening: "cwk_co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "cwk_leave", notEnough: "s.notenough", purchased: "s.cpurch"
+        opening: "cwk.co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "cwk.leave", notEnough: "s.notenough", purchased: "s.cpurch"
     },
     // Area 3: Fake Farm
     "upgrade2": {

@@ -283,7 +283,7 @@ var combat = {
         } else {
             combat.wrapUpCombat();
             var postCombat = (game.target !== null ? game.target.postBattle : undefined);
-            worldmap.clearTarget();
+            if(game.target !== null && !game.target.dontClearTarget) { worldmap.clearTarget(); }
             clearInterval(combat.charAnimIdx);
             game.transition(combat.inbetween, worldmap, {
                 init: worldmap.pos,

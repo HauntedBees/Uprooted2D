@@ -46,6 +46,7 @@ worldmap.title = {
                     //init: { x: 12,  y: 4 }, map: "farm" // by boss
                     //init: { x: 2,  y: 1 }, map: "farm" // by beehive
                     //init: { x: 19, y: 5}, map: "firstvillage" // top of village
+                    //init: { x: 3, y: 7 }, map: "firstvillage" // by fixture shop
                     //init: { x: 44,  y: 49 }, map: "forest" // start of forest
                     //init: { x: 11,  y: 60 }, map: "forest" // by boss turkey
                     //init: { x: 82,  y: 25 }, map: "forest" // by rabbit
@@ -54,15 +55,16 @@ worldmap.title = {
                     //init: { x: 4, y: 37}, map: "belowvillage" // by beehive
                     //init: { x: 20, y: 19}, map: "researchfacility" // by seed shooters
                     //init: { x: 27, y: 8}, map: "researchfacility" // by RAPBATTLE
+                    //init: { x: 7, y: 3}, map: "researchfacility" // by boss
+                    //init: { x: 27, y: 5 }, map: "bridge" // next to truck
+                    //init: { x: 41, y: 20 }, map: "underwater" // by entrance
+                    //init: { x: 19, y: 19 }, map: "underwater" // by Sea Monster
+                    //init: { x: 30, y: 10 }, map: "underwater" // by Pirate Sea Monk
+                    //init: { x: 47, y: 26 }, map: "underwater" // by Kelp Boy
+                    //init: { x: 5, y: 3 }, map: "underwater" // next to fish school
+                    //init: { x: 24.75, y: 35.5 }, map: "fakefarm" // by truck
                     //init: { x: 44, y: 44 }, map: "southcity" // by Skumpy's
                     //init: { x: 15, y: 36 }, map: "southcity" // by mob base
-                    //init: { x: 5, y: 5 }, map: "fakefarm"
-                    //init: { x: 24.75, y: 35.5 }, map: "fakefarm"
-                    //init: { x: 5, y: 3 }, map: "underwater"
-                    //init: { x: 41, y: 20 }, map: "underwater"
-                    //init: { x: 27, y: 5 }, map: "bridge"
-                    //init: { x: 3, y: 7 }, map: "firstvillage"
-                    //init: { x: 103,  y: 65 }, map: "forest"
                 });
             case 1: return game.innerTransition(this, pausemenu.savemenu, { saving: false }); // this is probably wrong
             case 2: return game.innerTransition(this, worldmap.optionsMenu);
