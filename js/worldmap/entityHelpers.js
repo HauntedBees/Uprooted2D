@@ -73,7 +73,7 @@ function FinishAnim() {
 }
 function SwitchMap(name, x, y, row, column, newx, newy, map) {
     return {
-        name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row,
+        name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row, isMapSwitch: true, destination: map,
         interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map }); } ]
     }
 };
@@ -95,6 +95,7 @@ function EnterShop(name, x, y, shop) {
     return { 
         name: name, 
         solid: false, pos: {x: x, y: y}, 
+        isShop: true, shopName: shop,
         interact: [ function() { game.transition(game.currentInputHandler, worldmap.shop, shop); return true; } ]
     };
 };
@@ -103,8 +104,8 @@ function GetInvisibleEntity(name, interact, additional) {
     return Object.assign(res, additional);
 };
 function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: [ GetSpeak(text) ] }; };
-function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false}); };
-function GetBeehive(hiveId, x, y, beetype) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true }); };
+function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false, boring: true}); };
+function GetBeehive(hiveId, x, y, beetype) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true }); };
 function ToggleRFDoors(type) {
     for(var i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
@@ -235,13 +236,13 @@ function PushRock() {
     }, 10);
 }
 function GetRock(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 12, 0, undefined, [PushRock], { noChange: true, pushDir: dir, sy: 7, killid: wfid, initx: x, inity: y });
+    return new GetCommonEntity(name, x, y, 12, 0, undefined, [PushRock], { noChange: true, pushDir: dir, sy: 7, killid: wfid, initx: x, inity: y, isRock: true });
 }
 function GetWaterfall(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 18, dir, undefined, [EnterWaterfall], { moving: true, dontDoThat: true, solid: false, wfid: wfid });
+    return new GetCommonEntity(name, x, y, 18, dir, undefined, [EnterWaterfall], { moving: true, dontDoThat: true, solid: false, wfid: wfid, isWaterfall: true, boring: (name.replace("waterfall" + wfid, "") !== "0") });
 }
 function GetWaterfallEnd(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: 4, sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid });
+    return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: 4, sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
 }
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);

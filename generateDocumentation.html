@@ -55,6 +55,8 @@
             label { font-weight: bold }
             .treeFill { display: inline-block; position: relative; width: 32px; height: 32px }
             .treeFill > span { position: absolute; top: 0; left: 0 }
+            .mapContainer, .mapContainer > .sp_final { position: relative }
+            .mapContainer > .mapDetail { position: absolute }
         </style>
         <title>Farming Fantasy Guide</title>
     </head>
@@ -65,12 +67,31 @@
                 <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
                     <ul id="sidebar" class="nav nav-pills flex-column">
                         <li class="nav-item"><a class="nav-link" href="#top">Return to Top</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#maps">Levels</a></li>
                         <li class="nav-item"><a class="nav-link" href="#crops">Crops</a></li>
                         <li class="nav-item"><a class="nav-link" href="#enemies">Enemies</a></li>
                     </ul>
                 </nav>
                 <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
                     <h1>Farming Fantasy<a name="top"></a></h1>
+                    <div id="maps">
+                        <h2>Levels<a name="maps"></a></h2>
+                        <div class="content row">
+                            <div id="mapTemplate" class="card template">
+                                <div class="text-center mapContainer"><img src="" class="sp_final" /></div>
+                                <div class="text-center font-weight-bold txt_name"></div>
+                                <div class="row narrow">
+                                    <div class="col-6 left"></div>
+                                    <div class="col-6 right"></div>
+                                </div>
+                                <div class="row wide">
+                                    <div class="col-4 left"></div>
+                                    <div class="col-4 mid"></div>
+                                    <div class="col-4 right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="crops">
                         <h2>Crops<a name="crops"></a></h2>
                         <div class="content row">
@@ -235,6 +256,7 @@
                     $crops.append($template);
                 }
 
+                // Enemy Generation
                 var $enemies = $("#enemies > .content");
                 for(var i = 0; i < debug.AllEnemies.length; i++) {
                     var $template = $("#enemyTemplate").clone();
@@ -287,6 +309,139 @@
                     }
 
                     $enemies.append($template);
+                }
+
+                // Level Generation
+                var $maps = $("#maps > .content");
+                var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm"]; // forest is big
+                var smallMaps = ["farm"];
+                var namesToIgnore = ["Sign"];
+                for(var i = 0; i < debugAllMaps.length; i++) {
+                    var $template = $("#mapTemplate").clone();
+                    $template.removeClass("template").removeAttr("id");
+                    var mapName = debugAllMaps[i];
+                    var mapData = mapentities[mapName];
+                    $template.find(".sp_final").attr("src", "guide_assets/map_" + mapName + ".png");
+                    $template.find(".txt_name").text(mapName);
+
+                    var $mapDad = $template.find(".mapContainer");
+                    var counts = {};
+                    var existingObjs = {};
+                    var lastObj = { name: "" };
+                    var mapObjects = [];
+                    for(var j = 0; j < mapData.length; j++) {
+                        var obj = mapData[j];
+                        var type = "?";
+                        var badgeclass = "badge-info";
+                        if(obj.name === undefined) { continue; }
+                        if(obj.name.replace("R", "L") === lastObj.name) { continue; }
+                        lastObj = obj;
+                        if(obj.name.indexOf("H_") === 0) { continue; }
+                        if(namesToIgnore.indexOf(obj.name) >= 0) { continue; }
+                        if(obj.pos.x < 0 && obj.pos.y < 0) { continue; }
+                        if(obj.boring === true || obj.jumbo === true) { continue; }
+                        if(obj.name.indexOf("waterfall") === 0 && obj.name[obj.name.length - 1] !== "0") { continue; }
+                        var dispCount = "";
+                        if(obj.isBeehive === true) {
+                            type = "Beehive";
+                            badgeclass = "badge-warning";
+                            dispCount = "B";
+                        } else if(obj.enemies !== undefined) {
+                            type = "Enemy";
+                            badgeclass = "badge-danger";
+                        } else if(obj.isMapSwitch === true) {
+                            type = "Move";
+                            badgeclass = "badge-dark";
+                        } else if(obj.isShop === true) {
+                            type = "Shop";
+                            badgeclass = "badge-success";
+                        } else if(obj.isWaterfall === true) {
+                            type = "Waterfall";
+                            badgeclass = "badge-primary";
+                            dispCount = "W";
+                        } else if(obj.isRock === true) {
+                            type = "Rock";
+                            badgeclass = "badge-info";
+                            dispCount = "R";
+                        } else if(obj.name === "AFuckingTruckL") {
+                            type = "Truck";
+                            badgeclass = "badge-dark";
+                            dispCount = "T";
+                        } else {
+                            type = "NPC";
+                            badgeclass = "badge-info";
+                        }
+                        if(type === "?") { console.log(obj); continue; }
+                        var count = 1;
+                        if(counts[type] === undefined) {
+                            counts[type] = 2;
+                        } else {
+                            count = counts[type]++;
+                        }
+                        switch(type) {
+                            case "Beehive": mapObjects.push({ type: 0, num: count, badgeclass: badgeclass, text: "Beehive", disp: "B" }); break;
+                            case "Truck": mapObjects.push({ type: 1, num: count, badgeclass: badgeclass, text: "Truck", disp: "T" }); break;
+                            case "Move": mapObjects.push({ type: 2, num: count, badgeclass: badgeclass, text: obj.destination }); break;
+                            case "Shop": mapObjects.push({ type: 3, num: count, badgeclass: badgeclass, text: obj.shopName }); break;
+                            case "Enemy":
+                                if(existingObjs["enemy_" +  obj.interactname] === undefined) {
+                                    existingObjs["enemy_" +  obj.interactname] = count;
+                                    mapObjects.push({ type: 4, num: count, badgeclass: badgeclass, text: obj.interactname });
+                                } else {
+                                    count = existingObjs["enemy_" +  obj.interactname];
+                                    counts[type] = count + 1;
+                                }
+                                break;
+                            case "NPC": mapObjects.push({ type: 5, num: count, badgeclass: badgeclass, text: obj.name }); break;
+                            case "Waterfall":
+                                if(existingObjs["waterfall"] === undefined) {
+                                    existingObjs["waterfall"] = count;
+                                    mapObjects.push({ type: 6, num: 1, badgeclass: badgeclass, text: "Water Current", disp: "W" });
+                                }
+                                break;
+                            case "Rock":
+                                if(existingObjs["rock"] === undefined) {
+                                    existingObjs["rock"] = count;
+                                    mapObjects.push({ type: 7, num: 1, badgeclass: badgeclass, text: "Rock", disp: "R" });
+                                }
+                                break;
+                        }
+                        var $md = $("<div class='badge badge-pill " + badgeclass + " mapDetail'>" + (dispCount === "" ? count : dispCount) + "</div>");
+                        $md.css("top", (16 * obj.pos.y) + "px").css("left", (16 * obj.pos.x) + "px");
+                        $mapDad.append($md);
+                    }
+                    mapObjects = mapObjects.sort(function(x, y) {
+                        if(x.type < y.type) { return -1; }
+                        if(x.type > y.type) { return 1; }
+                        if(x.num < y.num) { return -1; }
+                        if(x.num > y.num) { return 1; }
+                        return 0;
+                    });
+
+                    var numCols = 2;
+                    if(smallMaps.indexOf(mapName) >= 0) {
+                        $template.find(".row.wide").remove();
+                    } else {
+                        $template.find(".row.narrow").remove();
+                        numCols = 3;
+                    }
+                    var breakPoint = mapObjects.length / numCols;
+                    var $l = $template.find(".left");
+                    var $m = $template.find(".mid");
+                    var $r = $template.find(".right");
+                    for(var j = 0; j < mapObjects.length; j++) {
+                        var obj = mapObjects[j];
+                        var $obj = $("<div><label><div class='badge badge-pill " + obj.badgeclass + "'>" + (obj.disp === undefined ? obj.num : obj.disp) + "</div></label> <span>" + obj.text + "</span></div>");
+                        if(j < breakPoint) {
+                            $l.append($obj);
+                        } else if(numCols === 3 && j < (breakPoint * 2)) {
+                            $m.append($obj);
+                        } else {
+                            $r.append($obj);
+                        }
+                    }
+
+                    $maps.append($template);
                 }
 
                 var generatedSections = [];
