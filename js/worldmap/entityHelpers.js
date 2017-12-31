@@ -154,7 +154,7 @@ function GetTreasureChest(name, x, y, contents) {
             }
             worldmap.writeText("closedchest", undefined, false, contentString);
         }
-    }], { sy: 4, open: false, contents: contents, noChange: true });
+    }], { sy: 4, open: false, contents: contents, noChange: true, isChest: true });
 }
 function GetItemDisplayName(name, plural) {
     var pluralSuf = plural ? "s" : "";
@@ -271,7 +271,7 @@ var enemyMetadata = {
     turky: { interactname: "turky", dialogMax: 3, enemies: ["turky"], min: 1, max: 1, sy: 7 },
     robo2: { interactname: "research", dialogMax: 5, enemies: ["robo2", "robo", "robo"], min: 1, max: 2, sy: 4 },
     fish: { interactname: "fish", dialogMax: 3, enemies: ["fishFace", "fishFace", "fishFace", "seaMonk"], min: 1, max: 4, sy: 8, sheetlen: 2 },
-    smonk: { interactname: "seamonk", dialogMax: 8, enemies: ["seaMonk"], min: 1, max: 3, sy: 8, sheetlen: 2 },
+    seamonk: { interactname: "seamonk", dialogMax: 8, enemies: ["seaMonk"], min: 1, max: 3, sy: 8, sheetlen: 2 },
     golem: { interactname: "golem", dialogMax: 1, enemies: ["golem"], min: 1, max: 1, sy: 12, noChange: true },
     piggn: function(ct) { return { interactname: "pig", dialogMax: 1, enemies: ["piggun", "piggun", "piggun", "chickBot"], min: 2, max: 4, sy: 10, changeType: ct, sheetlen: 2, noChange: true } },
     chick: function(ct) { return { interactname: "chickbot", dialogMax: 3, enemies: ["chickBot"], min: 1, max: 3, sy: 10, changeType: ct } },

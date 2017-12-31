@@ -57,7 +57,7 @@ var mapentities = {
     "farm": [
         SwitchMap("ExitAreaWest", 23, 12, false, true, 1, 20, "producestand"),
 
-        GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, Cutscene("bigBot"), { big: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
+        GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, Cutscene("bigBot"), { boss: true, big: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
         GetInvisibleEntity("PostBoss", Cutscene("bigBotW"), { storageKey: "PostBoss" }),
         
         GetBeehive("FarmHive", 3, 1),
@@ -235,7 +235,7 @@ var mapentities = {
 			GetCommonEntity("Robo3", 14, 7, 4, 2, GetStdMovement([ [14, 7, 3], [23, 7, 3], [23, 13, 2], [14, 13, 1], [14, 7, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
 			GetCommonEntity("Robo4", 16, 9, 4, 2, GetStdMovement([ [16, 9, 3], [21, 9, 3], [21, 11, 2], [16, 11, 1], [16, 9, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
 			GetCommonEntity("Robo25", 14, 1, 4, 2, GetStdMovement([ [14, 1, 3], [18, 1, 3], [18, 5, 2], [14, 5, 1], [14, 1, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
-			SwitchMap("ExitAreaSouth", 0, 37, true, false, 7.5, 19, "belowvillage"),
+			SwitchMap("ExitAreaSouth", 12, 37, true, false, 7.5, 19, "belowvillage"),
             SwitchMap("ExitAreaEast", 31, 2, false, false, 13, 15, "belowvillage"),
             
 			GetInvisibleEntity("SeedShotArea1", Cutscene("seedShot"), { pos: { x: 20, y: 16 }, hasShot: 0 }),
@@ -251,7 +251,7 @@ var mapentities = {
                 
             GetCommonEntity("RAPBATTLE", 28, 8, 11, 0, undefined, Cutscene("rap"), { noChange: true, sy: 7 }),
 
-            GetCommonEntity("Jeff", 7, 2, 0, 0, undefined, Cutscene("jeff"), { sy: 4, postBattle: "PostBoss2", noChange: true, failedInteract: Cutscene("jeffL") }),
+            GetCommonEntity("Jeff", 7, 2, 0, 0, undefined, Cutscene("jeff"), { sy: 4, boss: true, postBattle: "PostBoss2", noChange: true, failedInteract: Cutscene("jeffL") }),
             GetInvisibleEntity("PostBoss2", Cutscene("jeffW"), { storageKey: "PostBoss2" })
 		];
 		var doors = [
@@ -348,11 +348,11 @@ var mapentities = {
             GetCommonEntity("FishFace13", 10, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), Cutscene("enemy"), enemyMetadata.fish),
             GetCommonEntity("FishFace14", 8, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), Cutscene("enemy"), enemyMetadata.fish),
             GetCommonEntity("FishFace15", 6, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), Cutscene("enemy"), enemyMetadata.fish),
-            GetCommonEntity("SeaMonk1", 34, 18, 4, 2, commonMovementDatas.rectangle(34, 18, 0, 10), Cutscene("enemy"), enemyMetadata.smonk),
-            GetCommonEntity("SeaMonk2", 16, 24, 4, 2, commonMovementDatas.downrectangle(16, 24, 11, 2), Cutscene("enemy"), enemyMetadata.smonk),
-            GetCommonEntity("SeaMonk3", 31, 27, 4, 3, GetStdMovement([[31, 27, 0], [32, 27, 3], [32, 29, 2], [25, 29, 1], [25, 27, 0], [28, 27, 3], [28, 28, 2], [31, 28, 3]]), Cutscene("enemy"), enemyMetadata.smonk),
-            GetCommonEntity("SeaMonk4", 2, 9, 4, 2, commonMovementDatas.rectangle(2, 9, 1, 14), Cutscene("enemy"), enemyMetadata.smonk),
-            GetCommonEntity("SeaMonk5", 32, 9, 4, 2, commonMovementDatas.rectangle(32, 9, 0, 10), Cutscene("enemy"), enemyMetadata.smonk),
+            GetCommonEntity("SeaMonk1", 34, 18, 4, 2, commonMovementDatas.rectangle(34, 18, 0, 10), Cutscene("enemy"), enemyMetadata.seamonk),
+            GetCommonEntity("SeaMonk2", 16, 24, 4, 2, commonMovementDatas.downrectangle(16, 24, 11, 2), Cutscene("enemy"), enemyMetadata.seamonk),
+            GetCommonEntity("SeaMonk3", 31, 27, 4, 3, GetStdMovement([[31, 27, 0], [32, 27, 3], [32, 29, 2], [25, 29, 1], [25, 27, 0], [28, 27, 3], [28, 28, 2], [31, 28, 3]]), Cutscene("enemy"), enemyMetadata.seamonk),
+            GetCommonEntity("SeaMonk4", 2, 9, 4, 2, commonMovementDatas.rectangle(2, 9, 1, 14), Cutscene("enemy"), enemyMetadata.seamonk),
+            GetCommonEntity("SeaMonk5", 32, 9, 4, 2, commonMovementDatas.rectangle(32, 9, 0, 10), Cutscene("enemy"), enemyMetadata.seamonk),
 
             GetCommonEntity("ShipLeft", 16, 17, 1, 0, undefined, undefined, { big: true, sy: 1, boring: true }),
             GetCommonEntity("ShipMiddle", 18, 17, 1, 1, undefined, undefined, { big: true, sy: 1, boring: true }),

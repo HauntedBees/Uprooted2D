@@ -52,6 +52,7 @@
             .inline2 { margin-bottom: -3px }
             .template { display: none }
             .card { margin: 10px }
+            .txt_info { max-width: 360px }
             label { font-weight: bold }
             .treeFill { display: inline-block; position: relative; width: 32px; height: 32px }
             .treeFill > span { position: absolute; top: 0; left: 0 }
@@ -76,18 +77,42 @@
                     <h1>Farming Fantasy<a name="top"></a></h1>
                     <div id="maps">
                         <h2>Levels<a name="maps"></a></h2>
-                        <div class="content row">
-                            <div id="mapTemplate" class="card template">
-                                <div class="text-center mapContainer"><img src="" class="sp_final" /></div>
-                                <div class="text-center font-weight-bold txt_name"></div>
-                                <div class="row narrow">
-                                    <div class="col-6 left"></div>
-                                    <div class="col-6 right"></div>
+                        <div class="content">
+                            <div id="shopTemplate" class="card template text-center">
+                                <div class="font-weight-bold txt_name"></div>
+                                <div class="sell">Buys items for <span class="percent"></span>% price</div>
+                                <div class="inn"><span class="spriteTiny stsleep"></span> Can rest for <span class="price"></span>G.</div>
+                                <div class="wares"></div>
+                            </div>
+                            <div id="enemyTemplate" class="card template text-center">
+                                <div class="font-weight-bold txt_name"></div>
+                                <div><label>Amount:</label> <span class="txt_amount"></span></div>
+                                <div><label>Types:</label> <span class="txt_types"></span></div>
+                            </div>
+                            <div id="bossTemplate" class="card template text-center">
+                                <div class="font-weight-bold txt_name"></div>
+                            </div>
+                            <div id="specialTemplate" class="card template text-center">
+                                <div class="font-weight-bold txt_name"></div>
+                                <div class="txt_info"></div>
+                            </div>
+                            <div id="mapTemplate" class="row template">
+                                <div class="card">
+                                    <div class="mapContainer"><img src="" class="sp_final" /></div>
+                                    <div class="text-center font-weight-bold txt_name"></div>
+                                    <div class="row narrow">
+                                        <div class="col-6 left"></div>
+                                        <div class="col-6 right"></div>
+                                    </div>
+                                    <div class="row wide">
+                                        <div class="col-4 left"></div>
+                                        <div class="col-4 mid"></div>
+                                        <div class="col-4 right"></div>
+                                    </div>
                                 </div>
-                                <div class="row wide">
-                                    <div class="col-4 left"></div>
-                                    <div class="col-4 mid"></div>
-                                    <div class="col-4 right"></div>
+                                <div class="span2">
+                                    <label>Additional Details</label>
+                                    <div class="additionalDetails"></div>
                                 </div>
                             </div>
                         </div>
@@ -148,6 +173,7 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
         <script src="out.js"></script>
+        <script src="guide_assets/metadata.js"></script>
         <script type="text/javascript">
             var patternText = {};
             function SameSprites(a, b) { var aa = spriteData.names[a]; var bb = spriteData.names[b]; return (aa[0] === bb[0] && aa[1] === bb[1]); }
@@ -313,16 +339,14 @@
 
                 // Level Generation
                 var $maps = $("#maps > .content");
-                var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm"]; // forest is big
-                var smallMaps = ["farm"];
-                var namesToIgnore = ["Sign"];
                 for(var i = 0; i < debugAllMaps.length; i++) {
                     var $template = $("#mapTemplate").clone();
                     $template.removeClass("template").removeAttr("id");
                     var mapName = debugAllMaps[i];
                     var mapData = mapentities[mapName];
                     $template.find(".sp_final").attr("src", "guide_assets/map_" + mapName + ".png");
-                    $template.find(".txt_name").text(mapName);
+                    $template.find(".txt_name").text(mapNames[mapName]);
+                    var $details = $template.find(".additionalDetails");
 
                     var $mapDad = $template.find(".mapContainer");
                     var counts = {};
@@ -342,7 +366,37 @@
                         if(obj.boring === true || obj.jumbo === true) { continue; }
                         if(obj.name.indexOf("waterfall") === 0 && obj.name[obj.name.length - 1] !== "0") { continue; }
                         var dispCount = "";
-                        if(obj.isBeehive === true) {
+
+                        var special = DoSpecialProcessing(obj);
+                        if(special !== null) {
+                            type = special.type;
+                            badgeclass = special.badgeclass;
+                            dispCount = special.dispCount;
+                        } else if(obj.rfd === true) {
+                            type = "RFDoor";
+                            badgeclass = "badge-secondary";
+                            switch(obj.type) {
+                                case 0: dispCount = "R"; break;
+                                case 1: dispCount = "B"; break;
+                                case 2: dispCount = "G"; break;
+                            }
+                            dispCount += obj.initActive ? "O" : "X";
+                        } else if(obj.rf === true) {
+                            type = "RFButton";
+                            badgeclass = "badge-primary";
+                            switch(obj.type) {
+                                case 0: dispCount = "RB"; break;
+                                case 1: dispCount = "BB"; break;
+                                case 2: dispCount = "GB"; break;
+                            }
+                        } else if(obj.isChest === true) {
+                            type = "Treasure";
+                            badgeclass = "badge-warning";
+                        } else if(obj.boss === true) {
+                            type = "Boss";
+                            badgeclass = "badge-danger";
+                            dispCount = "X";
+                        } else if(obj.isBeehive === true) {
                             type = "Beehive";
                             badgeclass = "badge-warning";
                             dispCount = "B";
@@ -355,6 +409,7 @@
                         } else if(obj.isShop === true) {
                             type = "Shop";
                             badgeclass = "badge-success";
+                            $details.append(GetShopHTML(obj.shopName));
                         } else if(obj.isWaterfall === true) {
                             type = "Waterfall";
                             badgeclass = "badge-primary";
@@ -378,33 +433,89 @@
                         } else {
                             count = counts[type]++;
                         }
-                        switch(type) {
-                            case "Beehive": mapObjects.push({ type: 0, num: count, badgeclass: badgeclass, text: "Beehive", disp: "B" }); break;
-                            case "Truck": mapObjects.push({ type: 1, num: count, badgeclass: badgeclass, text: "Truck", disp: "T" }); break;
-                            case "Move": mapObjects.push({ type: 2, num: count, badgeclass: badgeclass, text: obj.destination }); break;
-                            case "Shop": mapObjects.push({ type: 3, num: count, badgeclass: badgeclass, text: obj.shopName }); break;
-                            case "Enemy":
-                                if(existingObjs["enemy_" +  obj.interactname] === undefined) {
-                                    existingObjs["enemy_" +  obj.interactname] = count;
-                                    mapObjects.push({ type: 4, num: count, badgeclass: badgeclass, text: obj.interactname });
-                                } else {
-                                    count = existingObjs["enemy_" +  obj.interactname];
-                                    counts[type] = count + 1;
-                                }
-                                break;
-                            case "NPC": mapObjects.push({ type: 5, num: count, badgeclass: badgeclass, text: obj.name }); break;
-                            case "Waterfall":
-                                if(existingObjs["waterfall"] === undefined) {
-                                    existingObjs["waterfall"] = count;
-                                    mapObjects.push({ type: 6, num: 1, badgeclass: badgeclass, text: "Water Current", disp: "W" });
-                                }
-                                break;
-                            case "Rock":
-                                if(existingObjs["rock"] === undefined) {
-                                    existingObjs["rock"] = count;
-                                    mapObjects.push({ type: 7, num: 1, badgeclass: badgeclass, text: "Rock", disp: "R" });
-                                }
-                                break;
+                        if(special !== null) {
+                            $details.append(GetSpecialHTML(obj));
+                            mapObjects.push(GetSpecialMapObject(obj));
+                        } else {
+                            switch(type) {
+                                case "Boss":
+                                    $details.append(GetBossHTML(obj.name));
+                                    mapObjects.push({ type: 4, num: 9999, badgeclass: badgeclass, text: GetEnemyName(obj.name), disp: "X" });
+                                    break;
+                                case "Beehive": mapObjects.push({ type: 0, num: count, badgeclass: badgeclass, text: "Beehive", disp: "B" }); break;
+                                case "Truck": mapObjects.push({ type: 1, num: count, badgeclass: badgeclass, text: "Truck", disp: "T" }); break;
+                                case "Move": mapObjects.push({ type: 2, num: count, badgeclass: badgeclass, text: "To " + mapNames[obj.destination] }); break;
+                                case "Shop": mapObjects.push({ type: 3, num: count, badgeclass: badgeclass, text: shopNames[obj.shopName] }); break;
+                                case "Treasure":
+                                    if(existingObjs["chest"] === undefined) {
+                                        existingObjs["chest"] = count;
+                                        mapObjects.push({ type: 11, num: count, badgeclass: badgeclass, text: "Treasure Chest", disp: "#" });
+                                    }
+                                    //$details.append(GetEnemyHTML(obj.interactname));
+                                    break;
+                                case "RFDoor":
+                                    if(existingObjs["rfdoor_" + obj.type + obj.initActive] === undefined) {
+                                        existingObjs["rfdoor_" + obj.type + obj.initActive] = count;
+                                        var name = " Door ";
+                                        var disp = "";
+                                        switch(obj.type) {
+                                            case 0: name = "Red" + name; disp = "R"; break;
+                                            case 1: name = "Blue" + name; disp = "B"; break;
+                                            case 2: name = "Green" + name; disp = "G"; break;
+                                        }
+                                        if(obj.initActive) {
+                                            name += "(Open)";
+                                            disp += "O";
+                                        } else {
+                                            name += "(Closed)";
+                                            disp += "X";
+                                        }
+                                        mapObjects.push({ type: 9, num: count, badgeclass: badgeclass, text: name, disp: disp });
+                                    } else {
+                                        count = existingObjs["rfdoor_" + obj.type + obj.initActive];
+                                        counts[type] = count + 1;
+                                    }
+                                    break;
+                                case "RFButton":
+                                    if(existingObjs["rfbtn_" + obj.type] === undefined) {
+                                        existingObjs["rfbtn_" + obj.type] = count;
+                                        var name = " Button";
+                                        var disp = "";
+                                        switch(obj.type) {
+                                            case 0: name = "Red" + name; disp = "RB"; break;
+                                            case 1: name = "Blue" + name; disp = "BB"; break;
+                                            case 2: name = "Green" + name; disp = "GB"; break;
+                                        }
+                                        mapObjects.push({ type: 8, num: count, badgeclass: badgeclass, text: name, disp: disp });
+                                    } else {
+                                        count = existingObjs["rfbtn_" + obj.type + obj.initActive];
+                                        counts[type] = count + 1;
+                                    }
+                                    break;
+                                case "Enemy":
+                                    if(existingObjs["enemy_" +  obj.interactname] === undefined) {
+                                        existingObjs["enemy_" +  obj.interactname] = count;
+                                        mapObjects.push({ type: 4, num: count, badgeclass: badgeclass, text: GetEnemyName(obj.interactname) });
+                                        $details.append(GetEnemyHTML(obj.interactname));
+                                    } else {
+                                        count = existingObjs["enemy_" +  obj.interactname];
+                                        counts[type] = count + 1;
+                                    }
+                                    break;
+                                case "NPC": mapObjects.push({ type: 5, num: count, badgeclass: badgeclass, text: obj.name }); break;
+                                case "Waterfall":
+                                    if(existingObjs["waterfall"] === undefined) {
+                                        existingObjs["waterfall"] = count;
+                                        mapObjects.push({ type: 6, num: 1, badgeclass: badgeclass, text: "Water Current", disp: "W" });
+                                    }
+                                    break;
+                                case "Rock":
+                                    if(existingObjs["rock"] === undefined) {
+                                        existingObjs["rock"] = count;
+                                        mapObjects.push({ type: 7, num: 1, badgeclass: badgeclass, text: "Rock", disp: "R" });
+                                    }
+                                    break;
+                            }
                         }
                         var $md = $("<div class='badge badge-pill " + badgeclass + " mapDetail'>" + (dispCount === "" ? count : dispCount) + "</div>");
                         $md.css("top", (16 * obj.pos.y) + "px").css("left", (16 * obj.pos.x) + "px");
@@ -419,12 +530,12 @@
                     });
 
                     var numCols = 2;
-                    if(smallMaps.indexOf(mapName) >= 0) {
+                    //if(smallMaps.indexOf(mapName) >= 0) {
                         $template.find(".row.wide").remove();
-                    } else {
+                    /*} else {
                         $template.find(".row.narrow").remove();
                         numCols = 3;
-                    }
+                    }*/
                     var breakPoint = mapObjects.length / numCols;
                     var $l = $template.find(".left");
                     var $m = $template.find(".mid");
