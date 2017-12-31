@@ -103,7 +103,7 @@ function GetSpecialHTML(obj) {
 }
 
 function GetEnemyHTML(enemyKey) {
-    var $template = $("#enemyTemplate").clone();
+    var $template = $("#innerEnemyTemplate").clone();
     $template.removeClass("template").removeAttr("id");
     $template.find(".txt_name").text(GetEnemyName(enemyKey));
 
