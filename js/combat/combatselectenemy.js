@@ -226,7 +226,7 @@ combat.selectTarget = {
                 var innerDamage = damage;
                 if(!criticalHit) { innerDamage = Math.max(1, innerDamage - target.def); }
                 if(target.addtlHitCheck !== undefined) {
-                    innerDamage = target.addtlHitCheck(attackinfo.cropInfo, innerDamage);
+                    innerDamage = addtlHitChecks[target.addtlHitCheck](attackinfo.cropInfo, innerDamage);
                 }
                 avgDamage += innerDamage;
                 if(attackinfo.animals.length > 0) { hasAnimals = true; }
@@ -339,5 +339,27 @@ combat.selectTarget = {
             cropInfo: cropInfo,
             selfHarm: Math.ceil(selHurt)
         };
+    }
+};
+var addtlHitChecks = {
+    "check_SP_SU": function(cropInfo, damage) {
+        var hasSpringSummer = false;
+        for(var i = 0; i < cropInfo.length; i++) { hasSpringSummer |= (cropInfo[i].seasons[0] >= 0.5 || cropInfo[i].seasons[1] >= 0.5); }
+        return hasSpringSummer ? (damage * 50) : 0;
+    },
+    "check_AU_WI": function(cropInfo, damage) {
+        var hasFallWinter = false;
+        for(var i = 0; i < cropInfo.length; i++) { hasFallWinter |= (cropInfo[i].seasons[2] >= 0.5 || cropInfo[i].seasons[3] >= 0.5); }
+        return hasFallWinter ? (damage * 50) : 0;
+    },
+    "check_MUSH": function(cropInfo, damage) {
+        var hasMushroom = false;
+        for(var i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type == "mush"; }
+        return hasMushroom ? (damage * 50) : 0;
+    },
+    "check_FISH": function(cropInfo, damage) {
+        var hasFish = false;
+        for(var i = 0; i < cropInfo.length; i++) { hasFish |= (cropInfo[i].type == "spear" || cropInfo[i].type == "rod" || cropInfo[i].type == "water"); }
+        return hasFish ? (damage * 50) : 0;
     }
 };
