@@ -1,17 +1,21 @@
 uglifyjs ^
+    js/debug/enemyCursorTest.js ^
     js/gamedata/consts.js ^
     js/gamedata/veggies.js ^
     js/gamedata/equipment.js ^
     js/gamedata/fixtures.js ^
     js/gamedata/enemies.js ^
+    js/gamedata/enemy_patterns.js ^
     js/gamedata/shops.js ^
     js/gamedata/quests.js ^
     js/gamedata/spritedata.js ^
     js/gamedata/misc.js ^
     js/gamedata/text.js ^
+    js/gamedata/cutscenes.js ^
     js/animation/animController.js ^
     js/input.js ^
     js/combat/combat.js ^
+    js/combat/enemyParser.js ^
     js/combat/combatcropfuncs.js ^
     js/animation/combatAnim.js ^
     js/combat/combatmenu.js ^
@@ -26,6 +30,7 @@ uglifyjs ^
     js/worldmap/optionsMenu.js ^
     js/worldmap/shop.js ^
     js/worldmap/collisions.js ^
+    js/worldmap/cutsceneParser.js ^
     js/worldmap/entityHelpers.js ^
     js/worldmap/entities.js ^
     js/playerstats/pausemenu.js ^
