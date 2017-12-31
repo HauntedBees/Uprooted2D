@@ -3,7 +3,9 @@ function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldh
     this.health = health;
 	this.maxhealth = health;
     this.atk = atk;
+	this.baseatk = atk;
     this.def = def;
+	this.basedef = def;
     this.cursorinfo = cursorinfo;
     this.fieldheight = fieldheight;
     this.fieldwidth = fieldwidth;
@@ -51,14 +53,14 @@ function GetEnemy(name) {
 		case "kelpBoy": return new EnemyDetail(GetDisplayName(name, 1), "md", 13, { dx: 0.15, dy: -0.15, w: 0.2, h: 0.9 }, 210, 5, 5, 3, 3, true, [0, 0, 0, 1], "basicFarm", "garlic,garlic,corn,corn,leek,spinach,leek,leek", [ { money: true, min: 69, max: 69 }, { seed: "garlic", min: 10, max: 10 }, { seed: "leek", min: 10, max: 10 }, { seed: "spinach", min: 10, max: 10 } ], { tile: "dirt" });
 		case "fishFace": return new EnemyDetail(GetDisplayName(name, 1), "md", 10, { dx: 0.25, dy: 0.25, w: 0, h: 0.5 }, 30, 2, 1, 3, 1, false, [1, 1, 1, 0], "basic", "algae,kelp", [ { money: true, min: 60, max: 80 }, { seed: "net", min: 0, max: 1 }, { seed: "rice", min: 0, max: 1 } ], { tile: "watertile" });
 		case "seaMonk": return new EnemyDetail(GetDisplayName(name, 1), "md", 11, { dx: 0, dy: -0.15, w: 0.5, h: 0.9 }, 40, 2, 2, 2, 2, false, [0, 1, 1, 1], "wetboy", "algae,kelp", [ { money: true, min: 100, max: 120 }, { seed: "net", min: 0, max: 1 }, { seed: "rice", min: 2, max: 5 }, { seed: "chestnut", min: 0, max: 1 } ], { tile: "watertile" });
-		case "seaHandR": return new EnemyDetail(GetDisplayName(name, 1), "lg", 1, { dx: 0, dy: 0.15, w: 1, h: 1.35 }, 100, 5, 1, 3, 1, false, [1, 1, 1, 0], "basicRock", "algae,kelp", [ { money: true, min: 0, max: 0 } ], { tile: "watertile" });
-		case "seaMan": return new EnemyDetail(GetDisplayName(name, 1), "lg", 2, { dx: -0.05, dy: 0.15, w: 1.1, h: 1.4 }, 400, 2, 5, 3, 2, true, [1, 1, 1, 0], "slap", "", [ { money: true, min: 600, max: 600 }, { seed: "egg", min: 5, max: 5 } ], { tile: "watertile", soleKill: true });
-		case "seaHandL": return new EnemyDetail(GetDisplayName(name, 1), "lg", 3, { dx: 0.05, dy: 1.85, w: 0.95, h: -0.2 }, 100, 5, 1, 3, 1, false, [1, 1, 1, 0], "wetboy", "algae,kelp", [ { money: true, min: 0, max: 0 } ], { tile: "watertile" });
+		case "seaHandR": return new EnemyDetail(GetDisplayName(name, 1), "lg", 1, { dx: 0, dy: 0.15, w: 1, h: 1.35 }, 100, 10, 1, 3, 1, false, [1, 1, 1, 0], "basicRock", "algae,kelp", [ { money: true, min: 0, max: 0 } ], { tile: "watertile" });
+		case "seaMan": return new EnemyDetail(GetDisplayName(name, 1), "lg", 2, { dx: -0.05, dy: 0.15, w: 1.1, h: 1.4 }, 400, 20, 5, 3, 2, true, [1, 1, 1, 0], "slap", "", [ { money: true, min: 600, max: 600 }, { seed: "egg", min: 5, max: 5 } ], { tile: "watertile", soleKill: true });
+		case "seaHandL": return new EnemyDetail(GetDisplayName(name, 1), "lg", 3, { dx: 0.05, dy: 1.85, w: 0.95, h: -0.2 }, 100, 10, 1, 3, 1, false, [1, 1, 1, 0], "wetboy", "algae,kelp", [ { money: true, min: 0, max: 0 } ], { tile: "watertile" });
 		/* Fake Farm */
-		case "chickBot": return new EnemyDetail(GetDisplayName(name, 1), "md", 15, { dx: 0.2, dy: 0.05, w: 0.1, h: 0.7 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ]);
-		case "piggun": return new EnemyDetail(GetDisplayName(name, 1), "md", 16, { dx: 0, dy: 0.15, w: 0.5, h: 0.6 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ]);
-		case "golem": return new EnemyDetail(GetDisplayName(name, 1), "md", 17, { dx: 0, dy: -0.15, w: 0.55, h: 0.9 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ]);
-		case "lawnmower": return new EnemyDetail(GetDisplayName(name, 1), "md", 18, { dx: 0, dy: 0.05, w: 0.5, h: 0.7 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ]);
+		case "chickBot": return new EnemyDetail(GetDisplayName(name, 1), "md", 15, { dx: 0.2, dy: 0.05, w: 0.1, h: 0.7 }, 150, 8, 6, 3, 1, false, [1, 1, 0, 0], "basicRock", "egg", [ { money: true, min: 40, max: 60 }, { seed: "egg", min: 0, max: 5 }, { seed: "goose", min: 0, max: 1 } ], { tile: "_coop" });
+		case "piggun": return new EnemyDetail(GetDisplayName(name, 1), "md", 16, { dx: 0, dy: 0.15, w: 0.5, h: 0.6 }, 100, 3, 3, 3, 2, false, [1, 1, 0, 0], "pigGun", "portobello,shiitake,milkcap,blackshroom", [ { money: true, min: 0, max: 5 }, { seed: "shiitake", min: 0, max: 3 }, { seed: "portobello", min: 0, max: 3 } ], { tile: "_log" });
+		case "golem": return new EnemyDetail(GetDisplayName(name, 1), "md", 17, { dx: 0, dy: -0.15, w: 0.55, h: 0.9 }, 300, 30, 20, 4, 4, false, [1, 1, 1, 0], "basic", "garlic,grapes,leek", [ { money: true, min: 5, max: 10 }, { seed: "rhubarb", min: 5, max: 10 }, { seed: "tomato", min: 0, max: 15 }, { seed: "mango", min: 0, max: 5 } ], { tile: "dirt", weakSeason: 3 });
+		case "lawnmower": return new EnemyDetail(GetDisplayName(name, 1), "md", 18, { dx: 0, dy: 0.05, w: 0.5, h: 0.7 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ], { tile: "dirt" });
 		case "machineA": return new EnemyDetail(GetDisplayName(name, 1), "md", 14, { dx: 0.2, dy: 0.25, w: 0.1, h: 0.5 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ], { addtlHitCheck: "check_SP_SU" });
 		case "machineB": return new EnemyDetail(GetDisplayName(name, 1), "md", 22, { dx: 0.2, dy: 0.25, w: 0.1, h: 0.5 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ], { addtlHitCheck: "check_AU_WI" });
 		case "machineC": return new EnemyDetail(GetDisplayName(name, 1), "md", 23, { dx: 0.2, dy: 0.15, w: 0.1, h: 0.6 }, 10, 1, 1, 2, 2, false, [1, 1, 0, 0], "basic", "carrot", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ], { addtlHitCheck: "check_MUSH" });

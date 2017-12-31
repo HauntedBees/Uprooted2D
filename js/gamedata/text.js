@@ -3556,6 +3556,11 @@ var fulltext = {
 		"en-dm": "{0} splashes some water on your field, destroying a crop!", 
 		"type": "combat"
 	},
+	"pigWithAFuckingGun": {
+		"en-us": "", 
+		"en-dm": "The pig accidentally triggers the gun on her back, firing directly at you and dealing {1} damage!", 
+		"type": "combat"
+	},
 	// Enemy Names
 	"e.robo0": {
 		"en-us": "", 

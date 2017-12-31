@@ -297,6 +297,7 @@ combat.plant = {
             case 2: displaySeason = "Autumn"; break;
             case 3: displaySeason = "Winter"; break;
         }
+        combat.adjustEnemyStatsWeather();
         this.finishTurn("You load some seeds into the modulator, changing the season to " + displaySeason + ".");
     },
     finishTurn: function(t) {

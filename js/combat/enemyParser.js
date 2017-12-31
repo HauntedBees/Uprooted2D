@@ -225,6 +225,7 @@ var actions = {
             case 3: seasonStr = "Winter"; break;
         }
         combat.season = season;
+        combat.adjustEnemyStatsWeather();
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, seasonStr);
     },
     "RANDOM_GT": function(e, amt) { return (Math.random() > parseFloat(amt)); },
@@ -279,6 +280,11 @@ var actions = {
     },
     "WEAK_ATTACK": function(e) {
         var damage = combat.damagePlayer(e.atk);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
+        return true;
+    },
+    "PIG_GUN": function(e) {
+        var damage = combat.damagePlayer(300);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
     }

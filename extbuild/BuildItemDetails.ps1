@@ -89,7 +89,6 @@ function GetCrop(name) {
 	$out.close();
 	Write-Host "Converted $count crops";
 }
-
 if($which.Contains("E")) {
 	Write-Host "Converting Details_Equipment.ods to equipment.js";
 	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Equipment.ods" | Out-Null;
@@ -240,7 +239,9 @@ function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldh
     this.health = health;
 	this.maxhealth = health;
     this.atk = atk;
+	this.baseatk = atk;
     this.def = def;
+	this.basedef = def;
     this.cursorinfo = cursorinfo;
     this.fieldheight = fieldheight;
     this.fieldwidth = fieldwidth;
@@ -311,6 +312,7 @@ function GetEnemy(name) {
 		$addtl = @();
 		if($row.Tile) { $addtl += "tile: `"_`"".replace("_", $row.Tile); }
 		if($row.soleKill) { $addtl += "soleKill: true"; }
+		if($row.wkSn) { $addtl += "weakSeason: _".replace("_", $row.wkSn); }
 		if($row.addtlHitCheck) { $addtl += "addtlHitCheck: `"_`"".replace("_", $row.addtlHitCheck); }
 		
 		if($addtl.Count -gt 0) {

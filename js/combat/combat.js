@@ -59,6 +59,7 @@ var combat = {
             if(enemy.tile) { this.enemyTile = enemy.tile; } else { this.enemyTile = "tech"; }
             this.enemies.push(enemy);
         }
+        this.adjustEnemyStatsWeather();
         this.animHelper = new CombatAnimHelper(this.enemies);
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
         this.enemydx = 10 + Math.floor((5 - this.enemywidth) / 2);
@@ -136,6 +137,17 @@ var combat = {
             for(var i = 0; i < this.enemies.length; i++) {
                 if(i === enemyidx) { continue; }
                 this.damageEnemy(i, this.enemies[i].health + 1);
+            }
+        }
+    },
+    adjustEnemyStatsWeather: function() {
+        for(var i = 0; i < this.enemies.length; i++) {
+            if(this.enemies[i].weakSeason !== undefined && this.season === this.enemies[i].weakSeason) {
+                this.enemies[i].atk = 0.5;
+                this.enemies[i].def = 0.1;
+            } else {
+                this.enemies[i].atk = this.enemies[i].baseatk;
+                this.enemies[i].def = this.enemies[i].basedef;
             }
         }
     },
