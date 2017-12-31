@@ -54,7 +54,9 @@ var game = {
         spriteData.populate();
         gfx.loadSpriteSheets(this.sheetsToLoad, this.sheetsLoaded);
     },
+    transitioning: false,
     transition: function(from, to, arg) {
+        game.transitioning = true;
         game.startTransitionAnim(1, from, to, arg);
         return true;
     },
@@ -82,6 +84,7 @@ var game = {
     },
     finishTransition: function() {
         clearInterval(game.transitionInfo.animIdx);
+        game.transitioning = false;
         gfx.clearLayer("tutorial");
     },
     drawTransitionAnim: function() {
