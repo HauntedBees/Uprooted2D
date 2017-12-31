@@ -17,7 +17,7 @@ var shopNames = {
     "inn0": "Your House",
     "equip1": "Dave's Hoes and Sickles",
     "fixture1": "Fuckster's Fixtures",
-    "seed1": "Seedy Pete's Questionable Seeds",
+    "seed1": "Seedy Pete's Petey Seeds",
     "upgrade1": "Andrew D's Farm Expansions",
     "inn1": "Frothybarf Inn"
 };
