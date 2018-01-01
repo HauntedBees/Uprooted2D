@@ -59,7 +59,8 @@ combat.selectTarget = {
             if(crop === null) {
                 gfx.drawWrappedText("", me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
             } else {
-                gfx.drawWrappedText(Capitalize(crop.name), me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
+                if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
+                gfx.drawWrappedText(crop.name, me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
             }
         } else {
             gfx.drawWrappedText(combat.enemies[this.cursorx].name, me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);

@@ -1,4 +1,3 @@
-function Capitalize(str) { return str[0].toUpperCase() + str.substr(1); }
 function Range(min, max) { return min + Math.floor(Math.random() * (max - min)); }
 function InclusiveRange(min, max) { return min + Math.round(Math.random() * (max - min)); }
 var miscText = {
