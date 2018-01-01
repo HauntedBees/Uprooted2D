@@ -1,13 +1,13 @@
 var enemyHelpers = {
     GetNode: function(name) { for(var i = 0; i < EnemyParser.nodes.length; i++) { if(EnemyParser.nodes[i].id === name) { return EnemyParser.nodes[i]; } } },
-    GetEnemyFieldData: function(e, justBabies) {
+    GetEnemyFieldData: function(e, justBabies, includeInactive) {
         var dmg = 0;
         var crops = [];
         for(var x = 0; x < combat.enemyGrid.length; x++) {
             for(var y = 0; y < combat.enemyGrid[0].length; y++) {
                 var tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
-                if(tile.activeTime > 0 || tile.rotten) { continue; }
+                if(!includeInactive && (tile.activeTime > 0 || tile.rotten)) { continue; }
                 if(justBabies) {
                     if(tile.type !== "babby") { continue; }
                 } else {
@@ -32,7 +32,10 @@ var enemyHelpers = {
     GetAttackData: function(dmg, secondArg, thirdArg) {
         secondArg = secondArg || "";
         var node = EnemyParser.current;
+        
         var outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg).replace(/\{2\}/g, secondArg).replace(/\{3\}/g, thirdArg);
+        outputText = HandleArticles(outputText, secondArg);
+
         return { text: outputText, animFPS: node.data.animFPS, animData: node.data.animData };
     },
     TryDisturbTile: function(x, y, type) {
@@ -69,20 +72,29 @@ var enemyHelpers = {
         }
         combat.animHelper.DrawBackground();
         var crop = combat.grid[x][y];
-        if(crop === null) { return { status: true, crop: false }; }
+        if(crop === null || crop.type === "rock") { return { status: true, crop: false }; }
 
-        var dmg = enemyHelpers.GetCropDamage(e, x, y, 0);
+        return enemyHelpers.DoDamageCrop(e, x, y, 0);
+    },
+    DoDamageCrop: function(e, x, y, type) {
+        var crop = combat.grid[x][y];
+        var dmg = enemyHelpers.GetCropDamage(e, x, y, type);
         crop.power -= dmg;
         if(crop.rotten) { crop.power = 0; }
         if(crop.power <= 0) {
             combat.grid[x][y] = null;
+            if(crop.size === 2) {
+                combat.grid[x + 1][y] = null;
+                combat.grid[x][y + 1] = null;
+                combat.grid[x + 1][y + 1] = null;
+            }
             combat.animHelper.DrawCrops();
             return { status: true, crop: true, destroyed: true };
         } else {
             return { status: true, crop: true, destroyed: false };
         }
     },
-    GetCropDamage: function(e, x, y, type) { // type: 0 = water, 1 = fire
+    GetCropDamage: function(e, x, y, type) { // type: 0 = water, 1 = fire, -1 = general
         var crop = combat.grid[x][y];
         var itemTile = player.itemGrid[x][y];
         var dmg = Math.ceil(e.atk / 2);
@@ -91,6 +103,38 @@ var enemyHelpers = {
         if(crop.x !== undefined) { crop = combat.grid[crop.x][crop.y]; dmg = Math.ceil(dmg / 2); }
         if(itemTile === "_strongsoil") { dmg = Math.round(dmg / 2); }
         return dmg;
+    },
+    GetWeakestPlayerCrop: function() {
+        var pos = { x: -1, y: -1 };
+        var weakestCrop = 999;
+        for(var x = 0; x < combat.grid.length; x++) {
+            for(var y = 0; y < combat.grid[0].length; y++) {
+                var tile = combat.grid[x][y];
+                if(tile === null || tile === undefined || tile.x !== undefined || tile.type === "rock") { continue; }
+                if(tile.power < weakestCrop) {
+                    weakestCrop = tile.power;
+                    pos = { x: x, y: y };
+                }
+            }
+        }
+        return pos;
+    },
+    GetPlayerRowWithMostCrops: function() {
+        var busiestRow = -1;
+        var busiestCount = -1;
+        for(var y = 0; y < combat.grid[0].length; y++) {
+            var thisRowCount = 0;
+            for(var x = 0; x < combat.grid.length; x++) {
+                var tile = combat.grid[x][y];
+                if(tile === null || tile === undefined || tile.x !== undefined || tile.type === "rock") { continue; }
+                thisRowCount++;
+            }
+            if(thisRowCount > busiestCount) {
+                busiestCount = thisRowCount;
+                busiestRow = y;
+            }
+        }
+        return busiestRow;
     }
 };
 var EnemyParser = {
@@ -136,14 +180,240 @@ var EnemyParser = {
     }
 };
 var conditions = {
+    "HAS_CLOUD": function(e) {
+        var crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
+        if(crops.length === 0) { return false; }
+        for(var i = 0; i < crops.length; i++) {
+            if(crops[i][3] === "cloud") { return true; }
+        }
+        return false;
+    },
+    "PLAYER_HAS_CROPS": function() {
+        for(var x = 0; x < combat.grid.length; x++) {
+            for(var y = 0; y < combat.grid[0].length; y++) {
+                var tile = combat.grid[x][y];
+                if(tile !== null && tile !== undefined && tile.x === undefined && tile.type !== "rock") { return true; }
+            }
+        }
+        return false;
+    },
     "HAS_CROPS_READY": function(e) { return enemyHelpers.GetEnemyFieldData(e, false).crops.length > 0; },
     "HAS_BABIES_READY": function(e) { return enemyHelpers.GetEnemyFieldData(e, true).crops.length > 0; },
     "SUCCESS": function(e, condition) { return (condition === true); },
+    "UNPLUGGED": function(e) {
+        for(var i = 0; i < combat.enemies.length; i++) {
+            if(combat.enemies[i].unplugged === true) { return true; }
+        }
+        return false;
+    },
     "ELSE": function(e) { return true; }
 };
 var actions = {
     "INIT": function() { return true; },
     "END": function() { return true; },
+    "SKIP": function() { EnemyParser.outputData = { skip: true }; return true; },
+    "TRY_PLUG": function(e) {
+        var plugged = (--e.plugTimer <= 0);
+        if(plugged) {
+            EnemyParser.current.data.textID = "plugSuccess";
+            e.spriteidx = 26;
+            e.unplugged = false;
+            e.health = e.maxhealth;
+            e.def = 50;
+        } else {
+            EnemyParser.current.data.textID = "plugAttempt";
+        }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    "HOUSEKEEPER": function(e) {
+        var cropData = enemyHelpers.GetEnemyFieldData(e, false, false);
+        var hasCrops = cropData.crops.length > 0;
+        var attackAnim = [[0,2],[0,3],[0,4],[0,5,true]];
+        var stdAnim = [[0,2],[0,3],[0,4],[0,5]];
+        EnemyParser.current.data.animData = attackAnim;
+        if(conditions["HAS_CLOUD"](e)) {
+            if(hasCrops && Math.random() > 0.75) {
+                EnemyParser.current.data.textID = "hkAtkAttack";
+                return actions["LAUNCH_CROPS"](e);
+            }
+            var cloudPower = 0;
+            var crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
+            for(var i = 0; i < crops.length; i++) {
+                if(crops[i][3] === "cloud") {
+                    var x = crops[i][1];
+                    var y = crops[i][2];
+                    cloudPower = combat.enemyGrid[x][y].power;
+                    break;
+                }
+            }
+            var abilities = ["rock"];
+            if(cloudPower > 5) { abilities.push("splash"); }
+            if(cloudPower > 10) { abilities.push("splashrow"); }
+            if(cloudPower > 15) { abilities.push("plantmult"); }
+            if(cloudPower > 20) { abilities.push("attackweak"); }
+            if(cloudPower > 25) { abilities.push("season"); }
+            if(cloudPower > 30) { abilities.push("heal"); }
+            if(cloudPower > 35) { abilities.push("threaten"); }
+            var attack = abilities[Math.floor(Math.random() * abilities.length)];
+            if(attack === "rock") {
+                EnemyParser.current.data.textID = "hkAtkRock";
+                if(actions["TRY_THROW_ROCK"](e)) { return true; }
+                EnemyParser.current.data.animData = stdAnim;
+                EnemyParser.current.data.textID = "hkAtkError1";
+                EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                return true;
+            } else if(attack === "splash") {
+                var weakestPos = enemyHelpers.GetWeakestPlayerCrop();
+                if(weakestPos.x < 0) {
+                    EnemyParser.current.data.textID = "hkAtkError2";
+                    EnemyParser.current.data.animData = stdAnim;
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    return true;
+                } else {
+                    var res = enemyHelpers.TrySplashTile(e, weakestPos.x, weakestPos.y);
+                    if(!res.status) { EnemyParser.current.data.textID = "splashFail"; }
+                    else if(!res.crop) { EnemyParser.current.data.textID = "splashSucc"; }
+                    else if(!res.destroyed) { EnemyParser.current.data.textID = "splashDamage"; }
+                    else { EnemyParser.current.data.textID = "splashKill"; }
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    return true;
+                }
+            } else if(attack === "splashrow") {
+                var busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
+                var hasDamage = false;
+                var hasKills = true;
+                for(var x = 0; x < player.gridWidth; x++) {
+                    var res = enemyHelpers.TrySplashTile(e, x, busiestRow);
+                    if(!res.status) { continue; }
+                    else if(!res.crop) { continue; }
+                    else if(!res.destroyed) { hasDamage = true; }
+                    else { hasKills = true; }
+                }
+                if(hasKills) {
+                    EnemyParser.current.data.textID = "splashRowKill";
+                } else if(hasDamage) {
+                    EnemyParser.current.data.textID = "splashRowDamage";
+                } else {
+                    EnemyParser.current.data.textID = "splashRow";
+                }
+                EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                return true;
+            } else if(attack === "plantmult") {
+                EnemyParser.current.data.animData = stdAnim;
+                EnemyParser.current.data.textID = "hkAtkPlantOne";
+                var canPlantOne = actions["TRY_PLANT_CROP"](e, "lightbulb");
+                if(!canPlantOne) {
+                    EnemyParser.current.data.textID = "hkAtkCantPlant";
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    return true;
+                } 
+                EnemyParser.current.data.textID = "hkAtkPlantTwo";
+                if(actions["TRY_PLANT_CROP"](e, "lightbulb")) { return true; }
+                return true;
+            } else if(attack === "attackweak") {
+                var weakestPos = enemyHelpers.GetWeakestPlayerCrop();
+                if(weakestPos.x < 0) {
+                    EnemyParser.current.data.animData = stdAnim;
+                    EnemyParser.current.data.textID = "hkAtkError3";
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    return true;
+                } else {
+                    var res = enemyHelpers.DoDamageCrop(e, weakestPos.x, weakestPos.y, -1);
+                    if(res.destroyed) {
+                        EnemyParser.current.data.textID = "hkCropKill";
+                    } else {
+                        EnemyParser.current.data.textID = "hkCropAttack";
+                    }
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    return true;
+                }
+            } else if(attack === "season") {
+                EnemyParser.current.data.animData = stdAnim;
+                var seasons = [0, 0, 0, 0];
+                for(var x = 0; x < combat.grid.length; x++) {
+                    for(var y = 0; y < combat.grid[0].length; y++) {
+                        var tile = combat.grid[x][y];
+                        if(tile === null || tile === undefined || tile.x !== undefined || tile.type === "rock") { continue; }
+                        for(var i = 0; i < 4; i++) { seasons[i] += tile.seasons[i]; }
+                    }
+                }
+                var weakestSeason = 0;
+                var lowestNum = 1000;
+                for(var s = 0; s < 4; s++) {
+                    if(seasons[s] < lowestNum) {
+                        weakestSeason = s;
+                        lowestNum = seasons[s];
+                    }
+                }
+                var seasonStr = "Spring";
+                switch(weakestSeason) {
+                    case 1: seasonStr = "Summer"; break;
+                    case 2: seasonStr = "Autumn"; break;
+                    case 3: seasonStr = "Winter"; break;
+                }
+                combat.season = weakestSeason;
+                combat.adjustEnemyStatsWeather();
+                EnemyParser.current.data.textID = "hkSeasonChange";
+                EnemyParser.outputData = enemyHelpers.GetAttackData(0, seasonStr);
+                return true;
+            } else if(attack === "heal") {
+                var weakestEnemy = combat.enemies[0];
+                var lowestHP = weakestEnemy.health;
+                for(var i = 1; i < combat.enemies.length; i++) {
+                    if(combat.enemies[i].health < lowestHP) {
+                        weakestEnemy = combat.enemies[i];
+                        lowestHP = weakestEnemy.health;
+                    }
+                }
+                EnemyParser.current.data.textID = "hkHeal";
+                var base = 30;
+                var rangeSize = 25;
+                var amountToHeal = (base - rangeSize) + Math.floor(Math.random() * rangeSize * 2);
+                var prevHealth = weakestEnemy.health;
+                weakestEnemy.health = Math.min(weakestEnemy.maxhealth, (weakestEnemy.health + amountToHeal));
+                var adjustedAmountToHeal = (weakestEnemy.health - prevHealth);
+                EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal, weakestEnemy.name);
+            } else {
+                EnemyParser.current.data.animData = stdAnim;
+                EnemyParser.current.data.textID = "hkCreepy" + Math.floor(Math.random() * 6);
+                EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                return true;
+            }
+        } else {
+            if(hasCrops) {
+                EnemyParser.current.data.textID = "hkAtkAttack";
+                return actions["LAUNCH_CROPS"](e);
+            } else {
+                if(Math.random() > 0.5) {
+                    EnemyParser.current.data.animData = stdAnim;
+                    EnemyParser.current.data.textID = "hkAtkPlantOne";
+                    if(actions["TRY_PLANT_CROP"](e, "lightbulb")) { return true; }
+                    EnemyParser.current.data.textID = "hkAtkCantPlant";
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    return true;
+                } else {
+                    EnemyParser.current.data.textID = "hkAtkAttack";
+                    var damage = combat.damagePlayer(cropData.damage);
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(cropData.damage);
+                    return true; 
+                }
+            }
+        }
+    },
+    "BOOST_CLOUD": function(e) {
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0); 
+        var crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
+        for(var i = 0; i < crops.length; i++) {
+            if(crops[i][3] === "cloud") {
+                var x = crops[i][1];
+                var y = crops[i][2];
+                combat.enemyGrid[x][y].power++;
+                return true;
+            }
+        }
+        return true;
+    },
     "CONVINCEATRON": function(e) {
         var damage = 0;
         if(tutorial.state === 23) {
@@ -177,17 +447,57 @@ var actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     },
+    "CLEAR_CACHE": function(e) {
+        for(var x = 0; x < combat.enemyGrid.length; x++) {
+            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined) { continue; }
+                if(tile.size === 2) { continue; }
+                var kill = tile.rotten || Math.random() > 0.75;
+                if(!kill) { continue; }
+                combat.enemyGrid[x][y] = null;
+            }
+        }
+        combat.animHelper.DrawCrops();
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    "ATTACK_CROP": function(e) {
+        var attempts = 5;
+        var pos = null;
+        while(attempts-- > 0) {
+            var x = Math.floor(Math.random() * player.gridWidth);
+            var y = Math.floor(Math.random() * player.gridHeight);
+            var tile = combat.grid[x][y];
+            if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
+            pos = { x: x, y: y };
+        }
+        if(pos === null) {
+            for(var x = 0; x < player.gridWidth; x++) {
+                if(pos !== null) { break; }
+                for(var y = 0; y < player.gridHeight; y++) {
+                    var tile = combat.grid[x][y];
+                    if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
+                    pos = { x: x, y: y };
+                    break;
+                }
+            }
+        }
+        var res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1);
+        if(res.destroyed) {
+            EnemyParser.current.data.textID = "cropKill";
+        } else {
+            EnemyParser.current.data.textID = "cropAttack";
+        }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
     "SPLASH_TILE": function(e) {
         var res = enemyHelpers.TrySplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
-        if(!res.status) {
-            EnemyParser.current.data.textID = "splashFail";
-        } else if(!res.crop) {
-            EnemyParser.current.data.textID = "splashSucc";
-        } else if(!res.destroyed) {
-            EnemyParser.current.data.textID = "splashDamage";
-        } else {
-            EnemyParser.current.data.textID = "splashKill";
-        }
+        if(!res.status) { EnemyParser.current.data.textID = "splashFail"; }
+        else if(!res.crop) { EnemyParser.current.data.textID = "splashSucc"; }
+        else if(!res.destroyed) { EnemyParser.current.data.textID = "splashDamage"; }
+        else { EnemyParser.current.data.textID = "splashKill"; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     },
@@ -244,6 +554,10 @@ var actions = {
         var pos = {x: -1, y: -1};
         var attempts = 5;
         if(crop === "args") { crop = e.GetRandomArg(); }
+        else if(crop.indexOf(",") >= 0) {
+            var crops = crop.split(",");
+            crop = crops[Math.floor(Math.random() * crops.length)];
+        }
         var newCrop = GetCrop(crop);
         var delta = newCrop.size === 2 ? 1 : 0;
         while(attempts-- >= 0 && pos.x < 0) {

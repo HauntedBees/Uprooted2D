@@ -20,6 +20,16 @@ function GetText(key) {
 		return "fucko"; //throw e;
 	}
 }
+function HandleArticles(mainStr, subject) { // this is English-language specific; oops!
+	if(subject === undefined || subject === "" || mainStr.indexOf("{an}") < 0) { return mainStr; }
+	if(subject[subject.length - 1] === "s") {
+		return mainStr.replace(/\{an\}/g, "");
+	} else if("aeiou".indexOf(subject[0].toLowerCase()) >= 0) {
+		return mainStr.replace(/\{an\}/g, " an");
+	} else {
+		return mainStr.replace(/\{an\}/g, " a");
+	}
+}
 function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 '@);

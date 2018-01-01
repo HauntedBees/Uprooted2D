@@ -1,0 +1,1 @@
+{"nodes":[{"id":"node0","data":{"message":"INIT"},"next":{"type":"conditional","data":[{"next":"node6","condition":"UNPLUGGED"},{"next":"node3","condition":"ELSE"}]}},{"id":"node3","data":{"message":"SKIP"}},{"id":"node6","data":{"textID":"plugAttempt","message":"TRY_PLUG","animData":[[0,2],[0,3]],"animFPS":4}}]}

@@ -43,17 +43,19 @@ combat.ageCrops = function() {
             }
         }
     }
-    for(var x = 0; x < this.enemyGrid.length; x++) {
-        for(var y = 0; y < this.enemyGrid[0].length; y++) {
-            if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { continue; }
-            var crop = this.enemyGrid[x][y];
-            if(crop.activeTime > 0) {
-                crop.activeTime -= 1;
-            } else if(crop.activeTime == 0) {
-                if(crop.respawn > 0) {
-                    crop.activeTime = crop.respawn;
-                } else if(!crop.noRot && crop.type !== "tech" && crop.type !== "babby") {
-                    crop.rotten = true;
+    if(!conditions["UNPLUGGED"]()) {
+        for(var x = 0; x < this.enemyGrid.length; x++) {
+            for(var y = 0; y < this.enemyGrid[0].length; y++) {
+                if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { continue; }
+                var crop = this.enemyGrid[x][y];
+                if(crop.activeTime > 0) {
+                    crop.activeTime -= 1;
+                } else if(crop.activeTime == 0) {
+                    if(crop.respawn > 0) {
+                        crop.activeTime = crop.respawn;
+                    } else if(!crop.noRot && crop.type !== "tech" && crop.type !== "babby") {
+                        crop.rotten = true;
+                    }
                 }
             }
         }

@@ -9,6 +9,16 @@ function GetText(key) {
 		return "fucko"; //throw e;
 	}
 }
+function HandleArticles(mainStr, subject) { // this is English-language specific; oops!
+	if(subject === undefined || subject === "" || mainStr.indexOf("{an}") < 0) { return mainStr; }
+	if(subject[subject.length - 1] === "s") {
+		return mainStr.replace(/\{an\}/g, "");
+	} else if("aeiou".indexOf(subject[0].toLowerCase()) >= 0) {
+		return mainStr.replace(/\{an\}/g, " an");
+	} else {
+		return mainStr.replace(/\{an\}/g, " a");
+	}
+}
 function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 	// Items
@@ -3559,6 +3569,166 @@ var fulltext = {
 	"pigWithAFuckingGun": {
 		"en-us": "", 
 		"en-dm": "The pig accidentally triggers the gun on her back, firing directly at you and dealing {1} damage!", 
+		"type": "combat"
+	},
+	"cropAttack": {
+		"en-us": "", 
+		"en-dm": "{0} attacks a crop on your field.", 
+		"type": "combat"
+	},
+	"cropKill": {
+		"en-us": "", 
+		"en-dm": "{0} attacks a crop on your field, destroying it.", 
+		"type": "combat"
+	},
+	"initializeAttack": {
+		"en-us": "", 
+		"en-dm": "{0} initializes{an} {2}.", 
+		"type": "combat"
+	},
+	"clearCache": {
+		"en-us": "", 
+		"en-dm": "{0} clears its cache.", 
+		"type": "combat"
+	},
+	"cloudSucc": {
+		"en-us": "", 
+		"en-dm": "{0} establishes a connection to The Cloud.", 
+		"type": "combat"
+	},
+	"cloudFail": {
+		"en-us": "", 
+		"en-dm": "{0} tries to connect to The Cloud, but fails.", 
+		"type": "combat"
+	},
+	"cloudShare": {
+		"en-us": "", 
+		"en-dm": "{0} shares data with The Cloud.", 
+		"type": "combat"
+	},
+	"routerIdle": {
+		"en-us": "", 
+		"en-dm": "{0} is doing that \"internet\" thing.", 
+		"type": "combat"
+	},
+	"outletUnplugged": {
+		"en-us": "", 
+		"en-dm": "The outlet has been unplugged! HOUSEKEEPER has shut down!", 
+		"type": "combat"
+	},
+	"plugAttempt": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff struggles to plug everything back in.", 
+		"type": "combat"
+	},
+	"plugSuccess": {
+		"en-us": "", 
+		"en-dm": "Actually Just Jeff has plugged HOUSEKEEPER back in and installed a security guard over the outlet!", 
+		"type": "combat"
+	},
+	"hkAtkAttack": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I'm attacking you for {1} damage now. Thank you!", 
+		"type": "combat"
+	},
+	"hkAtkPlantOne": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I'm placing a Smart Light Bulb on the field now. Thank you!", 
+		"type": "combat"
+	},
+	"hkAtkCantPlant": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Oh dear, I can't seem to find any room on the field. Please clear the field and try again later!", 
+		"type": "combat"
+	},
+	"hkAtkRock": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I'm throwing a rock on your field. I hope it makes your life worse! :)", 
+		"type": "combat"
+	},
+	"hkAtkError1": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Oopsies, an error has occurred! Please look up Error Code R0CC on our website for more information!", 
+		"type": "combat"
+	},
+	"hkAtkError2": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Oh darn, there's an error! Please look up Error Code W473R on our website for more information!", 
+		"type": "combat"
+	},
+	"splashRow": {
+		"en-us": "", 
+		"en-dm": "{0} splashes some water all over your field.", 
+		"type": "combat"
+	},
+	"splashRowDamage": {
+		"en-us": "", 
+		"en-dm": "{0} splashes some water all over your field, damaging some crops.", 
+		"type": "combat"
+	},
+	"splashRowKill": {
+		"en-us": "", 
+		"en-dm": "{0} splashes some water all over your field, damaging and destroying some crops.", 
+		"type": "combat"
+	},
+	"hkAtkPlantTwo": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I'm placing some Smart Light Bulbs on the field now. Thank you!", 
+		"type": "combat"
+	},
+	"hkAtkError3": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Oh darn, there's an error! Please look up Error Code K111 on our website for more information!", 
+		"type": "combat"
+	},
+	"hkCropKill": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I have removed a crop I have deemed dangerous from your field. You're welcome!", 
+		"type": "combat"
+	},
+	"hkCropAttack": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I have identified a dangerous crop on your field, so I am now attempting to destroy it. Thank you for understanding!", 
+		"type": "combat"
+	},
+	"hkSeasonChange": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I have determined that changing the season to {2} would really suck for you, so I am doing that now.", 
+		"type": "combat"
+	},
+	"hkHeal": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Hello, I have determined that {2} is in need of healing, so I am recovering {1} health for them. Enjoy!", 
+		"type": "combat"
+	},
+	"hkCreepy0": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: This battle is brought to you by ChefCrate meal kits! Sign up now and get your first box for free!", 
+		"type": "combat"
+	},
+	"hkCreepy1": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: This battle is brought to you by Hearybooks! Sign up with promo code \"i'm going to kill you\" to get 25% off your first audiobook!", 
+		"type": "combat"
+	},
+	"hkCreepy2": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: I know what you did last summer.", 
+		"type": "combat"
+	},
+	"hkCreepy3": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: According to my analysis, your period will begin in approximately 4 hours. Would you like to order some sanitation products?", 
+		"type": "combat"
+	},
+	"hkCreepy4": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: The weather tomorrow will be sunny, with a high of 95 degrees Fahrenheit around noon.", 
+		"type": "combat"
+	},
+	"hkCreepy5": {
+		"en-us": "", 
+		"en-dm": "HOUSEKEEPER: Please rate this app on the Application Store. Any ratings lower than five stars will not be accepted.", 
 		"type": "combat"
 	},
 	// Enemy Names

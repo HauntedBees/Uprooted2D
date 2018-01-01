@@ -105,6 +105,18 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "cloud0": [15, 2, true],
+        "cloud": [30, 12],
+        "lightbulb0": [23, 15],
+        "lightbulb1": [24, 15],
+        "lightbulb": [24, 15],
+        "download": [30, 15],
+        "download0": [25, 15],
+        "download1": [26, 15],
+        "download2": [27, 15],
+        "download3": [28, 15],
+        "download4": [29, 15],
+        "cybertile": [22, 15],
         "bpermit": [30, 14],
         "bpermit0": [27, 14],
         "bpermit1": [28, 14],

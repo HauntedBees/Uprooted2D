@@ -313,6 +313,7 @@ function GetEnemy(name) {
 		if($row.Tile) { $addtl += "tile: `"_`"".replace("_", $row.Tile); }
 		if($row.soleKill) { $addtl += "soleKill: true"; }
 		if($row.wkSn) { $addtl += "weakSeason: _".replace("_", $row.wkSn); }
+		if($row.postHit) { $addtl += "postHit: `"_`"".replace("_", $row.postHit); }
 		if($row.addtlHitCheck) { $addtl += "addtlHitCheck: `"_`"".replace("_", $row.addtlHitCheck); }
 		
 		if($addtl.Count -gt 0) {

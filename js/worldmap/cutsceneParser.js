@@ -206,13 +206,6 @@ var SpecialFunctions = {
         if(player.hasQuest("fakeFarm") || player.completedQuest("fakeFarm")) { worldmap.writeText("mower" + Math.floor(Math.random() * 2)); }
         else { worldmap.writeText("lawnmower"); iHandler.state.done = true; }
     },
-    "MOWER1": function() {
-        var enemies = ["lawnmower"];
-        if(Math.random() < 0.4) { enemies.push("lawnmower"); }
-        if(Math.random() < 0.3) { enemies.push("lawnmower"); }
-        if(Math.random() < 0.1) { enemies.push("piggun"); }
-        combat.startBattle(enemies);
-    },
     "HOTBOXBEAT": function() {
         worldmap.importantEntities["MrShocky"].pos = { x: -1, y: -1 };
         worldmap.importantEntities["MrShocky"].moving = false;

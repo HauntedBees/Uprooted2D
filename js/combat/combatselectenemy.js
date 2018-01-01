@@ -173,9 +173,10 @@ combat.selectTarget = {
         var avgDamage = 0, lastTargetName = "";
         var targArr = this.targets.length > 1;
         if(targArr) { combat.lastTarget = []; }
+        var postHit = null;
         for(var i = 0; i < this.targets.length; i++) {
             var targetidx = this.targets[i];
-            if(targetidx.x !== undefined) {
+            if(targetidx.x !== undefined) { // attacking a crop
                 attackinfo.animals = [];
                 var cropPos = {x: targetidx.x - combat.enemydx, y: targetidx.y - combat.enemydy};
                 var crop = combat.enemyGrid[cropPos.x][cropPos.y];
@@ -208,7 +209,7 @@ combat.selectTarget = {
                     }
                     combat.enemyGrid[cropPos.x][cropPos.y] = null;
                 }
-            } else {
+            } else { // attacking an enemy
                 if(targArr) {
                     combat.lastTarget.push(targetidx);
                 } else {
@@ -236,6 +237,8 @@ combat.selectTarget = {
                     hasKills = true;
                 }
                 combat.damageEnemy(targetidx, innerDamage);
+                if(target.postHit !== undefined) { postHit = postHits[target.postHit](target); }
+
                 var recoilDamage = Math.ceil(innerDamage * 0.15);
                 for(var j = 0; j < additionalTargets.length; j++) {
                     combat.damageEnemy(additionalTargets[j], recoilDamage);
@@ -274,10 +277,9 @@ combat.selectTarget = {
 
         combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
         combat.flagFreshCrops(true, criticalHit, attackinfo.animals, additionalTargets);
-        game.innerTransition(this, combat.inbetween, {
-            next: function() { combat.endTurn(combat.inbetween) },
-            text: damagetext
-        });
+
+        if(postHit === null) { postHit = function() { combat.endTurn(combat.inbetween); }; }
+        game.innerTransition(this, combat.inbetween, { next: postHit, text: damagetext });
         return true;
     },
     getAttackDetails: function() {
@@ -339,6 +341,26 @@ combat.selectTarget = {
             cropInfo: cropInfo,
             selfHarm: Math.ceil(selHurt)
         };
+    }
+};
+var postHits = {
+    "unplug": function(e) {
+        if(e.unplugged) {
+            return null;
+        } else {
+            if(e.health > 170) { return null; }
+            return function() {
+                e.spriteidx = 25;
+                e.unplugged = true;
+                e.plugTimer = InclusiveRange(2, 3);
+                e.health = 50;
+                e.def = 5;
+                game.innerTransition(this, combat.inbetween, {
+                    next: function() { combat.endTurn(combat.inbetween) },
+                    text: GetText("outletUnplugged")
+                });
+            };
+        }
     }
 };
 var addtlHitChecks = {
