@@ -67,6 +67,7 @@ var worldmap = {
     moveEntities: function() {
         for(var i = 0; i < worldmap.entities.length; i++) {
             var e = worldmap.entities[i];
+            if(e.fov) { worldmap.fovCheck(e); }
             if(e.movement === undefined) { continue; }
             e.moving = true;
             var em = e.movement;
@@ -109,6 +110,7 @@ var worldmap = {
         gfx.clearSome(["background", "background2", "characters", "foreground"]); // TODO: actually put things on the foreground
         var offset = gfx.drawMap(this.mapName, this.pos.x, this.pos.y);
         var layers = [];
+        var fov = [];
         var ymax = collisions[this.mapName].length;
         for(var y = 0; y < ymax; y++) { layers.push([]); }
         for(var i = 0; i < this.entities.length; i++) {
@@ -118,6 +120,7 @@ var worldmap = {
                 gfx.drawJumbo(e.filename, (offset.x - e.pos.x), (offset.y - e.pos.y), e.w, e.h, e.offset.x, e.offset.y);
                 continue;
             }
+            if(e.fov) { fov.push({ x: e.pos.x - offset.x, y: e.pos.y - offset.y, dir: e.dir }); }
             layers[Math.round(e.pos.y)].push(e.anim.getFrame(e.pos, e.dir, e.moving));
         }
         var animDir = this.playerDir, moving = true;
@@ -137,6 +140,7 @@ var worldmap = {
                 gfx.drawAnimCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big, e.other);
             }
         }
+        for(var i = 0; i < fov.length; i++) { gfx.drawFOV(fov[i].x, fov[i].y, fov[i].dir, fov[i].ox, fov[i].oy); }
     },
     clean: function() {
         clearInterval(worldmap.fullAnimIdx);
@@ -150,6 +154,18 @@ var worldmap = {
             if(idx >= 0) { this.entities.splice(idx, 1); }
         }
         game.target = null;
+    },
+    fovCheck: function(e) {
+        if(worldmap.inDialogue) { return false; }
+        var dpos = { x: e.pos.x - worldmap.pos.x, y: e.pos.y - worldmap.pos.y };
+        var spotted = false;
+        switch(e.dir) {
+            case 0: spotted = Math.abs(dpos.x) <= 1 && dpos.y >= 0 && dpos.y <= 4; break;
+            case 1: spotted = Math.abs(dpos.y) <= 1 && dpos.x >= 0 && dpos.x <= 4; break;
+            case 2: spotted = Math.abs(dpos.x) <= 1 && dpos.y <= 0 && dpos.y >= -4; break;
+            case 3: spotted = Math.abs(dpos.y) <= 1 && dpos.x <= 0 && dpos.x >= -4; break;
+        }
+        if(spotted) { e.moving = false; e.movement = undefined; game.target = e; e.interact[0](); }
     },
     writeText: function(t, choices, isRefresh, formatting, overBlack) {
         gfx.clearSome(["menuA", "menutext", "menucursorA", "menuOverBlack", "menutextOverBlack"]);

@@ -2799,90 +2799,45 @@ var fulltext = {
 	},
 	"entercity4": {
 		"en-us": "", 
-		"en-dm": "Bruno: I just saw someone run in here. Who was it?", 
+		"en-dm": "Bruno: I just saw someone run in here. Who was it? Was it the farmer?", 
 		"type": "map"
 	},
 	"entercity5": {
 		"en-us": "", 
-		"en-dm": "???: Oh that--", 
+		"en-dm": "???: What? No! Don't be silly! That was just me! I was chasing a rat out!", 
 		"type": "map"
 	},
 	"entercity6": {
 		"en-us": "", 
-		"en-dm": "Bruno: Was it the farmer?", 
+		"en-dm": "Bruno: ...you got rats?", 
 		"type": "map"
 	},
 	"entercity7": {
 		"en-us": "", 
-		"en-dm": "???: What? No! Don't be silly! That was just me! I was chasing a rat out!", 
+		"en-dm": "???: Oh, no, no, no! Just one or two from time to time!", 
 		"type": "map"
 	},
 	"entercity8": {
 		"en-us": "", 
-		"en-dm": "Bruno: ...you got rats?", 
+		"en-dm": "Bruno: ...Alright. I'll have a drink. On the house. No rats.", 
 		"type": "map"
 	},
 	"entercity9": {
 		"en-us": "", 
-		"en-dm": "???: Oh, no, no, no! Just one or two from time to time!", 
+		"en-dm": "???: One drink, coming right up!", 
 		"type": "map"
 	},
 	"entercity10": {
 		"en-us": "", 
-		"en-dm": "Bruno: I called out when I saw you... why didn't you answer?", 
+		"en-dm": "Bruno: You know, if you've got rats, that might be a health code violation. I think I know a, uh, \"health inspector.\"", 
 		"type": "map"
 	},
 	"entercity11": {
 		"en-us": "", 
-		"en-dm": "???: Oh, I'm very very sorry, Mr. Bruno! I didn't hear you! My apologies!", 
+		"en-dm": "Bruno: It'd be unfortunate for your little lemonade stand here to go under because of a few rats, if you know what I'm sayin'.", 
 		"type": "map"
 	},
 	"entercity12": {
-		"en-us": "", 
-		"en-dm": "Bruno: ...", 
-		"type": "map"
-	},
-	"entercity13": {
-		"en-us": "", 
-		"en-dm": "Bruno: I'll have a drink. On the house. No rats.", 
-		"type": "map"
-	},
-	"entercity14": {
-		"en-us": "", 
-		"en-dm": "???: One drink, coming right up!", 
-		"type": "map"
-	},
-	"entercity15": {
-		"en-us": "", 
-		"en-dm": "Bruno: You know, if you've got rats, that might be a health code violation.", 
-		"type": "map"
-	},
-	"entercity16": {
-		"en-us": "", 
-		"en-dm": "???: Oh, don't worry, Mr. Bruno! This building is very clean! We just passed our last inspection a few months ago! I--", 
-		"type": "map"
-	},
-	"entercity17": {
-		"en-us": "", 
-		"en-dm": "Bruno: I think I might know a health inspector and uh, Mr. Ferrante might not agree with you, there.", 
-		"type": "map"
-	},
-	"entercity18": {
-		"en-us": "", 
-		"en-dm": "???: ...What are you trying to say, Bruno?", 
-		"type": "map"
-	},
-	"entercity19": {
-		"en-us": "", 
-		"en-dm": "Bruno: I'm just saying that it'd be unfortunate for your little lemonade stand here to go under because of a few rats.", 
-		"type": "map"
-	},
-	"entercity20": {
-		"en-us": "", 
-		"en-dm": "Bruno: I don't, ah, HAVE to tell Mr. Ferrante about it, though. Just something to think about.", 
-		"type": "map"
-	},
-	"entercity21": {
 		"en-us": "", 
 		"en-dm": "It sounds like this mobster is trying to extort this bartender! What will you do?", 
 		"type": "map"
@@ -2969,25 +2924,15 @@ var fulltext = {
 	},
 	"entercity0.pb0": {
 		"en-us": "", 
-		"en-dm": "Bruno: Ugh! Why I oughta...", 
+		"en-dm": "???: Wow... we're lucky he's one of the dumber ones. If I tell him he just drank too much and passed out, he'll probably buy it.", 
 		"type": "map"
 	},
 	"entercity0.pb1": {
 		"en-us": "", 
-		"en-dm": "The mobster collapses on the ground.", 
-		"type": "map"
-	},
-	"entercity0.pb2": {
-		"en-us": "", 
-		"en-dm": "???: Wow... we're lucky he's one of the dumber ones. If I tell him he just drank too much and passed out, he'll probably buy it.", 
-		"type": "map"
-	},
-	"entercity0.pb3": {
-		"en-us": "", 
 		"en-dm": "???: ...Thank you. Thank you very much. You really helped me out just now.", 
 		"type": "map"
 	},
-	"entercity0.pb4": {
+	"entercity0.pb2": {
 		"en-us": "", 
 		"en-dm": "???: If you need to stay here, you can stay the night any time. No charge for you.", 
 		"type": "map"
@@ -2999,75 +2944,45 @@ var fulltext = {
 	},
 	"entercity2.1": {
 		"en-us": "", 
-		"en-dm": "Skumpy: A few days ago a bunch of mobsters showed up and said they'd been hired to monitor the neighborhood.", 
+		"en-dm": "Skumpy: Apparently some farmer will be coming through here to get to the city, and they're trying to cut her off.", 
 		"type": "map"
 	},
 	"entercity2.2": {
 		"en-us": "", 
-		"en-dm": "Skumpy: Apparently some farmer would be probably be coming through here to get to the city, and they were going to cut her off.", 
+		"en-dm": "Skumpy: I think it's safe to say that you're the farmer they're looking for.", 
 		"type": "map"
 	},
 	"entercity2.3": {
 		"en-us": "", 
-		"en-dm": "Skumpy: I think it's safe to say that you're the farmer they're looking for.", 
+		"en-dm": "Skumpy: I can't say I know what they'll do to you if they catch you, or who hired them.", 
 		"type": "map"
 	},
 	"entercity2.4": {
 		"en-us": "", 
-		"en-dm": "Skumpy: I can't say I know what they'll do to you if they catch you, or why they were even hired.", 
+		"en-dm": "Skumpy: But whoever you pissed off, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
 		"type": "map"
 	},
 	"entercity2.5": {
 		"en-us": "", 
-		"en-dm": "Skumpy: Maybe you have some idea, but I think the less I know about this, the better.", 
+		"en-dm": "Skumpy: They haven't hurt anybody, but they make it pretty clear that the best way to keep it that way is by paying their \"fees.\"", 
 		"type": "map"
 	},
 	"entercity2.6": {
 		"en-us": "", 
-		"en-dm": "Skumpy: But whoever you pissed off, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
+		"en-dm": "Skumpy: Either way, the city is swarming with them, so if you're still determined to get into the city, you'd better be careful.", 
 		"type": "map"
 	},
 	"entercity2.7": {
 		"en-us": "", 
-		"en-dm": "Skumpy: They haven't hurt anybody, but they make it pretty clear that the best way to keep it that way is by paying their \"fees.\"", 
+		"en-dm": "Skumpy: They've set up a sort of home base just west of here, so if stealth isn't your thing, you can try to deal with them directly.", 
 		"type": "map"
 	},
 	"entercity2.8": {
 		"en-us": "", 
-		"en-dm": "Skumpy: Either way, the city is swarming with them, so if you're still determined to get into the city, you'd better be careful.", 
+		"en-dm": "Skumpy: Otherwise, stay to the east of town. That's where most of the shops are, anyway.", 
 		"type": "map"
 	},
 	"entercity2.9": {
-		"en-us": "", 
-		"en-dm": "Skumpy: They've set up a sort of home base just west of here, so if stealth isn't your thing, you can try to deal with them directly.", 
-		"type": "map"
-	},
-	"entercity2.10": {
-		"en-us": "", 
-		"en-dm": "Skumpy: That's all hypothetical of course. I'm sure you're pretty tough if someone thought hiring the mob was necessary to take care of you...", 
-		"type": "map"
-	},
-	"entercity2.11": {
-		"en-us": "", 
-		"en-dm": "Skumpy: ...but trying to storm a building full of armed criminals all by yourself is a suicide mission.", 
-		"type": "map"
-	},
-	"entercity2.12": {
-		"en-us": "", 
-		"en-dm": "Skumpy: Maybe if you could find a way to sneak in through the back or something and take on their boss directly..", 
-		"type": "map"
-	},
-	"entercity2.13": {
-		"en-us": "", 
-		"en-dm": "Skumpy: ...no no, I need to stop giving you ideas. Stay to the east of town. That's where most of the shops are, anyway.", 
-		"type": "map"
-	},
-	"entercity2.14": {
-		"en-us": "", 
-		"en-dm": "Skumpy: You can hide in them if you need to, and if you feel like buying any supplies, I'm sure you can find something you need.", 
-		"type": "map"
-	},
-	"entercity2.15": {
 		"en-us": "", 
 		"en-dm": "Skumpy: Good luck, stranger.", 
 		"type": "map"
@@ -3225,6 +3140,126 @@ var fulltext = {
 	"kindLadyGood3": {
 		"en-us": "", 
 		"en-dm": "You got 20,000G and 6 Funny Mushroom Seeds.", 
+		"type": "map"
+	},
+	"wildmobsty0": {
+		"en-us": "", 
+		"en-dm": "Mobster: Mamma mia, it's the farmer! Come on boys! Let's get 'er!!!", 
+		"type": "map"
+	},
+	"wildmobsty1": {
+		"en-us": "", 
+		"en-dm": "Mobster: It's the girl!!", 
+		"type": "map"
+	},
+	"wildmobsty2": {
+		"en-us": "", 
+		"en-dm": "Mobster: Hey, I'm walkin' here!", 
+		"type": "map"
+	},
+	"wildmobsty3": {
+		"en-us": "", 
+		"en-dm": "Mobster: Oh man, the boss will give me a very nice calzone if I tell 'im I took YOU down!", 
+		"type": "map"
+	},
+	"wildmobsty4": {
+		"en-us": "", 
+		"en-dm": "Mobster: Hi, I'm Canadian so I don't really have the accent you'd expect me to have as a mafia-type. Sorrey.", 
+		"type": "map"
+	},
+	"wildmobsty5": {
+		"en-us": "", 
+		"en-dm": "Mobster: You're goin' down!!", 
+		"type": "map"
+	},
+	"wildmobsty6": {
+		"en-us": "", 
+		"en-dm": "Mobster: The cars! The cannolis!", 
+		"type": "map"
+	},
+	"SignPawn": {
+		"en-us": "", 
+		"en-dm": "It's A Fucking Pawn Shop", 
+		"type": "map"
+	},
+	"mobBoss0": {
+		"en-us": "", 
+		"en-dm": "???: I says many things, but one more thing I will say is this: you got guts, lady.", 
+		"type": "map"
+	},
+	"mobBoss1": {
+		"en-us": "", 
+		"en-dm": "???: Guts in the literal sense of course, as I have little reason to believe you's a robot or somethin'...", 
+		"type": "map"
+	},
+	"mobBoss2": {
+		"en-us": "", 
+		"en-dm": "???: But what I really meant was more in the metaphorical sense of having guts. You got balls.", 
+		"type": "map"
+	},
+	"mobBoss3": {
+		"en-us": "", 
+		"en-dm": "???: Again, I'm not trying to imply anything about literal testicles that you may or may not have.", 
+		"type": "map"
+	},
+	"mobBoss4": {
+		"en-us": "", 
+		"en-dm": "???: I am speaking of metaphorical balls. What I means is, you are brave for coming here.", 
+		"type": "map"
+	},
+	"mobBoss5": {
+		"en-us": "", 
+		"en-dm": "???: Not many would come here. Most would not be brave enough to risk doing so...", 
+		"type": "map"
+	},
+	"mobBoss6": {
+		"en-us": "", 
+		"en-dm": "???: And the few who are would've been killed before they got here, anyway.", 
+		"type": "map"
+	},
+	"mobBoss7": {
+		"en-us": "", 
+		"en-dm": "???: Guts and or balls and or chutzpah and or bold. That is what you are.", 
+		"type": "map"
+	},
+	"mobBoss8": {
+		"en-us": "", 
+		"en-dm": "???: Again, not literally. Literally, you are a farmer. A farmer I have been hired to find.", 
+		"type": "map"
+	},
+	"mobBoss9": {
+		"en-us": "", 
+		"en-dm": "???: I am Don Vagante. A man by the name of Beckett wants you dead.", 
+		"type": "map"
+	},
+	"mobBoss10": {
+		"en-us": "", 
+		"en-dm": "Vagante: That is to say that he wants you to become dead through actions carried out by me that would cause your death.", 
+		"type": "map"
+	},
+	"mobBoss11": {
+		"en-us": "", 
+		"en-dm": "Vagante: And by making you dead, what he wants becomes what he has, and then what I want becomes what I have.", 
+		"type": "map"
+	},
+	"mobBoss12": {
+		"en-us": "", 
+		"en-dm": "Vagante: This is because, in exchange for making you dead, he will give me large amounts of dollar money.", 
+		"type": "map"
+	},
+	"mobBoss13": {
+		"en-us": "", 
+		"en-dm": "Vagante: I know not what you want - perhaps to survive this encounter - but I can guarantee you one thing.", 
+		"type": "map"
+	},
+	"mobBoss14": {
+		"en-us": "", 
+		"en-dm": "Vagante: There are many people with many wants in this world. Of which, I can speak certainly of three of them.", 
+		"type": "map"
+	},
+	"mobBoss15": {
+		"en-us": "", 
+		"en-dm": "Vagante: Two people are about to get a thing they want, and one person is about to get dead.", 
 		"type": "map"
 	},
 	// Shops

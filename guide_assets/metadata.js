@@ -1,4 +1,4 @@
-var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm"]; // forest is big
+var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity"]; // forest is big
 var smallMaps = ["farm"];
 var namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
 var mapNames = {
@@ -30,6 +30,7 @@ function GetEnemyName(name) {
         case "seamonk": name = "seaMonk"; break;
         case "chickbot": name = "chickBot"; break;
         case "pig": name = "piggun"; break;
+        case "wildmobsty": return "Mobster"; break;
     }
     return GetText("e." + name + "0");
 }

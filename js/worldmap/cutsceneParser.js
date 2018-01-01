@@ -1,4 +1,5 @@
 var iHandler = {
+    moveSpeed: 0.025,
     state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null },
     Start: function(startkey) {
         iHandler.state = { key: startkey, idx: 0, activeAnim: null, done: false, texts: [], animHandler: null };
@@ -31,8 +32,8 @@ var iHandler = {
         CommandParser.Parse(action);
     },
     HandleAnim: function(spedUp) {
-        iHandler.state.activeAnim.target.pos.x += iHandler.state.activeAnim.dx * 0.025;
-        iHandler.state.activeAnim.target.pos.y += iHandler.state.activeAnim.dy * 0.025;
+        iHandler.state.activeAnim.target.pos.x += iHandler.state.activeAnim.dx * iHandler.moveSpeed;
+        iHandler.state.activeAnim.target.pos.y += iHandler.state.activeAnim.dy * iHandler.moveSpeed;
         if(!spedUp) { worldmap.refreshMap(); }
         var finished = false;
         switch(iHandler.state.activeAnim.dx * 2 + iHandler.state.activeAnim.dy) {
@@ -108,6 +109,8 @@ var CommandParser = {
                 case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
                 case "CLEARINTERACT": target.interact = undefined; break;
                 case "SETTARGETTONOTHING": game.target = null; break;
+                case "HISPEED": iHandler.moveSpeed = 0.05; break;
+                case "LOSPEED": iHandler.moveSpeed = 0.025; break;
             }
         }
     },
@@ -175,6 +178,43 @@ var CommandParser = {
 };
 
 var SpecialFunctions = {
+    "WAIT": function() { },
+    "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
+    "ENTERSKUMPY": function() {
+        worldmap.importantEntities["skumpyCover"].visible = false;
+        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
+        worldmap.importantEntities["skumpy"].visible = true;
+        worldmap.importantEntities["skumpy"].pos = { x: 40, y: 39 };
+        worldmap.importantEntities["skumpy"].anim.shiftX(10);
+        worldmap.refreshMap();
+    },
+    "SKUMPYTURN": function() {
+        worldmap.pos.y = 39.25;
+        worldmap.importantEntities["bruno"].dir = 3;
+        worldmap.importantEntities["skumpy"].anim.shiftX(9);
+    },
+    "SKUMPYCLEAN": function() {
+        var temp = game.target;
+        game.target = worldmap.importantEntities["bruno"];
+        worldmap.clearTarget();
+        game.target = temp;
+    },
+    "SKUMPYPOP": function() {
+        worldmap.pos.y = 39.25;
+        worldmap.playerDir = 1;
+    },
+    "SKUMPYEXIT": function() {
+        worldmap.clearTarget();
+        worldmap.importantEntities["skumpyCover"].visible = true;
+        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+        game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
+    },
+    "BRUNOBEAT": function() {
+        worldmap.importantEntities["bruno"].anim.shiftX(16);
+        worldmap.importantEntities["bruno"].anim.shiftY(4);
+        worldmap.importantEntities["bruno"].dir = 0;
+    },
+    "FORCEYZERO": function() { worldmap.forcedY = 0; },
     "SETUPJEFF": function() {
         worldmap.playerDir = 0;
         worldmap.waitForAnimation = true;
@@ -376,6 +416,20 @@ var SpecialFunctions = {
         }
         iHandler.state.done = true;
         worldmap.finishDialog();
+    },
+    "ABUELASTART": function() {
+        var items = specialtyHelpers.getAbuelaItems();
+        if(items.length === 0) { worldmap.writeText("kindLadyX"); iHandler.state.done = true; }
+        else { worldmap.writeText("kindLadyQ", items); }
+    },
+    "ABUELANEXT": function(idx) {
+        switch(specialtyHelpers.getAbuelaItems()[idx]) {
+            case "lady.fodder": player.decreaseItem("fodder"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
+            case "lady.corn": player.decreaseItem("corn"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
+            case "lady.rice": player.decreaseItem("rice"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
+            case "lady.goodfood": player.decreaseItem("goodfood"); worldmap.writeText("kindLadyGood0"); iHandler.state.idx = 8; break;
+            case "lime.nope": worldmap.writeText("kindLadyX"); iHandler.state.done = true; break;
+        }
     },
     "CROUTONSTART": function() {
         var items = specialtyHelpers.getCroutonItems();

@@ -19,9 +19,8 @@ var stores = {
             { product: "egg", price: 20, type: "seed" },
             { product: "carrot", price: 5, type: "seed" },
             { product: "beet", price: 6, type: "seed" },
-            //{ product: "pineapple", price: 12, type: "seed" },
+            { product: "pineapple", price: 12, type: "seed" },
             { product: "grapes", price: 10, type: "seed" }//,
-            //{ product: "!baseSickle", price: 50, type: "equipment" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: true,
         opening: "s.co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.cpurch"
@@ -37,7 +36,9 @@ var stores = {
         wares: [
             { product: "!baseSickle", price: 50, type: "equipment" },
             { product: "!goodSickle", price: 50, type: "equipment" },
-            { product: "!baseCompost", price: 50, type: "equipment" }
+            { product: "!baseCompost", price: 50, type: "equipment" },
+            { product: "!weakGloves", price: 50, type: "equipment" },
+            { product: "!weakSoil", price: 50, type: "equipment" }
         ],
         opening: "s.eq1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
     },
@@ -102,14 +103,15 @@ var stores = {
             { product: "carrot", price: 5, type: "seed" },
             { product: "beet", price: 6, type: "seed" },
             { product: "pineapple", price: 12, type: "seed" },
-            { product: "!weakGloves", price: 50, type: "equipment" },
-            { product: "!weakSoil", price: 50, type: "equipment" },
             { product: "!strongCompost", price: 50, type: "equipment" },
             { product: "!sturdyCompost", price: 50, type: "equipment" },
-            { product: "!spSickle", price: 50, type: "equipment" },
-            { product: "!suSickle", price: 50, type: "equipment" },
-            { product: "!auSickle", price: 50, type: "equipment" },
-            { product: "!wiSickle", price: 50, type: "equipment" }
+            { product: "!dblSickle", price: 50, type: "equipment" },
+            { product: "!hvySickle", price: 50, type: "equipment" },
+            { product: "!hoe", price: 50, type: "equipment" },
+            { product: "!salthoe", price: 50, type: "equipment" },
+            { product: "!speedSoil", price: 50, type: "equipment" },
+            { product: "!sturdSoil", price: 50, type: "equipment" },
+            { product: "!minSoil", price: 50, type: "equipment" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: true,
         opening: "cwk.co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "cwk.leave", notEnough: "s.notenough", purchased: "s.cpurch"
@@ -134,6 +136,86 @@ var stores = {
         ],
         opening: "s.fi1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
     },
+    // Area 4: South City
+    "skumpys": {
+        img: "shops/dwarf2", innId: "skumpys",
+        wares: [ { product: "sleep", price: 20, type: "inn" } ],
+        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
+    },
+    "mantools": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "!sicklerang", price: 50, type: "equipment" },
+            { product: "!sunSickle", price: 50, type: "equipment" },
+            { product: "!fortCompost", price: 50, type: "equipment" },
+            { product: "!healthyCompost", price: 50, type: "equipment" },
+            { product: "!jumboCompost", price: 50, type: "equipment" },
+            { product: "!vitaminCompost", price: 50, type: "equipment" },
+            { product: "!pairGloves", price: 50, type: "equipment" },
+            { product: "!gardenGloves", price: 50, type: "equipment" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "seedshack": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "catalinas": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "_sprinkler", price: 100, type: "farm" },
+            { product: "_log", price: 100, type: "farm" },
+            { product: "_coop", price: 100, type: "farm" },
+            { product: "_lake", price: 100, type: "farm" },
+            { product: "_paddy", price: 100, type: "farm" },
+            { product: "_strongsoil", price: 100, type: "farm" },
+            { product: "beeB", price: 1000, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "tinker": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "_shooter", price: 1000, type: "farm" },
+            { product: "_modulator", price: 1000, type: "farm" },
+            { product: "_hotspot", price: 250, type: "farm" },
+            { product: "!compost2", price: 5000, type: "equipment" },
+            { product: "headphones", price: 20, type: "seed" },
+            { product: "battery", price: 20, type: "seed" },
+            { product: "frogbot", price: 20, type: "seed" },
+            { product: "coffee", price: 20, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "pawn": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "drone", price: 50, type: "seed" },
+            { product: "net", price: 50, type: "seed" },
+            { product: "bignet", price: 50, type: "seed" },
+            { product: "platypus", price: 150, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "church": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+
     "template": {
         img: "",
         wares: [

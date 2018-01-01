@@ -514,8 +514,8 @@ var mapentities = {
         GetCommonEntity("LawnMower2", 20, 28, 4, 1, undefined, Cutscene("mower"), enemyMetadata.mower(6)) // 6 = bigger RtL
     ],
     "southcity": [
-        { name: "mobCover", storageKey: "mobCover", jumbo: true, filename: "mobcover", visible: true, w: 772, h: 512, offset: { x: 0, y: 0 }, pos: { x: 9, y: 27 } },
-        { name: "skumpyCover", storageKey: "skumpyCover", jumbo: true, filename: "skumpycover", visible: true, w: 396, h: 256, offset: { x: 1, y: 1 }, pos: { x: 36, y: 39 } },
+        { name: "mobCover", storageKey: "mobCover", jumbo: true, filename: "mobcover", visible: true, w: 772, h: 512, offset: { x: 0, y: 0 }, pos: { x: 9, y: 27 }, boring: true },
+        { name: "skumpyCover", storageKey: "skumpyCover", jumbo: true, filename: "skumpycover", visible: true, w: 396, h: 256, offset: { x: 1, y: 1 }, pos: { x: 36, y: 39 }, boring: true },
         GetCommonEntity("EnterMob", 15, 33, 0, 0, undefined, [
             function() {
                 worldmap.importantEntities["mobCover"].visible = false;
@@ -523,7 +523,7 @@ var mapentities = {
                 for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
                 worldmap.finishDialog();
             }
-        ], { visible: false, solid: false }),
+        ], { visible: false, solid: false, boring: true }),
         GetCommonEntity("ExitMob", 15, 34, 0, 0, undefined, [
             function() {
                 worldmap.importantEntities["mobCover"].visible = true;
@@ -531,334 +531,54 @@ var mapentities = {
                 for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
                 worldmap.finishDialog();
             }
-        ], { visible: false, solid: false }),
-        GetCommonEntity("IntroSkumpyCutscene", 43, 40, 0, 0, undefined, [
-            GetSpeak("entercity0"), // 0
-            function() {
-                worldmap.playerDir = 2;
-                worldmap.writeText("entercity1");
-                worldmap.importantEntities["skumpy"].visible = true;
-                worldmap.refreshMap();
-            },
-            function() {
-                gfx.clearSome(["menuA", "menutext", "menucursorA"]);
-                worldmap.importantEntities["skumpy"].visible = false;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.y += 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.y >= 43) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.playerDir = 1;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.x -= 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.x <= 41) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.playerDir = 0;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.y -= 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.y <= 42) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.importantEntities["skumpyCover"].visible = false;
-                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
-                worldmap.importantEntities["skumpy"].visible = true;
-                worldmap.importantEntities["skumpy"].pos = { x: 40, y: 39 };
-                worldmap.importantEntities["skumpy"].anim.shiftX(10);
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.y -= 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.y <= 40.75) { FinishAnim(); }
-                }, 10); 
-            }, // 5
-            GetSpeak("entercity2"),
-            function() {
-                gfx.clearSome(["menuA", "menutext", "menucursorA"]);
-                worldmap.playerDir = 1;
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.x -= 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.x <= 38) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.forcedY = 0;
-                worldmap.playerDir = 0;
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.y -= 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.y <= 39) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.playerDir = 3;
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.x += 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.x >= 41) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.playerDir = 2;
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.y += 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.y >= 39.75) { FinishAnim(); }
-                }, 10);
-            }, // 10
-            function() {
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.y += 0.05;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.y >= 43) { FinishAnim(); }
-                }, 10);
-            },
-            function() {
-                worldmap.importantEntities["bruno"].dir = 1;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.x -= 0.05;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.x <= 41) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.importantEntities["bruno"].dir = 0;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.y -= 0.05;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.y <= 40.75) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.importantEntities["bruno"].dir = 1;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.x -= 0.05;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.x <= 40) { FinishAnim(); }
-                }, 10); 
-            }, // 15
-            function() {
-                worldmap.importantEntities["bruno"].dir = 0;
-                worldmap.importantEntities["bruno"].moving = false;
-                worldmap.refreshMap();
-                worldmap.writeText("entercity3");
-            },
-            GetSpeak("entercity4"),
-            GetSpeak("entercity5"),
-            GetSpeak("entercity6"),
-            GetSpeak("entercity7"), // 20
-            GetSpeak("entercity8"),
-            GetSpeak("entercity9"),
-            GetSpeak("entercity10"),
-            GetSpeak("entercity11"),
-            GetSpeak("entercity12"),
-            GetSpeak("entercity13"),
-            GetSpeak("entercity14"),
-            GetSpeak("entercity15"),
-            GetSpeak("entercity16"),
-            GetSpeak("entercity17"), // 30
-            GetSpeak("entercity18"),
-            GetSpeak("entercity19"),
-            GetSpeak("entercity20"),
-            GetSpeak("entercity21", ["mobchoice0", "mobchoice1"]),
-            function(i) {
-                if(i === 0) {
-                    worldmap.pos.y = 39.25;
-                    worldmap.importantEntities["bruno"].dir = 3;
-                    worldmap.importantEntities["skumpy"].anim.shiftX(9);
-                    worldmap.refreshMap();
-                    worldmap.writeText("entercity0_0");
-                    worldmap.dialogData.nextDialogState = 63;
-                } else {
-                    worldmap.writeText("entercity1_0");
-                }
-            }, // 35
-            GetSpeak("entercity1_1"),
-            GetSpeak("entercity1_2"),
-            GetSpeak("entercity1_3"),
-            GetSpeak("entercity1_4"),
-            GetSpeak("entercity1_5"), // 40
-            function() {
-                worldmap.importantEntities["bruno"].dir = 3;
-                worldmap.importantEntities["bruno"].moving = true;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.x += 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.x >= 41) { FinishAnim(); }
-                }, 10);
-            },
-            function() {
-                worldmap.importantEntities["bruno"].dir = 2;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.y += 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.y >= 42) { FinishAnim(); }
-                }, 10); 
-            },
-            function() {
-                worldmap.importantEntities["bruno"].dir = 3;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.x += 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.x >= 44) { FinishAnim(); }
-                }, 10);
-            },
-            function() {
-                worldmap.importantEntities["bruno"].dir = 0;
-                worldmap.refreshMap();
-                worldmap.waitForAnimation = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.importantEntities["bruno"].pos.y -= 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.importantEntities["bruno"].pos.y <= 33) { FinishAnim(); }
-                }, 10);
-            },
-            function() {
-                var temp = game.target;
-                game.target = worldmap.importantEntities["bruno"];
-                worldmap.clearTarget();
-                game.target = temp;
-                worldmap.writeText("entercity1_6");
-            }, // 45
-            function() {
-                worldmap.writeText("entercity1_7");
-                worldmap.pos.y = 39.25;
-                worldmap.playerDir = 1;
-                worldmap.refreshMap();
-            },
-            GetSpeak("entercity2_0"),
-            GetSpeak("entercity2_1"),
-            GetSpeak("entercity2_2"),
-            GetSpeak("entercity2_3"),
-            GetSpeak("entercity2_4"), // 51
-            GetSpeak("entercity2_5"),
-            GetSpeak("entercity2_6"),
-            GetSpeak("entercity2_7"),
-            GetSpeak("entercity2_8"),
-            GetSpeak("entercity2_9"), // 56
-            GetSpeak("entercity2_10"),
-            GetSpeak("entercity2_11"),
-            GetSpeak("entercity2_12"),
-            GetSpeak("entercity2_13"),
-            GetSpeak("entercity2_14"), // 61
-            GetSpeak("entercity2_15"),
-            function() {
-                worldmap.forceEndDialog = true;
-                worldmap.clearTarget();
-                worldmap.importantEntities["skumpyCover"].visible = true;
-                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
-                game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
-            },
-            GetSpeak("entercity0_1"),
-            GetSpeak("entercity0_2"),
-            GetSpeak("entercity0_3"),
-            GetSpeak("entercity0_4"), // 65
-            GetSpeak("entercity0_5"),
-            function() { combat.startBattle(["mobsty1"]); }
-        ], { visible: false, solid: false, isRow: false, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene" }), // TODO: change back to isRow!
-        { name: "beatBruno", storageKey: "beatBruno", pos: { x: -1, y: -1}, interact: [
-            function() {
-                worldmap.writeText("entercity0_pb0");
-                worldmap.importantEntities["bruno"].anim.shiftX(16);
-                worldmap.importantEntities["bruno"].anim.shiftY(4);
-                worldmap.importantEntities["bruno"].dir = 0;
-                worldmap.refreshMap();
-            },
-            GetSpeak("entercity0_pb1"),
-            GetSpeak("entercity0_pb2"),
-            GetSpeak("entercity0_pb3"),
-            GetSpeak("entercity0_pb4"),
-            GetSpeak("entercity2_0"),
-            GetSpeak("entercity2_1"),
-            GetSpeak("entercity2_2"),
-            GetSpeak("entercity2_3"),
-            GetSpeak("entercity2_4"),
-            GetSpeak("entercity2_5"),
-            GetSpeak("entercity2_6"),
-            GetSpeak("entercity2_7"),
-            GetSpeak("entercity2_8"),
-            GetSpeak("entercity2_9"),
-            function() {
-                game.target = worldmap.importantEntities["introCutscene"];
-                worldmap.clearTarget();
-                worldmap.importantEntities["skumpyCover"].visible = true;
-                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
-                game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
-            }
-        ]},
-        { name: "brunoKill", storageKey: "brunoKill", pos: { x: -1, y: -1}, interact: [
-            GetSpeak("entercityBAD0"),
-            GetSpeak("entercityBAD1"),
-            GetSpeak("entercityBAD2"),
-            GetSpeak("entercityBAD3"),
-            GetSpeak("entercityBAD4"),
-            GetSpeak("entercityBAD5"),
-            GetSpeak("entercityBAD6"),
-            GetSpeak("entercityBAD7"),
-            GetSpeak("entercityBAD8"),
-            GetSpeak("entercityBAD9"),
-            function() {
-                gfx.clearSome(["menuA", "menutext", "menucursorA"]);
-                worldmap.waitForAnimation = true;
-                worldmap.forceMove = true;
-                worldmap.animIdx = setInterval(function() {
-                    worldmap.pos.y += 0.025;
-                    worldmap.refreshMap();
-                    if(worldmap.pos.y >= 21) { FinishAnim(); }
-                }, 10); 
-            },
-            function() { console.log("wait for confirmation"); },
-            function() { game.transition(game.currentInputHandler, worldmap.title); }
-        ]},
+        ], { visible: false, solid: false, boring: true }),
+
+        EnterShop("Skumpys", 41, 42, "skumpys"),
+        EnterShop("ManTools", 52, 32, "mantools"),
+        EnterShop("Seed Shack", 65, 40, "seedshack"),
+        EnterShop("Catalinas", 67, 32, "catalinas"),
+        EnterShop("TinkerTierra", 50, 12, "tinker"),
+        EnterShop("PawnShop", 56, 21, "pawn"),
+        EnterShop("Church", 38, 14, "church"),
+        GetSign(57, 22, "SignPawn"),
+
+        GetMafiaMember(0, 24, 16, 3, commonMovementDatas.rectangle(24, 16, 20, 18)),
+        GetMafiaMember(1, 23, 7, 3, commonMovementDatas.rectangle(23, 7, 22, 9)),
+        GetMafiaMember(2, 23, 6, 2, commonMovementDatas.downrectangle(23, 6, 22, 9)),
+        GetMafiaMember(3, 45, 17, 2, commonMovementDatas.downrectangle(45, 17, 14, 17)),
+        GetMafiaMember(4, 44, 16, 2, commonMovementDatas.rectangle(24, 16, 20, 18, 1)),
+        GetMafiaMember(5, 44, 34, 1, commonMovementDatas.rectangle(24, 16, 20, 18, 2)),
+        GetMafiaMember(6, 24, 34, 0, commonMovementDatas.rectangle(24, 16, 20, 18, 3)),
+        GetMafiaMember(7, 45, 34, 3, commonMovementDatas.downrectangle(45, 17, 14, 17, 1)),
+        GetMafiaMember(8, 59, 34, 0, commonMovementDatas.downrectangle(45, 17, 14, 17, 2)),
+        GetMafiaMember(9, 59, 17, 1, commonMovementDatas.downrectangle(45, 17, 14, 17, 3)),
+        GetMafiaMember(10, 45, 7, 2, commonMovementDatas.rectangle(23, 7, 22, 9, 1)),
+        GetMafiaMember(11, 45, 16, 1, commonMovementDatas.rectangle(23, 7, 22, 9, 2)),
+        GetMafiaMember(12, 23, 16, 0, commonMovementDatas.rectangle(23, 7, 22, 9, 3)),
+        GetMafiaMember(13, 9, 36, 2, commonMovementDatas.downrectangle(9, 36, 15, 6)),
+        GetMafiaMember(14, 9, 42, 3, commonMovementDatas.downrectangle(9, 36, 15, 6, 1)),
+        GetMafiaMember(15, 24, 42, 0, commonMovementDatas.downrectangle(9, 36, 15, 6, 2)),
+        GetMafiaMember(16, 24, 36, 1, commonMovementDatas.downrectangle(9, 36, 15, 6, 3)),
+        GetMafiaMember2(17, 11, 31, 3),
+        GetMafiaMember2(18, 18, 30, 0),
+        GetMafiaMember2(19, 17, 28, 1),
+        GetMafiaMember2(20, 20, 33, 1),
+        GetCommonEntity("MobBoss", 20, 27, 17, 2, undefined, Cutscene("mobBoss"), { sy: 10, inside: true, visible: false, boss: true }),
+
+        GetCommonEntity("IntroSkumpyCutscene", 43, 40, 0, 0, undefined, Cutscene("southcity"), { visible: false, solid: false, isRow: true, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene", boring: true }),
+        GetInvisibleEntity("beatBruno", Cutscene("beatbruno"), { storageKey: "beatBruno" }),
+        GetInvisibleEntity("brunoKill", Cutscene("badEnd"), { storageKey: "brunoKill" }),
+        GetCommonEntity("Skumpy", 41, 42, 12, 0, undefined, undefined, { sy: 8, moving: true, sheetlen: 2, solid: false, storageKey: "skumpy", inside: true, visible: false, boring: true }),
+        GetCommonEntity("Bruno", 44, 33, 13, 2, undefined, undefined, { sy: 10, moving: true, solid: false, storageKey: "bruno", inside: true, boring: true }),
+        GetCommonEntity("BarL", 39, 39.875, 15, 0, undefined, undefined, { sy: 5, inside: true, visible: false, boring: true }),
+        GetCommonEntity("BarM", 40, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false, boring: true }),
+        GetCommonEntity("BarR", 41, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false, boring: true }),
+        
         GetCommonEntity("AFuckingTruckL", 52, 48, 4, 0, undefined, Cutscene("truck"), { big: true, noChange: true }),
         GetCommonEntity("AFuckingTruckR", 54, 48, 5, 0, undefined, Cutscene("truck"), { big: true, noChange: true }),
-        GetCommonEntity("Skumpy", 41, 42, 12, 0, undefined, undefined, { sy: 8, moving: true, sheetlen: 2, solid: false, storageKey: "skumpy", inside: true, visible: false }),
-        GetCommonEntity("Bruno", 44, 33, 13, 2, undefined, undefined, { sy: 10, moving: true, solid: false, storageKey: "bruno", inside: true }),
-        GetCommonEntity("BarL", 39, 39.875, 15, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
-        GetCommonEntity("BarM", 40, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
-        GetCommonEntity("BarR", 41, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false }),
-        GetCommonEntity("Pigeon1", 30, 22, 14, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true }),
-        GetCommonEntity("Pigeon2", 36, 21, 13, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true }),
-        GetCommonEntity("Pigeon3", 33, 22, 14, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true }),
-        GetCommonEntity("Abuela", 34, 20, 17, 0, undefined, [], { sy: 4, noChange: true })
+        GetCommonEntity("Pigeon1", 30, 22, 14, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true, boring: true }),
+        GetCommonEntity("Pigeon2", 36, 21, 13, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true, boring: true }),
+        GetCommonEntity("Pigeon3", 33, 22, 14, 0, undefined, undefined, { sy: 8, sheetlen: 2, moving: true, boring: true }),
+        GetCommonEntity("Abuela", 34, 20, 17, 0, undefined, Cutscene("abuela"), { sy: 4, noChange: true })
     ]
 };

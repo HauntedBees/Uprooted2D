@@ -52,6 +52,16 @@ var gfx = {
         img.src = encodedImg;
         img.onload = function() { gfx.ctx["menutext"].drawImage(this, 700, 14, 192, 128); };
     },
+    drawFOV: function(x, y, dir) {
+        var topx, topy, width, height, startx, starty;
+        switch(dir) {
+            case 0: topx = 48; topy = 0; width = 48; height = 80; startx = x - 1; starty = y - 4.5; break;
+            case 1: topx = 0; topy = 140; width = 80; height = 60; startx = x - 4.25; starty = y - 1.75; break;
+            case 2: topx = 0; topy = 0; width = 48; height = 80; startx = x - 1; starty = y - 0.25; break;
+            case 3: topx = 0; topy = 80; width = 80; height = 60; startx = x + 0.25; starty = y - 1.5; break;
+        }
+        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["fov"], topx, topy, width, height, startx * 16, starty * 16, width, height);
+    },
     drawJumbo: function(file, x, y, w, h, ox, oy) {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
     },

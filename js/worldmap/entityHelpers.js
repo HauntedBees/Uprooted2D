@@ -37,6 +37,15 @@ var specialtyHelpers = {
         if(items.length > 0) { items.push("lime.nope"); }
         return items;
     },
+    getAbuelaItems: function() {
+        var items = [];
+        if(player.hasItem("fodder")) { items.push("lady.fodder"); }
+        if(player.hasItem("corn")) { items.push("lady.corn"); }
+        if(player.hasItem("rice")) { items.push("lady.rice"); }
+        if(player.hasItem("goodfood")) { items.push("lady.goodfood"); }
+        if(items.length > 0) { items.push("lime.nope"); }
+        return items;
+    },
     getTruckOptions: function() {
         var options = [];
         if(worldmap.mapName !== "producestand") { options.push("truck.home"); }
@@ -244,6 +253,12 @@ function GetWaterfall(name, x, y, dir, wfid) {
 function GetWaterfallEnd(name, x, y, dir, wfid) {
     return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: 4, sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
 }
+function GetMafiaMember(num, x, y, dir, movement) {
+    return GetCommonEntity("Mafia" + num, x, y, 13, dir, movement, Cutscene("enemy"), enemyMetadata.mafia);
+}
+function GetMafiaMember2(num, x, y, dir) {
+    return GetCommonEntity("Mafia" + num, x, y, 13, dir, undefined, Cutscene("enemy"), enemyMetadata.mafia2);
+}
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
     var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
@@ -258,13 +273,15 @@ function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional
     };
     if(big) { res.anim.big = true; }
     return Object.assign(res, additional);
-};
+}
 function GetSpeak(t, choices) { return function() { worldmap.writeText(t, choices); }  }
 function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
 function Cutscene(s) { return [ function() { iHandler.Start(s); } ]; }
 
 var enemyMetadata = {
+    mafia2: { interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, inside: true, fov: true, visible: false },
+    mafia: { interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, fov: true },
     robo: { interactname: "robo", dialogMax: 5, enemies: ["robo"], min: 1, max: 2 },
     mouse: { interactname: "mouse", dialogMax: 3, enemies: ["mouse"], min: 2, max: 4, sy: 5, sheetlen: 2 },
     sqorl: { interactname: "sqorl", dialogMax: 4, enemies: ["sqorl", "sqorl", "sqorl", "mouse"], min: 1, max: 3, sy: 5, sheetlen: 2 },
