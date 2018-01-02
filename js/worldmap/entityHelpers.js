@@ -279,6 +279,24 @@ function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
 function Cutscene(s) { return [ function() { iHandler.Start(s); } ]; }
 
+function GetJumbo(id, img, x, y, w, h, ox, oy) {
+    return { name: id, storageKey: id, jumbo: true, filename: img, visible: true, w: w, h: h, offset: { x: ox, y: oy }, pos: { x: x, y: y }, boring: true };
+}
+function GetJumboToggle(id, x, y, enter) {
+    return GetCommonEntity(id, x, y, 0, 0, undefined, [enter ? JumboEntrance : JumboExit], { visible: false, solid: false, boring: true });
+}
+function JumboEntrance() { JumboToggle(true); }
+function JumboExit() { JumboToggle(false); }
+function JumboToggle(inside) {
+    worldmap.forceEndDialog = true;
+    for(var i = 0; i < worldmap.entities.length; i++) {
+        if(worldmap.entities[i].inside) { worldmap.entities[i].visible = inside; }
+        else if(worldmap.entities[i].jumbo) { worldmap.entities[i].visible = !inside; }
+    }
+    worldmap.finishDialog();
+}
+
+
 var enemyMetadata = {
     mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, inside: true, fov: true, visible: false },
     mafia: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, fov: true },

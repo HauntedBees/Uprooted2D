@@ -235,18 +235,8 @@ var SpecialFunctions = {
         worldmap.importantEntities["FarmerJeff"].visible = true;
         worldmap.importantEntities["FarmerJeff"].moving = true;
     },
-    "ENTERBARN": function() {
-        worldmap.importantEntities["barnCover"].visible = false;
-        worldmap.forceEndDialog = true;
-        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
-        worldmap.finishDialog();
-    },
-    "EXITBARN": function() {
-        worldmap.importantEntities["barnCover"].visible = true;
-        worldmap.forceEndDialog = true;
-        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
-        worldmap.finishDialog();
-    },
+    "ENTERBARN": function() { JumboEntrance(); },
+    "EXITBARN": function() { JumboExit(); },
     "FIXTIRE": function() {
         worldmap.writeText("bustedTruck1");
         game.target.anim.shiftY(0);

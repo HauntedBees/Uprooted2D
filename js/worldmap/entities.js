@@ -461,7 +461,7 @@ var mapentities = {
         GetSign(4, 30, "upgradeBarn"),
         EnterShop("Upgrade Barn", 3, 30, "upgrade2"),
         EnterShop("Fixture Stall", 19, 21, "fixture2"),
-        { name: "barnCover", storageKey: "barnCover", jumbo: true, filename: "barncover", visible: true, w: 1036, h: 900, offset: { x: 1, y: 0 }, pos: { x: 7, y: 18 } },
+        GetJumbo("barnCover", "barncover", 7, 18, 1036, 900, 1, 0),
         
         GetCommonEntity("FarmerJeffOpening", 15, 35.5, 8, 3, undefined, Cutscene("flatTire"), { sy: 10, solid: false, autoplay: true, storageKey: "FarmerJeff" }),
         GetCommonEntity("FarmTVEntrance", 10, 8, 0, 0, undefined, Cutscene("farmTV"), { solid: false, visible: false } ),
@@ -487,8 +487,8 @@ var mapentities = {
         GetCommonEntity("AFuckingTruckR", 26, 34, 5, 0, undefined, undefined, { big: true, noChange: true }),
         GetCommonEntity("Crouton", 26, 30, 0, 0, undefined, Cutscene("crouton"), { visible: false }),
         
-        GetCommonEntity("EnterBarnL", 14, 30, 0, 0, undefined, [ SpecialFunctions["ENTERBARN"] ], { visible: false, solid: false }),
-        GetCommonEntity("EnterBarnR", 15, 30, 0, 0, undefined, [ SpecialFunctions["ENTERBARN"] ], { visible: false, solid: false }),
+        GetJumboToggle("EnterBarnL", 14, 30, true),
+        GetJumboToggle("EnterBarnR", 15, 30, true),
         GetCommonEntity("ExitBarnL", 14, 31, 0, 0, undefined, Cutscene("exitBarn"), { visible: false, solid: false, postBattle: "beatDweeb", dontClearTarget: true }),
         GetCommonEntity("ExitBarnR", 15, 31, 0, 0, undefined, Cutscene("exitBarn"), { visible: false, solid: false, postBattle: "beatDweeb", dontClearTarget: true }),
         GetInvisibleEntity("beatDweeb", Cutscene("beatBarn"), { storageKey: "beatDweeb" }),
@@ -514,25 +514,11 @@ var mapentities = {
         GetCommonEntity("LawnMower2", 20, 28, 4, 1, undefined, Cutscene("mower"), enemyMetadata.mower(6)) // 6 = bigger RtL
     ],
     "southcity": [
-        { name: "mobCover", storageKey: "mobCover", jumbo: true, filename: "mobcover", visible: true, w: 772, h: 512, offset: { x: 0, y: 0 }, pos: { x: 9, y: 27 }, boring: true },
-        { name: "skumpyCover", storageKey: "skumpyCover", jumbo: true, filename: "skumpycover", visible: true, w: 396, h: 256, offset: { x: 1, y: 1 }, pos: { x: 36, y: 39 }, boring: true },
-        GetCommonEntity("EnterMob", 15, 33, 0, 0, undefined, [
-            function() {
-                worldmap.importantEntities["mobCover"].visible = false;
-                worldmap.forceEndDialog = true;
-                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
-                worldmap.finishDialog();
-            }
-        ], { visible: false, solid: false, boring: true }),
-        GetCommonEntity("ExitMob", 15, 34, 0, 0, undefined, [
-            function() {
-                worldmap.importantEntities["mobCover"].visible = true;
-                worldmap.forceEndDialog = true;
-                for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
-                worldmap.finishDialog();
-            }
-        ], { visible: false, solid: false, boring: true }),
-
+        GetJumbo("skumpyCover", "skumpycover", 36, 39, 396, 256, 1, 1),
+        GetJumbo("mobCover", "mobcover", 9, 27, 772, 512, 0, 0),
+        GetJumboToggle("EnterMob", 15, 33, true),
+        GetJumboToggle("ExitMob", 15, 34, false),
+        
         EnterShop("Skumpys", 41, 42, "skumpys"),
         EnterShop("ManTools", 52, 32, "mantools"),
         EnterShop("Seed Shack", 65, 40, "seedshack"),
