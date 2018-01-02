@@ -105,6 +105,15 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "porcini0": [22, 16],
+        "porcini1": [23, 16],
+        "porcini2": [24, 16],
+        "porcini": [25, 16],
+        "arborioB0": [26, 16],
+        "arborioB1": [27, 16],
+        "arborioB2": [28, 16],
+        "arborioB3": [29, 16],
+        "arborioB": [15, 18],
         "cloud0": [15, 2, true],
         "cloud": [30, 12],
         "lightbulb0": [23, 15],

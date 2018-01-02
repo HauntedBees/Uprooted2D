@@ -592,6 +592,19 @@ var actions = {
         combat.animHelper.DrawBottom();
         return true;
     },
+    "TRY_PLANT_THREE_CROPS": function(e, crop) {
+        var placeholderTitle = EnemyParser.current.data.textID;
+        if(!actions["TRY_PLANT_CROP"](e, crop)) { return false; }
+        EnemyParser.current.data.textID = placeholderTitle + "2";
+        if(!actions["TRY_PLANT_CROP"](e, crop)) {
+            EnemyParser.current.data.textID = placeholderTitle;
+            return true;
+        }
+        EnemyParser.current.data.textID = placeholderTitle + "3";
+        actions["TRY_PLANT_CROP"](e, crop);
+        EnemyParser.current.data.textID = placeholderTitle;
+        return true;
+    },
     "WEAK_ATTACK": function(e) {
         var damage = combat.damagePlayer(Math.max(1, Math.round(e.atk)));
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);

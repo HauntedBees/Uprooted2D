@@ -114,6 +114,8 @@ function GetCrop(name) {
 		case "lightbulb": return new CropDetail(name, "Smart Lightbulb", 0, "tech", 1, 1, 2, 5, 0, 1, 1, 1, 1);
 		case "download": return new CropDetail(name, "Download", 0, "tech", 1, 10, 5, 40, 0, 1, 1, 1, 1);
 		case "cloud": return new CropDetail(name, "The Cloud", 0, "cloud", 2, 100, 1, 20, 0, 1, 1, 1, 1);
+		case "porcini": return new CropDetail(name, "Porcini", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+		case "arborioB": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
 	}
 }
 debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs"];

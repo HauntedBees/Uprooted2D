@@ -301,7 +301,7 @@ var scripts = {
 	"badTruck0": "?[{\"q\":\"player.completedQuest('gotTire')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"badTruck1": "_TEXT:bustedTruck0&_END",
 	"badTruck2": "_CUSTOM:FIXTIRE",
-	// Fake Farm: Trying to Exit the Barn
+	// Fake Farm: Fourth Boss (HOUSEKEEPER)
 	"exitBarn0": "?[{\"q\":\"player.hasQuest('gotTire')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"exitBarn1": "_CUSTOM:EXITBARN&_END",
 	"exitBarn2": "?[{\"q\":\"player.hasQuestState('gotTire',1)\",\"v\":9},{\"q\":\"true\",\"v\":3}]",
@@ -355,7 +355,7 @@ var scripts = {
 	"southcity18": "_CUSTOM:SKUMPYTURN&_TEXT:entercity0.(0-3)",
 	"southcity19": "bruno_SETDIR:0&_TEXT:entercity0.4",
 	"southcity20": "bruno_SETDIR:3&_TEXT:entercity0.5",
-	"southcity21": "_FIGHT:mobsty1&_END",
+	"southcity21": "_FIGHT:mrbruno&_END",
 	"southcity22": "_TEXT:entercity1.(0-5)",
 	"southcity23": "bruno_SETDIR:3&bruno_ISMOVING:true&bruno_MOVE:x41",
 	"southcity24": "bruno_SETDIR:2&bruno_MOVE:y42",
@@ -385,7 +385,11 @@ var scripts = {
 	"abuela7": "_GIVE:asparagus,20&_MONEY:10000&_TEXT:kindLadyNorm3&_COMPLETEQUEST:abuelitaBonita&_END",
 	"abuela8": "_TEXT:kindLadyGood(1-2)",
 	"abuela9": "_GIVE:notdrugs,6&_MONEY:20000&_TEXT:kindLadyGood3&_COMPLETEQUEST:abuelitaBonita",
-	// South City: Mob Boss
+	// South City: Fifth Boss (DON VAGANTE)
 	"mobBoss0": "_TEXT:mobBoss(0-15)",
-	"mobBoss1": "_FIGHT:mobsty2",
+	"mobBoss1": "_FIGHT:mobBoss,mobsty2,mobsty2",
+	"mobLost0": "_TEXT:mobBack1",
+	"mobLost1": "_FIGHT:mobBoss,mobsty2,mobsty2",
+	"mobWon0": "_TEXT:beatMob(0-10)",
+	"mobWon1": "_CUSTOM:MOBFLEE&_TEXT:beatMob11",
 };

@@ -180,6 +180,16 @@ var CommandParser = {
 var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
+    "MOBFLEE": function() {
+        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+            var e = worldmap.entities[i];
+            if(e.mafia === true) { 
+                player.clearedEntities.push(e.name);
+                worldmap.entities.splice(i, 1);
+            }
+        }
+        worldmap.refreshMap();
+    },
     "ENTERSKUMPY": function() {
         worldmap.importantEntities["skumpyCover"].visible = false;
         for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }

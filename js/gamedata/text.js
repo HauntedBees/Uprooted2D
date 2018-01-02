@@ -3262,6 +3262,71 @@ var fulltext = {
 		"en-dm": "Vagante: Two people are about to get a thing they want, and one person is about to get dead.", 
 		"type": "map"
 	},
+	"beatMob0": {
+		"en-us": "", 
+		"en-dm": "Vagante: Mannaggia... who the hell are you, lady??", 
+		"type": "map"
+	},
+	"beatMob1": {
+		"en-us": "", 
+		"en-dm": "Vagante: Those rich kids up north are NOT paying us enough for this.", 
+		"type": "map"
+	},
+	"beatMob2": {
+		"en-us": "", 
+		"en-dm": "Vagante: If word gets out that I, Don Vagante, head of the Las Abejas County Mafia Reenactment Family, lost to you...", 
+		"type": "map"
+	},
+	"beatMob3": {
+		"en-us": "", 
+		"en-dm": "Vagante: What? You thought we were a real mob? Please, lady, you really thought you just beat the head of a REAL mafia?", 
+		"type": "map"
+	},
+	"beatMob4": {
+		"en-us": "", 
+		"en-dm": "Vagante: Now I'm not sure if you're really tough or just really really dumb.", 
+		"type": "map"
+	},
+	"beatMob5": {
+		"en-us": "", 
+		"en-dm": "Vagante: ...What do you mean, \"why would a historical reenactment group try to kill someone?\"", 
+		"type": "map"
+	},
+	"beatMob6": {
+		"en-us": "", 
+		"en-dm": "Vagante: We may be a fake mob, but the money those nerds were offering us was real!", 
+		"type": "map"
+	},
+	"beatMob7": {
+		"en-us": "", 
+		"en-dm": "Vagante: Do you know how hard it is to get funding for something like this? After the mayor cut the arts budget last year??", 
+		"type": "map"
+	},
+	"beatMob8": {
+		"en-us": "", 
+		"en-dm": "Vagante: But I'll tell ya what, lady. We'll clear out of here and leave you and this rinky dink part of the city alone.", 
+		"type": "map"
+	},
+	"beatMob9": {
+		"en-us": "", 
+		"en-dm": "Vagante: In exchange, you don't tell nobody here that we're not a real mob, and don't leak this to the press up north.", 
+		"type": "map"
+	},
+	"beatMob10": {
+		"en-us": "", 
+		"en-dm": "Vagante: Capisce? Capisce. Alright, boys! Let's scram!", 
+		"type": "map"
+	},
+	"beatMob11": {
+		"en-us": "", 
+		"en-dm": "All of the \"mobsters\" quickly flee the area.", 
+		"type": "map"
+	},
+	"mobBack1": {
+		"en-us": "", 
+		"en-dm": "Vagante: Back again, are you? Accept your fate!", 
+		"type": "map"
+	},
 	// Shops
 	"s.co": {
 		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
@@ -3539,6 +3604,16 @@ var fulltext = {
 	"plantAttack": {
 		"en-us": "", 
 		"en-dm": "{0} plants {2}.", 
+		"type": "combat"
+	},
+	"plantAttack2": {
+		"en-us": "", 
+		"en-dm": "{0} plants 2 crops.", 
+		"type": "combat"
+	},
+	"plantAttack3": {
+		"en-us": "", 
+		"en-dm": "{0} plants 3 crops.", 
 		"type": "combat"
 	},
 	"modulateAttack": {
@@ -3937,6 +4012,11 @@ var fulltext = {
 		"en-dm": "Outlet", 
 		"type": "enemy"
 	},
+	"e.mrbruno0": {
+		"en-us": "", 
+		"en-dm": "Mr. Bruno", 
+		"type": "enemy"
+	},
 	"e.mobsty10": {
 		"en-us": "", 
 		"en-dm": "Mr. Ferrante", 
@@ -3944,7 +4024,7 @@ var fulltext = {
 	},
 	"e.mobsty11": {
 		"en-us": "", 
-		"en-dm": "Mr. Bruno", 
+		"en-dm": "Mr. Russo", 
 		"type": "enemy"
 	},
 	"e.mobsty12": {
@@ -3965,6 +4045,11 @@ var fulltext = {
 	"e.mobsty22": {
 		"en-us": "", 
 		"en-dm": "Mr. Martinazzi", 
+		"type": "enemy"
+	},
+	"e.mobBoss0": {
+		"en-us": "", 
+		"en-dm": "Don Vagante", 
 		"type": "enemy"
 	},
 	"e.beeQueenA0": {

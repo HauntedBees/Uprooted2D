@@ -10,7 +10,8 @@ var mapNames = {
     "researchfacility": "Mysterious Research Lab",
     "bridge": "Bridge Crossing",
     "underwater": "Underwater",
-    "fakefarm": "Jeff's Farm"
+    "fakefarm": "Jeff's Farm",
+    "southcity": "South Las Abejas"
 };
 var shopNames = {
     "coop": "Chicken Coop",
@@ -31,6 +32,7 @@ function GetEnemyName(name) {
         case "chickbot": name = "chickBot"; break;
         case "pig": name = "piggun"; break;
         case "wildmobsty": return "Mobster"; break;
+        case "MobBoss": name = "mobBoss"; break;
     }
     return GetText("e." + name + "0");
 }
