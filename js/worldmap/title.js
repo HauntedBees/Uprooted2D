@@ -64,6 +64,7 @@ worldmap.title = {
                     //init: { x: 5, y: 3 }, map: "underwater" // next to fish school
                     //init: { x: 24.75, y: 35.5 }, map: "fakefarm" // by truck
                     //init: { x: 44, y: 44 }, map: "southcity" // by Skumpy's
+                    //init: { x: 34, y: 21 }, map: "southcity" // by old lady
                     //init: { x: 15, y: 36 }, map: "southcity" // by mob base
                 });
             case 1: return game.innerTransition(this, pausemenu.savemenu, { saving: false }); // this is probably wrong
