@@ -23,8 +23,8 @@ var game = {
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
                     "maps/producestand","maps/forest", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
                     "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home",
-                    "maps/fakefarm", "barncover", "maps/southcity", "mobcover", "skumpycover", "maps/gameover", "fov"],
-    canvasLayers: ["background", "background2", "characters", "foreground", "menuA", "menuB", "menucursorA", 
+                    "maps/fakefarm", "barncover", "maps/southcity", "mobcover", "skumpycover", "maps/gameover", "fov", "smartphone"],
+    canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
         var canvasObj = {};

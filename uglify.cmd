@@ -33,6 +33,7 @@ uglifyjs ^
     js/worldmap/cutsceneParser.js ^
     js/worldmap/entityHelpers.js ^
     js/worldmap/entities.js ^
+    js/worldmap/smartphone.js ^
     js/playerstats/pausemenu.js ^
     js/playerstats/viewinventory.js ^
     js/playerstats/equipment.js ^

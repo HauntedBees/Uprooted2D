@@ -1,5 +1,5 @@
 var worldmap = {
-    freeMovement: true, savedImage: "", angryBees: false,
+    freeMovement: true, savedImage: "", angryBees: false, smartphone: null,
     pos: {x: 0, y: 0}, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
@@ -141,6 +141,7 @@ var worldmap = {
             }
         }
         for(var i = 0; i < fov.length; i++) { gfx.drawFOV(fov[i].x, fov[i].y, fov[i].dir, fov[i].ox, fov[i].oy); }
+        if(worldmap.smartphone !== null) { worldmap.smartphone.Draw(); }
     },
     clean: function() {
         clearInterval(worldmap.fullAnimIdx);
@@ -191,7 +192,7 @@ var worldmap = {
         this.click(null);
     },
     click: function(pos) {
-        if(!this.inDialogue) { return false; }
+        if(!this.inDialogue) { if(worldmap.smartphone !== null) { return worldmap.smartphone.Read(); } return false; }
         if(this.waitForAnimation) { iHandler.SpeedUpAnimation(); }
         else { iHandler.Advance(); }
     },
@@ -252,6 +253,7 @@ var worldmap = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: 
                 if(this.inDialogue) { return; }
+                if(this.smartphone !== null && this.smartphone.Dismiss() > 0) { return ; }
                 worldmap.savedImage = gfx.getSaveFileImage();
                 game.transition(this, pausemenu);
                 return;
@@ -283,9 +285,11 @@ var worldmap = {
                 case directions.DOWN: newPos.y++; break;
                 case directions.RIGHT: newPos.x++; break;
             }
+            var didInteract = false;
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];
                 if(worldmap.isCollision(e, newPos) && e.interact !== undefined) {
+                    didInteract = true;
                     if(!e.noChange) { e.dir = this.invertDir(this.playerDir); }
                     this.inDialogue = true;
                     this.forceEndDialog = false;
@@ -300,6 +304,7 @@ var worldmap = {
                     break;
                 }
             }
+            if(!didInteract && worldmap.smartphone !== null) { return worldmap.smartphone.Read(); }
         } else {
             for(var i = 0; i < this.entities.length; i++) {
                 var e = this.entities[i];

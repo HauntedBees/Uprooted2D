@@ -176,10 +176,11 @@ var gfx = {
         if(selected) { gfx.drawCursor(0, y - 0.5, 14, -0.25); }
         gfx.drawText(t, 8, y * 16);
     },
-    drawText: function(t, x, y, color, size) {
-        gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
-        gfx.ctx["menutext"].fillStyle = (color || "#000000");
-        gfx.ctx["menutext"].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
+    drawText: function(t, x, y, color, size, layer) {
+        layer = layer || "menutext";
+        gfx.ctx[layer].font = (size || 22) + "px " + gfx.GetFont();
+        gfx.ctx[layer].fillStyle = (color || "#000000");
+        gfx.ctx[layer].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
     },
     getTextLength: function(t, size) {
         gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
@@ -187,6 +188,24 @@ var gfx = {
     },
     drawBottomFullText: function(t, color) {  gfx.drawFullText(t, 121, color); },
     drawFullText: function(t, y, color, overBlack) { gfx.drawWrappedText(t, 4, 11 + (y || 0), 235, color, (overBlack ? "menutextOverBlack" : undefined)); },
+    getWrappedTextInfo: function(t, maxWidth) {
+        maxWidth *= gfx.scale;
+        var ts = t.split(" ");
+        var row = ts[0];
+        var numRows = 1;
+        var ctx = gfx.ctx["menutext"];
+        var dy = 0;
+        for(var i = 1; i < ts.length; i++) {
+            if(ctx.measureText(row + " " + ts[i]).width > maxWidth || row.indexOf("\n") >= 0) {
+                row = ts[i];
+                dy += 8;
+                numRows++;
+            } else {
+                row += " " + ts[i];
+            }
+        }
+        return { rows: numRows, height: dy };
+    },
     drawWrappedText: function(t, x, y, maxWidth, color, layer) {
         layer = layer || "menutext";
         maxWidth *= gfx.scale;
@@ -197,7 +216,8 @@ var gfx = {
         var row = ts[0];
         var dy = 0;
         for(var i = 1; i < ts.length; i++) {
-            if(ctx.measureText(row + " " + ts[i]).width > maxWidth || row.indexOf("\n") >= 0) {
+            var textInfo = ctx.measureText(row + " " + ts[i]);
+            if(textInfo.width > maxWidth || row.indexOf("\n") >= 0) {
                 ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
                 dy += 8;
                 row = ts[i];
