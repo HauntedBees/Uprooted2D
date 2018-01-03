@@ -342,6 +342,11 @@ var fulltext = {
 		"en-dm": "Man go \"beep beep!\"", 
 		"type": "item"
 	},
+	"lotus": {
+		"en-us": "", 
+		"en-dm": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. That shit's fuckin' creepy, man.", 
+		"type": "item"
+	},
 	// Options
 	"opGameOps": {
 		"en-us": "", 
@@ -3327,6 +3332,578 @@ var fulltext = {
 		"en-dm": "Vagante: Back again, are you? Accept your fate!", 
 		"type": "map"
 	},
+	// Area 8: North City
+	"mushMan0": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Oh hey, what? Hi.", 
+		"type": "map"
+	},
+	"mushMan1": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Did you get my Message? Are you here to help me with my pizza?", 
+		"type": "map"
+	},
+	"mushMan2": {
+		"en-us": "", 
+		"en-dm": "Daveothy: I need some good mushrooms for my pizza. Can you help me out?", 
+		"type": "map"
+	},
+	"mushMan3": {
+		"en-us": "", 
+		"en-dm": "Daveothy: I need some good mushrooms for my pizza. If you have any, let me know!", 
+		"type": "map"
+	},
+	"mushChoice0": {
+		"en-us": "", 
+		"en-dm": "Give Milk Cap.", 
+		"type": "choice"
+	},
+	"mushChoice1": {
+		"en-us": "", 
+		"en-dm": "Give Portobello.", 
+		"type": "choice"
+	},
+	"mushChoice2": {
+		"en-us": "", 
+		"en-dm": "Give Parrot Toadstool.", 
+		"type": "choice"
+	},
+	"mushChoice3": {
+		"en-us": "", 
+		"en-dm": "Give Poisonous Mushroom.", 
+		"type": "choice"
+	},
+	"mushChoice4": {
+		"en-us": "", 
+		"en-dm": "Give Funny Mushroom.", 
+		"type": "choice"
+	},
+	"mushManNope": {
+		"en-us": "", 
+		"en-dm": "Daveothy: That is unfortunate.", 
+		"type": "map"
+	},
+	"mushManGive0": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Woah this looks like a tasty treat for me to eat.", 
+		"type": "map"
+	},
+	"mushManGive1": {
+		"en-us": "", 
+		"en-dm": "Daveothy homfs down the mushroom without hesitation, seemingly forgetting how pizza works.", 
+		"type": "map"
+	},
+	"mushManNorm0": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Hm, that was a tasty little fungus. Hunger sated, bro. Hunger sated.", 
+		"type": "map"
+	},
+	"mushManNorm1": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Here's a gift as thanks for hooking me up.", 
+		"type": "map"
+	},
+	"mushManNorm2": {
+		"en-us": "", 
+		"en-dm": "Daveothy gives you 20 Water Chestnut seeds.", 
+		"type": "map"
+	},
+	"mushManThanks": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Thanks again dude.", 
+		"type": "map"
+	},
+	"mushManPoison0": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Hm, that was a tasty little fung--oh, hey, I don't feel very good.", 
+		"type": "map"
+	},
+	"mushManPoison1": {
+		"en-us": "", 
+		"en-dm": "Daveothy collapses on the ground. It appears that he's still breathing.", 
+		"type": "map"
+	},
+	"mushManPoison2": {
+		"en-us": "", 
+		"en-dm": "Congrats on the attempted murder!", 
+		"type": "map"
+	},
+	"mushManCorpse": {
+		"en-us": "", 
+		"en-dm": "He is unconscious. That poison really did a number on him.", 
+		"type": "map"
+	},
+	"mushManGood0": {
+		"en-us": "", 
+		"en-dm": "Daveothy: Hm woah this is an interesting food I am eating right now. Very interesting indeed.", 
+		"type": "map"
+	},
+	"mushManGood1": {
+		"en-us": "", 
+		"en-dm": "Daveothy: This is exactly what I was hoping for! Please accept this reward!", 
+		"type": "map"
+	},
+	"mushManGood2": {
+		"en-us": "", 
+		"en-dm": "Daveothy gives you 20 Sacred Lotus seeds.", 
+		"type": "map"
+	},
+	"mushFridge": {
+		"en-us": "", 
+		"en-dm": "This fridge is just full of microwaveable pizza pockets.", 
+		"type": "map"
+	},
+	"mushGame": {
+		"en-us": "", 
+		"en-dm": "This looks like one of those \"video game systems\" that are all the rage these days. Video games suck.", 
+		"type": "map"
+	},
+	"mushPoster": {
+		"en-us": "", 
+		"en-dm": "This is a poster for the only reggae singer most white people can name.", 
+		"type": "map"
+	},
+	"mushLamp": {
+		"en-us": "", 
+		"en-dm": "Lava lamps are really cool.", 
+		"type": "map"
+	},
+	"foundRadish0": {
+		"en-us": "", 
+		"en-dm": "There are some seeds still in this radish! You get 5 radish seeds.", 
+		"type": "map"
+	},
+	"foundRadish1": {
+		"en-us": "", 
+		"en-dm": "There are no seeds left in this radish.", 
+		"type": "map"
+	},
+	"rentBill": {
+		"en-us": "", 
+		"en-dm": "Wow, it costs $3000 a month to live in this tiny studio apartment...", 
+		"type": "map"
+	},
+	"someonesBed": {
+		"en-us": "", 
+		"en-dm": "I probably shouldn't sleep in a stranger's bed.", 
+		"type": "map"
+	},
+	"someNerd0": {
+		"en-us": "", 
+		"en-dm": "???: Technology is great and all, but what we really need an app for is lowering apartment prices, am I right??", 
+		"type": "map"
+	},
+	"someNerd1": {
+		"en-us": "", 
+		"en-dm": "???: They say frozen dinners are bad for you, but how could something so convenient be bad?!", 
+		"type": "map"
+	},
+	"someNerd2": {
+		"en-us": "", 
+		"en-dm": "???: The start-up I work for is very generous, I only have to work a half day on Thanksgiving!!", 
+		"type": "map"
+	},
+	"bathroomNerd": {
+		"en-us": "", 
+		"en-dm": "???: Can I fucking help you?", 
+		"type": "map"
+	},
+	"troutMan0": {
+		"en-us": "", 
+		"en-dm": "Jeromy: Hey hey. I'm trying to sell fishing supplies to save money for college. See anything you like?", 
+		"type": "map"
+	},
+	"troutChoice0": {
+		"en-us": "", 
+		"en-dm": "Buy 5 Metal Rods (1000G).", 
+		"type": "choice"
+	},
+	"troutChoice1": {
+		"en-us": "", 
+		"en-dm": "Buy 10 Fishing Nets (500G).", 
+		"type": "choice"
+	},
+	"troutChoice2": {
+		"en-us": "", 
+		"en-dm": "Buy 10 Big Nets (1000G).", 
+		"type": "choice"
+	},
+	"troutChoice3": {
+		"en-us": "", 
+		"en-dm": "Buy 5 Fishing Spears (1000G).", 
+		"type": "choice"
+	},
+	"troutChoice4": {
+		"en-us": "", 
+		"en-dm": "Buy nothing.", 
+		"type": "choice"
+	},
+	"troutManNone": {
+		"en-us": "", 
+		"en-dm": "Jeromy: Your loss, lady.", 
+		"type": "map"
+	},
+	"troutManNotEnough": {
+		"en-us": "", 
+		"en-dm": "Jeromy: Hey hey, my prices are low, but not THAT low! Come back when you have more money!", 
+		"type": "map"
+	},
+	"troutManBuy": {
+		"en-us": "", 
+		"en-dm": "Jeromy: Pleasure doing business with ya, ma'am!", 
+		"type": "map"
+	},
+	"bmw0": {
+		"en-us": "", 
+		"en-dm": "Brandt: Hi yeah please take some of this spinach. I have far too much.", 
+		"type": "map"
+	},
+	"bmw1": {
+		"en-us": "", 
+		"en-dm": "You received 100 spinach seeds.", 
+		"type": "map"
+	},
+	"bmw2": {
+		"en-us": "", 
+		"en-dm": "Brandt: Spinach is so tasty... but you know what they say... \"too much of a good thing\" and all that!", 
+		"type": "map"
+	},
+	"cashMan0": {
+		"en-us": "", 
+		"en-dm": "???: Hello! Are you confused by Cash2? Would you like to know more about it?", 
+		"type": "map"
+	},
+	"cashManNo": {
+		"en-us": "", 
+		"en-dm": "???: Okay then... you can convert your regular old cash to and from Cash2 at one of the machines in the back if you want.", 
+		"type": "map"
+	},
+	"cashManYes0": {
+		"en-us": "", 
+		"en-dm": "???: Really? That's a firs--I mean, great! Let's get started, then!", 
+		"type": "map"
+	},
+	"cashManYes1": {
+		"en-us": "", 
+		"en-dm": "???: So, money - regular money, that is - is just a bunch of paper or whatever. It's not actually worth anything.", 
+		"type": "map"
+	},
+	"cashManYes2": {
+		"en-us": "", 
+		"en-dm": "???: But the government offers you a promise that, for example, one dollar is worth one dollar.", 
+		"type": "map"
+	},
+	"cashManYes3": {
+		"en-us": "", 
+		"en-dm": "???: But wouldn't it be great if, instead of the government telling you \"this useless paper is worth something\"...", 
+		"type": "map"
+	},
+	"cashManYes4": {
+		"en-us": "", 
+		"en-dm": "???: ...instead it was a computer telling you \"this useless data is worth something\"???", 
+		"type": "map"
+	},
+	"cashManYes5": {
+		"en-us": "", 
+		"en-dm": "???: If you answered yes, then Cash2 is the currency for you!", 
+		"type": "map"
+	},
+	"cashManYes6": {
+		"en-us": "", 
+		"en-dm": "???: You can convert your regular money to and from Cash2 at one of the machines in the back!", 
+		"type": "map"
+	},
+	"cashManYes7": {
+		"en-us": "", 
+		"en-dm": "???: Just as a heads-up, though, Cash2 is the future... but not necessarily the present.", 
+		"type": "map"
+	},
+	"cashManYes8": {
+		"en-us": "", 
+		"en-dm": "???: Currently the value of Cash2 fluctuates pretty rapidly so, uh, just keep that in mind.", 
+		"type": "map"
+	},
+	"atm0": {
+		"en-us": "", 
+		"en-dm": "ATM: Hello! The current value of Cash2 is {0}C2 per 1000G! What would you like to do?", 
+		"type": "map"
+	},
+	"atmc0": {
+		"en-us": "", 
+		"en-dm": "Buy {0}C2 for 1000G (you have {2}G).", 
+		"type": "choice"
+	},
+	"atmc1": {
+		"en-us": "", 
+		"en-dm": "Sell 1C2 for {1}G (you have {3}C2).", 
+		"type": "choice"
+	},
+	"atmc2": {
+		"en-us": "", 
+		"en-dm": "Nevermind.", 
+		"type": "choice"
+	},
+	"atmc0.0": {
+		"en-us": "", 
+		"en-dm": "ATM: Thank you! You now have {3}C2, which is worth {4}G!", 
+		"type": "map"
+	},
+	"atmc1.0": {
+		"en-us": "", 
+		"en-dm": "ATM: Thank you! You now have {2}G!", 
+		"type": "map"
+	},
+	"atmc0.X": {
+		"en-us": "", 
+		"en-dm": "ATM: Sorry, you don't have enough money to do that!", 
+		"type": "map"
+	},
+	"atmc1.X": {
+		"en-us": "", 
+		"en-dm": "ATM: Sorry, you don't have enough Cash2 to do that!", 
+		"type": "map"
+	},
+	"atmX": {
+		"en-us": "", 
+		"en-dm": "ATM: Thank you! Have a nice day!", 
+		"type": "map"
+	},
+	"officer1": {
+		"en-us": "", 
+		"en-dm": "Officer: This is Officer Ellis, requesting additional backup. There are at least two robbers inside the bank. They are armed.", 
+		"type": "map"
+	},
+	"officer2": {
+		"en-us": "", 
+		"en-dm": "Officer: Ma'am, this area is off-limits right now. There is a robbery in process.", 
+		"type": "map"
+	},
+	"officer3": {
+		"en-us": "", 
+		"en-dm": "Officer: This looks like a clue!", 
+		"type": "map"
+	},
+	"officer4": {
+		"en-us": "", 
+		"en-dm": "Officer: Do we know if there are any hostages?", 
+		"type": "map"
+	},
+	"robber0": {
+		"en-us": "", 
+		"en-dm": "Robber: Hey, what the hell are you doing in here?!", 
+		"type": "map"
+	},
+	"robber1": {
+		"en-us": "", 
+		"en-dm": "Robber: Let's get her!!", 
+		"type": "map"
+	},
+	"keycard0": {
+		"en-us": "", 
+		"en-dm": "You got a Food2 employee keycard! With this you should be able to get into the building!", 
+		"type": "map"
+	},
+	"foodEnter0": {
+		"en-us": "", 
+		"en-dm": "The door is locked. You need an employee keycard to get in. Maybe someone in one of the 13th St. apartments has one.", 
+		"type": "map"
+	},
+	"foodEnter1": {
+		"en-us": "", 
+		"en-dm": "You swipe the keycard and the door unlocks. You're in!", 
+		"type": "map"
+	},
+	"foodEnter2": {
+		"en-us": "", 
+		"en-dm": "You reach into your pocket... only to find the keycard is gone! You must have lost it in the battle!", 
+		"type": "map"
+	},
+	"keycard1": {
+		"en-us": "", 
+		"en-dm": "?!?!", 
+		"type": "map"
+	},
+	"keycard2": {
+		"en-us": "", 
+		"en-dm": "???: I hope you like traps, because you just walked into one!", 
+		"type": "map"
+	},
+	"keycard3": {
+		"en-us": "", 
+		"en-dm": "???: My super cool fighting robot and I will defeat you once and for all!", 
+		"type": "map"
+	},
+	"keycard4": {
+		"en-us": "", 
+		"en-dm": "???: Heh heh... looking for something? If you want this keycard you'll have to beat me!", 
+		"type": "map"
+	},
+	"keycard5": {
+		"en-us": "", 
+		"en-dm": "???: Ugh... you win this round...", 
+		"type": "map"
+	},
+	"keycard6": {
+		"en-us": "", 
+		"en-dm": "fucking kaboom", 
+		"type": "map"
+	},
+	// Text Messages
+	"beckettText0": {
+		"en-us": "", 
+		"en-dm": "XxXbeckXxX (to you): ur very dumb 4 coming here", 
+		"type": "text"
+	},
+	"beckettText1": {
+		"en-us": "", 
+		"en-dm": "XxXbeckXxX (to you): u wont make it out of this city alive.", 
+		"type": "text"
+	},
+	"beckettText2": {
+		"en-us": "", 
+		"en-dm": "XxXbeckXxX (to you): NO 1 mocks me like u have & gets away w/ it!!!", 
+		"type": "text"
+	},
+	"beckettText3": {
+		"en-us": "", 
+		"en-dm": "XxXbeckXxX (to you): btw u can dismiss texts w/ the pause button", 
+		"type": "text"
+	},
+	"sext0": {
+		"en-us": "", 
+		"en-dm": "fishoholic (to you): u must b a traffic ticket bc u got FINE written all over u!!", 
+		"type": "text"
+	},
+	"sext1": {
+		"en-us": "", 
+		"en-dm": "carl289 (to you): Your sexy", 
+		"type": "text"
+	},
+	"sext2": {
+		"en-us": "", 
+		"en-dm": "mrhuggsy (to you): Bongo BONG...", 
+		"type": "text"
+	},
+	"sext3": {
+		"en-us": "", 
+		"en-dm": "carl289 (to you): r u single?", 
+		"type": "text"
+	},
+	"sext4": {
+		"en-us": "", 
+		"en-dm": "luvrboi (to you): have u seen the newest episode of \"Oh No, It's Zombies Again, I Guess!\"? do u want 2?", 
+		"type": "text"
+	},
+	"sext5": {
+		"en-us": "", 
+		"en-dm": "carl289 (to you): y r u ignoring me", 
+		"type": "text"
+	},
+	"sext6": {
+		"en-us": "", 
+		"en-dm": "carl289 (to you): r u getting these messages?", 
+		"type": "text"
+	},
+	"sext7": {
+		"en-us": "", 
+		"en-dm": "carl289 (to you): fuk u", 
+		"type": "text"
+	},
+	"misctext0": {
+		"en-us": "", 
+		"en-dm": "susang (public): There's a beehive in my office! can some1 come 2 98 12th St & help???", 
+		"type": "text"
+	},
+	"misctext1": {
+		"en-us": "", 
+		"en-dm": "freethinker310 (public): anyone got any, uh, mushrooms? for cooking? i'm making a pizza. come to 90 13th st.", 
+		"type": "text"
+	},
+	"misctext2": {
+		"en-us": "", 
+		"en-dm": "GordonsFarming (public): SALE!! Pesticides! Very effective!! Come to 96 12th St!", 
+		"type": "text"
+	},
+	"misctext3": {
+		"en-us": "", 
+		"en-dm": "LasAbejasLotto (public): Grand prize is now $1.5m! Buy tickets now b4 numbers announced 2nite!!", 
+		"type": "text"
+	},
+	"misctext4": {
+		"en-us": "", 
+		"en-dm": "chet.bradson (public): Selling quail eggs for cheap. @ 13th St/Corvo Lane intersection.", 
+		"type": "text"
+	},
+	"misctext5": {
+		"en-us": "", 
+		"en-dm": "XxXbeckXxX (public): if ne1 sees a farmer woman plz call cops on her she tried 2 kill me ty", 
+		"type": "text"
+	},
+	"misctext6": {
+		"en-us": "", 
+		"en-dm": "craig (to you): im craig", 
+		"type": "text"
+	},
+	"misctext7": {
+		"en-us": "", 
+		"en-dm": "crazy4trout (public): selling fishing supplies to save up money 4 college. gr8 prices. @ 94 13th St 2nd floor.", 
+		"type": "text"
+	},
+	"misctext8": {
+		"en-us": "", 
+		"en-dm": "theFutureIsNow (public): looking 4 investors 4 my new startup - cryptocurrency 4 dogs. txt me 4 for more information.", 
+		"type": "text"
+	},
+	"misctext9": {
+		"en-us": "", 
+		"en-dm": "bmw (public): i ate too much spinach and now i can't stop shitting green. plz come take the rest of this spinach away from me. 98 13th st.", 
+		"type": "text"
+	},
+	"misctext10": {
+		"en-us": "", 
+		"en-dm": "gamers4Gameing (public): please sign our petition to stop Haunted Bees from making fun of nerds in their game Farming Fantasy.", 
+		"type": "text"
+	},
+	"misctext11": {
+		"en-us": "", 
+		"en-dm": "Emergency Alerts (public): There is an armed robbery at Las Abejas Bank on west 14th St. Please stay away from the area.", 
+		"type": "text"
+	},
+	"misctext12": {
+		"en-us": "", 
+		"en-dm": "investment.help (public): Need help understanding Cash2? Talk to one of our representatives at 92 12th St today! Don't let the future leave you behind!", 
+		"type": "text"
+	},
+	"misctext13": {
+		"en-us": "", 
+		"en-dm": "theFutureIsNow (public): looking 4 developers to program new web app. no pay (yet!) but will offer profit sharing.", 
+		"type": "text"
+	},
+	"misctext14": {
+		"en-us": "", 
+		"en-dm": "Automated Message (to you): You have reached your texting limit for the month. Please pay $9.95 for more messages or wait until the 25th of the month.", 
+		"type": "text"
+	},
+	"sistext0": {
+		"en-us": "", 
+		"en-dm": "JM (to you): Hey! Welcome to the 21st century finally! It's ur little sis!", 
+		"type": "text"
+	},
+	"sistext1": {
+		"en-us": "", 
+		"en-dm": "JM (to you): Got your letter a few days ago. I'd love to visit next month!", 
+		"type": "text"
+	},
+	"sistext2": {
+		"en-us": "", 
+		"en-dm": "JM (to you): What made you finally decide to get a smart phone? Nevermind, don't tell me! I want to hear it in person!", 
+		"type": "text"
+	},
+	"sistext3": {
+		"en-us": "", 
+		"en-dm": "JM (to you): Anyway, I'll ttyl (that means \"talk to you later\"), my shift's starting. Love you!! <3 <3 <3 <3", 
+		"type": "text"
+	},
 	// Shops
 	"s.co": {
 		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
@@ -4065,6 +4642,16 @@ var fulltext = {
 	"e.beeQueenC0": {
 		"en-us": "", 
 		"en-dm": "???", 
+		"type": "enemy"
+	},
+	"e.robber0": {
+		"en-us": "", 
+		"en-dm": "Bank Robber", 
+		"type": "enemy"
+	},
+	"e.dweebLord0": {
+		"en-us": "", 
+		"en-dm": "Dweeb Lord", 
 		"type": "enemy"
 	},
 };

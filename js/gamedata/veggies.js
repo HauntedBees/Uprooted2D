@@ -100,8 +100,9 @@ function GetCrop(name) {
 		case "coconut": return new CropDetail(name, "Coconut", 500, "tree", 2, 10, 5, 200, 3, 0, 1, 0, 0);
 		case "gmocorn": return new CropDetail(name, "GMO Corn", 500, "veg", 1, 5, 3, 200, 0, 1, 1, 1, 1);
 		case "ultrarod": return new CropDetail(name, "Master Bait", 500, "rod", 1, 20, 2, 5000, 0, 1, 1, 1, 1, { catchLuck: 0.99, req: 0.5 });
-		case "goodfood": return new CropDetail(name, "Delicious Food", 500, "food", 1, 0, 1, 5000, 0, 0, 0, 0, 0);
+		case "goodfood": return new CropDetail(name, "Delicious Food", 500, "food", 1, 0, 1, 5000, 0, 1, 1, 1, 1);
 		case "notdrugs": return new CropDetail(name, "Funny Mushroom", 500, "mush", 1, 5, 3, 200, 3, 1, 1, 1, 1, { stickChance: 0.25, stickRange: [1, 4] });
+		case "lotus": return new CropDetail(name, "Sacred Lotus", 500, "rice", 1, 30, 5, 10000, 0, 1, 1, 0.6, 0.4);
 		/* Enemy-Only */
 		case "algae": return new CropDetail(name, "Algae", 0, "rice", 1, 2, 2, 10, 0, 0.6, 1, 0.2, 0, { noRot: true });
 		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 30, 0, 1, 1, 0.5, 0.05, { noRot: true });
@@ -114,8 +115,10 @@ function GetCrop(name) {
 		case "lightbulb": return new CropDetail(name, "Smart Lightbulb", 0, "tech", 1, 1, 2, 5, 0, 1, 1, 1, 1);
 		case "download": return new CropDetail(name, "Download", 0, "tech", 1, 10, 5, 40, 0, 1, 1, 1, 1);
 		case "cloud": return new CropDetail(name, "The Cloud", 0, "cloud", 2, 100, 1, 20, 0, 1, 1, 1, 1);
-		case "porcini": return new CropDetail(name, "Porcini", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-		case "arborioB": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
+		case "porcini": return new CropDetail(name, "Porcini", 0, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+		case "arborioB": return new CropDetail(name, "Arborio Rice", 0, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
+		case "timebomb": return new CropDetail(name, "Time Bomb", 0, "veg", 1, 12, 4, 50, 0, 1, 1, 1, 1);
+		case "shotgun": return new CropDetail(name, "Shotgun", 0, "veg", 1, 5, 4, 30, 3, 1, 1, 1, 1);
 	}
 }
-debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs"];
+debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus"];

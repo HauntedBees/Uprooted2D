@@ -66,6 +66,14 @@ worldmap.title = {
                     //init: { x: 44, y: 44 }, map: "southcity" // by Skumpy's
                     //init: { x: 34, y: 21 }, map: "southcity" // by old lady
                     //init: { x: 15, y: 36 }, map: "southcity" // by mob base
+                    //init: { x: 8.5, y: 50 }, map: "northcity" // by entrance
+                    //init: { x: 25, y: 44 }, map: "northcity" // by Cash2 Investors
+                    //init: { x: 53, y: 44 }, map: "northcity" // by Office Building
+                    //init: { x: 53, y: 27 }, map: "northcity" // by Brandt's
+                    //init: { x: 44, y: 27 }, map: "northcity" // by Nerd's House
+                    //init: { x: 15, y: 27 }, map: "northcity" // by Mushroom Man
+                    //init: { x: 10, y: 13 }, map: "northcity" // by Bank
+                    //init: { x: 39, y: 10 }, map: "northcity" // by Food2
                 });
             case 1: return game.innerTransition(this, pausemenu.savemenu, { saving: false }); // this is probably wrong
             case 2: return game.innerTransition(this, worldmap.optionsMenu);

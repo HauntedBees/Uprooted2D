@@ -111,6 +111,8 @@ var CommandParser = {
                 case "SETTARGETTONOTHING": game.target = null; break;
                 case "HISPEED": iHandler.moveSpeed = 0.05; break;
                 case "LOSPEED": iHandler.moveSpeed = 0.025; break;
+                case "C2TEXT": CommandParser.Parse_Cash2Text(actSuffix.split(",")); break;
+                case "SETPOSX": target.pos.x = parseFloat(actSuffix); break;
             }
         }
     },
@@ -141,6 +143,23 @@ var CommandParser = {
         } else {
             worldmap.writeText(text, args);
         }
+    },
+    Parse_Cash2Text: function(args) {
+        var text = args.splice(0, 1)[0];
+        if(args.length > 0) {
+            if(player.c2 === 0) {
+                player.c2Rate = 500 + Math.floor(Math.random() * 500);
+            } else {
+                player.c2Rate = RoundNear(player.c2Rate * (0.5 + Math.random() * 0.45), 100);
+            }
+        }
+        var formatting = [
+            RoundNear(1000 / player.c2Rate, 100),      // 0 = C2 per 1000G
+            player.c2Rate,                              // 1 = G per 1C2
+            player.monies, player.c2,                   // 2 = your G, 3 = your C2
+            RoundNear(player.c2 * player.c2Rate, 100)  // 4 = how much your C2 is worth, in G
+        ];
+        worldmap.writeText(text, args, false, formatting);
     },
     Parse_BasicPlayerFrame: function(args) {
         worldmap.waitForAnimation = true;
@@ -180,6 +199,24 @@ var CommandParser = {
 var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
+    "SCREENSHAKE": function() {
+        // TODO
+    },
+    "DESTROYBUILDING": function() {
+        worldmap.importantEntities["13thStBuildings"].filename = "covers/northcity2_post";
+        for(var i = 0; i < worldmap.entities.length; i++) {
+            if(worldmap.entities[i].destroyable) {
+                player.clearedEntities.push(worldmap.entities[i].name);
+                worldmap.entities[i].solid = false;
+                worldmap.entities[i].visible = false;
+                worldmap.entities[i].inside = false;
+            } else if(worldmap.entities[i].name.indexOf("XNerndHaus") > 0) {
+                worldmap.entities[i].pos.y += 27;
+            }
+        }
+    },
+    "C2BUY": function() { player.monies -= 1000; player.c2 = RoundNear(player.c2 + 1000 / player.c2Rate, 100); },
+    "C2SELL": function() { player.monies += Math.round(player.c2Rate); player.c2 = RoundNear(player.c2 - 1, 100); },
     "MOBFLEE": function() {
         for(var i = worldmap.entities.length - 1; i >= 0; i--) {
             var e = worldmap.entities[i];
@@ -225,6 +262,7 @@ var SpecialFunctions = {
         worldmap.importantEntities["bruno"].dir = 0;
     },
     "FORCEYZERO": function() { worldmap.forcedY = 0; },
+    "UNFORCEYZERO": function() { worldmap.forcedY = -1; },
     "SETUPJEFF": function() {
         worldmap.playerDir = 0;
         worldmap.waitForAnimation = true;
@@ -416,6 +454,21 @@ var SpecialFunctions = {
         }
         iHandler.state.done = true;
         worldmap.finishDialog();
+    },
+    "MUSHSTART": function() {
+        var items = specialtyHelpers.getMushItems();
+        if(items.length === 0) { worldmap.writeText("mushMan3"); iHandler.state.done = true; }
+        else { worldmap.writeText("mushMan2", items); }
+    },
+    "MUSHNEXT": function(idx) {
+        switch(specialtyHelpers.getMushItems()[idx]) {
+            case "mushChoice0": player.decreaseItem("milkcap"); worldmap.writeText("mushManGive0"); iHandler.state.idx = 8; break;
+            case "mushChoice1": player.decreaseItem("portobello"); worldmap.writeText("mushManGive0"); iHandler.state.idx = 8; break;
+            case "mushChoice2": player.decreaseItem("greenshroom"); worldmap.writeText("mushManGive0"); iHandler.state.idx = 8; break;
+            case "mushChoice3": player.decreaseItem("poisnshroom"); worldmap.writeText("mushManGive0"); iHandler.state.idx = 12; break;
+            case "mushChoice4": player.decreaseItem("notdrugs"); worldmap.writeText("mushManGive0"); iHandler.state.idx = 10; break;
+            case "lime.nope": worldmap.writeText("mushManNope"); iHandler.state.done = true; break;
+        }
     },
     "ABUELASTART": function() {
         var items = specialtyHelpers.getAbuelaItems();

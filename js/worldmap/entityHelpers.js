@@ -46,6 +46,16 @@ var specialtyHelpers = {
         if(items.length > 0) { items.push("lime.nope"); }
         return items;
     },
+    getMushItems: function() {
+        var items = [];
+        if(player.hasItem("milkcap")) { items.push("mushChoice0"); }
+        if(player.hasItem("portobello")) { items.push("mushChoice1"); }
+        if(player.hasItem("greenshroom")) { items.push("mushChoice2"); }
+        if(player.hasItem("poisnshroom")) { items.push("mushChoice3"); }
+        if(player.hasItem("notdrugs")) { items.push("mushChoice4"); }
+        if(items.length > 0) { items.push("lime.nope"); }
+        return items;
+    },
     getTruckOptions: function() {
         var options = [];
         if(worldmap.mapName !== "producestand") { options.push("truck.home"); }
@@ -280,10 +290,10 @@ function GetFight(arr) { return function() { combat.startBattle(arr); } }
 function Cutscene(s) { return [ function() { iHandler.Start(s); } ]; }
 
 function GetJumbo(id, img, x, y, w, h, ox, oy) {
-    return { name: id, storageKey: id, jumbo: true, filename: img, visible: true, w: w, h: h, offset: { x: ox, y: oy }, pos: { x: x, y: y }, boring: true };
+    return { name: id, storageKey: id, jumbo: true, filename: "covers/" + img, visible: true, w: w, h: h, offset: { x: ox, y: oy }, pos: { x: x, y: y }, boring: true };
 }
 function GetJumboToggle(id, x, y, enter) {
-    return GetCommonEntity(id, x, y, 0, 0, undefined, [enter ? JumboEntrance : JumboExit], { visible: false, solid: false, boring: true });
+    return GetCommonEntity((enter ? "Enter" : "Exit") + id, x, y, 0, 0, undefined, [enter ? JumboEntrance : JumboExit], { visible: false, solid: false, boring: true });
 }
 function JumboEntrance() { JumboToggle(true); }
 function JumboExit() { JumboToggle(false); }
@@ -295,7 +305,6 @@ function JumboToggle(inside) {
     }
     worldmap.finishDialog();
 }
-
 
 var enemyMetadata = {
     mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, inside: true, fov: true, visible: false },

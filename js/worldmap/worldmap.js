@@ -169,12 +169,23 @@ var worldmap = {
         if(spotted) { e.moving = false; e.movement = undefined; game.target = e; e.interact[0](); }
     },
     writeText: function(t, choices, isRefresh, formatting, overBlack) {
+        worldmap.currentFormatting = formatting;
         gfx.clearSome(["menuA", "menutext", "menucursorA", "menuOverBlack", "menutextOverBlack"]);
         var drawY = (worldmap.pos.y <= 3) ? 7.5 : 0;
         gfx.drawFullbox(drawY, overBlack);
         var actualText = GetText(t);
         if(actualText === "") { return; }
-        if(formatting) { actualText = actualText.replace("{0}", formatting); }
+        var formatArray = false;
+        if(formatting) {
+            if((typeof formatting) === "string") {
+                actualText = actualText.replace("{0}", formatting);
+            } else {
+                formatArray = true;
+                for(var i = 0; i < formatting.length; i++) {
+                    actualText = actualText.replace("{" + i + "}", formatting[i]);
+                }
+            }
+        }
         gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
         if(choices === undefined) {
             worldmap.dialogData = { };
@@ -182,7 +193,13 @@ var worldmap = {
         }
         if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
         for(var i = 0; i < choices.length; i++) {
-            gfx.drawChoice(2.5 + i, GetText(choices[i]), worldmap.dialogData.idx === i);
+            var txt = GetText(choices[i]);
+            if(formatArray) {
+                for(var j = 0; j < formatting.length; j++) {
+                    txt = txt.replace("{" + j + "}", formatting[j]);
+                }
+            }
+            gfx.drawChoice(2.5 + i, txt, worldmap.dialogData.idx === i);
         }
     },
     mouseMove: function(pos) { return true; },
@@ -216,7 +233,7 @@ var worldmap = {
         if(newchoice < 0) { newchoice = 0; }
         if(newchoice >= worldmap.dialogData.choices.length) { newchoice = worldmap.dialogData.choices.length - 1; }
         worldmap.dialogData.idx = newchoice;
-        worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true);
+        worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
     },
     keyPress: function(key) {
         if(this.inWaterfall)  { return false; }

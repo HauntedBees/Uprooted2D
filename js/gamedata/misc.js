@@ -1,5 +1,6 @@
 function Range(min, max) { return min + Math.floor(Math.random() * (max - min)); }
 function InclusiveRange(min, max) { return min + Math.round(Math.random() * (max - min)); }
+function RoundNear(x, num) { return Math.round(x * num) / num; }
 var miscText = {
     "skill_season0": "Seasons\n Seasons are determined entirely by opponents.",
     "skill_season10": "Normalizer\n All available seasons are equally likely to appear.\n \n Requires Seasons.",

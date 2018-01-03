@@ -1,4 +1,3 @@
-function RoundNear(x, num) { return Math.round(x * num) / num; }
 var debug = {
     DoEnemyCursorTest: function() { game.transition(game.currentInputHandler, debug.enemyCursorTest); },
     enemyCursorTest: {
