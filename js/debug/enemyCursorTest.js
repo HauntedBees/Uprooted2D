@@ -13,12 +13,15 @@ var debug = {
         updateEnemy: function() {
             this.enemy = GetEnemy(debug.AllEnemies[this.enemyIdx]);
             combat.enemies = [this.enemy];
+            this.animHelp = new CombatAnimHelper([this.enemy]);
             this.drawShit();
         },
         drawShit: function() {
             gfx.clearAll();
             var y = this.enemy.size == "lg" ? 5 : 5.75;
-            gfx.drawCharacter(this.enemy.spriteidx, 0, this.enemy.sheet, this.enemy.size, 10, y);
+            var x = 10;
+            if(this.enemy.size === "xl") { x = 8; y = 3; }
+            gfx.drawCharacter(this.enemy.spriteidx, 0, this.enemy.sheet, this.enemy.size, x, y);
             gfx.drawInfobox(9, 1.5, combat.selectTarget.dy);
             gfx.drawWrappedText(this.enemy.name, me.INFOBOXWIDTH * 16, 11 + (combat.selectTarget.dy * 16), 85);
             var cursorInfo = this.animHelp.GetCursorInfo(0);

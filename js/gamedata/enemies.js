@@ -14,6 +14,7 @@ function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldh
     switch(this.size) {
         case "sm": 
         case "md": this.sheet = "charsheet"; break;
+		case "xl":
         case "lg": this.sheet = "charsheetbig"; break;
     }
     this.stickTurns = 0;

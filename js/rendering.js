@@ -111,6 +111,11 @@ var gfx = {
                 srcX = sx * 32;
                 srcY = sy * 40;
                 break;
+            case "xl":
+                w = 96; h = 80; dy = 14;
+                srcX = sx * 32;
+                srcY = sy * 80;
+                break;
         }
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], srcX, srcY, w, h, x * 16, y * 16 - dy, w, h);
     },
