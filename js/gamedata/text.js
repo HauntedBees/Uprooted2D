@@ -3925,6 +3925,311 @@ var fulltext = {
 		"en-dm": "Why do they have a giant TV screen if they already have a monitor built into the desk?", 
 		"type": "text"
 	},
+	"elevatorNope": {
+		"en-us": "", 
+		"en-dm": "Come on, you know how final area video game elevators work... wait until you've gotten to the second floor before using it!", 
+		"type": "text"
+	},
+	"elevatorNormal": {
+		"en-us": "", 
+		"en-dm": "What floor would you like to go to?", 
+		"type": "text"
+	},
+	"elevator0": {
+		"en-us": "", 
+		"en-dm": "Nevermind.", 
+		"type": "text"
+	},
+	"elevator1": {
+		"en-us": "", 
+		"en-dm": "First Floor.", 
+		"type": "text"
+	},
+	"elevator2": {
+		"en-us": "", 
+		"en-dm": "Second Floor.", 
+		"type": "text"
+	},
+	"elevator3": {
+		"en-us": "", 
+		"en-dm": "Third Floor.", 
+		"type": "text"
+	},
+	"elevator4": {
+		"en-us": "", 
+		"en-dm": "Fourth Floor.", 
+		"type": "text"
+	},
+	"enterHQ0": {
+		"en-us": "", 
+		"en-dm": "Receptionist: Oh, hello! You must be the farmer all the higher-ups have been bickering about!", 
+		"type": "text"
+	},
+	"enterHQ1": {
+		"en-us": "", 
+		"en-dm": "Receptionist: Welcome to Food2: Where the Future of Food... isn't Food!", 
+		"type": "text"
+	},
+	"enterHQ2": {
+		"en-us": "", 
+		"en-dm": "Receptionist: I overheard that they're going to fire me because some of our managers are afraid of women, so I don't really care how you got in here!", 
+		"type": "text"
+	},
+	"enterHQ3": {
+		"en-us": "", 
+		"en-dm": "Receptionist: Just don't do anything that could hurt my severance pay, and have a nice day!", 
+		"type": "text"
+	},
+	"intercom0": {
+		"en-us": "", 
+		"en-dm": "Intercom: I, uh, attention, employees on the third floor. This is Susanabel from Human Resources.", 
+		"type": "text"
+	},
+	"intercom1": {
+		"en-us": "", 
+		"en-dm": "Intercom: Please evacuate the third floor immediately. This is an emergency and this is not a drill.", 
+		"type": "text"
+	},
+	"intercom2": {
+		"en-us": "", 
+		"en-dm": "Intercom: One of our experiments in groundbreaking food technology has gotten loose. I repeat, this is not a drill.", 
+		"type": "text"
+	},
+	"intercom3": {
+		"en-us": "", 
+		"en-dm": "Intercom: Please remain calm and head to the nearest staircase or elevator immediately.", 
+		"type": "text"
+	},
+	"intercom4": {
+		"en-us": "", 
+		"en-dm": "Intercom: If you are far from an exit, please navigate with caution. If you enter a room and feel anything is off, please leave that room immediately and try another path.", 
+		"type": "text"
+	},
+	"intercom5": {
+		"en-us": "", 
+		"en-dm": "Intercom: Should you encounter the experiment, please remain calm. It is attracted to fear, and may spare you if you keep your composure.", 
+		"type": "text"
+	},
+	"intercom6": {
+		"en-us": "", 
+		"en-dm": "Intercom: Do not, I repeat, do NOT engage with the experiment. Thank you.", 
+		"type": "text"
+	},
+	"confront0": {
+		"en-us": "", 
+		"en-dm": "???: So... you made it all the way here.", 
+		"type": "text"
+	},
+	"confront1": {
+		"en-us": "", 
+		"en-dm": "???: Heh heh heh... remember me?", 
+		"type": "text"
+	},
+	"confront2": {
+		"en-us": "", 
+		"en-dm": "???: ...", 
+		"type": "text"
+	},
+	"confront3": {
+		"en-us": "", 
+		"en-dm": "???: It's BECKETT.", 
+		"type": "text"
+	},
+	"confront4": {
+		"en-us": "", 
+		"en-dm": "Beckett, I guess: DON'T GIVE ME THAT SHIT!", 
+		"type": "text"
+	},
+	"confront5": {
+		"en-us": "", 
+		"en-dm": "Beckett: I have to admit, I underestimated you...", 
+		"type": "text"
+	},
+	"confront6": {
+		"en-us": "", 
+		"en-dm": "Beckett: Who would have guessed some farmer from hicktown could compete with some of the smartest minds in the world?", 
+		"type": "text"
+	},
+	"confront7": {
+		"en-us": "", 
+		"en-dm": "Beckett: No one, of course, because you can't. I've just been toying with you. Because... I wanted to see how far you could go!", 
+		"type": "text"
+	},
+	"confront8": {
+		"en-us": "", 
+		"en-dm": "Beckett: If that doesn't make sense to you, clearly you just can't comprehend my brilliant intellect. It's completely logical!", 
+		"type": "text"
+	},
+	"confront9": {
+		"en-us": "", 
+		"en-dm": "Beckett: But now, you've come too far. You've caused us too many problems. You... made some of our investors change their minds...", 
+		"type": "text"
+	},
+	"confront10": {
+		"en-us": "", 
+		"en-dm": "Beckett: You are a bug in the hand of a fucking infant, who will grow up to rule the world.", 
+		"type": "text"
+	},
+	"confront11": {
+		"en-us": "", 
+		"en-dm": "Beckett: And when the infant grows tired of the bug... he CRUSHES IT.", 
+		"type": "text"
+	},
+	"confront12": {
+		"en-us": "", 
+		"en-dm": "Beckett: IN THIS METAPHOR YOU ARE THE BUG AND IT IS TIME TO BE CRUSHED!!!", 
+		"type": "text"
+	},
+	"beckettBack0": {
+		"en-us": "", 
+		"en-dm": "Beckett: Heh heh, back for more, are you? You dumb yokels never know when to quit!", 
+		"type": "text"
+	},
+	"postBeckett0": {
+		"en-us": "", 
+		"en-dm": "Beckett: Wh-wha... you... YOU BEAT ME?!", 
+		"type": "text"
+	},
+	"postBeckett1": {
+		"en-us": "", 
+		"en-dm": "Beckett: I'M SMART! YOU'RE DUMB! I'M RICH! YOU'RE POOR! I'M... THIS IS IMPOSSIBLE!", 
+		"type": "text"
+	},
+	"postBeckett2": {
+		"en-us": "", 
+		"en-dm": "Beckett: Wipe that smug look off your face! Once the boss hears about this you'll be sorry! YOU'LL BE SORRY!!", 
+		"type": "text"
+	},
+	"final0": {
+		"en-us": "", 
+		"en-dm": "Beckett: There she is, boss! There's the mean old lady who beat the fucking shit out of me!", 
+		"type": "text"
+	},
+	"final1": {
+		"en-us": "", 
+		"en-dm": "???: ...", 
+		"type": "text"
+	},
+	"final2": {
+		"en-us": "", 
+		"en-dm": "???: ... ...", 
+		"type": "text"
+	},
+	"final3": {
+		"en-us": "", 
+		"en-dm": "???: ... ... ...", 
+		"type": "text"
+	},
+	"final4": {
+		"en-us": "", 
+		"en-dm": "Nathan: Oh, hey boss! What brings you here?", 
+		"type": "text"
+	},
+	"final5": {
+		"en-us": "", 
+		"en-dm": "Beckett: B--WHAAAT?!?!?!!", 
+		"type": "text"
+	},
+	"final6": {
+		"en-us": "", 
+		"en-dm": "Nathan: Oh yeah, I guess I forgot to fill the rest of y'all in while I was gone.", 
+		"type": "text"
+	},
+	"final7": {
+		"en-us": "", 
+		"en-dm": "Nathan: This is that farmer we talked about last week at the board meeting. One of the best farmers in California. Remember?", 
+		"type": "text"
+	},
+	"final8": {
+		"en-us": "", 
+		"en-dm": "Beckett: Yes... I remember...", 
+		"type": "text"
+	},
+	"final9": {
+		"en-us": "", 
+		"en-dm": "Nathan: Well anyway, I figured that a good way to figure out her farming secrets was to work as her intern.", 
+		"type": "text"
+	},
+	"final10": {
+		"en-us": "", 
+		"en-dm": "Beckett: Her... intern...?", 
+		"type": "text"
+	},
+	"final11": {
+		"en-us": "", 
+		"en-dm": "Nathan: Yeah, she's been busy with some other stuff lately, so I've been working on her farm, helping her out, learning how she works.", 
+		"type": "text"
+	},
+	"final12": {
+		"en-us": "", 
+		"en-dm": "Nathan: I gotta admit, I never would have thought of some of the things she does.", 
+		"type": "text"
+	},
+	"final13": {
+		"en-us": "", 
+		"en-dm": "Nathan: But thanks to that research, we can figure out what makes her crops so damn good, so we can do the same thing to Food2!", 
+		"type": "text"
+	},
+	"final14": {
+		"en-us": "", 
+		"en-dm": "Beckett: ...", 
+		"type": "text"
+	},
+	"final15": {
+		"en-us": "", 
+		"en-dm": "Nathan: ...Beckett?", 
+		"type": "text"
+	},
+	"final16": {
+		"en-us": "", 
+		"en-dm": "Beckett: That's... certainly... one strategy...", 
+		"type": "text"
+	},
+	"final17": {
+		"en-us": "", 
+		"en-dm": "Nathan: What are you talking about?", 
+		"type": "text"
+	},
+	"final18": {
+		"en-us": "", 
+		"en-dm": "Beckett: Well... after that meeting last week.... after you left... we came up with a... DIFFERENT way... of working with her.", 
+		"type": "text"
+	},
+	"final19": {
+		"en-us": "", 
+		"en-dm": "Nathan: Oh? Great! What did you guys do?", 
+		"type": "text"
+	},
+	"final20": {
+		"en-us": "", 
+		"en-dm": "Beckett: ...uh... first we uh, decided that she was someone to compete with, not collaborate with... so...", 
+		"type": "text"
+	},
+	"final21": {
+		"en-us": "", 
+		"en-dm": "Beckett: We tried bribing her... and then that didn't work... so we tried to kill her.", 
+		"type": "text"
+	},
+	"final22": {
+		"en-us": "", 
+		"en-dm": "Nathan: What the fuck!? Why the fuck did you think any of that would be a good idea?!", 
+		"type": "text"
+	},
+	"final23": {
+		"en-us": "", 
+		"en-dm": "Beckett: ...the investors liked it more than your idea.", 
+		"type": "text"
+	},
+	"final24": {
+		"en-us": "", 
+		"en-dm": "Nathan: Oh, they did? Well why didn't you say so?", 
+		"type": "text"
+	},
+	"final25": {
+		"en-us": "", 
+		"en-dm": "Nathan: Sorry, boss, but business is business.", 
+		"type": "text"
+	},
 	// Shops
 	"s.co": {
 		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
@@ -4674,5 +4979,61 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "Dweeb Lord", 
 		"type": "enemy"
+	},
+	// Falcon Deliveries
+	"falconMsg0": {
+		"en-us": "", 
+		"en-dm": "It's a message from Nathan.", 
+		"type": "text"
+	},
+	"falconMsg0.0": {
+		"en-us": "", 
+		"en-dm": "\"Hey, it's me! Your intern! I think I'm starting to get the hang of things here. I finally put out all the fires!\"", 
+		"type": "text"
+	},
+	"falconMsg0.1": {
+		"en-us": "", 
+		"en-dm": "\"I'm kidding! There were no fires. But some of the crops you were growing were ripe, so I harvested them!\"", 
+		"type": "text"
+	},
+	"falconMsg0.2": {
+		"en-us": "", 
+		"en-dm": "\"You really are an amazing farmer. Here are some of the seeds from the fresh veggies!\"", 
+		"type": "text"
+	},
+	"falconMsg0.3": {
+		"en-us": "", 
+		"en-dm": "Attached to the letter are 10 Beet Seeds, 10 Carrot Seeds, and 5 Ginger Seeds.", 
+		"type": "text"
+	},
+	"falconMsg0.4": {
+		"en-us": "", 
+		"en-dm": "\"I figure you'll probably have a hard time growing anything while out on the road, so here's a cool idea I had:\"", 
+		"type": "text"
+	},
+	"falconMsg0.5": {
+		"en-us": "", 
+		"en-dm": "\"You give Iii some seeds, and when he gets back to me, I'll plant them for you.\"", 
+		"type": "text"
+	},
+	"falconMsg0.6": {
+		"en-us": "", 
+		"en-dm": "\"Then the next time I have a message for you, I'll send the seeds from the crops with it!\"", 
+		"type": "text"
+	},
+	"falconSelect": {
+		"en-us": "", 
+		"en-dm": "Select up to 5 seeds to send to Nathan.", 
+		"type": "text"
+	},
+	"falconConfirm": {
+		"en-us": "", 
+		"en-dm": "Confirm.", 
+		"type": "text"
+	},
+	"falconSeeds": {
+		"en-us": "", 
+		"en-dm": "Seeds:", 
+		"type": "text"
 	},
 };

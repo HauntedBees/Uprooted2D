@@ -87,7 +87,7 @@ var CommandParser = {
                 case "BLACKTEXT": CommandParser.Parse_BlackText(actSuffix); break;
                 case "ANIMSTATE": CommandParser.Parse_ShiftsAndFPS(target, JSON.parse(actSuffix)); break;
                 case "ISMOVING": target.moving = (actSuffix === "true"); break;
-                case "CLEARTEXT": gfx.clearSome(["menuA", "menutext"]);break;
+                case "CLEARTEXT": gfx.clearSome(["menuA", "menutext"]); break;
                 case "GO2": CommandParser.Parse_Transition(JSON.parse(actSuffix)); break;
                 case "VISIBLE": target.visible = (actSuffix === "true"); break;
                 case "SOLID": target.solid = (actSuffix === "true"); break;
@@ -201,6 +201,82 @@ var SpecialFunctions = {
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
     "SCREENSHAKE": function() {
         // TODO
+    },
+    "BIRDSONG.OGG": function() {
+        // TODO
+    },
+    "GETFALCONTEXT": function() {
+        var keyStart = "falconMsg0.";
+        var rangeMax = 6;
+        //switch(worldmap.mapName) { }
+        for(var i = 1; i <= rangeMax; i++) { iHandler.state.texts.push(keyStart + i); }
+        worldmap.writeText(keyStart + "0");
+    },
+    "FALCONSELECT": function() {
+        game.currentInputHandler = worldmap.falconSelect;
+        worldmap.falconSelect.setup();
+        //worldmap.writeText("falconSelect");
+    },
+    "PLAYERREAD": function() {
+        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 6, 0);
+        worldmap.refreshMap();
+    },
+    "ENTERTHEBIRD": function() {
+        var bird = GetCommonEntity("Eagle", worldmap.pos.x - 8, worldmap.pos.y - 3.5, 6, 0, undefined, undefined, { sheet: "assistant", sy: 1, sheetlen: 2, moving: true });
+        worldmap.entities.push(bird);
+        worldmap.importantEntities["bird"] = bird;
+
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["bird"].pos.x += 0.05;
+            worldmap.importantEntities["bird"].pos.y += 0.025;
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x - 1);
+            if(finished) {
+                worldmap.importantEntities["bird"].anim.shiftX(4);
+                worldmap.importantEntities["bird"].moving = false;
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "EXITTHEBIRD1": function() {
+        gfx.clearSome(["menuA", "menutext"]);
+        worldmap.importantEntities["bird"].anim.shiftX(6);
+        worldmap.importantEntities["bird"].moving = true;
+        worldmap.waitForAnimation = true;
+        worldmap.forcedPlayerInfo = false;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["bird"].pos.y -= 0.01;
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["bird"].pos.y <= (worldmap.pos.y - 1.5);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "EXITTHEBIRD2": function() {
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["bird"].pos.x += 0.05;
+            worldmap.importantEntities["bird"].pos.y -= 0.0125;
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x + 8);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                game.target = worldmap.importantEntities["bird"];
+                worldmap.clearTarget();
+                worldmap.importantEntities["bird"] = undefined;
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
     },
     "DESTROYBUILDING": function() {
         worldmap.importantEntities["13thStBuildings"].filename = "covers/northcity2_post";
@@ -538,7 +614,7 @@ var SpecialFunctions = {
     "LIMESTART": function() {
         var items = specialtyHelpers.getLimeItems();
         if(items.length === 0) { worldmap.writeText("lime3"); iHandler.state.done = true; }
-        else {  worldmap.writeText("lime4", items); }
+        else { worldmap.writeText("lime4", items); }
     },
     "LIMENEXT": function(idx) {
         switch(specialtyHelpers.getLimeItems()[idx]) {

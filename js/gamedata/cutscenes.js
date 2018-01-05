@@ -407,7 +407,7 @@ var scripts = {
 	"mushman11": "_GIVE:lotus,20&_TEXT:mushManGood(0-2)&_COMPLETEQUEST:stonehenge&_END",
 	"mushman12": "_TEXT:mushManGive1",
 	"mushman13": "_TEXT:mushManPoison0",
-	"mushman14": "targ_SHIFTY:9&_TEXT:mushManPoison1",
+	"mushman14": "targ_SHIFTY:7&_TEXT:mushManPoison1",
 	"mushman15": "_TEXT:mushManPoison2&_COMPLETEQUEST:stonehenge&_COMPLETEQUEST:youarebad",
 	// North City: Radish on Counter
 	"freeRadish0": "?[{\"q\":\"player.completedQuest('freeRadish')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
@@ -474,4 +474,28 @@ var scripts = {
 	"keywin1": "_HISPEED&_CUSTOM:FORCEYZERO&dweeb_MOVE:y15",
 	"keywin2": "_LOSPEED&_CUSTOM:UNFORCEYZERO&dweeb_SETTARGET&_CLEARTARGET&_TEXT:keycard6",
 	"keywin3": "mech_SETTARGET&_CLEARTARGET&scrungus_SETTARGET&_CLEARTARGET&keytrap_SETTARGET&_CLEARTARGET&_QUIT",
+	// Food2: First Floor
+	"food2Start0": "_TEXT:enterHQ(0-3)",
+	// Food2: Third Floor
+	"food2Third0": "_TEXT:intercom(0-6)",
+	// Food2: Seventh Boss (Beckett)
+	"food2Fifth0": "_TEXT:confront(0-12)",
+	"food2Fifth1": "_FIGHT:beckett",
+	"food2Lost0": "_TEXT:beckettBack0",
+	"food2Lost1": "_FIGHT:beckett",
+	"food2Beat0": "_TEXT:postBeckett(0-2)",
+	// Food2: Final Boss (Nathan)
+	"final0": "_TEXT:final(0-25)",
+	// Misc.: The Fucking Bird
+	"falcon0": "_CUSTOM:BIRDSONG.OGG&pl_SETDIR:0&_SLEEP:1000",
+	"falcon1": "pl_SETDIR:1&_CUSTOM:ENTERTHEBIRD",
+	"falcon2": "_SLEEP:500",
+	"falcon3": "_PLANIM:5,0,1000",
+	"falcon4": "bird_SHIFTY:0&_CUSTOM:PLAYERREAD&_TEXT:falconMsg0",
+	"falcon5": "_CUSTOM:GETFALCONTEXT",
+	"falcon6": "_CUSTOM:FALCONSELECT",
+	"falcon7": "_PLANIM:5,0,1000",
+	"falcon8": "bird_SHIFTY:1&_SLEEP:500",
+	"falcon9": "_CUSTOM:EXITTHEBIRD1",
+	"falcon10": "pl_SETDIR:3&_CUSTOM:EXITTHEBIRD2",
 };
