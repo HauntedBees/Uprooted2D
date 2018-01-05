@@ -140,10 +140,10 @@ var mapentities = {
         SwitchMap("ExitAreaNorth", 21, 0, true, false, 16, 22, "producestand"),
         SwitchMap("ExitAreaWest", 0, 22, false, true, 44, 49, "forest"),
         SwitchMap("ExitAreaSouth", 21, 30, true, false, 21.5, 1, "belowvillage"),
-        GetCommonEntity("Dean", 10, 13, 15, 3, undefined, [GetSpeak("villager0")], { sy: 6 }),
-        GetCommonEntity("June", 20, 5, 19, 2, undefined, [GetSpeak("villager1")], { sy: 6 }),
-        GetCommonEntity("Aiko", 27, 10, 15, 3, undefined, [GetSpeak("villager2")], { sy: 7 }),
-        GetCommonEntity("Tanner", 3, 18, 19, 0, undefined, [GetSpeak("villager3")], { sy: 7 }),
+        GetCommonEntity("Dean", 10, 13, 12, 3, undefined, [GetSpeak("villager0")], { sy: 14 }),
+        GetCommonEntity("June", 20, 5, 16, 2, undefined, [GetSpeak("villager1")], { sy: 14 }),
+        GetCommonEntity("Aiko", 27, 10, 12, 3, undefined, [GetSpeak("villager2")], { sy: 15 }),
+        GetCommonEntity("Tanner", 3, 18, 16, 0, undefined, [GetSpeak("villager3")], { sy: 15 }),
         EnterShop("EquipmentShop", 17, 12, "equip1"),
         GetSign(18, 13, "SignWeapon0"),
         EnterShop("UpgradeShop", 18, 20, "upgrade1"),
@@ -491,7 +491,7 @@ var mapentities = {
         GetCommonEntity("ExitBarnL", 14, 31, 0, 0, undefined, Cutscene("exitBarn"), { visible: false, solid: false, postBattle: "beatDweeb", dontClearTarget: true }),
         GetCommonEntity("ExitBarnR", 15, 31, 0, 0, undefined, Cutscene("exitBarn"), { visible: false, solid: false, postBattle: "beatDweeb", dontClearTarget: true }),
         GetInvisibleEntity("beatDweeb", Cutscene("beatBarn"), { storageKey: "beatDweeb" }),
-        GetCommonEntity("HOUSEKEEPER", 13, 30, 12, 0, undefined, Cutscene("housekeeper"), { visible: false, inside: true, storageKey: "HK", sy: 10, noChange: true } ),
+        GetCommonEntity("HOUSEKEEPER", 13, 30, 17, 0, undefined, Cutscene("housekeeper"), { visible: false, inside: true, storageKey: "HK", sy: 5, noChange: true } ),
 
         GetCommonEntity("CoveredDoorL1", 11, 15, 6, 0, undefined, [ GetSpeak("barndoorChick") ], { sy: 12, noChange: true, solid: true, changeType: 0 }), // 0 = open door
         GetCommonEntity("CoveredDoorL2", 11, 18, 6, 0, undefined, [ GetSpeak("barndoorPig") ], { sy: 12, noChange: true, solid: true, changeType: 0 }),
@@ -556,7 +556,7 @@ var mapentities = {
         GetMafiaMember(27, 43, 4, 1),
         GetMafiaMember(28, 44.5, 4, 2),
         GetMafiaMember(29, 46, 4, 3),
-        GetCommonEntity("MobBoss", 20, 27, 17, 2, undefined, Cutscene("mobBoss"), { sy: 10, inside: true, visible: false, boss: true, postBattle: "BeatMob", failedInteract: Cutscene("mobLost") }),
+        GetCommonEntity("MobBoss", 20, 27, 20, 2, undefined, Cutscene("mobBoss"), { sy: 12, inside: true, visible: false, boss: true, postBattle: "BeatMob", failedInteract: Cutscene("mobLost") }),
         GetInvisibleEntity("BeatMob", Cutscene("mobWon"), { storageKey: "BeatMob" }),
 
         GetCommonEntity("IntroSkumpyCutscene", 43, 40, 0, 0, undefined, Cutscene("southcity"), { visible: false, solid: false, isRow: true, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene", boring: true }),
@@ -596,13 +596,13 @@ var mapentities = {
         GetJumboToggle("StrangeR", 17, 8, true), GetJumboToggle("StrangeR", 17, 9, false),
         
         GetCommonEntity("LavaLamp", 15, 20.25, 22, 0, undefined, undefined, { inside: true, sheetlen: 6, visible: false, moving: true }),
-        GetCommonEntity("MushMan", 16, 22, 15, 0, undefined, Cutscene("mushman"), { noChange: true, sy: 8, visible: false, inside: true }),
+        GetCommonEntity("MushMan", 16, 22, 15, 0, undefined, Cutscene("mushman"), { noChange: true, sy: 6, visible: false, inside: true }),
 
         GetCommonEntity("SomeNerd", 15, 17, 0, 3, undefined, Cutscene("someNerd"), { sy: 15, visible: false, inside: true }),
         GetCommonEntity("SomeNerd2", 22, 15, 0, 2, undefined, [ GetSpeak("bathroomNerd") ], { sy: 15, visible: false, inside: true }),
 
         GetCommonEntity("crazy4trout", 34, 17, 0, 2, undefined, Cutscene("crazy4trout"), { sy: 14, visible: false, inside: true }),
-        GetCommonEntity("brandt", 54, 22, 16, 0, undefined, Cutscene("brandt"), { noChange: true, sy: 8, visible: false, inside: true }),
+        GetCommonEntity("brandt", 54, 22, 15, 0, undefined, Cutscene("brandt"), { noChange: true, sy: 8, visible: false, inside: true }),
 
         GetCommonInvisibleSpeakingEntity("fridge", 18, 21, "mushFridge"),
         GetCommonInvisibleSpeakingEntity("fridge2", 12, 15, "mushFridge"),
@@ -642,13 +642,13 @@ var mapentities = {
 
         GetCommonEntity("Food2Entrance", 39, 9, 0, 0, undefined, Cutscene("foodDoor"), { visible: false, solid: true }),
 
-        GetCommonEntity("atm0", 22, 34, 17, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 8 }),
-        GetCommonEntity("atm1", 23, 34, 17, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 8 }),
-        GetCommonEntity("atm2", 24, 34, 17, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 8 }),
-        GetCommonEntity("atm3", 25, 34, 17, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 8 }),
-        GetCommonEntity("atm4", 26, 34, 17, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 8 }),
-        GetCommonEntity("atm5", 27, 34, 17, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 8 }),
-        GetCommonEntity("atm6", 28, 34, 17, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 8 }),
+        GetCommonEntity("atm0", 22, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
+        GetCommonEntity("atm1", 23, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
+        GetCommonEntity("atm2", 24, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
+        GetCommonEntity("atm3", 25, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
+        GetCommonEntity("atm4", 26, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
+        GetCommonEntity("atm5", 27, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
+        GetCommonEntity("atm6", 28, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
         GetCommonEntity("cashboy0", 23, 39, 4, 3, undefined, Cutscene("cashBoy"), { inside: true, visible: false, sy: 15 }),
         GetCommonEntity("cashboy1", 27, 37, 4, 2, undefined, Cutscene("cashBoy"), { inside: true, visible: false, sy: 15 })
     ]

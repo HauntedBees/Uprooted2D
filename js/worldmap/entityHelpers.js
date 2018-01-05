@@ -271,10 +271,10 @@ function GetWaterfallEnd(name, x, y, dir, wfid) {
     return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: 4, sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
 }
 function GetMafiaMember(num, x, y, dir, movement) {
-    return GetCommonEntity("Mafia" + num, x, y, 13, dir, movement, Cutscene("enemy"), enemyMetadata.mafia);
+    return GetCommonEntity("Mafia" + num, x, y, 12, dir, movement, Cutscene("enemy"), enemyMetadata.mafia);
 }
 function GetMafiaMember2(num, x, y, dir) {
-    return GetCommonEntity("Mafia" + num, x, y, 13, dir, undefined, Cutscene("enemy"), enemyMetadata.mafia2);
+    return GetCommonEntity("Mafia" + num, x, y, 12, dir, undefined, Cutscene("enemy"), enemyMetadata.mafia2);
 }
 function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
     var big = (additional !== undefined && additional.big);
