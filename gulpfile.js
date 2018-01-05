@@ -12,7 +12,7 @@ gulp.task("watch", function() {
 });
 gulp.task("buildcollisions", function() {
     fs.writeFile("js/worldmap/collisions.js", "var collisions = {\r\n");
-    gulp.src("./collision/*.png").pipe(foreach(function(stream, file) {
+    return gulp.src("./collision/*.png").pipe(foreach(function(stream, file) {
         var pathArr = file.path.split("\\");
         var len = pathArr.length;
         var path = pathArr[len - 2] + "/" + pathArr[len - 1];
