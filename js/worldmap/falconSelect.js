@@ -1,9 +1,8 @@
 worldmap.falconSelect = {
-    cursor: { x: 0, y: 0 }, cropsToSend: [], options: [],
+    cursor: { x: 0, y: 0 }, cropsToSend: [], 
     layersToClean: ["menuA", "menuB", "menucursorA", "menucursorB", "menutext"],
     actualIndexes: [], inventoryWidth: 9, dy: 6, addHalf: true,
     setup: function() {
-        this.options = [];
         this.cursor = { x: 0, y: 0 };
         this.cropsToSend = [];
         this.actualIndexes = [];
@@ -25,7 +24,6 @@ worldmap.falconSelect = {
         gfx.drawInfobox(6, 3, this.dy + 1);
         gfx.drawInfobox(16, 2, 1.5);
         gfx.drawFullText(GetText("falconSeeds"), 32);
-        gfx.drawCursor(cursorX, cursorY + 1, 0, 0);
         for(var i = 0; i < this.actualIndexes.length; i++) {
             var actItem = player.inventory[this.actualIndexes[i]];
             gfx.drawInventoryItem(actItem, i % this.inventoryWidth, this.dy + 1 + Math.floor(i / this.inventoryWidth), "menuA");
@@ -33,8 +31,13 @@ worldmap.falconSelect = {
         for(var i = 0; i < this.cropsToSend.length; i++) {
             gfx.drawTileToGrid(this.cropsToSend[i] + "seed", 2.5 + i, 2, "menuA");
         }
-        this.options = [];
-        this.drawOption(GetText("falconConfirm"), 3.25);
+        //this.options = [];
+        var xi = this.drawOption(GetText("falconConfirm"), 3.25);
+        if(this.cursor.y < 0) {
+            gfx.drawCursor(0, 3.25, xi, 0);
+        } else {
+            gfx.drawCursor(cursorX, cursorY + 1, 0, 0);
+        }
     },
     drawOption: function(text, y, selected) {
         var xi = 1, tile = 7;
@@ -47,9 +50,15 @@ worldmap.falconSelect = {
         }
         gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, 2 + y * 16, "menuA");
         gfx.drawText(text, 2, 10.5 + y * 16);
-        this.options.push(xi);
+        return xi;
+        //this.options.push(xi);
     },
     setText: function() {
+        if(this.cursor.y < 0) {
+            var sendText = HandlePlurals(GetText("falconConfirmX"), this.cropsToSend.length).replace("{0}", this.cropsToSend.length);
+            gfx.drawWrappedText(sendText, 9.5 * 16, 11 + (16 * (this.dy + 1)), 85);
+            return;
+        }
         var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
         var item = player.inventory[this.actualIndexes[idx]];
         if(item === null || item === undefined) { return; }
@@ -66,23 +75,45 @@ worldmap.falconSelect = {
     },
 
     mouseMove: function(pos) {
-        if(pos.x < 0 || pos.y < 0) { return false; }
+        if(pos.x < 0 || pos.y < -1) { return false; }
         if(pos.x >= this.inventoryWidth) { return false; }
-        var idx = pos.y * this.inventoryWidth + pos.x;
-        if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
+        if(pos.y >= 0) {
+            var idx = pos.y * this.inventoryWidth + pos.x;
+            if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
+        }
         this.cursor = { x: pos.x, y: pos.y };
         this.drawAll();
         return true;
     },
-    click: function(pos) {
-        if(this.cropsToSend.length === 5) { return false; }
-        var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
-        var item = player.inventory[this.actualIndexes[idx]];
-        if(item[1] === 0) { return false; }
-        player.inventory[this.actualIndexes[idx]][1]--;
-        this.cropsToSend.push(item[0]);
-        this.drawAll();
+    confirmSeeds: function() {
+        player.nathanSeeds = [];
+        for(var i = 0; i < this.cropsToSend.length; i++) {
+            var crop = this.cropsToSend[i];
+            player.nathanSeeds.push([crop, this.GetSeedAmountForCrop(crop)]);
+            player.clearItemIfEmpty(crop);
+        }
+        game.currentInputHandler = worldmap;
+        gfx.clearSome(this.layersToClean);
+        iHandler.Advance();
         return true;
+    },
+    GetSeedAmountForCrop: function(crop) {
+        if(["coconut", "gmocorn", "notdrugs", "lotus"].indexOf(crop) >= 0) { return 2; }
+        return 10; // TODO: probably shouldn't be this for EVERY standard crop (should this be in the spreadsheet?)
+    },
+    click: function(pos) {
+        if(this.cursor.y < 0) {
+            return this.confirmSeeds();
+        } else {
+            if(this.cropsToSend.length === 5) { return false; }
+            var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
+            var item = player.inventory[this.actualIndexes[idx]];
+            if(item[1] === 0) { return false; }
+            player.inventory[this.actualIndexes[idx]][1]--;
+            this.cropsToSend.push(item[0]);
+            this.drawAll();
+            return true;
+        }
     },
     cancel: function() {
         var last = this.cropsToSend.pop();
@@ -103,7 +134,7 @@ worldmap.falconSelect = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(pos.y < 0 || pos.x < 0) { return false; }
+        if(pos.y < -1 || pos.x < 0) { return false; }
         if(isEnter) { return this.click(pos); }
         else { return this.mouseMove(pos); }
     }

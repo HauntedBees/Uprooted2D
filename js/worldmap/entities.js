@@ -221,6 +221,8 @@ var mapentities = {
         SwitchMap("EnterFacilityR", 8, 18, false, false, 13, 36, "researchfacility"),
         GetBeehive("BelowHive", 4, 36),
         
+        { name: "Falcon0", pos: { x: 21, y: 9 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
+
         GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
         GetCommonEntity("Robo2", 10, 38, 4, 2, GetStdMovement([ [10, 38, 3], [11, 38, 3], [11, 39, 2], [10, 39, 1], [10, 38, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
         GetCommonEntity("Robo3", 10, 31, 4, 2, GetStdMovement([ [10, 31, 3], [14, 31, 3], [10, 31, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
@@ -293,6 +295,8 @@ var mapentities = {
 		return x;
 	}(),
     "bridge": [
+        { name: "Falcon1", pos: { x: 27, y: 5 }, isColumn: true, visible: false, solid: false, interact: Cutscene("falcon"), autoplay: true },
+
         SwitchMap("GoUnderwater", 4, 14, false, false, 41, 20, "underwater"),
 
         GetSign(9, 13, "SignMermaid"),
@@ -452,6 +456,7 @@ var mapentities = {
         return x;
     }(),
     "fakefarm": [
+        { name: "Falcon2", pos: { x: 14, y: 32 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
         { pos: { x: -1, y: -1 }, innCheck: true, action: function() {
             worldmap.importantEntities["barnCover"].visible = false;
             worldmap.importantEntities["FarmerJeff"].visible = true;
@@ -513,6 +518,8 @@ var mapentities = {
         GetCommonEntity("LawnMower2", 20, 28, 4, 1, undefined, Cutscene("mower"), enemyMetadata.mower(6)) // 6 = bigger RtL
     ],
     "southcity": [
+        { name: "Falcon3", pos: { x: 44, y: 46 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
+
         GetJumbo("skumpyCover", "skumpy", 36, 39, 396, 256, 1, 1),
         GetJumbo("mobCover", "mob", 9, 27, 772, 512, 0, 0),
         GetJumboToggle("Mob", 15, 33, true), GetJumboToggle("Mob", 15, 34, false),
@@ -576,6 +583,8 @@ var mapentities = {
         GetCommonEntity("Abuela", 34, 20, 17, 0, undefined, Cutscene("abuela"), { sy: 4, noChange: true })
     ],
     "northcity": [
+        { name: "Falcon4", pos: { x: 8, y: 44 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
+
         GetJumbo("12thStBuildings", "northcity3", 21, 31, 2436, 832, 1, 0),
         GetJumboToggle("Cash2", 25, 42, true), GetJumboToggle("Cash2", 25, 43, false),
         GetJumboToggle("OfficeL", 52, 42, true), GetJumboToggle("OfficeL", 52, 43, false),
@@ -653,7 +662,9 @@ var mapentities = {
         GetCommonEntity("cashboy1", 27, 37, 4, 2, undefined, Cutscene("cashBoy"), { inside: true, visible: false, sy: 15 })
     ],
     "hq_1": function() {
-        var x = [];
+        var x = [ 
+            { name: "Falcon5", pos: { x: 15, y: 27 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") }
+        ];
         var doors = [ [20, 10, 0, false], [7, 10, 0, true],  [20, 3, 1, false], [25, 7, 1, true], [18, 6, 1, false], [17, 14, 1, true], [15, 8, 1, false],
                  [4, 17, 1, true], [10, 17, 1, false], [4, 8, 2, false], [4, 12, 2, true], [10, 12, 2, false], [7, 14, 2, true] ];
         for(var i = 0; i < doors.length; i++) { var d = doors[i]; x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3])); }

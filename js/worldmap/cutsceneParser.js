@@ -199,6 +199,7 @@ var CommandParser = {
 var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
+    "SWITCHTOFALCON": function() { iHandler.Start("falcon"); },
     "SCREENSHAKE": function() {
         // TODO
     },
@@ -208,14 +209,27 @@ var SpecialFunctions = {
     "GETFALCONTEXT": function() {
         var keyStart = "falconMsg0.";
         var rangeMax = 6;
-        //switch(worldmap.mapName) { }
+        switch(worldmap.mapName) {
+            case "bridge": keyStart = "falconMsg1."; rangeMax = 5; break;
+            case "fakefarm": keyStart = "falconMsg2."; rangeMax = 5; break;
+            case "southcity":
+                player.increaseItem("goose", 10);
+                player.increaseItem("egg", 20);
+                keyStart = "falconMsg3.";
+                rangeMax = 5;
+                break;
+            case "northcity": keyStart = "falconMsg4."; rangeMax = 4; break;
+            case "hq_1": keyStart = "falconMsg5."; rangeMax = 7; break;
+        }
         for(var i = 1; i <= rangeMax; i++) { iHandler.state.texts.push(keyStart + i); }
         worldmap.writeText(keyStart + "0");
     },
     "FALCONSELECT": function() {
         game.currentInputHandler = worldmap.falconSelect;
+        for(var i = 0; i < player.nathanSeeds.length; i++) {
+            player.increaseItem(player.nathanSeeds[i][0], player.nathanSeeds[i][1]);
+        }
         worldmap.falconSelect.setup();
-        //worldmap.writeText("falconSelect");
     },
     "PLAYERREAD": function() {
         worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 6, 0);
@@ -241,6 +255,11 @@ var SpecialFunctions = {
             return finished;
         };
         worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "EXITTHEBIRDFINAL": function() {
+        worldmap.forcedPlayerInfo = false;
+        worldmap.writeText("falconMsg5.8");
+        iHandler.state.texts.push("falconMsg5.9");
     },
     "EXITTHEBIRD1": function() {
         gfx.clearSome(["menuA", "menutext"]);

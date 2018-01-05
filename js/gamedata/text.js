@@ -19,6 +19,14 @@ function HandleArticles(mainStr, subject) { // this is English-language specific
 		return mainStr.replace(/\{an\}/g, " a");
 	}
 }
+function HandlePlurals(mainStr, subject) { // this is English-language specific; oops!
+	if(subject === undefined || mainStr.indexOf("{s}") < 0) { return mainStr; }
+	if(subject === 1) {
+		return mainStr.replace(/\{s\}/g, "");
+	} else {
+		return mainStr.replace(/\{s\}/g, "s");
+	}
+}
 function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 	// Items
@@ -4986,6 +4994,26 @@ var fulltext = {
 		"en-dm": "It's a message from Nathan.", 
 		"type": "text"
 	},
+	"falconSelect": {
+		"en-us": "", 
+		"en-dm": "Select up to 5 seeds to send to Nathan.", 
+		"type": "text"
+	},
+	"falconConfirm": {
+		"en-us": "", 
+		"en-dm": "Confirm.", 
+		"type": "text"
+	},
+	"falconSeeds": {
+		"en-us": "", 
+		"en-dm": "Seeds:", 
+		"type": "text"
+	},
+	"falconConfirmX": {
+		"en-us": "", 
+		"en-dm": "Send {0} seed{s} to Nathan.", 
+		"type": "text"
+	},
 	"falconMsg0.0": {
 		"en-us": "", 
 		"en-dm": "\"Hey, it's me! Your intern! I think I'm starting to get the hang of things here. I finally put out all the fires!\"", 
@@ -5003,7 +5031,7 @@ var fulltext = {
 	},
 	"falconMsg0.3": {
 		"en-us": "", 
-		"en-dm": "Attached to the letter are 10 Beet Seeds, 10 Carrot Seeds, and 5 Ginger Seeds.", 
+		"en-dm": "Attached to the letter {seeds}.", 
 		"type": "text"
 	},
 	"falconMsg0.4": {
@@ -5021,19 +5049,169 @@ var fulltext = {
 		"en-dm": "\"Then the next time I have a message for you, I'll send the seeds from the crops with it!\"", 
 		"type": "text"
 	},
-	"falconSelect": {
+	"falconMsg1.0": {
 		"en-us": "", 
-		"en-dm": "Select up to 5 seeds to send to Nathan.", 
+		"en-dm": "\"Hey hey! It worked! I planted the seeds and then crops grew out of them and the crops had seeds in them!\"", 
 		"type": "text"
 	},
-	"falconConfirm": {
+	"falconMsg1.1": {
 		"en-us": "", 
-		"en-dm": "Confirm.", 
+		"en-dm": "Attached to the letter {seeds}.", 
 		"type": "text"
 	},
-	"falconSeeds": {
+	"falconMsg1.2": {
 		"en-us": "", 
-		"en-dm": "Seeds:", 
+		"en-dm": "\"But I gotta say - this yard work is hard work! That's a reference! Do you watch any internet cartoons?\"", 
+		"type": "text"
+	},
+	"falconMsg1.3": {
+		"en-us": "", 
+		"en-dm": "\"No? Nevermind then. Anyway, props to you for farming all these years. This is definitely a workout!\"", 
+		"type": "text"
+	},
+	"falconMsg1.4": {
+		"en-us": "", 
+		"en-dm": "\"I mean, there's plenty of technology to make this easier for me, but if machines do all the work for me, who's really interning for you? Me, or the machines?\"", 
+		"type": "text"
+	},
+	"falconMsg1.5": {
+		"en-us": "", 
+		"en-dm": "\"Nosiree, I'm gonna learn this stuff the old fashioned way! Oh oh, I hear some clucking! Something must have gotten into the chicken coop. Talk to you later!\"", 
+		"type": "text"
+	},
+	"falconMsg2.0": {
+		"en-us": "", 
+		"en-dm": "\"Long time no talk! I hope you're knocking a lot of chores off of your to-do list out there!\"", 
+		"type": "text"
+	},
+	"falconMsg2.1": {
+		"en-us": "", 
+		"en-dm": "\"As for me... well, it seems like every time I cross something off my list, I need to add five more things!!\"", 
+		"type": "text"
+	},
+	"falconMsg2.2": {
+		"en-us": "", 
+		"en-dm": "\"I don't know how you do it, but to say I respect your determination is an understatement!\"", 
+		"type": "text"
+	},
+	"falconMsg2.3": {
+		"en-us": "", 
+		"en-dm": "\"Anyway, here are the seeds from the last harvest!\"", 
+		"type": "text"
+	},
+	"falconMsg2.4": {
+		"en-us": "", 
+		"en-dm": "Attached to the letter {seeds}.", 
+		"type": "text"
+	},
+	"falconMsg2.5": {
+		"en-us": "", 
+		"en-dm": "\"Back to work for me! Vegetables don't sleep! And sometimes it feels like your chickens don't, either!\"", 
+		"type": "text"
+	},
+	"falconMsg3.0": {
+		"en-us": "", 
+		"en-dm": "\"Hey, hey! Great news! Your farm has some new friends living on it!\"", 
+		"type": "text"
+	},
+	"falconMsg3.1": {
+		"en-us": "", 
+		"en-dm": "\"Some geese have taken residence in your little water hole thing, and - even better - they lay a bunch of eggs!\"", 
+		"type": "text"
+	},
+	"falconMsg3.2": {
+		"en-us": "", 
+		"en-dm": "\"Of course your chickens are doing well, too! I think they miss you!\"", 
+		"type": "text"
+	},
+	"falconMsg3.3": {
+		"en-us": "", 
+		"en-dm": "You got 10 Goose Eggs and 20 Chicken Eggs.", 
+		"type": "text"
+	},
+	"falconMsg3.4": {
+		"en-us": "", 
+		"en-dm": "\"I hope things are going well for you, wherever you are!\"", 
+		"type": "text"
+	},
+	"falconMsg3.5": {
+		"en-us": "", 
+		"en-dm": "Attached to the letter {seeds}.", 
+		"type": "text"
+	},
+	"falconMsg4.0": {
+		"en-us": "", 
+		"en-dm": "\"Great news! I think I've finally gotten the hang of the basics!\"", 
+		"type": "text"
+	},
+	"falconMsg4.1": {
+		"en-us": "", 
+		"en-dm": "\"I actually finished all of my chores before sunset today! It's nice to have a night off for once.\"", 
+		"type": "text"
+	},
+	"falconMsg4.2": {
+		"en-us": "", 
+		"en-dm": "\"Obviously I still have a ways to go before I'm even close to as good as you, but practice makes progress!\"", 
+		"type": "text"
+	},
+	"falconMsg4.3": {
+		"en-us": "", 
+		"en-dm": "\"But for now, I will celebrate my advances by catching up on some personal work! Talk to you later!\"", 
+		"type": "text"
+	},
+	"falconMsg4.4": {
+		"en-us": "", 
+		"en-dm": "Attached to the letter {seeds}.", 
+		"type": "text"
+	},
+	"falconMsg5.0": {
+		"en-us": "", 
+		"en-dm": "\"The life of a farmer can be a lonely one! Even when I need to head into town for supplies, I barely have time to say more than 'hello' and 'goodbye' to anyone!\"", 
+		"type": "text"
+	},
+	"falconMsg5.1": {
+		"en-us": "", 
+		"en-dm": "\"But these past few days I've been getting done early, and I've managed to get acquainted with some of the locals here in San Ambrosio.\"", 
+		"type": "text"
+	},
+	"falconMsg5.2": {
+		"en-us": "", 
+		"en-dm": "\"You have a really beautiful community down here. Everyone is so kind and trustworthy. It's nothing like where I'm from.\"", 
+		"type": "text"
+	},
+	"falconMsg5.3": {
+		"en-us": "", 
+		"en-dm": "\"The big city can be pretty unforgiving, and people will turn their backs on you at the drop of a hat if they think it'll benefit them.\"", 
+		"type": "text"
+	},
+	"falconMsg5.4": {
+		"en-us": "", 
+		"en-dm": "\"I hope you never have to deal with anything like that. Just stay away from the city if you can.\"", 
+		"type": "text"
+	},
+	"falconMsg5.5": {
+		"en-us": "", 
+		"en-dm": "\"I've got to run a few personal errands now, but don't worry! I'll still be back by tomorrow to get my work done!\"", 
+		"type": "text"
+	},
+	"falconMsg5.6": {
+		"en-us": "", 
+		"en-dm": "Attached to the letter {seeds}.", 
+		"type": "text"
+	},
+	"falconMsg5.7": {
+		"en-us": "", 
+		"en-dm": "I don't think I need to send any more seeds back home... this is the end of my journey, after all.", 
+		"type": "text"
+	},
+	"falconMsg5.8": {
+		"en-us": "", 
+		"en-dm": "Care to join me, Iii?", 
+		"type": "text"
+	},
+	"falconMsg5.9": {
+		"en-us": "", 
+		"en-dm": "Iii has joined my party! Now I can attack one more time per turn!", 
 		"type": "text"
 	},
 };

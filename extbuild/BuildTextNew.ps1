@@ -30,6 +30,14 @@ function HandleArticles(mainStr, subject) { // this is English-language specific
 		return mainStr.replace(/\{an\}/g, " a");
 	}
 }
+function HandlePlurals(mainStr, subject) { // this is English-language specific; oops!
+	if(subject === undefined || mainStr.indexOf("{s}") < 0) { return mainStr; }
+	if(subject === 1) {
+		return mainStr.replace(/\{s\}/g, "");
+	} else {
+		return mainStr.replace(/\{s\}/g, "s");
+	}
+}
 function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 '@);

@@ -189,6 +189,26 @@ var worldmap = {
                     actualText = actualText.replace("{" + i + "}", formatting[i]);
                 }
             }
+        } else if(actualText.indexOf("{seeds}") >= 0) { // TODO: this is not other language friendly
+            var actualSeedCounts = {};
+            for(var i = 0; i < player.nathanSeeds.length; i++) {
+                var seedInfo = player.nathanSeeds[i];
+                if(actualSeedCounts[seedInfo[0]] === undefined) { actualSeedCounts[seedInfo[0]] = 0; }
+                actualSeedCounts[seedInfo[0]] += seedInfo[1];
+            }
+            var seedStrArr = [];
+            for(var crop in actualSeedCounts) {
+                seedStrArr.push(actualSeedCounts[crop] + " " + GetCrop(crop).displayname + " Seed" + (actualSeedCounts[crop] === 1 ? "" : "s"));
+            }
+            if(seedStrArr.length === 0) {
+                actualText = actualText.replace("{seeds}", "is... nothing.");
+            } else if(seedStrArr.length === 1) {
+                actualText = actualText.replace("{seeds}", "are " + seedStrArr[0]);
+            } else {
+                actualText = actualText.replace("{seeds}", "are " + seedStrArr.join(", "));
+                var lastComma = actualText.lastIndexOf(",");
+                actualText = actualText.substring(0, lastComma) + " and" + actualText.substring(lastComma + 1);
+            }
         }
         gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
         if(choices === undefined) {
