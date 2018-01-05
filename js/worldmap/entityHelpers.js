@@ -189,6 +189,8 @@ function GetItemDisplayName(name, plural) {
     }
 }
 function AdvanceWaterfall() {
+    var lastDir = game.target.dir;
+    var newDir = -1;
     for(var i = 0; i < worldmap.entities.length; i++) {
         var e = worldmap.entities[i];
         if(!e.solid && e.pos.x == Math.round(worldmap.pos.x) && e.pos.y == Math.round(worldmap.pos.y)) {
@@ -197,11 +199,16 @@ function AdvanceWaterfall() {
                 ExitWaterfall();
                 return;
             }
-            break;
+            if(e.dir === lastDir) {
+                newDir = lastDir;
+                break;
+            } else if(newDir != lastDir) {
+                newDir = e.dir;
+            }
         }
     }
     var x = 0, y = 0;
-    switch(game.target.dir) {
+    switch(newDir) {
         case 0: y--; break;
         case 1: x--; break;
         case 2: y++; break;
