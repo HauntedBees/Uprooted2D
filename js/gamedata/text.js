@@ -3748,7 +3748,7 @@ var fulltext = {
 		"en-dm": "fucking kaboom", 
 		"type": "map"
 	},
-	// Text Messages
+	// Area 8: North City Text Messages
 	"beckettText0": {
 		"en-us": "", 
 		"en-dm": "XxXbeckXxX (to you): ur very dumb 4 coming here", 
@@ -3902,6 +3902,27 @@ var fulltext = {
 	"sistext3": {
 		"en-us": "", 
 		"en-dm": "JM (to you): Anyway, I'll ttyl (that means \"talk to you later\"), my shift's starting. Love you!! <3 <3 <3 <3", 
+		"type": "text"
+	},
+	// Area 9: Food2 Headquarters
+	"theFirstBottle": {
+		"en-us": "", 
+		"en-dm": "\"When our founder took his first sip of this mixture and only vomited a *little* bit, he knew it was the future of food.\"", 
+		"type": "text"
+	},
+	"smartDesk": {
+		"en-us": "", 
+		"en-dm": "This desk appears to be covered in a thick layer of glass with a monitor underneath it. Technology can be cool sometimes, I guess.", 
+		"type": "text"
+	},
+	"whiteboard": {
+		"en-us": "", 
+		"en-dm": "Lots of scribbles and half-messages that probably made sense at the time litter the whiteboard.", 
+		"type": "text"
+	},
+	"secondMonitor": {
+		"en-us": "", 
+		"en-dm": "Why do they have a giant TV screen if they already have a monitor built into the desk?", 
 		"type": "text"
 	},
 	// Shops

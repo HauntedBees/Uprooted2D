@@ -651,5 +651,102 @@ var mapentities = {
         GetCommonEntity("atm6", 28, 34, 15, 0, undefined, Cutscene("atm"), { noChange: true, inside: true, visible: false, sy: 9 }),
         GetCommonEntity("cashboy0", 23, 39, 4, 3, undefined, Cutscene("cashBoy"), { inside: true, visible: false, sy: 15 }),
         GetCommonEntity("cashboy1", 27, 37, 4, 2, undefined, Cutscene("cashBoy"), { inside: true, visible: false, sy: 15 })
-    ]
+    ],
+    "hq_1": function() {
+        var x = [];
+        var doors = [ [20, 10, 0, false], [7, 10, 0, true],  [20, 3, 1, false], [25, 7, 1, true], [18, 6, 1, false], [17, 14, 1, true], [15, 8, 1, false],
+                 [4, 17, 1, true], [10, 17, 1, false], [4, 8, 2, false], [4, 12, 2, true], [10, 12, 2, false], [7, 14, 2, true] ];
+        for(var i = 0; i < doors.length; i++) { var d = doors[i]; x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3])); }
+         
+        var buttons = [ [24, 4, 0, false], [3, 15, 0, false], [10, 8, 1, false], [26, 4, 1, false], [19, 19, 1, false], [1, 8, 2, false] ];
+        for(var i = 0; i < buttons.length; i++) { var b = buttons[i]; x.push(GetRFDoorButton("Btn" + i, b[0], b[1], b[2], b[3])); }
+        
+        var lookables = [ [3, 24, "smartDesk"], [4, 24, "smartDesk"], [5, 24, "smartDesk"], [6, 24, "smartDesk"], [7, 24, "smartDesk"],
+                          [3, 25, "smartDesk"], [3, 26, "smartDesk"], [7, 25, "smartDesk"], [7, 26, "smartDesk"],
+                          [3, 27, "smartDesk"], [4, 27, "smartDesk"], [5, 27, "smartDesk"], [6, 27, "smartDesk"], [7, 27, "smartDesk"],
+                          [2, 22, "secondMonitor"], [3, 22, "secondMonitor"], [4, 22, "secondMonitor"], [5, 22, "secondMonitor"],
+                          [6, 22, "whiteboard"], [7, 22, "whiteboard"], [8, 22, "whiteboard"], [26, 21, "theFirstBottle"],
+                          [26, 22, "theFirstBottle"], [27, 22, "theFirstBottle"], [28, 22, "theFirstBottle"], [26, 29, "theFirstBottle"] ];
+        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
+        return x;
+    }(),
+    "hq_2": function() {
+        var x = [
+            GetWaterfall("tech_waterfallAS", 4, 10, 2, "AX", true), GetWaterfallEnd("tech_wfendA", 4, 12, 2, "A", true),
+            GetWaterfall("tech_waterfallBS", 1, 10, 2, "BX", true), GetWaterfallEnd("tech_wfendB", 1, 17, 2, "B", true),
+            GetWaterfall("tech_waterfallCS", 6, 13, 3, "CX", true), GetWaterfallEnd("tech_wfendC", 8, 13, 3, "C", true),
+            GetWaterfall("tech_waterfallDS", 8, 12, 1, "DX", true), GetWaterfallEnd("tech_wfendD", 6, 12, 1, "D", true),
+            GetWaterfall("tech_waterfallES", 6, 15, 2, "EX", true), GetWaterfallEnd("tech_wfendE", 6, 17, 2, "E", true),
+            GetWaterfall("tech_waterfallFS", 1, 19, 3, "FX", true), GetWaterfallEnd("tech_wfendF", 11, 19, 3, "F", true), // rock
+            GetWaterfall("tech_waterfallGS", 9, 27, 0, "GX", true), GetWaterfallEnd("tech_wfendG", 9, 15, 0, "G", true),
+            GetWaterfall("tech_waterfallHS", 6, 8, 3, "HX", true), GetWaterfallEnd("tech_wfendH", 8, 8, 3, "H", true),
+            GetWaterfall("tech_waterfallIS", 8, 6, 0, "IX", true), GetWaterfallEnd("tech_wfendI", 8, 4, 0, "I", true),
+            GetWaterfall("tech_waterfallJS", 11, 10, 2, "JX", true), GetWaterfallEnd("tech_wfendJ", 11, 12, 2, "J", true),
+            GetWaterfall("tech_waterfallKS", 19, 9, 1, "KX", true), GetWaterfallEnd("tech_wfendK", 13, 9, 1, "K", true),
+            GetWaterfall("tech_waterfallLS", 19, 4, 1, "LX", true), GetWaterfallEnd("tech_wfendL", 13, 4, 1, "L", true),
+            GetWaterfall("tech_waterfallMS", 26, 6, 1, "MX", true), GetWaterfallEnd("tech_wfendM", 24, 6, 1, "M", true),
+            GetWaterfall("tech_waterfallNS", 8, 24, 3, "NX", true), GetWaterfallEnd("tech_wfendN", 11, 24, 3, "N", true),
+            GetWaterfall("tech_waterfallOS", 17, 25, 1, "OX", true), GetWaterfallEnd("tech_wfendO", 4, 25, 1, "O", true),
+            GetWaterfall("tech_waterfallPS", 18, 23, 0, "PX", true), GetWaterfallEnd("tech_wfendP", 18, 19, 0, "P", true),
+            GetWaterfall("tech_waterfallQS", 21, 19, 2, "QX", true), GetWaterfallEnd("tech_wfendQ", 21, 27, 2, "Q", true),
+            GetWaterfall("tech_waterfallRS", 15, 21, 3, "RX", true), GetWaterfallEnd("tech_wfendR", 24, 21, 3, "R", true),
+            GetWaterfall("tech_waterfallSS", 13, 21, 0, "SX", true), GetWaterfallEnd("tech_wfendS", 13, 15, 0, "S", true),
+            GetWaterfall("tech_waterfallTS", 22, 17, 3, "TX", true), GetWaterfallEnd("tech_wfendT", 24, 17, 3, "T", true),
+            GetWaterfall("tech_waterfallUS", 26, 15, 2, "UX", true), GetWaterfallEnd("tech_wfendU", 26, 25, 2, "U", true), // rock
+            GetWaterfall("tech_waterfallVS", 28, 15, 2, "VX", true), GetWaterfallEnd("tech_wfendV", 28, 25, 2, "V", true),
+            GetWaterfall("tech_waterfallWS", 27, 20, 3, "WX", true), GetWaterfallEnd("tech_wfendW", 29, 20, 3, "W", true),
+            GetWaterfall("tech_waterfallXS", 29, 20, 0, "XX", true), GetWaterfallEnd("tech_wfendX", 29, 13, 0, "X", true),
+            GetTechRock("TechRockF", 1, 20, 0, "F"), GetTechRock("TechRockU", 25, 15, 2, "U"),
+            GetWaterfall("tech_waterfallA", 4, 11, 2, "A", true), GetWaterfall("tech_waterfallC", 7, 13, 3, "C", true),
+            GetWaterfall("tech_waterfallD", 7, 12, 1, "D", true), GetWaterfall("tech_waterfallE", 6, 16, 2, "E", true),
+            GetWaterfall("tech_waterfallH", 7, 8, 3, "H", true), GetWaterfall("tech_waterfallI", 8, 5, 0, "I", true),
+            GetWaterfall("tech_waterfallJ", 11, 11, 2, "J", true), GetWaterfall("tech_waterfallM", 25, 6, 1, "M", true),
+            GetWaterfall("tech_waterfallN1", 9, 24, 3, "N", true), GetWaterfall("tech_waterfallN2", 10, 24, 3, "N", true),
+            GetWaterfall("tech_waterfallT", 23, 17, 3, "T", true)
+        ];
+        
+        for(var i = 11; i < 17; i++) { x.push(GetWaterfall("tech_waterfallB" + i, 1, i, 2, "B", true)); }
+        for(var i = 2; i < 11; i++) { x.push(GetWaterfall("tech_waterfallF" + i, i, 19, 3, "F", true)); }
+        for(var i = 16; i < 27; i++) { x.push(GetWaterfall("tech_waterfallG" + i, 9, i, 0, "G", true)); }
+        for(var i = 14; i < 19; i++) { x.push(GetWaterfall("tech_waterfallK" + i, i, 9, 1, "K", true)); }
+        for(var i = 14; i < 19; i++) { x.push(GetWaterfall("tech_waterfallL" + i, i, 4, 1, "L", true)); }
+        for(var i = 5; i < 17; i++) { x.push(GetWaterfall("tech_waterfallO" + i, i, 25, 1, "O", true)); }
+        for(var i = 20; i < 23; i++) { x.push(GetWaterfall("tech_waterfallP" + i, 18, i, 0, "P", true)); }
+        for(var i = 20; i < 27; i++) { x.push(GetWaterfall("tech_waterfallQ" + i, 21, i, 2, "Q", true)); }
+        for(var i = 16; i < 24; i++) { x.push(GetWaterfall("tech_waterfallR" + i, i, 21, 3, "R", true)); }
+        for(var i = 16; i < 21; i++) { x.push(GetWaterfall("tech_waterfallS" + i, 13, i, 0, "S", true)); }
+        for(var i = 16; i < 25; i++) { x.push(GetWaterfall("tech_waterfallU" + i, 26, i, 2, "U", true)); }
+        for(var i = 16; i < 25; i++) { x.push(GetWaterfall("tech_waterfallV" + i, 28, i, 2, "V", true)); }
+        for(var i = 14; i < 20; i++) { x.push(GetWaterfall("tech_waterfallX" + i, 29, i, 0, "X", true)); }
+        x.push(GetWaterfall("tech_waterfallW", 28, 20, 3, "W", true));
+
+        return x;
+    }(),
+    "hq_3": function() {
+        var x = [
+            GetChungus(0, 0, 15, 0, 297, 119), GetChungus(1, 0, 15, 119, 73, 192), GetChungus(2, 0, 15, 311, 185, 154), GetChungus(3, 0, 200, 375, 112, 90), 
+            GetChungus(4, 0, 312, 263, 112, 160), GetChungus(5, 0, 424, 263, 57, 96), GetChungus(6, 0, 312, 103, 64, 106), GetChungus(7, 0, 88, 119, 96, 192),
+            GetChungus(7, 1, 184, 151, 16, 160), GetChungus(8, 0, 200, 119, 64, 96), GetChungus(8, 1, 184, 119, 16, 32), GetChungus(9, 0, 200, 215, 112, 160),
+            GetChungus(9, 1, 264, 119, 48, 96), GetChungus(10, 0, 312, 423, 89, 42), GetChungus(10, 1, 401, 439, 80, 26), GetChungus(11, 0, 424, 359, 57, 58),
+            GetChungus(11, 1, 447, 417, 34, 22), GetChungus(12, 0, 376, 167, 105, 96), GetChungus(12, 1, 312, 231, 64, 32), GetChungus(13, 0, 312, 0, 169, 103),
+            GetChungus(13, 1, 376, 103, 105, 64), { id: "StartChungus", chungi: [13], autoplay: true, interact: [ ToggleChungus ], pos: { x: -1, y: -1 } } // TODO: handle coming from elevator/above
+        ];
+        var doors = [ 
+            { x: 21, y: 5, dx: 0, dy: 1, doors: [13, 6] }, { x: 28, y: 9, dx: 0, dy: 1, doors: [13, 12] }, { x: 29, y: 15, dx: 0, dy: 1, doors: [12, 5] },
+            { x: 28, y: 21, dx: 0, dy: 1, doors: [5, 11] }, { x: 29, y: 26, dx: 0, dy: 1, doors: [11, 10] }, { x: 21, y: 15, dx: 0, dy: 1, doors: [12, 4] },
+            { x: 21, y: 25, dx: 0, dy: 1, doors: [4, 10] }, { x: 1, y: 6, dx: 0, dy: 1, doors: [0, 1] }, { x: 6, y: 18, dx: 0, dy: 1, doors: [7, 2] },
+            { x: 13, y: 12, dx: 0, dy: 1, doors: [8, 9] }, { x: 16, y: 22, dx: 0, dy: 1, doors: [9, 3] }, { x: 22, y: 11, dx: 1, dy: 0, doors: [6, 12] },
+            { x: 25, y: 17, dx: 1, dy: 0, doors: [4, 5] }, { x: 18, y: 10, dx: 1, dy: 0, doors: [9, 6] }, { x: 15, y: 9, dx: 1, dy: 0, doors: [8, 9] },
+            { x: 10, y: 8, dx: 1, dy: 0, doors: [7, 8] }, { x: 4, y: 14, dx: 1, dy: 0, doors: [1, 7] }, { x: 11, y: 15, dx: 1, dy: 0, doors: [7, 9] },
+            { x: 11, y: 20, dx: 1, dy: 0, doors: [2, 9] }, { x: 11, y: 26, dx: 1, dy: 0, doors: [2, 3] }, { x: 18, y: 27, dx: 1, dy: 0, doors: [3, 10] },
+            { x: 25, y: 25, dx: 1, dy: 0, doors: [4, 11] }
+        ];
+        for(var i = 0; i < doors.length; i++) { 
+            var door = doors[i];
+            x.push(GetChungusDoor(i, door.x, door.y, [door.doors[0]]));
+            x.push(GetChungusDoor(i, door.x + door.dx, door.y + door.dy, door.doors, (door.dx > 0 ? 1 : 0)));
+            x.push(GetChungusDoor(i, door.x + door.dx * 2, door.y + door.dy * 2, [door.doors[1]]));
+        }
+        return x;
+    }()
 };

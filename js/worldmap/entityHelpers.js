@@ -228,6 +228,27 @@ function ExitWaterfall() {
     worldmap.finishDialog();
     worldmap.inWaterfall = false;
 }
+function GetChungusDoor(num, x, y, chungi, visState) {
+    var chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi };
+    if(visState !== undefined) {
+        chungy.noChange = true;
+        chungy.anim = new MapAnim("mapchar", 15, 9, 16, 20, visState, 4);
+        chungy.visible = true;
+    } else {
+        chungy.visible = false;
+    }
+    return chungy;
+}
+function GetChungus(id, num, x, y, w, h) { return { name: "chungus" + id + "_" + num, chungus: true, chungusId: id, pos: { x: x, y: y }, width: w, height: h, visible: true }; }
+function ToggleChungus(arg, target) {
+    var acceptableChungi = target.chungi;
+    for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+        if(!worldmap.entities[i].chungus) { continue; }
+        worldmap.entities[i].visible = (acceptableChungi.indexOf(worldmap.entities[i].chungusId) < 0);
+    }
+    worldmap.refreshMap();
+    worldmap.finishDialog();
+}
 function PushRock() {
     if(game.target.donePushing) {
         worldmap.finishDialog();
@@ -261,14 +282,33 @@ function PushRock() {
         }
     }, 10);
 }
+function PushTechRock() {
+    if(game.target.donePushing) { worldmap.finishDialog(); return; }
+    game.target.donePushing = true;
+    game.target.dir += 1;
+    for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+        if(worldmap.entities[i].wfid === game.target.killid) {
+            player.clearedEntities.push(worldmap.entities[i].name);
+            worldmap.entities.splice(i, 1);
+        } else if(worldmap.entities[i].wfid === (game.target.killid + "X")) {
+            player.clearedEntities.push(worldmap.entities[i].name);
+            worldmap.entities[i].interact = undefined;
+        }
+    }
+    worldmap.refreshMap();
+    worldmap.finishDialog();
+}
 function GetRock(name, x, y, dir, wfid) {
     return new GetCommonEntity(name, x, y, 12, 0, undefined, [PushRock], { noChange: true, pushDir: dir, sy: 7, killid: wfid, initx: x, inity: y, isRock: true });
 }
-function GetWaterfall(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 18, dir, undefined, [EnterWaterfall], { moving: true, dontDoThat: true, solid: false, wfid: wfid, isWaterfall: true, boring: (name.replace("waterfall" + wfid, "") !== "0") });
+function GetTechRock(name, x, y, dir, wfid) {
+    return new GetCommonEntity(name, x, y, 18, dir, undefined, [PushTechRock], { noChange: true, sy: 11, killid: wfid, isRock: true });
 }
-function GetWaterfallEnd(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: 4, sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
+function GetWaterfall(name, x, y, dir, wfid, tech) {
+    return new GetCommonEntity(name, x, y, 18, dir, undefined, [EnterWaterfall], { sy: (tech ? (wfid[1] === "X" ? 6: 7) : 0), sheetlen: (tech ? 2 : 4), moving: (!tech || wfid[1] !== "X"), dontDoThat: true, solid: false, wfid: wfid, isWaterfall: true, boring: (name.replace("waterfall" + wfid, "") !== "0") });
+}
+function GetWaterfallEnd(name, x, y, dir, wfid, tech) {
+    return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: (tech ? 9 : 4), sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
 }
 function GetMafiaMember(num, x, y, dir, movement) {
     return GetCommonEntity("Mafia" + num, x, y, 12, dir, movement, Cutscene("enemy"), enemyMetadata.mafia);

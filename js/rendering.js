@@ -62,6 +62,11 @@ var gfx = {
         }
         gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["fov"], topx, topy, width, height, startx * 16, starty * 16, width, height);
     },
+    drawChungus: function(x, y, w, h, offset) {
+        var ctx = gfx.ctx["foreground"];
+        ctx.fillStyle = "#64A5FF";
+        ctx.fillRect((x - offset.x * 16) * gfx.scale, (y - offset.y * 16) * gfx.scale, w * gfx.scale, h * gfx.scale);
+    },
     drawJumbo: function(file, x, y, w, h, ox, oy) {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
     },

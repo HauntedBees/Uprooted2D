@@ -115,9 +115,13 @@ var worldmap = {
         for(var y = 0; y < ymax; y++) { layers.push([]); }
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
-            if(!e.visible || e.pos.y < 0 || e.pos.y >= ymax) { continue; }
+            if(!e.visible || e.pos.y < 0 || (!e.chungus && e.pos.y >= ymax)) { continue; }
             if(e.jumbo) {
                 gfx.drawJumbo(e.filename, (offset.x - e.pos.x), (offset.y - e.pos.y), e.w, e.h, e.offset.x, e.offset.y);
+                continue;
+            }
+            if(e.chungus) {
+                gfx.drawChungus(e.pos.x, e.pos.y, e.width, e.height, offset);
                 continue;
             }
             if(e.fov) { fov.push({ x: e.pos.x - offset.x, y: e.pos.y - offset.y, dir: e.dir }); }
