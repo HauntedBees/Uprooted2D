@@ -586,6 +586,7 @@ var mapentities = {
         GetCommonEntity("Abuela", 34, 20, 17, 0, undefined, Cutscene("abuela"), { sy: 4, noChange: true })
     ],
     "northcity": [
+        GetInvisibleEntity("CS_newphone", Cutscene("newPhone"), { autoplay: true }),
         { name: "Falcon4", pos: { x: 8, y: 44 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
 
         GetJumbo("12thStBuildings", "northcity3", 21, 31, 2436, 832, 1, 0),

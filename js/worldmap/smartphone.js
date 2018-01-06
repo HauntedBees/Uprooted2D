@@ -6,6 +6,39 @@ function Text(msg) {
 function Smartphone() {
     var texts = [ new Text("beckettText0"), new Text("beckettText1"), new Text("beckettText2"), new Text("beckettText3") ];
     var notifications = texts.length;
+    var remainingTexts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], pushedLimit = false;
+    var datingApp = 0, datingAppMax = 7;
+    var havePushedSister = false, sisterChance = 0;
+    var lastX = 0, lastY = 0;
+    this.Update = function() {
+        if(worldmap.pos.x % 4 !== 0 && worldmap.pos.y % 3 !== 0) { return; }
+        if(Math.random() > 0.16) { return; }
+        if(worldmap.pos.x === lastX || worldmap.pos.y === lastY) { return; }
+        lastX = worldmap.pos.x; lastY = worldmap.pos.y;
+        worldmap.smartphone.PushRandomText();
+    };
+    this.PushRandomText = function() {
+        if(!havePushedSister) {
+            var pushSisterTexts = (Math.random() < sisterChance);
+            if(!pushSisterTexts) {
+                sisterChance += 0.05;
+            } else {
+                havePushedSister = true;
+                worldmap.smartphone.PushText("sistext0");
+                setTimeout(function() { worldmap.smartphone.PushText("sistext1"); }, 1055);
+                setTimeout(function() { worldmap.smartphone.PushText("sistext2"); }, 2203);
+                setTimeout(function() { worldmap.smartphone.PushText("sistext3"); }, 3527);
+                return;
+            }
+        }
+        if(datingApp <= datingAppMax && Math.random() > 0.75) {
+            worldmap.smartphone.PushText("sext" + (datingApp++));
+        } else {
+            var result = remainingTexts.splice(Math.floor(Math.random() * remainingTexts.length), 1)[0];
+            if(result !== undefined) { worldmap.smartphone.PushText("misctext" + result); }
+            else if(!pushedLimit && datingApp > datingAppMax) { worldmap.smartphone.PushText("misctext14"); pushedLimit = true; }
+        }
+    };
     this.PushText = function(msg) { notifications++; texts.push(new Text(msg)); };
     this.Read = function() {
         for(var i = 0; i < texts.length; i++) {

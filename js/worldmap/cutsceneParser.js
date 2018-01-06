@@ -206,6 +206,8 @@ var SpecialFunctions = {
     "BIRDSONG.OGG": function() {
         // TODO
     },
+    "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); },
+    "PHONEPRESS": function() { worldmap.smartphone.Read(); },
     "THEMONSTER": function() {
         var monster = GetCommonEntity("Monster", worldmap.pos.x - 0.5, worldmap.pos.y - 2.25, 6, 0, undefined, undefined, { big: true, sy: 2 });
         monster.anim.other.layer = "foreground";

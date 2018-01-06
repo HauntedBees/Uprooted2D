@@ -3807,6 +3807,31 @@ var fulltext = {
 		"en-dm": "fucking kaboom", 
 		"type": "map"
 	},
+	"newPhone0": {
+		"en-us": "", 
+		"en-dm": "*bzzt bzzt* *bzzt bzzt* ... *bzzt bzzt*", 
+		"type": "map"
+	},
+	"newPhone1": {
+		"en-us": "", 
+		"en-dm": "I feel a phone vibrating in my pocket...", 
+		"type": "map"
+	},
+	"newPhone2": {
+		"en-us": "", 
+		"en-dm": "...which would be a bit less unsettling if I owned a cell phone.", 
+		"type": "map"
+	},
+	"newPhone3": {
+		"en-us": "", 
+		"en-dm": "... ... ...", 
+		"type": "map"
+	},
+	"newPhone4": {
+		"en-us": "", 
+		"en-dm": "Sure enough, there was a brand new phone in my pocket.", 
+		"type": "map"
+	},
 	// Area 8: North City Text Messages
 	"beckettText0": {
 		"en-us": "", 
