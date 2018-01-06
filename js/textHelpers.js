@@ -46,17 +46,17 @@ lingHelpers.PluralHandler["en-us"] = function(mainStr, subject) {
 		return mainStr.replace(/\{s\}/g, "s");
 	}
 };
-lingHelpers.ListHandler["en-us"] = function(mainStr, needle, list, nothingKey, pluralizeSingular) {
+lingHelpers.ListHandler["en-us"] = function(mainStr, needle, list, nothingKey, pluralizeSingular, showCopula) {
     if(list === undefined || mainStr.indexOf(needle) < 0) { return mainStr; }
 	if(list.length === 0) {                                     // list is empty: needle => GetText(nothingKey)
         return mainStr.replace(needle, GetText(nothingKey));
     } else if(list.length === 1) {                              // list has one item: needle => "are [...]" or "is [...]"
-        return mainStr.replace(needle, (pluralizeSingular ? "are " : "is ") + list[0]);
+        return mainStr.replace(needle, (showCopula ? (pluralizeSingular ? "are " : "is ") : "") + list[0]);
     } else {                                                    // list has many items: needle => "are [...], [...], and [...]"
         var listStr = list.join(", ");
         var lastComma = listStr.lastIndexOf(",");
         listStr = listStr.substring(0, lastComma) + " and" + listStr.substring(lastComma + 1);
-        return mainStr.replace(needle, "are " + listStr);
+        return mainStr.replace(needle, (showCopula ? "are " : "") + listStr);
     }
 };
 lingHelpers.GiftHandler["en-us"] = function(item, amount) {

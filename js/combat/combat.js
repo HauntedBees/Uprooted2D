@@ -189,13 +189,13 @@ var combat = {
             if(this.itemsEarned.length > 2) {
                 var count = 0;
                 for(var i = 0; i < this.itemsEarned.length; i++) { count += this.itemsEarned[i][1]; }
-                resulties.push(HandlePlurals(GetText("gift.itemseed") + "{s}", count));
+                resulties.push(count + HandlePlurals(GetText("gift.itemseed") + "{s}", count));
             } else {
                 for(var i = 0; i < this.itemsEarned.length; i++) {
                     resulties.push(HandleGifts(this.itemsEarned[i][0], this.itemsEarned[i][1]));
                 }
             }
-            text = HandleLists(text, "{res}", resulties, "", true);
+            text = HandleLists(text, "{res}", resulties, "", true, false);
             game.innerTransition(game.currentInputHandler, combat.inbetween, { next: combat.checkForLevelUp, text: text });
             return;
         }
