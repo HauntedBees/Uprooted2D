@@ -46,6 +46,9 @@ var mapentities = {
         GetCommonEntity("ConvinceATron", 10, 4, 0, 0, undefined, Cutscene("tutBuddy"), { sy: 3, noChange: true, sheet: "hipster", noRunKill: true, storageKey: "convince", visible: false, postBattle: "PostStandaloneTutorial" }),
         GetInvisibleEntity("PostStandaloneTutorial", Cutscene("finStTut"), { storageKey: "PostStandaloneTutorial" }),
         
+        GetCommonEntity("Nathan2", 16, 19, 0, 1, undefined, Cutscene("theHappening"), { sheet: "assistant", visible: false, solid: false, autoplay: true, moving: true, storageKey: "nathanB" }),
+        GetCommonEntity("Eagle2", 1.5, 19, 4, 0, undefined, undefined, { sheet: "assistant", solid: false, visible: false, storageKey: "eaglia" }),
+
         SwitchMap("ExitAreaWest", 0, 20, false, true, 22, 12, "farm"),
         { name: "ExitAreaSouth", pos: { x: 16, y: 23}, isRow: true, interact: Cutscene("farmFirst"), solid: false, visible: false, isMapSwitch: true, destination: "firstvillage" },
 

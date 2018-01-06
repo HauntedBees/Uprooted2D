@@ -9,6 +9,8 @@ var tutorial = {
         this.currentInputHandler = combat.menu;
         this.state = 0;
         this.completed = false;
+        player.hadFalcon = player.hasFalcon;
+        player.hasFalcon = false;
         player.tempInventory = InventoryCopy(player.inventory);
         player.inventory = InventoryCopy(player.tutorialInventory);
         this.drawTutorial();

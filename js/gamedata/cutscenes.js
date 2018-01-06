@@ -501,4 +501,18 @@ var scripts = {
 	"falcon11": "bird_SHIFTY:1&_SLEEP:500",
 	"falcon12": "_CUSTOM:EXITTHEBIRD1",
 	"falcon13": "pl_SETDIR:3&_CLEARTARGET&_CUSTOM:EXITTHEBIRD2",
+	// Produce Stand: Meeting Nathan
+	"theHappening0": "?[{\"q\":\"player.completedQuest('bigBot')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
+	"theHappening1": "_QUIT",
+	"theHappening2": "nathanB_VISIBLE:true&nathanB_MOVE:x4",
+	"theHappening3": "nathanB_ANIMSTATE:[2,3,2,8,true]&_TEXT:theHappening(0-3)",
+	"theHappening4": "eaglia_VISIBLE:true&_TEXT:theHappening(4-5)",
+	"theHappening5": "nathanB_ANIMSTATE:[2,4,2,8,true]&_TEXT:theHappening6",
+	"theHappening6": "nathanB_ISMOVING:false&eaglia_ANIMSTATE:[0,5,2,8,true]&eaglia_MOVE:x4",
+	"theHappening7": "eaglia_VISIBLE:false&nathanB_ISMOVING:true&_TEXT:theHappening7",
+	"theHappening8": "_GIVE:pineapple,10&_GIVE:garlic,10&_GIVE:apple,10&_TEXT:theHappening8",
+	"theHappening9": "nathanB_ISMOVING:false&_TEXT:theHappening9",
+	"theHappening10": "nathanB_ISMOVING:true&_TEXT:theHappening10",
+	"theHappening11": "_CLEARTEXT&nathanB_ANIMSTATE:[0,0,4,8]&nathanB_MOVE:x-1",
+	"theHappening12": "_CLEARTARGET&eaglia_SETTARGET&_CLEARTARGET&_CUSTOM:BYEFALCON&_QUIT",
 };

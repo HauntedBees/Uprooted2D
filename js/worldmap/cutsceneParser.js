@@ -206,6 +206,7 @@ var SpecialFunctions = {
     "BIRDSONG.OGG": function() {
         // TODO
     },
+    "BYEFALCON": function() { player.hasFalcon = false; },
     "GETFALCONTEXT": function() {
         var keyStart = "falconMsg0.";
         var rangeMax = 6;
@@ -680,6 +681,7 @@ var SpecialFunctions = {
     "TUTORIAL": function() { tutorial.startBattle(); },
     "LEAVETUTORIAL": function() {
         player.inventory = InventoryCopy(player.tempInventory);
+        player.hasFalcon = player.hadFalcon;
         player.tempInventory = undefined;
     },
     "FINISHTUTORIALATSTART": function() {

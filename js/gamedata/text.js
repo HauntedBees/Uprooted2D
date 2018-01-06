@@ -1175,6 +1175,67 @@ var fulltext = {
 		"en-dm": "Tanner: How's your truck doin'? Cool, cool. Take care of that bad boy, I feel like you're gonna need it.", 
 		"type": "map"
 	},
+	// Area 2: Produce Stand Cutscene
+	"theHappening0": {
+		"en-us": "", 
+		"en-dm": "Nathan: Oh hey! I'm back! I got your-- what's going on?", 
+		"type": "map"
+	},
+	"theHappening1": {
+		"en-us": "", 
+		"en-dm": "Nathan: You have something important you need to do?", 
+		"type": "map"
+	},
+	"theHappening2": {
+		"en-us": "", 
+		"en-dm": "Nathan: Well, okay then. I'll watch over your farm while you're gone!", 
+		"type": "map"
+	},
+	"theHappening3": {
+		"en-us": "", 
+		"en-dm": "Nathan: Oh, who's that there?", 
+		"type": "map"
+	},
+	"theHappening4": {
+		"en-us": "", 
+		"en-dm": "Nathan: Iii? He's a cute little guy. Hey, I have an idea!", 
+		"type": "map"
+	},
+	"theHappening5": {
+		"en-us": "", 
+		"en-dm": "Nathan: How about Iii stays here with me, and if I need to send you any messages, I can give them to him?", 
+		"type": "map"
+	},
+	"theHappening6": {
+		"en-us": "", 
+		"en-dm": "Nathan: Sounds good? Great! Come here, little guy!", 
+		"type": "map"
+	},
+	"theHappening7": {
+		"en-us": "", 
+		"en-dm": "Nathan: Ouch! Ha ha, sharp talons!", 
+		"type": "map"
+	},
+	"theHappening8": {
+		"en-us": "", 
+		"en-dm": "Nathan: Well, anyway, here are the seeds I got for you.", 
+		"type": "map"
+	},
+	"theHappening9": {
+		"en-us": "", 
+		"en-dm": "You got 10 Pineapple Seeds, 10 Garlic Seeds, and 10 Apple Seeds.", 
+		"type": "map"
+	},
+	"theHappening10": {
+		"en-us": "", 
+		"en-dm": "Nathan: Good luck on your errands! I'll make sure everything is safe here!", 
+		"type": "map"
+	},
+	"theFarmBoy": {
+		"en-us": "", 
+		"en-dm": "Nathan: Don't worry about a thing! I'll keep everything under control here!", 
+		"type": "map"
+	},
 	// Area 3: Forest
 	"foundShroom": {
 		"en-us": "", 
