@@ -79,7 +79,7 @@ function GetEnemy(name) {
 		case "dweebLord": return new EnemyDetail(GetDisplayName(name, 1), "xl", 9, { dx: 0.5, dy: -0.65, w: 4.15, h: 3.75 }, 10000, 100, 100, 4, 1, true, [0, 0, 1, 0], "basic", "egg", [ { money: true, min: 10, max: 10 } ], { tile: "cybertile" });
 		case "robber": return new EnemyDetail(GetDisplayName(name, 1), "md", 33, { dx: 0.25, dy: 0.15, w: -0.05, h: 0.6 }, 1000, 40, 35, 3, 1, true, [0, 0, 0, 1], "basic", "shotgun,timebomb", [ { money: true, min: 2500, max: 2500 } ]);
 		/* Food2 HQ */
-		case "theMonster": return new EnemyDetail(GetDisplayName(name, 1), "xl", 12, { dx: 0, dy: 0, w: 0, h: 0 }, 10000, 400, 400, 4, 4, true, [1, 0, 0, 0], "basic", "egg", [ { money: true, min: 0, max: 0 } ]);
+		case "theMonster": return new EnemyDetail(GetDisplayName(name, 1), "xl", 12, { dx: 0.3, dy: -0.35, w: 4.35, h: 3.5 }, 10000, 400, 400, 4, 4, true, [1, 0, 0, 0], "basic", "egg", [ { money: true, min: 0, max: 0 } ], { tile: "dirt" });
 		/* Bee Queen */
 		case "beeQueenA": return new EnemyDetail(GetDisplayName(name, 1), "md", 34, { dx: 0, dy: 0, w: 0.45, h: 0.65 }, 500, 50, 50, 1, 1, false, [1, 0, 0, 0], "basic", "battery", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ], { tile: "_beehive" });
 		case "beeQueenB": return new EnemyDetail(GetDisplayName(name, 1), "md", 34, { dx: 0, dy: 0, w: 0.45, h: 0.65 }, 2000, 500, 100, 1, 1, false, [1, 0, 0, 0], "basic", "battery", [ { money: true, min: 0, max: 5 }, { seed: "carrot", min: 0, max: 1 } ], { tile: "_beehive" });
