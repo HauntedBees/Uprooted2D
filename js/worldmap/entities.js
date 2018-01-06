@@ -743,7 +743,12 @@ var mapentities = {
             GetChungus(7, 1, 184, 151, 16, 160), GetChungus(8, 0, 200, 119, 64, 96), GetChungus(8, 1, 184, 119, 16, 32), GetChungus(9, 0, 200, 215, 112, 160),
             GetChungus(9, 1, 264, 119, 48, 96), GetChungus(10, 0, 312, 423, 89, 42), GetChungus(10, 1, 401, 439, 80, 26), GetChungus(11, 0, 424, 359, 57, 58),
             GetChungus(11, 1, 447, 417, 34, 22), GetChungus(12, 0, 376, 167, 105, 96), GetChungus(12, 1, 312, 231, 64, 32), GetChungus(13, 0, 312, 0, 169, 103),
-            GetChungus(13, 1, 376, 103, 105, 64), { id: "StartChungus", chungi: [13], autoplay: true, interact: [ ToggleChungus ], pos: { x: -1, y: -1 } } // TODO: handle coming from elevator/above
+            GetChungus(13, 1, 376, 103, 105, 64), { id: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
+                var startingRoom = 13; // TODO: handle coming from elevator/above
+                worldmap.horRor = new HorRor(startingRoom);
+                ToggleChungus(true, { chungi: [startingRoom] });
+                return true;
+            } ], pos: { x: -1, y: -1 } }
         ];
         var doors = [ 
             { x: 21, y: 5, dx: 0, dy: 1, doors: [13, 6] }, { x: 28, y: 9, dx: 0, dy: 1, doors: [13, 12] }, { x: 29, y: 15, dx: 0, dy: 1, doors: [12, 5] },

@@ -4074,6 +4074,11 @@ var fulltext = {
 		"en-dm": "Intercom: Do not, I repeat, do NOT engage with the experiment. Thank you.", 
 		"type": "text"
 	},
+	"uhoh0": {
+		"en-us": "", 
+		"en-dm": "???: EEEEEEE EEEEEE EEEEEE EEEEEEEEEEEE EEEEEEEEEEEEEEEEEEEEEEEE EEEEEEEEEEEE!!!!!", 
+		"type": "text"
+	},
 	"confront0": {
 		"en-us": "", 
 		"en-dm": "???: So... you made it all the way here.", 
@@ -5397,6 +5402,11 @@ var fulltext = {
 	"e.dweebLord0": {
 		"en-us": "", 
 		"en-dm": "Dweeb Lord", 
+		"type": "enemy"
+	},
+	"e.theMonster0": {
+		"en-us": "", 
+		"en-dm": "???", 
 		"type": "enemy"
 	},
 	// Falcon Deliveries

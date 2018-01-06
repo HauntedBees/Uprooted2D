@@ -515,4 +515,21 @@ var scripts = {
 	"theHappening10": "nathanB_ISMOVING:true&_TEXT:theHappening10",
 	"theHappening11": "_CLEARTEXT&nathanB_ANIMSTATE:[0,0,4,8]&nathanB_MOVE:x-1",
 	"theHappening12": "_CLEARTARGET&eaglia_SETTARGET&_CLEARTARGET&_CUSTOM:BYEFALCON&_QUIT",
+	// Food2: The Monster Found You
+	"ohFuck0": "_TEXT:uhoh0",
+	"ohFuck1": "_CLEARTEXT&pl_SETDIR:0&_SLEEP:250",
+	"ohFuck2": "pl_SETDIR:1&_SLEEP:250",
+	"ohFuck3": "pl_SETDIR:2&_SLEEP:250",
+	"ohFuck4": "pl_SETDIR:3&_SLEEP:250",
+	"ohFuck5": "pl_SETDIR:0&_SLEEP:250",
+	"ohFuck6": "pl_SETDIR:1&_SLEEP:250",
+	"ohFuck7": "pl_SETDIR:2&_SLEEP:250",
+	"ohFuck8": "_CUSTOM:THEMONSTER&_SLEEP:2000",
+	"ohFuck9": "pl_SETDIR:0&_SLEEP:1000",
+	"ohFuck10": "_TEXT:uhoh0",
+	"ohFuck11": "_FIGHT:theMonster",
+	// North City: You Got A Phone!
+	"newPhone0": "_TEXT:newPhone(0-3)",
+	"newPhone1": "_CUSTOM:NEWPHONE&_TEXT:newPhone4",
+	"newPhone2": "_CLEARTEXT&_CUSTOM:PHONEPRESS&_CLEARTARGET&_QUIT",
 };

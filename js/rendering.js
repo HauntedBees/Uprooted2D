@@ -52,6 +52,11 @@ var gfx = {
         img.src = encodedImg;
         img.onload = function() { gfx.ctx["menutext"].drawImage(this, 700, 14, 192, 128); };
     },
+    drawHorRor: function(intensity) { // intensity > 62 is not visible
+        if(intensity < 0) { intensity = 0; }
+        gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorTop"], 0, 0, 960, 252, 0, 0 - intensity, 960, 252);
+        gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorBottom"], 0, 0, 960, 252, 0, 97 + intensity, 960, 252);
+    },
     drawFOV: function(x, y, dir) {
         var topx, topy, width, height, startx, starty;
         switch(dir) {
@@ -156,7 +161,9 @@ var gfx = {
         sheet = sheet || "mapchar";
         var w = (big ? 32 : 16), h = (big ? 40 : 20);
         if(other !== undefined && other.forceWide) { w = 32; }
-        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - (big ? 8 : 4), w, h);
+        var layer = "characters";
+        if(other !== undefined && other.layer) { layer = other.layer; }
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - (big ? 8 : 4), w, h);
     },
     drawCursor: function(x, y, w, h, cursorName) {
         cursorName = cursorName || "cursor";

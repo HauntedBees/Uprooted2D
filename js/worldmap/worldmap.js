@@ -1,5 +1,5 @@
 var worldmap = {
-    freeMovement: true, savedImage: "", angryBees: false, smartphone: null,
+    freeMovement: true, savedImage: "", angryBees: false, smartphone: null, horRor: null,
     pos: {x: 0, y: 0}, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
@@ -44,9 +44,11 @@ var worldmap = {
         if(targetToAutoplay !== null) {
             game.target = targetToAutoplay;
             if(game.target !== null && game.target.interact !== undefined) {
-                game.target.interact[0](0, game.target);
-                worldmap.toggleMovement(false);
-                return;
+                var keepGoing = game.target.interact[0](0, game.target);
+                if(!keepGoing) {
+                    worldmap.toggleMovement(false);
+                    return;
+                }
             }
         }
         worldmap.toggleMovement(true);
@@ -65,6 +67,8 @@ var worldmap = {
         this.fullAnimIdx = setInterval((moving ? worldmap.moveEntities : function() { worldmap.refreshMap(); }), timers.FULLANIM);
     },
     moveEntities: function() {
+        if(worldmap.horRor !== null) { worldmap.horRor.Pursue(); }
+        if(worldmap.smartphone !== null) { worldmap.smartphone.Update(); }
         for(var i = 0; i < worldmap.entities.length; i++) {
             var e = worldmap.entities[i];
             if(e.fov) { worldmap.fovCheck(e); }
@@ -146,6 +150,7 @@ var worldmap = {
         }
         for(var i = 0; i < fov.length; i++) { gfx.drawFOV(fov[i].x, fov[i].y, fov[i].dir, fov[i].ox, fov[i].oy); }
         if(worldmap.smartphone !== null) { worldmap.smartphone.Draw(); }
+        if(worldmap.horRor !== null) { worldmap.horRor.Draw(); }
     },
     clean: function() {
         clearInterval(worldmap.fullAnimIdx);
