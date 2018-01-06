@@ -303,9 +303,9 @@ var mapentities = {
         GetSign(26, 3, "SignConstWork"),
         GetSign(20, 12, "SignMermaidInn"),
 
-        EnterShop("Mermaid Inn", 20, 11, "mermaidinn"),
-        EnterShop("Mermaid Shoppe", 10, 13, "mermaid"),
-        EnterShop("Construction Shoppe", 25, 3, "cworker"),
+        EnterShop("MermaidInn", 20, 11, "mermaidinn"),
+        EnterShop("MermaidShoppe", 10, 13, "mermaid"),
+        EnterShop("ConstructionShoppe", 25, 3, "cworker"),
 
         GetCommonEntity("ConstructionManShop", 25, 3, 15, 0, undefined, undefined, { sy: 4, solid: false, noChange: true, boring: true }),
         
@@ -464,8 +464,8 @@ var mapentities = {
             worldmap.importantEntities["FarmerJeff"].dir = 0;
         }},
         GetSign(4, 30, "upgradeBarn"),
-        EnterShop("Upgrade Barn", 3, 30, "upgrade2"),
-        EnterShop("Fixture Stall", 19, 21, "fixture2"),
+        EnterShop("UpgradeBarn", 3, 30, "upgrade2"),
+        EnterShop("FixtureStall", 19, 21, "fixture2"),
         GetJumbo("barnCover", "barn", 7, 18, 1036, 900, 1, 0),
         
         GetCommonEntity("FarmerJeffOpening", 15, 35.5, 8, 3, undefined, Cutscene("flatTire"), { sy: 10, solid: false, autoplay: true, storageKey: "FarmerJeff" }),
@@ -526,7 +526,7 @@ var mapentities = {
         
         EnterShop("Skumpys", 41, 42, "skumpys"),
         EnterShop("ManTools", 52, 32, "mantools"),
-        EnterShop("Seed Shack", 65, 40, "seedshack"),
+        EnterShop("SeedShack", 65, 40, "seedshack"),
         EnterShop("Catalinas", 67, 32, "catalinas"),
         EnterShop("TinkerTierra", 50, 12, "tinker"),
         EnterShop("PawnShop", 56, 21, "pawn"),

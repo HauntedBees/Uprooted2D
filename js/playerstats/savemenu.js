@@ -7,11 +7,12 @@ pausemenu.savemenu = {
         this.isSave = args.saving;
         this.options = [];
         this.cursorY = args.sel || 0;
-        this.drawOption("Slot 1", 0, this.cursorY === 0);
-        this.drawOption("Slot 2", 1, this.cursorY === 1);
-        this.drawOption("Slot 3", 2, this.cursorY === 2);
-        this.drawOption("Slot 4", 3, this.cursorY === 3);
-        this.drawOption("Slot 5", 4, this.cursorY === 4);
+        var slotStr = GetText("saveSlotDisp") + " ";
+        this.drawOption(slotStr + "1", 0, this.cursorY === 0);
+        this.drawOption(slotStr + "2", 1, this.cursorY === 1);
+        this.drawOption(slotStr + "3", 2, this.cursorY === 2);
+        this.drawOption(slotStr + "4", 3, this.cursorY === 3);
+        this.drawOption(slotStr + "5", 4, this.cursorY === 4);
         gfx.drawInfobox(11, 2.5);
         gfx.drawCursor(0, this.cursorY, this.options[this.cursorY], 0);
         if(args.confirm) {

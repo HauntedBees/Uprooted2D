@@ -275,7 +275,7 @@ combat.plant = {
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
             combat.damageEnemy(i, damage);
         }
-        this.finishTurn("You load up the seed shooter and it fires rapidly, dealing " + damage + " damage" + (initLength > 1 ? " to everyone." : "."));
+        this.finishTurn(GetText("seedShooterAttack").replace(/\{dmg\}/g, damage).replace(/\{amt\}/g, GetText(initLength > 1 ? "cmpatk_pl" : "cmpatk_sing")));
     },
     modulate: function() {
         var newCrop = GetCrop(this.activeCrop.name);

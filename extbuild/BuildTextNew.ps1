@@ -9,36 +9,6 @@ if($which.Contains("T")) {
 
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\text.js";
 	$out.WriteLine(@'
-function GetText(key) {
-	try {
-		var lang = (game !== undefined) ? game.language : "en-dm";
-		var d = fulltext[key];
-		if(d[lang] !== undefined) { return d[lang]; }
-		return d["en-us"];
-	} catch(e) {
-		console.log("Couldn't find key: " + key);
-		return "fucko"; //throw e;
-	}
-}
-function HandleArticles(mainStr, subject) { // this is English-language specific; oops!
-	if(subject === undefined || subject === "" || mainStr.indexOf("{an}") < 0) { return mainStr; }
-	if(subject[subject.length - 1] === "s") {
-		return mainStr.replace(/\{an\}/g, "");
-	} else if("aeiou".indexOf(subject[0].toLowerCase()) >= 0) {
-		return mainStr.replace(/\{an\}/g, " an");
-	} else {
-		return mainStr.replace(/\{an\}/g, " a");
-	}
-}
-function HandlePlurals(mainStr, subject) { // this is English-language specific; oops!
-	if(subject === undefined || mainStr.indexOf("{s}") < 0) { return mainStr; }
-	if(subject === 1) {
-		return mainStr.replace(/\{s\}/g, "");
-	} else {
-		return mainStr.replace(/\{s\}/g, "s");
-	}
-}
-function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 '@);
 	$i = 0;

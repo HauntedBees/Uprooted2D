@@ -1,33 +1,3 @@
-function GetText(key) {
-	try {
-		var lang = (game !== undefined) ? game.language : "en-dm";
-		var d = fulltext[key];
-		if(d[lang] !== undefined) { return d[lang]; }
-		return d["en-us"];
-	} catch(e) {
-		console.log("Couldn't find key: " + key);
-		return "fucko"; //throw e;
-	}
-}
-function HandleArticles(mainStr, subject) { // this is English-language specific; oops!
-	if(subject === undefined || subject === "" || mainStr.indexOf("{an}") < 0) { return mainStr; }
-	if(subject[subject.length - 1] === "s") {
-		return mainStr.replace(/\{an\}/g, "");
-	} else if("aeiou".indexOf(subject[0].toLowerCase()) >= 0) {
-		return mainStr.replace(/\{an\}/g, " an");
-	} else {
-		return mainStr.replace(/\{an\}/g, " a");
-	}
-}
-function HandlePlurals(mainStr, subject) { // this is English-language specific; oops!
-	if(subject === undefined || mainStr.indexOf("{s}") < 0) { return mainStr; }
-	if(subject === 1) {
-		return mainStr.replace(/\{s\}/g, "");
-	} else {
-		return mainStr.replace(/\{s\}/g, "s");
-	}
-}
-function HasText(key) { return fulltext[key] !== undefined; }
 var fulltext = {
 	// Items
 	"beeB": {
@@ -356,6 +326,26 @@ var fulltext = {
 		"type": "item"
 	},
 	// Options
+	"saveSlotDisp": {
+		"en-us": "", 
+		"en-dm": "Slot", 
+		"type": "opts"
+	},
+	"title.new": {
+		"en-us": "", 
+		"en-dm": "New Game", 
+		"type": "opts"
+	},
+	"title.cont": {
+		"en-us": "", 
+		"en-dm": "Continue", 
+		"type": "opts"
+	},
+	"title.options": {
+		"en-us": "", 
+		"en-dm": "Options", 
+		"type": "opts"
+	},
 	"opGameOps": {
 		"en-us": "", 
 		"en-dm": "Accessibility", 
@@ -4239,6 +4229,16 @@ var fulltext = {
 		"type": "text"
 	},
 	// Shops
+	"shop.back": {
+		"en-us": "", 
+		"en-dm": "Go Back", 
+		"type": "shop"
+	},
+	"shop.forward": {
+		"en-us": "", 
+		"en-dm": "Go Forward", 
+		"type": "shop"
+	},
 	"s.co": {
 		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
 		"en-dm": "Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow!", 
@@ -4460,7 +4460,7 @@ var fulltext = {
 		"en-dm": "Oh fuck it's a bear.", 
 		"type": "map"
 	},
-	// Reoccuring
+	// Recurring
 	"openchest": {
 		"en-us": "", 
 		"en-dm": "This treasure chest is empty.", 
@@ -4505,6 +4505,81 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "Drive to the fake farm.", 
 		"type": "choice"
+	},
+	"menu.Items": {
+		"en-us": "", 
+		"en-dm": "Items", 
+		"type": "opts"
+	},
+	"menu.Equipment": {
+		"en-us": "", 
+		"en-dm": "Equipment", 
+		"type": "opts"
+	},
+	"menu.Farm": {
+		"en-us": "", 
+		"en-dm": "Fixtures", 
+		"type": "opts"
+	},
+	"menu.Options": {
+		"en-us": "", 
+		"en-dm": "Options", 
+		"type": "opts"
+	},
+	"menu.Save": {
+		"en-us": "", 
+		"en-dm": "Save", 
+		"type": "opts"
+	},
+	"menu.level": {
+		"en-us": "", 
+		"en-dm": "Lv.", 
+		"type": "opts"
+	},
+	"menu.HP": {
+		"en-us": "", 
+		"en-dm": "HP", 
+		"type": "opts"
+	},
+	"menu.ATK": {
+		"en-us": "", 
+		"en-dm": "ATK", 
+		"type": "opts"
+	},
+	"menu.DEF": {
+		"en-us": "", 
+		"en-dm": "DEF", 
+		"type": "opts"
+	},
+	"menu.nextLevel": {
+		"en-us": "", 
+		"en-dm": "Next Level", 
+		"type": "opts"
+	},
+	"menu.totalEXP": {
+		"en-us": "", 
+		"en-dm": "Total EXP", 
+		"type": "opts"
+	},
+	"menu.timePlayed": {
+		"en-us": "", 
+		"en-dm": "Time Played", 
+		"type": "opts"
+	},
+	"menu.coins": {
+		"en-us": "", 
+		"en-dm": "Monies", 
+		"type": "opts"
+	},
+	"gift.itemname": {
+		"en-us": "", 
+		"en-dm": "{count} {item}{seed}{s}", 
+		"type": "opts"
+	},
+	"gift.itemseed": {
+		"en-us": "", 
+		"en-dm": " Seed", 
+		"type": "opts"
 	},
 	// Combat - Player Actions
 	"seeds_none": {
@@ -4620,6 +4695,26 @@ var fulltext = {
 	"flee_fail": {
 		"en-us": "", 
 		"en-dm": "You tried to run away, but failed miserably, you stupid idiot. #lmao", 
+		"type": "combat"
+	},
+	"diedInCombat": {
+		"en-us": "", 
+		"en-dm": "i can't believe the protagonist is fucking dead.", 
+		"type": "combat"
+	},
+	"youDidATheWin": {
+		"en-us": "", 
+		"en-dm": "You did a the win.! You's's {res}!", 
+		"type": "combat"
+	},
+	"levelUp": {
+		"en-us": "", 
+		"en-dm": "Whoah [gamer voice] nice! You hit level {0}! You got some Bonus Seeds!", 
+		"type": "combat"
+	},
+	"seedShooterAttack": {
+		"en-us": "", 
+		"en-dm": "You load up the seed shooter and it fires rapidly, dealing {dmg} damage{amt}", 
 		"type": "combat"
 	},
 	// Combat - Player Attack String
@@ -5244,6 +5339,11 @@ var fulltext = {
 		"type": "enemy"
 	},
 	// Falcon Deliveries
+	"falconNoGifts": {
+		"en-us": "", 
+		"en-dm": "is... nothing.", 
+		"type": "text"
+	},
 	"falconMsg0": {
 		"en-us": "", 
 		"en-dm": "It's a message from Nathan.", 

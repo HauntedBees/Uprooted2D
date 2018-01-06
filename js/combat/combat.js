@@ -173,55 +173,30 @@ var combat = {
         combat.animHelper.DrawCrops();
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
             combat.animHelper.SetPlayerAnimInfo([[3, 1, false, true]]);
-            game.innerTransition(game.currentInputHandler, combat.inbetween, {
-                next: combat.fuckingDead,
-                text: "i can't believe the protagonist is fucking dead."
-            });
+            game.innerTransition(game.currentInputHandler, combat.inbetween, { next: combat.fuckingDead, text: GetText("diedInCombat") });
             return;
         } else if(this.enemies.length == 0) {
             player.addExp(this.expEarned);
             combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
-            var text = "You did a the win.! You's's " + this.expEarned + "EXP";
+            var text = GetText("youDidATheWin");
+            var resulties = [this.expEarned + "EXP"];
+
             player.monies += this.moniesEarned;
             for(var i = 0; i < this.itemsEarned.length; i++) {
                 player.increaseItem(this.itemsEarned[i][0], this.itemsEarned[i][1]);
             }
-            if(this.moniesEarned > 0 && this.itemsEarned.length > 0) {
-                text += ", " + this.moniesEarned + " coins";
-                if(this.itemsEarned.length > 2) {
-                    var count = 0;
-                    for(var i = 0; i < this.itemsEarned.length; i++) { count += this.itemsEarned[i][1]; }
-                    text += ", and " + count + " seeds!";
-                } else {
-                    for(var i = 0; i < this.itemsEarned.length; i++) {
-                        var t = (i == (this.itemsEarned.length - 1) ? " and " : ", ");
-                        t += this.itemsEarned[i][1] + " " + this.itemsEarned[i][0] + " seed" + (this.itemsEarned[i][1] > 1 ? "s" : "");
-                        text += t;
-                    }
-                    text += "!";
-                }
-            } else if(this.moniesEarned > 0) {
-                text += " and " + this.moniesEarned + " coins!";
-            } else if(this.itemsEarned.length > 0) {
-                if(this.itemsEarned.length > 2) {
-                    var count = 0;
-                    for(var i = 0; i < this.itemsEarned.length; i++) { count += this.itemsEarned[i][1]; }
-                    text += " and " + count + " seeds!";
-                } else {
-                    for(var i = 0; i < this.itemsEarned.length; i++) {
-                        var t = (i == (this.itemsEarned.length - 1) ? " and " : ", ");
-                        t += this.itemsEarned[i][1] + " " + this.itemsEarned[i][0] + " seed" + (this.itemsEarned[i][1] > 1 ? "s" : "");
-                        text += t;
-                    }
-                    text += "!";
-                }
+            if(this.moniesEarned > 0) { resulties.push(this.moniesEarned + "G"); }
+            if(this.itemsEarned.length > 2) {
+                var count = 0;
+                for(var i = 0; i < this.itemsEarned.length; i++) { count += this.itemsEarned[i][1]; }
+                resulties.push(HandlePlurals(GetText("gift.itemseed") + "{s}", count));
             } else {
-                text += "!";
+                for(var i = 0; i < this.itemsEarned.length; i++) {
+                    resulties.push(HandleGifts(this.itemsEarned[i][0], this.itemsEarned[i][1]));
+                }
             }
-            game.innerTransition(game.currentInputHandler, combat.inbetween, {
-                next: combat.checkForLevelUp,
-                text: text
-            });
+            text = HandleLists(text, "{res}", resulties, "", true);
+            game.innerTransition(game.currentInputHandler, combat.inbetween, { next: combat.checkForLevelUp, text: text });
             return;
         }
         this.state++;
@@ -297,7 +272,7 @@ var combat = {
             combat.animHelper.SetPlayerAnimInfo([[2, 2], [2, 3]]);
             game.innerTransition(game.currentInputHandler, combat.inbetween, {
                 next: combat.checkForLevelUp,
-                text: "Whoah [gamer voice] nice! You hit level " + player.level + "!"
+                text: GetText("levelUp").replace(/\{0\}/g, player.level)
             });
         } else {
             combat.wrapUpCombat();

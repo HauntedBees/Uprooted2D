@@ -172,12 +172,12 @@ worldmap.shop = {
         var text = "hi im craig";
         if(this.cursorX === 0) {
             if((this.numArrows & 1) === 1) {
-                text = "Go Back";
+                text = GetText("shop.back");
             } else {
                 text = GetText(this.details.leaveSell);
             }
         } else if((this.numArrows & 2) === 2 && newCursorX > this.actualIdxs.length) {
-            text = "Go Forward";
+            text = GetText("shop.forward");
         } else {
             var actualIdx = this.actualIdxs[this.cursorX - 1];
             var item = player.inventory[actualIdx][0];

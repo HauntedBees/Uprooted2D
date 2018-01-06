@@ -10,6 +10,7 @@ uglifyjs ^
     js/gamedata/quests.js ^
     js/gamedata/spritedata.js ^
     js/gamedata/misc.js ^
+    js/textHelpers.js ^
     js/gamedata/text.js ^
     js/gamedata/cutscenes.js ^
     js/animation/animController.js ^

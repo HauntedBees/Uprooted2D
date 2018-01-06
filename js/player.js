@@ -198,6 +198,21 @@ var player = {
         }
         return true;
     },
+    clearItemIfEmpty: function(name) {
+        var idx = -1;
+        for(var i = 0; i < player.inventory.length; i++) {
+            if(player.inventory[i][0] === name) {
+                idx = i;
+                break;
+            }
+        }
+        if(idx < 0) { return false; }
+        if(player.inventory[idx][1] <= 0) {
+            player.inventory.splice(idx, 1);
+            return true;
+        }
+        return false;
+    },
     increaseItem: function(name, amount) {
         for(var i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0] === name) {
