@@ -53,7 +53,7 @@ lingHelpers.ListHandler["en-us"] = function(mainStr, needle, list, nothingKey, p
     } else if(list.length === 1) {                              // list has one item: needle => "are [...]" or "is [...]"
         return mainStr.replace(needle, (pluralizeSingular ? "are " : "is ") + list[0]);
     } else {                                                    // list has many items: needle => "are [...], [...], and [...]"
-        var listStr = seedStrArr.join(", ");
+        var listStr = list.join(", ");
         var lastComma = listStr.lastIndexOf(",");
         listStr = listStr.substring(0, lastComma) + " and" + listStr.substring(lastComma + 1);
         return mainStr.replace(needle, "are " + listStr);
