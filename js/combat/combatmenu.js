@@ -172,14 +172,14 @@ combat.menu = {
                         noEntityUpdate: true
                     });
                 },
-                text: "You ran away like a baby that runs which is actually pretty impressive for a baby so good job (y)"
+                text: GetText("flee_success")
             });
         } else {
             combat.animHelper.SetPlayerAnimInfo([[5, 1], [5, 2], [0, 3], [3, 2, true, true]]);
             combat.animHelper.SetUpPlayerForRun();
             game.innerTransition(this, combat.inbetween, {
                 next: function() { combat.endTurn(combat.inbetween) },
-                text: "You tried to run away, but failed miserably, you stupid idiot. #lmao"
+                text: GetText("flee_fail")
             });
         }
     },

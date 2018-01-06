@@ -4612,6 +4612,16 @@ var fulltext = {
 		"en-dm": " to everyone.", 
 		"type": "combat"
 	},
+	"flee_success": {
+		"en-us": "", 
+		"en-dm": "You ran away like a baby that runs which is actually pretty impressive for a baby so good job (y)", 
+		"type": "combat"
+	},
+	"flee_fail": {
+		"en-us": "", 
+		"en-dm": "You tried to run away, but failed miserably, you stupid idiot. #lmao", 
+		"type": "combat"
+	},
 	// Combat - Player Attack String
 	"critPrefix": {
 		"en-us": "", 
