@@ -10,7 +10,7 @@ worldmap.title = {
         this.drawMenu();
     },
     getMainMenuItems: function() {
-        return (this.hasSaves() ? ["New Game", "Continue", "Options"] : ["New Game", "Options"]);
+        return (this.hasSaves() ? ["title.new", "title.cont", "title.options"] : ["title.new", "title.options"]);
     },
     hasSaves: function() {
         for(var i = 0; i < 10; i++) {
@@ -27,8 +27,9 @@ worldmap.title = {
             gfx.drawTileToGrid(spr + "0", 6, i + 6, "menutext");
             gfx.drawTileToGrid(spr + "1", 7, i + 6, "menutext");
             gfx.drawTileToGrid(spr + "2", 8, i + 6, "menutext");
-            var dx = (176 - gfx.getTextLength(this.menuItems[i])) / 8;
-            gfx.drawText(this.menuItems[i], 99.5 + dx, i * 16 + 106);
+            var dispText = GetText(this.menuItems[i]);
+            var dx = (176 - gfx.getTextLength(dispText)) / 8;
+            gfx.drawText(dispText, 99.5 + dx, i * 16 + 106);
         }
     },
     mouseMove: function(pos) {
@@ -51,6 +52,7 @@ worldmap.title = {
                     //init: { x: 11,  y: 60 }, map: "forest" // by boss turkey
                     //init: { x: 82,  y: 25 }, map: "forest" // by rabbit
                     //init: { x: 103,  y: 65 }, map: "forest" // by lime
+                    //init: { x: 21.5, y: 7 }, map: "belowvillage" // on bridge
                     //init: { x: 25, y: 25}, map: "belowvillage" // by crater
                     //init: { x: 4, y: 37}, map: "belowvillage" // by beehive
                     //init: { x: 20, y: 19}, map: "researchfacility" // by seed shooters

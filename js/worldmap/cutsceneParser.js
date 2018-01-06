@@ -260,6 +260,7 @@ var SpecialFunctions = {
         worldmap.forcedPlayerInfo = false;
         worldmap.writeText("falconMsg5.8");
         iHandler.state.texts.push("falconMsg5.9");
+        player.hasFalcon = true;
     },
     "EXITTHEBIRD1": function() {
         gfx.clearSome(["menuA", "menutext"]);
