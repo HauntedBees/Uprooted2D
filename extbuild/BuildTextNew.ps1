@@ -4,7 +4,7 @@ param ([string]$which="TS")
 $rootpath = Resolve-Path ..;
 if($which.Contains("T")) {
 	Write-Host "Converting Details_Text.ods to text.js";
-	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Text.ods" | Out-Null;
+	& "C:\Program Files (x86)\LibreOffice 5\program\scalc.exe" --headless --convert-to csv:"Text - txt - csv (StarCalc)":"44,34,0,,,,true" --outdir ".\temp" "Details_Text.ods" | Out-Null;
 	$csv = Import-CSV ".\temp\Details_Text.csv";
 
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\text.js";
@@ -47,8 +47,8 @@ var fulltext = {
 		$key = $row.Key;
 		if($key -eq "") { continue; }
 		if($key -eq "*") { $out.WriteLine("	// " + ($row."en-dm")); continue; }
-		$us = ($row."en-us").Trim().Replace("`"", "\`"");
-		$dm = ($row."en-dm").Trim().Replace("`"", "\`"");
+		$us = ($row."en-us").TrimEnd().Replace("`"", "\`"");
+		$dm = ($row."en-dm").TrimEnd().Replace("`"", "\`"");
 		$typ = ($row."type");
 		$hasdm = $dm -ne "";
 		$i += 1;
