@@ -634,14 +634,20 @@ var mapentities = {
         GetCommonEntity("Hazard", 12, 11, 0, 0, undefined, undefined, { big: true, noChange: true, sy: 1 }),
         GetCommonEntity("Hazard2", 0, 11, 0, 0, undefined, undefined, { big: true, noChange: true, sy: 1 }),
 
-        GetCommonEntity("Officer1", 9, 13, 8, 1, undefined, [GetSpeak("officer1")], { noChange: true, sy: 15 }),
-        GetCommonEntity("Officer2", 7, 10, 8, 0, undefined, [GetSpeak("officer2")], { noChange: true, sy: 15 }),
-        GetCommonEntity("Officer3", 10, 11, 8, 2, undefined, [GetSpeak("officer4")], { noChange: true, sy: 15 }),
-        GetCommonEntity("Officer4", 3, 11, 8, 3, undefined, [GetSpeak("officer3")], { noChange: true, sy: 15 }),
+        GetCommonEntity("Officer1", 9, 13, 16, 0, undefined, [GetSpeak("officer1")], { noChange: true, sy: 10, robbery: true }),
+        GetCommonEntity("Officer2", 7, 10, 8, 0, undefined, [GetSpeak("officer2")], { noChange: true, sy: 15, robbery: true }),
+        GetCommonEntity("Officer3", 10, 11, 8, 2, undefined, [GetSpeak("officer4")], { noChange: true, sy: 15, robbery: true }),
+        GetCommonEntity("Officer4", 3, 11, 16, 1, undefined, [GetSpeak("officer3")], { noChange: true, sy: 10, robbery: true }),
+
+        GetCommonEntity("ConeThing1L", 2, 7, 16, 0, undefined, undefined, { sy: 11, inside: true, visible: false }),
+        GetCommonEntity("ConeThing1R", 3, 7, 16, 1, undefined, undefined, { sy: 11, inside: true, visible: false }),
+        GetCommonEntity("ConeThing2L", 10, 6, 16, 0, undefined, undefined, { sy: 12, inside: true, visible: false }),
+        GetCommonEntity("ConeThing2R", 11, 6, 16, 1, undefined, undefined, { sy: 12, inside: true, visible: false }),
         
-        GetCommonEntity("Robber1", 6, 5, 8, 3, undefined, Cutscene("robber"), { sy: 14, inside: true, visible: false }),
-        GetCommonEntity("Robber2", 9, 2, 8, 0, undefined, Cutscene("robber"), { sy: 14, inside: true, visible: false }),
-        
+        GetCommonEntity("Robber1", 6, 5, 8, 3, undefined, Cutscene("robber"), { sy: 14, inside: true, visible: false, robbery: true, postBattle: "PostRobbers" }),
+        GetCommonEntity("Robber2", 9, 3, 8, 0, undefined, Cutscene("robber"), { sy: 14, inside: true, visible: false, robbery: true, postBattle: "PostRobbers" }),
+        GetInvisibleEntity("CS_beatRobbers", Cutscene("strobbery"), { storageKey: "PostRobbers" }),
+
         GetCommonEntity("RealSleepyHoursWhoUp", 43, 15, 23, 0, undefined, undefined, { nochange: true, inside: true, visible: false, storageKey: "dweeb" }),
         GetCommonEntity("Keycard", 45, 15, 23, 0, undefined, Cutscene("keycard"), { sy: 2, nochange: true, inside: true, visible: false }),
         GetCommonEntity("KeycardTrap", 44, 20, 0, 0, undefined, Cutscene("keytrap"), { isRow: true, solid: false, visible: false, storageKey: "keytrap", postBattle: "scrungus" }),

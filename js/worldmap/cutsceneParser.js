@@ -117,7 +117,7 @@ var CommandParser = {
             }
         }
     },
-    Parse_ShiftsAndFPS: function(target, args) {
+    Parse_ShiftsAndFPS: function(target, args) { // [shifty, shiftx, sheetlen, fps, moving]
         target.anim.shiftY(args[0]).shiftX(args[1], args[2]).setFPS(args[3]);
         if(args[4] !== undefined) { target.moving = args[4]; }
     },
@@ -197,9 +197,166 @@ var CommandParser = {
     Parse_Special: function(id) { SpecialFunctions[id](); }
 };
 
+function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
+    for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+        var e = worldmap.entities[i];
+        if(conditionFunc(e)) { 
+            player.clearedEntities.push(e.name);
+            worldmap.entities.splice(i, 1);
+        }
+    }
+    if(refreshMap) { worldmap.refreshMap(); }
+}
+
 var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
+    "BEATROBBERS": function() {
+        ClearEntitiesUnderCondition(function(e) { return e.robbery === true; }, false);
+        worldmap.pos = { x: 6, y: 6 };
+        var caughtRobbers = GetCommonEntity("Strobbers", 7, 6, 16, 0, undefined, undefined, { sy: 8, robbery: true });
+        worldmap.entities.push(caughtRobbers);
+        worldmap.importantEntities["caughtRobbers"] = caughtRobbers;
+        for(var i = 0; i < 4; i++) {
+            var x = 6 + (i % 2);
+            var y = 12 + (i < 2 ? 0 : 2);
+            var newCopper = GetCommonEntity("NewCop" + i, x, y, 8, 0, undefined, undefined, { moving: true, sy: 15, robbery: true });
+            worldmap.entities.push(newCopper);
+            worldmap.importantEntities["NewCop" + i] = newCopper;
+        }
+        worldmap.refreshMap();
+
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            for(var i = 0; i < 4; i++) {
+                worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["NewCop0"].pos.y <= 8;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM1": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop0"].dir = 1;
+        worldmap.importantEntities["NewCop1"].dir = 3;
+        iHandler.state.animHandler = function(spedUp) {
+            for(var i = 0; i < 4; i++) {
+                if(i === 0) {
+                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.05;
+                } else if(i === 1) {
+                    worldmap.importantEntities["NewCop" + i].pos.x += 0.05;
+                } else {
+                    worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
+                }
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["NewCop2"].pos.y <= 8;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM2": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop0"].dir = 0;
+        worldmap.importantEntities["NewCop1"].dir = 0;
+        worldmap.importantEntities["NewCop2"].dir = 1;
+        worldmap.importantEntities["NewCop3"].dir = 3;
+        iHandler.state.animHandler = function(spedUp) {
+            for(var i = 0; i < 4; i++) {
+                if(i === 2) {
+                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.05;
+                } else if(i === 3) {
+                    worldmap.importantEntities["NewCop" + i].pos.x += 0.05;
+                } else {
+                    worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
+                }
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["NewCop0"].pos.y <= 6;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM3": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop2"].dir = 0;
+        worldmap.importantEntities["NewCop3"].dir = 0;
+        iHandler.state.animHandler = function(spedUp) {
+            for(var i = 0; i < 4; i++) {
+                worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["NewCop2"].pos.y <= 7;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                for(var i = 0; i < 4; i++) {
+                    worldmap.importantEntities["NewCop" + i].moving = false;
+                    worldmap.importantEntities["NewCop" + i].dir = (i % 2 === 0 ? 3 : 1);
+                }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM4": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop1"].moving = true;
+        worldmap.importantEntities["NewCop2"].moving = true;
+        worldmap.importantEntities["NewCop3"].moving = true;
+        iHandler.state.animHandler = function(spedUp) {
+            for(var i = 1; i < 4; i++) {
+                if(i === 2) {
+                    worldmap.importantEntities["NewCop" + i].pos.x += 0.025;
+                } else {
+                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.025;
+                }
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["NewCop1"].pos.x <= 7;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM5": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop1"].dir = 2;
+        worldmap.importantEntities["NewCop2"].dir = 2;
+        worldmap.importantEntities["NewCop3"].dir = 2;
+        iHandler.state.animHandler = function(spedUp) {
+            for(var i = 1; i < 4; i++) {
+                worldmap.importantEntities["NewCop" + i].pos.y += 0.025;
+            }
+            worldmap.importantEntities["caughtRobbers"].pos.y += 0.025;
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = worldmap.importantEntities["NewCop1"].pos.y >= 12;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "FINISHCOPS": function() { ClearEntitiesUnderCondition(function(e) { return e.robbery === true; }, false); },
     "SWITCHTOFALCON": function() { iHandler.Start("falcon"); },
     "SCREENSHAKE": function() {
         // TODO
@@ -323,16 +480,7 @@ var SpecialFunctions = {
     },
     "C2BUY": function() { player.monies -= 1000; player.c2 = RoundNear(player.c2 + 1000 / player.c2Rate, 100); },
     "C2SELL": function() { player.monies += Math.round(player.c2Rate); player.c2 = RoundNear(player.c2 - 1, 100); },
-    "MOBFLEE": function() {
-        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-            var e = worldmap.entities[i];
-            if(e.mafia === true) { 
-                player.clearedEntities.push(e.name);
-                worldmap.entities.splice(i, 1);
-            }
-        }
-        worldmap.refreshMap();
-    },
+    "MOBFLEE": function() { ClearEntitiesUnderCondition(function(e) { return e.mafia === true; }, true); },
     "ENTERSKUMPY": function() {
         worldmap.importantEntities["skumpyCover"].visible = false;
         for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
@@ -473,25 +621,11 @@ var SpecialFunctions = {
         worldmap.writeText("smD5");
     },
     "SEAHELP1": function() {
-        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-            var e = worldmap.entities[i].name;
-            if(e.indexOf("H_") === 0) { 
-                player.clearedEntities.push(e);
-                worldmap.entities.splice(i, 1);
-            }
-        }
-        worldmap.refreshMap();
+        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("H_") === 0; }, true);
         worldmap.writeText("smD6");
     },
     "DEADFISH": function() {
-        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-            var e = worldmap.entities[i].name;
-            if(e.indexOf("SeaCreature") === 0) { 
-                player.clearedEntities.push(e);
-                worldmap.entities.splice(i, 1);
-            }
-        }
-        worldmap.refreshMap();
+        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("SeaCreature") === 0; }, true);
         if(player.hasQuest("getHeart")) {
             player.activeQuests["getHeart"] = "heart";
         } else {
@@ -500,14 +634,7 @@ var SpecialFunctions = {
         worldmap.writeText("bworkerA1");
     },
     "CONSTWORKWIN": function() {
-        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-            var e = worldmap.entities[i].name;
-            if(e.indexOf("H_") === 0 || e.indexOf("Worker") >= 0) { 
-                player.clearedEntities.push(e);
-                worldmap.entities.splice(i, 1);
-            }
-        }
-        worldmap.refreshMap();
+        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0; }, true);
         quests.completeQuest("helpSeaMonster");
         quests.completeQuest("getHeart");
         worldmap.writeText("bworkerB5");
@@ -515,13 +642,7 @@ var SpecialFunctions = {
     "CONSTWORKFIGHT": function() {
         worldmap.writeText("bworkerMad6");
         player.activeQuests["helpSeaMonster"] = "gotEgg";
-        for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-            var e = worldmap.entities[i].name;
-            if(e.indexOf("Worker") >= 0) { 
-                player.clearedEntities.push(e);
-                worldmap.entities.splice(i, 1);
-            }
-        }
+        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("Worker") >= 0; }, false);
     },
     "SEEDSHOT": function() { player.health -= 2; game.target.hasShot = 5; },
     "SEEDSHOTKILL": function() {

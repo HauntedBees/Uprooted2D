@@ -3832,6 +3832,36 @@ var fulltext = {
 		"en-dm": "Sure enough, there was a brand new phone in my pocket.", 
 		"type": "map"
 	},
+	"copperStoppers0": {
+		"en-us": "", 
+		"en-dm": "Officer: STOP RIGHT THERE CRIMINAL SC--oh. You already caught them, I guess.", 
+		"type": "map"
+	},
+	"copperStoppers1": {
+		"en-us": "", 
+		"en-dm": "Officer: I... what? How? You...", 
+		"type": "map"
+	},
+	"copperStoppers2": {
+		"en-us": "", 
+		"en-dm": "Officer: ...", 
+		"type": "map"
+	},
+	"copperStoppers3": {
+		"en-us": "", 
+		"en-dm": "Officer: Whatever. Take 'em away, boys.", 
+		"type": "map"
+	},
+	"copperStoppers4": {
+		"en-us": "", 
+		"en-dm": "Officer: Let's just keep the fact that some armed robbers were stopped by some random lady between you and me, okay?", 
+		"type": "map"
+	},
+	"copperStoppers5": {
+		"en-us": "", 
+		"en-dm": "The officer slides you a crisp 5000G, then walks away.", 
+		"type": "map"
+	},
 	// Area 8: North City Text Messages
 	"beckettText0": {
 		"en-us": "", 
