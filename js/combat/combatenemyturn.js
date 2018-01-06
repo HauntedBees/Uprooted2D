@@ -3,6 +3,7 @@ combat.enemyTurn = {
     setup: function(args) {
         var enemy = args.enemy;
         combat.animHelper.SetPlayerAnimInfo();
+        combat.animHelper.SetBirdAnimInfo();
         gfx.drawFullbox(this.dy);
         var attackData = EnemyParser.Parse(enemy);
         if(attackData.skip) {

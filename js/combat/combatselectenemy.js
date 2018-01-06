@@ -5,8 +5,13 @@ combat.selectTarget = {
     setup: function(args) {
         this.cursorx = 0;
         this.sicklePos = {x: -1, y: -1};
-        this.canSickle = player.canSickleCrops();
-        this.canHumans = !args.isMelee || player.canAttackPeople();
+        if(combat.isFalcon) {
+            this.canSickle = true;
+            this.canHumans = true;
+        } else {
+            this.canSickle = player.canSickleCrops();
+            this.canHumans = !args.isMelee || player.canAttackPeople();
+        }
         if(!this.canHumans) {
             this.sicklePos = {x: combat.enemydx, y: (combat.enemyheight - 1 + combat.enemydy)};
         }
@@ -30,7 +35,13 @@ combat.selectTarget = {
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
-        combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
+        if(combat.isFalcon) {
+            combat.animHelper.SetBirdAnimInfo([[2, 0]]);
+            combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+        } else {
+            combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+            combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
+        }
         for(var i = 0; i < this.targets.length; i++) {
             var idx = this.targets[i];
             if(idx.x === undefined) {
@@ -161,7 +172,6 @@ combat.selectTarget = {
         var additionalTargets = [];
         if(player.getRandomLuckyNumber() < 0.05) {
             damage = Math.max(damage + 2, Math.ceil(damage * Math.max(1.5, 1 + Math.random())));
-            damagetext = "CRITICAL HIT! ";
             criticalHit = true;
             if(stunTurns > 0) {
                 stunTurns = Math.round(stunTurns * 1.5);
@@ -194,7 +204,7 @@ combat.selectTarget = {
                 combat.lastTargetCrop = false;
                 var innerDamage = Math.ceil(damage / 6);
                 avgDamage += innerDamage;
-                lastTargetName = "the " + crop.displayname;
+                lastTargetName = GetText("cropWithDefArticle").replace(/\{0\}/g, crop.displayname);
                 if((crop.power - damage) <= 0) {
                     hasDestroys = true;
                     crop.hidden = true;
@@ -251,37 +261,70 @@ combat.selectTarget = {
             }
             avgDamage = Math.floor(avgDamage / this.targets.length);
         }
-        if(hasAnimals) {
-            damagetext += "Nature Strikes! You and your animal friends";
-        } else {
-            damagetext += "You";
-        }
-        damagetext += " attack " + lastTargetName;
-        if(this.targets.length > 1) {
-            damagetext += " and others, for an average of " + avgDamage + " damage";
-            if(hasRecoil) { damagetext += ", with some recoil hitting even more enemies" }
-            if(hasKills || hasDestroys) { damagetext += ", leading to some casualties!"; } else { damagetext += "!"; }
-            if(stunningEnemies) { damagetext += " And now they're all sticky!" }
-        } else {
-            damagetext += " for " + avgDamage + " damage";
-            if(hasRecoil) { damagetext += ", plus recoil" }
-            if(hasKills) { damagetext += ", killing them instantly."; }
-            else if(hasDestroys) { damagetext += ", destroying it."; }
-            else { damagetext += "."; }
-            if(stunningEnemies) { damagetext += " And now they're all sticky!" }
-        }
+        
         if((player.health - attackinfo.selfHarm) <= 0) { attackinfo.selfHarm = player.health - 1; }
-        if(attackinfo.selfHarm > 0) {
-            damagetext += " Also, your gloves shock you for " + attackinfo.selfHarm + " damage!";
-            player.health -= attackinfo.selfHarm;
-        }
+        if(attackinfo.selfHarm > 0) { player.health -= attackinfo.selfHarm; }
 
-        combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
+        var damagetext = this.GetDamageText(criticalHit, hasAnimals, hasRecoil, hasKills, hasDestroys, stunningEnemies, combat.isFalcon, 
+                                            avgDamage, lastTargetName, this.targets.length > 1, attackinfo.selfHarm);
+
+        if(combat.isFalcon) {
+            combat.animHelper.SetBirdAnimInfo([[2, 1], [3, 1], [2, 1], [3, 1, true]], undefined, undefined, undefined, GetFrameRate(12));
+        } else {
+            combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
+        }
         combat.flagFreshCrops(true, criticalHit, attackinfo.animals, additionalTargets);
 
         if(postHit === null) { postHit = function() { combat.endTurn(combat.inbetween); }; }
         game.innerTransition(this, combat.inbetween, { next: postHit, text: damagetext });
         return true;
+    },
+    GetDamageText: function(criticalHit, hasAnimals, hasRecoil, hasKills, hasDestroys, stunningEnemies, isFalcon, damage, target, multipleTargets, selfHarm) {
+        var damagetext = GetText("attackMessageStruct");
+        if(criticalHit) { damagetext = damagetext.replace(/\{crit\}/g, GetText("critPrefix")); }
+        else { damagetext = damagetext.replace(/\{crit\}/g, ""); }
+
+        if(hasAnimals) { damagetext = damagetext.replace(/\{subject\}/g, GetText("subject_nature")); }
+        else if(isFalcon) { damagetext = damagetext.replace(/\{subject\}/g, GetText("subject_falcon")); }
+        else { damagetext = damagetext.replace(/\{subject\}/g, GetText("subject_you")); }
+
+        if(isFalcon) { damagetext = damagetext.replace(/\{object\}/g, GetText("obj_thirdperson")); }
+        else { damagetext = damagetext.replace(/\{object\}/g, GetText("obj_secondperson")); }
+
+        var suffix = (multipleTargets ? "_pl" : "_sing");
+        damagetext = damagetext.replace(/\{objectmult\}/g, GetText("obj" + suffix));
+        damagetext = damagetext.replace(/\{amount\}/g, GetText("amount" + suffix));
+        
+        if(hasRecoil) { damagetext = damagetext.replace(/\{recoil\}/g, GetText("recoil" + suffix)); }
+        else { damagetext = damagetext.replace(/\{recoil\}/g, ""); }
+        
+        var allEnemiesDead = false;
+        if(hasKills) {
+            allEnemiesDead = true;
+            for(var i = 0; i < combat.enemies.length; i++) { if(combat.enemies[i].health > 0) { allEnemiesDead = false; break; } }
+        }
+
+        if(multipleTargets) {
+            if(allEnemiesDead) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_all_pl")); }
+            else if(hasKills || hasDestroys) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_some_pl")); }
+            else { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_none_pl")); }
+
+            if(stunningEnemies && !allEnemiesDead) { damagetext = damagetext.replace(/\{sticky\}/g, GetText("sticky_some")); }
+            else { damagetext = damagetext.replace(/\{sticky\}/g, GetText("sticky_none")); }
+        } else {
+            if(hasKills) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_defeatthey_sing")); } // TODO: account for unique defeats
+            else if(hasDestroys) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_crop_sing")); }
+            else { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_none_sing")); }
+
+            if(stunningEnemies && !allEnemiesDead) { damagetext = damagetext.replace(/\{sticky\}/g, GetText("sticky_some")); }
+            else { damagetext = damagetext.replace(/\{sticky\}/g, GetText("sticky_none")); }
+        }
+        damagetext = damagetext.replace(/\{dmg\}/g, damage).replace(/\{target\}/g, target);
+
+        if(selfHarm > 0) { damagetext = damagetext.replace(/\{gloves\}/g, GetText("gloves_some")).replace(/\{glovedmg\}/g, selfHarm); }
+        else { damagetext = damagetext.replace(/\{gloves\}/g, ""); }
+        
+        return damagetext;
     },
     getAttackDetails: function() {
         var dmg = 0, numCrops = 0;

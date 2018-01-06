@@ -152,7 +152,7 @@ combat.plant = {
             if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
             var newCrop = GetCrop(this.activeCrop.name);
             var cropIsKill = false, killType = 0;
-            if(player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech) {
+            if(player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech && !combat.isFalcon) {
                 if(["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && Math.random() <= 0.1) {
                     cropIsKill = true;
                     killType = 1;
@@ -227,24 +227,18 @@ combat.plant = {
                 } else {
                     next = function() { game.innerTransition(combat.inbetween, combat.plant); }
                 }
-                var killMsg = "You try to plant your " + newCrop.displayname + ", ";
+                var killMsg = GetText("tryPlantStart").replace(/\{0\}/g, newCrop.displayname);
                 switch(killType) {
-                    case 1: killMsg += "but your gloves shock it!"; break;
-                    case 2: killMsg += "but it is too weak to withstand your soil's pesticides!"; break;
-                    case 3: 
-                        killMsg = "You try to put your bees in the beehive, but the pesticide scares them away, you dumbfuck.";
-                        worldmap.angryBees = true;
-                        break;
-                    default: killMsg += "but ERROR MESSAGE GOES HERE!"; break;
+                    case 1: killMsg += GetText("tryPlantGloves"); break;
+                    case 2: killMsg += GetText("tryPlantPesticide"); break;
+                    case 3: killMsg = GetText("tryPlantBees"); worldmap.angryBees = true; break;
+                    default: killMsg += GetText("tryPlantBug"); break;
                 }
-                game.innerTransition(this, combat.inbetween, {
-                    next: next,
-                    text: killMsg
-                });
+                game.innerTransition(this, combat.inbetween, { next: next, text: killMsg });
                 return true;
             } else {
                 if(--combat.numPlantTurns == 0) {
-                    if(player.canAttackAfterPlanting()) {
+                    if(player.canAttackAfterPlanting() && !combat.isFalcon) {
                         game.innerTransition(this, combat.menu);
                     } else {
                         combat.endTurn(this);
@@ -342,14 +336,30 @@ combat.plant = {
         var cursorX = this.cursor.x, cursorY = this.cursor.y;
         if(this.activeCrop === null) {
             this.setText();
-            combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
+            if(combat.isFalcon) {
+                combat.animHelper.SetBirdAnimInfo([[0, 1]]);
+                combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+            } else {
+                combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
+            }
             this.drawXs();
         } else {
             size = this.activeCrop.size - 1;
-            if(size == 1) {
-                combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX + 0.5, cursorY + 0.25, true);
+            if(combat.isFalcon) {
+                combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                if(size == 1) {
+                    combat.animHelper.SetBirdAnimInfo([[1, 1]], cursorX + 2, cursorY - 1, true);
+                } else {
+                    combat.animHelper.SetBirdAnimInfo([[1, 1]], cursorX + 1, cursorY - 0.75, true);
+                }
             } else {
-                combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX, cursorY - 0.25, true);
+                combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                if(size == 1) {
+                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX + 0.5, cursorY + 0.25, true);
+                } else {
+                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX, cursorY - 0.25, true);
+                }
             }
         }
         gfx.drawInfobox(16, 3, this.dy + 0.5);

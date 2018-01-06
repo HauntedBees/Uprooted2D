@@ -47,8 +47,14 @@ var fulltext = {
 		$key = $row.Key;
 		if($key -eq "") { continue; }
 		if($key -eq "*") { $out.WriteLine("	// " + ($row."en-dm")); continue; }
-		$us = ($row."en-us").TrimEnd().Replace("`"", "\`"");
-		$dm = ($row."en-dm").TrimEnd().Replace("`"", "\`"");
+		$us = $row."en-us";
+		$dm = $row."en-dm";
+		if(-not $row."noTrim") {
+			$us = $us.TrimEnd();
+			$dm = $dm.TrimEnd();
+		}
+		$us = $us.Replace("`"", "\`"");
+		$dm = $dm.Replace("`"", "\`"");
 		$typ = ($row."type");
 		$hasdm = $dm -ne "";
 		$i += 1;

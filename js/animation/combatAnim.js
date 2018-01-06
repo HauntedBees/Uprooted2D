@@ -169,9 +169,43 @@ PlayerAnimInfo.prototype.Animate = function() {
     }
 };
 
+function FalconAnimInfo(ani, x, y, fr, top) {
+    EntityAnimInfo.call(this, ani, x || 3.5, y || 5, fr);
+    this.onTop = top;
+}
+FalconAnimInfo.prototype = Object.create(EntityAnimInfo.prototype);
+FalconAnimInfo.prototype.constructor = FalconAnimInfo;
+FalconAnimInfo.prototype.Animate = function() {
+    var dt = (+new Date()) - this.lastRan;
+    if(dt >= this.timePerFrame) {
+        if(this.animArray[this.animState][2]) {
+            if(this.lastThrownFrame < 0 && !this.isRun) {
+                if(combat.lastTargetCrop) {
+                    // TODO: targeting crops
+                } else if(Array.isArray(combat.lastTarget)) {
+                    for(var q = 0; q < combat.lastTarget.length; q++) {
+                        combat.animHelper.DisplayEnemyDamage(combat.lastTarget[q]);
+                    }
+                } else {
+                    combat.animHelper.DisplayEnemyDamage(combat.lastTarget);
+                }
+                this.lastThrownFrame = 0;
+            }
+        } else {
+            this.lastRan = +new Date();
+            this.animState = (this.animState + 1) % this.animArray.length;
+        }
+    } else if(this.isRun && !this.animArray[this.animState][2]) {
+        this.x -= 0.1;
+    }
+    var animData = this.animArray[this.animState];
+    gfx.drawFalcon(animData[0], animData[1], this.x - 1, this.y, this.onTop ? "menucursorC" : "characters");
+};
+
 function CombatAnimHelper(enemies) {
     var playerAnimInfo = new PlayerAnimInfo();
     var enemyAnimInfos = [];
+    var birdAnimInfo = (player.hasFalcon ? new FalconAnimInfo() : null);
     var currentx = 11 - enemies.length;
     for(var i = 0; i < enemies.length; i++) {
         var e = enemies[i];
@@ -231,6 +265,7 @@ function CombatAnimHelper(enemies) {
     this.GetPlayerPos = function() { return { x: playerAnimInfo.x, y: playerAnimInfo.y }; };
 
     this.SetPlayerAnimInfo = function(anims, x, y, top, fr) { playerAnimInfo = new PlayerAnimInfo(anims, x, y, fr, top); };
+    this.SetBirdAnimInfo = function(anims, x, y, top, fr) { if(birdAnimInfo === null) { return; } birdAnimInfo = new FalconAnimInfo(anims, x, y, fr, top); };
     this.SetUpPlayerForRun = function() { playerAnimInfo.isRun = true; }
     this.SetEnemyAnimInfo = function(idx, anims, fr, throwables) {
         var e = combat.enemies[idx];
@@ -261,6 +296,7 @@ function CombatAnimHelper(enemies) {
 
     this.AddPlayerThrowable = function(t) { playerAnimInfo.throwables.push(t); };
     var AnimateEntities = function() {
+        if(birdAnimInfo !== null) { birdAnimInfo.Animate(); }
         playerAnimInfo.Animate();
         for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Animate(); }
         for(var i = 0; i < combat.enemies.length; i++) {

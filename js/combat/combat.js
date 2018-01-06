@@ -1,5 +1,5 @@
 var combat = {
-    enemies: [], state: 0, season: 0, numPlantTurns: 0,
+    enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false,
     lastTarget: 0, lastTargetCrop: false, lastSelectedSeed: { x: 0, y: 0 }, 
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
@@ -98,6 +98,7 @@ var combat = {
     },
     startRound: function() {
         this.cleanUpEffects();
+        this.isFalcon = false;
         this.numPlantTurns = player.getPlantingTurns();
         for(var i = 0; i < combat.enemies.length; i++) {
             combat.enemies[i].stickTurns = Math.max(0, combat.enemies[i].stickTurns - 1);
@@ -224,7 +225,12 @@ var combat = {
             return;
         }
         this.state++;
-        if(this.state > combat.enemies.length) {
+        if(this.state === 1 && player.hasFalcon && !this.isFalcon) {
+            this.state = 0;
+            this.isFalcon = true;
+            this.numPlantTurns = 1;
+            game.innerTransition(caller, combat.menu);
+        } else if(this.state > combat.enemies.length) {
             this.startRound();
             game.innerTransition(caller, combat.menu);
         } else {

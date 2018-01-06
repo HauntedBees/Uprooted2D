@@ -97,6 +97,10 @@ var gfx = {
         layer = layer || "characters";
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["playersheet"], sx * 16, sy * 20, 16, 20, x * 16, y * 16 - 4, 16, 20);
     },
+    drawFalcon: function(sx, sy, x, y, layer) {
+        layer = layer || "characters";
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["falconsheet"], sx * 24, sy * 30, 24, 30, x * 16, y * 16 - 2, 24, 30);
+    },
     drawCharacter: function(sx, sy, sheet, size, x, y, layer) {
         layer = layer || "characters";
         var srcX, srcY, w, h, dy;

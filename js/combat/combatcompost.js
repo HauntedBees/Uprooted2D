@@ -55,10 +55,22 @@ combat.compost = {
         }
         if(this.healButtonSelected) {
             gfx.drawCursor(0, this.dy, this.healButtonWidth, 0);
-            combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
+            if(combat.isFalcon) {
+                combat.animHelper.SetBirdAnimInfo([[0, 1]]);
+                combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+            } else {
+                combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
+            }
         } else if(this.attackButtonSelected) {
             gfx.drawCursor(0, this.dy + 1, this.attackButtonWidth, 0);
-            combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
+            if(combat.isFalcon) {
+                combat.animHelper.SetBirdAnimInfo([[2, 0]]);
+                combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+            } else {
+                combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
+            }
         } else {
             var px = this.cursor.x - combat.dx; var py = this.cursor.y - combat.dy;
             var tile = combat.grid[px][py];
@@ -69,17 +81,32 @@ combat.compost = {
                     } else {
                         gfx.drawCursor(tile.x + combat.dx, tile.y + combat.dy, 1, 1, "bcursor");
                     }
-                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25, true);
+                    if(combat.isFalcon) {
+                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        combat.animHelper.SetBirdAnimInfo([[1, 1]], tile.x + 4, tile.y + combat.dy - 1, true);
+                    } else {
+                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25, true);
+                    }
                 } else {
                     if(this.isCompostable(tile)) {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1);
                     } else {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1, "bcursor");
                     }
-                    if(tile.size === 2) {
-                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x + 0.5, this.cursor.y + 0.25, true);
+                    if(combat.isFalcon) {
+                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        if(tile.size === 2) {
+                            combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x + 2, this.cursor.y - 1, true);
+                        } else {
+                            combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x + 1, this.cursor.y - 0.75, true);
+                        }
                     } else {
-                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                        combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                        if(tile.size === 2) {
+                            combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x + 0.5, this.cursor.y + 0.25, true);
+                        } else {
+                            combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                        }
                     }
                 }
             } else {
@@ -93,10 +120,20 @@ combat.compost = {
                 }
                 if(cowIdx < 0) {
                     gfx.drawCursor(this.cursor.x, this.cursor.y, 0, 0, "bcursor");
-                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                    if(combat.isFalcon) {
+                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x + 1, this.cursor.y - 0.75, true);
+                    } else {
+                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                    }
                 } else {
                     gfx.drawCursor(cowPos.x, cowPos.y, 1, 1);
-                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], cowPos.x + 0.5, cowPos.y + 0.25, true);
+                    if(combat.isFalcon) { 
+                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        combat.animHelper.SetBirdAnimInfo([[1, 1]], cowPos.x + 2, cowPos.y - 1, true);
+                    } else {
+                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], cowPos.x + 0.5, cowPos.y + 0.25, true);
+                    }
                 }
             }
         }
@@ -168,7 +205,7 @@ combat.compost = {
             }
         }
         return {
-            total: Math.max(0, outputAmount),
+            total: Math.max(1, outputAmount),
             cows: thereAreCows
         };
     },
@@ -211,7 +248,7 @@ combat.compost = {
         player.health = Math.min(player.maxhealth, player.health + healAmount);
         game.innerTransition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
-            text: "You compost your crops, recovering " + healAmount + " health."
+            text: GetText("compost_heal").replace(/\{0\}/g, healAmount)
         });
         combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
         combat.animHelper.DrawCrops();
@@ -220,7 +257,8 @@ combat.compost = {
     attackAction: function() {
         if(this.selectedCrops.length == 0) { return false; }
         if(this.compostFailureCheck()) { return true; }
-        var damage = this.addCompostAnimsAndGetValue({ cowMult: 0.01, beeMult: 0.1, beeFraction: 1, baseMult: 0.1, coffeeMult: 0.5 }).total;
+        var res = this.addCompostAnimsAndGetValue({ cowMult: 0.01, beeMult: 0.1, beeFraction: 1, baseMult: 0.1, coffeeMult: 0.5 });
+        var damage = res.total, thereAreCows = res.cows;
         var anim = new NotAnAnim(4, 6, 1000, "compost");
         anim.finish = function() {
             var anim = new ShakeAnim(4, 6, 500, "compost", 0.25, 20);
@@ -245,7 +283,7 @@ combat.compost = {
         }
         game.innerTransition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
-            text: "You compost your crops and hurl them forward, dealing " + damage + " damage" + (combat.enemies.length > 1 ? " to everyone." : ".")
+            text: GetText("compost_attack").replace(/\{dmg\}/g, damage).replace(/\{amt\}/g, GetText(combat.enemies.length > 1 ? "cmpatk_pl" : "cmpatk_sing"))
         });
         combat.animHelper.DrawCrops();
         return true;

@@ -25,55 +25,71 @@ combat.menu = {
         this.drawOption("Run", 3, this.cursorY === 3);
         gfx.drawCursor(0, this.dy + this.cursorY, this.options[this.cursorY], 0);
         var text = "abba is a band";
-        var charX = 0, charY = 0;
+        var charX = 0, charY = 0, birdX = 0, birdY = 0;
         switch(this.cursorY) {
             case 0:
-                if(combat.numPlantTurns == 0) {
-                    text = "You can't plant any more seeds this turn.";
+                if(combat.isFalcon) {
+                    text = GetText("seeds_one");
+                    charX = 5;
+                    birdX = 1;
+                } else if(combat.numPlantTurns == 0) {
+                    text = GetText("seeds_none");
                     charX = 3;
                 } else if(combat.numPlantTurns == 1) {
-                    text = "Plant a Seed in your Field.";
+                    text = GetText("seeds_one");
                     charX = 1;
                 } else {
-                    text = "Plant up to " + combat.numPlantTurns + " Seeds in your Field.";
+                    text = GetText("seeds_many").replace(/\{0\}/g, combat.numPlantTurns);
                     charX = 1;
                 }
                 break;
             case 1:
                 var count = this.highlightReadyCropsAndReturnCount();
-                if(count === 0) {
+                if(combat.isFalcon) {
+                    text = GetText("attack_falcon");
+                    charX = 5;
+                    birdX = 2;
+                } else if(count === 0) {
                     if(player.canMelee(this.getEnemyCropCount())) {
-                        text = "Perform a Melee attack.";
+                        text = GetText("attack_melee");
                         charX = 2;
                     } else {
-                        text = "You need an appropriate weapon to attack.";
+                        text = GetText("attack_cant");
                         charX = 3;
                     }
                 } else {
-                    text = "Attack with Ripe Crops on your Field.";
+                    text = GetText("attack_crop");
                     charX = 1; charY = 1;
                 }
                 break;
             case 2: 
                 if(player.equipment.compost === null) {
-                    text = "You need a Compost Bin equipped to perform this action.";
+                    text = GetText("compost_cant");
                     charX = 3;
                 } else {
-                    text = "Compost any Crops in your Field to recover Health.";
-                    charX = 4;
+                    text = GetText("compost_can");
+                    if(combat.isFalcon) {
+                        charX = 5; birdX = 3;
+                    } else {
+                        charX = 4;
+                    }
                 }
                 break;
             case 3:
-                if(combat.isBossBattle) {
-                    text = "You can't run away from boss battles!";
+                if(combat.isFalcon) {
+                    text = GetText("run_falcon");
+                    charX = 5;
+                } else if(combat.isBossBattle) {
+                    text = GetText("run_cant");
                     charX = 3;
                 } else {
-                    text = "Fuck off and cry to your mum, shitbird.";
+                    text = GetText("run_can");
                     charX = 5;
                 }
                 break;
         }
         combat.animHelper.SetPlayerAnimInfo([[charX, charY]]);
+        combat.animHelper.SetBirdAnimInfo([[birdX, birdY]]);
         gfx.drawInfobox(11, 2.5, this.dy + 1.5);
         gfx.drawWrappedText(text, 4.5 * 16, 11 + ((1.5 + this.dy) * 16), 170);
         combat.animHelper.DrawBottom();
@@ -137,7 +153,7 @@ combat.menu = {
                 game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
                 break;
             case 2: if(player.equipment.compost !== null) { game.innerTransition(this, combat.compost); } break;
-            case 3: if(!combat.isBossBattle) { this.tryFlee(); } break;
+            case 3: if(!combat.isBossBattle && !combat.isFalcon) { this.tryFlee(); } break;
             default: return false;
         }
         return true;

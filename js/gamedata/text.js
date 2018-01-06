@@ -4506,7 +4506,252 @@ var fulltext = {
 		"en-dm": "Drive to the fake farm.", 
 		"type": "choice"
 	},
-	// Combat
+	// Combat - Player Actions
+	"seeds_none": {
+		"en-us": "", 
+		"en-dm": "You can't plant any more seeds this turn.", 
+		"type": "combat"
+	},
+	"seeds_one": {
+		"en-us": "", 
+		"en-dm": "Plant a Seed in your Field.", 
+		"type": "combat"
+	},
+	"seeds_many": {
+		"en-us": "", 
+		"en-dm": "Plant up to {0} Seeds in your Field.", 
+		"type": "combat"
+	},
+	"attack_melee": {
+		"en-us": "", 
+		"en-dm": "Perform a Melee attack.", 
+		"type": "combat"
+	},
+	"attack_cant": {
+		"en-us": "", 
+		"en-dm": "You need an appropriate weapon to attack.", 
+		"type": "combat"
+	},
+	"attack_crop": {
+		"en-us": "", 
+		"en-dm": "Attack with Ripe Crops on your Field.", 
+		"type": "combat"
+	},
+	"attack_falcon": {
+		"en-us": "", 
+		"en-dm": "Perform a Pecking attack.", 
+		"type": "combat"
+	},
+	"compost_cant": {
+		"en-us": "", 
+		"en-dm": "You need a Compost Bin equipped to perform this action.", 
+		"type": "combat"
+	},
+	"compost_can": {
+		"en-us": "", 
+		"en-dm": "Compost Crops in your Field to recover Health.", 
+		"type": "combat"
+	},
+	"run_cant": {
+		"en-us": "", 
+		"en-dm": "You can't run away from this battle!", 
+		"type": "combat"
+	},
+	"run_can": {
+		"en-us": "", 
+		"en-dm": "Fuck off and cry to your mum, shitbird.", 
+		"type": "combat"
+	},
+	"run_falcon": {
+		"en-us": "", 
+		"en-dm": "Don't abandon your owner!", 
+		"type": "combat"
+	},
+	"tryPlantStart": {
+		"en-us": "", 
+		"en-dm": "You try to plant your {0},", 
+		"type": "combat"
+	},
+	"tryPlantGloves": {
+		"en-us": "", 
+		"en-dm": "but your gloves shock it!", 
+		"type": "combat"
+	},
+	"tryPlantPesticide": {
+		"en-us": "", 
+		"en-dm": "but it is too weak to withstand your soil's pesticides!", 
+		"type": "combat"
+	},
+	"tryPlantBees": {
+		"en-us": "", 
+		"en-dm": "You try to put bees in the beehive, but the pesticide scares them away, you dumbfuck.", 
+		"type": "combat"
+	},
+	"tryPlantBug": {
+		"en-us": "", 
+		"en-dm": "but you found a bug in the game, I guess! Neat!", 
+		"type": "combat"
+	},
+	"compost_heal": {
+		"en-us": "", 
+		"en-dm": "You compost your crops, recovering {0} health.", 
+		"type": "combat"
+	},
+	"compost_attack": {
+		"en-us": "", 
+		"en-dm": "You compost your crops and hurl them forward, dealing {dmg} damage{amt}", 
+		"type": "combat"
+	},
+	"cmpatk_sing": {
+		"en-us": "", 
+		"en-dm": ".", 
+		"type": "combat"
+	},
+	"cmpatk_pl": {
+		"en-us": "", 
+		"en-dm": " to everyone.", 
+		"type": "combat"
+	},
+	// Combat - Player Attack String
+	"critPrefix": {
+		"en-us": "", 
+		"en-dm": "CRITICAL HIT! ", 
+		"type": "combat"
+	},
+	"cropWithDefArticle": {
+		"en-us": "", 
+		"en-dm": "the {0}", 
+		"type": "combat"
+	},
+	"attackMessageStruct": {
+		"en-us": "", 
+		"en-dm": "{crit}{subject} {object}{objectmult} {amount}{recoil}{casualties}{sticky}{gloves}", 
+		"type": "combat"
+	},
+	"subject_nature": {
+		"en-us": "", 
+		"en-dm": "Nature Strikes! You and your animal friends", 
+		"type": "combat"
+	},
+	"subject_you": {
+		"en-us": "", 
+		"en-dm": "You", 
+		"type": "combat"
+	},
+	"subject_falcon": {
+		"en-us": "", 
+		"en-dm": "Iii", 
+		"type": "combat"
+	},
+	"obj_secondperson": {
+		"en-us": "", 
+		"en-dm": "attack {target}", 
+		"type": "combat"
+	},
+	"obj_thirdperson": {
+		"en-us": "", 
+		"en-dm": "attacks {target}", 
+		"type": "combat"
+	},
+	"obj_pl": {
+		"en-us": "", 
+		"en-dm": " and others,", 
+		"type": "combat"
+	},
+	"obj_sing": {
+		"en-us": "", 
+		"type": "combat"
+	},
+	"amount_pl": {
+		"en-us": "", 
+		"en-dm": "for an average of {dmg} damage", 
+		"type": "combat"
+	},
+	"amount_sing": {
+		"en-us": "", 
+		"en-dm": "for {dmg} damage", 
+		"type": "combat"
+	},
+	"recoil_pl": {
+		"en-us": "", 
+		"en-dm": ", with some recoil hitting even more enemies", 
+		"type": "combat"
+	},
+	"recoil_sing": {
+		"en-us": "", 
+		"en-dm": ", plus recoil", 
+		"type": "combat"
+	},
+	"kill_none_pl": {
+		"en-us": "", 
+		"en-dm": "!", 
+		"type": "combat"
+	},
+	"kill_some_pl": {
+		"en-us": "", 
+		"en-dm": ", leading to some casualties!", 
+		"type": "combat"
+	},
+	"kill_all_pl": {
+		"en-us": "", 
+		"en-dm": ", defeating all enemies!", 
+		"type": "combat"
+	},
+	"kill_none_sing": {
+		"en-us": "", 
+		"en-dm": ".", 
+		"type": "combat"
+	},
+	"kill_crop_sing": {
+		"en-us": "", 
+		"en-dm": ", destroying it.", 
+		"type": "combat"
+	},
+	"kill_robot_sing": {
+		"en-us": "", 
+		"en-dm": ", breaking it to pieces!", 
+		"type": "combat"
+	},
+	"kill_livingthey_sing": {
+		"en-us": "", 
+		"en-dm": ", and they retreat!", 
+		"type": "combat"
+	},
+	"kill_livinghe_sing": {
+		"en-us": "", 
+		"en-dm": ", and he retreats!", 
+		"type": "combat"
+	},
+	"kill_seamonster_sing": {
+		"en-us": "", 
+		"en-dm": ", killing her!", 
+		"type": "combat"
+	},
+	"kill_defeatthey_sing": {
+		"en-us": "", 
+		"en-dm": ", defeating them!", 
+		"type": "combat"
+	},
+	"kill_defeathe_sing": {
+		"en-us": "", 
+		"en-dm": ", defeating him!", 
+		"type": "combat"
+	},
+	"sticky_some": {
+		"en-us": "", 
+		"en-dm": " Now they're all sticky!", 
+		"type": "combat"
+	},
+	"sticky_none": {
+		"en-us": "", 
+		"type": "combat"
+	},
+	"gloves_some": {
+		"en-us": "", 
+		"en-dm": " Also, your gloves shock you for {glovedmg} damage!", 
+		"type": "combat"
+	},
+	// Combat - Enemy Attacks
 	"standardAttack": {
 		"en-us": "", 
 		"en-dm": "{0} attacks for {1} damage.", 
@@ -4752,7 +4997,7 @@ var fulltext = {
 		"en-dm": "HOUSEKEEPER: Please rate this app on the Application Store. Any ratings lower than five stars will not be accepted.", 
 		"type": "combat"
 	},
-	// Enemy Names
+	// Combat - Enemy Names
 	"e.robo0": {
 		"en-us": "", 
 		"en-dm": "Byte Buddy", 
