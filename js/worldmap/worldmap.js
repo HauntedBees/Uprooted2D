@@ -249,7 +249,7 @@ var worldmap = {
             case player.controls.confirm:
             case player.controls.pause: return this.click(null);
         }
-        if(worldmap.dialogData.choices === undefined) { return; }
+        if(worldmap.dialogData.choices === undefined || worldmap.dialogData.choices.length === 0) { return; }
         var newchoice = worldmap.dialogData.idx + dy;
         if(newchoice < 0) { newchoice = 0; }
         if(newchoice >= worldmap.dialogData.choices.length) { newchoice = worldmap.dialogData.choices.length - 1; }

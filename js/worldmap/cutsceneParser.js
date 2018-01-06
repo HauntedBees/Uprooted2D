@@ -2,6 +2,7 @@ var iHandler = {
     moveSpeed: 0.025,
     state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null },
     Start: function(startkey) {
+        worldmap.dialogData = {};
         iHandler.state = { key: startkey, idx: 0, activeAnim: null, done: false, texts: [], animHandler: null };
         iHandler.Advance();
     },
