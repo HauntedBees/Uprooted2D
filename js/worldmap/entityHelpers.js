@@ -124,7 +124,7 @@ function GetInvisibleEntity(name, interact, additional) {
 };
 function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: [ GetSpeak(text) ] }; };
 function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false, boring: true}); };
-function GetBeehive(hiveId, x, y, beetype) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true }); };
+function GetBeehive(hiveId, x, y, inside) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true, inside: inside, visible: !inside }); };
 function ToggleRFDoors(type) {
     for(var i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
@@ -303,7 +303,7 @@ function GetRock(name, x, y, dir, wfid) {
     return new GetCommonEntity(name, x, y, 12, 0, undefined, [PushRock], { noChange: true, pushDir: dir, sy: 7, killid: wfid, initx: x, inity: y, isRock: true });
 }
 function GetTechRock(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 18, dir, undefined, [PushTechRock], { noChange: true, sy: 11, killid: wfid, isRock: true });
+    return new GetCommonEntity(name, x, y, 22, 0, undefined, [PushTechRock], { noChange: true, sy: (dir == 0 ? 10 : 9), killid: wfid, isRock: true });
 }
 function GetWaterfall(name, x, y, dir, wfid, tech) {
     return new GetCommonEntity(name, x, y, 18, dir, undefined, [EnterWaterfall], { sy: (tech ? (wfid[1] === "X" ? 6: 7) : 0), sheetlen: (tech ? 2 : 4), moving: (!tech || wfid[1] !== "X"), dontDoThat: true, solid: false, wfid: wfid, isWaterfall: true, boring: (name.replace("waterfall" + wfid, "") !== "0") });
@@ -332,7 +332,7 @@ function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional
     if(big) { res.anim.big = true; }
     return Object.assign(res, additional);
 }
-function GetSpeak(t, choices) { return function() { worldmap.writeText(t, choices); }  }
+function GetSpeak(t, choices) { return function(i, e) { console.log(e.name); worldmap.writeText(t, choices); }  }
 function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
 function Cutscene(s) { return [ function() { iHandler.Start(s); } ]; }
@@ -355,6 +355,14 @@ function JumboToggle(inside) {
 }
 
 var enemyMetadata = {
+    hoverdweeb: { interactname: "hoverdweeb", dialogMax: 3, enemies: ["hoverdweeb"], min: 1, max: 1, sy: 17, sheetlen: 1 },
+    vendo: { interactname: "vendo", dialogMax: 2, enemies: ["vendo"], min: 1, max: 1, sy: 15, sheetlen: 2 },
+    vendo2: { interactname: "vendo", dialogMax: 2, enemies: ["vendo"], min: 1, max: 1, sy: 15, sheetlen: 2, inside: true, visible: false },
+    delivery: { interactname: "delivTruck", dialogMax: 3, enemies: ["delivTruck"], min: 1, max: 2, sy: 17, sheetlen: 2 },
+    car1: { interactname: "carBr", dialogMax: 3, enemies: ["brownCar"], min: 1, max: 2, sy: 4, sheetlen: 2, big: true },
+    car2: { interactname: "carBl", dialogMax: 3, enemies: ["blueCar"], min: 1, max: 2, sy: 6, sheetlen: 2, big: true },
+    car3: { interactname: "carRe", dialogMax: 3, enemies: ["redCar"], min: 1, max: 2, sy: 4, sheetlen: 2, big: true },
+    car4: { interactname: "foodTruck", dialogMax: 4, enemies: ["foodTruck"], min: 1, max: 3, sy: 6, sheetlen: 2, big: true },
     mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, inside: true, fov: true, visible: false },
     mafia: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, fov: true },
     robo: { interactname: "robo", dialogMax: 5, enemies: ["robo"], min: 1, max: 2 },
@@ -374,7 +382,8 @@ var commonMovementDatas = {
     rectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
         points: [ { x: x + w, y: y, dx: 1, dy: 0 }, { x: x + w, y: y + h, dx: 0, dy: 1 }, { x: x, y: y + h, dx: -1, dy: 0 }, { x: x, y: y, dx: 0, dy: -1 } ] } },
     downrectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
-        points: [ { x: x, y: y + h, dx: 0, dy: 1 }, { x: x + w, y: y + h, dx: 1, dy: 0 }, { x: x + w, y: y, dx: 0, dy: -1 }, { x: x, y: y, dx: -1, dy: 0 } ] } }
+        points: [ { x: x, y: y + h, dx: 0, dy: 1 }, { x: x + w, y: y + h, dx: 1, dy: 0 }, { x: x + w, y: y, dx: 0, dy: -1 }, { x: x, y: y, dx: -1, dy: 0 } ] } },
+    fastdownrect: function(x, y, w, h, initState) { var r = commonMovementDatas.downrectangle(x, y, w, h, initState); r.speed *= 3; return r; }
 };
 function GetStdMovement(points) {
     var newPoints = [];

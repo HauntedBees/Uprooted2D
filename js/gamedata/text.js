@@ -3862,6 +3862,211 @@ var fulltext = {
 		"en-dm": "The officer slides you a crisp 5000G, then walks away.", 
 		"type": "map"
 	},
+	"officeLady0": {
+		"en-us": "", 
+		"en-dm": "Susantha: Hello! Are you an exterminator? Or a beekeeper? Or some weirdo who collects beehives?", 
+		"type": "map"
+	},
+	"officeLady1": {
+		"en-us": "", 
+		"en-dm": "Susantha: It doesn't matter! Just... please! Take that beehive away! I can't microwave my lunch with it in our breakroom!", 
+		"type": "map"
+	},
+	"officeLady2": {
+		"en-us": "", 
+		"en-dm": "Susantha: Thank you for getting rid of that beehive! Now I can heat up my tasty frozen children's meal in peace!", 
+		"type": "map"
+	},
+	"corpseBuddy": {
+		"en-us": "", 
+		"en-dm": "Looks like this guy was Gameing Too Hard. Remember to take a break every 30-60 minutes!", 
+		"type": "map"
+	},
+	"cityMonk0": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: What the fuck are you looking at? Don't judge me. I pay rent. I'm ALLOWED here.", 
+		"type": "map"
+	},
+	"cityMonk1": {
+		"en-us": "", 
+		"en-dm": "Sea Monk: ...Whether or not soaking the carpet with water is allowed... is another question.", 
+		"type": "map"
+	},
+	"forRentSign": {
+		"en-us": "", 
+		"en-dm": "Now Available for Rent: 92A 13th Street. First Floor - Wheelchair Accessible - Close to Downtown - Water & Garbage Covered - 50,000G/mo", 
+		"type": "map"
+	},
+	"undergroundNotYet": {
+		"en-us": "", 
+		"en-dm": "???: This area isn't ready yet...", 
+		"type": "map"
+	},
+	"eggBoy0": {
+		"en-us": "", 
+		"en-dm": "Egg Dealer: Can I offer you a nice egg in this trying time? 250G for two. What kind of eggs? You won't know until you buy 'em!", 
+		"type": "map"
+	},
+	"eggBoyY": {
+		"en-us": "", 
+		"en-dm": "Buy two eggs.", 
+		"type": "map"
+	},
+	"eggBoyN": {
+		"en-us": "", 
+		"en-dm": "Nevermind.", 
+		"type": "map"
+	},
+	"eggBoyNoSale": {
+		"en-us": "", 
+		"en-dm": "Egg Dealer: Your loss. You're missing out on an eggscellent deal!", 
+		"type": "map"
+	},
+	"eggBoyNoMoney": {
+		"en-us": "", 
+		"en-dm": "Egg Dealer: Oh ho ho, nice try, little lady, but you don't have enough money for two eggs! Come back later.", 
+		"type": "map"
+	},
+	"eggBoyBuy": {
+		"en-us": "", 
+		"en-dm": "Egg Dealer: Pleasure doin' business with ya, lady. Enjoy your eggs!", 
+		"type": "map"
+	},
+	"eggBoy.egg": {
+		"en-us": "", 
+		"en-dm": "You got two Chicken Eggs!", 
+		"type": "map"
+	},
+	"eggBoy.quail": {
+		"en-us": "", 
+		"en-dm": "You got two Quail Eggs!", 
+		"type": "map"
+	},
+	"eggBoy.turkey": {
+		"en-us": "", 
+		"en-dm": "You got two Turkey Eggs!", 
+		"type": "map"
+	},
+	"eggBoy.goose": {
+		"en-us": "", 
+		"en-dm": "You got two Goose Eggs!", 
+		"type": "map"
+	},
+	"eggBoy.platypus": {
+		"en-us": "", 
+		"en-dm": "You got two Platypus Eggs!", 
+		"type": "map"
+	},
+	"eggBoy.goldegg": {
+		"en-us": "", 
+		"en-dm": "You got two... Golden Eggs?! Why did he even have these?!", 
+		"type": "map"
+	},
+	"carBr0": {
+		"en-us": "", 
+		"en-dm": "Driver: Behold the technological marvel of the Chocolate Car! Melts in your mouth, not on the road!", 
+		"type": "map"
+	},
+	"carBr1": {
+		"en-us": "", 
+		"en-dm": "Driver: This car is powered by anything brown. Chocolate, wood, dirt, and... you know.", 
+		"type": "map"
+	},
+	"carBr2": {
+		"en-us": "", 
+		"en-dm": "Driver: Excuse me, I'm a bit lost... my phone isn't getting any reception here. Can you tell me the fastest way to KICKING YOUR ASS?", 
+		"type": "map"
+	},
+	"carBl0": {
+		"en-us": "", 
+		"en-dm": "Driver: The dealership said this car was eco-friendly... I don't really care about that shit, but if it gives me another way to feel superior to you, I'm all for it!", 
+		"type": "map"
+	},
+	"carBl1": {
+		"en-us": "", 
+		"en-dm": "Car: BEEP BEEP! BEEP BEEEP! BEEEEEEEP BEEEEEEEEEEEP!!!!", 
+		"type": "map"
+	},
+	"carBl2": {
+		"en-us": "", 
+		"en-dm": "Driver: Jaywalking is a crime!!!", 
+		"type": "map"
+	},
+	"carRe0": {
+		"en-us": "", 
+		"en-dm": "Driver: Get out of the way, asshole!", 
+		"type": "map"
+	},
+	"carRe1": {
+		"en-us": "", 
+		"en-dm": "Car: I have detected an obstacle in the road. Now commencing... uh... I'm gonna run it over.", 
+		"type": "map"
+	},
+	"carRe2": {
+		"en-us": "", 
+		"en-dm": "Driver: What are you doing?! Walking?! Why would you do that to yourself?? Cars exist!!!", 
+		"type": "map"
+	},
+	"foodTruck0": {
+		"en-us": "", 
+		"en-dm": "Driver: Hello would you like to buy some Authentic Indian Curry? Chili-free because that stuff is too spicy!", 
+		"type": "map"
+	},
+	"foodTruck1": {
+		"en-us": "", 
+		"en-dm": "Driver: Hola! Welcome to Amigo Craig's Real Mexican Tacos and Burritos!", 
+		"type": "map"
+	},
+	"foodTruck2": {
+		"en-us": "", 
+		"en-dm": "Driver: This soup is so pho-king good, and this joke has literally never been made before!", 
+		"type": "map"
+	},
+	"foodTruck3": {
+		"en-us": "", 
+		"en-dm": "Driver: Welcome! We have a special today: a bottle of Gluten-Free Premium Water is only 10,000G now!", 
+		"type": "map"
+	},
+	"delivTruck0": {
+		"en-us": "", 
+		"en-dm": "Delivery Robot: You have a delivery from: Beckett. Contained inside is: One. Knife.", 
+		"type": "map"
+	},
+	"delivTruck1": {
+		"en-us": "", 
+		"en-dm": "Delivery Robot: Hello! I'm on a mission to deliver a package! Please don't interrupt me!", 
+		"type": "map"
+	},
+	"delivTruck2": {
+		"en-us": "", 
+		"en-dm": "Delivery Robot: I am a delivery robot that has been reprogrammed to kill you woah this is deep.", 
+		"type": "map"
+	},
+	"vendo0": {
+		"en-us": "", 
+		"en-dm": "Vendo: The candy bar you ordered is stuck. Please try again later.", 
+		"type": "map"
+	},
+	"vendo1": {
+		"en-us": "", 
+		"en-dm": "Vendo: I am Vending Machine. Please insert currency.", 
+		"type": "map"
+	},
+	"hoverdweeb0": {
+		"en-us": "", 
+		"en-dm": "Dweeb: This hoverboard is a STATEMENT. And that statement is that I'm terrible!", 
+		"type": "map"
+	},
+	"hoverdweeb1": {
+		"en-us": "", 
+		"en-dm": "Dweeb: My girlfriend said I had to go outside more... but she didn't say I had to WALK!", 
+		"type": "map"
+	},
+	"hoverdweeb2": {
+		"en-us": "", 
+		"en-dm": "Dweeb: Don't you wish you could look like a huge tool in public like I do right now? Don't be TOO jealous!", 
+		"type": "map"
+	},
 	// Area 8: North City Text Messages
 	"beckettText0": {
 		"en-us": "", 
@@ -3945,7 +4150,7 @@ var fulltext = {
 	},
 	"misctext4": {
 		"en-us": "", 
-		"en-dm": "chet.bradson (public): Selling quail eggs for cheap. @ 13th St/Corvo Lane intersection.", 
+		"en-dm": "frankr (public): Selling eggs for cheap. @ 13th St/Corvo Lane intersection.", 
 		"type": "text"
 	},
 	"misctext5": {
@@ -4983,6 +5188,41 @@ var fulltext = {
 		"en-dm": "{0} attacks for {1} damage.", 
 		"type": "combat"
 	},
+	"grillAttack": {
+		"en-us": "", 
+		"en-dm": "{0} places some {2} on the grill.", 
+		"type": "combat"
+	},
+	"kombuch": {
+		"en-us": "", 
+		"en-dm": "{0} gulps down some hearty kombucha and recovers {1} health.", 
+		"type": "combat"
+	},
+	"carPlantAttack": {
+		"en-us": "", 
+		"en-dm": "{0} sets up {2}.", 
+		"type": "combat"
+	},
+	"someSalt": {
+		"en-us": "", 
+		"en-dm": "Some salt got on your field!", 
+		"type": "combat"
+	},
+	"someFire": {
+		"en-us": "", 
+		"en-dm": "Some of your field got burned!", 
+		"type": "combat"
+	},
+	"tireChuck": {
+		"en-us": "", 
+		"en-dm": "{0} chucks a spare tire on your field.", 
+		"type": "combat"
+	},
+	"revEngine": {
+		"en-us": "", 
+		"en-dm": "{0} revs its engine. Its attacks will do more damage now.", 
+		"type": "combat"
+	},
 	"plantAttack": {
 		"en-us": "", 
 		"en-dm": "{0} plants {2}.", 
@@ -5462,6 +5702,41 @@ var fulltext = {
 	"e.theMonster0": {
 		"en-us": "", 
 		"en-dm": "???", 
+		"type": "enemy"
+	},
+	"e.brownCar0": {
+		"en-us": "", 
+		"en-dm": "Chocolate Car", 
+		"type": "enemy"
+	},
+	"e.blueCar0": {
+		"en-us": "", 
+		"en-dm": "Eco-Friendly Car", 
+		"type": "enemy"
+	},
+	"e.redCar0": {
+		"en-us": "", 
+		"en-dm": "Car-Type Vehicle", 
+		"type": "enemy"
+	},
+	"e.foodTruck0": {
+		"en-us": "", 
+		"en-dm": "Authentic Food Truck", 
+		"type": "enemy"
+	},
+	"e.delivTruck0": {
+		"en-us": "", 
+		"en-dm": "Delivery Robot", 
+		"type": "enemy"
+	},
+	"e.vendo0": {
+		"en-us": "", 
+		"en-dm": "Vendo on Wheels", 
+		"type": "enemy"
+	},
+	"e.hoverdweeb0": {
+		"en-us": "", 
+		"en-dm": "Hoverboard Asshole", 
 		"type": "enemy"
 	},
 	// Falcon Deliveries

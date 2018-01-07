@@ -90,7 +90,7 @@ var worldmap = {
                 worldmap.entities[i].dir = directions.RIGHT;
             }
             var isBlocked = false;
-            if(Math.round(newPos.x) == Math.round(worldmap.pos.x) && Math.round(newPos.y) == Math.round(worldmap.pos.y) && e.interact !== undefined) {
+            if(worldmap.isTheirCollision(newPos, e.big) && e.interact !== undefined) {
                 isBlocked = true;
                 if(!e.onlyActiveInteracts) {
                     worldmap.inDialogue = true;
@@ -117,6 +117,18 @@ var worldmap = {
         var fov = [];
         var ymax = collisions[this.mapName].length;
         for(var y = 0; y < ymax; y++) { layers.push([]); }
+
+        var animDir = this.playerDir, moving = true;
+        if(input.mainKey !== undefined) { animDir = input.mainKey; }
+        else if(input.keys[player.controls.up] !== undefined) { animDir = directions.UP; }
+        else if(input.keys[player.controls.left] !== undefined) { animDir = directions.LEFT; }
+        else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
+        else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
+        else { moving = this.forceMove; }
+        if(this.mapName !== "gameover") {
+            layers[this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
+        }
+
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
             if(!e.visible || e.pos.y < 0 || (!e.chungus && e.pos.y >= ymax)) { continue; }
@@ -129,18 +141,11 @@ var worldmap = {
                 continue;
             }
             if(e.fov) { fov.push({ x: e.pos.x - offset.x, y: e.pos.y - offset.y, dir: e.dir }); }
-            layers[Math.round(e.pos.y)].push(e.anim.getFrame(e.pos, e.dir, e.moving));
+            var roundedY = Math.round(e.pos.y);
+            if(roundedY < 0 || roundedY >= ymax) { continue; }
+            layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
         }
-        var animDir = this.playerDir, moving = true;
-        if(input.mainKey !== undefined) { animDir = input.mainKey; }
-        else if(input.keys[player.controls.up] !== undefined) { animDir = directions.UP; }
-        else if(input.keys[player.controls.left] !== undefined) { animDir = directions.LEFT; }
-        else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
-        else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
-        else { moving = this.forceMove; }
-        if(this.mapName !== "gameover") {
-            layers[this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
-        }
+        
         for(var y = 0; y < ymax; y++) {
             var funcs = layers[y];
             for(var i = 0; i < funcs.length; i++) {
@@ -378,11 +383,19 @@ var worldmap = {
     },
     isCollision: function(e, newPos) {
         if(e.seamlessMap || !e.solid) { return false; }
-        if(Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y) === newPos.y) { return true; }
-        return e.big && (
-            ((e.pos.x + 1) == newPos.x && e.pos.y == newPos.y)
-            || (e.pos.x == newPos.x && (e.pos.y + 1) == newPos.y)
-            || ((e.pos.x + 1) == newPos.x && (e.pos.y + 1) == newPos.y)
-        );
+        if(e.big) {
+            return (Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y + 1) === newPos.y) || Math.round(e.pos.x + 1) === newPos.x && Math.round(e.pos.y + 1) === newPos.y;
+        } else {
+            return Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y) === newPos.y;
+        }
+    },
+    isTheirCollision: function(newPos, big) {
+        var wpx = Math.round(worldmap.pos.x), wpy = Math.round(worldmap.pos.y);
+        var npx = Math.round(newPos.x), npy = Math.round(newPos.y);
+        if(big) {
+            return (npx === wpx && (npy + 1) === wpy) || ((npx + 1) === wpx && (npy + 1) === wpy);
+        } else {
+            return (npx === wpx && npy === wpy);
+        }
     }
 };

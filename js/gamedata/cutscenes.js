@@ -550,4 +550,20 @@ var scripts = {
 	"strobbery14": "pl_SETDIR:2&NewCop0_SETDIR:3&NewCop0_MOVE:x6.5",
 	"strobbery15": "NewCop0_SETDIR:2&NewCop0_MOVE:y12",
 	"strobbery16": "_CUSTOM:FINISHCOPS&_QUIT",
+	// North City: Beehive
+	"OfficeHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5&_COMPLETEQUEST:officeBeehive&_CLEARTARGET",
+	// North City: Office Lady
+	"officeLady0": "?[{\"q\":\"player.completedQuest('officeBeehive')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
+	"officeLady1": "_TEXT:officeLady2&_END",
+	"officeLady2": "_TEXT:officeLady(0-1)",
+	// North City: Sea Monk
+	"cityMonk0": "_TEXT:cityMonk(0-1)",
+	// North City: Egg Dealer
+	"eggBoy0": "_TEXT:eggBoy0,eggBoyY,eggBoyN",
+	"eggBoy1": "?[{\"q\":\"d===0\",\"v\":2},{\"q\":\"d===1\",\"v\":3}]",
+	"eggBoy2": "?[{\"q\":\"player.monies<250\",\"v\":4},{\"q\":\"true\",\"v\":5}]",
+	"eggBoy3": "_TEXT:eggBoyNoSale&_END",
+	"eggBoy4": "_TEXT:eggBoyNoMoney&_END",
+	"eggBoy5": "_TEXT:eggBoyBuy",
+	"eggBoy6": "_CUSTOM:THEGIFTOFEGG",
 };

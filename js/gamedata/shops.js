@@ -216,6 +216,48 @@ var stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
 
+    "cityFixtures": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "cityInn": {
+        img: "shops/dwarf2", innId: "bigCity",
+        wares: [ { product: "sleep", price: 500, type: "inn" } ],
+        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
+    },
+    "gordonsFarming": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "cityTech": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+    "cityExpansions": {
+        img: "shops/dwarf2",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+    },
+
     "template": {
         img: "",
         wares: [

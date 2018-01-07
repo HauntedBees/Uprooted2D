@@ -211,6 +211,17 @@ function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
 var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
+    "THEGIFTOFEGG": function() {
+        player.monies -= 250;
+        var eggType = "egg";
+        if(player.completedQuest("goodEgg") && Math.random() < 0.08) {
+            eggType = "goldegg";
+        } else {
+            eggType = ["egg", "quail", "turkey", "goose", "platypus"][Math.floor(Math.random() * 5)];
+        }
+        player.increaseItem(eggType, 2);
+        worldmap.writeText("eggBoy." + eggType);
+    },
     "BEATROBBERS": function() {
         ClearEntitiesUnderCondition(function(e) { return e.robbery === true; }, false);
         worldmap.pos = { x: 6, y: 6 };

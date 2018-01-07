@@ -107,6 +107,7 @@ function GetCrop(name) {
 		case "algae": return new CropDetail(name, "Algae", 0, "rice", 1, 2, 2, 10, 0, 0.6, 1, 0.2, 0, { noRot: true });
 		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 30, 0, 1, 1, 0.5, 0.05, { noRot: true });
 		case "rock": return new CropDetail(name, "Rock", 0, "rock", 1, 5, 1, 0, 0, 1, 1, 1, 1);
+		case "tire": return new CropDetail(name, "Tire", 0, "rock", 1, 8, 1, 0, 0, 1, 1, 1, 1);
 		case "salt": return new CropDetail(name, "Salt", 0, "rock", 1, 30, 1, 0, 0, 1, 1, 1, 1);
 		case "acorn": return new CropDetail(name, "Acorn", 0, "tree", 2, 6, 4, 6, 2, 0, 1, 1, 0);
 		case "robobabby": return new CropDetail(name, "Byte Baby", 0, "babby", 1, 4, 4, 0, 0, 1, 1, 1, 1, { baby: "robo" });
@@ -118,7 +119,17 @@ function GetCrop(name) {
 		case "porcini": return new CropDetail(name, "Porcini", 0, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
 		case "arborioB": return new CropDetail(name, "Arborio Rice", 0, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
 		case "timebomb": return new CropDetail(name, "Time Bomb", 0, "veg", 1, 12, 4, 50, 0, 1, 1, 1, 1);
-		case "shotgun": return new CropDetail(name, "Shotgun", 0, "veg", 1, 5, 4, 30, 3, 1, 1, 1, 1);
+		case "shotgun": return new CropDetail(name, "Shotgun", 0, "veg", 1, 5, 4, 30, 0, 1, 1, 1, 1);
+		case "burrito": return new CropDetail(name, "Burrito", 0, "veg", 1, 10, 1, 20, 0, 1, 1, 1, 1);
+		case "dango": return new CropDetail(name, "Dango", 0, "veg", 1, 5, 1, 15, 0, 1, 1, 1, 1);
+		case "taco": return new CropDetail(name, "Taco", 0, "veg", 1, 8, 1, 18, 0, 1, 1, 1, 1);
+		case "kombucha": return new CropDetail(name, "Kombucha", 0, "veg", 1, 30, 1, 80, 0, 1, 1, 1, 1);
+		case "cheese": return new CropDetail(name, "Cheese", 0, "veg", 1, 4, 1, 5, 0, 1, 1, 1, 1);
+		case "batterysalt": return new CropDetail(name, "Smart Salt", 0, "veg", 1, 6, 3, 10, 0, 1, 1, 1, 1, { saltChance: 0.5 });
+		case "gastank": return new CropDetail(name, "Gas Tank", 0, "tech", 1, 6, 4, 10, 0, 1, 1, 1, 1, { burnChance: 0.25 });
+		case "airfilter": return new CropDetail(name, "Air Filter", 0, "tech", 1, 6, 5, 10, 0, 1, 1, 1, 1);
+		case "dipstick": return new CropDetail(name, "Dip Stick", 0, "tech", 1, 3, 3, 10, 0, 1, 1, 1, 1);
+		case "cacao": return new CropDetail(name, "Cacao", 0, "tree", 2, 10, 5, 10, 3, 1, 1, 1, 1);
 	}
 }
 debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus"];

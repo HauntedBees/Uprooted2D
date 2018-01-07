@@ -1,5 +1,44 @@
 var enemyHelpers = {
     GetNode: function(name) { for(var i = 0; i < EnemyParser.nodes.length; i++) { if(EnemyParser.nodes[i].id === name) { return EnemyParser.nodes[i]; } } },
+    GetSideEffect: function(e, tile) {
+        if(tile.saltChance === undefined && tile.burnChance === undefined) { return ""; }
+        if(tile.saltChance !== undefined && tile.saltChance > Math.random()) { 
+            var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "salt");
+            return res ? "SALT" : "";
+        }
+        if(tile.burnChance !== undefined && tile.burnChance > Math.random()) { 
+            var res = enemyHelpers.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+            return res ? "BURN" : "";
+        }
+    },
+    BurnTile: function(e, x, y) {
+        var itemTile = player.itemGrid[x][y];
+        var crop = combat.grid[x][y];
+        var effect = combat.effectGrid[x][y];
+        if(effect !== null && effect.type === "splashed") { return { status: false, wet: true }; }
+        if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
+        if(["_cow", "_lake", "_paddy", "_shooter", "_hotspot", "_modulator", "_sprinkler"].indexOf(itemTile) >= 0) { return { status: false }; }
+        if(itemTile === "_strongsoil" && (Math.random() * player.luck) > 0.75) { return { status: false }; }
+
+        combat.effectGrid[x][y] = { type: "burned", duration: Math.ceil(Math.log2(e.atk)) };
+        if(["_log", "_coop", "_beehive"].indexOf(itemTile) >= 0) {
+            var hadTile = (crop !== null);
+            if(hadTile) { combat.grid[x][y] = null; }
+            return { status: true, crop: hadTile, destroyed: true, special: itemTile };
+        }
+        if(crop === null) { return { status: true, crop: false }; }
+        var dmg = enemyHelpers.GetCropDamage(e, x, y, 1);
+
+        crop.power -= dmg;
+        if(crop.rotten) { crop.power = 0; }
+        if(crop.power <= 0) {
+            combat.grid[x][y] = null;
+            combat.animHelper.DrawCrops();
+            return { status: true, crop: true, destroyed: true, special: "" };
+        } else {
+            return { status: true, crop: true, destroyed: false, special: "" };
+        }
+    },
     GetEnemyFieldData: function(e, justBabies, includeInactive) {
         var dmg = 0;
         var crops = [];
@@ -14,7 +53,7 @@ var enemyHelpers = {
                     if(tile.type === "babby") { continue; }
                 }
                 dmg += tile.power * Math.max(0.75, Math.log10(e.atk));
-                crops.push([tile.name, x, y, tile.type]);
+                crops.push([tile.name, x, y, tile.type, enemyHelpers.GetSideEffect(e, tile)]);
             }
         }
         if(dmg === 0) { dmg = (e.atk / 1.5); }
@@ -447,6 +486,17 @@ var actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     },
+    "TIRE_CHUCK": function(e) { 
+        var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "tire");
+        if(!res) { return false; }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    "REV_ENGINE": function(e) {
+        e.atk += 2;
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
     "CLEAR_CACHE": function(e) {
         for(var x = 0; x < combat.enemyGrid.length; x++) {
             for(var y = 0; y < combat.enemyGrid[0].length; y++) {
@@ -590,6 +640,25 @@ var actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
+        return true;
+    },
+    "MAYBE_TRY_DRINK_KOMBUCHA": function(e) {
+        var kombuchaData = null;
+        for(var x = 0; x < combat.enemyGrid.length; x++) {
+            if(kombuchaData !== null) { break; }
+            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined) { continue; }
+                if(tile.name !== "kombucha") { continue; }
+                tile.flagged = true;
+                tile.activeTime = 0;
+                kombuchaData = [tile.name, x, y, tile.type];
+                break;
+            }
+        }
+        if(kombuchaData === null) { return false; }
+        actions["HEAL_RANGE"](e, "60,35");
+        EnemyParser.outputData.throwables = [kombuchaData];
         return true;
     },
     "TRY_PLANT_THREE_CROPS": function(e, crop) {

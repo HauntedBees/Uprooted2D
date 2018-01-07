@@ -73,6 +73,8 @@ function GetCrop(name) {
 		if($row.StkChance) { $addtl += "stickChance: _".replace("_", $row.StkChance); }
 		if($row.StkRange) { $addtl += "stickRange: _".replace("_", $row.StkRange); }
 		if($row.Baby) { $addtl += "baby: `"_`"".replace("_", $row.Baby); }
+		if($row.SaltChance) { $addtl += "saltChance: _".replace("_", $row.SaltChance); }
+		if($row.BurnChance) { $addtl += "burnChance: _".replace("_", $row.BurnChance); }
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
 			$endStr = $endStr.replace("{addtl}", ", { $folded }");
