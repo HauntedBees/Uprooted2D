@@ -399,15 +399,8 @@
                             $specialTemplate.find(".txt_info").text(mapObj.infoText);
                             $details.append($specialTemplate);
                         }
-                                /*case "Treasure":
-                                    if(existingObjs["chest"] === undefined) {
-                                        existingObjs["chest"] = count;
-                                        mapObjects.push({ type: 11, num: count, badgeclass: badgeclass, text: "Treasure Chest", disp: "#" });
-                                    }
-                                    break;*/
-                                
                         var $md = $("<div class='badge badge-pill " + mapObj.badgeclass + " mapDetail'>" + mapObj.dispCount + "</div>");
-                        $md.css("top", (16 * obj.pos.y) + "px").css("left", (16 * obj.pos.x) + "px");
+                        $md.css("top", (16 * (obj.big ? (obj.pos.y + 1) : obj.pos.y)) + "px").css("left", (16 * obj.pos.x) + "px").attr("title", obj.name);
                         $mapDad.append($md);
                     }
                     mapObjects = mapObjects.sort(function(x, y) {

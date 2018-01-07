@@ -2,39 +2,17 @@ var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "res
 var smallMaps = ["farm"];
 var namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
 var mapNames = {
-    "farm": "Your Farm",
-    "producestand": "Produce Stand",
-    "forest": "Forest",
-    "firstvillage": "San Ambrosio",
-    "belowvillage": "South of Town",
-    "researchfacility": "Mysterious Research Lab",
-    "bridge": "Bridge Crossing",
-    "underwater": "Underwater",
-    "fakefarm": "Jeff's Farm",
-    "southcity": "South Las Abejas",
-    "northcity": "Central Las Abejas"
+    "farm": "Your Farm", "producestand": "Produce Stand", "forest": "Agrios Forest", "firstvillage": "San Ambrosio", "belowvillage": "South of Town",
+    "researchfacility": "Mysterious Research Lab", "bridge": "Bridge Crossing", "underwater": "Underwater", "fakefarm": "Jeff's Farm",
+    "southcity": "South Las Abejas", "northcity": "Central Las Abejas", "hq_1": "Food2 Headquarters 1F"
 };
 var shopNames = {
-    "coop": "Chicken Coop",
-    "inn0": "Your House",
-    "equip1": "Dave's Hoes and Sickles",
-    "fixture1": "Fuckster's Fixtures",
-    "seed1": "Seedy Pete's Petey Seeds",
-    "upgrade1": "Andrew D's Farm Expansions",
-    "inn1": "Frothybarf Inn",
-    "mermaidinn": "The Mermaid Inn",
-    "mermaid": "Ye Mermaid Shoppe",
-    "cworker": "Lazy Construction Worker's Shop",
-    "upgrade2": "The Upgrade Barn",
-    "fixture2": "The Fixture Stall",
-    "skumpys": "Skumpy's Pub",
-    "mantools": "MAN TOOLS",
-    "seedshack": "The Seed Shack",
-    "catalinas": "Catalina's Fixtures",
-    "tinker": "Tinker Tierra",
-    "pawn": "Pawn Shop",
-    "church": "Church",
-    "trout": "crazy4trout"
+    "coop": "Chicken Coop", "inn0": "Your House", "equip1": "Dave's Hoes and Sickles", "fixture1": "Fuckster's Fixtures", "seed1": "Seedy Pete's Petey Seeds",
+    "upgrade1": "Andrew D's Farm Expansions", "inn1": "Frothybarf Inn", "mermaidinn": "The Mermaid Inn", "mermaid": "Ye Mermaid Shoppe",
+    "cworker": "Lazy Construction Worker's Shop", "upgrade2": "The Upgrade Barn", "fixture2": "The Fixture Stall", "skumpys": "Skumpy's Pub", "mantools": "MAN TOOLS",
+    "seedshack": "The Seed Shack", "catalinas": "Catalina's Fixtures", "tinker": "Tinker Tierra", "pawn": "Pawn Shop", "church": "Las Abejas Church",
+    "trout": "crazy4trout", "cityInn": "Hotel", "cityFixtures": "Fixtures", "gordonsFarming": "Gordon's Farming", "cityTech": "Tech Supplies",
+    "cityExpansions": "Farm Expansions"
 };
 function GetEnemyName(name) { 
     switch(name) {
@@ -48,6 +26,9 @@ function GetEnemyName(name) {
         case "wildmobsty": return "Mobster"; break;
         case "MobBoss": name = "mobBoss"; break;
         case "HOUSEKEEPER": name = "housekeeper"; break;
+        case "carBr": name = "brownCar"; break;
+        case "carBl": name = "blueCar"; break;
+        case "carRe": name = "redCar"; break;
     }
     return GetText("e." + name + "0");
 }
@@ -60,8 +41,14 @@ function GetBossHTML(enemyKey) {
 
 
 function GetMapObjData(e, $details) {
-    if(e.name === "Food2Entrance") {
-        return { order: 2, type: "Move", subtype: e.destination, badgeclass: "badge-dark", text: "To Food2 Headquarters" };
+    if(e.name === "EggBoy") {
+        return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Egg Dealer", infoText: "Sells 2 eggs for 250G. The eggs you get are random, and can be quite rare!" };
+    } else if(e.name === "CityMonk") {
+        return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Big City Sea Monk" };
+    } else if(e.name === "UndergroundMan") {
+        return { order: 5, type: "NPC", badgeclass: "badge-warning", text: "???", infoText: "???" };
+    } else if(e.name === "OfficeLady") {
+        return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Susantha" };
     } else if(e.name === "KeycardTrap") {
         // TODO
         return { order: 4, sortCount: 9999, type: "Boss", badgeclass: "badge-danger", dispCount: "X", text: "Dweeblord" };
@@ -92,7 +79,7 @@ function GetMapObjData(e, $details) {
     } else if(e.name.indexOf("atm") === 0) {
         return { order: 5, type: "atm", subtype: "atm", badgeclass: "badge-warning", dispCount: "A", text: "Cash2 ATM" };
     } else if(e.name.indexOf("cashboy") === 0) {
-        return { order: 5, type: "cashboy", subtype: "cashboy", badgeclass: "badge-info", dispCount: "C", text: "Cash2 Investor" };
+        return { order: 5, type: "cashboy", subtype: "cashboy", badgeclass: "badge-info", dispCount: "I", text: "Cash2 Investor" };
     } else if(e.name.indexOf("Officer") === 0) {
         return { order: 5, type: "cop", subtype: "cop", badgeclass: "badge-info", dispCount: "C", text: "Police Officer" };
     } else if(e.name === "Abuela") {
