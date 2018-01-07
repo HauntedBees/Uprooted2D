@@ -65,7 +65,7 @@
         <header><nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"><a class="navbar-brand" href="#">Farming Fantasy Official Guide</a></nav></header>
         <div class="container-fluid">
             <div class="row">
-                <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+                <nav class="col-sm-3 col-md-1 d-none d-sm-block bg-light sidebar">
                     <ul id="sidebar" class="nav nav-pills flex-column">
                         <li class="nav-item"><a class="nav-link" href="#top">Return to Top</a></li>
                         <li class="nav-item"><a class="nav-link" href="#maps">Levels</a></li>
@@ -73,7 +73,7 @@
                         <li class="nav-item"><a class="nav-link" href="#enemies">Enemies</a></li>
                     </ul>
                 </nav>
-                <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+                <main role="main" class="col-sm-9 ml-sm-auto col-md-11 pt-3">
                     <h1>Farming Fantasy<a name="top"></a></h1>
                     <div id="maps">
                         <h2>Levels<a name="maps"></a></h2>
@@ -355,8 +355,6 @@
                     var mapObjects = [];
                     for(var j = 0; j < mapData.length; j++) {
                         var obj = mapData[j];
-                        var type = "?";
-                        var badgeclass = "badge-info";
                         if(obj.name === undefined) { continue; }
                         if(obj.name.replace("R", "L") === lastObj.name) { continue; }
                         lastObj = obj;
@@ -365,167 +363,58 @@
                         if(obj.pos.x < 0 && obj.pos.y < 0) { continue; }
                         if(obj.boring === true || obj.jumbo === true) { continue; }
                         if(obj.name.indexOf("waterfall") === 0 && obj.name[obj.name.length - 1] !== "0") { continue; }
-                        var dispCount = "";
 
-                        var special = DoSpecialProcessing(obj);
-                        if(special !== null) {
-                            type = special.type;
-                            badgeclass = special.badgeclass;
-                            dispCount = special.dispCount;
-                        } else if(obj.rfd === true) {
-                            type = "RFDoor";
-                            badgeclass = "badge-secondary";
-                            switch(obj.type) {
-                                case 0: dispCount = "R"; break;
-                                case 1: dispCount = "B"; break;
-                                case 2: dispCount = "G"; break;
-                            }
-                            dispCount += obj.initActive ? "O" : "X";
-                        } else if(obj.rf === true) {
-                            type = "RFButton";
-                            badgeclass = "badge-primary";
-                            switch(obj.type) {
-                                case 0: dispCount = "RB"; break;
-                                case 1: dispCount = "BB"; break;
-                                case 2: dispCount = "GB"; break;
-                            }
-                        } else if(obj.isChest === true) {
-                            type = "Treasure";
-                            badgeclass = "badge-warning";
-                        } else if(obj.boss === true) {
-                            type = "Boss";
-                            badgeclass = "badge-danger";
-                            dispCount = "X";
-                        } else if(obj.isBeehive === true) {
-                            type = "Beehive";
-                            badgeclass = "badge-warning";
-                            dispCount = "B";
-                        } else if(obj.enemies !== undefined) {
-                            type = "Enemy";
-                            badgeclass = "badge-danger";
-                        } else if(obj.isMapSwitch === true) {
-                            type = "Move";
-                            badgeclass = "badge-dark";
-                        } else if(obj.isShop === true) {
-                            type = "Shop";
-                            badgeclass = "badge-success";
-                            $details.append(GetShopHTML(obj.shopName));
-                        } else if(obj.isWaterfall === true) {
-                            type = "Waterfall";
-                            badgeclass = "badge-primary";
-                            dispCount = "W";
-                        } else if(obj.isRock === true) {
-                            type = "Rock";
-                            badgeclass = "badge-info";
-                            dispCount = "R";
-                        } else if(obj.name === "AFuckingTruckL") {
-                            type = "Truck";
-                            badgeclass = "badge-dark";
-                            dispCount = "T";
-                        } else {
-                            type = "NPC";
-                            badgeclass = "badge-info";
-                        }
-                        if(type === "?") { console.log(obj); continue; }
+                        var mapObj = GetMapObjData(obj, $details);
+                        if(mapObj.type === "?") { console.log(obj); continue; }
+
                         var count = 1;
-                        if(counts[type] === undefined) {
-                            counts[type] = 2;
+                        if(counts[mapObj.type] === undefined) {
+                            if(mapObj.subtype === undefined) {
+                                counts[mapObj.type] = 2;
+                            } else {
+                                counts["full"] = 2;
+                                counts[mapObj.type] = {};
+                                counts[mapObj.type][mapObj.subtype] = 1;
+                            }
                         } else {
-                            count = counts[type]++;
+                            if(mapObj.subtype === undefined) {
+                                count = counts[mapObj.type]++;
+                                if(mapObj.type === "Treasure") { mapObj.dontShowOnBottom = true; }
+                            } else if(counts[mapObj.type][mapObj.subtype] === undefined) {
+                                count = counts["full"]++;
+                                counts[mapObj.type][mapObj.subtype] = count;
+                            } else {
+                                count = counts[mapObj.type][mapObj.subtype];
+                                mapObj.dontShowOnBottom = true;
+                            }
                         }
-                        if(special !== null) {
-                            $details.append(GetSpecialHTML(obj));
-                            mapObjects.push(GetSpecialMapObject(obj));
-                        } else {
-                            switch(type) {
-                                case "Boss":
-                                    $details.append(GetBossHTML(obj.name));
-                                    mapObjects.push({ type: 4, num: 9999, badgeclass: badgeclass, text: GetEnemyName(obj.name), disp: "X" });
-                                    break;
-                                case "Beehive": mapObjects.push({ type: 0, num: count, badgeclass: badgeclass, text: "Beehive", disp: "B" }); break;
-                                case "Truck": mapObjects.push({ type: 1, num: count, badgeclass: badgeclass, text: "Truck", disp: "T" }); break;
-                                case "Move": mapObjects.push({ type: 2, num: count, badgeclass: badgeclass, text: "To " + mapNames[obj.destination] }); break;
-                                case "Shop": mapObjects.push({ type: 3, num: count, badgeclass: badgeclass, text: shopNames[obj.shopName] }); break;
-                                case "Treasure":
+                        if(mapObj.dispCount === undefined) { mapObj.dispCount = count; }
+                        if(mapObj.sortCount === undefined) { mapObj.sortCount = count; }
+                        if(!mapObj.dontShowOnBottom) { mapObjects.push(mapObj); }
+
+                        if(mapObj.infoText !== undefined && !mapObj.dontShowOnBottom) {
+                            var $specialTemplate = $("#specialTemplate").clone();
+                            $specialTemplate.removeClass("template").removeAttr("id");
+                            $specialTemplate.find(".txt_name").text(mapObj.text);
+                            $specialTemplate.find(".txt_info").text(mapObj.infoText);
+                            $details.append($specialTemplate);
+                        }
+                                /*case "Treasure":
                                     if(existingObjs["chest"] === undefined) {
                                         existingObjs["chest"] = count;
                                         mapObjects.push({ type: 11, num: count, badgeclass: badgeclass, text: "Treasure Chest", disp: "#" });
                                     }
-                                    //$details.append(GetEnemyHTML(obj.interactname));
-                                    break;
-                                case "RFDoor":
-                                    if(existingObjs["rfdoor_" + obj.type + obj.initActive] === undefined) {
-                                        existingObjs["rfdoor_" + obj.type + obj.initActive] = count;
-                                        var name = " Door ";
-                                        var disp = "";
-                                        switch(obj.type) {
-                                            case 0: name = "Red" + name; disp = "R"; break;
-                                            case 1: name = "Blue" + name; disp = "B"; break;
-                                            case 2: name = "Green" + name; disp = "G"; break;
-                                        }
-                                        if(obj.initActive) {
-                                            name += "(Open)";
-                                            disp += "O";
-                                        } else {
-                                            name += "(Closed)";
-                                            disp += "X";
-                                        }
-                                        mapObjects.push({ type: 9, num: count, badgeclass: badgeclass, text: name, disp: disp });
-                                    } else {
-                                        count = existingObjs["rfdoor_" + obj.type + obj.initActive];
-                                        counts[type] = count + 1;
-                                    }
-                                    break;
-                                case "RFButton":
-                                    if(existingObjs["rfbtn_" + obj.type] === undefined) {
-                                        existingObjs["rfbtn_" + obj.type] = count;
-                                        var name = " Button";
-                                        var disp = "";
-                                        switch(obj.type) {
-                                            case 0: name = "Red" + name; disp = "RB"; break;
-                                            case 1: name = "Blue" + name; disp = "BB"; break;
-                                            case 2: name = "Green" + name; disp = "GB"; break;
-                                        }
-                                        mapObjects.push({ type: 8, num: count, badgeclass: badgeclass, text: name, disp: disp });
-                                    } else {
-                                        count = existingObjs["rfbtn_" + obj.type + obj.initActive];
-                                        counts[type] = count + 1;
-                                    }
-                                    break;
-                                case "Enemy":
-                                    if(existingObjs["enemy_" +  obj.interactname] === undefined) {
-                                        existingObjs["enemy_" +  obj.interactname] = count;
-                                        mapObjects.push({ type: 4, num: count, badgeclass: badgeclass, text: GetEnemyName(obj.interactname) });
-                                        $details.append(GetEnemyHTML(obj.interactname));
-                                    } else {
-                                        count = existingObjs["enemy_" +  obj.interactname];
-                                        counts[type] = count + 1;
-                                    }
-                                    break;
-                                case "NPC": mapObjects.push({ type: 5, num: count, badgeclass: badgeclass, text: obj.name }); break;
-                                case "Waterfall":
-                                    if(existingObjs["waterfall"] === undefined) {
-                                        existingObjs["waterfall"] = count;
-                                        mapObjects.push({ type: 6, num: 1, badgeclass: badgeclass, text: "Water Current", disp: "W" });
-                                    }
-                                    break;
-                                case "Rock":
-                                    if(existingObjs["rock"] === undefined) {
-                                        existingObjs["rock"] = count;
-                                        mapObjects.push({ type: 7, num: 1, badgeclass: badgeclass, text: "Rock", disp: "R" });
-                                    }
-                                    break;
-                            }
-                        }
-                        var $md = $("<div class='badge badge-pill " + badgeclass + " mapDetail'>" + (dispCount === "" ? count : dispCount) + "</div>");
+                                    break;*/
+                                
+                        var $md = $("<div class='badge badge-pill " + mapObj.badgeclass + " mapDetail'>" + mapObj.dispCount + "</div>");
                         $md.css("top", (16 * obj.pos.y) + "px").css("left", (16 * obj.pos.x) + "px");
                         $mapDad.append($md);
                     }
                     mapObjects = mapObjects.sort(function(x, y) {
-                        if(x.type < y.type) { return -1; }
-                        if(x.type > y.type) { return 1; }
-                        if(x.num < y.num) { return -1; }
-                        if(x.num > y.num) { return 1; }
+                        if(x.order < y.order) { return -1; }
+                        if(x.order > y.order) { return 1; }
+                        if(x.sortCount < y.sortCount) { return -1; }
+                        if(x.sortCount > y.sortCount) { return 1; }
                         return 0;
                     });
 
@@ -542,7 +431,9 @@
                     var $r = $template.find(".right");
                     for(var j = 0; j < mapObjects.length; j++) {
                         var obj = mapObjects[j];
-                        var $obj = $("<div><label><div class='badge badge-pill " + obj.badgeclass + "'>" + (obj.disp === undefined ? obj.num : obj.disp) + "</div></label> <span>" + obj.text + "</span></div>");
+                        if(obj.dontShowOnBottom) { continue; }
+                        if(obj.type === "Treasure") { obj.dispCount = "#"; }
+                        var $obj = $("<div><label><div class='badge badge-pill " + obj.badgeclass + "'>" + obj.dispCount + "</div></label> <span>" + obj.text + "</span></div>");
                         if(j < breakPoint) {
                             $l.append($obj);
                         } else if(numCols === 3 && j < (breakPoint * 2)) {
