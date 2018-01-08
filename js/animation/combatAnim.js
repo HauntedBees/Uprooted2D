@@ -212,14 +212,14 @@ function CombatAnimHelper(enemies) {
         var y = 5.75;
         switch(e.size) {
             case "lg": y = 5; break;
-            case "xl": y = 3; currentx -= 2; break;
+            case "xl": y = 3; currentx -= 4; break;
         }
         enemyAnimInfos.push(new EnemyAnimInfo([[e.spriteidx, 0]], currentx, y, 0, e.size, e.spriteidx, e.sheet));
         switch(e.size) {
             case "sm": currentx += 1; break;
             case "md": currentx += 1.5; break;
             case "lg": currentx += 2; break;
-            case "xl": currentx += 2; break;
+            case "xl": currentx += 4; break;
         }
     }
     var anims = [];
@@ -235,7 +235,7 @@ function CombatAnimHelper(enemies) {
                     case "sm": y = 5.25; break;
                     case "md": y = 5.0; break;
                     case "lg": y = 4.5; posy = 5; break;
-                    case "xl": y = 3; posy = 3; currentx -= 2; break;
+                    case "xl": y = 3; posy = 3; currentx -= 4; break;
                 }
                 return { x: currentx + info.dx, rawX: currentx, y: y + info.dy, rawY: posy, w: info.w, h: info.h };
             }
@@ -243,7 +243,7 @@ function CombatAnimHelper(enemies) {
                 case "sm": currentx += 1; break;
                 case "md": currentx += 1.5; break;
                 case "lg": currentx += 2; break;
-                case "xl": currentx += 2; break;
+                case "xl": currentx += 4; break;
             }
         }
     };
@@ -370,6 +370,8 @@ function CombatAnimHelper(enemies) {
                             gfx.drawItemNumber(0, xdx, ydy, "foreground", true);
                         }
                     }
+                } else if(crop.type === "card") {
+                    gfx.drawTileToGrid((crop.inDefensePosition ? "def" : "") + crop.name, xdx, ydy, "foreground");
                 } else if(crop.type === "bee") {
                     gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
                 } else if(crop.type === "rod") {

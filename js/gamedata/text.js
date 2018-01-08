@@ -5203,6 +5203,11 @@ var fulltext = {
 		"en-dm": "{0} sets up {2}.", 
 		"type": "combat"
 	},
+	"vendoAttack": {
+		"en-us": "", 
+		"en-dm": "{0} begins dispensing one {2}. Thank you for your patronage!", 
+		"type": "combat"
+	},
 	"someSalt": {
 		"en-us": "", 
 		"en-dm": "Some salt got on your field!", 
@@ -5221,6 +5226,96 @@ var fulltext = {
 	"revEngine": {
 		"en-us": "", 
 		"en-dm": "{0} revs its engine. Its attacks will do more damage now.", 
+		"type": "combat"
+	},
+	"wacg.shuffle": {
+		"en-us": "", 
+		"en-dm": "{0} reshuffles his deck.", 
+		"type": "combat"
+	},
+	"wacg.placeatk": {
+		"en-us": "", 
+		"en-dm": "{0} places a {2} Character Card in the Attack Position.", 
+		"type": "combat"
+	},
+	"wacg.placedef": {
+		"en-us": "", 
+		"en-dm": "{0} places a {2} Character Card in the Defense Position.", 
+		"type": "combat"
+	},
+	"wacg.idle": {
+		"en-us": "", 
+		"en-dm": "{0} looks up killer strats on his smartphone.", 
+		"type": "combat"
+	},
+	"wacg.discard": {
+		"en-us": "", 
+		"en-dm": "{0} draws a {2} Card from his hand and places it in his Discard Pile.", 
+		"type": "combat"
+	},
+	"wacg.swapdef": {
+		"en-us": "", 
+		"en-dm": "{0} swaps his {2} Character Card into the Defense Position.", 
+		"type": "combat"
+	},
+	"wacg.swapatk": {
+		"en-us": "", 
+		"en-dm": "{0} swaps his {2} Character Card into the Attack Position.", 
+		"type": "combat"
+	},
+	"wacg.placeElem": {
+		"en-us": "", 
+		"en-dm": "{0} places a {2} Element Card on the field.", 
+		"type": "combat"
+	},
+	"wacg.removeElem": {
+		"en-us": "", 
+		"en-dm": "{0} removes his {2} Element Card from the field and places it in his Discard Pile.", 
+		"type": "combat"
+	},
+	"wacg.placeFx": {
+		"en-us": "", 
+		"en-dm": "{0} places a {2} Effect Card on the field, {3}", 
+		"type": "combat"
+	},
+	"wacg.attack0": {
+		"en-us": "", 
+		"en-dm": "{0}'s {2} attacks for {1} damage!", 
+		"type": "combat"
+	},
+	"wacg.attack1": {
+		"en-us": "", 
+		"en-dm": "{0}'s {2}, imbued with the power of {3}, attacks for {1} damage!", 
+		"type": "combat"
+	},
+	"wacg.attack2": {
+		"en-us": "", 
+		"en-dm": "{0}'s {2}, imbued with the powers of {3} and {4}, attacks for {1} damage!", 
+		"type": "combat"
+	},
+	"wacg.fx0": {
+		"en-us": "", 
+		"en-dm": "increasing his defenses while it is on the field!", 
+		"type": "combat"
+	},
+	"wacg.fx1": {
+		"en-us": "", 
+		"en-dm": "increasing his attack power while it is on the field!", 
+		"type": "combat"
+	},
+	"wacg.fx2": {
+		"en-us": "", 
+		"en-dm": "allowing him to perform two actions per turn!", 
+		"type": "combat"
+	},
+	"wacg.fx3": {
+		"en-us": "", 
+		"en-dm": "which doesn't actually do anything, but makes his dad happy!", 
+		"type": "combat"
+	},
+	"wacg.fx4": {
+		"en-us": "", 
+		"en-dm": "changing the season to Winter while it is on the field!", 
 		"type": "combat"
 	},
 	"plantAttack": {

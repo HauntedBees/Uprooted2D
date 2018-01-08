@@ -208,6 +208,7 @@ combat.selectTarget = {
                 if((crop.power - damage) <= 0) {
                     hasDestroys = true;
                     crop.hidden = true;
+                    crop.flagged = true;
                     combat.animHelper.DrawCrops();
                     combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
                 }

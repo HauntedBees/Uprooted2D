@@ -26,6 +26,7 @@ uglifyjs ^
     js/combat/combatselectenemy.js ^
     js/combat/combatinbetween.js ^
     js/combat/tutorial.js ^
+    js/combat/wacg.js ^
     js/worldmap/worldmap.js ^
     js/worldmap/title.js ^
     js/worldmap/optionsMenu.js ^

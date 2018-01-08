@@ -130,6 +130,21 @@ function GetCrop(name) {
 		case "airfilter": return new CropDetail(name, "Air Filter", 0, "tech", 1, 6, 5, 10, 0, 1, 1, 1, 1);
 		case "dipstick": return new CropDetail(name, "Dip Stick", 0, "tech", 1, 3, 3, 10, 0, 1, 1, 1, 1);
 		case "cacao": return new CropDetail(name, "Cacao", 0, "tree", 2, 10, 5, 10, 3, 1, 1, 1, 1);
+		/* WACG Cards */
+		case "char0": return new CropDetail(name, "Pale Blood Horse", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "char1": return new CropDetail(name, "Mabingy the Elf", 0, "card", 1, 999, 1, 40, 0, 1, 1, 1, 1);
+		case "char2": return new CropDetail(name, "Pagan Cave Bat", 0, "card", 1, 999, 1, 30, 0, 1, 1, 1, 1);
+		case "char3": return new CropDetail(name, "Just a Slime", 0, "card", 1, 999, 1, 20, 0, 1, 1, 1, 1);
+		case "char4": return new CropDetail(name, "Trash Lobster", 0, "card", 1, 999, 1, 10, 0, 1, 1, 1, 1);
+		case "elem0": return new CropDetail(name, "Fire", 0, "card", 1, 999, 1, 5, 0, 1, 1, 1, 1);
+		case "elem1": return new CropDetail(name, "Earth", 0, "card", 1, 999, 1, 5, 0, 1, 1, 1, 1);
+		case "elem2": return new CropDetail(name, "Water", 0, "card", 1, 999, 1, 5, 0, 1, 1, 1, 1);
+		case "elem3": return new CropDetail(name, "Tech", 0, "card", 1, 999, 1, 5, 0, 1, 1, 1, 1);
+		case "fx0": return new CropDetail(name, "Gobulin Shield", 0, "card", 1, 999, 1, 10, 0, 1, 1, 1, 1);
+		case "fx1": return new CropDetail(name, "Wand of Ps'ghetti", 0, "card", 1, 999, 1, 10, 0, 1, 1, 1, 1);
+		case "fx2": return new CropDetail(name, "Infernal Doug", 0, "card", 1, 999, 1, 10, 0, 1, 1, 1, 1);
+		case "fx3": return new CropDetail(name, "Regular Baseball", 0, "card", 1, 999, 1, 10, 0, 1, 1, 1, 1);
+		case "fx4": return new CropDetail(name, "The Blue Winter", 0, "card", 1, 999, 1, 10, 0, 1, 1, 1, 1);
 	}
 }
 debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus"];

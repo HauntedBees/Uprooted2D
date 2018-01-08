@@ -68,11 +68,12 @@ var enemyHelpers = {
         if(combat.enemyGrid[x + 1][y + 1] !== null) { return false; }
         return true;
     },
-    GetAttackData: function(dmg, secondArg, thirdArg) {
+    GetAttackData: function(dmg, secondArg, thirdArg, fourthArg) {
         secondArg = secondArg || "";
         var node = EnemyParser.current;
         
-        var outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg).replace(/\{2\}/g, secondArg).replace(/\{3\}/g, thirdArg);
+        var outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg)
+                            .replace(/\{2\}/g, secondArg).replace(/\{3\}/g, thirdArg).replace(/\{4\}/g, fourthArg);
         outputText = HandleArticles(outputText, secondArg);
 
         return { text: outputText, animFPS: node.data.animFPS, animData: node.data.animData };
@@ -117,6 +118,7 @@ var enemyHelpers = {
     },
     DoDamageCrop: function(e, x, y, type) {
         var crop = combat.grid[x][y];
+        if(crop === null) { return { status: false }; }
         var dmg = enemyHelpers.GetCropDamage(e, x, y, type);
         crop.power -= dmg;
         if(crop.rotten) { crop.power = 0; }
@@ -263,6 +265,94 @@ var actions = {
             EnemyParser.current.data.textID = "plugAttempt";
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    "CARDGAME": function(e) {
+        EnemyParser.current.data.textID = "plantAttack";
+        if(e.wacg === undefined) { e.wacg = new ChildrensCardGame(e); }
+        var cardData = e.wacg.MakeMove();
+        var attackAgain = e.wacg.HandleStatusEffectsAndReturnIfCanAttackAgain();
+        EnemyParser.current.data.textID = cardData.textID;
+        var damage = 0;
+        if(cardData.isAttack) { // TODO: add messages for when crops are damaged/destroyed?
+            damage = e.atk;
+            if(cardData.action === "attack1") {
+                switch(cardData.argval) {
+                    case "elem0":
+                        if(Math.random() < 0.25) { enemyHelpers.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight)); }
+                        break;
+                    case "elem1":
+                        if(Math.random() < 0.25) { enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "rock"); }
+                        break;
+                    case "elem2":
+                        if(Math.random() < 0.25) { enemyHelpers.TrySplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight)); }
+                        break;
+                    case "elem3":
+                        if(Math.random() < 0.25) { enemyHelpers.DoDamageCrop(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), -1); }
+                        break;
+                }
+            } else if(cardData.action === "attack2") {
+                if(cardData.argval === cardData.arg2val) {
+                    switch(cardData.argval) {
+                        case "elem0":
+                            if(Math.random() < 0.25) { 
+                                var row = Math.floor(Math.random() * player.gridHeight);
+                                for(var x = 0; x < player.gridWidth; x++) { enemyHelpers.BurnTile(e, x, row); }
+                            }
+                            break;
+                        case "elem1":
+                            enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "rock");
+                            break;
+                        case "elem2":
+                            if(Math.random() < 0.25) { 
+                                var row = Math.floor(Math.random() * player.gridHeight);
+                                for(var x = 0; x < player.gridWidth; x++) { enemyHelpers.TrySplashTile(e, x, row); }
+                            }
+                            break;
+                        case "elem3":
+                            enemyHelpers.DoDamageCrop(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), -1);
+                            break;
+                    }
+                } else {
+                    var first = (cardData.argval < cardData.arg2val ? cardData.argval : cardData.arg2val);
+                    var second = (cardData.argval < cardData.arg2val ? cardData.arg2val : cardData.argval);
+                    if(first === "elem0") {
+                        switch(second) {
+                            case "elem1": // fire + earth
+                                if(Math.random() < 0.10) {
+                                    enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "rock");
+                                    enemyHelpers.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+                                }
+                                break;
+                            case "elem2": damage = Math.floor(damage * 0.5); break; // fire + water
+                            case "elem3": // fire + tech
+                                if(Math.random() < 0.25) {
+                                    enemyHelpers.DoDamageCrop(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), -1);
+                                    enemyHelpers.DoDamageCrop(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), -1);
+                                    enemyHelpers.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+                                    enemyHelpers.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+                                }
+                                break;
+                        }
+                    } else if(first === "elem1") {
+                        switch(second) {
+                            case "elem2": // earth + water
+                                if(Math.random() < 0.5) { enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "salt"); }
+                                break;
+                            case "elem3": damage = Math.floor(damage * 1.5); break; // earth + tech
+                        }
+                    } else if(first === "elem2") { // water + tech
+                        if(Math.random() < 0.25) {
+                            var row = Math.floor(Math.random() * player.gridHeight);
+                            for(var x = 0; x < player.gridWidth; x++) { enemyHelpers.DoDamageCrop(e, x, row, -1); }
+                        }
+                    }
+                }
+            }
+        }
+        if(damage > 0) { damage = combat.damagePlayer(damage); }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(damage, cardData.cardName, cardData.arg, cardData.arg2);
+        if(attackAgain) { EnemyParser.outputData.attackAgain = true; }
         return true;
     },
     "HOUSEKEEPER": function(e) {

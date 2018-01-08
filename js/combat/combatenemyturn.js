@@ -1,11 +1,13 @@
 combat.enemyTurn = {
-    dy: 7, 
+    dy: 7, lastIdx: -1,
     setup: function(args) {
         var enemy = args.enemy;
         combat.animHelper.SetPlayerAnimInfo();
         combat.animHelper.SetBirdAnimInfo();
         gfx.drawFullbox(this.dy);
         var attackData = EnemyParser.Parse(enemy);
+        if(attackData.attackAgain && this.lastIdx != args.idx) { combat.state--; }
+        this.lastIdx = args.idx;
         if(attackData.skip) {
             combat.endTurn(this);
             return;

@@ -1,0 +1,1 @@
+{"nodes":[{"id":"node0","data":{"message":"INIT"},"next":"node3"},{"id":"node3","data":{"textID":"eh","message":"CARDGAME","animData":[[0,0],[0,1,true]]}}]}

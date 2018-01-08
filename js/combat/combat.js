@@ -21,6 +21,7 @@ var combat = {
         this.itemsEarned = [];
         this.happyCows = [];
         this.usedShooters = [];
+        combat.enemyTurn.lastIdx = -1;
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
             var hasCharger = false;
             for(var x = 0; x < player.gridWidth; x++) {
@@ -99,6 +100,7 @@ var combat = {
     startRound: function() {
         this.cleanUpEffects();
         this.isFalcon = false;
+        combat.enemyTurn.lastIdx = -1;
         this.numPlantTurns = player.getPlantingTurns();
         for(var i = 0; i < combat.enemies.length; i++) {
             combat.enemies[i].stickTurns = Math.max(0, combat.enemies[i].stickTurns - 1);
