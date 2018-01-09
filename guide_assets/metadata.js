@@ -1,4 +1,4 @@
-var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity", "northcity"]; // forest is big
+var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity", "northcity", "hq_1"]; // forest is big
 var smallMaps = ["farm"];
 var namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
 var mapNames = {

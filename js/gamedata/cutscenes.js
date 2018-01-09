@@ -475,7 +475,9 @@ var scripts = {
 	"keywin2": "_LOSPEED&_CUSTOM:UNFORCEYZERO&dweeb_SETTARGET&_CLEARTARGET&_TEXT:keycard6",
 	"keywin3": "mech_SETTARGET&_CLEARTARGET&scrungus_SETTARGET&_CLEARTARGET&keytrap_SETTARGET&_CLEARTARGET&_QUIT",
 	// Food2: First Floor
-	"food2Start0": "_TEXT:enterHQ(0-3)",
+	"food2Start0": "?[{\"q\":\"player.completedQuest('talkedToReceptionist')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
+	"food2Start1": "_TEXT:enterHQ4&_END",
+	"food2Start2": "_COMPLETEQUEST:talkedToReceptionist&_TEXT:enterHQ(0-3)",
 	// Food2: Third Floor
 	"food2Third0": "_TEXT:intercom(0-6)",
 	// Food2: Seventh Boss (Beckett)

@@ -48,6 +48,7 @@
                 height: 80px;
                 width: 64px;
             }
+            .enemySpriteBig.huge { height: 160px; width: 192px; }
             .inline { margin: 0 -3px -3px 0 }
             .inline2 { margin-bottom: -3px }
             .template { display: none }
@@ -290,7 +291,9 @@
                     var enemy = GetEnemy(debug.AllEnemies[i]);
                     $template.find(".txt_name").text(enemy.name);
                     
-                    if(enemy.size === "lg") {
+                    if(enemy.size === "xl") {
+                        $template.find(".sp_final").addClass("enemySpriteBig huge").css("background-position", "-" + (enemy.spriteidx * 64) + "px 0");
+                    } else if(enemy.size === "lg") {
                         $template.find(".sp_final").addClass("enemySpriteBig").css("background-position", "-" + (enemy.spriteidx * 64) + "px 0");
                     } else {
                         $template.find(".sp_final").addClass("enemySprite").css("background-position", "-" + (enemy.spriteidx * 48) + "px 0");

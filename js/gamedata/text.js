@@ -4296,7 +4296,12 @@ var fulltext = {
 	},
 	"enterHQ3": {
 		"en-us": "", 
-		"en-dm": "Receptionist: Just don't do anything that could hurt my severance pay, and have a nice day!", 
+		"en-dm": "Receptionist: Just don't do anything that could hurt my severance package, and have a nice day!", 
+		"type": "text"
+	},
+	"enterHQ4": {
+		"en-us": "", 
+		"en-dm": "Receptionist: I wish people weren't so terrible all the time always.", 
 		"type": "text"
 	},
 	"intercom0": {
@@ -5832,6 +5837,41 @@ var fulltext = {
 	"e.hoverdweeb0": {
 		"en-us": "", 
 		"en-dm": "Hoverboard Asshole", 
+		"type": "enemy"
+	},
+	"e.trendyNerd0": {
+		"en-us": "", 
+		"en-dm": "Trendy Nerd", 
+		"type": "enemy"
+	},
+	"e.coffeeNerd0": {
+		"en-us": "", 
+		"en-dm": "Caffeine Nerd", 
+		"type": "enemy"
+	},
+	"e.buffNerd0": {
+		"en-us": "", 
+		"en-dm": "Fitness Nerd", 
+		"type": "enemy"
+	},
+	"e.tinyNerd0": {
+		"en-us": "", 
+		"en-dm": "Regular Nerd", 
+		"type": "enemy"
+	},
+	"e.theFunnyOne0": {
+		"en-us": "", 
+		"en-dm": "\"Funny\" Nerd", 
+		"type": "enemy"
+	},
+	"e.beckett0": {
+		"en-us": "", 
+		"en-dm": "Beckett", 
+		"type": "enemy"
+	},
+	"e.nathan0": {
+		"en-us": "", 
+		"en-dm": "Nathan", 
 		"type": "enemy"
 	},
 	// Falcon Deliveries
