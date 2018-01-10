@@ -1770,72 +1770,72 @@ var fulltext = {
 	},
 	"B2.3": {
 		"en-us": "", 
-		"en-dm": "???: My name is Allen Husk, Ph.D. One of the smartest minds in the world. Too smart to waste time being humble, mind you.", 
+		"en-dm": "???: My name is Jeff Husk, Ph.D. One of the smartest minds in the world. Too smart to waste time being humble, mind you.", 
 		"type": "map"
 	},
 	"B2.4": {
 		"en-us": "", 
-		"en-dm": "Allen: I am helping--- ahem. That's DOCTOR Allen, thank you.", 
+		"en-dm": "Jeff: I am helping--- ahem. That's DOCTOR Jeff, thank you.", 
 		"type": "map"
 	},
 	"B2.5": {
 		"en-us": "", 
-		"en-dm": "Dr. Allen: I am helping an old friend by doing some groundbreaking research answering the age old question of \"what is food?\"", 
+		"en-dm": "Dr. Jeff: I am helping an old friend by doing some groundbreaking research answering the age old question of \"what is food?\"", 
 		"type": "map"
 	},
 	"B2.6": {
 		"en-us": "", 
-		"en-dm": "Dr. Allen: An apple is good for you. Is a baked apple just as good for you? What about apple sauce?", 
+		"en-dm": "Dr. Jeff: An apple is good for you. Is a baked apple just as good for you? What about apple sauce?", 
 		"type": "map"
 	},
 	"B2.7": {
 		"en-us": "", 
-		"en-dm": "Dr. Allen: What about a proprietary mulch made from apple and apple byproducts? Are cars food?", 
+		"en-dm": "Dr. Jeff: What about a proprietary mulch made from apple and apple byproducts? Are cars food?", 
 		"type": "map"
 	},
 	"B2.8": {
 		"en-us": "", 
-		"en-dm": "Dr. Allen: If the answer to any of those questions is \"no,\" then the followup question is \"why?\" That is what I intend to answer.", 
+		"en-dm": "Dr. Jeff: If the answer to any of those questions is \"no,\" then the followup question is \"why?\" That is what I intend to answer.", 
 		"type": "map"
 	},
 	"B2.9": {
 		"en-us": "", 
-		"en-dm": "Dr. Allen: With this knowledge, my friend's startup will be able to create the perfect food substitute, and will change the world forever!", 
+		"en-dm": "Dr. Jeff: With this knowledge, my friend's startup will be able to create the perfect food substitute, and will change the world forever!", 
 		"type": "map"
 	},
 	"B2.10": {
 		"en-us": "", 
-		"en-dm": "\"Dr.\" Allen: And, of course, people who change the world are often rewarded handsomely for it. I would know, I've read a history book before.", 
+		"en-dm": "\"Dr.\" Jeff: And, of course, people who change the world are often rewarded handsomely for it. I would know, I've read a history book before.", 
 		"type": "map"
 	},
 	"B2.11": {
 		"en-us": "", 
-		"en-dm": "\"Dr.\" Allen: But it seems you are intent on thwarting the evolution of food. And for that, I must thwart you.", 
+		"en-dm": "\"Dr.\" Jeff: But it seems you are intent on thwarting the evolution of food. And for that, I must thwart you.", 
 		"type": "map"
 	},
 	"B2.12": {
 		"en-us": "", 
-		"en-dm": "Allen: Still not convinced? I will just have to beat some more sense into you! And that's DOCTOR Allen!!!!", 
+		"en-dm": "\"Dr.\" Jeff: Still not convinced? I will just have to beat some more sense into you! And TAKE THOSE QUOTATION MARKS OFF OF \"Dr.\"!!", 
 		"type": "map"
 	},
 	"Pb2.0": {
 		"en-us": "", 
-		"en-dm": "Allen: Ugh... it seems I underestimated you... do you also have a Ph.D?", 
+		"en-dm": "\"Dr. \"Jeff: Ugh... it seems I underestimated you... do you also have a Ph.D?", 
 		"type": "map"
 	},
 	"Pb2.1": {
 		"en-us": "", 
-		"en-dm": "Allen: Wh-what?! I lost to someone... who never even went to college... ugh...", 
+		"en-dm": "\"Dr.\" Jeff: Wh-what?! I lost to someone... who never even went to college... ugh...", 
 		"type": "map"
 	},
 	"Pb2.2": {
 		"en-us": "", 
-		"en-dm": "Allen: Going to college, then being too smart for it and dropping out is one thing... but never going at all? Ugh... insulting.", 
+		"en-dm": "\"Dr.\" Jeff: Going to college, then being too smart for it and dropping out is one thing... but never going at all? Ugh... insulting.", 
 		"type": "map"
 	},
 	"Pb2.3": {
 		"en-us": "", 
-		"en-dm": "Allen: I'm sorry, Beckett... I'm sorry, Food2... I've failed you... all my research... for nothing...", 
+		"en-dm": "\"Dr.\" Jeff: I'm sorry, Beckett... I'm sorry, Food2... I've failed you... all my research... for nothing...", 
 		"type": "map"
 	},
 	"Pb2.4": {
@@ -1845,12 +1845,12 @@ var fulltext = {
 	},
 	"Pb2.5": {
 		"en-us": "", 
-		"en-dm": "Allen: You may have beaten me... but you'll never stop Food2... not without grabbing exactly one of those three things over there, at least...", 
+		"en-dm": "\"Dr.\" Jeff: You may have beaten me... but you'll never stop Food2... not without grabbing exactly one of those three things over there, at least...", 
 		"type": "map"
 	},
 	"Pb2.6": {
 		"en-us": "", 
-		"en-dm": "You turn to what Allen is pointing at. In the corner of the room are three items: a Seed Shooter, a large bag of seeds, and a healthy drink.", 
+		"en-dm": "You turn to what Dr. Jeff is pointing at. In the corner of the room are three items: a Seed Shooter, a large bag of seeds, and a healthy drink.", 
 		"type": "map"
 	},
 	"Pb2.7": {
@@ -1905,12 +1905,12 @@ var fulltext = {
 	},
 	"Pb2.11": {
 		"en-us": "", 
-		"en-dm": "Allen: I'm not sure... why I told you... to do that... ughh.....", 
+		"en-dm": "\"Dr.\" Jeff: I'm not sure... why I told you... to do that... ughh.....", 
 		"type": "map"
 	},
 	"Pb2.12": {
 		"en-us": "", 
-		"en-dm": "Allen falls to the ground, unconscious.", 
+		"en-dm": "\"Dr.\" Jeff falls to the ground, unconscious.", 
 		"type": "map"
 	},
 	"Pb2.13": {
@@ -5591,7 +5591,7 @@ var fulltext = {
 	},
 	"e.ScienceMan0": {
 		"en-us": "", 
-		"en-dm": "Dr. Allen", 
+		"en-dm": "Dr. Jeff", 
 		"type": "enemy"
 	},
 	"e.mouse0": {
@@ -5796,7 +5796,7 @@ var fulltext = {
 	},
 	"e.dweebLord0": {
 		"en-us": "", 
-		"en-dm": "Dweeb Lord", 
+		"en-dm": "Jeff", 
 		"type": "enemy"
 	},
 	"e.theMonster0": {
