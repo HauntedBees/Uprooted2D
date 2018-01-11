@@ -745,7 +745,18 @@ var mapentities = {
             GetCommonEntity("CompyL", 14, 23.375, 20, 0, undefined, undefined, { boring: true, sy: 11 }),
             GetCommonEntity("CompyR", 15, 23.375, 21, 0, undefined, undefined, { boring: true, sy: 11 }),
             GetCommonEntity("Receptionist", 15.25, 23.375, 19, 0, undefined, undefined, { sy: 12 }),
-            GetCommonEntity("ReceptionistTalky", 15, 24, 19, 0, undefined, Cutscene("food2Start"), { boring: true, visible: false })
+            GetCommonEntity("ReceptionistTalky", 15, 24, 19, 0, undefined, Cutscene("food2Start"), { boring: true, visible: false }),
+            GetCommonEntity("rollybaby1", 29, 8, 18, 2, undefined, undefined, { sy: 7, sheetlen: 2, moving: true, boring: true }),
+            GetCommonEntity("rollybaby2", 29, 9, 18, 3, undefined, undefined, { sy: 7, sheetlen: 2, moving: true, boring: true }),
+            GetCommonEntity("rollybaby3", 29, 10, 18, 3, undefined, undefined, { sy: 7, sheetlen: 2, moving: true, boring: true }),
+            GetCommonEntity("rollybaby4", 29, 11, 18, 3, undefined, undefined, { sy: 7, sheetlen: 2, moving: true, boring: true }),
+            GetCommonEntity("rollybaby5", 30, 9, 18, 3, undefined, undefined, { sy: 7, sheetlen: 2, moving: true, boring: true }),
+            GetCommonEntity("rollybaby6", 30, 10, 18, 3, undefined, undefined, { sy: 7, sheetlen: 2, moving: true, boring: true }),
+            GetCommonEntity("rollybaby7", 30, 11, 18, 3, undefined, undefined, { sy: 7, sheetlen: 2, moving: true, boring: true }),
+            GetCommonEntity("hqCompCover1", 13, 15, 22, 0, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
+            GetCommonEntity("hqCompCover2", 14, 15, 22, 1, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
+            GetCommonEntity("hqCompCover3", 17, 16, 22, 0, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
+            GetCommonEntity("hqCompCover4", 18, 16, 22, 1, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true })
         ];
         var doors = [ [20, 10, 0, false], [7, 10, 0, true],  [20, 3, 1, false], [25, 7, 1, true], [18, 6, 1, false], [17, 14, 1, true], [15, 8, 1, false],
                  [4, 17, 1, true], [10, 17, 1, false], [4, 8, 2, false], [4, 12, 2, true], [10, 12, 2, false], [7, 14, 2, true] ];
