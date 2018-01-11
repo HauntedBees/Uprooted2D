@@ -125,9 +125,6 @@ var worldmap = {
         else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
         else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
         else { moving = this.forceMove; }
-        if(this.mapName !== "gameover") {
-            layers[this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
-        }
 
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
@@ -141,9 +138,12 @@ var worldmap = {
                 continue;
             }
             if(e.fov) { fov.push({ x: e.pos.x - offset.x, y: e.pos.y - offset.y, dir: e.dir }); }
-            var roundedY = Math.round(e.pos.y);
+            var roundedY = e.forcedY ? e.forcedY : Math.round(e.pos.y);
             if(roundedY < 0 || roundedY >= ymax) { continue; }
             layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
+        }
+        if(this.mapName !== "gameover") {
+            layers[this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
         }
         
         for(var y = 0; y < ymax; y++) {
