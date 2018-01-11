@@ -4224,6 +4224,121 @@ var fulltext = {
 		"type": "text"
 	},
 	// Area 9: Food2 Headquarters
+	"fuzuruStart": {
+		"en-us": "", 
+		"en-dm": "Marty: Hello this is the IT department how can I help you?", 
+		"type": "text"
+	},
+	"fuzuru0.1": {
+		"en-us": "", 
+		"en-dm": "Phone: Yes my computer is on fire.", 
+		"type": "text"
+	},
+	"fuzuru0.2": {
+		"en-us": "", 
+		"en-dm": "Marty: Try installing Service Pack 2.", 
+		"type": "text"
+	},
+	"fuzuru0.3": {
+		"en-us": "", 
+		"en-dm": "Phone: Now I'm on fire.", 
+		"type": "text"
+	},
+	"fuzuru0.4": {
+		"en-us": "", 
+		"en-dm": "Marty: This wouldn't have happened if you had installed Service Pack 2.", 
+		"type": "text"
+	},
+	"fuzuruEnd": {
+		"en-us": "", 
+		"en-dm": "Marty hangs up the phone.", 
+		"type": "text"
+	},
+	"fuzuru1.1": {
+		"en-us": "", 
+		"en-dm": "Phone: Hi, my mouse isn't working.", 
+		"type": "text"
+	},
+	"fuzuru1.2": {
+		"en-us": "", 
+		"en-dm": "Marty: Feed it CHEEEESE, BITCH.", 
+		"type": "text"
+	},
+	"fuzuru2.1": {
+		"en-us": "", 
+		"en-dm": "Phone: This is Beckett, your SUPERIOR. If you see that farmer anywhere, let me know so--", 
+		"type": "text"
+	},
+	"fuzuru2.2": {
+		"en-us": "", 
+		"en-dm": "Marty: Beckett I am not unblocking farmersonly.com no matter how many times you ask.", 
+		"type": "text"
+	},
+	"fuzuru2.3": {
+		"en-us": "", 
+		"en-dm": "Phone: What?! No!! The FARMER!! If you see her, be sure to--", 
+		"type": "text"
+	},
+	"fuzuru3.1": {
+		"en-us": "", 
+		"en-dm": "Phone: Hey Marty it's Craig.", 
+		"type": "text"
+	},
+	"fuzuru3.2": {
+		"en-us": "", 
+		"en-dm": "Marty: Oh hey Craig, what's up? Ready to hear some fuckin' funny D&D moments?", 
+		"type": "text"
+	},
+	"fuzuru3.3": {
+		"en-us": "", 
+		"en-dm": "Phone: Hell yeah!", 
+		"type": "text"
+	},
+	"fuzuru3.4": {
+		"en-us": "", 
+		"en-dm": "Marty: Okay, so, like, fuckin', these three gobulins burst through the door, and one has TWO DICKS...", 
+		"type": "text"
+	},
+	"fuzuru3.5": {
+		"en-us": "", 
+		"en-dm": "It seems like this call could go on for a while.", 
+		"type": "text"
+	},
+	"hungryBoy0": {
+		"en-us": "", 
+		"en-dm": "???: God I'm SO FUCKING SICK of this food2 shit. I was SO HUNGRY FOR REAL FOOD.", 
+		"type": "text"
+	},
+	"hungryBoy1": {
+		"en-us": "", 
+		"en-dm": "???: Meats, breads, curries, pastas, fruits, fuck, even VEGETABLES. I just want some REAL FUCKING FOOD.", 
+		"type": "text"
+	},
+	"hungryBoy2": {
+		"en-us": "", 
+		"en-dm": "???: If you don't tell anyone about this, you can have some of my food, too. It'll be our little secret.", 
+		"type": "text"
+	},
+	"hungryBoy3": {
+		"en-us": "", 
+		"en-dm": "The man does not look up from the pile of food in front of him as he continues homfing it down.", 
+		"type": "text"
+	},
+	"hungyFoodBin0": {
+		"en-us": "", 
+		"en-dm": "You scoop several handfuls of fruit and veggie seeds out of the bin. (TODO: actually give some shit here)", 
+		"type": "text"
+	},
+	"hungyFoodBin1": {
+		"en-us": "", 
+		"en-dm": "You should probably leave some of these for this guy... it looks like he'll need it.", 
+		"type": "text"
+	},
+	"fuzuruLast": {
+		"en-us": "", 
+		"en-dm": "He's still talking to his friend about D&D.", 
+		"type": "text"
+	},
 	"theFirstBottle": {
 		"en-us": "", 
 		"en-dm": "\"When our founder took his first sip of this mixture and only vomited a *little* bit, he knew it was the future of food.\"", 

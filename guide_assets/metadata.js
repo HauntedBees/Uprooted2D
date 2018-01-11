@@ -41,7 +41,11 @@ function GetBossHTML(enemyKey) {
 
 
 function GetMapObjData(e, $details) {
-    if(e.name === "EggBoy") {
+    if(e.name === "hungryboy") {
+        return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Hungry Boy", infoText: "He'll share some of his fruits and veggies with you if you keep his secret safe." };
+    } else if(e.name === "fuzurusenpai") {
+        return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Marty" };
+    } else if(e.name === "EggBoy") {
         return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Egg Dealer", infoText: "Sells 2 eggs for 250G. The eggs you get are random, and can be quite rare!" };
     } else if(e.name === "CityMonk") {
         return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Big City Sea Monk" };
