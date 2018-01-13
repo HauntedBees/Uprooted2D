@@ -355,6 +355,7 @@ function JumboToggle(inside) {
 }
 
 var enemyMetadata = {
+    buffNerd: { interactname: "buffNerd", dialogMax: 3, enemies: ["buffNerd"], min: 1, max: 2, sy: 1, sheetlen: 2, moving: true },
     tinyNerd: { interactname: "tinyNerd", dialogMax: 5, enemies: ["tinyNerd"], min: 1, max: 2, sy: 14 },
     hipNerd: { interactname: "trendyNerd", dialogMax: 5, enemies: ["trendyNerd"], min: 1, max: 2, sy: 12, sheetlen: 2, moving: true },
     hipNerdUp: { interactname: "trendyNerd", dialogMax: 5, enemies: ["trendyNerd"], min: 1, max: 2, sy: 14, sheetlen: 2, moving: true },

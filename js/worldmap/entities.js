@@ -778,7 +778,7 @@ var mapentities = {
             GetCommonEntity("fuzurusenpai", 16.5, 16.25, 8, 0, undefined, undefined, { noChange: true, sy: 1, sheetlen: 3, storageKey: "ed" }),
             GetCommonEntity("fuzuruL", 16, 16, 0, 0, undefined, Cutscene("apuru"), { visible: false, boring: true }),
             GetCommonEntity("fuzuruR", 17, 16, 0, 0, undefined, Cutscene("apuru"), { visible: false, boring: true }),
-            GetCommonEntity("hungryboy", 14, 13, 9, 0, undefined, Cutscene("hungy"), { noChange: true, sy: 1, sheetlen: 2, moving: true }),
+            GetCommonEntity("hungryboy", 14, 13, 11, 0, undefined, Cutscene("hungy"), { noChange: true, sy: 1, sheetlen: 2, moving: true }),
             GetCommonEntity("hungyBinU", 14, 11, 0, 0, undefined, Cutscene("hungyBin"), { visible: false, boring: true }),
             GetCommonEntity("hungyBinB", 14, 12, 0, 0, undefined, Cutscene("hungyBin"), { visible: false, boring: true })
         ];
@@ -800,6 +800,10 @@ var mapentities = {
     }(),
     "hq_2": function() {
         var x = [
+            SwitchMap("GoUpstairsL", 24, 1, false, false, 24.5, 2, "hq_3"),
+            SwitchMap("GoUpstairsR", 25, 1, false, false, 24.5, 2, "hq_3"),
+            SwitchMap("GoDownstairsL", 5, 1, false, false, 5.5, 2, "hq_1"),
+            SwitchMap("GoDownstairsR", 6, 1, false, false, 5.5, 2, "hq_1"),
             GetWaterfall("tech_waterfallAS", 4, 10, 2, "AX", true), GetWaterfallEnd("tech_wfendA", 4, 12, 2, "A", true),
             GetWaterfall("tech_waterfallBS", 1, 10, 2, "BX", true), GetWaterfallEnd("tech_wfendB", 1, 17, 2, "B", true),
             GetWaterfall("tech_waterfallCS", 6, 13, 3, "CX", true), GetWaterfallEnd("tech_wfendC", 8, 13, 3, "C", true),
@@ -830,7 +834,15 @@ var mapentities = {
             GetWaterfall("tech_waterfallH", 7, 8, 3, "H", true), GetWaterfall("tech_waterfallI", 8, 5, 0, "I", true),
             GetWaterfall("tech_waterfallJ", 11, 11, 2, "J", true), GetWaterfall("tech_waterfallM", 25, 6, 1, "M", true),
             GetWaterfall("tech_waterfallN1", 9, 24, 3, "N", true), GetWaterfall("tech_waterfallN2", 10, 24, 3, "N", true),
-            GetWaterfall("tech_waterfallT", 23, 17, 3, "T", true)
+            GetWaterfall("tech_waterfallT", 23, 17, 3, "T", true),
+
+            GetCommonEntity("HQ2Robo1", 2, 20, 16, 2, commonMovementDatas.downrectangle(2, 20, 2, 5), Cutscene("enemy"), enemyMetadata.roboGuard),
+            GetCommonEntity("HQ2Robo2", 4, 25, 16, 0, commonMovementDatas.downrectangle(2, 20, 2, 5, 2), Cutscene("enemy"), enemyMetadata.roboGuard),
+            GetCommonEntity("HQ2Robo3", 24, 26, 16, 3, commonMovementDatas.rectangle(24, 26, 5, 2), Cutscene("enemy"), enemyMetadata.roboGuard),
+            GetCommonEntity("HQ2Robo4", 26, 10, 16, 3, commonMovementDatas.downrectangle(26, 10, 3, 2), Cutscene("enemy"), enemyMetadata.roboGuard),
+            GetCommonEntity("HQ2Robo5", 17, 27, 16, 2, commonMovementDatas.downrectangle(17, 27, 6, 1), Cutscene("enemy"), enemyMetadata.roboGuard),
+            GetCommonEntity("HQ2BuffNerd1", 12, 28, 8, 2, undefined, Cutscene("enemy"), enemyMetadata.buffNerd),
+            GetCommonEntity("HQ2BuffNerd2", 15, 22, 8, 2, undefined, Cutscene("enemy"), enemyMetadata.buffNerd)
         ];
         
         for(var i = 11; i < 17; i++) { x.push(GetWaterfall("tech_waterfallB" + i, 1, i, 2, "B", true)); }
@@ -848,16 +860,27 @@ var mapentities = {
         for(var i = 14; i < 20; i++) { x.push(GetWaterfall("tech_waterfallX" + i, 29, i, 0, "X", true)); }
         x.push(GetWaterfall("tech_waterfallW", 28, 20, 3, "W", true));
 
+        var lookables = [ [18, 13, "coffeeBottle"], [18, 14, "coffeeBottle"], [19, 14, "coffeeBottle"], [20, 14, "coffeeBottle"], [20, 13, "coffeeBottle"],
+                          [27, 8, "gamerBottle"], [28, 8, "gamerBottle"], [29, 8, "gamerBottle"] ];
+        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
     "hq_3": function() {
         var x = [
+            GetCommonEntity("HurtWorker", 24, 27, 20, 0, undefined, Cutscene("hurtNerd"), { sy: 16, noChange: true, sheetlen: 2, storageKey: "trent" }),
+
+            SwitchMap("GoDownstairsL", 24, 1, false, false, 24.5, 2, "hq_2"),
+            SwitchMap("GoDownstairsR", 25, 1, false, false, 24.5, 2, "hq_2"),
+            SwitchMap("GoUpstairsL", 5, 1, false, false, 5.5, 2, "hq_4"),
+            SwitchMap("GoupstairsR", 6, 1, false, false, 5.5, 2, "hq_4"),
+
             GetChungus(0, 0, 15, 0, 297, 119), GetChungus(1, 0, 15, 119, 73, 192), GetChungus(2, 0, 15, 311, 185, 154), GetChungus(3, 0, 200, 375, 112, 90), 
             GetChungus(4, 0, 312, 263, 112, 160), GetChungus(5, 0, 424, 263, 57, 96), GetChungus(6, 0, 312, 103, 64, 106), GetChungus(7, 0, 88, 119, 96, 192),
             GetChungus(7, 1, 184, 151, 16, 160), GetChungus(8, 0, 200, 119, 64, 96), GetChungus(8, 1, 184, 119, 16, 32), GetChungus(9, 0, 200, 215, 112, 160),
             GetChungus(9, 1, 264, 119, 48, 96), GetChungus(10, 0, 312, 423, 89, 42), GetChungus(10, 1, 401, 439, 80, 26), GetChungus(11, 0, 424, 359, 57, 58),
             GetChungus(11, 1, 447, 417, 34, 22), GetChungus(12, 0, 376, 167, 105, 96), GetChungus(12, 1, 312, 231, 64, 32), GetChungus(13, 0, 312, 0, 169, 103),
-            GetChungus(13, 1, 376, 103, 105, 64), { id: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
+            GetChungus(13, 1, 376, 103, 105, 64),
+            { id: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
                 var startingRoom = 13; // TODO: handle coming from elevator/above
                 worldmap.horRor = new HorRor(startingRoom);
                 ToggleChungus(true, { chungi: [startingRoom] });

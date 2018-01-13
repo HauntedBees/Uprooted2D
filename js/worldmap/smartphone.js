@@ -11,6 +11,7 @@ function Smartphone() {
     var havePushedSister = false, sisterChance = 0;
     var lastX = 0, lastY = 0;
     this.Update = function() {
+        if(worldmap.mapName !== "northcity") { return; }
         if(worldmap.pos.x % 4 !== 0 && worldmap.pos.y % 3 !== 0) { return; }
         if(Math.random() > 0.16) { return; }
         if(worldmap.pos.x === lastX || worldmap.pos.y === lastY) { return; }
@@ -58,6 +59,7 @@ function Smartphone() {
         return count;
     };
     this.Draw = function() {
+        if(worldmap.mapName !== "northcity") { return; }
         gfx.clearSome(["smartphone", "smartphoneText"]);
         gfx.drawSprite("smartphone", 1, 0, 0, 128, "smartphone", true);
         if(notifications > 0) {

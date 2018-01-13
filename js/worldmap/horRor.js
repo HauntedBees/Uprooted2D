@@ -4,13 +4,15 @@ function HorRor(playerStartingRoom) {
     var timeToNextMove = 20;
     var stopped = false;
     var neighbors = [
-        [1], [7], [7, 9, 3], [2, 9, 10], [10, 11, 5, 12], // 0 - 4
+        [1], [7], [7, 9, 3], [2, 9], [11, 5, 12], // 0 - 4
         [11, 4, 12], [9, 12], [1, 2, 9, 8], [7, 9], [8, 6, 2, 3], // 5 - 9
-        [3, 4, 11], [4, 10, 5], [6, 4, 5], [6, 12] // 10 - 13
+        [3, 4, 11], [4, 5], [6, 4, 5], [6, 12] // 10 - 13
     ];
     this.playerRoom = playerStartingRoom;
-    this.Draw = function() { gfx.drawHorRor(intensity); };
+    this.Draw = function() { if(worldmap.mapName === "hq_3") { gfx.drawHorRor(intensity); } };
     this.Pursue = function() {
+        if(worldmap.mapName !== "hq_3") { return; }
+        if(worldmap.inDialogue) { return; }
         if(intensity === 0) {
             stopped = true;
             this.inDialogue = true;

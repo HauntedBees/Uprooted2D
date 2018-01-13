@@ -4554,6 +4554,116 @@ var fulltext = {
 		"en-dm": "Food2 Worker: Oh wow, a female! I'm flattered that you want to marry me, but you're not really my type.", 
 		"type": "text"
 	},
+	"coffeeBottle": {
+		"en-us": "", 
+		"en-dm": "\"Despite our best efforts, drinking Food2 still takes time. So why waste MORE time drinking coffee? 'Food2 Workaholic' combines Food2 with 250ml of caffeine!\"", 
+		"type": "text"
+	},
+	"gamerBottle": {
+		"en-us": "", 
+		"en-dm": "\"Going on epic raids, pwning n00bs, and yelling at minorities takes up a lot of a gamer's time! Why spend more heating up dinner? 'Food2 Epic' is the answer!\"", 
+		"type": "text"
+	},
+	"buffNerd0": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Gotta be buff so all the people who used to bully me can't do it again at our high school reunion!", 
+		"type": "text"
+	},
+	"buffNerd1": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: A bottle of Food2 contains all the protein I need to lift heavy things for a while!", 
+		"type": "text"
+	},
+	"buffNerd2": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Thursday nights are weight lifting nights, Friday nights are card game nights, and on Saturday nights? The cards have weights!", 
+		"type": "text"
+	},
+	"hurtNerd0": {
+		"en-us": "", 
+		"en-dm": "???: Y-you're the farmer, aren't you? The one we're supposed to stop!", 
+		"type": "text"
+	},
+	"hurtNerd1": {
+		"en-us": "", 
+		"en-dm": "???: Just my luck... the one person who can help me is the one my friends have been trying to kill for the past couple days.", 
+		"type": "text"
+	},
+	"hurtNerd2": {
+		"en-us": "", 
+		"en-dm": "???: ...fine, fine, the past couple weeks.", 
+		"type": "text"
+	},
+	"hurtNerd3": {
+		"en-us": "", 
+		"en-dm": "???: Anyway, I know I work for the company that's trying to kill you, but that... that THING... is out there.", 
+		"type": "text"
+	},
+	"hurtNerd4": {
+		"en-us": "", 
+		"en-dm": "???: I barely managed to escape earlier, but I'm pretty sure my right leg is broken. I can't get out of here on my own.", 
+		"type": "text"
+	},
+	"hurtNerd5": {
+		"en-us": "", 
+		"en-dm": "???: Can you please help me? If I stay here, it will definitely kill me, and it will take its time.", 
+		"type": "text"
+	},
+	"hurtNerdY": {
+		"en-us": "", 
+		"en-dm": "Carry the worker to safety.", 
+		"type": "choice"
+	},
+	"hurtNerdN": {
+		"en-us": "", 
+		"en-dm": "Leave him to die.", 
+		"type": "choice"
+	},
+	"hurtNerdN0": {
+		"en-us": "", 
+		"en-dm": "???: Well... that's karma I guess. I'm not sure what I expected, given all we've put you through.", 
+		"type": "text"
+	},
+	"hurtNerdN1": {
+		"en-us": "", 
+		"en-dm": "???: But... I'm serious, this thing is bad. If you aren't going to save me, at least save yourself and get the hell out of here!", 
+		"type": "text"
+	},
+	"hurtNerdX0": {
+		"en-us": "", 
+		"en-dm": "???: Did you have a change of heart? Are you going to help me?", 
+		"type": "text"
+	},
+	"hurtNerdXN0": {
+		"en-us": "", 
+		"en-dm": "???: I know rubbing my inevitable death in your face must be fun to you, but unless you want to die, too, I recommend getting upstairs fast!", 
+		"type": "text"
+	},
+	"hurtNerdY0": {
+		"en-us": "", 
+		"en-dm": "???: Oh, thank God. Not that I believe in---nevermind, now's not the time for trying to sound smart.", 
+		"type": "text"
+	},
+	"hurtNerdY1": {
+		"en-us": "", 
+		"en-dm": "???: Thank you. I'm glad you have more empathy than the people who work here. Myself included, probably.", 
+		"type": "text"
+	},
+	"hurtNerdY2": {
+		"en-us": "", 
+		"en-dm": "???: By the way, my name is Trent. What's yours?", 
+		"type": "text"
+	},
+	"hurtNerdY3": {
+		"en-us": "", 
+		"en-dm": "Trent: ...Yeah, I can't pronounce that... but I'll try to learn, I guess.", 
+		"type": "text"
+	},
+	"hurtNerdY4": {
+		"en-us": "", 
+		"en-dm": "Trent: Anyway, now is not the time for small talk. We need to get out of here fast!", 
+		"type": "text"
+	},
 	"uhoh0": {
 		"en-us": "", 
 		"en-dm": "???: EEEEEEE EEEEEE EEEEEE EEEEEEEEEEEE EEEEEEEEEEEEEEEEEEEEEEEE EEEEEEEEEEEE!!!!!", 

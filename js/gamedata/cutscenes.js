@@ -599,4 +599,17 @@ var scripts = {
 	"hungyBin0": "?[{\"q\":\"player.completedQuest('hungybin')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"hungyBin1": "_TEXT:hungyFoodBin1&_END",
 	"hungyBin2": "_COMPLETEQUEST:hungybin&_TEXT:hungyFoodBin0",
+	// Food2: Hurt Nerd
+	"hurtNerd0": "?[{\"q\":\"player.hasQuest('helpNerd')\",\"v\":6},{\"q\":\"true\",\"v\":1}]",
+	"hurtNerd1": "trent_ISMOVING:true&_TEXT:hurtNerd(0-4)",
+	"hurtNerd2": "_TEXT:hurtNerd5,hurtNerdY,hurtNerdN",
+	"hurtNerd3": "?[{\"q\":\"d===0\",\"v\":10},{\"q\":\"d===1\",\"v\":4}]",
+	"hurtNerd4": "_SETQUEST:helpNerd,waiting&_TEXT:hurtNerdN(0-1)",
+	"hurtNerd5": "trent_ISMOVING:false&_END&_QUIT",
+	"hurtNerd6": "trent_ISMOVING:true&_TEXT:hurtNerdX0,hurtNerdY,hurtNerdN",
+	"hurtNerd7": "?[{\"q\":\"d===0\",\"v\":10},{\"q\":\"d===1\",\"v\":8}]",
+	"hurtNerd8": "_TEXT:hurtNerdXN0",
+	"hurtNerd9": "trent_ISMOVING:false&_END&_QUIT",
+	"hurtNerd10": "_SETQUEST:helpNerd,helping&_TEXT:hurtNerdY(0-4)",
+	"hurtNerd11": "_CUSTOM:NERDUP&_QUIT",
 };

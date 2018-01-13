@@ -375,6 +375,12 @@ var SpecialFunctions = {
     "BIRDSONG.OGG": function() {
         // TODO
     },
+    "NERDUP": function() {
+        player.hasNerd = true;
+        worldmap.clearTarget();
+        worldmap.animData = new MapAnim("mapplayer_help", 0, 0, 20, 25, 2);
+        me.PLAYERMOVESPEED /= 2;
+    },
     "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); },
     "PHONEPRESS": function() { worldmap.smartphone.Read(); },
     "THEMONSTER": function() {
