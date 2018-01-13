@@ -160,10 +160,12 @@ var gfx = {
     drawAnimCharacter: function(sx, sy, pos, offset, sheet, big, other) {
         sheet = sheet || "mapchar";
         var w = (big ? 32 : 16), h = (big ? 40 : 20);
+        var dx = 0, dy = (big ? 8 : 4);
+        if(sheet === "mapplayer_help") { w = 20; h = 25; dx = 2; dy = 9; }
         if(other !== undefined && other.forceWide) { w = 32; }
         var layer = "characters";
         if(other !== undefined && other.layer) { layer = other.layer; }
-        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - (big ? 8 : 4), w, h);
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16 - dx, (pos.y - offset.y) * 16 - dy, w, h);
     },
     drawCursor: function(x, y, w, h, cursorName) {
         cursorName = cursorName || "cursor";

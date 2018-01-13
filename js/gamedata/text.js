@@ -4664,6 +4664,61 @@ var fulltext = {
 		"en-dm": "Trent: Anyway, now is not the time for small talk. We need to get out of here fast!", 
 		"type": "text"
 	},
+	"savedNerd0": {
+		"en-us": "", 
+		"en-dm": "Trent: We made it! We're upstairs! You saved us!", 
+		"type": "text"
+	},
+	"savedNerd1": {
+		"en-us": "", 
+		"en-dm": "Trent: I... thank you. Thank you for saving my life.", 
+		"type": "text"
+	},
+	"savedNerd2": {
+		"en-us": "", 
+		"en-dm": "Trent: The world needs more people like you, and hopefully I can start being less like my coworkers and more like you.", 
+		"type": "text"
+	},
+	"savedNerd3": {
+		"en-us": "", 
+		"en-dm": "Trent: This floor has some tough robots guarding the path, but with the right materials you should be able to stop them easily.", 
+		"type": "text"
+	},
+	"savedNerd4": {
+		"en-us": "", 
+		"en-dm": "Trent: Beckett is probably upstairs waiting for you. And, just as an FYI... he has a few allergies you might want to know about.", 
+		"type": "text"
+	},
+	"savedNerd5": {
+		"en-us": "", 
+		"en-dm": "Trent: Fish, citrus, and carrots. There's a vending machine on this floor, too, so I'd recommend stocking up on those if you can.", 
+		"type": "text"
+	},
+	"savedNerd6": {
+		"en-us": "", 
+		"en-dm": "Trent: If you could drop me off here, that'd be great... I can rest here for a bit, then make my way to the elevator to get downstairs.", 
+		"type": "text"
+	},
+	"savedNerd7": {
+		"en-us": "", 
+		"en-dm": "Trent: Thank you again.", 
+		"type": "text"
+	},
+	"beatMonster0": {
+		"en-us": "", 
+		"en-dm": "Trent: Holy shit, you beat it! Who ARE you?!", 
+		"type": "text"
+	},
+	"beatMonster1": {
+		"en-us": "", 
+		"en-dm": "Trent: Either way, there may be other hazards on this floor, so we should still get out of here quickly.", 
+		"type": "text"
+	},
+	"sleepingSavedNerd": {
+		"en-us": "", 
+		"en-dm": "He's asleep. Upon closer inspection, his leg doesn't look broken at all. Sprained ankle, maybe, but nothing serious.", 
+		"type": "text"
+	},
 	"uhoh0": {
 		"en-us": "", 
 		"en-dm": "???: EEEEEEE EEEEEE EEEEEE EEEEEEEEEEEE EEEEEEEEEEEEEEEEEEEEEEEE EEEEEEEEEEEE!!!!!", 

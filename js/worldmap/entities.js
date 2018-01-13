@@ -904,5 +904,12 @@ var mapentities = {
             x.push(GetChungusDoor(i, door.x + door.dx * 2, door.y + door.dy * 2, [door.doors[1]]));
         }
         return x;
+    }(),
+    "hq_4": function() {
+        var x = [
+            GetCommonEntity("Reached4F", 0, 0, 0, 0, undefined, Cutscene("to4F"), { boring: true, solid: false, visible: false, autoplay: true }),
+            GetCommonEntity("SavedWorker", 10, 3, 20, 0, undefined, undefined, { sy: 16, noChange: true, visible: false, solid: false, sheetlen: 2, storageKey: "trentSafe" })
+        ];
+        return x;
     }()
 };

@@ -376,10 +376,19 @@ var SpecialFunctions = {
         // TODO
     },
     "NERDUP": function() {
-        player.hasNerd = true;
+        player.hasNerd = true; // TODO: account for this shit when saving/loading
         worldmap.clearTarget();
         worldmap.animData = new MapAnim("mapplayer_help", 0, 0, 20, 25, 2);
         me.PLAYERMOVESPEED /= 2;
+    },
+    "NERDDOWN": function() {
+        player.hasNerd = false;
+        worldmap.clearTarget();
+        worldmap.animData = new MapAnim("mapplayer", 0, 0, 16, 20, 2);
+        me.PLAYERMOVESPEED *= 2;
+        worldmap.importantEntities["trentSafe"].interact = [GetSpeak("sleepingSavedNerd")];
+        worldmap.importantEntities["trentSafe"].visible = true;
+        worldmap.importantEntities["trentSafe"].solid = true;
     },
     "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); },
     "PHONEPRESS": function() { worldmap.smartphone.Read(); },

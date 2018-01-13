@@ -612,4 +612,9 @@ var scripts = {
 	"hurtNerd9": "trent_ISMOVING:false&_END&_QUIT",
 	"hurtNerd10": "_SETQUEST:helpNerd,helping&_TEXT:hurtNerdY(0-4)",
 	"hurtNerd11": "_CUSTOM:NERDUP&_QUIT",
+	// Food2: Made it Upstairs
+	"to4F0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
+	"to4F1": "_END&_QUIT",
+	"to4F2": "_TEXT:savedNerd(0-7)",
+	"to4F3": "_CUSTOM:NERDDOWN&_COMPLETEQUEST:helpNerd&_QUIT",
 };
