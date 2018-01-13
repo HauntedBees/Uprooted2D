@@ -76,9 +76,10 @@ var worldmap = {
             e.moving = true;
             var em = e.movement;
             var pointinfo = em.points[em.state];
+            var speed = ((typeof em.speed) === "function" ? em.speed(e) : em.speed);
             var newPos = {
-                x: e.pos.x + pointinfo.dx * em.speed,
-                y: e.pos.y + pointinfo.dy * em.speed
+                x: e.pos.x + pointinfo.dx * speed,
+                y: e.pos.y + pointinfo.dy * speed
             }
             if(pointinfo.dy > 0) {
                 worldmap.entities[i].dir = directions.DOWN;

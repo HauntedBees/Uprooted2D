@@ -355,6 +355,10 @@ function JumboToggle(inside) {
 }
 
 var enemyMetadata = {
+    tinyNerd: { interactname: "tinyNerd", dialogMax: 5, enemies: ["tinyNerd"], min: 1, max: 2, sy: 14 },
+    hipNerd: { interactname: "trendyNerd", dialogMax: 5, enemies: ["trendyNerd"], min: 1, max: 2, sy: 12, sheetlen: 2, moving: true },
+    hipNerdUp: { interactname: "trendyNerd", dialogMax: 5, enemies: ["trendyNerd"], min: 1, max: 2, sy: 14, sheetlen: 2, moving: true },
+    roboGuard: { interactname: "wowNewRobot", dialogMax: 10, enemies: ["robo4a", "robo4b", "robo4c"], min: 1, max: 4, sy: 15 },
     hoverdweeb: { interactname: "hoverdweeb", dialogMax: 3, enemies: ["hoverdweeb"], min: 1, max: 1, sy: 17, sheetlen: 1 },
     vendo: { interactname: "vendo", dialogMax: 2, enemies: ["vendo"], min: 1, max: 1, sy: 15, sheetlen: 2 },
     vendo2: { interactname: "vendo", dialogMax: 2, enemies: ["vendo"], min: 1, max: 1, sy: 15, sheetlen: 2, inside: true, visible: false },
@@ -378,6 +382,19 @@ var enemyMetadata = {
     mower: function(ct) { return { sy: 10, noChange: true, changeType: ct, sheetlen: 2, visible: false, inside: true } }
 };
 var commonMovementDatas = {
+    fuckinBottle: function(x, y, w, h, initState) { return { 
+            state: (initState || 0), loop: true, 
+            points: [ { x: x, y: y + h, dx: 0, dy: 1 }, { x: x + w, y: y + h, dx: 1, dy: 0 }, { x: x + w, y: y, dx: 0, dy: -1 }, { x: x, y: y, dx: -1, dy: 0 } ],
+            speed: function(e) {
+                switch(e.dir) {
+                    case 2: return 0.05;
+                    case 1:
+                    case 3: return 0.0125;
+                    case 0: return Math.random();
+                    default: return 0.025;
+                }
+            }
+        } },
     robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 },  { x: x, y: 8, dx: 0, dy: -1 } ] } },
     rectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
         points: [ { x: x + w, y: y, dx: 1, dy: 0 }, { x: x + w, y: y + h, dx: 0, dy: 1 }, { x: x, y: y + h, dx: -1, dy: 0 }, { x: x, y: y, dx: 0, dy: -1 } ] } },

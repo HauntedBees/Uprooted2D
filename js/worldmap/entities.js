@@ -587,8 +587,8 @@ var mapentities = {
         GetCommonEntity("Abuela", 34, 20, 17, 0, undefined, Cutscene("abuela"), { sy: 4, noChange: true })
     ],
     "northcity": [
-        GetInvisibleEntity("CS_newphone", Cutscene("newPhone"), { autoplay: false }),
-        //{ name: "Falcon4", pos: { x: 8, y: 44 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
+        GetInvisibleEntity("CS_newphone", Cutscene("newPhone"), { autoplay: true }),
+        { name: "Falcon4", pos: { x: 8, y: 44 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
 
         GetCommonEntity("Car1", 8, 28, 0, 2, commonMovementDatas.fastdownrect(8, 28, 52, 16), Cutscene("enemy"), enemyMetadata.car1),
@@ -737,7 +737,25 @@ var mapentities = {
     ],
     "hq_1": function() {
         var x = [ 
-            { name: "Falcon5", pos: { x: 15, y: 27 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") }
+            { name: "Falcon5", pos: { x: 15, y: 27 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
+            SwitchMap("GoUpstairs", 5.5, 1, true, false, 5, 2, "hq_2"),
+            SwitchMap("Leave", 15, 30, false, false, 39, 10, "northcity"),
+
+            GetCommonEntity("HQ1Robo1", 27, 9, 16, 3, undefined, Cutscene("enemy"), enemyMetadata.roboGuard),
+            GetCommonEntity("HQ1Robo2", 16, 8, 16, 3, commonMovementDatas.rectangle(16, 8, 3, 2), Cutscene("enemy"), enemyMetadata.roboGuard),
+            GetCommonEntity("HQ1Robo3", 5, 11, 16, 2, commonMovementDatas.downrectangle(5, 11, 4, 2), Cutscene("enemy"), enemyMetadata.roboGuard),
+
+            GetCommonEntity("HipNerd1", 13, 15, 20, 2, undefined, Cutscene("enemy"), enemyMetadata.hipNerd),
+            GetCommonEntity("HipNerd2", 13, 18, 20, 0, undefined, Cutscene("enemy"), enemyMetadata.hipNerdUp),
+            GetCommonEntity("HipNerd3", 16, 18, 20, 0, undefined, Cutscene("enemy"), enemyMetadata.hipNerdUp),
+            GetCommonEntity("RegNerd1", 3, 18, 4, 3, undefined, Cutscene("enemy"), enemyMetadata.tinyNerd),
+            GetCommonEntity("RegNerd2", 1, 16, 4, 0, undefined, Cutscene("enemy"), enemyMetadata.tinyNerd),
+            GetCommonEntity("RegNerd3", 11, 8, 4, 2, undefined, Cutscene("enemy"), enemyMetadata.tinyNerd),
+
+            GetCommonEntity("droppybottle1", 29, -1, 8, 2, commonMovementDatas.fuckinBottle(29, -1, 3, 10), undefined, { solid: false, forcedY: 15, noChange: true, sy: 4, sheetlen: 1 } ),
+            GetCommonEntity("droppybottle2", 29, -11, 8, 2, commonMovementDatas.fuckinBottle(29, -11, 3, 21), undefined, { solid: false, forcedY: 15, noChange: true, sy: 4, sheetlen: 1 } ),
+            GetCommonEntity("droppybottle3", 29, -6, 8, 2, commonMovementDatas.fuckinBottle(29, -6, 3, 17), undefined, { solid: false, forcedY: 15, noChange: true, sy: 4, sheetlen: 1 } ),
+
             GetCommonEntity("Chair1", 11, 25, 18, 0, undefined, undefined, { boring: true, sy: 11 }),
             GetCommonEntity("Chair2", 11, 27, 18, 0, undefined, undefined, { boring: true, sy: 11 }),
             GetCommonEntity("Chair3", 19, 25, 19, 0, undefined, undefined, { boring: true, sy: 11 }),
@@ -756,7 +774,13 @@ var mapentities = {
             GetCommonEntity("hqCompCover1", 13, 15, 22, 0, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
             GetCommonEntity("hqCompCover2", 14, 15, 22, 1, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
             GetCommonEntity("hqCompCover3", 17, 16, 22, 0, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
-            GetCommonEntity("hqCompCover4", 18, 16, 22, 1, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true })
+            GetCommonEntity("hqCompCover4", 18, 16, 22, 1, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
+            GetCommonEntity("fuzurusenpai", 16.5, 16.25, 8, 0, undefined, undefined, { noChange: true, sy: 1, sheetlen: 3, storageKey: "ed" }),
+            GetCommonEntity("fuzuruL", 16, 16, 0, 0, undefined, Cutscene("apuru"), { visible: false, boring: true }),
+            GetCommonEntity("fuzuruR", 17, 16, 0, 0, undefined, Cutscene("apuru"), { visible: false, boring: true }),
+            GetCommonEntity("hungryboy", 14, 13, 9, 0, undefined, Cutscene("hungy"), { noChange: true, sy: 1, sheetlen: 2, moving: true }),
+            GetCommonEntity("hungyBinU", 14, 11, 0, 0, undefined, Cutscene("hungyBin"), { visible: false, boring: true }),
+            GetCommonEntity("hungyBinB", 14, 12, 0, 0, undefined, Cutscene("hungyBin"), { visible: false, boring: true })
         ];
         var doors = [ [20, 10, 0, false], [7, 10, 0, true],  [20, 3, 1, false], [25, 7, 1, true], [18, 6, 1, false], [17, 14, 1, true], [15, 8, 1, false],
                  [4, 17, 1, true], [10, 17, 1, false], [4, 8, 2, false], [4, 12, 2, true], [10, 12, 2, false], [7, 14, 2, true] ];

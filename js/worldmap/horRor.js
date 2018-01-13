@@ -9,9 +9,7 @@ function HorRor(playerStartingRoom) {
         [3, 4, 11], [4, 10, 5], [6, 4, 5], [6, 12] // 10 - 13
     ];
     this.playerRoom = playerStartingRoom;
-    this.Draw = function() {
-        gfx.drawHorRor(intensity);
-    };
+    this.Draw = function() { gfx.drawHorRor(intensity); };
     this.Pursue = function() {
         if(intensity === 0) {
             stopped = true;

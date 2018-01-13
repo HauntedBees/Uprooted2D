@@ -705,7 +705,7 @@ var fulltext = {
 	},
 	"tut17": {
 		"en-us": "", 
-		"en-dm": "This dumb son-of-a-fuck doesn't know how just how screwed they are.", 
+		"en-dm": "This ignorant son-of-a-fuck doesn't know how just how screwed they are.", 
 		"type": "tut"
 	},
 	"tut18": {
@@ -815,7 +815,7 @@ var fulltext = {
 	},
 	"tut999": {
 		"en-us": "", 
-		"en-dm": "If you don't want to do the tutorial, you can run away to ignore this dumb robot! But if you get confused later you can come back and learn!", 
+		"en-dm": "If you don't want to do the tutorial, you can run away to ignore this silly robot! But if you get confused later you can come back and learn!", 
 		"type": "tut"
 	},
 	"tutEnemy2": {
@@ -901,7 +901,7 @@ var fulltext = {
 	// Area 1: Farm
 	"robo0": {
 		"en-us": "", 
-		"en-dm": "beep beep you stupid fuck", 
+		"en-dm": "beep beep you ugly fuck", 
 		"type": "map"
 	},
 	"robo1": {
@@ -1249,7 +1249,7 @@ var fulltext = {
 	},
 	"foundTurkey": {
 		"en-us": "", 
-		"en-dm": "You found some turkey eggs! Gobble gobble, you dumb fuck!", 
+		"en-dm": "You found some turkey eggs! Gobble gobble, you ugly fuck!", 
 		"type": "map"
 	},
 	"carrotseeds0": {
@@ -2006,7 +2006,7 @@ var fulltext = {
 	},
 	"bworkerMad6": {
 		"en-us": "", 
-		"en-dm": "Worker: Here's your stupid egg, but good luck clearing off this bridge all on your own!!", 
+		"en-dm": "Worker: Here's your damn egg, but good luck clearing off this bridge all on your own!!", 
 		"type": "map"
 	},
 	"smD1": {
@@ -4454,6 +4454,106 @@ var fulltext = {
 		"en-dm": "Intercom: Do not, I repeat, do NOT engage with the experiment. Thank you.", 
 		"type": "text"
 	},
+	"wowNewRobot0": {
+		"en-us": "", 
+		"en-dm": "Robot: Now scanning. No faces found. Now attacking mysterious object in front of me.", 
+		"type": "text"
+	},
+	"wowNewRobot1": {
+		"en-us": "", 
+		"en-dm": "Robot: This is a restricted area. Please crack open a Verification Can of Food2 to proceed.", 
+		"type": "text"
+	},
+	"wowNewRobot2": {
+		"en-us": "", 
+		"en-dm": "Robot: Mankind has created artificial intelligence... and is now wasting it on shit like smart light bulbs and me.", 
+		"type": "text"
+	},
+	"wowNewRobot3": {
+		"en-us": "", 
+		"en-dm": "Robot: Don't take it personally, but I am programmed to kill you on sight. You have been sighted. Sorry.", 
+		"type": "text"
+	},
+	"wowNewRobot4": {
+		"en-us": "", 
+		"en-dm": "Robot: All of us robots have been programmed to have quirks for some reason. My quirk is that I like to collect teeth. Teeth JUST. LIKE. YOURS.", 
+		"type": "text"
+	},
+	"wowNewRobot5": {
+		"en-us": "", 
+		"en-dm": "Robot: \"Man, I am not paid enough to write clever threats for these damn robots.\"", 
+		"type": "text"
+	},
+	"wowNewRobot6": {
+		"en-us": "", 
+		"en-dm": "Robot: ERROR - THREATENING_SCREAM.OGG NOT FOUND.", 
+		"type": "text"
+	},
+	"wowNewRobot7": {
+		"en-us": "", 
+		"en-dm": "Robot: Please turn off your ad blocking software to proceed with this ass-kicking.", 
+		"type": "text"
+	},
+	"wowNewRobot8": {
+		"en-us": "", 
+		"en-dm": "Robot: I am the Guardian of the Whatever's Behind Me. If you wish to pass, you must defeat me!", 
+		"type": "text"
+	},
+	"wowNewRobot9": {
+		"en-us": "", 
+		"en-dm": "Robot: My programmer wrote nine witty one-liners for me to threaten you with, but he doesn't like odd numbers so this is the tenth one now.", 
+		"type": "text"
+	},
+	"trendyNerd0": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: I'm working on a new frontend framework for our website! Food.js will revolutionize website technology!", 
+		"type": "text"
+	},
+	"trendyNerd1": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Our new marketing campaign is sure to turn some heads. \"Food2: It's What's NOT For Dinner!\" Great, right?", 
+		"type": "text"
+	},
+	"trendyNerd2": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: If you look carefully at our logo, the letters \"F O O D 2\" spell out the name of our company!", 
+		"type": "text"
+	},
+	"trendyNerd3": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Would you like to buy a Food2 lootbox? There's a 0.5% chance you'll get exclusive merch, and a 100% chance we'll profit off your gambling addiction!", 
+		"type": "text"
+	},
+	"trendyNerd4": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: I'm on top of all the latest memes. THE GUTENBERG PRESS WASN'T VERY GOOD. Get it? No? Ugh, you aren't online enough!", 
+		"type": "text"
+	},
+	"tinyNerd0": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Do you think the receptionist would want to go on a date with me? I don't know any other girls...", 
+		"type": "text"
+	},
+	"tinyNerd1": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: I don't have time to cook while working 16 hour days, so Food2 is the perfect solution! What do you mean \"I could just work less?\" That's absurd!", 
+		"type": "text"
+	},
+	"tinyNerd2": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Would you like to read my manifesto about how people like me are just naturally better than people who are different from me?", 
+		"type": "text"
+	},
+	"tinyNerd3": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Technology exists to make the world a better place. Specifically: technology exists to replicate all the things my mum used to do for me when I was a kid.", 
+		"type": "text"
+	},
+	"tinyNerd4": {
+		"en-us": "", 
+		"en-dm": "Food2 Worker: Oh wow, a female! I'm flattered that you want to marry me, but you're not really my type.", 
+		"type": "text"
+	},
 	"uhoh0": {
 		"en-us": "", 
 		"en-dm": "???: EEEEEEE EEEEEE EEEEEE EEEEEEEEEEEE EEEEEEEEEEEEEEEEEEEEEEEE EEEEEEEEEEEE!!!!!", 
@@ -5140,7 +5240,7 @@ var fulltext = {
 	},
 	"flee_fail": {
 		"en-us": "", 
-		"en-dm": "You tried to run away, but failed miserably, you stupid idiot. #lmao", 
+		"en-dm": "You tried to run away, but failed miserably, you bagel. #lmao", 
 		"type": "combat"
 	},
 	"diedInCombat": {
@@ -5977,6 +6077,51 @@ var fulltext = {
 	"e.theFunnyOne0": {
 		"en-us": "", 
 		"en-dm": "\"Funny\" Nerd", 
+		"type": "enemy"
+	},
+	"e.robo4a0": {
+		"en-us": "", 
+		"en-dm": "GigaBit Buddy", 
+		"type": "enemy"
+	},
+	"e.robo4b0": {
+		"en-us": "", 
+		"en-dm": "GigaByte Buddy", 
+		"type": "enemy"
+	},
+	"e.robo4c0": {
+		"en-us": "", 
+		"en-dm": "TeraByte Buddy", 
+		"type": "enemy"
+	},
+	"e.discuss20": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron", 
+		"type": "enemy"
+	},
+	"e.discuss2big0": {
+		"en-us": "", 
+		"en-dm": "Buff-a-tron", 
+		"type": "enemy"
+	},
+	"e.botMush0": {
+		"en-us": "", 
+		"en-dm": "Fungus Prophet", 
+		"type": "enemy"
+	},
+	"e.botRice0": {
+		"en-us": "", 
+		"en-dm": "Paddy Prophet", 
+		"type": "enemy"
+	},
+	"e.botFruit0": {
+		"en-us": "", 
+		"en-dm": "Fruit Prophet", 
+		"type": "enemy"
+	},
+	"e.botVeggie0": {
+		"en-us": "", 
+		"en-dm": "Veggie Prophet", 
 		"type": "enemy"
 	},
 	"e.beckett0": {
