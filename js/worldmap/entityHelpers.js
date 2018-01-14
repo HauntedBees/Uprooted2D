@@ -229,7 +229,7 @@ function ExitWaterfall() {
     worldmap.inWaterfall = false;
 }
 function GetChungusDoor(num, x, y, chungi, visState) {
-    var chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi };
+    var chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi, boring: true };
     if(visState !== undefined) {
         chungy.noChange = true;
         chungy.anim = new MapAnim("mapchar", 15, 9, 16, 20, visState, 4);
@@ -239,7 +239,7 @@ function GetChungusDoor(num, x, y, chungi, visState) {
     }
     return chungy;
 }
-function GetChungus(id, num, x, y, w, h) { return { name: "chungus" + id + "_" + num, chungus: true, chungusId: id, pos: { x: x, y: y }, width: w, height: h, visible: true }; }
+function GetChungus(id, num, x, y, w, h) { return { name: "chungus" + id + "_" + num, chungus: true, chungusId: id, pos: { x: x, y: y }, width: w, height: h, visible: true, boring: true }; }
 function ToggleChungus(arg, target) {
     var acceptableChungi = target.chungi;
     for(var i = worldmap.entities.length - 1; i >= 0; i--) {

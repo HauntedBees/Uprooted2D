@@ -4441,7 +4441,7 @@ var fulltext = {
 	},
 	"intercom4": {
 		"en-us": "", 
-		"en-dm": "Intercom: If you are far from an exit, please navigate with caution. If you enter a room and feel anything is off, please leave that room immediately and try another path.", 
+		"en-dm": "Intercom: If you are far from an exit, please navigate with caution. If you enter a room and feel anything is off, please leave that room immediately.", 
 		"type": "text"
 	},
 	"intercom5": {
@@ -4579,6 +4579,41 @@ var fulltext = {
 		"en-dm": "Food2 Worker: Thursday nights are weight lifting nights, Friday nights are card game nights, and on Saturday nights? The cards have weights!", 
 		"type": "text"
 	},
+	"crispyBottle": {
+		"en-us": "", 
+		"en-dm": "\"Miss chewing? Worry not! 'Food2 Crispy' has delicious & nutritious kelp bits to chew on while slurpin' down the good stuff!\"", 
+		"type": "text"
+	},
+	"salsaBottle": {
+		"en-us": "", 
+		"en-dm": "\"Hola my amigos! Want a little spice in your life? Each bottle of 'Food2 Salsa Picante' includes real tomato juice from tomatos that were once near a pepper!\"", 
+		"type": "text"
+	},
+	"cookiesBottle": {
+		"en-us": "", 
+		"en-dm": "\"A diet of Food2 doesn't mean a diet with no dessert! 'Food2 Rocky Road' mixes artificial chocolate flavor with real* sugar!\"", 
+		"type": "text"
+	},
+	"soybeanBaby": {
+		"en-us": "", 
+		"en-dm": "That soybean is looking at me. I don't like that.", 
+		"type": "text"
+	},
+	"brokenIncubator": {
+		"en-us": "", 
+		"en-dm": "This must be where the whatever-it-is that got loose was contained. The glass looks a few inches thick. Bad sign.", 
+		"type": "text"
+	},
+	"kelpFishBaby": {
+		"en-us": "", 
+		"en-dm": "The label says that this is actually an artificial fish made from algae, wheat gluten, and Javan rhinoceros meat.", 
+		"type": "text"
+	},
+	"veggieGolemBaby": {
+		"en-us": "", 
+		"en-dm": "It looks like this is how Vegetable Golems are made. It's kind of cute.", 
+		"type": "text"
+	},
 	"hurtNerd0": {
 		"en-us": "", 
 		"en-dm": "???: Y-you're the farmer, aren't you? The one we're supposed to stop!", 
@@ -4706,7 +4741,7 @@ var fulltext = {
 	},
 	"beatMonster0": {
 		"en-us": "", 
-		"en-dm": "Trent: Holy shit, you beat it! Who ARE you?!", 
+		"en-dm": "Trent: ...Holy shit, you beat it! Who ARE you?!", 
 		"type": "text"
 	},
 	"beatMonster1": {
@@ -4722,6 +4757,41 @@ var fulltext = {
 	"uhoh0": {
 		"en-us": "", 
 		"en-dm": "???: EEEEEEE EEEEEE EEEEEE EEEEEEEEEEEE EEEEEEEEEEEEEEEEEEEEEEEE EEEEEEEEEEEE!!!!!", 
+		"type": "text"
+	},
+	"lostToMonstA0": {
+		"en-us": "", 
+		"en-dm": "... ... ... ...", 
+		"type": "text"
+	},
+	"lostToMonstA1": {
+		"en-us": "", 
+		"en-dm": "\"How will I die?\" is not a question I asked myself often, but it did cross my mind from time to time.", 
+		"type": "text"
+	},
+	"lostToMonstA2": {
+		"en-us": "", 
+		"en-dm": "But I gotta say, \"a giant soybean monster impaling me\" was never an answer I would have expected.", 
+		"type": "text"
+	},
+	"lostToMonstA3": {
+		"en-us": "", 
+		"en-dm": "Like what the fuck.", 
+		"type": "text"
+	},
+	"lostToMonstB0": {
+		"en-us": "", 
+		"en-dm": "Trent: Hey! Hey! Get up! You're okay, right? You can keep fighting, right? You can save us, right?", 
+		"type": "text"
+	},
+	"lostToMonstB1": {
+		"en-us": "", 
+		"en-dm": "Trent: Oh man, oh geez, oh geez, oh man... this is not good... I gotta----.... uh oh.", 
+		"type": "text"
+	},
+	"lostToMonstB2": {
+		"en-us": "", 
+		"en-dm": "... ... ... ...", 
 		"type": "text"
 	},
 	"confront0": {

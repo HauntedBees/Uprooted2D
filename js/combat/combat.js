@@ -255,7 +255,7 @@ var combat = {
                 game.transition(combat.inbetween, worldmap, {
                     init: { x: 8.5, y: 9 },
                     map: "gameover",
-                    noEntityUpdate: true,
+                    noEntityUpdate: false,
                     postCombat: postCombat
                 });
                 return;

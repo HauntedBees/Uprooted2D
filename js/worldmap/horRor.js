@@ -2,14 +2,25 @@ function HorRor(playerStartingRoom) {
     var intensity = 64;
     var currentRoom = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11][Math.floor(Math.random() * 5)];
     var timeToNextMove = 20;
+    var helpCounter = 0;
+    var showHelp = false;
     var stopped = false;
     var neighbors = [
-        [1], [7], [7, 9, 3], [2, 9], [11, 5, 12], // 0 - 4
-        [11, 4, 12], [9, 12], [1, 2, 9, 8], [7, 9], [8, 6, 2, 3], // 5 - 9
+        [1], [7], [7, 9, 3], [9], [11, 5, 12], // 0 - 4
+        [11, 4, 12], [9, 12], [1, 9, 8], [7, 9], [8, 6, 3], // 5 - 9
         [3, 4, 11], [4, 5], [6, 4, 5], [6, 12] // 10 - 13
     ];
+    var roomSizeMultiplier = [0, 0.5, 0, 1, 0.9, 1.25, 0.85, 0.5, 1, 0.5, 0, 1.5, 0.9, 0];
     this.playerRoom = playerStartingRoom;
-    this.Draw = function() { if(worldmap.mapName === "hq_3") { gfx.drawHorRor(intensity); } };
+    this.Draw = function() {
+        if(worldmap.mapName !== "hq_3") { return; }
+        gfx.drawHorRor(intensity);
+        if(this.playerRoom === 10 || player.completedQuest("helpNerd") || player.hasQuest("helpNerd")) { return; }
+        if(showHelp) { gfx.drawHelp(); }
+        if(--helpCounter > 0) { return; }
+        showHelp = !showHelp;
+        helpCounter = 160;
+    };
     this.Pursue = function() {
         if(worldmap.mapName !== "hq_3") { return; }
         if(worldmap.inDialogue) { return; }
@@ -19,20 +30,21 @@ function HorRor(playerStartingRoom) {
             this.forceEndDialog = false;
             worldmap.toggleMovement(false);
             this.dialogState = 0;
-            worldmap.horRor = null;
+            intensity = 64;
+            game.target = worldmap.importantEntities["theMonster"];
             iHandler.Start("ohFuck");
             return;
         }
         if(stopped) { return; }
         var doAdvance = true;
         if(currentRoom === this.playerRoom) {
-            intensity = Math.max(0, intensity - 0.33);
+            intensity = Math.max(0, intensity - (0.15 * roomSizeMultiplier[currentRoom] * (player.hasQuestState("helpNerd", "helping") ? 0.8 : 1)));
             doAdvance = false;
         } else if(neighbors[currentRoom].indexOf(this.playerRoom) >= 0) {
-            intensity = Math.max(0, intensity + 0.15);
+            intensity = Math.max(0, intensity + 0.1);
             timeToNextMove -= 1;
         } else {
-            intensity = Math.min(64, intensity + 0.3);
+            intensity = Math.min(64, intensity + 0.2);
         }
         if(doAdvance && --timeToNextMove <= 0) {
             timeToNextMove = 20 + Math.floor(Math.random() * 180);

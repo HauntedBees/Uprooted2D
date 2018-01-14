@@ -393,11 +393,12 @@ var SpecialFunctions = {
     "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); },
     "PHONEPRESS": function() { worldmap.smartphone.Read(); },
     "THEMONSTER": function() {
-        var monster = GetCommonEntity("Monster", worldmap.pos.x - 0.5, worldmap.pos.y - 2.25, 6, 0, undefined, undefined, { big: true, sy: 2 });
+        var monster = GetCommonEntity("Monster", worldmap.pos.x - 0.5, worldmap.pos.y - 2.25, 6, 0, undefined, undefined, { big: true, sy: 2, isTheMonster: true });
         monster.anim.other.layer = "foreground";
         worldmap.entities.push(monster);
         worldmap.importantEntities["monster"] = worldmap;
     },
+    "BEATMONSTER": function() { ClearEntitiesUnderCondition(function(e) { return e.isTheMonster === true; }, true); },
     "BYEFALCON": function() { player.hasFalcon = false; },
     "GETFALCONTEXT": function() {
         var keyStart = "falconMsg0.";

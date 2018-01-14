@@ -572,7 +572,6 @@ var mapentities = {
 
         GetCommonEntity("IntroSkumpyCutscene", 43, 40, 0, 0, undefined, Cutscene("southcity"), { visible: false, solid: false, isRow: true, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene", boring: true }),
         GetInvisibleEntity("beatBruno", Cutscene("beatbruno"), { storageKey: "beatBruno" }),
-        GetInvisibleEntity("brunoKill", Cutscene("badEnd"), { storageKey: "brunoKill" }),
         GetCommonEntity("Skumpy", 41, 42, 12, 0, undefined, undefined, { sy: 8, moving: true, sheetlen: 2, solid: false, storageKey: "skumpy", inside: true, visible: false, boring: true }),
         GetCommonEntity("Bruno", 44, 33, 13, 2, undefined, undefined, { sy: 10, moving: true, solid: false, storageKey: "bruno", inside: true, boring: true }),
         GetCommonEntity("BarL", 39, 39.875, 15, 0, undefined, undefined, { sy: 5, inside: true, visible: false, boring: true }),
@@ -869,6 +868,13 @@ var mapentities = {
         var x = [
             GetCommonEntity("HurtWorker", 24, 27, 20, 0, undefined, Cutscene("hurtNerd"), { sy: 16, noChange: true, sheetlen: 2, storageKey: "trent" }),
 
+            GetCommonEntity("PodBaby1", 1.5, 20.75, 20, 1, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),
+            GetCommonEntity("PodBaby2", 1.5, 24.75, 20, 2, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),
+            GetCommonEntity("PodBaby3", 1.5, 27.25, 20, 3, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),
+
+            GetCommonEntity("TheMonster", -1, -1, 0, 0, undefined, undefined, { nonStandardGameOver: "lostToMonster", postBattle: "beatTheMonster", storageKey: "theMonster", boring: true }),
+            GetInvisibleEntity("beatTheMonster", Cutscene("monstLost"), { storageKey: "beatTheMonster" }),
+
             SwitchMap("GoDownstairsL", 24, 1, false, false, 24.5, 2, "hq_2"),
             SwitchMap("GoDownstairsR", 25, 1, false, false, 24.5, 2, "hq_2"),
             SwitchMap("GoUpstairsL", 5, 1, false, false, 5.5, 2, "hq_4"),
@@ -881,9 +887,15 @@ var mapentities = {
             GetChungus(11, 1, 447, 417, 34, 22), GetChungus(12, 0, 376, 167, 105, 96), GetChungus(12, 1, 312, 231, 64, 32), GetChungus(13, 0, 312, 0, 169, 103),
             GetChungus(13, 1, 376, 103, 105, 64),
             { id: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
-                var startingRoom = 13; // TODO: handle coming from elevator/above
-                worldmap.horRor = new HorRor(startingRoom);
-                ToggleChungus(true, { chungi: [startingRoom] });
+                if(worldmap.horRor === null) {
+                    var startingRoom = 13;
+                    worldmap.horRor = new HorRor(startingRoom);
+                    ToggleChungus(true, { chungi: [startingRoom] });
+                    Cutscene("food2Third")[0]();
+                } else {
+                    var startingRoom = worldmap.horRor.playerRoom;
+                    ToggleChungus(true, { chungi: [startingRoom] });
+                }
                 return true;
             } ], pos: { x: -1, y: -1 } }
         ];
@@ -903,13 +915,27 @@ var mapentities = {
             x.push(GetChungusDoor(i, door.x + door.dx, door.y + door.dy, door.doors, (door.dx > 0 ? 1 : 0)));
             x.push(GetChungusDoor(i, door.x + door.dx * 2, door.y + door.dy * 2, [door.doors[1]]));
         }
+        var lookables = [ [2, 20, "soybeanBaby"], [2, 21, "soybeanBaby"], [2, 22, "brokenIncubator"], [2, 23, "brokenIncubator"], [2, 24, "kelpFishBaby"],
+                          [2, 25, "kelpFishBaby"], [2, 27, "veggieGolemBaby"], [2, 28, "veggieGolemBaby"], [22, 19, "crispyBottle"], [22, 20, "crispyBottle"],
+                          [23, 20, "crispyBottle"], [24, 20, "crispyBottle"], [24, 19, "crispyBottle"], [9, 12, "salsaBottle"], [9, 13, "salsaBottle"], [10, 13, "salsaBottle"],
+                          [11, 13, "salsaBottle"], [2, 10, "cookiesBottle"], [2, 11, "cookiesBottle"], [3, 11, "cookiesBottle"], [4, 11, "cookiesBottle"] ];
+        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
     "hq_4": function() {
         var x = [
+            SwitchMap("GoUpstairsL", 24, 1, false, false, 24.5, 2, "hq_5"),
+            SwitchMap("GoUpstairsR", 25, 1, false, false, 24.5, 2, "hq_5"),
+            SwitchMap("GoDownstairsL", 5, 1, false, false, 5.5, 2, "hq_3"),
+            SwitchMap("GoDownstairsR", 6, 1, false, false, 5.5, 2, "hq_3"),
+
             GetCommonEntity("Reached4F", 0, 0, 0, 0, undefined, Cutscene("to4F"), { boring: true, solid: false, visible: false, autoplay: true }),
             GetCommonEntity("SavedWorker", 10, 3, 20, 0, undefined, undefined, { sy: 16, noChange: true, visible: false, solid: false, sheetlen: 2, storageKey: "trentSafe" })
         ];
         return x;
-    }()
+    }(),
+    "gameover": [
+        GetInvisibleEntity("brunoKill", Cutscene("badEnd"), { storageKey: "brunoKill" }),
+        GetInvisibleEntity("lostToMonster", Cutscene("monstWon"), { storageKey: "lostToMonster" })
+    ]
 };

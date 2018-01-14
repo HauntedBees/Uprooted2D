@@ -589,7 +589,7 @@ var scripts = {
 	"apuru17": "ed_ISMOVING:false&_TEXT:fuzuru3.3",
 	"apuru18": "ed_ISMOVING:true&_TEXT:fuzuru3.4",
 	"apuru19": "_TEXT:fuzuru3.5&_COMPLETEQUEST:fuzuru&_END",
-	"apuru20": "_TEXT:fuzuruLas",
+	"apuru20": "_TEXT:fuzuruLast",
 	// Food2: Hungry Boy
 	"hungy0": "?[{\"q\":\"player.completedQuest('hungyboy')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
 	"hungy1": "_TEXT:hungryBoy(0-1)",
@@ -617,4 +617,16 @@ var scripts = {
 	"to4F1": "_END&_QUIT",
 	"to4F2": "_TEXT:savedNerd(0-7)",
 	"to4F3": "_CUSTOM:NERDDOWN&_COMPLETEQUEST:helpNerd&_QUIT",
+	// Food2: BAD END
+	"monstWon0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
+	"monstWon1": "_TEXT:lostToMonstA(0-3)&_SETSTATE:3",
+	"monstWon2": "_TEXT:lostToMonstB(0-2)",
+	"monstWon3": "_CLEARTEXT&pl_MOVE:y21",
+	"monstWon4": "_CUSTOM:WAIT",
+	"monstWon5": "_CUSTOM:GOTOTITLE",
+	// Food2: Beat the Monster
+	"monstLost0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":1},{\"q\":\"true\",\"v\":3}]",
+	"monstLost1": "_CUSTOM:BEATMONSTER&_TEXT:beatMonster0",
+	"monstLost2": "_TEXT:beatMonster1&_END",
+	"monstLost3": "_CUSTOM:BEATMONSTER&_QUIT",
 };

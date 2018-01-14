@@ -73,7 +73,10 @@ var gfx = {
         ctx.fillRect((x - offset.x * 16) * gfx.scale, (y - offset.y * 16) * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
     drawJumbo: function(file, x, y, w, h, ox, oy) {
-        gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
+        gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h); // TODO: this might be wrong??
+    },
+    drawHelp: function() {
+        gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 200, 130, 34, 24);
     },
     drawTransitionImage: function(spritename, x, y, mult) {
         var data = spriteData.names[spritename];
