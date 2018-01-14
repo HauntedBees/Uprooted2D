@@ -215,7 +215,7 @@ var stores = {
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
-
+    // Area 5: North City
     "cityFixtures": {
         img: "shops/dwarf2",
         wares: [
@@ -257,7 +257,7 @@ var stores = {
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
-
+    // Final Area: HQ
     "vendo_veg": {
         img: "shops/vendo",
         wares: [
@@ -320,6 +320,11 @@ var stores = {
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+    "lastInn": {
+        img: "shops/dwarf2", innId: "lastInn",
+        wares: [ { product: "sleep", price: 5, type: "inn" } ],
+        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
 
     "template": {

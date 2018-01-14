@@ -478,14 +478,24 @@ var scripts = {
 	"food2Start0": "?[{\"q\":\"player.completedQuest('talkedToReceptionist')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"food2Start1": "_TEXT:enterHQ4&_END",
 	"food2Start2": "_COMPLETEQUEST:talkedToReceptionist&_TEXT:enterHQ(0-3)",
+	// Food2: First Floor Bed
+	"hqBed0": "_CUSTOM:SETNERDBED&_TEXT:nerdBed",
 	// Food2: Third Floor
 	"food2Third0": "_TEXT:intercom(0-6)",
 	// Food2: Seventh Boss (Beckett)
-	"food2Fifth0": "_TEXT:confront(0-12)",
-	"food2Fifth1": "_FIGHT:beckett",
-	"food2Lost0": "_TEXT:beckettBack0",
-	"food2Lost1": "_FIGHT:beckett",
-	"food2Beat0": "_TEXT:postBeckett(0-2)",
+	"food2Fifth0": "_TEXT:confront0",
+	"food2Fifth1": "beckettBack_SHIFTY:0&beckettBack_SETDIR:1&beckettBack_ISMOVING:true&_TEXT:confront1",
+	"food2Fifth2": "beckettBack_SETDIR:0&beckettBack_ISMOVING:false&_TEXT:confront2",
+	"food2Fifth3": "beckettBack_SETDIR:1&beckettBack_ISMOVING:true&_TEXT:confront3",
+	"food2Fifth4": "beckettBack_SETDIR:2&_TEXT:confront4",
+	"food2Fifth5": "beckettBack_SETDIR:1&_TEXT:confront(5-11)",
+	"food2Fifth6": "beckettBack_SETDIR:2&_TEXT:confront12",
+	"food2Fifth7": "beckettBack_SETDIR:0&beckettBack_ISMOVING:false&_FIGHT:beckett",
+	"food2Lost0": "beckettBack_SETDIR:1&beckettBack_ISMOVING:true&_TEXT:beckettBack0",
+	"food2Lost1": "beckettBack_SETDIR:0&beckettBack_ISMOVING:false&_FIGHT:beckett",
+	"food2Beat0": "beckettBack_ISMOVING:true&beckettBack_SETDIR:2&_TEXT:postBeckett(0-2)",
+	"food2Beat1": "_CLEARTEXT&beckettBack_SETDIR:0&beckettBack_SHIFTY:2&_HISPEED&beckettBack_MOVE:y10",
+	"food2Beat2": "_LOSPEED&_CLEARTARGET&beckettBack_SETTARGET&_CLEARTARGET&_QUIT",
 	// Food2: Final Boss (Nathan)
 	"final0": "_TEXT:final(0-25)",
 	// Misc.: The Fucking Bird
@@ -641,4 +651,9 @@ var scripts = {
 	// Food2: Discussly2
 	"tutReturn0": "_TEXT:tutReturn(0-4)",
 	"tutReturn1": "_FIGHT:discuss2",
+	"tutLost0": "_TEXT:tutReturnBack",
+	"tutLost1": "_FIGHT:discuss2",
+	// Food2: ELEVATOR
+	"elevator0": "_CUSTOM:ELEVATORSTART",
+	"elevator1": "??ELEVATORNEXT",
 };

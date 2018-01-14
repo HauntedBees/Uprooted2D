@@ -4359,6 +4359,11 @@ var fulltext = {
 		"en-dm": "Why do they have a giant TV screen if they already have a monitor built into the desk?", 
 		"type": "text"
 	},
+	"nerdBed": {
+		"en-us": "", 
+		"en-dm": "It's no Inn, but it'll do. I'll return here the next time I lose a battle.", 
+		"type": "text"
+	},
 	"elevatorNope": {
 		"en-us": "", 
 		"en-dm": "Come on, you know how final area video game elevators work... wait until you've gotten to the second floor before using it!", 
@@ -4384,14 +4389,14 @@ var fulltext = {
 		"en-dm": "Second Floor.", 
 		"type": "text"
 	},
-	"elevator3": {
-		"en-us": "", 
-		"en-dm": "Third Floor.", 
-		"type": "text"
-	},
 	"elevator4": {
 		"en-us": "", 
 		"en-dm": "Fourth Floor.", 
+		"type": "text"
+	},
+	"elevator3": {
+		"en-us": "", 
+		"en-dm": "Elevator: I'm sorry, but due to the biohazard situation, I cannot open on this floor. Thank you for understanding.", 
 		"type": "text"
 	},
 	"enterHQ0": {
@@ -4452,6 +4457,11 @@ var fulltext = {
 	"intercom6": {
 		"en-us": "", 
 		"en-dm": "Intercom: Do not, I repeat, do NOT engage with the experiment. Thank you.", 
+		"type": "text"
+	},
+	"blockedOff3F": {
+		"en-us": "", 
+		"en-dm": "Looks like they already blocked off this staircase... I guess the only way to go is up.", 
 		"type": "text"
 	},
 	"wowNewRobot0": {

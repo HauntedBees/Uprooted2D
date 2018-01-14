@@ -211,6 +211,7 @@ function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
 var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
+    "SETNERDBED": function() { player.lastInn = "nerdBed"; },
     "THEGIFTOFEGG": function() {
         player.monies -= 250;
         var eggType = "egg";
@@ -379,6 +380,8 @@ var SpecialFunctions = {
         player.hasNerd = true; // TODO: account for this shit when saving/loading
         worldmap.clearTarget();
         worldmap.animData = new MapAnim("mapplayer_help", 0, 0, 20, 25, 2);
+        worldmap.entities.push(GetCommonEntity("BarricadeL", 23, 2, 6, 0, undefined, [ GetSpeak("blockedOff3F") ], { big: true, noChange: true }));
+        worldmap.entities.push(GetCommonEntity("BarricadeR", 25, 2, 6, 0, undefined, [ GetSpeak("blockedOff3F") ], { big: true, sy: true, noChange: true }));
         me.PLAYERMOVESPEED /= 2;
     },
     "NERDDOWN": function() {
@@ -687,6 +690,20 @@ var SpecialFunctions = {
             }
         }
         game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
+    },
+    "ELEVATORSTART": function() {
+        var items = specialtyHelpers.getHQElevatorOptions();
+        if(items === null) { worldmap.writeText("elevatorNope"); iHandler.state.done = true; }
+        else { worldmap.writeText("elevatorNormal", items); }
+    },
+    "ELEVATORNEXT": function(idx) {
+        switch(specialtyHelpers.getHQElevatorOptions()[idx]) {
+            case "elevator1": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_1", playerDir: 2 }); break;
+            case "elevator2": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_2", playerDir: 2 }); break;
+            case "elevator4": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_4", playerDir: 2 }); break;
+        }
+        iHandler.state.done = true;
+        worldmap.finishDialog();
     },
     "TRUCKSTART": function() {
         var items = specialtyHelpers.getTruckOptions();

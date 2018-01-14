@@ -68,6 +68,15 @@ var specialtyHelpers = {
         }
         options.push("truck.nm");
         return options;
+    },
+    getHQElevatorOptions: function() {
+        var options = [];
+        if(player.visitedMaps.indexOf("hq_1") >= 0 && worldmap.mapName !== "hq_1") { options.push("elevator1"); }
+        if(player.visitedMaps.indexOf("hq_2") >= 0 && worldmap.mapName !== "hq_2") { options.push("elevator2"); }
+        if(player.visitedMaps.indexOf("hq_4") >= 0 && worldmap.mapName !== "hq_4") { options.push("elevator4"); }
+        if(options.length < 1) { return null; }
+        options.push("elevator0");
+        return options;
     }
 };
 function GetSleep(time) {

@@ -1,5 +1,5 @@
 var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity", "northcity", 
-                    "hq_1", "hq_2", "hq_3", "hq_4"]; // TODO: forest is too big
+                    "hq_1", "hq_2", "hq_3", "hq_4", "hq_5"]; // TODO: forest is too big
 var smallMaps = ["farm"];
 var namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
 var mapNames = {

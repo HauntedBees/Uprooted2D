@@ -740,6 +740,14 @@ var mapentities = {
             SwitchMap("GoUpstairs", 5.5, 1, true, false, 5, 2, "hq_2"),
             SwitchMap("Leave", 15, 30, false, false, 39, 10, "northcity"),
 
+            GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
+            GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
+
+            GetCommonEntity("HQBed1", 11, 9, 0, 0, undefined, Cutscene("hqBed"), { visible: false, isInn: true }),
+            GetCommonEntity("HQBed2", 12, 9, 0, 0, undefined, Cutscene("hqBed"), { visible: false, isInn: true }),
+            GetCommonEntity("HQBed3", 13, 9, 0, 0, undefined, Cutscene("hqBed"), { visible: false, isInn: true }),
+            GetCommonEntity("HQBed4", 14, 9, 0, 0, undefined, Cutscene("hqBed"), { visible: false, isInn: true }),
+
             GetCommonEntity("HQ1Robo1", 27, 9, 16, 3, undefined, Cutscene("enemy"), enemyMetadata.roboGuard),
             GetCommonEntity("HQ1Robo2", 16, 8, 16, 3, commonMovementDatas.rectangle(16, 8, 3, 2), Cutscene("enemy"), enemyMetadata.roboGuard),
             GetCommonEntity("HQ1Robo3", 5, 11, 16, 2, commonMovementDatas.downrectangle(5, 11, 4, 2), Cutscene("enemy"), enemyMetadata.roboGuard),
@@ -803,6 +811,8 @@ var mapentities = {
             SwitchMap("GoUpstairsR", 25, 1, false, false, 24.5, 2, "hq_3"),
             SwitchMap("GoDownstairsL", 5, 1, false, false, 5.5, 2, "hq_1"),
             SwitchMap("GoDownstairsR", 6, 1, false, false, 5.5, 2, "hq_1"),
+            GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
+            GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
             GetWaterfall("tech_waterfallAS", 4, 10, 2, "AX", true), GetWaterfallEnd("tech_wfendA", 4, 12, 2, "A", true),
             GetWaterfall("tech_waterfallBS", 1, 10, 2, "BX", true), GetWaterfallEnd("tech_wfendB", 1, 17, 2, "B", true),
             GetWaterfall("tech_waterfallCS", 6, 13, 3, "CX", true), GetWaterfallEnd("tech_wfendC", 8, 13, 3, "C", true),
@@ -868,6 +878,9 @@ var mapentities = {
         var x = [
             GetCommonEntity("HurtWorker", 24, 27, 20, 0, undefined, Cutscene("hurtNerd"), { sy: 16, noChange: true, sheetlen: 2, storageKey: "trent" }),
 
+            GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, [ GetSpeak("elevator3") ], { visible: false, isElevator: true }),
+            GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, [ GetSpeak("elevator3") ], { visible: false, isElevator: true }),
+
             GetCommonEntity("PodBaby1", 1.5, 20.75, 20, 1, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),
             GetCommonEntity("PodBaby2", 1.5, 24.75, 20, 2, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),
             GetCommonEntity("PodBaby3", 1.5, 27.25, 20, 3, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),
@@ -926,9 +939,12 @@ var mapentities = {
         var x = [
             SwitchMap("GoDownstairsL", 5, 1, false, false, 5.5, 2, "hq_3"),
             SwitchMap("GoDownstairsR", 6, 1, false, false, 5.5, 2, "hq_3"),
-            SwitchMap("GoUpstairsL", 24, 1, false, false, 8.5, 51, "hq_5"),
-            SwitchMap("GoUpstairsM", 25, 1, false, false, 8.5, 51, "hq_5"),
-            SwitchMap("GoUpstairsR", 26, 1, false, false, 8.5, 51, "hq_5"),
+            SwitchMap("GoUpstairsL", 24, 1, false, false, 8, 51, "hq_5"),
+            SwitchMap("GoUpstairsM", 25, 1, false, false, 8, 51, "hq_5"),
+            SwitchMap("GoUpstairsR", 26, 1, false, false, 8, 51, "hq_5"),
+            
+            GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
+            GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
 
             GetCommonEntity("EndOfTheRoad", 2, 5, 20, 0, undefined, Cutscene("lotus"), { noChange: true, sy: 12, sheetlen: 2, moving: true, visible: false, }),
 
@@ -959,6 +975,20 @@ var mapentities = {
         for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
+    "hq_5": [
+        SwitchMap("GoDownstairsL", 7, 52, false, false, 25, 2, "hq_4"),
+        SwitchMap("GoDownstairsM", 8, 52, false, false, 25, 2, "hq_4"),
+        SwitchMap("GoDownstairsR", 9, 52, false, false, 25, 2, "hq_4"),
+        GetCommonEntity("BeckettsReturn", 8, 15, 5, 0, undefined, undefined, { sheet: "hipster", sy: 1, sheetlen: 2, storageKey: "beckettBack" }),
+        { name: "CS_BeckettStandoff", pos: { x: 8, y: 16 }, boring: true, isRow: true, interact: Cutscene("food2Fifth"), solid: false, visible: false, failedInteract: Cutscene("food2Lost"), postBattle: "iWahn" },
+        GetCommonEntity("BeckettsReturn", 0, 0, 0, 0, undefined, Cutscene("food2Beat"), { boring: true, visible: false, storageKey: "iWahn" }),
+        EnterShop("LastInn", 5, 5, "lastInn"),
+        SwitchMap("Flee", 11, 5, false, false, 39, 10, "northcity"),
+        SwitchMap("GoUpstairs", 8, 0, false, false, 8.5, 15, "hq_6")
+    ],
+    "hq_6": [
+
+    ],
     "gameover": [
         GetInvisibleEntity("brunoKill", Cutscene("badEnd"), { storageKey: "brunoKill" }),
         GetInvisibleEntity("lostToMonster", Cutscene("monstWon"), { storageKey: "lostToMonster" })

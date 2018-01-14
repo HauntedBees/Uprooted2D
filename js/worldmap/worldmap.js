@@ -15,6 +15,7 @@ var worldmap = {
         this.waitForAnimation = false;
         this.dialogState = 0;
         this.mapName = args.map;
+        if(player.visitedMaps.indexOf(args.map) < 0) { player.visitedMaps.push(args.map); }
         this.pos = args.init;
         this.playerDir = (args.playerDir === undefined ? (this.playerDir === undefined ? 2 : this.playerDir) : args.playerDir);
         this.dialogData = null;
