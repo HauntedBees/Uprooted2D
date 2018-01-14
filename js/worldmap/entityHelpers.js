@@ -94,8 +94,7 @@ function GetBasicPlayerFrame(sx, sy, time) {
     };
 }
 function FinishAnim() {
-    worldmap.forceMove = false;
-    worldmap.forcedPlayerInfo = false;
+    if(worldmap.mapName !== "hq_6") { worldmap.forceMove = false; worldmap.forcedPlayerInfo = false; }
     worldmap.refreshMap();
     worldmap.finishAnimation();
 }

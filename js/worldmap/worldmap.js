@@ -187,7 +187,7 @@ var worldmap = {
     writeText: function(t, choices, isRefresh, formatting, overBlack) {
         worldmap.currentFormatting = formatting;
         gfx.clearSome(["menuA", "menutext", "menucursorA", "menuOverBlack", "menutextOverBlack"]);
-        var drawY = (worldmap.pos.y <= 3) ? 7.5 : 0;
+        var drawY = (worldmap.pos.y <= 3 || worldmap.mapName === "hq_6") ? 7.5 : 0;
         gfx.drawFullbox(drawY, overBlack);
         var actualText = GetText(t);
         if(actualText === "") { return; }

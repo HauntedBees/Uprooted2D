@@ -2,7 +2,7 @@ var player = {
     health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true,
     c2: 0, c2Rate: 1, beeQueensFaced: 0, nathanSeeds: [["beet", 10], ["carrot", 10], ["ginger", 5]],
     level: 1, exp: 0, nextExp: 4, totalExp: 0, 
-    monies: 1000, playTime: 0,
+    monies: 1000, playTime: 0, visitedMaps: [],
     clearedEntities: [], questsCleared: [], activeQuests: {}, 
     lastInn: "start",
     options: {

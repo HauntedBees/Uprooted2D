@@ -12,8 +12,10 @@ var iHandler = {
     },
     SleepSkip: function() { iHandler.Finish(); return true; },
     Finish: function() {
-        worldmap.forceMove = false;
-        worldmap.forcedPlayerInfo = false;
+        if(worldmap.mapName !== "hq_6") {
+            worldmap.forceMove = false;
+            worldmap.forcedPlayerInfo = false;
+        }
         worldmap.waitForAnimation = false;
         worldmap.refreshMap();
         clearInterval(worldmap.animIdx);
@@ -110,6 +112,7 @@ var CommandParser = {
                 case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
                 case "CLEARINTERACT": target.interact = undefined; break;
                 case "SETTARGETTONOTHING": game.target = null; break;
+                case "HIHISPEED": iHandler.moveSpeed = 0.1; break;
                 case "HISPEED": iHandler.moveSpeed = 0.05; break;
                 case "LOSPEED": iHandler.moveSpeed = 0.025; break;
                 case "C2TEXT": CommandParser.Parse_Cash2Text(actSuffix.split(",")); break;
@@ -376,6 +379,24 @@ var SpecialFunctions = {
     "BIRDSONG.OGG": function() {
         // TODO
     },
+    "FLIPSHIT": function() {
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            var newY = (worldmap.entities[0].anim.getFrame().sy / 20) + 1;
+            for(var i = 0; i < worldmap.entities.length; i++) {
+                if(worldmap.entities[i].isFlippy !== true) { continue; }
+                worldmap.entities[i].anim.shiftY(newY);
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            var finished = (newY === 14);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 250);
+    },
     "NERDUP": function() {
         player.hasNerd = true; // TODO: account for this shit when saving/loading
         worldmap.clearTarget();
@@ -430,6 +451,19 @@ var SpecialFunctions = {
     },
     "PLAYERREAD": function() {
         worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 6, 0);
+        worldmap.refreshMap();
+    },
+    "PLAYERSTOP": function() {
+        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame({ x: 8.5, y: 10 }, 0, 0);
+        worldmap.forcedY = 10;
+        worldmap.refreshMap();
+    },
+    "PLAYERSHOCK1": function() {
+        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame({ x: 8.5, y: 10 }, 7, 0);
+        worldmap.refreshMap();
+    },
+    "PLAYERSHOCK2": function() {
+        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame({ x: 8.5, y: 10 }, 7, 1);
         worldmap.refreshMap();
     },
     "ENTERTHEBIRD": function() {

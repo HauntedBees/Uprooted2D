@@ -74,14 +74,15 @@ worldmap.title = {
                     //init: { x: 53, y: 27 }, map: "northcity" // by Brandt's
                     //init: { x: 44, y: 27 }, map: "northcity" // by Nerd's House
                     //init: { x: 15, y: 27 }, map: "northcity" // by Mushroom Man
-                    //init: { x: 10, y: 13 }, map: "northcity" // by Bank
+                    //init: { x: 9, y: 12 }, map: "northcity" // by Bank
                     //init: { x: 39, y: 10 }, map: "northcity" // by Food2
                     //init: { x: 15, y: 29 }, map: "hq_1" // by entrance
+                    //init: { x: 27, y: 8 }, map: "hq_1" // by conveyor belts
                     //init: { x: 5, y: 3 }, map: "hq_2" // by entrance
                     //init: { x: 25, y: 3 }, map: "hq_3" // by entrance
                     //init: { x: 5, y: 3 }, map: "hq_4" // by entrance
-                    //init: { x: 8.5, y: 96 }, map: "hq_5" // by entrance
                     //init: { x: 8.5, y: 14 }, map: "hq_6" // by entrance
+                    //init: { x: 8, y: 51 }, map: "hq_5" // by entrance
                 });
             case 1: return game.innerTransition(this, pausemenu.savemenu, { saving: false }); // this is probably wrong
             case 2: return game.innerTransition(this, worldmap.optionsMenu);

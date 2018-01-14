@@ -986,9 +986,22 @@ var mapentities = {
         SwitchMap("Flee", 11, 5, false, false, 39, 10, "northcity"),
         SwitchMap("GoUpstairs", 8, 0, false, false, 8.5, 15, "hq_6")
     ],
-    "hq_6": [
-
-    ],
+    "hq_6": function() {
+        var x = [
+            { name: "OhMyGodThisIsTheEnd", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("final"), autoplay: true },
+            GetCommonEntity("CryBeckett", 5, 9, 6, 0, undefined, undefined, { sheet: "hipster", sy: 2, sheetlen: 2, storageKey: "beckettCry" }),
+            GetCommonEntity("chair", 8.5, 7, 1, 0, undefined, undefined, { sheet: "assistant", sy: 5, boring: true, visible: false, storageKey: "chair", forcedY: 13 }),
+            GetCommonEntity("BigBadNathan", 8.5, 7, 0, 0, undefined, undefined, { sheet: "assistant", sy: 4, sheetlen: 2, storageKey: "endNath", forcedY: 14 }),
+            GetCommonEntity("button", 7.75, 7, 5, 2, undefined, undefined, { sheet: "assistant", sy: 5, boring: true, storageKey: "btn", forcedY: 14 }),
+            GetCommonEntity("desk", 8, 7, 7, 0, undefined, undefined, { big: true, sy: 3, boring: true, storageKey: "table", forcedY: 15 })
+        ];
+        for(var xx = 6; xx < 12; xx++) {
+            for(var yy = 8; yy < 10; yy++) {
+                x.unshift(GetCommonEntity("flipTile" + xx + "." + yy, xx, yy, 24, 0, undefined, undefined, { boring: true, isFlippy: true }));
+            }
+        }
+        return x;
+    }(),
     "gameover": [
         GetInvisibleEntity("brunoKill", Cutscene("badEnd"), { storageKey: "brunoKill" }),
         GetInvisibleEntity("lostToMonster", Cutscene("monstWon"), { storageKey: "lostToMonster" })
