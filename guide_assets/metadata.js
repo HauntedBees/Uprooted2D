@@ -1,11 +1,12 @@
 var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity", "northcity", 
-                    "hq_1", "hq_2", "hq_3"]; // TODO: forest is too big
+                    "hq_1", "hq_2", "hq_3", "hq_4"]; // TODO: forest is too big
 var smallMaps = ["farm"];
 var namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
 var mapNames = {
     "farm": "Your Farm", "producestand": "Produce Stand", "forest": "Agrios Forest", "firstvillage": "San Ambrosio", "belowvillage": "South of Town",
     "researchfacility": "Mysterious Research Lab", "bridge": "Bridge Crossing", "underwater": "Underwater", "fakefarm": "Jeff's Farm",
-    "southcity": "South Las Abejas", "northcity": "Central Las Abejas", "hq_1": "Food2 Headquarters 1F", "hq_2": "Food2 Headquarters 2F"
+    "southcity": "South Las Abejas", "northcity": "Central Las Abejas", "hq_1": "Food2 Headquarters 1F", "hq_2": "Food2 Headquarters 2F",
+    "hq_3": "Food2 Headquarters 3F", "hq_4": "Food2 Headquarters 4F", "hq_5": "Food2 Headquarters 5F", "hq_6": "Food2 Headquarters 6F"
 };
 var shopNames = {
     "coop": "Chicken Coop", "inn0": "Your House", "equip1": "Dave's Hoes and Sickles", "fixture1": "Fuckster's Fixtures", "seed1": "Seedy Pete's Petey Seeds",

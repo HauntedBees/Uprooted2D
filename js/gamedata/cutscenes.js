@@ -629,4 +629,16 @@ var scripts = {
 	"monstLost1": "_CUSTOM:BEATMONSTER&_TEXT:beatMonster0",
 	"monstLost2": "_TEXT:beatMonster1&_END",
 	"monstLost3": "_CUSTOM:BEATMONSTER&_QUIT",
+	// Food2: The Sacred Lotus
+	"lotus0": "?[{\"q\":\"player.completedQuest('theBeeQuest')\",\"v\":7},{\"q\":\"player.hasItem('lotus')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
+	"lotus1": "_TEXT:dirtPileNo&_END",
+	"lotus2": "_TEXT:dirtPileYes,sYes,sNo",
+	"lotus3": "?[{\"q\":\"d===0\",\"v\":5},{\"q\":\"d===1\",\"v\":4}]",
+	"lotus4": "_TEXT:dirtPileNoPlant&_END",
+	"lotus5": "targ_VISIBLE:true&_TEXT:dirtPilePlant(0-1)",
+	"lotus6": "_TEXT:dirtPilePlant2&_COMPLETEQUEST:theBeeQuest&_GIVE:hbee,9&_END",
+	"lotus7": "_TEXT:dirtPileBees",
+	// Food2: Discussly2
+	"tutReturn0": "_TEXT:tutReturn(0-4)",
+	"tutReturn1": "_FIGHT:discuss2",
 };

@@ -4794,6 +4794,106 @@ var fulltext = {
 		"en-dm": "... ... ... ...", 
 		"type": "text"
 	},
+	"midniteBottle": {
+		"en-us": "", 
+		"en-dm": "\"If you're an emo or goff, then you can finally have a food as dark as your soul with 'Food2 Midnite' and its cotton candy flavor!\"", 
+		"type": "text"
+	},
+	"purpleBottle": {
+		"en-us": "", 
+		"en-dm": "\"Want your kids on the diet of the future? Try 'Food2 Purple' with its WhAcKy kid-friendly color and the delicious egg flavor that kids love!\"", 
+		"type": "text"
+	},
+	"crystalBottle": {
+		"en-us": "", 
+		"en-dm": "\"The limited edition 'Crystal Food2' flavor tastes the way crystals look! Unless you don't think crystals look good, then it's not that.\"", 
+		"type": "text"
+	},
+	"prophet0": {
+		"en-us": "", 
+		"en-dm": "Robot: To proceed you must pass my trial.", 
+		"type": "text"
+	},
+	"prophet1": {
+		"en-us": "", 
+		"en-dm": "Robot: Many will enter, few will win.", 
+		"type": "text"
+	},
+	"prophet2": {
+		"en-us": "", 
+		"en-dm": "Robot: If you wish to get past me, you must defeat me... or defeat the robot standing next to me. Either one, really.", 
+		"type": "text"
+	},
+	"prophet3": {
+		"en-us": "", 
+		"en-dm": "Robot: Thou shalt not passeth.", 
+		"type": "text"
+	},
+	"dirtPileNo": {
+		"en-us": "", 
+		"en-dm": "If I had some flower seeds, I could probably plant them here... but where would I get flower seeds??", 
+		"type": "text"
+	},
+	"dirtPileYes": {
+		"en-us": "", 
+		"en-dm": "I can probably plant my Sacred Lotus seeds in this dirt patch next to this beehive. Should I?", 
+		"type": "text"
+	},
+	"dirtPileNoPlant": {
+		"en-us": "", 
+		"en-dm": "Yeah, these seeds deserve better than to be planted in this big ugly building.", 
+		"type": "text"
+	},
+	"dirtPilePlant0": {
+		"en-us": "", 
+		"en-dm": "As soon as the seeds were planted, they immediately blossomed into a full flower. That was no ordinary soil!", 
+		"type": "text"
+	},
+	"dirtPilePlant1": {
+		"en-us": "", 
+		"en-dm": "It looks like some bees are coming to the flower now... I've never seen that kind of bee before!", 
+		"type": "text"
+	},
+	"dirtPilePlant2": {
+		"en-us": "", 
+		"en-dm": "You got 9 Haunted Bees!", 
+		"type": "text"
+	},
+	"dirtPileBees": {
+		"en-us": "", 
+		"en-dm": "The bees look happy.", 
+		"type": "text"
+	},
+	"tutReturn0": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron: Do you remember me?", 
+		"type": "text"
+	},
+	"tutReturn1": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron: We tried to reason with you. We didn't want things to go this way.", 
+		"type": "text"
+	},
+	"tutReturn2": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron: ...Okay, maybe some of us did a little bit. But *I* wanted to be your friend.", 
+		"type": "text"
+	},
+	"tutReturn3": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron: But I guess potential friends make the best enemies... I'm sure some great philosopher probably said that once.", 
+		"type": "text"
+	},
+	"tutReturn4": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron: To quote another great philosopher... \"I'm gonna fuckin' kill you, jackass!\" - Plato", 
+		"type": "text"
+	},
+	"tutReturnBack": {
+		"en-us": "", 
+		"en-dm": "Convince-a-tron: Back for more, are you? Do you need another tutorial on getting your ass kicked?", 
+		"type": "text"
+	},
 	"confront0": {
 		"en-us": "", 
 		"en-dm": "???: So... you made it all the way here.", 
@@ -5163,6 +5263,26 @@ var fulltext = {
 	"quest1.d": {
 		"en-us": "", 
 		"en-dm": "hly faulk lass is that a fucken golden mushroom? I'll trade you for this log! AND I'll start selling you my special mushroom selection!", 
+		"type": "shop"
+	},
+	"s.vendoEnter": {
+		"en-us": "", 
+		"en-dm": "Welcome to the Vending Machine.", 
+		"type": "shop"
+	},
+	"s.vendoLeave": {
+		"en-us": "", 
+		"en-dm": "Thank you for your Patronage.", 
+		"type": "shop"
+	},
+	"s.vendoNotEnough": {
+		"en-us": "", 
+		"en-dm": "Error: Insufficient Funds for Purchase.", 
+		"type": "shop"
+	},
+	"s.vendoBought": {
+		"en-us": "", 
+		"en-dm": "Transaction Completed.", 
 		"type": "shop"
 	},
 	// Bees

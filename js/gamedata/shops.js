@@ -258,6 +258,70 @@ var stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
 
+    "vendo_veg": {
+        img: "shops/vendo",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+    "vendo_tree": {
+        img: "shops/vendo",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+    "vendo_mush": {
+        img: "shops/vendo",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+    "vendo_paddy": {
+        img: "shops/vendo",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+    "vendo_coop": {
+        img: "shops/vendo",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+    "vendo_water": {
+        img: "shops/vendo",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+    "vendo_tech": {
+        img: "shops/vendo",
+        wares: [
+            { product: "carrot", price: 0, type: "seed" },
+            { product: "carrot", price: 0, type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
+    },
+
     "template": {
         img: "",
         wares: [

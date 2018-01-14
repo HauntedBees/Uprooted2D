@@ -924,14 +924,39 @@ var mapentities = {
     }(),
     "hq_4": function() {
         var x = [
-            SwitchMap("GoUpstairsL", 24, 1, false, false, 24.5, 2, "hq_5"),
-            SwitchMap("GoUpstairsR", 25, 1, false, false, 24.5, 2, "hq_5"),
             SwitchMap("GoDownstairsL", 5, 1, false, false, 5.5, 2, "hq_3"),
             SwitchMap("GoDownstairsR", 6, 1, false, false, 5.5, 2, "hq_3"),
+            SwitchMap("GoUpstairsL", 24, 1, false, false, 8.5, 51, "hq_5"),
+            SwitchMap("GoUpstairsM", 25, 1, false, false, 8.5, 51, "hq_5"),
+            SwitchMap("GoUpstairsR", 26, 1, false, false, 8.5, 51, "hq_5"),
+
+            GetCommonEntity("EndOfTheRoad", 2, 5, 20, 0, undefined, Cutscene("lotus"), { noChange: true, sy: 12, sheetlen: 2, moving: true, visible: false, }),
+
+            GetCommonEntity("ProphetMush0", 9, 10, 12, 0, undefined, Cutscene("enemy"), enemyMetadata.prophet("Mush")),
+            GetCommonEntity("ProphetRice0", 9, 11, 12, 1, undefined, Cutscene("enemy"), enemyMetadata.prophet("Rice")),
+            GetCommonEntity("ProphetFrut0", 15, 10, 12, 2, undefined, Cutscene("enemy"), enemyMetadata.prophet("Fruit")),
+            GetCommonEntity("ProphetVeji0", 15, 11, 12, 3, undefined, Cutscene("enemy"), enemyMetadata.prophet("Veggie")),
+            GetCommonEntity("ProphetVeji1", 18, 10, 12, 3, undefined, Cutscene("enemy"), enemyMetadata.prophet("Veggie")),
+            GetCommonEntity("ProphetMush1", 18, 11, 12, 0, undefined, Cutscene("enemy"), enemyMetadata.prophet("Mush")),
+            GetCommonEntity("ProphetRice1", 24, 10, 12, 1, undefined, Cutscene("enemy"), enemyMetadata.prophet("Rice")),
+            GetCommonEntity("ProphetFrut1", 24, 11, 12, 2, undefined, Cutscene("enemy"), enemyMetadata.prophet("Fruit")),
+            GetCommonEntity("ReturnOfTheFucker", 26, 7, 19, 0, undefined, Cutscene("tutReturn"), { sy: 13, noChange: true, boss: true, failedInteract: Cutscene("tutLost") }),
+
+            EnterShop("VegShop", 15, 3, "vendo_veg"),
+            EnterShop("FrtShop", 16, 3, "vendo_tree"),
+            EnterShop("LogShop", 17, 3, "vendo_mush"),
+            EnterShop("RceShop", 18, 3, "vendo_paddy"),
+            EnterShop("EggShop", 19, 3, "vendo_coop"),
+            EnterShop("FshShop", 20, 3, "vendo_water"),
+            EnterShop("BotShop", 21, 3, "vendo_tech"),
 
             GetCommonEntity("Reached4F", 0, 0, 0, 0, undefined, Cutscene("to4F"), { boring: true, solid: false, visible: false, autoplay: true }),
-            GetCommonEntity("SavedWorker", 10, 3, 20, 0, undefined, undefined, { sy: 16, noChange: true, visible: false, solid: false, sheetlen: 2, storageKey: "trentSafe" })
+            GetCommonEntity("SavedWorker", 10, 3, 20, 0, undefined, undefined, { sy: 16, noChange: true, visible: false, solid: false, sheetlen: 2, storageKey: "trentSafe", boring: true })
         ];
+        var lookables = [ [1, 11, "midniteBottle"], [2, 11, "midniteBottle"], [3, 11, "midniteBottle"], [3, 10, "midniteBottle"],
+                          [27, 10, "purpleBottle"], [27, 11, "purpleBottle"], [28, 11, "purpleBottle"], [29, 11, "purpleBottle"], 
+                          [27, 3, "crystalBottle"], [27, 4, "crystalBottle"], [28, 4, "crystalBottle"], [4, 11, "crystalBottle"] ];
+        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
     "gameover": [
