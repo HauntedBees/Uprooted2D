@@ -23,5 +23,10 @@ var combatEndTurnFuncs = {
                 combat.enemyGrid[combat.enemywidth - 2][y] = newCrop;
             }
         }
+    },
+    "CONVINCE": function() {
+        if(combat.enemies.length < 1 || combat.enemies[0].convinceState < 5) { return; }
+        combat.enemies[0] = GetEnemy("discuss2big");
+        combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
     }
 };

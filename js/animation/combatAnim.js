@@ -224,6 +224,26 @@ function CombatAnimHelper(enemies) {
     }
     var anims = [];
 
+    this.ResetEnemyAnimHelper = function(enemies) {
+        enemyAnimInfos = [];
+        var currentx = 11 - enemies.length;
+        for(var i = 0; i < enemies.length; i++) {
+            var e = enemies[i];
+            var y = 5.75;
+            switch(e.size) {
+                case "lg": y = 5; break;
+                case "xl": y = 3; currentx -= 4; break;
+            }
+            enemyAnimInfos.push(new EnemyAnimInfo([[e.spriteidx, 0]], currentx, y, 0, e.size, e.spriteidx, e.sheet));
+            switch(e.size) {
+                case "sm": currentx += 1; break;
+                case "md": currentx += 1.5; break;
+                case "lg": currentx += 2; break;
+                case "xl": currentx += 4; break;
+            }
+        }
+    }
+
     this.GetCursorInfo = function(x) {
         var currentx = 11 - combat.enemies.length;
         for(var i = 0; i < combat.enemies.length; i++) {

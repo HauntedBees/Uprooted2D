@@ -6003,6 +6003,16 @@ var fulltext = {
 		"en-dm": "{0} attacks a crop on your field, destroying it.", 
 		"type": "combat"
 	},
+	"hulkPunch": {
+		"en-us": "", 
+		"en-dm": "{0} punches a row of crops on your field.", 
+		"type": "combat"
+	},
+	"hulkPunchKill": {
+		"en-us": "", 
+		"en-dm": "{0} punches a row of crops on your field, destroying some.", 
+		"type": "combat"
+	},
 	"initializeAttack": {
 		"en-us": "", 
 		"en-dm": "{0} initializes{an} {2}.", 
@@ -6151,6 +6161,31 @@ var fulltext = {
 	"hkCreepy5": {
 		"en-us": "", 
 		"en-dm": "HOUSEKEEPER: Please rate this app on the Application Store. Any ratings lower than five stars will not be accepted.", 
+		"type": "combat"
+	},
+	"convince2.0": {
+		"en-us": "", 
+		"en-dm": "{0} is going to beat you up real good!", 
+		"type": "combat"
+	},
+	"convince2.1": {
+		"en-us": "", 
+		"en-dm": "Just you wait, {0} is gonna kick your ass, for sure!", 
+		"type": "combat"
+	},
+	"convince2.2": {
+		"en-us": "", 
+		"en-dm": "{0} is busy mining for cryptocurrencies.", 
+		"type": "combat"
+	},
+	"convince2.3": {
+		"en-us": "", 
+		"en-dm": "{0} is distracted by apps.", 
+		"type": "combat"
+	},
+	"convince2.4": {
+		"en-us": "", 
+		"en-dm": "{0} gets buff from being oan the protein.", 
 		"type": "combat"
 	},
 	// Combat - Enemy Names

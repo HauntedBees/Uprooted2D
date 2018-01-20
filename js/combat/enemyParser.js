@@ -588,6 +588,22 @@ var actions = {
         EnemyParser.current.data = { message: "CONVINCEATRON" };
         return true;
     },
+    "CONVINCEATRON2": function(e) {
+        var damage = 0;
+        if(e.convinceState === undefined) {
+            e.convinceState = 1;
+            EnemyParser.current.data = { textID: "convince2.0", animFPS: 4, animData: [ [0, 4], [0, 5] ] };
+        } else if(e.convinceState === 4) {
+            EnemyParser.current.data = { textID: "convince2.4", animFPS: 24, animData: [ [0, 0], [0, 2], [0, 3], [0, 2], [0, 3] ] };
+            e.convinceState = 5;
+        } else {
+            EnemyParser.current.data = { textID: "convince2." + e.convinceState, animFPS: 4, animData: [ [0, 4], [0, 5] ] };
+            e.convinceState++;
+        }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        EnemyParser.current.data = { message: "CONVINCEATRON2" };
+        return true;
+    },
     "LAUNCH_CROPS": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
         var damage = combat.damagePlayer(fieldData.damage);
@@ -686,6 +702,23 @@ var actions = {
             EnemyParser.current.data.textID = "cropKill";
         } else {
             EnemyParser.current.data.textID = "cropAttack";
+        }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    "HULK_PUNCH": function(e) {
+        var row = Math.floor(Math.random() * player.gridHeight);
+        var hasKills = false;
+        for(var x = 0; x < player.gridWidth; x++) {
+            var tile = combat.grid[x][row];
+            if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
+            var res = enemyHelpers.DoDamageCrop(e, x, row, -1);
+            hasKills = hasKills || res;
+        }
+        if(hasKills) {
+            EnemyParser.current.data.textID = "hulkPunchKill";
+        } else {
+            EnemyParser.current.data.textID = "hulkPunch";
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
