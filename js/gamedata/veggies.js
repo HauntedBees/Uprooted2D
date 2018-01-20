@@ -41,7 +41,7 @@ function GetCrop(name) {
 		case "radish": return new CropDetail(name, "Radish", 10, "veg", 1, 1, 2, 3, 0, 2, 0, 1, 0);
 		case "rhubarb": return new CropDetail(name, "Rhubarb", 10, "veg", 1, 20, 4, 1000, 0, 1, 0, 0, 0);
 		case "spinach": return new CropDetail(name, "Spinach", 10, "veg", 1, 1, 2, 2, 0, 1, 0, 2, 0);
-		case "tomato": return new CropDetail(name, "Tomato", 10, "veg", 1, 1, 2, 2, 0, 0, 2, 0, 0);
+		case "tomato": return new CropDetail(name, "Tomato", 10, "veg", 1, 1, 2, 2, 0, 0, 2, 0, 0, { saltClean: true });
 		/* Trees */
 		case "apple": return new CropDetail(name, "Apple", 10, "tree", 2, 5, 5, 2, 2, 1, 1, 2, 1);
 		case "apricot": return new CropDetail(name, "Apricot", 10, "tree", 2, 24, 5, 10, 5, 2, 1, 0, 0);

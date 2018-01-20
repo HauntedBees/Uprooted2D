@@ -82,7 +82,7 @@ var enemyHelpers = {
         var itemTile = player.itemGrid[x][y];
         if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
         if((itemTile !== null && itemTile !== "_hotspot") || combat.grid[x][y] !== null) { return false; }
-        // TODO: destroy weaker crops with rocks?
+        // TODO: destroy crops with rocks and salt (salt resistance!)
         var newCrop = GetCrop(type);
         newCrop.activeTime = newCrop.time;
         combat.grid[x][y] = newCrop;
@@ -116,7 +116,7 @@ var enemyHelpers = {
 
         return enemyHelpers.DoDamageCrop(e, x, y, 0);
     },
-    DoDamageCrop: function(e, x, y, type) {
+    DoDamageCrop: function(e, x, y, type) { // 0 = water, 1 = fire, 2 = salt, -1 = general
         var crop = combat.grid[x][y];
         if(crop === null) { return { status: false }; }
         var dmg = enemyHelpers.GetCropDamage(e, x, y, type);
@@ -135,12 +135,13 @@ var enemyHelpers = {
             return { status: true, crop: true, destroyed: false };
         }
     },
-    GetCropDamage: function(e, x, y, type) { // type: 0 = water, 1 = fire, -1 = general
+    GetCropDamage: function(e, x, y, type) { // type: 0 = water, 1 = fire, salt = 2, -1 = general
         var crop = combat.grid[x][y];
         var itemTile = player.itemGrid[x][y];
         var dmg = Math.ceil(e.atk / 2);
-        if(type === 0 && crop.waterResist) { dmg *= crop.waterResist; }
-        else if(type === 1 && crop.fireResist) { dmg *= crop.fireResist; }
+        if(type === 0 && crop.waterResist) { dmg /= 0.5 + crop.waterResist; }
+        else if(type === 1 && crop.fireResist) { dmg /= 0.5 + crop.fireResist; }
+        else if(type === 1 && crop.saltResist) { dmg /= 0.5 + crop.saltResist; }
         if(crop.x !== undefined) { crop = combat.grid[crop.x][crop.y]; dmg = Math.ceil(dmg / 2); }
         if(itemTile === "_strongsoil") { dmg = Math.round(dmg / 2); }
         return dmg;

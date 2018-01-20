@@ -41,7 +41,7 @@ combat.plant = {
             return this.isValidLocationForCrop(px, py) && this.isValidLocationForCrop(px + 1, py)
                     && this.isValidLocationForCrop(px, py + 1) && this.isValidLocationForCrop(px + 1, py + 1);
         } else {
-            if(combat.grid[px][py] !== null) { return false; }
+            if(combat.grid[px][py] !== null) { return (combat.grid[px][py].name === "salt" && this.activeCrop.saltClean); }
             return this.isValidLocationForCrop(px, py);
         }
     },
@@ -151,6 +151,7 @@ combat.plant = {
             var ppos = {x: px, y: py};
             if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
             var newCrop = GetCrop(this.activeCrop.name);
+            if(combat.grid[px][py] !== null && combat.grid[px][py].name === "salt") { newCrop.power = Math.ceil(newCrop.power / 2); }
             var cropIsKill = false, killType = 0;
             if(player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech && !combat.isFalcon) {
                 if(["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && Math.random() <= 0.1) {
@@ -321,7 +322,12 @@ combat.plant = {
         var tempCrop = GetCrop(item[0]);
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
-                if(combat.grid[x][y] !== null) { continue; }
+                if(combat.grid[x][y] !== null) { 
+                    if(combat.grid[x][y].name === "salt" && !tempCrop.saltClean) {
+                        gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");
+                    }
+                    continue;
+                }
                 this.activeCrop = tempCrop;
                 if(!this.isValidLocationForCrop(x, y)) {
                     gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");
