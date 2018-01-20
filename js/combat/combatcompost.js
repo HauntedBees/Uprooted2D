@@ -177,6 +177,7 @@ combat.compost = {
     },
     addCompostAnimsAndGetValue: function(args) {
         var outputAmount = 0, thereAreCows = false;
+        var nerfs = combat.selectTarget.GetNerfs();
         for(var i = 0; i < this.selectedCrops.length; i++) {
             var croppos = this.selectedCrops[i];
             if(croppos.cow !== undefined) {
@@ -199,6 +200,7 @@ combat.compost = {
                 } else {
                     outputAmount += (args.baseMult - (crop.activeTime / crop.time)) * crop.power;
                 }
+                outputAmount *= combat.selectTarget.GetNerfMultiplier(crop, nerfs);
                 var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds)
                 combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x, combat.dy + croppos.y, 250, "puff", 5));
                 combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x, combat.dy + croppos.y, 4, 6, 1000, cropSprite));

@@ -108,6 +108,7 @@ function GetCrop(name) {
 		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 30, 0, 2, 2, 1, 1, { noRot: true });
 		case "rock": return new CropDetail(name, "Rock", 0, "rock", 1, 5, 1, 0, 0, 1, 1, 1, 1);
 		case "tire": return new CropDetail(name, "Tire", 0, "rock", 1, 8, 1, 0, 0, 1, 1, 1, 1);
+		case "engine": return new CropDetail(name, "Engine", 0, "rock", 1, 10, 1, 0, 0, 1, 1, 1, 1);
 		case "salt": return new CropDetail(name, "Salt", 0, "rock", 1, 30, 1, 0, 0, 1, 1, 1, 1);
 		case "acorn": return new CropDetail(name, "Acorn", 0, "tree", 2, 6, 4, 6, 2, 0, 1, 1, 0);
 		case "robobabby": return new CropDetail(name, "Byte Baby", 0, "babby", 1, 4, 4, 0, 0, 1, 1, 1, 1, { baby: "robo" });
@@ -130,6 +131,16 @@ function GetCrop(name) {
 		case "airfilter": return new CropDetail(name, "Air Filter", 0, "tech", 1, 6, 5, 10, 0, 1, 1, 1, 1);
 		case "dipstick": return new CropDetail(name, "Dip Stick", 0, "tech", 1, 3, 3, 10, 0, 1, 1, 1, 1);
 		case "cacao": return new CropDetail(name, "Cacao", 0, "tree", 2, 10, 5, 10, 3, 1, 1, 1, 1);
+		case "bananaPill": return new CropDetail(name, "Banana Pill", 0, "veg", 1, 4, 4, 10, 0, 0, 1, 0, 0);
+		/* Beckett Nerfs */
+		case "mushNerf": return new CropDetail(name, "Mushrooms", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "riceNerf": return new CropDetail(name, "Paddy Crops", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "treeNerf": return new CropDetail(name, "Tree Crops", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "vegNerf": return new CropDetail(name, "Veggies", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "fishNerf": return new CropDetail(name, "Fishes", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "beeNerf": return new CropDetail(name, "Bees", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "eggNerf": return new CropDetail(name, "Eggs", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
+		case "reNerf": return new CropDetail(name, "Regrowing Crops", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
 		/* WACG Cards */
 		case "char0": return new CropDetail(name, "Pale Blood Horse", 0, "card", 1, 999, 1, 50, 0, 1, 1, 1, 1);
 		case "char1": return new CropDetail(name, "Mabingy the Elf", 0, "card", 1, 999, 1, 40, 0, 1, 1, 1, 1);

@@ -411,11 +411,27 @@ function CombatAnimHelper(enemies) {
     };
 
     this.GetActualTile = function(tile, x, y) {
+        var rightmost = combat.enemywidth - 1;
+        var bottommost = combat.enemyheight - 1;
         switch(tile) {
+            case "beckett":
+                if(y < 3) {
+                    if(x === 0) { return "conveyorL"; }
+                    else if(x === rightmost) { return "conveyorR"; }
+                    else { return "conveyorM"; }    
+                } else {
+                    var rightCorner = (x === rightmost);
+                    var bottomCorner = (y === bottommost);
+                    if(rightCorner && bottomCorner) { return "chargingBayLR"; }
+                    else if(rightCorner && y === (bottommost - 1)) { return "chargingBayUR"; }
+                    else if(bottomCorner && x === (rightmost - 1)) { return "chargingBayLL"; }
+                    else if(x === (rightmost - 1) && y === (bottommost - 1)) { return "chargingBayUL"; }
+                    else { return "tech"; }
+                }
             case "conveyor":
                 if(y === 0) { return "tech"; }
                 if(x === 0) { return "conveyorL"; }
-                else if(x === (combat.enemywidth - 1)) { return "conveyorR"; }
+                else if(x === rightmost) { return "conveyorR"; }
                 else { return "conveyorM"; }    
         }
         return tile;

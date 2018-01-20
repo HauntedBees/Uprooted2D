@@ -327,6 +327,41 @@ combat.selectTarget = {
         
         return damagetext;
     },
+    GetNerfs: function() {
+        if(combat.enemies[0].id !== "beckett") { return []; }
+        var nerfs = [];
+        var right = combat.enemywidth - 1, bottom = combat.enemyheight - 1;
+        for(var x = right - 1; x <= right; x++) {
+            for(var y = bottom - 1; y <= bottom; y++) {
+                var nerf = combat.enemyGrid[x][y];
+                if(nerf === null) { continue; }
+                switch(nerf.id) {
+                    case "mushNerf": nerfs.push("mush"); break;
+                    case "riceNerf": nerfs.push("rice"); break;
+                    case "treeNerf": nerfs.push("tree"); break;
+                    case "vegNerf": nerfs.push("veg"); break;
+                    case "fishNerf": nerfs.push("spear"); nerfs.push("rod"); nerfs.push("water"); break;
+                    case "beeNerf": nerfs.push("bee"); break;
+                    case "eggNerf": nerfs.push("egg"); break;
+                    case "reNerf": nerfs.push("RE"); break;
+                }
+            }
+        }
+        return nerfs;
+    },
+    GetNerfMultiplier: function(crop, nerfs) { 
+        if(combat.enemies[0].id !== "beckett") { return 1; }
+        if(nerfs.length === 0) { return 1; }
+        var nerfMult = 1;
+        for(var i = 0; i < nerfs.length; i++) {
+            if(nerfs[i] === "RE") {
+                if(crop.respawn > 0) { nerfMult *= 0.25; }
+            } else if(nerfs[i] === crop.type) {
+                nerfMult *= 0.25;
+            }
+        }
+        return nerfMult;
+    },
     getAttackDetails: function() {
         var dmg = 0, numCrops = 0;
         var stickAmount = 0, potentialForStun = false;
@@ -334,6 +369,7 @@ combat.selectTarget = {
         var selHurt = 0;
         var animals = [];
         var cropInfo = [];
+        var nerfs = this.GetNerfs();
         for(var x = 0; x < player.gridWidth; x++) {
             for(var y = 0; y < player.gridHeight; y++) {
                 var tile = combat.grid[x][y];
@@ -367,7 +403,7 @@ combat.selectTarget = {
                 if(canHurt && ["water", "rice", "spear", "rod"].indexOf(tile.type) >= 0) {
                     selHurt += tile.power * 0.25;
                 }
-                var thisCropsDamage = tile.power * boost;
+                var thisCropsDamage = tile.power * boost * this.GetNerfMultiplier(tile, nerfs);
                 if(tile.name === "app") { thisCropsDamage *= 2 / (tile.activeTime + 1); }
                 if(tile.animal !== undefined && player.getRandomLuckyNumber() <= tile.animalChance) {
                     animals.push({ crop: tile.name, animal: tile.animal });

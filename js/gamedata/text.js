@@ -6008,6 +6008,26 @@ var fulltext = {
 		"en-dm": "{0} splashes some water on your field, destroying a crop!", 
 		"type": "combat"
 	},
+	"nerfMove": {
+		"en-us": "", 
+		"en-dm": "{0} activates a nerf on {2}. {2} are weaker now!", 
+		"type": "combat"
+	},
+	"burnSucc": {
+		"en-us": "", 
+		"en-dm": "{0} burns your field.", 
+		"type": "combat"
+	},
+	"burnDamage": {
+		"en-us": "", 
+		"en-dm": "{0} burns your field, damaging some crops!", 
+		"type": "combat"
+	},
+	"burnKill": {
+		"en-us": "", 
+		"en-dm": "{0} burns your field, destroying some crops!", 
+		"type": "combat"
+	},
 	"pigWithAFuckingGun": {
 		"en-us": "", 
 		"en-dm": "The pig accidentally triggers the gun on her back, firing directly at you and dealing {1} damage!", 
@@ -6186,6 +6206,21 @@ var fulltext = {
 	"hkCreepy5": {
 		"en-us": "", 
 		"en-dm": "HOUSEKEEPER: Please rate this app on the Application Store. Any ratings lower than five stars will not be accepted.", 
+		"type": "combat"
+	},
+	"beckettRock": {
+		"en-us": "", 
+		"en-dm": "{0} throws an engine onto your field.", 
+		"type": "combat"
+	},
+	"beckettSalt": {
+		"en-us": "", 
+		"en-dm": "{0} salts a row of crops on your field.", 
+		"type": "combat"
+	},
+	"beckettSaltKill": {
+		"en-us": "", 
+		"en-dm": "{0} salts a row of crops on your field, destroying some.", 
 		"type": "combat"
 	},
 	"convince2.0": {
