@@ -5913,6 +5913,26 @@ var fulltext = {
 		"en-dm": "changing the season to Winter while it is on the field!", 
 		"type": "combat"
 	},
+	"soyHeal": {
+		"en-us": "", 
+		"en-dm": "{0} consumes some crops and recovers {1} health.", 
+		"type": "combat"
+	},
+	"soyHealWeak": {
+		"en-us": "", 
+		"en-dm": "{0} soaks in nutrients from the ground and recovers {1} health.", 
+		"type": "combat"
+	},
+	"vineSmack": {
+		"en-us": "", 
+		"en-dm": "{0} vine-slaps a row of crops on your field.", 
+		"type": "combat"
+	},
+	"vineSmackKill": {
+		"en-us": "", 
+		"en-dm": "{0} vine-slaps a row of crops on your field, destroying some.", 
+		"type": "combat"
+	},
 	"plantAttack": {
 		"en-us": "", 
 		"en-dm": "{0} plants {2}.", 
@@ -6427,6 +6447,16 @@ var fulltext = {
 	"e.theMonster0": {
 		"en-us": "", 
 		"en-dm": "???", 
+		"type": "enemy"
+	},
+	"e.soyChild0": {
+		"en-us": "", 
+		"en-dm": "L'enfant d'Soy", 
+		"type": "enemy"
+	},
+	"e.soyStack0": {
+		"en-us": "", 
+		"en-dm": "Les Enfants Soy", 
 		"type": "enemy"
 	},
 	"e.brownCar0": {

@@ -17,6 +17,8 @@ var spriteData = {
             spriteData.names["frogbot" + i] = [11 + i, 0, true];
             spriteData.names["coffee" + i] = [11 + i, 1, true];
             spriteData.names["robobabby" + i] = [12, 18 + i];
+            spriteData.names["soybean" + i] = [32 + i, 16];
+            spriteData.names["soybaby" + i] = [37, 19 + i];
             if(i < 2) {
                 spriteData.names["apple" + i] = [3 + i, 0, true];
                 spriteData.names["banana" + i] = [5 + i, 0, true];
@@ -119,6 +121,10 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "soybean4": [35, 15],
+        "soybaby4": [38, 19],
+        "soybean": [35, 14],
+        "soybaby": [38, 20],
         "food2bar0": [31, 18],
         "food2bar1": [32, 18],
         "food2bar2": [33, 18],

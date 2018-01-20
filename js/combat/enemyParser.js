@@ -249,6 +249,8 @@ var conditions = {
         }
         return false;
     },
+    "NOT_SPRING": function(e) { return combat.season != 0; },
+    "HAS_LOW_HP": function(e) { return (e.health / e.maxhealth) < 0.5; },
     "UNPLUGGED": function(e) {
         for(var i = 0; i < combat.enemies.length; i++) {
             if(combat.enemies[i].unplugged === true) { return true; }
@@ -604,6 +606,16 @@ var actions = {
         EnemyParser.current.data = { message: "CONVINCEATRON2" };
         return true;
     },
+    "HEAL_FROM_CROPS": function(e) {
+        var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
+        var amountToHeal = combat.damagePlayer(fieldData.damage);
+        var prevHealth = e.health;
+        e.health = Math.min(e.maxhealth, (e.health + amountToHeal));
+        var adjustedAmountToHeal = (e.health - prevHealth);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
+        EnemyParser.outputData.throwables = fieldData.crops;
+        return true;
+    },
     "LAUNCH_CROPS": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
         var damage = combat.damagePlayer(fieldData.damage);
@@ -723,6 +735,32 @@ var actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     },
+    "VINE_SMACK": function(e) {
+        var row = Math.floor(Math.random() * player.gridHeight);
+        var hasKills = false;
+        for(var x = 0; x < player.gridWidth; x++) {
+            var tile = combat.grid[x][row];
+            if(tile === null) {
+                if(Math.random() < 0.33) {
+                    enemyHelpers.TryDisturbTile(x, row, "salt");
+                }
+            } else {
+                if(tile.x !== undefined || tile.type === "rock") { continue; }
+                var res = enemyHelpers.DoDamageCrop(e, x, row, -1);
+                if(res && Math.random() < 0.33) {
+                    enemyHelpers.TryDisturbTile(x, row, "salt");
+                }
+                hasKills = hasKills || res;
+            }
+        }
+        if(hasKills) {
+            EnemyParser.current.data.textID = "vineSmackKill";
+        } else {
+            EnemyParser.current.data.textID = "vineSmack";
+        }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
     "SPLASH_TILE": function(e) {
         var res = enemyHelpers.TrySplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
         if(!res.status) { EnemyParser.current.data.textID = "splashFail"; }
@@ -742,7 +780,22 @@ var actions = {
         EnemyParser.outputData.throwables = fieldData.crops;
         for(var i = 0; i < fieldData.crops.length; i++) {
             var baby = GetCrop(fieldData.crops[0][0]).baby;
-            combat.enemies.push(GetEnemy(baby));
+            if(combat.enemies.length < 5) {
+                combat.enemies.push(GetEnemy(baby));
+            } else if(baby === "soyChild") {
+                var enemiesRemoved = 0;
+                for(var j = combat.enemies.length - 1; j >= 0; j--) {
+                    if(combat.enemies[j].id === baby) {
+                        combat.enemies.splice(j, 1);
+                        enemiesRemoved++;
+                        if(enemiesRemoved === 2) { break; }
+                    }
+                }
+                if(enemiesRemoved === 2) {
+                    combat.enemies.push(GetEnemy("soyStack"));
+                    combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
+                }
+            }
         }
     },
     "MODULATE": function (e, season) {

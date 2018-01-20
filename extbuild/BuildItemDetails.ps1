@@ -235,8 +235,9 @@ if($which.Contains("X")) {
 	$csv = Import-CSV ".\temp\Details_Enemies.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\enemies.js";
 	$out.WriteLine(@'
-function EnemyDetail(name, size, spriteidx, cursorinfo, health, atk, def, fieldheight, fieldwidth, boss, seasonDistribution, atkType, args, drops, addtl) {
-    this.name = name;
+function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fieldheight, fieldwidth, boss, seasonDistribution, atkType, args, drops, addtl) {
+    this.id = id;
+	this.name = name;
     this.health = health;
 	this.maxhealth = health;
     this.atk = atk;
@@ -270,7 +271,7 @@ function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math
 function GetEnemy(name) {
     switch(name) {
 '@);
-	$formatStr = "		case `"{name}`": return new EnemyDetail(GetDisplayName(name, {dsl}), `"{size}`", {spriteidx}, { dx: {dx}, dy: {dy}, w: {w}, h: {h} }, {health}, {atk}, {def}, {fheight}, {fwidth}, {boss}, [{sp}, {su}, {au}, {wi}], `"{atkid}`", `"{args}`"{drops}{addtl});";
+	$formatStr = "		case `"{name}`": return new EnemyDetail(name, GetDisplayName(name, {dsl}), `"{size}`", {spriteidx}, { dx: {dx}, dy: {dy}, w: {w}, h: {h} }, {health}, {atk}, {def}, {fheight}, {fwidth}, {boss}, [{sp}, {su}, {au}, {wi}], `"{atkid}`", `"{args}`"{drops}{addtl});";
 	$count = 0;
 	$allEnemies = @();
 	ForEach($row in $csv) {

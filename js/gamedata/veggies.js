@@ -159,8 +159,9 @@ function GetCrop(name) {
 		case "food2powder": return new CropDetail(name, "Food2 Powder", 0, "food2", 1, 1, 1, 5, 0, 1, 1, 1, 1);
 		case "food2bar": return new CropDetail(name, "Foobar2", 0, "food2", 1, 5, 3, 45, 0, 1, 1, 1, 1);
 		case "food2barChoc": return new CropDetail(name, "Chocky Foobar2", 0, "food2", 1, 5, 3, 50, 0, 1, 1, 1, 1);
-		case "soybean": return new CropDetail(name, "Soybean", 0, "veg", 1, 10, 5, 60, 2, 0, 1, 1, 0);
+		case "soybean": return new CropDetail(name, "Soybean", 0, "veg", 1, 10, 5, 60, 0, 0, 1, 1, 0);
 		case "conveyorEnd": return new CropDetail(name, "Food2 Conveyor", 0, "card", 1, 999, 1, 100, 0, 0, 0, 0, 0);
+		case "soybaby": return new CropDetail(name, "Soy Baby", 0, "babby", 1, 5, 5, 0, 0, 1, 1, 1, 1, { baby: "soyChild" });
 	}
 }
 debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus"];
