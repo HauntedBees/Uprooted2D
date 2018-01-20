@@ -389,25 +389,46 @@ function CombatAnimHelper(enemies) {
         DrawCropGrid(combat.grid, combat.dx, combat.dy, true);
         DrawCropGrid(combat.enemyGrid, combat.enemydx, combat.enemydy);
     };
+
+    this.GetActualTile = function(tile, x, y) {
+        switch(tile) {
+            case "conveyor":
+                if(y === 0) { return "tech"; }
+                if(x === 0) { return "conveyorL"; }
+                else if(x === (combat.enemywidth - 1)) { return "conveyorR"; }
+                else { return "conveyorM"; }    
+        }
+        return tile;
+    };
+
+    this.DrawWrapper = function(x, y, w, h, name) {
+        name = name || "edge";
+        gfx.drawTileToGrid(name + "WA", x - 1, y - 1, "background");
+        gfx.drawTileToGrid(name + "WD", x + w, y - 1, "background");
+        gfx.drawTileToGrid(name + "SA", x - 1, y + h, "background");
+        gfx.drawTileToGrid(name + "SD", x + w, y + h, "background");
+        for(var yy = 0; yy < h; yy++) {
+            gfx.drawTileToGrid(name + "A", x - 1, y + yy, "background");
+            gfx.drawTileToGrid(name + "D", x + w, y + yy, "background");
+        }
+        for(var xx = 0; xx < w; xx++) {
+            gfx.drawTileToGrid(name + "W", x + xx, y - 1, "background");
+            gfx.drawTileToGrid(name + "S", x + xx, y + h, "background");
+        }
+    };
+
     this.DrawBackground = function() {
         gfx.clearLayer("background");
+        
+        if(combat.enemyTile === "dirt") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
         for(var x = 0; x < combat.enemywidth; x++) { // enemy field
             for(var y = 0; y < combat.enemyheight; y++) {
-                gfx.drawTileToGrid(combat.enemyTile, combat.enemydx + x, y + combat.enemydy, "background");
+                gfx.drawTileToGrid(this.GetActualTile(combat.enemyTile, x, y), combat.enemydx + x, y + combat.enemydy, "background");
             }
         }
         var toDrawAfterwards = [];
-        gfx.drawTileToGrid("edgeWA", combat.dx - 1, combat.dy - 1, "background");
-        gfx.drawTileToGrid("edgeWD", combat.dx + player.gridWidth, combat.dy - 1, "background");
-        gfx.drawTileToGrid("edgeSA", combat.dx - 1, combat.dy + player.gridHeight, "background");
-        gfx.drawTileToGrid("edgeSD", combat.dx + player.gridWidth, combat.dy + player.gridHeight, "background");
-        for(var y = 0; y < player.gridHeight; y++) {
-            gfx.drawTileToGrid("edgeA", combat.dx - 1, y + combat.dy, "background");
-            gfx.drawTileToGrid("edgeD", combat.dx + player.gridWidth, y + combat.dy, "background");
-        }
+        this.DrawWrapper(combat.dx, combat.dy, player.gridWidth, player.gridHeight);
         for(var x = 0; x < player.gridWidth; x++) { // player field
-            gfx.drawTileToGrid("edgeW", x + combat.dx, combat.dy - 1, "background");
-            gfx.drawTileToGrid("edgeS", x + combat.dx, combat.dy + player.gridHeight, "background");
             for(var y = 0; y < player.gridHeight; y++) {
                 gfx.drawTileToGrid("dirt", x + combat.dx, y + combat.dy, "background");
                 var item = player.itemGrid[x][y];

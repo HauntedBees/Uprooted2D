@@ -61,11 +61,16 @@ var combat = {
             if(enemy.tile) { this.enemyTile = enemy.tile; } else { this.enemyTile = "tech"; }
             this.enemies.push(enemy);
         }
+        this.enemywidth = Math.min(this.enemywidth, 6); // TODO: get a good actual max
         this.adjustEnemyStatsWeather();
         this.animHelper = new CombatAnimHelper(this.enemies);
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
         this.enemydx = 10 + Math.floor((5 - this.enemywidth) / 2);
         this.enemydy = this.dy + Math.floor((player.gridHeight - this.enemyheight) / 2);
+        for(var i = 0; i < this.enemies.length; i++) {
+            if(this.enemies[i].initFunc === undefined) { continue; }
+            combatInitFuncs[this.enemies[i].initFunc]();
+        }
         combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
         combat.charAnimIdx = setInterval(function() { combat.animHelper.Animate() }, timers.CHARANIM);
@@ -208,6 +213,10 @@ var combat = {
             this.numPlantTurns = 1;
             game.innerTransition(caller, combat.menu);
         } else if(this.state > combat.enemies.length) {
+            for(var i = 0; i < this.enemies.length; i++) {
+                if(this.enemies[i].turnFunc === undefined) { continue; }
+                combatEndTurnFuncs[this.enemies[i].turnFunc]();
+            }
             this.startRound();
             game.innerTransition(caller, combat.menu);
         } else {

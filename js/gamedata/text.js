@@ -5773,6 +5773,16 @@ var fulltext = {
 		"en-dm": "{0} attacks for {1} damage.", 
 		"type": "combat"
 	},
+	"sipSomeFood2": {
+		"en-us": "", 
+		"en-dm": "{0} slurps down some Food2 and recovers {1} health.", 
+		"type": "combat"
+	},
+	"repairMachine": {
+		"en-us": "", 
+		"en-dm": "{0} repairs his conveyor belt.", 
+		"type": "combat"
+	},
 	"grillAttack": {
 		"en-us": "", 
 		"en-dm": "{0} places some {2} on the grill.", 

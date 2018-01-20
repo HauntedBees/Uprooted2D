@@ -15,6 +15,7 @@ uglifyjs ^
     js/gamedata/cutscenes.js ^
     js/animation/animController.js ^
     js/input.js ^
+    js/combat/enemyInitFuncs.js ^
     js/combat/combat.js ^
     js/combat/enemyParser.js ^
     js/combat/combatcropfuncs.js ^

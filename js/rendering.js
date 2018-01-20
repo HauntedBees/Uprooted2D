@@ -273,6 +273,16 @@ var gfx = {
         ctx.fillStyle = "#8B8CDE";
         ctx.fillRect((startx + 1) * 16 * gfx.scale, (y + 16) * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
     },
+    drawBigNumber: function(number, x, y, layer) {
+        if(number > 100 || number <= 0) { return; }
+        var digits = ("" + number).split("");
+        var sheet = gfx.spritesheets["sheet"];
+        var ctx = gfx.ctx[layer];
+        for(var i = 0; i < digits.length; i++) {
+            var d = spriteData.names["bigNum" + digits[i]];
+            gfx.drawTileToGrid("bigNum" + digits[i], x + 0.5 * i, y, layer);
+        }
+    },
     drawItemNumber: function(number, x, y, layer, top) {
         var digits = ("" + number).split("");
         var sheet = gfx.spritesheets["sheet"];

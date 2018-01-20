@@ -138,8 +138,8 @@ combat.cleanFlaggedCrops = function() {
             combat.purgeFlaggedCrop(this.grid, x, y);
         }
     }
-    for(var x = 0; x < this.enemyGrid.length; x++) {
-        for(var y = 0; y < this.enemyGrid[0].length; y++) {
+    for(var x = 0; x < combat.enemywidth; x++) {
+        for(var y = 0; y < combat.enemyheight; y++) {
             if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined || !this.enemyGrid[x][y].flagged) { continue; }
             combat.purgeFlaggedCrop(this.enemyGrid, x, y);
         }
@@ -148,7 +148,7 @@ combat.cleanFlaggedCrops = function() {
 combat.purgeFlaggedCrop = function(grid, x, y) {
     if(grid[x][y] === null || grid[x][y].name === undefined) { return false; }
     var crop = grid[x][y];
-    if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; }
+    //if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; } // TODO: why was this even here
     if(crop.respawn > 0) {
         crop.activeTime = crop.respawn;
         crop.flagged = false;

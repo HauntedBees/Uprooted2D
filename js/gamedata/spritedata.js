@@ -119,6 +119,16 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "food2bar0": [31, 18],
+        "food2bar1": [32, 18],
+        "food2bar2": [33, 18],
+        "food2bar": [34, 18],
+        "food2barChoc0": [32, 17],
+        "food2barChoc1": [32, 18],
+        "food2barChoc2": [33, 17],
+        "food2barChoc": [34, 17],
+        "food2powder0": [30, 16],
+        "food2powder": [31, 16],
         "bigNum?": [38, 15],
         "bigNum0": [39, 14],
         "bigNum1": [38, 10],

@@ -318,6 +318,7 @@ function GetEnemy(name) {
 		if($row.postHit) { $addtl += "postHit: `"_`"".replace("_", $row.postHit); }
 		if($row.addtlHitCheck) { $addtl += "addtlHitCheck: `"_`"".replace("_", $row.addtlHitCheck); }
 		if($row.initFunc) { $addtl += "initFunc: `"_`"".replace("_", $row.initFunc); }
+		if($row.turnFunc) { $addtl += "turnFunc: `"_`"".replace("_", $row.turnFunc); }
 		
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
