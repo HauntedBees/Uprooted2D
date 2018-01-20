@@ -20,7 +20,7 @@ function CropDetail(name, displayname, price, type, size, time, frames, power, r
     this.frames = frames;
     this.power = power;
     this.respawn = re;
-    this.seasons = [sp || 0.2, su || 0.2, au || 0.2, wi || 0.2];
+    this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
 }
 function GetCropDesc(cropInfo) {
@@ -58,20 +58,19 @@ function GetCrop(name) {
 		$endStr = $endStr.replace("{time}", $row.Time).replace("{frames}", $row.AnimFrames).replace("{power}", $row.Power).replace("{re}", (?? $row.Re 0));
 		$endStr = $endStr.replace("{sp}", (?? $row.Sp 0)).replace("{su}", (?? $row.Su 0)).replace("{au}", (?? $row.Au 0)).replace("{wi}", (?? $row.Wi 0));
 		$addtl = @();
-		if($row.WaterResist) { $addtl += "waterResist: _".replace("_", $row.WaterResist); }
-		if($row.FireResist) { $addtl += "fireResist: _".replace("_", $row.FireResist); }
+		if($row.WaterR) { $addtl += "waterResist: _".replace("_", $row.WaterR); }
+		if($row.FireR) { $addtl += "fireResist: _".replace("_", $row.FireR); }
+		if($row.SaltR) { $addtl += "saltResist: _".replace("_", $row.SaltR); } # TODO: IMPLEMENT
+		if($row.SaltClean) { $addtl += "saltClean: true"; } # TODO: IMPLEMENT
+		if($row.Stick) { $addtl += "stickChance: _".replace("_", $row.Stick); }
 		if($row.Animal) {
 			$anInfo = $row.Animal.split("/");
 			$addtl += "animal: `"_`"".replace("_", $anInfo[0]);
 			$addtl += "animalChance: _".replace("_", $anInfo[1]);
 			$addtl += "animalDamageMult: _".replace("_", $anInfo[2]);
 		}
-		if($row.Catch) { $addtl += "catchLuck: _".replace("_", $row.Catch); }
 		if($row.Rot) { $addtl += "rotten: true"; }
 		if($row.NoRot) { $addtl += "noRot: true"; }
-		if($row.Req) { $addtl += "req: _".replace("_", $row.Req); }
-		if($row.StkChance) { $addtl += "stickChance: _".replace("_", $row.StkChance); }
-		if($row.StkRange) { $addtl += "stickRange: _".replace("_", $row.StkRange); }
 		if($row.Baby) { $addtl += "baby: `"_`"".replace("_", $row.Baby); }
 		if($row.SaltChance) { $addtl += "saltChance: _".replace("_", $row.SaltChance); }
 		if($row.BurnChance) { $addtl += "burnChance: _".replace("_", $row.BurnChance); }
@@ -318,6 +317,7 @@ function GetEnemy(name) {
 		if($row.wkSn) { $addtl += "weakSeason: _".replace("_", $row.wkSn); }
 		if($row.postHit) { $addtl += "postHit: `"_`"".replace("_", $row.postHit); }
 		if($row.addtlHitCheck) { $addtl += "addtlHitCheck: `"_`"".replace("_", $row.addtlHitCheck); }
+		if($row.initFunc) { $addtl += "initFunc: `"_`"".replace("_", $row.initFunc); }
 		
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
