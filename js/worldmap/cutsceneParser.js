@@ -379,6 +379,13 @@ var SpecialFunctions = {
     "BIRDSONG.OGG": function() {
         // TODO
     },
+    "BEEQUEENMAD": function() {
+        game.target = null;
+        player.beeQueensFaced++;
+        worldmap.angryBees = false;
+        var enemy = player.beeQueensFaced < 2 ? "beeQueenA" : (player.beeQueensFaced < 5 ? "beeQueenB" : "beeQueenC");
+        combat.startBattle([enemy]);
+    },
     "FLIPSHIT": function() {
         worldmap.waitForAnimation = true;
         iHandler.state.animHandler = function(spedUp) {

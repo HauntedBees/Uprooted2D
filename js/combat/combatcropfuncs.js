@@ -75,7 +75,12 @@ combat.ageCrops = function() {
                 if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { continue; }
                 var crop = this.enemyGrid[x][y];
                 if(crop.activeTime > 0) {
-                    crop.activeTime -= 1;
+                    if(crop.type === "bee" && Math.random() > 0.45) {
+                        crop.rotten = false;
+                        crop.activeTime = 0;
+                    } else {
+                        crop.activeTime -= 1;
+                    }
                 } else if(crop.activeTime == 0) {
                     if(crop.respawn > 0) {
                         crop.activeTime = crop.respawn;

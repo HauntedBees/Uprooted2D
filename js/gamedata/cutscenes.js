@@ -689,4 +689,11 @@ var scripts = {
 	"final31": "endNath_SETDIR:1&_CUSTOM:FLIPSHIT",
 	"final32": "_SLEEP:3000",
 	"final33": "_FIGHT:nathan",
+	// Misc.: Pissed off Colel Cab
+	"angryBee0": "pl_SETDIR:2&_TEXT:BeeGuard0",
+	"angryBee1": "pl_SETDIR:1&_TEXT:BeeGuard1",
+	"angryBee2": "pl_SETDIR:0&_TEXT:BeeGuard2",
+	"angryBee3": "pl_SETDIR:3&_TEXT:BeeGuard3",
+	"angryBee4": "pl_SETDIR:2&_TEXT:BeeGuard4",
+	"angryBee5": "_CUSTOM:BEEQUEENMAD",
 };

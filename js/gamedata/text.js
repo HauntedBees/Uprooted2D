@@ -6028,6 +6028,11 @@ var fulltext = {
 		"en-dm": "{0} punches a row of crops on your field.", 
 		"type": "combat"
 	},
+	"queenMaim": {
+		"en-us": "", 
+		"en-dm": "{0} fucking maims you for hurting the bees again, for {1} damage.", 
+		"type": "combat"
+	},
 	"hulkPunchKill": {
 		"en-us": "", 
 		"en-dm": "{0} punches a row of crops on your field, destroying some.", 

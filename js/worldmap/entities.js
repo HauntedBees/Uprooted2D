@@ -1,37 +1,4 @@
-var beeQueen = { interact: [
-    function() {
-        worldmap.writeText("BeeGuard0");
-        worldmap.playerDir = 2;
-        worldmap.refreshMap();
-    },
-    function() {
-        worldmap.writeText("BeeGuard1");
-        worldmap.playerDir = 1;
-        worldmap.refreshMap();
-    },
-    function() {
-        worldmap.writeText("BeeGuard2");
-        worldmap.playerDir = 0;
-        worldmap.refreshMap();
-    },
-    function() {
-        worldmap.writeText("BeeGuard3");
-        worldmap.playerDir = 3;
-        worldmap.refreshMap();
-    },
-    function() {
-        worldmap.writeText("BeeGuard4");
-        worldmap.playerDir = 2;
-        worldmap.refreshMap();
-    },
-    function() {
-        game.target = null;
-        player.beeQueensFaced++;
-        worldmap.angryBees = false;
-        var enemy = player.beeQueensFaced < 2 ? "beeQueenA" : (player.beeQueensFaced < 5 ? "beeQueenB" : "beeQueenC");
-        combat.startBattle([enemy]);
-    }
-]};
+var beeQueen = { interact: Cutscene("angryBee") };
 var mapentities = {
     "farm_init": [
         GetInvisibleEntity("CS_farminit", Cutscene("farminit"), { autoplay: true }),

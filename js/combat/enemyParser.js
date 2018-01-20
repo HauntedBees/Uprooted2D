@@ -240,6 +240,7 @@ var conditions = {
         }
         return false;
     },
+    "HURT_BEES": function(e) { return worldmap.angryBees; },
     "HAS_CROPS_READY": function(e) { return enemyHelpers.GetEnemyFieldData(e, false).crops.length > 0; },
     "HAS_BABIES_READY": function(e) { return enemyHelpers.GetEnemyFieldData(e, true).crops.length > 0; },
     "SUCCESS": function(e, condition) { return (condition === true); },
@@ -263,6 +264,19 @@ var actions = {
     "INIT": function() { return true; },
     "END": function() { return true; },
     "SKIP": function() { EnemyParser.outputData = { skip: true }; return true; },
+    "FUCKING_MAIM": function(e) {
+        worldmap.angryBees = false;
+        for(var x = 0; x < player.gridWidth; x++) {
+            for(var y = 0; y < player.gridHeight; y++) {
+                enemyHelpers.BurnTile(e, x, y);
+                enemyHelpers.BurnTile(e, x, y);
+                enemyHelpers.BurnTile(e, x, y);
+            }
+        }
+        var damage = combat.damagePlayer(e.atk * 500);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
+        return true;
+    },
     "REPAIR_MACHINE": function(e, crop) {
         var pos = {x: combat.enemywidth - 1, y: 0 };
         var newCrop = GetCrop("conveyorEnd");
