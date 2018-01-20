@@ -356,12 +356,12 @@ combat.selectTarget = {
                         boost *= 1 + (equipInfo.boost || 0);
                     }
                 }
-                if(tile.type === "bee") {
+                if(tile.stickChance !== undefined) {
                     potentialForStun = true;
                     if(stickAmount === 0 && player.getRandomLuckyNumber() < tile.stickChance) {
-                        stickAmount = Range(tile.stickRange[0], tile.stickRange[1]);
+                        stickAmount = combat.getStickTime(tile);
                     } else {
-                        stickAmount = Math.max(stickAmount, 1.2 * Range(tile.stickRange[0], tile.stickRange[1]));
+                        stickAmount = Math.max(stickAmount, 1.2 * combat.getStickTime(tile));
                     }
                 }
                 if(canHurt && ["water", "rice", "spear", "rod"].indexOf(tile.type) >= 0) {

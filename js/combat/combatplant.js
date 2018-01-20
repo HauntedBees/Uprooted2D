@@ -253,14 +253,14 @@ combat.plant = {
         return true;
     },
     throwSpear: function(x, y) {
-        var success = (Math.random() * player.luck) < this.activeCrop.req;
+        var success = (Math.random() * player.luck) < combat.getCatchChance(this.activeCrop);
         player.decreaseItem(this.activeCrop.name);
         if(!success) { return this.finishTurn("You chuck the spear, but do not catch any fish."); }
         var crop = GetCrop(this.activeCrop.name);
         crop.ready = true;
         crop.activeTime = 0;
         var fishNum = 0;
-        while(fishNum < 2 && Math.random() > (crop.catchLuck * player.luck)) { fishNum++; }
+        while(fishNum < 2 && Math.random() > (combat.getCatchLuck(crop) * player.luck)) { fishNum++; }
         crop.power = 10 + fishNum * 10;
         crop.type = "rod";
         crop.fishNum = fishNum;

@@ -92,6 +92,20 @@ var spriteData = {
         for(var i = 0; i < items.length; i++) {
             spriteData.names[items[i]] = [6 + i, 10];
         }
+
+        var food2s = ["orig", "kelp", "coffee", "salsa", "gamer", "cookie", "black", "purple", "crystal"];
+        for(var i = 0; i < food2s.length; i++) {
+            var myfood = food2s[i];
+            spriteData.names["food2" + myfood + "0"] = [30, 18];
+            if(i === 0) { spriteData.names["food2classic0"] = [30, 18]; }
+            for(var j = 1; j <= 4; j++) {
+                spriteData.names["food2" + myfood + j] = [28 + i, 18 + j];
+                if(i === 0) { spriteData.names["food2classic" + j] = [28, 18 + j]; }
+            }
+            spriteData.names["food2" + myfood] = [28 + i, 22];
+            if(i === 0) { spriteData.names["food2classic"] = [28, 22]; }
+        }
+
         for(var i = 0; i < 13; i++) {
             spriteData.names["sickle_" + i] = [i, 16];
             if(i < 9) { spriteData.names["compost_" + i] = [i, 17]; }
@@ -105,6 +119,47 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "bigNum?": [38, 15],
+        "bigNum0": [39, 14],
+        "bigNum1": [38, 10],
+        "bigNum2": [39, 10],
+        "bigNum3": [38, 11],
+        "bigNum4": [39, 11],
+        "bigNum5": [38, 12],
+        "bigNum6": [39, 12],
+        "bigNum7": [38, 13],
+        "bigNum8": [39, 13],
+        "bigNum9": [38, 14],
+        "starNone": [36, 10],
+        "starHalf": [36, 11],
+        "starFull": [36, 12],
+        "starMax": [36, 13],
+        "stunIco1": [36, 14],
+        "stunIco2": [36, 15],
+        "stunIco3": [36, 16],
+        "waterIco1": [37, 10],
+        "waterIco2": [37, 11],
+        "fireIco1": [37, 12],
+        "fireIco2": [37, 13],
+        "saltIco1": [37, 14],
+        "saltIco2": [37, 15],
+        "saltIcoX": [37, 16],
+        "spring0": [36, 17],
+        "spring1": [36, 18],
+        "spring2": [12, 10],
+        "summer0": [37, 17],
+        "summer1": [37, 18],
+        "summer2": [13, 10],
+        "autumn0": [38, 17],
+        "autumn1": [38, 18],
+        "autumn2": [14, 10],
+        "winter0": [39, 17],
+        "winter1": [39, 18],
+        "winter2": [15, 10],
+        "conveyorL": [29, 17],
+        "conveyorM": [30, 17],
+        "conveyorR": [35, 17],
+        "conveyorEnd": [31, 17],
         "fx0": [32, 10],
         "fx1": [32, 11],
         "fx2": [32, 12],

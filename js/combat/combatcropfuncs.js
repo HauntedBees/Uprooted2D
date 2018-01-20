@@ -9,13 +9,39 @@ combat.getArrIdx = function(arr, x, y) {
     return -1;
 };
 
+combat.getCatchChance = function(crop) {
+    if(crop.type === "water") { return 0.05; }
+    if(crop.type === "spear") { return 0.5; }
+    var val = 0.3;
+    if(crop.power < 2) { val = 0.15; }
+    else if(crop.power < 6) { val = 0.175; }
+    else if(crop.power < 10) { val = 0.2; }
+    if(crop.type === "bee") { val *= 0.75; }
+    return val;
+};
+combat.getCatchLuck = function(crop) {
+    if(crop.power < 2) { return 0.99; }
+    else if(crop.power < 6) { return 0.8; }
+    else if(crop.power < 10) { return 0.7; }
+    return 0.65;
+};
+combat.getStickTime = function(crop) {
+    var min = 0; max = 0;
+    switch(crop.stickChance) {
+        case 1: min = 1; max = 1; break;
+        case 2: min = 1; max = 3; break;
+        case 3: min = 2; max = 5; break;
+    }
+    return Range(min, max);
+}
+
 combat.ageCrops = function() {
     for(var x = 0; x < this.grid.length; x++) {
         for(var y = 0; y < this.grid[0].length; y++) {
             if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { continue; }
             var crop = this.grid[x][y];
             if(crop.type === "water" || crop.type === "rod") {
-                var success = (Math.random() * player.luck) < crop.req;
+                var success = (Math.random() * player.luck) < combat.getCatchChance(crop);
                 if((crop.name === "net" || crop.name === "bignet") && crop.rotten && success) {
                     crop.rotten = false;
                     crop.power += Range(0, 5);
@@ -24,11 +50,11 @@ combat.ageCrops = function() {
                     crop.ready = true;
                     crop.activeTime = 0;
                     var fishNum = 0;
-                    while(fishNum < 2 && Math.random() > (crop.catchLuck * player.luck)) { fishNum++; }
+                    while(fishNum < 2 && Math.random() > (combat.getCatchLuck(crop) * player.luck)) { fishNum++; }
                     crop.power = 10 + fishNum * 10;
                     crop.fishNum = fishNum;
                 }
-            } else if(crop.type === "bee" && (Math.random() * player.luck) < crop.req) {
+            } else if(crop.type === "bee" && (Math.random() * player.luck) < combat.getCatchChance(crop)) {
                 crop.rotten = false;
                 crop.activeTime = 0;   
             }
