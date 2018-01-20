@@ -139,6 +139,10 @@
                                         <div><label><span class="spriteTiny inline stinv_regrow" title="Time to Regrow"></span> Regrow: </label> <span class="txt_regrow"></span></div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-6"><label>Can be found at:</label></div>
+                                    <div class="col-6"><ul class="txt_locations"></ul></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -280,6 +284,32 @@
                     } else {
                         $template.find(".txt_regrow").text(crop.respawn);
                     }
+
+                    var locations = GetNonstandardLocationsForItem(crop.name);
+                    for(var key in stores) {
+                        var wares = stores[key].wares;
+                        for(var j = 0; j < wares.length; j++) {
+                            if(wares[j].product !== crop.name) { continue; }
+                            locations.push(shopNames[key]);
+                            break;
+                        }
+                    }
+                    for(var key in mapentities) {
+                        var entities = mapentities[key];
+                        for(var j = 0; j < entities.length; j++) {
+                            if(entities[j].isChest !== true) { continue; }
+                            var contents = entities[j].contents;
+                            for(var k = 0; k < contents.length; k++) {
+                                if(contents[k][0] !== crop.name) { continue; }
+                                var name = mapNames[key] + " (Chest)";
+                                if(locations.indexOf(name) < 0) { locations.push(name); }
+                                break;
+                            }
+                        }
+                    }
+                    var $ul = $template.find(".txt_locations");
+                    for(var j = 0; j < locations.length; j++) { $ul.append(("<li>" + locations[j] + "</li>")); }
+
                     $crops.append($template);
                 }
 

@@ -6,7 +6,7 @@ var mapNames = {
     "farm": "Your Farm", "producestand": "Produce Stand", "forest": "Agrios Forest", "firstvillage": "San Ambrosio", "belowvillage": "South of Town",
     "researchfacility": "Mysterious Research Lab", "bridge": "Bridge Crossing", "underwater": "Underwater", "fakefarm": "Jeff's Farm",
     "southcity": "South Las Abejas", "northcity": "Central Las Abejas", "hq_1": "Food2 Headquarters 1F", "hq_2": "Food2 Headquarters 2F",
-    "hq_3": "Food2 Headquarters 3F", "hq_4": "Food2 Headquarters 4F", "hq_5": "Food2 Headquarters 5F", "hq_6": "Food2 Headquarters 6F"
+    "hq_3": "Food2 Headquarters 3F", "hq_4": "Food2 Headquarters 4F", "hq_5": "Food2 Headquarters 5F"
 };
 var shopNames = {
     "coop": "Chicken Coop", "inn0": "Your House", "equip1": "Dave's Hoes and Sickles", "fixture1": "Fuckster's Fixtures", "seed1": "Seedy Pete's Petey Seeds",
@@ -39,6 +39,24 @@ function GetBossHTML(enemyKey) {
     $template.removeClass("template").removeAttr("id");
     $template.find(".txt_name").text("Boss: " + GetEnemyName(enemyKey));
     return $template;
+}
+
+function GetNonstandardLocationsForItem(name) {
+    switch(name) {
+        case "egg":
+        case "quail":
+        case "goose":
+        case "turkey":
+        case "platypus": return ["Central Las Abejas (Egg Dealer)"];
+        case "goldegg": return ["Produce Stand (Egg Fairy)", "Central Las Abejas (Egg Dealer)"];
+        case "coconut": return ["Agrios Forest (Lime)"];
+        case "gmocorn": return ["Mysterious Research Lab (RAPBATTLE)"];
+        case "ultrarod": return ["Underwater (Dowel)"];
+        case "goodfood": return ["Fake Farm (Crouton)"];
+        case "notdrugs": return ["South Las Abejas (Old Lady)"];
+        case "lotus": return ["Central Las Abejas (Daveothy)"];
+        default: return [];
+    }
 }
 
 
