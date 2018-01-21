@@ -165,7 +165,7 @@ var CommandParser = {
         ];
         worldmap.writeText(text, args, false, formatting);
     },
-    Parse_BasicPlayerFrame: function(args) {
+    Parse_BasicPlayerFrame: function(args) { // sx, sy, time
         worldmap.waitForAnimation = true;
         var sx = parseInt(args[0]);
         var sy = parseInt(args[1]);
