@@ -193,12 +193,12 @@ var mapentities = {
         
         { name: "Falcon0", pos: { x: 21, y: 9 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
 
-        GetCommonEntity("Robo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
-        GetCommonEntity("Robo2", 10, 38, 4, 2, GetStdMovement([ [10, 38, 3], [11, 38, 3], [11, 39, 2], [10, 39, 1], [10, 38, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
-        GetCommonEntity("Robo3", 10, 31, 4, 2, GetStdMovement([ [10, 31, 3], [14, 31, 3], [10, 31, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
-        GetCommonEntity("Robo4", 8, 28, 4, 2, GetStdMovement([ [8, 28, 3], [13, 28, 3], [8, 28, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
-        GetCommonEntity("Robo5", 3, 23, 4, 2, GetStdMovement([ [3, 23, 3], [13, 23, 3], [3, 23, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
-        GetCommonEntity("Robo6", 22, 36, 4, 3, undefined, Cutscene("enemy"), enemyMetadata.robo2)
+        GetCommonEntity("BVRobo1", 20, 20, 4, 2, GetStdMovement([ [20, 20, 3], [27, 20, 3], [27, 24, 2], [20, 24, 1], [20, 20, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("BVRobo2", 10, 38, 4, 2, GetStdMovement([ [10, 38, 3], [11, 38, 3], [11, 39, 2], [10, 39, 1], [10, 38, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("BVRobo3", 10, 31, 4, 2, GetStdMovement([ [10, 31, 3], [14, 31, 3], [10, 31, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("BVRobo4", 8, 28, 4, 2, GetStdMovement([ [8, 28, 3], [13, 28, 3], [8, 28, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("BVRobo5", 3, 23, 4, 2, GetStdMovement([ [3, 23, 3], [13, 23, 3], [3, 23, 1] ]), Cutscene("enemy"), enemyMetadata.robo2),
+        GetCommonEntity("BVRobo6", 22, 36, 4, 3, undefined, Cutscene("enemy"), enemyMetadata.robo2)
     ],
     "researchfacility": function() {
 		var x = [
