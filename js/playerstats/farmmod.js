@@ -175,7 +175,7 @@ pausemenu.farmmod = {
                 player.itemGrid[gridX][gridY] = this.selectedItem;
             }
             var stillHasAny = player.decreaseItem(this.selectedItem);
-            if(!stillHasAny) { this.selectedItem = null; }
+            if(!stillHasAny) { this.selectedItem = null; this.selectedItemSize = 0; }
         }
         this.drawEverything();
         return true;

@@ -107,34 +107,34 @@ function EquipmentDetail(name, displayname, price, sprite, type, addtl) {
 function GetEquipmentDesc(equipInfo) {
     var str = "";
     if(equipInfo.type === "weapon") {
-        str += "Power: " + equipInfo.power;
-        if(equipInfo.targetCrops) { str += "\n Can target enemy Crops."; }
-        if(equipInfo.noEnemies) { str += "\n Cannot target enemies."; }
-        if(equipInfo.sp) { str += "\n Stronger in Spring."; }
-        if(equipInfo.su) { str += "\n Stronger in Summer."; }
-        if(equipInfo.au) { str += "\n Stronger in Autumn."; }
-        if(equipInfo.wi) { str += "\n Stronger in Winter."; }
-        if(equipInfo.tech) { str += "\n Requires Sickle2 Charger on field."; }
+        str += GetText("eq.power") + " " + equipInfo.power;
+        if(equipInfo.targetCrops) { str += "\n " + GetText("eq.hitCrops"); }
+        if(!equipInfo.noEnemies) { str += "\n " + GetText("eq.hitEnemies"); }
+        if(equipInfo.sp) { str += "\n " + GetText("eq.su"); }
+        if(equipInfo.su) { str += "\n " + GetText("eq.sp"); }
+        if(equipInfo.au) { str += "\n " + GetText("eq.au"); }
+        if(equipInfo.wi) { str += "\n " + GetText("eq.wi"); }
+        if(equipInfo.tech) { str += "\n " + GetText("eq.sickle2"); }
         if(equipInfo.attacks) { 
-            if(equipInfo.attacks === 999) { str += "\n Attacks all enemies."; }
-            else { str += "\n Attacks "+ equipInfo.attacks + " enemies."; }
+            if(equipInfo.attacks === 999) { str += "\n " + GetText("eq.attackall"); }
+            else { str += "\n " + GetText("eq.attacksome").replace(/\{0\}/g, equipInfo.attacks); }
         }
     } else if(equipInfo.type === "compost") {
-        str += "Holding Amount: " + equipInfo.amount;
-        if(equipInfo.canAttack) { str += "\n Can attack enemies with Compost."; }
-        if(equipInfo.rotOnly) { str += "\n Can only compost rotten crops."; }
-        if(equipInfo.bonus) { str += "\n Bonus Effect: " + (equipInfo.bonus * 100) + "%"; }
-        if(equipInfo.tech) { str += "\n May backfire."; }
+        str += GetText("eq.holds") + " "  + equipInfo.amount;
+        if(equipInfo.canAttack) { str += "\n " + GetText("eq.compattack"); }
+        if(equipInfo.rotOnly) { str += "\n " + GetText("eq.rotten"); }
+        if(equipInfo.bonus) { str += "\n " + GetText("eq.bonus") + " " + (equipInfo.bonus * 100) + "%"; }
+        if(equipInfo.tech) { str += "\n " + GetText("eq.backfire"); }
     } else if(equipInfo.type === "gloves") {
-        str += "Seeds Per Turn: " + equipInfo.amount;
-        if(equipInfo.canAttack) { str += "\n Can Attack or Compost after planting seeds."; }
-        if(equipInfo.def) { str += "\n Damage Resistance: " + (equipInfo.def * 100) + "%"; }
-        if(equipInfo.tech) { str += "\n May shock saplings and tech when planted. Will shock you when touching water."; }
+        str += GetText("eq.spturn") + " "  + equipInfo.amount;
+        if(equipInfo.canAttack) { str += "\n " + GetText("eq.actafter"); }
+        if(equipInfo.def) { str += "\n " + GetText("eq.dmgresist") + " " + (equipInfo.def * 100) + "%"; }
+        if(equipInfo.tech) { str += "\n " + GetText("eq.mayshock1") + " " + GetText("eq.mayshock2"); }
     } else if(equipInfo.type === "soil") {
-        if(equipInfo.speed) { str += "\n Growth Speed Boost: " + (equipInfo.speed * 100) + "%"; }
-        if(equipInfo.boost) { str += "\n Seasonal Resistance: " + (equipInfo.boost * 100) + "%"; }
-        if(equipInfo.amplify) { str += "\n Seasonal Strength: " + (equipInfo.amplify * 100) + "%"; }
-        if(equipInfo.tech) { str += "\n Will kill crops that are too weak or grow too quickly. Bees will fly away."; }
+        if(equipInfo.speed) { str += GetText("eq.growth") + " " + (equipInfo.speed * 100) + "%"; }
+        if(equipInfo.boost) { str += "\n " + GetText("eq.sres") + " " + (equipInfo.boost * 100) + "%"; }
+        if(equipInfo.amplify) { str += "\n " + GetText("eq.sstr") + " " + (equipInfo.amplify * 100) + "%"; }
+        if(equipInfo.tech) { str += "\n " + GetText("eq.willkill1") + " " + GetText("eq.willkill2"); }
     }
     return str;
 }
@@ -153,7 +153,7 @@ function GetEquipment(name) {
 		$addtl = @();
 		if($row.Tech) { $addtl += "tech: true"; }
 		# Weapons
-		if(-not $row.Foes) { $addtl += "noEnemies: true"; }
+		if($row.Foes) { $addtl += "noEnemies: false"; } else { $addtl += "noEnemies: true"; }
 		if($row.Crops) { $addtl += "targetCrops: true"; }
 		if($row.Pow) { $addtl += "power: _".replace("_", $row.Pow); }
 		if($row.Num) { $addtl += "attacks: _".replace("_", $row.Num); }
@@ -165,13 +165,13 @@ function GetEquipment(name) {
 		if($row.Amt) { $addtl += "amount: _".replace("_", $row.Amt); }
 		if($row.Rot) { $addtl += "rotOnly: true"; }
 		if($row.Atk) { $addtl += "canAttack: true"; }
-		if($row.Bns) { $addtl += "bonus: _".replace("_", $row.Bns); }
+		if($row.Bns) { $addtl += "bonus: _".replace("_", $row.Bns); } else { $addtl += "bonus: 0"; }
 		# Gloves
-		if($row.Def) { $addtl += "def: _".replace("_", $row.Def); }
+		if($row.Def) { $addtl += "def: _".replace("_", $row.Def); } else { $addtl += "def: 0"; }
 		# Watering Cans
-		if($row.Spd) { $addtl += "speed: _".replace("_", $row.Spd); }
-		if($row.Bst) { $addtl += "boost: _".replace("_", $row.Bst); }
-		if($row.Amp) { $addtl += "amplify: _".replace("_", $row.Amp); }
+		if($row.Spd) { $addtl += "speed: _".replace("_", $row.Spd); } else { $addtl += "speed: 0"; }
+		if($row.Bst) { $addtl += "boost: _".replace("_", $row.Bst); } else { $addtl += "boost: 0"; }
+		if($row.Amp) { $addtl += "amplify: _".replace("_", $row.Amp); } else { $addtl += "amplify: 0"; }
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
 			$endStr = $endStr.replace("{addtl}", ", { $folded }");

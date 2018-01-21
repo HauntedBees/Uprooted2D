@@ -196,6 +196,7 @@ var gfx = {
         gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
+    drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = "#000000"; gfx.ctx["menutext"].fillRect(x, y, w, 5); },
     drawChoice: function(y, t, selected) {
         var tile = selected ? 9 : 7;
         for(var x = 0; x < 15; x++) { gfx.drawSprite("sheet", tile, 11, x * 16, y * 16 - 8, "menuA"); }
@@ -232,12 +233,14 @@ var gfx = {
         }
         return { rows: numRows, height: dy };
     },
-    drawWrappedText: function(t, x, y, maxWidth, color, layer) {
+    drawWrappedText: function(t, x, y, maxWidth, color, layer, size) {
         layer = layer || "menutext";
         maxWidth *= gfx.scale;
         var ctx = gfx.ctx[layer];
         ctx.fillStyle = (color || "#000000");
-        ctx.font = "22px " + gfx.GetFont();
+        size = size || 22;
+        ctx.font = size + "px " + gfx.GetFont();
+        var ddy = size / 2.75;
         var ts = t.split(" ");
         var row = ts[0];
         var dy = 0;
@@ -245,7 +248,7 @@ var gfx = {
             var textInfo = ctx.measureText(row + " " + ts[i]);
             if(textInfo.width > maxWidth || row.indexOf("\n") >= 0) {
                 ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
-                dy += 8;
+                dy += ddy;
                 row = ts[i];
             } else {
                 row += " " + ts[i];

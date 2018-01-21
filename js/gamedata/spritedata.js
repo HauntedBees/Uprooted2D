@@ -121,6 +121,14 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "food2keycard": [39, 15],
+        "smartphone": [40, 15],
+        "monsterheart": [22, 14],
+        "monsteregg": [23, 14],
+        "seamonkkey": [24, 14],
+        "goldmushroom": [39, 20],
+        "alignment": [16, 3, true],
+        "alignmentcursor": [38, 16],
         "engine0": [39, 19],
         "soybean4": [35, 15],
         "soybaby4": [38, 19],

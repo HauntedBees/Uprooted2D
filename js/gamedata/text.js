@@ -5417,6 +5417,7 @@ var fulltext = {
 		"en-dm": "Drive to the fake farm.", 
 		"type": "choice"
 	},
+	// Menus
 	"menu.Items": {
 		"en-us": "", 
 		"en-dm": "Items", 
@@ -5440,6 +5441,11 @@ var fulltext = {
 	"menu.Save": {
 		"en-us": "", 
 		"en-dm": "Save", 
+		"type": "opts"
+	},
+	"menu.Quit": {
+		"en-us": "", 
+		"en-dm": "Quit", 
 		"type": "opts"
 	},
 	"menu.level": {
@@ -5480,6 +5486,191 @@ var fulltext = {
 	"menu.coins": {
 		"en-us": "", 
 		"en-dm": "Monies", 
+		"type": "opts"
+	},
+	"eq.hitCrops": {
+		"en-us": "", 
+		"en-dm": "Can target enemy Crops.", 
+		"type": "opts"
+	},
+	"eq.hitEnemies": {
+		"en-us": "", 
+		"en-dm": "Can target enemies.", 
+		"type": "opts"
+	},
+	"eq.sp": {
+		"en-us": "", 
+		"en-dm": "Stronger in Spring.", 
+		"type": "opts"
+	},
+	"eq.su": {
+		"en-us": "", 
+		"en-dm": "Stronger in Summer.", 
+		"type": "opts"
+	},
+	"eq.au": {
+		"en-us": "", 
+		"en-dm": "Stronger in Autumn.", 
+		"type": "opts"
+	},
+	"eq.wi": {
+		"en-us": "", 
+		"en-dm": "Stronger in Winter.", 
+		"type": "opts"
+	},
+	"eq.sickle2": {
+		"en-us": "", 
+		"en-dm": "Requires Sickle2 Charger on field.", 
+		"type": "opts"
+	},
+	"eq.attackall": {
+		"en-us": "", 
+		"en-dm": "Attacks all enemies.", 
+		"type": "opts"
+	},
+	"eq.attacksome": {
+		"en-us": "", 
+		"en-dm": "Attacks {0} enemies.", 
+		"type": "opts"
+	},
+	"eq.holds": {
+		"en-us": "", 
+		"en-dm": "Holding Amount:", 
+		"type": "opts"
+	},
+	"eq.compattack": {
+		"en-us": "", 
+		"en-dm": "Can attack enemies with Compost.", 
+		"type": "opts"
+	},
+	"eq.rotten": {
+		"en-us": "", 
+		"en-dm": "Can only compost rotten crops.", 
+		"type": "opts"
+	},
+	"eq.bonus": {
+		"en-us": "", 
+		"en-dm": "Bonus Effect:", 
+		"type": "opts"
+	},
+	"eq.backfire": {
+		"en-us": "", 
+		"en-dm": "May backfire.", 
+		"type": "opts"
+	},
+	"eq.spturn": {
+		"en-us": "", 
+		"en-dm": "Seeds Per Turn:", 
+		"type": "opts"
+	},
+	"eq.actafter": {
+		"en-us": "", 
+		"en-dm": "Can Attack or Compost after planting.", 
+		"type": "opts"
+	},
+	"eq.dmgresist": {
+		"en-us": "", 
+		"en-dm": "Damage Resistance:", 
+		"type": "opts"
+	},
+	"eq.mayshock1": {
+		"en-us": "", 
+		"en-dm": "May shock plants and tech when planted.", 
+		"type": "opts"
+	},
+	"eq.mayshock2": {
+		"en-us": "", 
+		"en-dm": "Will shock you when touching water.", 
+		"type": "opts"
+	},
+	"eq.growth": {
+		"en-us": "", 
+		"en-dm": "Growth Speed Boost:", 
+		"type": "opts"
+	},
+	"eq.sres": {
+		"en-us": "", 
+		"en-dm": "Seasonal Resistance:", 
+		"type": "opts"
+	},
+	"eq.sstr": {
+		"en-us": "", 
+		"en-dm": "Seasonal Strength:", 
+		"type": "opts"
+	},
+	"eq.willkill1": {
+		"en-us": "", 
+		"en-dm": "Will kill crops that are too weak or", 
+		"type": "opts"
+	},
+	"eq.willkill2": {
+		"en-us": "", 
+		"en-dm": "grow too quickly. Bees will fly away.", 
+		"type": "opts"
+	},
+	"eq.power": {
+		"en-us": "", 
+		"en-dm": "Power:", 
+		"type": "opts"
+	},
+	"alignment": {
+		"en-us": "", 
+		"en-dm": "Alignment", 
+		"type": "opts"
+	},
+	"aligngood": {
+		"en-us": "", 
+		"en-dm": "Good", 
+		"type": "opts"
+	},
+	"qi.goldmushroom": {
+		"en-us": "", 
+		"en-dm": "Golden Mushroom", 
+		"type": "opts"
+	},
+	"qi.seamonkkey": {
+		"en-us": "", 
+		"en-dm": "Sea Monk Key", 
+		"type": "opts"
+	},
+	"qi.monsterheart": {
+		"en-us": "", 
+		"en-dm": "Sea Monster Heart", 
+		"type": "opts"
+	},
+	"qi.monsteregg": {
+		"en-us": "", 
+		"en-dm": "Sea Monster Egg", 
+		"type": "opts"
+	},
+	"qi.tire": {
+		"en-us": "", 
+		"en-dm": "Spare Tire", 
+		"type": "opts"
+	},
+	"qi.food2keycard": {
+		"en-us": "", 
+		"en-dm": "Employee Keycard", 
+		"type": "opts"
+	},
+	"qi.smartphone": {
+		"en-us": "", 
+		"en-dm": "Smartphone", 
+		"type": "opts"
+	},
+	"alignbad": {
+		"en-us": "", 
+		"en-dm": "Evil", 
+		"type": "opts"
+	},
+	"aligntech": {
+		"en-us": "", 
+		"en-dm": "Industrial", 
+		"type": "opts"
+	},
+	"alignnature": {
+		"en-us": "", 
+		"en-dm": "Natural", 
 		"type": "opts"
 	},
 	"gift.itemname": {

@@ -1,7 +1,7 @@
 var player = {
     health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true,
     c2: 0, c2Rate: 1, beeQueensFaced: 0, nathanSeeds: [["beet", 10], ["carrot", 10], ["ginger", 5]],
-    level: 1, exp: 0, nextExp: 4, totalExp: 0, 
+    level: 1, exp: 0, nextExp: 4, totalExp: 0, ethicsAxis: 0, techAxis: 0, // 1 = good/tech, -1 = bad/nature
     monies: 1000, playTime: 0, visitedMaps: [],
     clearedEntities: [], questsCleared: [], activeQuests: {}, 
     lastInn: "start",
@@ -20,13 +20,7 @@ var player = {
         cancel: "q", 
         pause: "Enter"
     },
-    equipment: {
-        weapon: "!babySickle", 
-        compost: "!weakCompost", 
-        gloves: null, 
-        soil: null, 
-        armor: null
-    },
+    equipment: { weapon: "!goodSickle", compost: "!weakCompost", gloves: null, soil: null },
     setMapPosition: function() {
         player.mapName = worldmap.mapName;
         player.mapPos = worldmap.pos;
@@ -103,7 +97,7 @@ var player = {
         this.atk = Math.ceil(this.atk + Math.log10(this.level));
         this.def = Math.ceil(this.def + Math.log10(this.level));
         this.luck = 0.7 - (this.level / 400);
-        this.nextExp = Math.floor(this.level * this.level * 5 * Math.pow(1.02, this.level - 2));
+        this.nextExp = Math.floor(this.level * this.level * 3 * Math.pow(1.005, this.level - 2));
         this.getLevelUpItemBonuses();
     },
     canMelee: function(numEnemyCrops) {
@@ -214,12 +208,21 @@ var player = {
         return false;
     },
     increaseItem: function(name, amount) {
+        var numOfType = 0;
+        var type = name[0] === "!" ? "!" : (name[0] === "_" ? "_" : "C");
         for(var i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0] === name) {
                 player.inventory[i][1] += (amount || 1);
-                return;
+                return true;
             }
-        }
+            var front = player.inventory[i][0][0];
+            if(front === "!" || front === "_") {
+                if(type === front) { numOfType++; }
+            } else if(type === "C") {
+                numOfType++;
+            }
+        }   
+        if(numOfType === 27) { console.log("NOT ENOUGH ROOM!"); return false; }
         player.inventory.push([name, (amount || 1)]);
     }
 };
