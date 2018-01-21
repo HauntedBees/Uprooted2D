@@ -5778,6 +5778,11 @@ var fulltext = {
 		"en-dm": "{0} slurps down some Food2 and recovers {1} health.", 
 		"type": "combat"
 	},
+	"nathanCompost": {
+		"en-us": "", 
+		"en-dm": "{0} composts his crops and recovers {1} health.", 
+		"type": "combat"
+	},
 	"repairMachine": {
 		"en-us": "", 
 		"en-dm": "{0} repairs his conveyor belt.", 

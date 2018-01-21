@@ -272,6 +272,106 @@ var actions = {
     "INIT": function() { return true; },
     "END": function() { return true; },
     "SKIP": function() { EnemyParser.outputData = { skip: true }; return true; },
+    "NATHAN_PLANT": function(e) {
+        var cropsToGrow = [ // these should only be 4 star or higher crops in the end, with a 2 for the season, if possible
+            { // spring
+                crops: ["asparagus", "carrot", "garlic", "pineapple", "radish", "food2crystal"],
+                trees: ["apricot", "avocado"],
+                fishs: ["spear", "goodrod", "net"],
+                mushs: ["poisnshroom", "blackshroom", "greenshroom"],
+                eggie: ["platypus", "turkey", "goose", "quail"],
+                abeee: ["beeR", "beeG", "beeB"],
+                paddy: ["arborio", "blackrice", "shortgrain", "kelp"]
+            },
+            { // summer
+                crops: ["corn", "tomato", "soybean", "food2crystal"],
+                trees: ["avocado", "blackberry", "kiwi", "lemon", "mango", "cacao"],
+                fishs: ["spear", "goodrod", "net"],
+                mushs: ["poisnshroom", "blackshroom", "greenshroom"],
+                eggie: ["platypus", "turkey", "goose", "quail"],
+                abeee: ["beeR", "beeG", "beeB"],
+                paddy: ["arborio", "blackrice", "shortgrain", "chestnut", "algae", "kelp"]
+            },
+            { // autumn
+                crops: ["beet", "bellpepper", "carrot", "ginger", "spinach", "soybean", "food2crystal"],
+                trees: ["apple", "grapes", "cacao"],
+                fishs: ["spear", "goodrod", "net"],
+                mushs: ["poisnshroom", "blackshroom", "greenshroom", "porcini"],
+                eggie: ["platypus", "turkey", "goose", "quail"],
+                abeee: ["beeR", "beeG", "beeB"],
+                paddy: ["chestnut"]
+            },
+            { // winter
+                crops: ["beet", "leek", "food2crystal"],
+                trees: ["apple"],
+                fishs: ["spear", "goodrod", "net"],
+                mushs: ["poisnshroom", "blackshroom", "porcini"],
+                eggie: ["platypus", "turkey", "goose", "quail"],
+                abeee: ["beeR", "beeG", "beeB"],
+                paddy: ["arborio", "blackrice", "shortgrain", "chestnut"]
+            }
+        ];
+        var availableSpots = [];
+        for(var x = 0; x < 3; x++) {
+            if(combat.enemyGrid[x][0] === null) { availableSpots.push({ x: x, y: 0, type: "eggie" }); }
+            if(combat.enemyGrid[x][1] === null) { availableSpots.push({ x: x, y: 1, type: "fishs" }); }
+            for(var y = 2; y < 6; y++) {
+                if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "crops" }); }
+                if(y < 5 && combat.enemyGrid[x + 1][y] === null && combat.enemyGrid[x][y + 1] === null && combat.enemyGrid[x + 1][y + 1] === null) {
+                    availableSpots.push({ x: x, y: y, type: "trees" });
+                }
+            }
+            if(combat.enemyGrid[x][6] === null) { availableSpots.push({ x: x, y: 6, type: "paddy" }); }
+        }
+        for(var x = 3; x < 5; x++) {
+            if(combat.enemyGrid[x][0] === null) { availableSpots.push({ x: x, y: 0, type: "mushs" }); }
+            if(combat.enemyGrid[x][1] === null) { availableSpots.push({ x: x, y: 1, type: "mushs" }); }
+            for(var y = 2; y < 6; y++) {
+                if(y < 5 && x === 4) {
+                    if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "abeee" }); }
+                } else {
+                    if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "crops" }); }
+                }
+            }
+            if(combat.enemyGrid[x][6] === null) { availableSpots.push({ x: x, y: 6, type: "paddy" }); }
+        }
+        if(availableSpots.length === 0) { return false; }
+
+        var pos = availableSpots[Math.floor(Math.random() * availableSpots.length)];
+        var finalCropArr = cropsToGrow[combat.season][pos.type];
+        var crop = finalCropArr[Math.floor(Math.random() * finalCropArr.length)];
+
+        var newCrop = GetCrop(crop);
+        newCrop.activeTime = newCrop.time;
+        combat.enemyGrid[pos.x][pos.y] = newCrop;
+        if(newCrop.size === 2) {        
+            combat.enemyGrid[pos.x + 1][pos.y] = pos;
+            combat.enemyGrid[pos.x][pos.y + 1] = pos;
+            combat.enemyGrid[pos.x + 1][pos.y + 1] = pos;
+        }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
+        combat.animHelper.DrawCrops(); // TODO: should this be here?
+        combat.animHelper.DrawBottom();
+        return true;
+    },
+    "RETRACT_CROPS": function(e) {
+        var dmg = 0;
+        var crops = [];
+        for(var x = 0; x < 4; x++) {
+            for(var y = 2; y < 6; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
+                if(crops.length === 0 || Math.random() > 0.25) { crops.push([tile.name, x, y, tile.type, ""]); }
+            }
+        }
+        if(dmg === 0 || crops.length === 0) { return false; }
+        var prevHealth = e.health;
+        e.health = Math.min(e.maxhealth, (e.health + dmg));
+        var adjustedAmountToHeal = (e.health - prevHealth);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
+        EnemyParser.outputData.throwables = fieldData.crops;
+        return true;
+    },
     "FUCKING_MAIM": function(e) {
         worldmap.angryBees = false;
         for(var x = 0; x < player.gridWidth; x++) {
@@ -646,7 +746,7 @@ var actions = {
     },
     "HEAL_FROM_CROPS": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
-        var amountToHeal = combat.damagePlayer(fieldData.damage);
+        var amountToHeal = fieldData.damage;
         var prevHealth = e.health;
         e.health = Math.min(e.maxhealth, (e.health + amountToHeal));
         var adjustedAmountToHeal = (e.health - prevHealth);

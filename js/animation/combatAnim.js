@@ -414,6 +414,21 @@ function CombatAnimHelper(enemies) {
         var rightmost = combat.enemywidth - 1;
         var bottommost = combat.enemyheight - 1;
         switch(tile) {
+            case "nathan":
+                if(y === 0) {
+                    if(x < 3) { return "_coop"; }
+                    else { return "_log"; }
+                } else if(y === 1) {
+                    switch(x) {
+                        case 0: return "lakeD";
+                        case 1: return "lakeAD";
+                        case 2: return "lakeA";
+                        default: return "_log";
+                    }
+                } else if(y >= 2 && y <= 4 && x === 4) {
+                    return "_beehive";
+                } else if(y === 6) { return "_paddy"; }
+                return "dirt";
             case "beckett":
                 if(y < 3) {
                     if(x === 0) { return "conveyorL"; }
@@ -456,9 +471,10 @@ function CombatAnimHelper(enemies) {
     this.DrawBackground = function() {
         gfx.clearLayer("background");
         
-        if(combat.enemyTile === "dirt") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
+        if(combat.enemyTile === "dirt" || combat.enemyTile === "nathan") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
         for(var x = 0; x < combat.enemywidth; x++) { // enemy field
             for(var y = 0; y < combat.enemyheight; y++) {
+                if(combat.enemyTile === "nathan") { gfx.drawTileToGrid("dirt", combat.enemydx + x, y + combat.enemydy, "background"); }
                 gfx.drawTileToGrid(this.GetActualTile(combat.enemyTile, x, y), combat.enemydx + x, y + combat.enemydy, "background");
             }
         }

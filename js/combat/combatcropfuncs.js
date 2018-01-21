@@ -9,6 +9,13 @@ combat.getArrIdx = function(arr, x, y) {
     return -1;
 };
 
+combat.getEnemyCatchChance = function(crop) {
+    if(crop.type === "bee" && ["beeQueenA", "beeQueenB", "beeQueenC"].indexOf(combat.enemies[0].id) >= 0) {
+        return 0.65;
+    } else {
+        return combat.getCatchChance(crop);
+    }
+};
 combat.getCatchChance = function(crop) {
     if(crop.type === "water") { return 0.05; }
     if(crop.type === "spear") { return 0.5; }
@@ -75,7 +82,21 @@ combat.ageCrops = function() {
                 if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined) { continue; }
                 var crop = this.enemyGrid[x][y];
                 if(crop.activeTime > 0) {
-                    if(crop.type === "bee" && Math.random() > 0.45) {
+                    if(crop.type === "water" || crop.type === "rod") {
+                        var success = Math.random() < combat.getCatchChance(crop);
+                        if((crop.name === "net" || crop.name === "bignet") && crop.rotten && success) {
+                            crop.rotten = false;
+                            crop.power += Range(0, 5);
+                            crop.activeTime = crop.time;
+                        } else if(crop.type === "rod" && !crop.ready && !crop.rotten && success) {
+                            crop.ready = true;
+                            crop.activeTime = 0;
+                            var fishNum = 0;
+                            while(fishNum < 2 && Math.random() > (combat.getCatchLuck(crop) * player.luck)) { fishNum++; }
+                            crop.power = 10 + fishNum * 10;
+                            crop.fishNum = fishNum;
+                        }
+                    } else if(crop.type === "bee" && Math.random() < combat.getEnemyCatchChance(crop)) {
                         crop.rotten = false;
                         crop.activeTime = 0;
                     } else {

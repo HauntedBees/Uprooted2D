@@ -60,5 +60,17 @@ var combatEndTurnFuncs = {
         combat.enemies[0] = GetEnemy("discuss2big");
         combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
         return false;
+    },
+    "NATHAN": function(me) {
+        if(me.turnState === undefined) {
+            me.turnState = 1;
+            return true;
+        } else if(me.turnState === 2) {
+            me.turnState = 0;
+            return false;
+        } else {
+            me.turnState++;
+            return true;
+        }
     }
 };
