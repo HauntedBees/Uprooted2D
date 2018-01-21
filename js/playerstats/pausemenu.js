@@ -53,7 +53,7 @@ var pausemenu = {
 
         gfx.drawTileToGrid("alignment", 2, 7.75, "foreground");
         var centerx = 0.75, centery = 0.75;
-        centerx += Math.round(4 * player.ethicsAxis) / 4; centery += Math.round(4 * player.techAxis) / 4;
+        centerx += Math.round(4 * player.ethicsAxis / 5) / 4; centery += Math.round(4 * player.techAxis / 5) / 4;
         gfx.drawTileToGrid("alignmentcursor", 2 + centerx, 7.75 + centery, "foreground");
 
         for(var i = 0; i < pausemenu.questItems.length; i++) {

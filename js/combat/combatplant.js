@@ -185,6 +185,7 @@ combat.plant = {
                 this.throwSpear(px, py);
                 return true;
             }
+            player.shiftTech(newCrop.type === "tech" ? 0.04 : -0.01);
             if(player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") {
                 cropIsKill = false;
                 var cowIdx = combat.getCowIndex(px - 1, py - 1);
@@ -232,7 +233,7 @@ combat.plant = {
                 switch(killType) {
                     case 1: killMsg += GetText("tryPlantGloves"); break;
                     case 2: killMsg += GetText("tryPlantPesticide"); break;
-                    case 3: killMsg = GetText("tryPlantBees"); worldmap.angryBees = true; break;
+                    case 3: killMsg = GetText("tryPlantBees"); worldmap.angryBees = true; player.shiftEthics(-1); break;
                     default: killMsg += GetText("tryPlantBug"); break;
                 }
                 game.innerTransition(this, combat.inbetween, { next: next, text: killMsg });
@@ -255,6 +256,7 @@ combat.plant = {
     },
     throwSpear: function(x, y) {
         var success = (Math.random() * player.luck) < combat.getCatchChance(this.activeCrop);
+        player.shiftTech(-0.01);
         player.decreaseItem(this.activeCrop.name);
         if(!success) { return this.finishTurn("You chuck the spear, but do not catch any fish."); }
         var crop = GetCrop(this.activeCrop.name);
@@ -270,6 +272,7 @@ combat.plant = {
     },
     launchSeeds: function() {
         var newCrop = GetCrop(this.activeCrop.name);
+        player.shiftTech(0.03);
         var damage = Math.ceil(newCrop.power / 2);
         player.decreaseItem(this.activeCrop.name);
         var initLength = combat.enemies.length;
@@ -280,6 +283,7 @@ combat.plant = {
     },
     modulate: function() {
         var newCrop = GetCrop(this.activeCrop.name);
+        player.shiftTech(0.015);
         var seasons = [];
         for(var i = 0; i < 4; i++) {
             if(newCrop.seasons[i] === 1) { seasons.push(i); }
