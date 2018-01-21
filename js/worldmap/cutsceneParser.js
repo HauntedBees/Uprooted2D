@@ -896,6 +896,7 @@ var SpecialFunctions = {
     "TUTORIAL": function() { tutorial.startBattle(); },
     "LEAVETUTORIAL": function() {
         player.inventory = InventoryCopy(player.tempInventory);
+        player.equipment = player.tempEquipment;
         player.hasFalcon = player.hadFalcon;
         player.tempInventory = undefined;
     },

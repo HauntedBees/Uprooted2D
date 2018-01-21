@@ -35,6 +35,7 @@ var player = {
         return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (time < 10 ? "0" : "") + time;
     },
     tutorialInventory: [["specialgrapes", 1], ["carrot", 3], ["beet", 3], ["!weakCompost", 1], ["!babySickle", 1]],
+    tutorialEquipment: { weapon: "!goodSickle", compost: "!weakCompost", gloves: null, soil: null },
     inventory: [
         ["specialgrapes", 1], ["carrot", 6], ["beet", 4], ["!weakCompost", 1], ["!babySickle", 1] // ACTUAL STARTING INVENTORY
         ["_shooter", 2], ["_hotspot", 1], ["_modulator", 1], ["battery", 4], ["spear", 5], 

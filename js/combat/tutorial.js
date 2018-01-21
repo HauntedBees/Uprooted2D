@@ -12,6 +12,8 @@ var tutorial = {
         player.hadFalcon = player.hasFalcon;
         player.hasFalcon = false;
         player.tempInventory = InventoryCopy(player.inventory);
+        player.tempEquipment = player.equipment;
+        player.equipment = player.tutorialEquipment;
         player.inventory = InventoryCopy(player.tutorialInventory);
         this.drawTutorial();
     },
