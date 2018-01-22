@@ -81,6 +81,8 @@ var CommandParser = {
             var actDeets = action.split(":");
             var actSuffix = actDeets[1];
             switch(actDeets[0]) {
+                case "ALIGNTECH": player.shiftTech(parseFloat(actSuffix)); break;
+                case "ALIGNGOOD": player.shiftEthics(parseFloat(actSuffix)); break;
                 case "MOVE": CommandParser.Parse_Movement(target, isPlayer, actSuffix); break;
                 case "CUSTOM": CommandParser.Parse_Special(actSuffix); break;
                 case "SLEEP": worldmap.waitForAnimation = true; iHandler.state.animHandler = iHandler.SleepSkip; worldmap.animIdx = setTimeout(iHandler.Finish, parseInt(actSuffix)); break;
@@ -702,6 +704,7 @@ var SpecialFunctions = {
         } else {
             player.activeQuests["getHeart"] = "weirdheart";
         }
+        player.shiftEthics(-10);
         worldmap.writeText("bworkerA1");
     },
     "CONSTWORKWIN": function() {

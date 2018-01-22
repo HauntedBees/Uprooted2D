@@ -70,7 +70,7 @@ var scripts = {
 	"eggfairy10": "_TEXT:lakeegg3,sYes,sNo",
 	"eggfairy11": "?[{\"q\":\"d===0\",\"v\":12},{\"q\":\"d===1\",\"v\":14}]",
 	"eggfairy12": "_TEXT:lakeeggLie&eggFairy_SHIFTY:2&_TAKE:egg,999&_TAKE:quail,999&_TAKE:goose,999&_TAKE:turkey,999&_TAKE:platypus,999",
-	"eggfairy13": "_TEXT:lakeFinish&eggFairy_VISIBLE:false&_COMPLETEQUEST:badEgg&_END",
+	"eggfairy13": "_ALIGNGOOD:-1&_TEXT:lakeFinish&eggFairy_VISIBLE:false&_COMPLETEQUEST:badEgg&_END",
 	"eggfairy14": "_TEXT:lakeeggTruth&eggFairy_SHIFTY:1&_GIVE:egg,1&_GIVE:goldegg,1",
 	"eggfairy15": "_TEXT:lakeFinish&eggFairy_VISIBLE:false&_COMPLETEQUEST:goodEgg",
 	// Farm: First Boss (Big Bot)
@@ -81,8 +81,8 @@ var scripts = {
 	"bigBotW0": "_COMPLETEQUEST:bigBot&_TEXT:Pb1.(0-1)",
 	"bigBotW1": "_TEXT:Pb1.2,Pb1.2a,Pb1.2b",
 	"bigBotW2": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":4}]",
-	"bigBotW3": "_TEXT:Pb1.2a0&_SETSTATE:5&_GIVE:beet,10&_GIVE:banana,5&_GIVE:spinach,5&_GIVE:rhubarb,2&_GIVE:ginger,10",
-	"bigBotW4": "_TEXT:Pb1.2b0&_GIVE:~modulator,1",
+	"bigBotW3": "_ALIGNTECH:-1&_TEXT:Pb1.2a0&_SETSTATE:5&_GIVE:beet,10&_GIVE:banana,5&_GIVE:spinach,5&_GIVE:rhubarb,2&_GIVE:ginger,10",
+	"bigBotW4": "_ALIGNTECH:1&_TEXT:Pb1.2b0&_GIVE:~modulator,1",
 	"bigBotW5": "_TEXT:Pb1.(3-5)",
 	// Misc.: Standard Enemy
 	"enemy0": "_CUSTOM:ENEMY0",
@@ -92,7 +92,7 @@ var scripts = {
 	"FarmHive1": "_CUSTOM:BEEGUARDIANAPPEAR&_TEXT:FarmHive(0-3)",
 	"FarmHive2": "_TEXT:FarmHive4&_CLEARTARGET",
 	// Forest: Optional Boss (Turkey)
-	"turky0": "_TEXT:bossturky(0-1)",
+	"turky0": "_ALIGNGOOD:-1&_TEXT:bossturky(0-1)",
 	"turky1": "_FIGHT:bossturky,turky,turky",
 	// Forest: Beehive
 	"ForestHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
@@ -158,8 +158,8 @@ var scripts = {
 	"jeffW0": "_COMPLETEQUEST:researchLab&_TEXT:Pb2.(0-9)",
 	"jeffW1": "_TEXT:Pb2.10,Pb2.10a,Pb2.10b,Pb2.10c",
 	"jeffW2": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":4},{\"q\":\"d===2\",\"v\":5}]",
-	"jeffW3": "_TEXT:Pb2.10a0&_SETSTATE:6&_GIVE:~shooter,1",
-	"jeffW4": "_TEXT:Pb2.10b0&_SETSTATE:6&_GIVE:apple,10&_GIVE:apricot,10&_GIVE:kiwi,5&_GIVE:mango,5&_GIVE:lemon,5",
+	"jeffW3": "_ALIGNTECH:1&_TEXT:Pb2.10a0&_SETSTATE:6&_GIVE:~shooter,1",
+	"jeffW4": "_ALIGNTECH:-1&_TEXT:Pb2.10b0&_SETSTATE:6&_GIVE:apple,10&_GIVE:apricot,10&_GIVE:kiwi,5&_GIVE:mango,5&_GIVE:lemon,5",
 	"jeffW5": "_TEXT:Pb2.10c0&_LEVELUP&_LEVELUP&_LEVELUP",
 	"jeffW6": "_TEXT:Pb2.(11-13)",
 	// Bridge: First Worker
@@ -223,7 +223,7 @@ var scripts = {
 	// Bridge: Sea Monster helps you move debris
 	"seahelp0": "_CUSTOM:SEAHELP0",
 	"seahelp1": "_CUSTOM:SEAHELP1",
-	"seahelp2": "_COMPLETEQUEST:helpSeaMonster&_COMPLETEQUEST:getHeart&_TEXT:smD7",
+	"seahelp2": "_ALIGNGOOD:1&_COMPLETEQUEST:helpSeaMonster&_COMPLETEQUEST:getHeart&_TEXT:smD7",
 	// Underwater: Pirate Sea Monk
 	"piratemonk0": "?[{\"q\":\"player.completedQuest('seamonkey')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"piratemonk1": "?[{\"q\":\"player.hasQuestState('seamonkey', 'looking')\",\"v\":2},{\"q\":\"true\",\"v\":3}]",
@@ -251,7 +251,7 @@ var scripts = {
 	"kelpVase4": "_TEXT:vaseDont&_END",
 	"kelpVase5": "_TEXT:vaseDo0&targ_SHIFTY:7&KelpBoy_SHIFTY:7&targ_SOLID:false&_SETQUEST:kelpBoy,fuck&_PUSHCLEAREDTARGET:Vase",
 	"kelpVase6": "_TEXT:vaseDo(1-2)",
-	"kelpVase7": "_FIGHT:kelpBoy",
+	"kelpVase7": "_ALIGNGOOD:-0.75&_FIGHT:kelpBoy",
 	// Underwater: Kelp Boy
 	"kelpBoy0": "?[{\"q\":\"player.hasQuest('kelpBoy')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"kelpBoy1": "_TEXT:kelpBoy1&_END",
@@ -352,11 +352,11 @@ var scripts = {
 	"southcity15": "bruno_SETDIR:0&bruno_ISMOVING:false&_TEXT:entercity(3-11)",
 	"southcity16": "_LOSPEED&_TEXT:entercity12,mobchoice0,mobchoice1",
 	"southcity17": "?[{\"q\":\"d===0\",\"v\":18},{\"q\":\"d===1\",\"v\":22}]",
-	"southcity18": "_CUSTOM:SKUMPYTURN&_TEXT:entercity0.(0-3)",
+	"southcity18": "_ALIGNGOOD:1.5&_CUSTOM:SKUMPYTURN&_TEXT:entercity0.(0-3)",
 	"southcity19": "bruno_SETDIR:0&_TEXT:entercity0.4",
 	"southcity20": "bruno_SETDIR:3&_TEXT:entercity0.5",
 	"southcity21": "_FIGHT:mrbruno&_END",
-	"southcity22": "_TEXT:entercity1.(0-5)",
+	"southcity22": "_ALIGNGOOD:-1.5&_TEXT:entercity1.(0-5)",
 	"southcity23": "bruno_SETDIR:3&bruno_ISMOVING:true&bruno_MOVE:x41",
 	"southcity24": "bruno_SETDIR:2&bruno_MOVE:y42",
 	"southcity25": "bruno_SETDIR:3&bruno_MOVE:x44",
@@ -390,7 +390,7 @@ var scripts = {
 	"mobBoss1": "_FIGHT:mobBoss,mobsty2,mobsty2",
 	"mobLost0": "_TEXT:mobBack1",
 	"mobLost1": "_FIGHT:mobBoss,mobsty2,mobsty2",
-	"mobWon0": "_TEXT:beatMob(0-10)",
+	"mobWon0": "_ALIGNGOOD:0.75&_TEXT:beatMob(0-10)",
 	"mobWon1": "_CUSTOM:MOBFLEE&_TEXT:beatMob11",
 	// North City: Mushroom Man
 	"mushman0": "?[{\"q\":\"player.completedQuest('stonehenge')\",\"v\":1},{\"q\":\"player.hasQuest('stonehenge')\",\"v\":5},{\"q\":\"true\",\"v\":4}]",
@@ -406,7 +406,7 @@ var scripts = {
 	"mushman10": "_TEXT:mushManGive1",
 	"mushman11": "_GIVE:lotus,20&_TEXT:mushManGood(0-2)&_COMPLETEQUEST:stonehenge&_END",
 	"mushman12": "_TEXT:mushManGive1",
-	"mushman13": "_TEXT:mushManPoison0",
+	"mushman13": "_ALIGNGOOD:-3&_TEXT:mushManPoison0",
 	"mushman14": "targ_SHIFTY:7&_TEXT:mushManPoison1",
 	"mushman15": "_TEXT:mushManPoison2&_COMPLETEQUEST:stonehenge&_COMPLETEQUEST:youarebad",
 	// North City: Radish on Counter
@@ -446,10 +446,10 @@ var scripts = {
 	"atm2": "_TEXT:atmX&_END",
 	"atm3": "?[{\"q\":\"player.monies<1000\",\"v\":4},{\"q\":\"true\",\"v\":5}]",
 	"atm4": "_TEXT:atmc0.X&_END",
-	"atm5": "_CUSTOM:C2BUY&_C2TEXT:atmc0.0&_END",
+	"atm5": "_ALIGNGOOD:-0.2&_ALIGNTECH:0.1&_CUSTOM:C2BUY&_C2TEXT:atmc0.0&_END",
 	"atm6": "?[{\"q\":\"player.c2<1\",\"v\":7},{\"q\":\"true\",\"v\":8}]",
 	"atm7": "_TEXT:atmc1.X&_END",
-	"atm8": "_CUSTOM:C2SELL&_C2TEXT:atmc1.0&_END",
+	"atm8": "_ALIGNGOOD:-0.2&_ALIGNTECH:0.1&_CUSTOM:C2SELL&_C2TEXT:atmc1.0&_END",
 	// North City: Bank Robbery
 	"robber0": "_TEXT:robber(0-1)",
 	"robber1": "_FIGHT:robber,robber",
@@ -543,7 +543,7 @@ var scripts = {
 	"newPhone1": "_CUSTOM:NEWPHONE&_TEXT:newPhone4",
 	"newPhone2": "_CLEARTEXT&_CUSTOM:PHONEPRESS&_CLEARTARGET&_QUIT",
 	// North City: You Stopped a Crime!
-	"strobbery0": "_CUSTOM:BEATROBBERS",
+	"strobbery0": "_ALIGNGOOD:1&_CUSTOM:BEATROBBERS",
 	"strobbery1": "_CUSTOM:COPANIM1",
 	"strobbery2": "_CUSTOM:COPANIM2",
 	"strobbery3": "_CUSTOM:COPANIM3",
@@ -623,7 +623,7 @@ var scripts = {
 	// Food2: Made it Upstairs
 	"to4F0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"to4F1": "_END&_QUIT",
-	"to4F2": "_TEXT:savedNerd(0-7)",
+	"to4F2": "_ALIGNGOOD:2.5&_TEXT:savedNerd(0-7)",
 	"to4F3": "_CUSTOM:NERDDOWN&_COMPLETEQUEST:helpNerd&_QUIT",
 	// Food2: BAD END
 	"monstWon0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
@@ -690,7 +690,7 @@ var scripts = {
 	"final32": "_SLEEP:3000",
 	"final33": "_FIGHT:nathan",
 	// Misc.: Pissed off Colel Cab
-	"angryBee0": "pl_SETDIR:2&_TEXT:BeeGuard0",
+	"angryBee0": "_ALIGNGOOD:-1&pl_SETDIR:2&_TEXT:BeeGuard0",
 	"angryBee1": "pl_SETDIR:1&_TEXT:BeeGuard1",
 	"angryBee2": "pl_SETDIR:0&_TEXT:BeeGuard2",
 	"angryBee3": "pl_SETDIR:3&_TEXT:BeeGuard3",
