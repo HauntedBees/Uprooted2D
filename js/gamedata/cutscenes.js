@@ -54,7 +54,7 @@ var scripts = {
 	"finStTut0": "_CUSTOM:LEAVETUTORIAL&_CUSTOM:FINISHTUTORIALSTANDALONE",
 	// Produce Stand: Trying to head to Town before going to Farm
 	"farmFirst0": "?[{\"q\":\"player.completedQuest('bigBot')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
-	"farmFirst1": "_GO2:[\"firstvillage\",21,1]",
+	"farmFirst1": "_GO2:[\"firstvillage\",21,1]&_END",
 	"farmFirst2": "_TEXT:farmFirst",
 	// Produce Stand: Egg Fairy
 	"eggfairy0": "?[{\"q\":\"player.completedQuest('badEgg')\",\"v\":1},{\"q\":\"player.completedQuest('goodEgg')\",\"v\":2},{\"q\":\"player.hasItem('egg')\",\"v\":4},{\"q\":\"true\",\"v\":3}]",
