@@ -7041,4 +7041,35 @@ var fulltext = {
 		"en-dm": "Iii has joined my party! Now I can attack one more time per turn!", 
 		"type": "text"
 	},
+	// Ya Boy at the Farm
+	"iiiTalk0": {
+		"en-us": "", 
+		"en-dm": "Iii: IIIIIII, IIIIII!!! III! IIIIIII!!! IIIIEIIIIIEIIIEEEEE!!!", 
+		"type": "text"
+	},
+	"iiiTalk1": {
+		"en-us": "", 
+		"en-dm": "Iii never fails to remind me why I named her that.", 
+		"type": "text"
+	},
+	"yaBoiA": {
+		"en-us": "", 
+		"en-dm": "Nathan: Hey boss! These fields won't till themselves! I mean, with the right equipment they could, probably, but that's besides the point!", 
+		"type": "text"
+	},
+	"yaBoiB": {
+		"en-us": "", 
+		"en-dm": "Nathan: Howdy boss! WATER you doing here? Ha ha! Get it? It is funny because I am a farmer now.", 
+		"type": "text"
+	},
+	"yaBoiC": {
+		"en-us": "", 
+		"en-dm": "Nathan: Hey hey! I'm studying how this veggie is growing. It's amazing to see how small changes to the environment can change the end product so much!", 
+		"type": "text"
+	},
+	"yaBoiD": {
+		"en-us": "", 
+		"en-dm": "\"Hey boss! I'm just running a few errands in the city real quick! I'll be back soon! - Nathan\"", 
+		"type": "text"
+	},
 };

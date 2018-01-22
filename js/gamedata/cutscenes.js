@@ -78,7 +78,7 @@ var scripts = {
 	"bigBot1": "_FIGHT:bigBot",
 	"bigBotL0": "_TEXT:B1.5",
 	"bigBotL1": "_FIGHT:bigBot",
-	"bigBotW0": "_COMPLETEQUEST:bigBot&_TEXT:Pb1.(0-1)",
+	"bigBotW0": "_CUSTOM:WIPEFARMBOTS&_COMPLETEQUEST:bigBot&_TEXT:Pb1.(0-1)",
 	"bigBotW1": "_TEXT:Pb1.2,Pb1.2a,Pb1.2b",
 	"bigBotW2": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":4}]",
 	"bigBotW3": "_ALIGNTECH:-1&_TEXT:Pb1.2a0&_SETSTATE:5&_GIVE:beet,10&_GIVE:banana,5&_GIVE:spinach,5&_GIVE:rhubarb,2&_GIVE:ginger,10",
@@ -696,4 +696,6 @@ var scripts = {
 	"angryBee3": "pl_SETDIR:3&_TEXT:BeeGuard3",
 	"angryBee4": "pl_SETDIR:2&_TEXT:BeeGuard4",
 	"angryBee5": "_CUSTOM:BEEQUEENMAD",
+	// Misc.: Ya Boi on the Farm
+	"iiiTalk0": "_TEXT:iiiTalk(0-1)",
 };

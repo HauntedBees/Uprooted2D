@@ -217,6 +217,41 @@ var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
     "SETNERDBED": function() { player.lastInn = "nerdBed"; },
+    "WIPEFARMBOTS": function() {
+        for(var i = (worldmap.entities.length - 1); i >= 0; i--) {
+            var e = worldmap.entities[i];
+            if(e.isRobo) {
+                player.clearedEntities.push(e.name);
+                worldmap.entities.splice(i, 1);
+            }
+        }
+        worldmap.refreshMap();
+    },
+    "ENTERFARM": function() {
+        worldmap.importantEntities["n0"].pos = { x: -1, y: -1 };
+        worldmap.importantEntities["n1"].pos = { x: -1, y: -1 };
+        worldmap.importantEntities["n2"].pos = { x: -1, y: -1 };
+        worldmap.importantEntities["n3"].pos = { x: -1, y: -1 };
+        worldmap.importantEntities["n4"].pos = { x: -1, y: -1 };
+        if(!player.completedQuest("bigBot")) { return true; }
+        if(player.completedQuest("keycard")) {
+            if(!player.hasFalcon) { worldmap.importantEntities["n4"].pos = { x: 13, y: 3 }; }
+            worldmap.importantEntities["n3"].pos = { x: 12, y: 2 };
+        } else if(player.completedQuest("gotSpareTire")) {
+            worldmap.importantEntities["n4"].pos = { x: 13, y: 3 };
+            worldmap.importantEntities["n3"].pos = { x: 12, y: 2 };
+        } else if(player.completedQuest("helpSeaMonster") || player.completedQuest("getHeart")) {
+            worldmap.importantEntities["n4"].pos = { x: 15, y: 8 };
+            worldmap.importantEntities["n2"].pos = { x: 16, y: 9 };
+        } else if(player.completedQuest("researchLab")) {
+            worldmap.importantEntities["n4"].pos = { x: 13, y: 11 };
+            worldmap.importantEntities["n1"].pos = { x: 14, y: 12 };
+        } else {
+            worldmap.importantEntities["n4"].pos = { x: 9, y: 5 };
+            worldmap.importantEntities["n0"].pos = { x: 10, y: 6 };
+        }
+        return true;
+    },
     "THEGIFTOFEGG": function() {
         player.monies -= 250;
         var eggType = "egg";

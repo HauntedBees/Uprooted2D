@@ -1,3 +1,37 @@
+/* Cutscene Quest IDs
+    badEgg/goodEgg - egg fairy
+*** bigBot - first boss
+    rabbitShit - rabbit shat in your hands
+    fishyTalk - talked to forest fish
+    limeAndTheCoconut - got coconut seeds from Lime
+    rapbattle - got GMO corn from RAPBATTLE
+*** researchLab - second boss
+*** helpSeaMonster/getHeart - third boss
+    seamonkey - got key from Dowel
+    kelpBoy - beat up kelp boy
+*** gotSpareTire - fourth boss
+    croutonsFishingAdventure - got master bait from Crouton
+    abuelaBonita - got funny mushroom from old lady
+    stonehenge - got lotus from stoner
+    youarebad - poisoned stoner
+    foundRadish - found a radish
+    theGoodSpanch - took Brandt's spinach
+*** keycard - fifth boss
+    talkedToReceptionist - talked to Food2 receptionist
+    officeBeehive - got beehive in office
+    fuzuru - talked to Marty several times
+    hungryBoy - talked to hungry Food2 worker
+    hungybin - took food from his bin
+    helpNerd - saved nerd from the Monster
+    theBeeQuest - got haunted bees
+    ----------------------------------------
+    Falcon 0: south of town
+    Falcon 1: the bridge
+    Falcon 2: fake farm
+    Falcon 3: south city
+    Falcon 4: north city
+    Falcon 5: food2 HQ
+*/
 var quests = {
     getQuestText: function(name) {
         if(player.activeQuests[name] === undefined) { player.activeQuests[name] = 0; }

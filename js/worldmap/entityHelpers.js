@@ -379,7 +379,7 @@ var enemyMetadata = {
     car4: { interactname: "foodTruck", dialogMax: 4, enemies: ["foodTruck"], min: 1, max: 3, sy: 6, sheetlen: 2, big: true },
     mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, inside: true, fov: true, visible: false },
     mafia: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, fov: true },
-    robo: { interactname: "robo", dialogMax: 5, enemies: ["robo"], min: 1, max: 2 },
+    robo: { interactname: "robo", dialogMax: 5, enemies: ["robo"], min: 1, max: 2, isRobo: true },
     mouse: { interactname: "mouse", dialogMax: 3, enemies: ["mouse"], min: 2, max: 4, sy: 5, sheetlen: 2 },
     sqorl: { interactname: "sqorl", dialogMax: 4, enemies: ["sqorl", "sqorl", "sqorl", "mouse"], min: 1, max: 3, sy: 5, sheetlen: 2 },
     turky: { interactname: "turky", dialogMax: 3, enemies: ["turky"], min: 1, max: 1, sy: 7 },
