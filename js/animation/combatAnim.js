@@ -374,9 +374,9 @@ function CombatAnimHelper(enemies) {
                     } else if(crop.type !== "tree") {
                         gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
                     } else if(newFrame < 3) {
-                        gfx.drawTileToGrid("tree" + newFrame, xdx, ydy, "foreground");
+                        gfx.drawTileToGrid((crop.treeSprite || "tree") + newFrame, xdx, ydy, "foreground");
                     } else {
-                        gfx.drawTileToGrid("tree2", xdx, ydy, "foreground");
+                        gfx.drawTileToGrid((crop.treeSprite || "tree") + "2", xdx, ydy, "foreground");
                         newFrame -= 3;
                         gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
                     }

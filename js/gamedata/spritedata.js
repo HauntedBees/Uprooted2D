@@ -121,6 +121,9 @@ var spriteData = {
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
     },
     names: {
+        "tropictree0": [18, 1, true],
+        "tropictree1": [19, 1, true],
+        "tropictree2": [20, 1, true],
         "food2keycard": [39, 15],
         "smartphone": [40, 15],
         "monsterheart": [22, 14],

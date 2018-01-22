@@ -74,6 +74,7 @@ function GetCrop(name) {
 		if($row.Baby) { $addtl += "baby: `"_`"".replace("_", $row.Baby); }
 		if($row.SaltChance) { $addtl += "saltChance: _".replace("_", $row.SaltChance); }
 		if($row.BurnChance) { $addtl += "burnChance: _".replace("_", $row.BurnChance); }
+		if($row.AltTree) { $addtl += "treeSprite: `"_`"".replace("_", $row.AltTree); }
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
 			$endStr = $endStr.replace("{addtl}", ", { $folded }");

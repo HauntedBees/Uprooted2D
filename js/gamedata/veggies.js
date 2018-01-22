@@ -46,7 +46,7 @@ function GetCrop(name) {
 		case "apple": return new CropDetail(name, "Apple", 10, "tree", 2, 5, 5, 2, 2, 1, 1, 2, 1);
 		case "apricot": return new CropDetail(name, "Apricot", 10, "tree", 2, 24, 5, 10, 5, 2, 1, 0, 0);
 		case "avocado": return new CropDetail(name, "Avocado", 10, "tree", 2, 24, 5, 8, 5, 2, 2, 0, 1);
-		case "banana": return new CropDetail(name, "Banana", 10, "tree", 2, 7, 5, 3, 3, 1, 1, 1, 1);
+		case "banana": return new CropDetail(name, "Banana", 10, "tree", 2, 7, 5, 3, 3, 1, 1, 1, 1, { treeSprite: "tropictree" });
 		case "blackberry": return new CropDetail(name, "Blackberry", 10, "tree", 2, 14, 5, 5, 1, 0, 2, 0, 0);
 		case "grapes": return new CropDetail(name, "Grapes", 10, "tree", 2, 20, 5, 6, 4, 0, 0, 2, 0);
 		case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 6, 3, 0, 0, 2, 0);
@@ -97,7 +97,7 @@ function GetCrop(name) {
 		case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 10, "sickle2", 1, 5, 4, 0, 0, 1, 1, 1, 1);
 		/* Rare */
 		case "goldegg": return new CropDetail(name, "Golden Egg", 500, "egg", 1, 4, 4, 11, 0, 1, 1, 1, 1);
-		case "coconut": return new CropDetail(name, "Coconut", 500, "tree", 2, 10, 5, 11, 3, 1, 2, 0, 0);
+		case "coconut": return new CropDetail(name, "Coconut", 500, "tree", 2, 10, 5, 11, 3, 1, 2, 0, 0, { treeSprite: "tropictree" });
 		case "gmocorn": return new CropDetail(name, "GMO Corn", 500, "veg", 1, 5, 3, 11, 0, 1, 1, 1, 2);
 		case "ultrarod": return new CropDetail(name, "Master Bait", 500, "rod", 1, 20, 2, 11, 0, 1, 1, 1, 1);
 		case "goodfood": return new CropDetail(name, "Delicious Food", 500, "food", 1, 0, 1, 11, 0, 1, 1, 1, 1);
