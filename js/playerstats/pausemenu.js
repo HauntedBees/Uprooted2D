@@ -26,8 +26,9 @@ var pausemenu = {
         pausemenu.drawOption("menu.Equipment", 1, pausemenu.cursorY == 1);
         pausemenu.drawOption("menu.Farm", 2, pausemenu.cursorY == 2);
         pausemenu.drawOption("menu.Options", 3, pausemenu.cursorY == 3);
-        pausemenu.drawOption("menu.Save", 4, pausemenu.cursorY == 4);
-        pausemenu.drawOption("menu.Quit", 5, pausemenu.cursorY == 5);
+        pausemenu.drawOption("menu.Achievements", 4, pausemenu.cursorY == 4);
+        pausemenu.drawOption("menu.Save", 5, pausemenu.cursorY == 5);
+        //pausemenu.drawOption("menu.Quit", 6, pausemenu.cursorY == 6);
         pausemenu.addFormattedText("menu.level", player.level, 1, rowYs[0], "", 0);
         pausemenu.addFormattedText("menu.HP", player.health + "/" + player.maxhealth, 3.5, rowYs[0], ":", 0);
         pausemenu.addFormattedText("menu.ATK", player.atk, 8.5, rowYs[0], ":", 2);
@@ -142,8 +143,9 @@ var pausemenu = {
             case 1: game.innerTransition(this, pausemenu.equipment); break;
             case 2: game.innerTransition(this, pausemenu.farmmod); break;
             case 3: game.innerTransition(this, worldmap.optionsMenu, true); break;
-            case 4: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
-            case 5: console.log("quit!"); break;
+            case 4: game.innerTransition(this, pausemenu.chievos); break;
+            case 5: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
+            case 6: console.log("quit!"); break;
             default: return false;
         }
         return true;

@@ -81,6 +81,7 @@ var CommandParser = {
             var actDeets = action.split(":");
             var actSuffix = actDeets[1];
             switch(actDeets[0]) {
+                case "CHIEVO": player.achievements.push(actSuffix); break;
                 case "ALIGNTECH": player.shiftTech(parseFloat(actSuffix)); break;
                 case "ALIGNGOOD": player.shiftEthics(parseFloat(actSuffix)); break;
                 case "MOVE": CommandParser.Parse_Movement(target, isPlayer, actSuffix); break;

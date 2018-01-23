@@ -74,7 +74,7 @@ pausemenu.savemenu = {
         if(this.confirm) {
             this.setup({ saving: true, sel: this.cursorY });
         } else if(this.isSave) {
-            game.innerTransition(this, pausemenu, 4);
+            game.innerTransition(this, pausemenu, 5);
         } else {
             game.innerTransition(this, worldmap.title, 1);
         }

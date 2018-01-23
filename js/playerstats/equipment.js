@@ -1,5 +1,5 @@
 pausemenu.equipment = {
-    cursor: { x: 0, y: 0 }, inventoryWidth: 15, textY: 100, 
+    cursor: { x: 0, y: 0 }, textY: 100, 
     rowData: [], curY: 0,
     layersToClear: ["menuA", "menucursorA", "menucursorB", "menutext"],
     setup: function() {

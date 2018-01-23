@@ -5433,6 +5433,11 @@ var fulltext = {
 		"en-dm": "Fixtures", 
 		"type": "opts"
 	},
+	"menu.Achievements": {
+		"en-us": "", 
+		"en-dm": "Achievements", 
+		"type": "opts"
+	},
 	"menu.Options": {
 		"en-us": "", 
 		"en-dm": "Options", 
@@ -5682,6 +5687,512 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": " Seed", 
 		"type": "opts"
+	},
+	// Achievements
+	"a.boss1": {
+		"en-us": "", 
+		"en-dm": "Tech Trasher", 
+		"type": "aname"
+	},
+	"ad.boss1": {
+		"en-us": "", 
+		"en-dm": "Destroyed the MegaByte Buddy on your farm.", 
+		"type": "adesc"
+	},
+	"a.lakeFairy": {
+		"en-us": "", 
+		"en-dm": "Eggscellent", 
+		"type": "aname"
+	},
+	"ad.lakeFairy": {
+		"en-us": "", 
+		"en-dm": "Told the truth to the mysterious fairy from the lake.", 
+		"type": "adesc"
+	},
+	"a.badrabbit": {
+		"en-us": "", 
+		"en-dm": "Bad Rabbit", 
+		"type": "aname"
+	},
+	"ad.badrabbit": {
+		"en-us": "", 
+		"en-dm": "Accepted the \"gift\" of fertilizer from the rabbit in the forest.", 
+		"type": "adesc"
+	},
+	"a.limeTime": {
+		"en-us": "", 
+		"en-dm": "Lime Time", 
+		"type": "aname"
+	},
+	"ad.limeTime": {
+		"en-us": "", 
+		"en-dm": "Gave Lime a yellow food to complete his collection.", 
+		"type": "adesc"
+	},
+	"a.RAPBATTLE": {
+		"en-us": "", 
+		"en-dm": "Research Assistant", 
+		"type": "aname"
+	},
+	"ad.RAPBATTLE": {
+		"en-us": "", 
+		"en-dm": "Gave RAPBATTLE a versatile crop to aid in its research.", 
+		"type": "adesc"
+	},
+	"a.boss2": {
+		"en-us": "", 
+		"en-dm": "Direct Action", 
+		"type": "aname"
+	},
+	"ad.boss2": {
+		"en-us": "", 
+		"en-dm": "Broke into a research lab and beat the shit out of its head scientist.", 
+		"type": "adesc"
+	},
+	"a.boss3help": {
+		"en-us": "", 
+		"en-dm": "Friend to the Sea", 
+		"type": "aname"
+	},
+	"ad.boss3help": {
+		"en-us": "", 
+		"en-dm": "Returned the Sea Monster's egg and scared off the construction workers.", 
+		"type": "adesc"
+	},
+	"a.boss3hurt": {
+		"en-us": "", 
+		"en-dm": "Heartless", 
+		"type": "aname"
+	},
+	"ad.boss3hurt": {
+		"en-us": "", 
+		"en-dm": "Murdered the Sea Monster to work out a deal with the construction workers.", 
+		"type": "adesc"
+	},
+	"a.dowel": {
+		"en-us": "", 
+		"en-dm": "Irate Treasure", 
+		"type": "aname"
+	},
+	"ad.dowel": {
+		"en-us": "", 
+		"en-dm": "Helped Dowel figure out how to farm underwater.", 
+		"type": "adesc"
+	},
+	"a.kelpBuddy": {
+		"en-us": "", 
+		"en-dm": "Kelp Buddy", 
+		"type": "aname"
+	},
+	"ad.kelpBuddy": {
+		"en-us": "", 
+		"en-dm": "Helped Kelp Boy out instead of just breaking all his stuff like some sort of bully.", 
+		"type": "adesc"
+	},
+	"a.unplugged": {
+		"en-us": "", 
+		"en-dm": "Unplugged", 
+		"type": "aname"
+	},
+	"ad.unplugged": {
+		"en-us": "", 
+		"en-dm": "Defeated HOUSEKEEPER by unplugging it, because nerds aren't actually clever.", 
+		"type": "adesc"
+	},
+	"a.crouton": {
+		"en-us": "", 
+		"en-dm": "Teach a Dog to Fish", 
+		"type": "aname"
+	},
+	"ad.crouton": {
+		"en-us": "", 
+		"en-dm": "Gave Crouton some fishing supplies to help him catch a delicious supper.", 
+		"type": "adesc"
+	},
+	"a.boss4": {
+		"en-us": "", 
+		"en-dm": "Not-so-Smart Home", 
+		"type": "aname"
+	},
+	"ad.boss4": {
+		"en-us": "", 
+		"en-dm": "Defeated HOUSEKEEPER and escaped Farmer Jeff's trap.", 
+		"type": "adesc"
+	},
+	"a.abuelita": {
+		"en-us": "", 
+		"en-dm": "Birdfeed", 
+		"type": "aname"
+	},
+	"ad.abuelita": {
+		"en-us": "", 
+		"en-dm": "Gave the old lady in the park some food so she could feed the birds.", 
+		"type": "adesc"
+	},
+	"a.skumpy": {
+		"en-us": "", 
+		"en-dm": "Chumpy with Skumpy", 
+		"type": "aname"
+	},
+	"ad.skumpy": {
+		"en-us": "", 
+		"en-dm": "Saved Skumpy from having to pay protection money to the mob.", 
+		"type": "adesc"
+	},
+	"a.bossMob": {
+		"en-us": "", 
+		"en-dm": "Mobbed Boss", 
+		"type": "aname"
+	},
+	"ad.bossMob": {
+		"en-us": "", 
+		"en-dm": "Defeated the leader of the mob, Don Vagante.", 
+		"type": "adesc"
+	},
+	"a.stonehenge": {
+		"en-us": "", 
+		"en-dm": "Pizza Party", 
+		"type": "aname"
+	},
+	"ad.stonehenge": {
+		"en-us": "", 
+		"en-dm": "Hooked up some hipster with some delicious mushrooms for his pizza.", 
+		"type": "adesc"
+	},
+	"a.boss5": {
+		"en-us": "", 
+		"en-dm": "Sent to the Shadow Realm", 
+		"type": "aname"
+	},
+	"ad.boss5": {
+		"en-us": "", 
+		"en-dm": "Defeated Jeff and his giant card-battling robot.", 
+		"type": "adesc"
+	},
+	"a.bankStop": {
+		"en-us": "", 
+		"en-dm": "Bank Roberts", 
+		"type": "aname"
+	},
+	"ad.bankStop": {
+		"en-us": "", 
+		"en-dm": "Just casually walked into a bank and beat up the robbers for some reason.", 
+		"type": "adesc"
+	},
+	"a.helpNerd": {
+		"en-us": "", 
+		"en-dm": "Lifesaver", 
+		"type": "aname"
+	},
+	"ad.helpNerd": {
+		"en-us": "", 
+		"en-dm": "Carried a Food2 employee to safety, sparing them from certain death.", 
+		"type": "adesc"
+	},
+	"a.abee": {
+		"en-us": "", 
+		"en-dm": "A BEEE!!!!!", 
+		"type": "aname"
+	},
+	"ad.abee": {
+		"en-us": "", 
+		"en-dm": "AAAAAAA BEEEEEEEEEEEE!!!!", 
+		"type": "adesc"
+	},
+	"a.techGood": {
+		"en-us": "", 
+		"en-dm": "Technology Is A Tool", 
+		"type": "aname"
+	},
+	"ad.techGood": {
+		"en-us": "", 
+		"en-dm": "Completed the game with an Industrial Good alignment.", 
+		"type": "adesc"
+	},
+	"a.techBad": {
+		"en-us": "", 
+		"en-dm": "Technology Is A Weapon", 
+		"type": "aname"
+	},
+	"ad.techBad": {
+		"en-us": "", 
+		"en-dm": "Completed the game with an Industrial Bad alignment.", 
+		"type": "adesc"
+	},
+	"a.natureGood": {
+		"en-us": "", 
+		"en-dm": "Technology Will Not Save Us", 
+		"type": "aname"
+	},
+	"ad.natureGood": {
+		"en-us": "", 
+		"en-dm": "Completed the game with a Natural Good alignment.", 
+		"type": "adesc"
+	},
+	"a.natureBad": {
+		"en-us": "", 
+		"en-dm": "Technology Is A Disease", 
+		"type": "aname"
+	},
+	"ad.natureBad": {
+		"en-us": "", 
+		"en-dm": "Completed the game with a Natural Bad alignment.", 
+		"type": "adesc"
+	},
+	"a.vegan": {
+		"en-us": "", 
+		"en-dm": "Vegan", 
+		"type": "aname"
+	},
+	"ad.vegan": {
+		"en-us": "", 
+		"en-dm": "Completed the game without using any eggs, fishing supplies, bees, or cows.", 
+		"type": "adesc"
+	},
+	"a.beeKing": {
+		"en-us": "", 
+		"en-dm": "Queen Bee", 
+		"type": "aname"
+	},
+	"ad.beeKing": {
+		"en-us": "", 
+		"en-dm": "Collected bees from every beehive in the game.", 
+		"type": "adesc"
+	},
+	"a.luddite": {
+		"en-us": "", 
+		"en-dm": "Luddite", 
+		"type": "aname"
+	},
+	"ad.luddite": {
+		"en-us": "", 
+		"en-dm": "Completed the game without using any technology.", 
+		"type": "adesc"
+	},
+	"a.springKing": {
+		"en-us": "", 
+		"en-dm": "Spring King", 
+		"type": "aname"
+	},
+	"ad.springKing": {
+		"en-us": "", 
+		"en-dm": "Harvested over 500 Spring crops in their season.", 
+		"type": "adesc"
+	},
+	"a.summerHummer": {
+		"en-us": "", 
+		"en-dm": "Summer Hummer", 
+		"type": "aname"
+	},
+	"ad.summerHummer": {
+		"en-us": "", 
+		"en-dm": "Harvested over 500 Summer crops in their season.", 
+		"type": "adesc"
+	},
+	"a.autumnBottom": {
+		"en-us": "", 
+		"en-dm": "Autumn Bottom", 
+		"type": "aname"
+	},
+	"ad.autumnBottom": {
+		"en-us": "", 
+		"en-dm": "Harvested over 500 Autumn crops in their season.", 
+		"type": "adesc"
+	},
+	"a.winterHinter": {
+		"en-us": "", 
+		"en-dm": "Winter Hinter", 
+		"type": "aname"
+	},
+	"ad.winterHinter": {
+		"en-us": "", 
+		"en-dm": "Harvested over 500 Winter crops in their season.", 
+		"type": "adesc"
+	},
+	"a.vegbuddy": {
+		"en-us": "", 
+		"en-dm": "Veggie Buddy", 
+		"type": "aname"
+	},
+	"ad.vegbuddy": {
+		"en-us": "", 
+		"en-dm": "Planted over 1000 Vegetables.", 
+		"type": "adesc"
+	},
+	"a.treebuddy": {
+		"en-us": "", 
+		"en-dm": "Tree Buddy", 
+		"type": "aname"
+	},
+	"ad.treebuddy": {
+		"en-us": "", 
+		"en-dm": "Planted over 500 Trees.", 
+		"type": "adesc"
+	},
+	"a.mushbuddy": {
+		"en-us": "", 
+		"en-dm": "Mushroom Buddy", 
+		"type": "aname"
+	},
+	"ad.mushbuddy": {
+		"en-us": "", 
+		"en-dm": "Planted over 500 Mushrooms.", 
+		"type": "adesc"
+	},
+	"a.eggbuddy": {
+		"en-us": "", 
+		"en-dm": "Egg Buddy", 
+		"type": "aname"
+	},
+	"ad.eggbuddy": {
+		"en-us": "", 
+		"en-dm": "Incubated over 500 Eggs.", 
+		"type": "adesc"
+	},
+	"a.ricebuddy": {
+		"en-us": "", 
+		"en-dm": "Rice Buddy", 
+		"type": "aname"
+	},
+	"ad.ricebuddy": {
+		"en-us": "", 
+		"en-dm": "Planted over 500 Paddy Crops.", 
+		"type": "adesc"
+	},
+	"a.beebuddy": {
+		"en-us": "", 
+		"en-dm": "Bee Buddy", 
+		"type": "aname"
+	},
+	"ad.beebuddy": {
+		"en-us": "", 
+		"en-dm": "Kept over 500 Bees.", 
+		"type": "adesc"
+	},
+	"a.seabuddy": {
+		"en-us": "", 
+		"en-dm": "Sea Buddy", 
+		"type": "aname"
+	},
+	"ad.seabuddy": {
+		"en-us": "", 
+		"en-dm": "Fished over 500 times.", 
+		"type": "adesc"
+	},
+	"a.cowbuddy": {
+		"en-us": "", 
+		"en-dm": "Cow Buddy", 
+		"type": "aname"
+	},
+	"ad.cowbuddy": {
+		"en-us": "", 
+		"en-dm": "Fed cows over 500 times.", 
+		"type": "adesc"
+	},
+	"a.techbuddy": {
+		"en-us": "", 
+		"en-dm": "Tech Buddy", 
+		"type": "aname"
+	},
+	"ad.techbuddy": {
+		"en-us": "", 
+		"en-dm": "Powered up over 500 Tech Items.", 
+		"type": "adesc"
+	},
+	"a.biglaunch": {
+		"en-us": "", 
+		"en-dm": "Big Launch Big Lunch", 
+		"type": "aname"
+	},
+	"ad.biglaunch": {
+		"en-us": "", 
+		"en-dm": "Launched 20 or more Crops in one turn.", 
+		"type": "adesc"
+	},
+	"a.laila": {
+		"en-us": "", 
+		"en-dm": "Special Delivery!", 
+		"type": "aname"
+	},
+	"ad.laila": {
+		"en-us": "", 
+		"en-dm": "Delivered mail to the right house in Central Las Abejas.", 
+		"type": "adesc"
+	},
+	"a.madeForMe": {
+		"en-us": "", 
+		"en-dm": "It Was Made For Me", 
+		"type": "aname"
+	},
+	"ad.madeForMe": {
+		"en-us": "", 
+		"en-dm": "Completed the fifth floor of the hole.", 
+		"type": "adesc"
+	},
+	"a.soybeat": {
+		"en-us": "", 
+		"en-dm": "Monster Conquest", 
+		"type": "aname"
+	},
+	"ad.soybeat": {
+		"en-us": "", 
+		"en-dm": "Defeated the monster on the third floor of the Food2 headquarters.", 
+		"type": "adesc"
+	},
+	"a.fullUpgrade": {
+		"en-us": "", 
+		"en-dm": "Huge Tracts of Land", 
+		"type": "aname"
+	},
+	"ad.fullUpgrade": {
+		"en-us": "", 
+		"en-dm": "Expanded your farm area to the maximum size.", 
+		"type": "adesc"
+	},
+	"a.allCrop": {
+		"en-us": "", 
+		"en-dm": "Balanced Farmer", 
+		"type": "aname"
+	},
+	"ad.allCrop": {
+		"en-us": "", 
+		"en-dm": "Planted one of every type of crop.", 
+		"type": "adesc"
+	},
+	"a.overkill": {
+		"en-us": "", 
+		"en-dm": "Is This Your First RPG?", 
+		"type": "aname"
+	},
+	"ad.overkill": {
+		"en-us": "", 
+		"en-dm": "You wasted an INCREDIBLY POWERFUL and RARE item on some weak-ass enemy THAT WASN'T EVEN A BOSS!", 
+		"type": "adesc"
+	},
+	"a.murderedToDeath": {
+		"en-us": "", 
+		"en-dm": "Murdered to Death", 
+		"type": "aname"
+	},
+	"ad.murderedToDeath": {
+		"en-us": "", 
+		"en-dm": "Got a nonstandard game over.", 
+		"type": "adesc"
+	},
+	"a.???": {
+		"en-us": "", 
+		"en-dm": "???", 
+		"type": "aname"
+	},
+	"ad.???": {
+		"en-us": "", 
+		"en-dm": "I haven't made this one yet. You shouldn't have this achievement.", 
+		"type": "adesc"
+	},
+	"ad.none": {
+		"en-us": "", 
+		"en-dm": "You have not yet unlocked this achievement.", 
+		"type": "adesc"
 	},
 	// Combat - Player Actions
 	"seeds_none": {

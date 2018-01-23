@@ -1,5 +1,6 @@
 uglifyjs ^
     js/debug/enemyCursorTest.js ^
+    js/gamedata/achievements.js ^
     js/gamedata/consts.js ^
     js/gamedata/veggies.js ^
     js/gamedata/equipment.js ^
@@ -40,6 +41,7 @@ uglifyjs ^
     js/worldmap/horRor.js ^
     js/worldmap/falconSelect.js ^
     js/playerstats/pausemenu.js ^
+    js/playerstats/chievosmenu.js ^
     js/playerstats/viewinventory.js ^
     js/playerstats/equipment.js ^
     js/playerstats/farmmod.js ^

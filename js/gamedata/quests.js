@@ -12,6 +12,7 @@
 *** gotSpareTire - fourth boss
     croutonsFishingAdventure - got master bait from Crouton
     abuelaBonita - got funny mushroom from old lady
+    // WHERE IS THE MAFIA ONE?
     stonehenge - got lotus from stoner
     youarebad - poisoned stoner
     foundRadish - found a radish

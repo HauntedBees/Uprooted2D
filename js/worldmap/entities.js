@@ -26,6 +26,13 @@ var mapentities = {
     ],
     "farm": [
         SwitchMap("ExitAreaWest", 23, 12, false, true, 1, 20, "producestand"),
+        GetInvisibleEntity("CS_enterfarm", [ SpecialFunctions["ENTERFARM"] ], { autoplay: true }),
+
+        GetCommonEntity("NathanOnTheFarm0", 10, 6, 9, 0, undefined, [ GetSpeak("yaBoiA") ], { big: true, moving: true, sheetlen: 8, storageKey: "n0", noChange: true }),
+        GetCommonEntity("NathanOnTheFarm1", 12, 6, 9, 1, undefined, [ GetSpeak("yaBoiB") ], { big: true, moving: true, sheetlen: 3, storageKey: "n1", noChange: true }),
+        GetCommonEntity("NathanOnTheFarm2", 14, 6, 9, 1, undefined, [ GetSpeak("yaBoiC") ], { big: true, sy: 3, storageKey: "n2", noChange: true }),
+        GetCommonEntity("NathanOnTheFarm3", 12, 2, 6, 0, undefined, [ GetSpeak("yaBoiD") ], { sheet: "assistant", storageKey: "n3", noChange: true }),
+        GetCommonEntity("IiiOnTheFarm", 16, 9, 4, 0, undefined, Cutscene("iiiTalk"), { sheet: "assistant", storageKey: "n4", noChange: true }),
 
         GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, Cutscene("bigBot"), { boss: true, big: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
         GetInvisibleEntity("PostBoss", Cutscene("bigBotW"), { storageKey: "PostBoss" }),
@@ -948,7 +955,7 @@ var mapentities = {
         SwitchMap("GoDownstairsR", 9, 52, false, false, 25, 2, "hq_4"),
         GetCommonEntity("BeckettsReturn", 8, 15, 5, 0, undefined, undefined, { sheet: "hipster", sy: 1, sheetlen: 2, storageKey: "beckettBack" }),
         { name: "CS_BeckettStandoff", pos: { x: 8, y: 16 }, boring: true, isRow: true, interact: Cutscene("food2Fifth"), solid: false, visible: false, failedInteract: Cutscene("food2Lost"), postBattle: "iWahn" },
-        GetCommonEntity("BeckettsReturn", 0, 0, 0, 0, undefined, Cutscene("food2Beat"), { boring: true, visible: false, storageKey: "iWahn" }),
+        GetCommonEntity("BeckettsReturn2", 0, 0, 0, 0, undefined, Cutscene("food2Beat"), { boring: true, visible: false, storageKey: "iWahn" }),
         EnterShop("LastInn", 5, 5, "lastInn"),
         SwitchMap("Flee", 11, 5, false, false, 39, 10, "northcity"),
         SwitchMap("GoUpstairs", 8, 0, false, false, 8.5, 15, "hq_6")
