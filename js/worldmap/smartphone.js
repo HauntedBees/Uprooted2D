@@ -1,4 +1,5 @@
 function Text(msg) {
+    this.id = msg;
     this.message = GetText(msg);
     this.read = false;
     this.active = false;
@@ -46,6 +47,7 @@ function Smartphone() {
             if(texts[i].read || texts[i].active) { continue; }
             texts[i].active = true;
             texts[i].read = true;
+            if(texts[i].id === "misctext1") { player.activeQuests["stonehenge"] = 1; }
             notifications -= 1;
             return true;
         }
