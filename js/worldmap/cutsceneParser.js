@@ -218,6 +218,7 @@ var SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
     "SETNERDBED": function() { player.lastInn = "nerdBed"; },
+    "CATMAIL": function() { player.activeQuests["catmail"] = 1; },
     "WIPEFARMBOTS": function() {
         for(var i = (worldmap.entities.length - 1); i >= 0; i--) {
             var e = worldmap.entities[i];

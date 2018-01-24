@@ -419,6 +419,11 @@ var scripts = {
 	"mushman13": "_ALIGNGOOD:-3&_TEXT:mushManPoison0",
 	"mushman14": "targ_SHIFTY:7&_TEXT:mushManPoison1",
 	"mushman15": "_CHIEVO:stonehenge&_TEXT:mushManPoison2&_COMPLETEQUEST:stonehenge&_COMPLETEQUEST:youarebad",
+	// North City: Mailman
+	"mailman0": "?[{\"q\":\"player.completedQuest('catmail')\",\"v\":1},{\"q\":\"player.hasQuestState('catmail',1)\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
+	"mailman1": "targ_ISMOVING:true&_TEXT:mailman5&_SETSTATE:3",
+	"mailman2": "_CUSTOM:CATMAIL&targ_ISMOVING:true&_TEXT:mailman(0-4)",
+	"mailman3": "targ_ISMOVING:false&_QUIT",
 	// North City: Radish on Counter
 	"freeRadish0": "?[{\"q\":\"player.completedQuest('freeRadish')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"freeRadish1": "_COMPLETEQUEST:freeRadish&_GIVE:radish,5&_TEXT:foundRadish0&_END",

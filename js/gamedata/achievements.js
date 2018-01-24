@@ -17,6 +17,7 @@ var achievements = {
     "abuelita": { fromQuest: true },
     "bossMob": { fromQuest: true },
     "stonehenge": { fromQuest: true },
+    "laila": { fromQuest: false },
     "bankStop": { fromQuest: true },
     "boss5": { fromQuest: true },
     "helpNerd": { fromQuest: true },
@@ -42,7 +43,6 @@ var achievements = {
     "cowbuddy": { fromQuest: false }, // unimplemented
     "techbuddy": { fromQuest: false }, // unimplemented
     "biglaunch": { fromQuest: false }, // launch 20(?) crops in one turn
-    "laila": { fromQuest: false }, // TODO: running errands around North City
     "madeForMe": { fromQuest: false }, // TODO: get to fifth level of the endless cave
     "soybeat": { fromQuest: false }, // beat the soy monster
     "fullUpgrade": { fromQuest: false }, // get the biggest upgrade to your field

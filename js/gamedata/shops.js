@@ -175,10 +175,12 @@ var stores = {
             { product: "_lake", price: 100, type: "farm" },
             { product: "_paddy", price: 100, type: "farm" },
             { product: "_strongsoil", price: 100, type: "farm" },
-            { product: "beeB", price: 1000, type: "seed" }
+            { product: "beeB", price: 1000, type: "seed" },
+            { product: "beeR", price: 1000, type: "seed", locked: "catmail" },
+            { product: "beeG", price: 1000, type: "seed", locked: "catmail" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.fi1o", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased", talk: "catmail"
     },
     "tinker": {
         img: "shops/dwarf2",

@@ -82,5 +82,16 @@ var quests = {
                 quests.completeQuest("quest1");
             }
         }
+    ],
+    "catmail": [
+        { text: "catmail0", next: function() { } },
+        {
+            text: "catmail1", 
+            next: function() {
+                worldmap.shop.resetTalk();
+                player.achievements.push("laila");
+                quests.completeQuest("catmail");
+            }
+        }
     ]
 };

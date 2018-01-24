@@ -17,6 +17,7 @@ var pausemenu = {
         else if(player.hasQuestState("helpSeaMonster", "gotEgg")) { this.questItems.push("monsteregg"); }
         if(player.hasQuest("truckRepair")) { this.questItems.push("tire"); }
         if(worldmap.smartphone !== null) { this.questItems.push("smartphone"); }
+        if(player.hasQuestState("catmail", 1)) { this.questItems.push("bpermit1"); }
         if(player.completedQuest("keycard")) { this.questItems.push("food2keycard"); }
     },
     drawAll: function() {

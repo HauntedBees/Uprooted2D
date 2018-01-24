@@ -566,6 +566,8 @@ var mapentities = {
         { name: "Falcon4", pos: { x: 8, y: 44 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
 
+        GetCommonEntity("Mailman", 25, 20, 24, 0, undefined, Cutscene("mailman"), { sy: 15, sheetlen: 2, noChange: true, inside: true, visible: false }),
+
         GetCommonEntity("Car1", 8, 28, 0, 2, commonMovementDatas.fastdownrect(8, 28, 52, 16), Cutscene("enemy"), enemyMetadata.car1),
         GetCommonEntity("Car2", 8, 44, 0, 3, commonMovementDatas.fastdownrect(8, 28, 52, 16, 1), Cutscene("enemy"), enemyMetadata.car2),
         GetCommonEntity("Car3", 60, 44, 4, 0, commonMovementDatas.fastdownrect(8, 28, 52, 16, 2), Cutscene("enemy"), enemyMetadata.car3),

@@ -3446,6 +3446,21 @@ var fulltext = {
 		"en-dm": "Vagante: Back again, are you? Accept your fate!", 
 		"type": "map"
 	},
+	"catmail": {
+		"en-us": "", 
+		"en-dm": "*sigh*", 
+		"type": "shop"
+	},
+	"catmail0": {
+		"en-us": "", 
+		"en-dm": "Catalina: I had to move out of my old apartment up north because it was getting too expensive. On one hand, it sucks, but on the other hand, my neighbors were all assholes.", 
+		"type": "shop"
+	},
+	"catmail1": {
+		"en-us": "", 
+		"en-dm": "Catalina: Oh hey! You brought me my mail! Wow, thank you very much! Just for that, I'm gonna open up my RARE BEE COLLECTION for sale, just for you!", 
+		"type": "shop"
+	},
 	// Area 8: North City
 	"mushMan0": {
 		"en-us": "", 
@@ -3580,6 +3595,36 @@ var fulltext = {
 	"mushLamp": {
 		"en-us": "", 
 		"en-dm": "Lava lamps are really cool.", 
+		"type": "map"
+	},
+	"mailman0": {
+		"en-us": "", 
+		"en-dm": "Mailman: *sigh* Another day, another empty apartment.", 
+		"type": "map"
+	},
+	"mailman1": {
+		"en-us": "", 
+		"en-dm": "Mailman: With all these hip new companies opening up here, the rent prices are skyrocketing, and all the old tenants are moving out.", 
+		"type": "map"
+	},
+	"mailman2": {
+		"en-us": "", 
+		"en-dm": "Mailman: This is the third time this week I've had a letter for someone only to find that they had moved out!", 
+		"type": "map"
+	},
+	"mailman3": {
+		"en-us": "", 
+		"en-dm": "Mailman: Did you know who used to live here? Catalina? Yeah, didn't think s--wait, did you say yes?", 
+		"type": "map"
+	},
+	"mailman4": {
+		"en-us": "", 
+		"en-dm": "Mailman: Well, if you could give this letter to her the next time you see her, that'd be A+ swell and dandy! Thank you!", 
+		"type": "map"
+	},
+	"mailman5": {
+		"en-us": "", 
+		"en-dm": "Mailman: I wonder how much longer I'll be able to stay in this city before I have to move somewhere cheaper, too...", 
 		"type": "map"
 	},
 	"foundRadish0": {
@@ -5711,6 +5756,11 @@ var fulltext = {
 	"qi.tire": {
 		"en-us": "", 
 		"en-dm": "Spare Tire", 
+		"type": "opts"
+	},
+	"qi.bpermit1": {
+		"en-us": "", 
+		"en-dm": "Mail for Catalina", 
 		"type": "opts"
 	},
 	"qi.food2keycard": {
