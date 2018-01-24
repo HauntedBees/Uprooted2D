@@ -34,6 +34,7 @@ var worldmap = {
                 this.entities = [];
             }
         }
+        mapRefreshes[this.mapName]();
         var targetToAutoplay = null;
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];

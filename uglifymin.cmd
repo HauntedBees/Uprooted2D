@@ -31,6 +31,7 @@ uglifyjs ^
     js/combat/wacg.js ^
     js/worldmap/cutsceneParser.js ^
     js/worldmap/worldmap.js ^
+    js/worldmap/entitySaveData.js ^
     js/worldmap/credits.js ^
     js/worldmap/title.js ^
     js/worldmap/optionsMenu.js ^
@@ -50,4 +51,5 @@ uglifyjs ^
     js/player.js^
     js/rendering.js ^
     js/main.js ^
+    js/lib/lz-string.js ^
 -o out.min.js

@@ -355,6 +355,7 @@ function JumboEntrance() { JumboToggle(true); }
 function JumboExit() { JumboToggle(false); }
 function JumboToggle(inside) {
     worldmap.forceEndDialog = true;
+    mapStates[worldmap.mapName].inside = inside;
     for(var i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].inside) { worldmap.entities[i].visible = inside; }
         else if(worldmap.entities[i].jumbo) { worldmap.entities[i].visible = !inside; }

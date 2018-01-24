@@ -24,9 +24,9 @@ pausemenu.savemenu = {
         }
     },
     displaySaveDataInfo: function(savenum) {
-        var slotData = localStorage.getItem("file" + savenum);
+        var slotData = localStorage.getItem("player" + savenum);
         if(slotData === null) { return this.drawSaveDataText("No Save Data"); }
-        var loadedPlayer = JSON.parse(localStorage.getItem("file" + savenum));
+        var loadedPlayer = game.str2obj(slotData);
         var text = "Lv." + loadedPlayer.level + " HP: " + loadedPlayer.health + "/" + loadedPlayer.maxhealth;
         text += "\n Coins: " + loadedPlayer.monies + "\n Time: " + player.getPlayTimeString(loadedPlayer.playTime);
         var image = localStorage.getItem("fileImg" + savenum);
