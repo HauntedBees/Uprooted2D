@@ -462,6 +462,7 @@ var mapentities = {
                 worldmap.importantEntities["HK"].visible = true;
                 worldmap.importantEntities["HK"].solid = true;
                 player.activeQuests["gotTire"] = 0;
+                player.activeQuests["truckRepair"] = 1;
             }
         ], { sy: 8, noChange: true }),
         
@@ -547,7 +548,7 @@ var mapentities = {
         GetCommonEntity("IntroSkumpyCutscene", 43, 40, 0, 0, undefined, Cutscene("southcity"), { visible: false, solid: false, isRow: true, nonStandardGameOver: "brunoKill", postBattle: "beatBruno", storageKey: "introCutscene", boring: true }),
         GetInvisibleEntity("beatBruno", Cutscene("beatbruno"), { storageKey: "beatBruno" }),
         GetCommonEntity("Skumpy", 41, 42, 12, 0, undefined, undefined, { sy: 8, moving: true, sheetlen: 2, solid: false, storageKey: "skumpy", inside: true, visible: false, boring: true }),
-        GetCommonEntity("Bruno", 44, 33, 13, 2, undefined, undefined, { sy: 10, moving: true, solid: false, storageKey: "bruno", inside: true, boring: true }),
+        GetCommonEntity("Bruno", 44, 33, 12, 2, undefined, undefined, { sy: 10, moving: true, solid: false, storageKey: "bruno", inside: true, boring: true }),
         GetCommonEntity("BarL", 39, 39.875, 15, 0, undefined, undefined, { sy: 5, inside: true, visible: false, boring: true }),
         GetCommonEntity("BarM", 40, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false, boring: true }),
         GetCommonEntity("BarR", 41, 39.875, 16, 0, undefined, undefined, { sy: 5, inside: true, visible: false, boring: true }),
