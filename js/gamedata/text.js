@@ -6179,14 +6179,14 @@ var fulltext = {
 		"en-dm": "Got a nonstandard game over.", 
 		"type": "adesc"
 	},
-	"a.???": {
+	"a.goldshroom": {
 		"en-us": "", 
-		"en-dm": "???", 
+		"en-dm": "The Golden Mushroom", 
 		"type": "aname"
 	},
-	"ad.???": {
+	"ad.goldshroom": {
 		"en-us": "", 
-		"en-dm": "I haven't made this one yet. You shouldn't have this achievement.", 
+		"en-dm": "You found the shiny golden mushroom in Agrios Forest.", 
 		"type": "adesc"
 	},
 	"ad.none": {

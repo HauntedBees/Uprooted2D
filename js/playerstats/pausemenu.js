@@ -10,13 +10,13 @@ var pausemenu = {
     },
     GetQuestItems: function() {
         this.questItems = [];
-        if(true || player.hasQuestState("quest1", 4) || player.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
-        if(true || player.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }
-        if(true || player.hasQuestState("getHeart", "weirdheart") || player.hasQuestState("getHeart", "heart")) { this.questItems.push("monsterheart"); }
+        if(player.hasQuestState("quest1", 4) || player.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
+        if(player.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }
+        if(player.hasQuestState("getHeart", "weirdheart") || player.hasQuestState("getHeart", "heart")) { this.questItems.push("monsterheart"); }
         else if(player.hasQuestState("helpSeaMonster", "gotEgg")) { this.questItems.push("monsteregg"); }
-        if(true || player.hasQuest("gotTire")) { this.questItems.push("tire"); } // TODO: double check this one!
-        if(true || worldmap.smartphone !== null) { this.questItems.push("smartphone"); }
-        if(true || player.completedQuest("keycard")) { this.questItems.push("food2keycard"); }
+        if(player.hasQuest("gotTire")) { this.questItems.push("tire"); } // TODO: double check this one!
+        if(worldmap.smartphone !== null) { this.questItems.push("smartphone"); }
+        if(player.completedQuest("keycard")) { this.questItems.push("food2keycard"); }
     },
     drawAll: function() {
         gfx.clearSome(pausemenu.layersToClear);

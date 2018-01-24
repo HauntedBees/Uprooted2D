@@ -514,7 +514,7 @@ var scripts = {
 	// Produce Stand: Meeting Nathan
 	"theHappening0": "?[{\"q\":\"player.completedQuest('bigBot')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"theHappening1": "_QUIT",
-	"theHappening2": "nathanB_VISIBLE:true&nathanB_MOVE:x4",
+	"theHappening2": "_COMPLETEQUEST:nathanned&nathanB_VISIBLE:true&nathanB_MOVE:x4",
 	"theHappening3": "nathanB_ANIMSTATE:[2,3,2,8,true]&_TEXT:theHappening(0-3)",
 	"theHappening4": "eaglia_VISIBLE:true&_TEXT:theHappening(4-5)",
 	"theHappening5": "nathanB_ANIMSTATE:[2,4,2,8,true]&_TEXT:theHappening6",

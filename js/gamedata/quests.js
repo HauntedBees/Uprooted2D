@@ -64,6 +64,7 @@ var quests = {
             text: "quest1.b",
             next: function() {
                 worldmap.shop.resetTalk();
+                player.achievements.push("goldshroom");
                 player.increaseItem("_log", 1);
                 player.decreaseItem("shiitake");
                 quests.completeQuest("quest1");
@@ -74,6 +75,7 @@ var quests = {
             text: "quest1.d", 
             next: function() {
                 worldmap.shop.resetTalk();
+                player.achievements.push("goldshroom");
                 player.increaseItem("_log", 1);
                 player.decreaseItem("shiitake");
                 quests.completeQuest("quest1");

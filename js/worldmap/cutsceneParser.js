@@ -234,7 +234,7 @@ var SpecialFunctions = {
         worldmap.importantEntities["n2"].pos = { x: -1, y: -1 };
         worldmap.importantEntities["n3"].pos = { x: -1, y: -1 };
         worldmap.importantEntities["n4"].pos = { x: -1, y: -1 };
-        if(!player.completedQuest("bigBot")) { return true; }
+        if(!player.completedQuest("nathanned")) { return true; }
         if(player.completedQuest("keycard")) {
             if(!player.hasFalcon) { worldmap.importantEntities["n4"].pos = { x: 13, y: 3 }; }
             worldmap.importantEntities["n3"].pos = { x: 12, y: 2 };

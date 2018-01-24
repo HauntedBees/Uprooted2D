@@ -170,7 +170,7 @@ var spriteData = {
         "a.allCrop": [42, 16], 
         "a.overkill": [43, 16], 
         "a.murderedToDeath": [44, 16], 
-        "a.???": [45, 16], 
+        "a.goldshroom": [45, 16], 
         "a.donthave": [46, 16], 
         "tropictree0": [18, 1, true],
         "tropictree1": [19, 1, true],

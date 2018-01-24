@@ -1,6 +1,7 @@
 var achievements = {
     "boss1": { fromQuest: true },
     "lakeFairy": { fromQuest: true },
+    "goldshroom": { fromQuest: false },
     "badrabbit": { fromQuest: true },
     "limeTime": { fromQuest: true },
     "RAPBATTLE": { fromQuest: true },
@@ -47,6 +48,5 @@ var achievements = {
     "fullUpgrade": { fromQuest: false }, // get the biggest upgrade to your field
     "allCrop": { fromQuest: false }, // use every crop at least once
     "overkill": { fromQuest: false }, // waste a rare item on a non-boss enemy
-    "murderedToDeath": { fromQuest: false }, // get killed by Mr. Bruno or The Monster (how get this to save?)
-    "???": { fromQuest: false } // tbd
+    "murderedToDeath": { fromQuest: false } // get killed by Mr. Bruno or The Monster (how get this to save?)
 };
