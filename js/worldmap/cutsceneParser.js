@@ -601,6 +601,7 @@ var SpecialFunctions = {
     },
     "SKUMPYTURN": function() {
         worldmap.pos.y = 39.25;
+        stores["skumpys"].wares[0].price = 0;
         worldmap.importantEntities["bruno"].dir = 3;
         worldmap.importantEntities["skumpy"].anim.shiftX(9);
     },

@@ -134,6 +134,7 @@ var game = {
     load: function(savenum) {
         var loadedPlayer = JSON.parse(localStorage.getItem("file" + savenum));
         player = Object.assign(player, loadedPlayer);
+        stores["skumpys"].wares[0].price = (player.achievements.indexOf("skumpy") < 0 ? 20 : 0);
         game.transition(game.currentInputHandler, worldmap, { 
             init: player.mapPos,
             map: player.mapName,
