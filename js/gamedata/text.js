@@ -5219,6 +5219,147 @@ var fulltext = {
 		"en-dm": "Nathan: Sorry, boss, but business is business.", 
 		"type": "text"
 	},
+	// Area 10: Endings
+	"naturalGood0": {
+		"en-us": "", 
+		"en-dm": "Technology will not save us.", 
+		"type": "ending"
+	},
+	"naturalGood1": {
+		"en-us": "", 
+		"en-dm": "Our future is not and cannot be left in the hands of a few people in Silicon Valley.", 
+		"type": "ending"
+	},
+	"naturalGood2": {
+		"en-us": "", 
+		"en-dm": "The power to shape the future belongs to all of us, and we must work together to make the best future we can.", 
+		"type": "ending"
+	},
+	"naturalGood3": {
+		"en-us": "", 
+		"en-dm": "Doing the work to make the world better isn't always rewarding, but it is work that needs to be done.", 
+		"type": "ending"
+	},
+	"naturalGood4": {
+		"en-us": "", 
+		"en-dm": "We can't rely on corporations to bring about real change: no one gets rich from doing the right thing.", 
+		"type": "ending"
+	},
+	"naturalGood5": {
+		"en-us": "", 
+		"en-dm": "But some people don't do things for money or fame. Some people do things to make the world better.", 
+		"type": "ending"
+	},
+	"naturalGood6": {
+		"en-us": "", 
+		"en-dm": "I hope you're one of them.", 
+		"type": "ending"
+	},
+	"industrialGood0": {
+		"en-us": "", 
+		"en-dm": "Technology is a tool.", 
+		"type": "ending"
+	},
+	"industrialGood1": {
+		"en-us": "", 
+		"en-dm": "Those who wield it can change the world, for better or for worse.", 
+		"type": "ending"
+	},
+	"industrialGood2": {
+		"en-us": "", 
+		"en-dm": "We need to do our best to ensure that this tool is accessible to everyone, so we can all build the future together.", 
+		"type": "ending"
+	},
+	"industrialGood3": {
+		"en-us": "", 
+		"en-dm": "Some will try to use this tool to help themselves at the expense of others. Oppose them.", 
+		"type": "ending"
+	},
+	"industrialGood4": {
+		"en-us": "", 
+		"en-dm": "Others will try to use this tool to help others at the expense of themselves. Help them.", 
+		"type": "ending"
+	},
+	"industrialGood5": {
+		"en-us": "", 
+		"en-dm": "Together, we can build a better future for all of us, and technology can help us get there.", 
+		"type": "ending"
+	},
+	"industrialGood6": {
+		"en-us": "", 
+		"en-dm": "So let's start building.", 
+		"type": "ending"
+	},
+	"naturalBad0": {
+		"en-us": "", 
+		"en-dm": "Technology will kill us.", 
+		"type": "ending"
+	},
+	"naturalBad1": {
+		"en-us": "", 
+		"en-dm": "More and more, technology is becoming just another tool to widen the gap between the elites and us.", 
+		"type": "ending"
+	},
+	"naturalBad2": {
+		"en-us": "", 
+		"en-dm": "They spend their wealth on internet-ready light bulbs and smart juicers as they walk past the homeless with their noses in the air.", 
+		"type": "ending"
+	},
+	"naturalBad3": {
+		"en-us": "", 
+		"en-dm": "They build rockets to take them to Mars, while we are stuck here suffering the effects of the climate change they created.", 
+		"type": "ending"
+	},
+	"naturalBad4": {
+		"en-us": "", 
+		"en-dm": "If they use a ladder to escape us, we must break that ladder, and bring them back to our level.", 
+		"type": "ending"
+	},
+	"naturalBad5": {
+		"en-us": "", 
+		"en-dm": "If they use technology to distance themselves from us, we must break that, too.", 
+		"type": "ending"
+	},
+	"naturalBad6": {
+		"en-us": "", 
+		"en-dm": "They cannot escape us.", 
+		"type": "ending"
+	},
+	"industrialBad0": {
+		"en-us": "", 
+		"en-dm": "Technology is a weapon.", 
+		"type": "ending"
+	},
+	"industrialBad1": {
+		"en-us": "", 
+		"en-dm": "I don't believe violence is the best answer, but when the options are \"kill or die,\" it's certainly not the worst.", 
+		"type": "ending"
+	},
+	"industrialBad2": {
+		"en-us": "", 
+		"en-dm": "It is better to be a soldier in a garden than a gardener in a war.", 
+		"type": "ending"
+	},
+	"industrialBad3": {
+		"en-us": "", 
+		"en-dm": "Those with the power of technology are using that power to widen the gaps between rich and poor.", 
+		"type": "ending"
+	},
+	"industrialBad4": {
+		"en-us": "", 
+		"en-dm": "We can't let people driven by greed and hate have a monopoly on our future.", 
+		"type": "ending"
+	},
+	"industrialBad5": {
+		"en-us": "", 
+		"en-dm": "We must reject the pet projects of eccentric billionaires and use technology to protect us from those who wish to rule us.", 
+		"type": "ending"
+	},
+	"industrialBad6": {
+		"en-us": "", 
+		"en-dm": "Don't strike back. Strike first.", 
+		"type": "ending"
+	},
 	// Shops
 	"shop.back": {
 		"en-us": "", 
@@ -6041,7 +6182,7 @@ var fulltext = {
 	},
 	"a.natureBad": {
 		"en-us": "", 
-		"en-dm": "Technology Is A Disease", 
+		"en-dm": "Technology Will Kill Us", 
 		"type": "aname"
 	},
 	"ad.natureBad": {
@@ -7692,5 +7833,96 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "\"Hey boss! I'm just running a few errands in the city real quick! I'll be back soon! - Nathan\"", 
 		"type": "text"
+	},
+	// Credits
+	"cr0": {
+		"en-us": "", 
+		"en-dm": "Credits", 
+		"type": "chead"
+	},
+	"cr.sf": {
+		"en-us": "", 
+		"en-dm": "Sean Finch", 
+		"type": "cname"
+	},
+	"cr.sj": {
+		"en-us": "", 
+		"en-dm": "Skyler Johnson", 
+		"type": "cname"
+	},
+	"cr.tr": {
+		"en-us": "", 
+		"en-dm": "Tanner Roof", 
+		"type": "cname"
+	},
+	"cr.bw": {
+		"en-us": "", 
+		"en-dm": "Brandt White", 
+		"type": "cname"
+	},
+	"cr.mr": {
+		"en-us": "", 
+		"en-dm": "Marcin Rojek", 
+		"type": "cname"
+	},
+	"cr.so": {
+		"en-us": "", 
+		"en-dm": "Sarah Oliver", 
+		"type": "cname"
+	},
+	"cr.km": {
+		"en-us": "", 
+		"en-dm": "Kelly Marie", 
+		"type": "cname"
+	},
+	"cr.mkla": {
+		"en-us": "", 
+		"en-dm": "The MklaDiscord Gang", 
+		"type": "cname"
+	},
+	"cr.you": {
+		"en-us": "", 
+		"en-dm": "...and You!", 
+		"type": "cname"
+	},
+	"cr.gd": {
+		"en-us": "", 
+		"en-dm": "Game Design", 
+		"type": "crole"
+	},
+	"cr.p": {
+		"en-us": "", 
+		"en-dm": "Programming", 
+		"type": "crole"
+	},
+	"cr.sw": {
+		"en-us": "", 
+		"en-dm": "Story & Writing", 
+		"type": "crole"
+	},
+	"cr.g": {
+		"en-us": "", 
+		"en-dm": "Graphics", 
+		"type": "crole"
+	},
+	"cr.m": {
+		"en-us": "", 
+		"en-dm": "Music", 
+		"type": "crole"
+	},
+	"cr.qa": {
+		"en-us": "", 
+		"en-dm": "Quality Assurance", 
+		"type": "crole"
+	},
+	"cr.spec": {
+		"en-us": "", 
+		"en-dm": "Special Thanks", 
+		"type": "crole"
+	},
+	"cr.copy": {
+		"en-us": "", 
+		"en-dm": "Copyright 2018 Haunted Bees Productions", 
+		"type": "crole"
 	},
 };

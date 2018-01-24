@@ -713,4 +713,18 @@ var scripts = {
 	"angryBee5": "_CUSTOM:BEEQUEENMAD",
 	// Misc.: Ya Boi on the Farm
 	"iiiTalk0": "_TEXT:iiiTalk(0-1)",
+	// Misc.: Ending
+	"theEnd0": "?[{\"q\":\"player.techAxis <= 0 && player.ethicsAxis >= 0\",\"v\":1},{\"q\":\"player.techAxis > 0 && player.ethicsAxis >= 0\",\"v\":7},{\"q\":\"player.techAxis <= 0 && player.ethicsAxis < 0\",\"v\":4},{\"q\":\"true\",\"v\":10}]",
+	"theEnd1": "_BLACKTEXT:naturalGood0",
+	"theEnd2": "_TEXT:naturalGood(1-6)",
+	"theEnd3": "_CUSTOM:CREDITS&_END",
+	"theEnd4": "_BLACKTEXT:naturalBad0",
+	"theEnd5": "_TEXT:naturalBad(1-6)",
+	"theEnd6": "_CUSTOM:CREDITS&_END",
+	"theEnd7": "_BLACKTEXT:industrialGood0",
+	"theEnd8": "_TEXT:industrialGood(1-6)",
+	"theEnd9": "_CUSTOM:CREDITS&_END",
+	"theEnd10": "_BLACKTEXT:industrialBad0",
+	"theEnd11": "_TEXT:industrialBad(1-6)",
+	"theEnd12": "_CUSTOM:CREDITS&_END",
 };

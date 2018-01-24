@@ -31,6 +31,7 @@ uglifyjs ^
     js/combat/wacg.js ^
     js/worldmap/cutsceneParser.js ^
     js/worldmap/worldmap.js ^
+    js/worldmap/credits.js ^
     js/worldmap/title.js ^
     js/worldmap/optionsMenu.js ^
     js/worldmap/shop.js ^
