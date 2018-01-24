@@ -11,6 +11,7 @@ var pausemenu = {
     GetQuestItems: function() {
         this.questItems = [];
         if(player.hasQuestState("quest1", 4) || player.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
+        if(player.hasQuestState("kelpBoy", "gotMilk")) { this.questItems.push("milk"); }
         if(player.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }
         if(player.hasQuestState("getHeart", "weirdheart") || player.hasQuestState("getHeart", "heart")) { this.questItems.push("monsterheart"); }
         else if(player.hasQuestState("helpSeaMonster", "gotEgg")) { this.questItems.push("monsteregg"); }

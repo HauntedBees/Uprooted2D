@@ -7,7 +7,7 @@ var achievements = {
     "RAPBATTLE": { fromQuest: true },
     "boss2": { fromQuest: true },
     "dowel": { fromQuest: true },
-    "kelpBuddy": { fromQuest: true }, // TODO: make this exist
+    "kelpBuddy": { fromQuest: true },
     "boss3help": { fromQuest: true },
     "boss3hurt": { fromQuest: true },
     "crouton": { fromQuest: true },

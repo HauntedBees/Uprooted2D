@@ -253,10 +253,14 @@ var scripts = {
 	"kelpVase6": "_TEXT:vaseDo(1-2)",
 	"kelpVase7": "_ALIGNGOOD:-0.75&_FIGHT:kelpBoy",
 	// Underwater: Kelp Boy
-	"kelpBoy0": "?[{\"q\":\"player.hasQuest('kelpBoy')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
-	"kelpBoy1": "_TEXT:kelpBoy1&_END",
-	"kelpBoy2": "_TEXT:vaseDo3",
-	"kelpBoy3": "_FIGHT:kelpBoy",
+	"kelpBoy0": "?[{\"q\":\"player.completedQuest('kelpBoy')\",\"v\":1},{\"q\":\"player.hasQuestState('kelpBoy', 'wantMilk')\",\"v\":3},{\"q\":\"player.hasQuestState('kelpBoy','gotMilk')\",\"v\":4},{\"q\":\"player.hasQuestState('kelpBoy','fuck')\",\"v\":6},{\"q\":\"true\",\"v\":2}]",
+	"kelpBoy1": "_TEXT:kelpBoyEnd&_END",
+	"kelpBoy2": "_SETQUEST:kelpBoy,wantMilk&_TEXT:kelpBoy(0-2)&_END",
+	"kelpBoy3": "_TEXT:kelpBoy2&_END",
+	"kelpBoy4": "_COMPLETEQUEST:kelpBoy&_ALIGNGOOD:0.25&_TEXT:kelpBoy(3-5)",
+	"kelpBoy5": "_CHIEVO:kelpBuddy&meHive_SETTARGET&_CLEARTARGET&_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_END",
+	"kelpBoy6": "_TEXT:vaseDo3",
+	"kelpBoy7": "_FIGHT:kelpBoy",
 	// Underwater: Kelp Boy Defeated
 	"kelpDead0": "_CUSTOM:KELPDEAD",
 	// Underwater: Kelp Boy's Beehive
@@ -268,6 +272,12 @@ var scripts = {
 	// Underwater: Kelp Boy Defeated At Beehive
 	"kelpDeadBee0": "_CUSTOM:KELPDEAD",
 	"kelpDeadBee1": "_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
+	// Bridge: Cow
+	"bridgeCow0": "?[{\"q\":\"player.hasQuestState('kelpBoy', 'wantMilk')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
+	"bridgeCow1": "targ_SHIFTY:5&_TEXT:kelpCow0",
+	"bridgeCow2": "targ_SHIFTY:4&_END&_QUIT",
+	"bridgeCow3": "targ_SHIFTY:5&_TEXT:kelpCow(1-4)",
+	"bridgeCow4": "_SETQUEST:kelpBoy,gotMilk&targ_SHIFTY:4&_END&_QUIT",
 	// Fake Farm: Flat Tire Opening Cutscene
 	"flatTire0": "_BLACKTEXT:fakeFarmS",
 	"flatTire1": "_TRANSITIONANIM&_TEXT:fakeFarm0",

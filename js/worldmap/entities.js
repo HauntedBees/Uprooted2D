@@ -285,6 +285,7 @@ var mapentities = {
         EnterShop("ConstructionShoppe", 25, 3, "cworker"),
 
         GetCommonEntity("ConstructionManShop", 25, 3, 15, 0, undefined, undefined, { sy: 4, solid: false, noChange: true, boring: true }),
+        GetCommonEntity("KelpCow", 27, 1, 10, 0, undefined, Cutscene("bridgeCow"), { sy: 4, big: true, noChange: true }),
         
         GetCommonEntity("Worker1", 24, 5, 0, 3, undefined, Cutscene("workerA")),
         GetCommonEntity("Worker2", 21, 7, 0, 3, commonMovementDatas.rectangle(11, 5, 10, 2, 2), Cutscene("workerB"), { onlyActiveInteracts: true }),
@@ -349,7 +350,7 @@ var mapentities = {
             GetCommonEntity("Vase", 45, 28, 14, 0, undefined, Cutscene("kelpVase"), { sy: 6, noChange: true, postBattle: "kelpBeat", boring: true }),
             GetCommonEntity("KelpBoy", 46, 27, 13, 0, undefined, Cutscene("kelpBoy"), { sy: 6, noChange: true, storageKey: "KelpBoy", postBattle: "kelpBeat" }),
             GetInvisibleEntity("kelpBeat", Cutscene("kelpDead"), { storageKey: "kelpBeat" }),
-            GetCommonEntity("KelpBeehive", 45, 27, 2, 0, undefined, Cutscene("kelpHive"), { sy: 4, postBattle: "beeBeat", noChange: true, isBeehive: true } ),
+            GetCommonEntity("KelpBeehive", 45, 27, 2, 0, undefined, Cutscene("kelpHive"), { storageKey: "meHive", sy: 4, postBattle: "beeBeat", noChange: true, isBeehive: true } ),
             GetInvisibleEntity("beeBeat", Cutscene("kelpDeadBee"), { storageKey: "beeBeat" }),
 
             GetWaterfall("waterfallAS", 36, 22, 0, "AX"),

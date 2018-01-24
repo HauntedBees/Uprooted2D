@@ -2279,9 +2279,64 @@ var fulltext = {
 		"en-dm": "Kelp Boy: I must react to your destruction of property with VIOLENCE! PREPARE YOURSELF!!!", 
 		"type": "map"
 	},
-	"kelpBoy1": {
+	"kelpBoy0": {
 		"en-us": "", 
 		"en-dm": "Kelp Boy: Hi. I'm Kelp Boy. I like bees and pottery, I guess.", 
+		"type": "map"
+	},
+	"kelpBoy1": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: But what I really like... is milk. Which is hard to come by underwater, unsurprisingly.", 
+		"type": "map"
+	},
+	"kelpBoy2": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: If you could hook me up with some white gold, I'd be DAIRY thankful.", 
+		"type": "map"
+	},
+	"kelpCow0": {
+		"en-us": "", 
+		"en-dm": "Cow: i'm a fucking cow", 
+		"type": "map"
+	},
+	"kelpCow1": {
+		"en-us": "", 
+		"en-dm": "Cow: you. farm woman. i know what you seek. say no more.", 
+		"type": "map"
+	},
+	"kelpCow2": {
+		"en-us": "", 
+		"en-dm": "The cow gestures to a nearby lad, who runs up and goes to fucking town on those udders.", 
+		"type": "map"
+	},
+	"kelpCow3": {
+		"en-us": "", 
+		"en-dm": "The lad presents you with a carton of milk, then runs off.", 
+		"type": "map"
+	},
+	"kelpCow4": {
+		"en-us": "", 
+		"en-dm": "Cow: the first carton is on me, but we both know you'll be back. drink up, honey.", 
+		"type": "map"
+	},
+	"kelpBoy3": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: Oh boy! Is that MILK? For ME? Gee, thanks, mom! I mean, uh, stranger who is not my mom.", 
+		"type": "map"
+	},
+	"kelpBoy4": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy defies a few laws of physics and gulps down the milk, straight from the carton, while underwater.", 
+		"type": "map"
+	},
+	"kelpBoy5": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: As a thank-you-for-the-milk and as a please-forget-I-called-you-mom, please accept this gift!", 
+		"type": "map"
+	},
+	"kelpBoyEnd": {
+		"en-us": "", 
+		"en-dm": "Kelp Boy: Hey hey, what do you call a vase full of milk? A hearty drink!! Eh? Eh? I guess the joke is lost in translation.", 
 		"type": "map"
 	},
 	"vaseWon0": {
@@ -2306,7 +2361,7 @@ var fulltext = {
 	},
 	"vaseFoundBee": {
 		"en-us": "", 
-		"en-dm": "You already stole Kelp Boy's bees. Somehow. Breaking his vase now would just be salt in the wound.", 
+		"en-dm": "This is a nice vase.", 
 		"type": "map"
 	},
 	"fish0": {
@@ -5633,6 +5688,11 @@ var fulltext = {
 		"en-dm": "Golden Mushroom", 
 		"type": "opts"
 	},
+	"qi.milk": {
+		"en-us": "", 
+		"en-dm": "Milk", 
+		"type": "opts"
+	},
 	"qi.seamonkkey": {
 		"en-us": "", 
 		"en-dm": "Sea Monk Key", 
@@ -5786,7 +5846,7 @@ var fulltext = {
 	},
 	"ad.kelpBuddy": {
 		"en-us": "", 
-		"en-dm": "Helped Kelp Boy out instead of just breaking all his stuff like some sort of bully.", 
+		"en-dm": "Gave Kelp Boy some milk instead of just breaking all his stuff like some sort of bully.", 
 		"type": "adesc"
 	},
 	"a.unplugged": {
