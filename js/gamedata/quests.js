@@ -10,6 +10,7 @@
     seamonkey - got key from Dowel
     kelpBoy - beat up kelp boy
 *** gotSpareTire - fourth boss
+    truckRepair - actually holding the tire
     croutonsFishingAdventure - got master bait from Crouton
     abuelaBonita - got funny mushroom from old lady
     // WHERE IS THE MAFIA ONE?

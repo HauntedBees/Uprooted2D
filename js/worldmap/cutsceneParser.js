@@ -640,6 +640,7 @@ var SpecialFunctions = {
     "EXITBARN": function() { JumboExit(); },
     "FIXTIRE": function() {
         worldmap.writeText("bustedTruck1");
+        quests.completeQuest("truckRepair");
         game.target.anim.shiftY(0);
         game.target.interact = Cutscene("truck");
     },

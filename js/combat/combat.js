@@ -1,5 +1,5 @@
 var combat = {
-    enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false,
+    enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false, doingFinalKill: false,
     lastTarget: 0, lastTargetCrop: false, lastSelectedSeed: { x: 0, y: 0 }, 
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
@@ -21,6 +21,7 @@ var combat = {
         this.itemsEarned = [];
         this.happyCows = [];
         this.usedShooters = [];
+        this.doingFinalKill = false;
         combat.enemyTurn.lastIdx = -1;
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
             var hasCharger = false;
@@ -132,7 +133,7 @@ var combat = {
         if(this.enemies[enemyidx].health <= 0) {
             var e = this.enemies[enemyidx];
             this.expEarned += e.exp;
-            if(e.soleKill) { isFinalKill = true; }
+            if(e.soleKill && !this.doingFinalKill) { isFinalKill = true; this.doingFinalKill = true; }
             for(var i = 0; i < e.drops.length; i++) {
                 var dropInfo = e.drops[i];
                 if(dropInfo.money) {

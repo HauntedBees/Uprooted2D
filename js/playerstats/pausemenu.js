@@ -14,7 +14,7 @@ var pausemenu = {
         if(player.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }
         if(player.hasQuestState("getHeart", "weirdheart") || player.hasQuestState("getHeart", "heart")) { this.questItems.push("monsterheart"); }
         else if(player.hasQuestState("helpSeaMonster", "gotEgg")) { this.questItems.push("monsteregg"); }
-        if(player.hasQuest("gotTire")) { this.questItems.push("tire"); } // TODO: double check this one!
+        if(player.hasQuest("truckRepair")) { this.questItems.push("tire"); }
         if(worldmap.smartphone !== null) { this.questItems.push("smartphone"); }
         if(player.completedQuest("keycard")) { this.questItems.push("food2keycard"); }
     },

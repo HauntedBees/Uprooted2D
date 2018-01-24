@@ -429,7 +429,7 @@ var postHits = {
         if(e.unplugged) {
             return null;
         } else {
-            if(e.health > 170) { return null; }
+            if(e.health > 170 || e.health <= 0) { return null; }
             return function() {
                 e.spriteidx = 25;
                 e.unplugged = true;
