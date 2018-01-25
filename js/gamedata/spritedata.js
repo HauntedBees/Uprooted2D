@@ -404,6 +404,7 @@ var spriteData = {
         "coffee": [31, 6],
         "_sprinkler": [9, 17],
         "animalRabbit": [15, 12],
+        "animalMonkey": [40, 10],
         "goopdrop": [15, 15],
         "hgoop": [14, 15],
         "_beehive": [14, 12],

@@ -5219,6 +5219,11 @@ var fulltext = {
 		"en-dm": "Nathan: Sorry, boss, but business is business.", 
 		"type": "text"
 	},
+	"nathReturn": {
+		"en-us": "", 
+		"en-dm": "Nathan: Sorry, boss, but I must defeat you.", 
+		"type": "text"
+	},
 	// Area 10: Endings
 	"naturalGood0": {
 		"en-us": "", 
@@ -6721,6 +6726,11 @@ var fulltext = {
 		"type": "combat"
 	},
 	// Combat - Enemy Attacks
+	"stuckTurn": {
+		"en-us": "", 
+		"en-dm": "{0} tries to attack, but they are stuck in honey!", 
+		"type": "combat"
+	},
 	"standardAttack": {
 		"en-us": "", 
 		"en-dm": "{0} attacks for {1} damage.", 
@@ -7863,6 +7873,11 @@ var fulltext = {
 	"cr.mr": {
 		"en-us": "", 
 		"en-dm": "Marcin Rojek", 
+		"type": "cname"
+	},
+	"cr.lt": {
+		"en-us": "", 
+		"en-dm": "Leslie Tunstall", 
 		"type": "cname"
 	},
 	"cr.so": {

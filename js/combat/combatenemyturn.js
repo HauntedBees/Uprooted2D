@@ -5,6 +5,12 @@ combat.enemyTurn = {
         combat.animHelper.SetPlayerAnimInfo();
         combat.animHelper.SetBirdAnimInfo();
         gfx.drawFullbox(this.dy);
+        if(enemy.stickTurns > 0) {
+            var text = GetText("stuckTurn").replace(/\{0\}/g, enemy.name);
+            gfx.drawFullText(text, this.dy * 16);
+            combat.animHelper.DrawBottom();
+            return;
+        }
         var attackData = EnemyParser.Parse(enemy);
         if(attackData.attackAgain && this.lastIdx != args.idx) { combat.state--; }
         this.lastIdx = args.idx;

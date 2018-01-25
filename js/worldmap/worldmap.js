@@ -47,7 +47,12 @@ var worldmap = {
         if(targetToAutoplay !== null) {
             game.target = targetToAutoplay;
             if(game.target !== null && game.target.interact !== undefined) {
-                var keepGoing = game.target.interact[0](0, game.target);
+                var keepGoing = true;
+                if(player.failedEntities.indexOf(game.target.name) >= 0 && game.target.failedInteract !== undefined) {
+                    keepGoing = game.target.failedInteract[0](0, game.target);
+                } else {
+                    keepGoing = game.target.interact[0](0, game.target);
+                }
                 if(!keepGoing) {
                     worldmap.allowLateStart = false;
                     worldmap.toggleMovement(false);
@@ -350,7 +355,7 @@ var worldmap = {
                     worldmap.toggleMovement(false);
                     this.dialogState = 0;
                     game.target = e;
-                    if(e.failed && e.failedInteract !== undefined) {
+                    if(player.failedEntities.indexOf(game.target.name) >= 0 && e.failedInteract !== undefined) {
                         if(e.failedInteract[0](true, e)) { return; }
                     } else {
                         if(e.interact[0](true, e)) { return; }

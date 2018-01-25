@@ -704,6 +704,8 @@ var scripts = {
 	"final31": "endNath_SETDIR:1&_CUSTOM:FLIPSHIT",
 	"final32": "_SLEEP:3000",
 	"final33": "_FIGHT:nathan",
+	"finalReturn0": "endNath_ANIMSTATE:[3,7,2,4,true]&_TEXT:nathReturn",
+	"finalReturn1": "_FIGHT:nathan",
 	// Misc.: Pissed off Colel Cab
 	"angryBee0": "_ALIGNGOOD:-1&pl_SETDIR:2&_TEXT:BeeGuard0",
 	"angryBee1": "pl_SETDIR:1&_TEXT:BeeGuard1",

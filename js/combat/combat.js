@@ -217,7 +217,7 @@ var combat = {
             var anotherTurn = false;
             for(var i = 0; i < this.enemies.length; i++) {
                 if(this.enemies[i].turnFunc === undefined) { continue; }
-                anotherTurn |= combatEndTurnFuncs[this.enemies[i].turnFunc](this.enemies[i]);
+                anotherTurn |= this.enemies[i].stickTurns === 0 && combatEndTurnFuncs[this.enemies[i].turnFunc](this.enemies[i]);
             }
             if(anotherTurn) {
                 this.state--;
@@ -278,7 +278,7 @@ var combat = {
                 });
                 return;
             }
-            game.target.failed = true;
+            player.failedEntities.push(game.target.name);
             game.target = null;
         }
         player.health = player.maxhealth;
