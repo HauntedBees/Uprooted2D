@@ -307,7 +307,7 @@ var worldmap = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: 
                 if(this.inDialogue) { return; }
-                if(this.smartphone !== null && this.smartphone.Dismiss() > 0) { return ; }
+                if(this.smartphone !== null && this.smartphone.Dismiss() > 0) { return; }
                 worldmap.savedImage = gfx.getSaveFileImage();
                 game.transition(this, pausemenu);
                 return;

@@ -58,6 +58,7 @@ var game = {
     },
     transitioning: false,
     transition: function(from, to, arg) {
+        if(game.transitioning) { return false; }
         game.transitioning = true;
         if(from.earlyclean !== undefined) { from.earlyclean(); }
         game.startTransitionAnim(1, from, to, arg);
