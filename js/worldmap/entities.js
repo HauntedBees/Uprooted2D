@@ -6,7 +6,7 @@ var mapentities = {
         GetCommonEntity("Eagle", 16, 9, 4, 0, undefined, undefined, { sheet: "assistant" })
     ],
     "producestand": [
-        GetInvisibleEntity("CS_produce", Cutscene("pstand"), { autoplay: false }),
+        GetInvisibleEntity("CS_produce", Cutscene("pstand"), { autoplay: true }),
         GetInvisibleEntity("PostInitialBattle", Cutscene("finTut"), { storageKey: "PostInitialBattle" }), 
         GetCommonEntity("H_HipsterBike", 6, 4, 0, 0, undefined, undefined, { sy: 2, sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
         GetCommonEntity("H_Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", moving: true, sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
@@ -249,9 +249,9 @@ var mapentities = {
 		var invisSpeaks = [
 			[28, 9, "growingpeppie"], [28, 11, "growingpeppie"], [29, 11, "rottencrop"], [28, 10, "rottencrop"], [18, 17, "seedshooter"], [18, 16, "seedshooter"], [23, 17, "seedshooter"], 
 			[23, 16, "seedshooter"], [12, 16, "seasmod"], [13, 16, "seasmod"], [12, 15, "seasmod"], [13, 15, "seasmod"], [2, 13, "flask"], [2, 11, "sink"], [3, 11, "sink"], [6, 24, "labprinter"],
-			[16, 26, "bookshelf_left"], [17, 26, "bookshelf_left"], [18, 26, "bookshelf_mid"], [19, 26, "bookshelf_mid"], [20, 26, "bookshelf_mid"], [21, 26, "bookshelf_mid"],
-			[22, 26, "bookshelf_mid"], [23, 26, "bookshelf_right"], [24, 26, "bookshelf_right"], [10, 32, "broken_robot"], [11, 32, "broken_robot"], [12, 32, "broken_robot"], [13, 32, "broken_robot"], 
-			[12, 31, "broken_robot"], [13, 31, "broken_robot"], [1, 7, "devbed"], [2, 7, "devbed"], [1, 3, "devmachines"], [2, 3, "devmachines"], [3, 2, "devmachines"], [4, 1, "devmonitor"],
+			[16, 26, "bookshelf.left"], [17, 26, "bookshelf.left"], [18, 26, "bookshelf.mid"], [19, 26, "bookshelf.mid"], [20, 26, "bookshelf.mid"], [21, 26, "bookshelf.mid"],
+			[22, 26, "bookshelf.mid"], [23, 26, "bookshelf.right"], [24, 26, "bookshelf.right"], [10, 32, "broken.robot"], [11, 32, "broken.robot"], [12, 32, "broken.robot"], [13, 32, "broken.robot"], 
+			[12, 31, "broken.robot"], [13, 31, "broken.robot"], [1, 7, "devbed"], [2, 7, "devbed"], [1, 3, "devmachines"], [2, 3, "devmachines"], [3, 2, "devmachines"], [4, 1, "devmonitor"],
 			[5, 1, "devmachines"], [6, 1, "devmachines"], [7, 1, "devmachines"], [8, 1, "devmachines"], [9, 1, "devmachines"], [10, 2, "devmachines"], [11, 3, "devmachines"], [12, 3, "devmachines"]
 		];
 		for(var i = 0; i < invisSpeaks.length; i++) { var s = invisSpeaks[i]; x.push(GetCommonInvisibleSpeakingEntity("Spk" + i, s[0], s[1], s[2])); }
@@ -330,11 +330,11 @@ var mapentities = {
             GetCommonEntity("FishFace13", 10, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), Cutscene("enemy"), enemyMetadata.fish),
             GetCommonEntity("FishFace14", 8, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), Cutscene("enemy"), enemyMetadata.fish),
             GetCommonEntity("FishFace15", 6, 5, 0, 1, commonMovementDatas.rectangle(6, 3, 9, 2, 2), Cutscene("enemy"), enemyMetadata.fish),
-            GetCommonEntity("SeaMonk1", 34, 18, 4, 2, commonMovementDatas.rectangle(34, 18, 0, 10), Cutscene("enemy"), enemyMetadata.seamonk),
+            GetCommonEntity("SeaMonk1", 34, 18, 4, 2, commonMovementDatas.vertline(34, 18, 10), Cutscene("enemy"), enemyMetadata.seamonk),
             GetCommonEntity("SeaMonk2", 16, 24, 4, 2, commonMovementDatas.downrectangle(16, 24, 11, 2), Cutscene("enemy"), enemyMetadata.seamonk),
             GetCommonEntity("SeaMonk3", 31, 27, 4, 3, GetStdMovement([[31, 27, 0], [32, 27, 3], [32, 29, 2], [25, 29, 1], [25, 27, 0], [28, 27, 3], [28, 28, 2], [31, 28, 3]]), Cutscene("enemy"), enemyMetadata.seamonk),
             GetCommonEntity("SeaMonk4", 2, 9, 4, 2, commonMovementDatas.rectangle(2, 9, 1, 14), Cutscene("enemy"), enemyMetadata.seamonk),
-            GetCommonEntity("SeaMonk5", 32, 9, 4, 2, commonMovementDatas.rectangle(32, 9, 0, 10), Cutscene("enemy"), enemyMetadata.seamonk),
+            GetCommonEntity("SeaMonk5", 32, 9, 4, 2, commonMovementDatas.vertline(32, 9, 10), Cutscene("enemy"), enemyMetadata.seamonk),
 
             GetCommonEntity("ShipLeft", 16, 17, 1, 0, undefined, undefined, { big: true, sy: 1, boring: true }),
             GetCommonEntity("ShipMiddle", 18, 17, 1, 1, undefined, undefined, { big: true, sy: 1, boring: true }),
@@ -447,10 +447,10 @@ var mapentities = {
         GetJumbo("barnCover", "barn", 7, 18, 1036, 900, 1, 0),
         
         GetCommonEntity("FarmerJeffOpening", 15, 35.5, 8, 3, undefined, Cutscene("flatTire"), { boring: true, sy: 10, solid: false, autoplay: true, storageKey: "FarmerJeff" }),
-        GetCommonEntity("FarmTVEntrance", 10, 8, 0, 0, undefined, Cutscene("farmTV"), { boring: true, solid: false, visible: false } ),
+        GetCommonEntity("FarmTVEntrance", 10, 8, 0, 0, undefined, Cutscene("farmTV"), { boring: true, solid: false, visible: false, storageKey: "fuckOffFarmerJeff" } ),
 
         GetCommonEntity("FarmTV", 14, 2, 5, 0, undefined, undefined, { boring: true, sy: 1, big: true, sheetlen: 2, moving: true, storageKey: "FarmTV" } ),
-        GetCommonEntity("Outlet", 13, 2, 5, 0, undefined, Cutscene("outlet"), { sy: 12, noChange: true } ),
+        GetCommonEntity("Outlet", 13, 2, 5, 0, undefined, Cutscene("outlet"), { sy: 12, noChange: true, storageKey: "outlet" } ),
         
         GetCommonEntity("MrShocky", 10, 9, 7, 0, undefined, undefined, { boring: true, sy: 12, sheetlen: 2, moving: true, visible: false, solid: false, storageKey: "MrShocky", changeType: 7 }), // 7 = becomes visible/solid
         GetCommonEntity("Hotbox", 9, 8, 4, 0, undefined, Cutscene("hotbox"), { sy: 13, noChange: true, noRunKill: true, postBattle: "HotBoxEnd" }),
@@ -465,9 +465,9 @@ var mapentities = {
                 player.activeQuests["gotTire"] = 0;
                 player.activeQuests["truckRepair"] = 1;
             }
-        ], { sy: 8, noChange: true }),
+        ], { sy: 8, noChange: true, storageKey: "tire" }),
         
-        GetCommonEntity("AFuckingTruckL", 24, 34, 4, 0, undefined, Cutscene("badTruck"), { sy: 3, big: true, noChange: true }),
+        GetCommonEntity("AFuckingTruckL", 24, 34, 4, 0, undefined, Cutscene("badTruck"), { sy: 3, big: true, noChange: true, storageKey: "ltruck" }),
         GetCommonEntity("AFuckingTruckR", 26, 34, 5, 0, undefined, undefined, { big: true, noChange: true }),
         GetCommonEntity("Crouton", 26, 30, 0, 0, undefined, Cutscene("crouton"), { visible: false }),
         
@@ -879,7 +879,7 @@ var mapentities = {
             GetChungus(13, 1, 376, 103, 105, 64),
             { id: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
                 if(worldmap.horRor === null) {
-                    var startingRoom = 13;
+                    var startingRoom = worldmap.pos.x < 10 ? 0 : 13;
                     worldmap.horRor = new HorRor(startingRoom);
                     ToggleChungus(true, { chungi: [startingRoom] });
                     Cutscene("food2Third")[0]();
@@ -966,7 +966,8 @@ var mapentities = {
     ],
     "hq_6": function() {
         var x = [
-            { name: "OhMyGodThisIsTheEnd", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("final"), autoplay: true },
+            { name: "OhMyGodThisIsTheEnd", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("final"), autoplay: true, postBattle: "youWon" },
+            { name: "youWon", storageKey: "youWon", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("theEnd") },
             GetCommonEntity("CryBeckett", 5, 9, 6, 0, undefined, undefined, { sheet: "hipster", sy: 2, sheetlen: 2, storageKey: "beckettCry" }),
             GetCommonEntity("chair", 8.5, 7, 1, 0, undefined, undefined, { sheet: "assistant", sy: 5, boring: true, visible: false, storageKey: "chair", forcedY: 13 }),
             GetCommonEntity("BigBadNathan", 8.5, 7, 0, 0, undefined, undefined, { sheet: "assistant", sy: 4, sheetlen: 2, storageKey: "endNath", forcedY: 14 }),

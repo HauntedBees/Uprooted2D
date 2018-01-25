@@ -53,6 +53,7 @@ var player = {
     hasQuest: function(q) { return player.activeQuests[q] !== undefined; },
     hasQuestState: function(q, state) { return player.activeQuests[q] !== undefined && state === player.activeQuests[q]; },
     completedQuest: function(q) { return player.questsCleared.indexOf(q) >= 0; },
+    hasOrHasHadQuest: function(q) { return player.questsCleared.indexOf(q) >= 0 || player.activeQuests[q] !== undefined; },
     hasItem: function(item, amount) {
         amount = amount || 1;
         for(var i = 0; i < player.inventory.length; i++) {

@@ -126,19 +126,33 @@ var game = {
         game.currentInputHandler = worldmap.title;
         worldmap.title.setup();
     },
+    obj2str: function(obj) { return LZString.compress(JSON.stringify(obj)); },
+    str2obj: function(str) { return JSON.parse(LZString.decompress(str)); },
     save: function(savenum) {
         player.setMapPosition();
-        localStorage.setItem("file" + savenum, JSON.stringify(player));
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
+        localStorage.setItem("player" + savenum, game.obj2str(player));
+        stateBinders.storePositions(worldmap.mapName);
+        if(stateBinders[worldmap.mapName] !== undefined) { stateBinders[worldmap.mapName](); }
+        if(worldmap.smartphone !== null) {
+            mapStates["northcity"].phoneData = worldmap.smartphone.GetPhoneData();
+        }
+        localStorage.setItem("mapent" + savenum, game.obj2str(mapStates));
     },
     load: function(savenum) {
-        var loadedPlayer = JSON.parse(localStorage.getItem("file" + savenum));
+        var loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
         player = Object.assign(player, loadedPlayer);
+        mapStates = game.str2obj(localStorage.getItem("mapent" + savenum));
         stores["skumpys"].wares[0].price = (player.achievements.indexOf("skumpy") < 0 ? 20 : 0);
+        if(mapStates["northcity"].phoneData !== undefined) {
+            worldmap.smartphone = new Smartphone();
+            worldmap.smartphone.SetPhoneData(mapStates["northcity"].phoneData);
+        }
         game.transition(game.currentInputHandler, worldmap, { 
             init: player.mapPos,
             map: player.mapName,
-            playerDir: player.mapDir
+            playerDir: player.mapDir,
+            fromLoad: true
         });
     }
 };

@@ -34,13 +34,13 @@ var worldmap = {
                 this.entities = [];
             }
         }
-        mapRefreshes[this.mapName]();
         var targetToAutoplay = null;
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
-            if(e.autoplay) { targetToAutoplay = e; }
+            if(e.autoplay && targetToAutoplay === null) { targetToAutoplay = e; } // always autoplay first one
         }
+        if(args.fromLoad) { mapRefreshes.resetData(this.mapName); }
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {

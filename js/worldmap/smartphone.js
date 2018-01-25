@@ -11,6 +11,23 @@ function Smartphone() {
     var datingApp = 0, datingAppMax = 7;
     var havePushedSister = false, sisterChance = 0;
     var lastX = 0, lastY = 0;
+    this.GetPhoneData = function() {
+        return {
+            rt: remainingTexts, t: texts,
+            hps: havePushedSister, sC: sisterChance,
+            dA: datingApp, pL: pushedLimit
+        };
+    };
+    this.SetPhoneData = function(t) { 
+        remainingTexts = t.rt;
+        texts = t.t; 
+        notifications = 0;
+        for(var i = 0; i < texts.length; i++) { if(!texts[i].read) { notifications++; } }
+        havePushedSister = t.hps;
+        sisterChance = t.sC;
+        datingApp = t.dA;
+        pushedLimit = t.pL;
+    };
     this.Update = function() {
         if(worldmap.mapName !== "northcity") { return; }
         if(worldmap.pos.x % 4 !== 0 && worldmap.pos.y % 3 !== 0) { return; }

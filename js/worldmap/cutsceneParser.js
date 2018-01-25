@@ -454,7 +454,7 @@ var SpecialFunctions = {
         worldmap.animIdx = setInterval(iHandler.state.animHandler, 250);
     },
     "NERDUP": function() {
-        player.hasNerd = true; // TODO: account for this shit when saving/loading
+        player.hasNerd = true;
         worldmap.clearTarget();
         worldmap.animData = new MapAnim("mapplayer_help", 0, 0, 20, 25, 2);
         worldmap.entities.push(GetCommonEntity("BarricadeL", 23, 2, 6, 0, undefined, [ GetSpeak("blockedOff3F") ], { big: true, noChange: true }));
@@ -668,21 +668,28 @@ var SpecialFunctions = {
         worldmap.refreshMap();
         worldmap.writeText("hotbox3");
     },
-    "UNPLUGOUTLET": function() {
-        game.target.anim.shiftY(13);
-        worldmap.importantEntities["MrShocky"].pos = { x: -1, y: -1 };
-        worldmap.importantEntities["MrShocky"].moving = false;
-        player.clearedEntities.push("MrShocky");
+    "UNPLUGOUTLET": function(fromLoad) {
+        if(!fromLoad) {
+            worldmap.writeText("farmTVunplug2");
+            game.target.anim.shiftY(13);
+            player.activeQuests["fakeFarm"] = 1;
+            player.questsCleared.push("unpluggedOutlet");
+            if(worldmap.importantEntities["MrShocky"] !== undefined) {
+                worldmap.importantEntities["MrShocky"].pos = { x: -1, y: -1 };
+                worldmap.importantEntities["MrShocky"].moving = false;
+                player.clearedEntities.push("MrShocky");
+            }
+        }
         worldmap.importantEntities["FarmTV"].moving = false;
         worldmap.importantEntities["FarmTV"].anim.shiftY(3);
-        player.activeQuests["fakeFarm"] = 1;
         worldmap.refreshMap();
-        worldmap.writeText("farmTVunplug2");
     },
-    "FARMTVEND": function() {
-        worldmap.writeText("farmTV5");
-        game.target.pos = { x: -1, y: -1 };
-        player.activeQuests["fakeFarm"] = 0;
+    "FARMTVEND": function(fromLoad) {
+        if(!fromLoad) {
+            worldmap.writeText("farmTV5");
+            game.target.pos = { x: -1, y: -1 };
+            player.activeQuests["fakeFarm"] = 0;
+        }
         for(var i = 0; i < worldmap.entities.length; i++) {
             if(worldmap.entities[i].changeType === undefined) { continue; }
             switch(worldmap.entities[i].changeType) {
@@ -692,28 +699,28 @@ var SpecialFunctions = {
                     worldmap.entities[i].visible = false;
                     break;
                 case 1:
-                    var p = worldmap.entities[i].pos;
-                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 9, 0);
+                    var p = worldmap.entities[i].startingpos;
+                    worldmap.entities[i].movement = commonMovementDatas.line(p.x, p.y, 9);
                     break;
                 case 2:
-                    var p = worldmap.entities[i].pos;
-                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 4, p.y, 4, 0, 1);
+                    var p = worldmap.entities[i].startingpos;
+                    worldmap.entities[i].movement = commonMovementDatas.line(p.x - 4, p.y, 4, 1);
                     break;
                 case 3:
-                    var p = worldmap.entities[i].pos;
-                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 4, 0);
+                    var p = worldmap.entities[i].startingpos;
+                    worldmap.entities[i].movement = commonMovementDatas.line(p.x, p.y, 4);
                     break;
                 case 4:
-                    var p = worldmap.entities[i].pos;
-                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 7, p.y, 7, 0, 1);
+                    var p = worldmap.entities[i].startingpos;
+                    worldmap.entities[i].movement = commonMovementDatas.line(p.x - 7, p.y, 7, 1);
                     break;
                 case 5:
-                    var p = worldmap.entities[i].pos;
-                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x, p.y, 11, 0);
+                    var p = worldmap.entities[i].startingpos;
+                    worldmap.entities[i].movement = commonMovementDatas.line(p.x, p.y, 11);
                     break;
                 case 6:
-                    var p = worldmap.entities[i].pos;
-                    worldmap.entities[i].movement = commonMovementDatas.rectangle(p.x - 11, p.y, 11, 0, 1);
+                    var p = worldmap.entities[i].startingpos;
+                    worldmap.entities[i].movement = commonMovementDatas.line(p.x - 11, p.y, 11, 1);
                     break;
                 case 7:
                     worldmap.entities[i].solid = true;

@@ -134,6 +134,7 @@ function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: 
 function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false, boring: true}); };
 function GetBeehive(hiveId, x, y, inside) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true, inside: inside, visible: !inside }); };
 function ToggleRFDoors(type) {
+    mapStates[worldmap.mapName].rf[type] = !mapStates[worldmap.mapName].rf[type];
     for(var i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
             var newActive = !worldmap.entities[i].active;
@@ -331,7 +332,7 @@ function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional
     var len = (additional !== undefined && additional.sheetlen !== undefined) ? additional.sheetlen : 4;
     var res = {
         name: name, visible: true, 
-        pos: {x: x, y: y}, solid: true, 
+        pos: {x: x, y: y}, startingpos: {x: x, y: y}, solid: true, 
         anim: new MapAnim(sheet, firstx, (additional === undefined ? 0 : (additional.sy || 0)), (big ? 32 : 16), (big ? 40 : 20), dir, len, additional !== undefined ? additional.dontDoThat : false),
         moving: false,
         sx: firstx * (big ? 32 : 16), dir: dir,
@@ -407,9 +408,13 @@ var commonMovementDatas = {
             }
         } },
     robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 },  { x: x, y: 8, dx: 0, dy: -1 } ] } },
+    line: function(x, y, w, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
+        points: [ { x: x + w, y: y, dx: 1, dy: 0 }, { x: x, y: y, dx: -1, dy: 0 } ] } },
+    vertline: function(x, y, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
+        points: [ { x: x, y: y + h, dx: 0, dy: 1 }, { x: x, y: y, dx: 0, dy: -1 } ] } },
     rectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
         points: [ { x: x + w, y: y, dx: 1, dy: 0 }, { x: x + w, y: y + h, dx: 0, dy: 1 }, { x: x, y: y + h, dx: -1, dy: 0 }, { x: x, y: y, dx: 0, dy: -1 } ] } },
-    downrectangle: function(x, y, w, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
+    downrectangle: function(x, y, w, h, initState) {  return { state: (initState || 0), speed: 0.025, loop: true, 
         points: [ { x: x, y: y + h, dx: 0, dy: 1 }, { x: x + w, y: y + h, dx: 1, dy: 0 }, { x: x + w, y: y, dx: 0, dy: -1 }, { x: x, y: y, dx: -1, dy: 0 } ] } },
     fastdownrect: function(x, y, w, h, initState) { var r = commonMovementDatas.downrectangle(x, y, w, h, initState); r.speed *= 3; return r; }
 };
