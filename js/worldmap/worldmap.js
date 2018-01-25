@@ -22,6 +22,7 @@ var worldmap = {
         this.forceEndDialog = false;
         this.inWaterfall = false;
         this.importantEntities = {};
+        this.allowLateStart = true;
         if(!args.noEntityUpdate) {
             if(mapentities[this.mapName] !== undefined) {
                 this.entities = mapentities[this.mapName].slice();
@@ -48,12 +49,13 @@ var worldmap = {
             if(game.target !== null && game.target.interact !== undefined) {
                 var keepGoing = game.target.interact[0](0, game.target);
                 if(!keepGoing) {
+                    worldmap.allowLateStart = false;
                     worldmap.toggleMovement(false);
                     return;
                 }
             }
         }
-        worldmap.toggleMovement(true);
+        
         if(worldmap.angryBees) {
             this.dialogState = 0;
             this.inDialogue = true;
@@ -63,6 +65,9 @@ var worldmap = {
         if(args.isInn && worldmap.entities[0].innCheck) {
             worldmap.entities[0].action();
         }
+    },
+    latestart: function() {
+        if(worldmap.allowLateStart) { worldmap.toggleMovement(true); }
     },
     toggleMovement: function(moving) {
         clearInterval(worldmap.fullAnimIdx);
@@ -160,9 +165,12 @@ var worldmap = {
         if(worldmap.smartphone !== null) { worldmap.smartphone.Draw(); }
         if(worldmap.horRor !== null) { worldmap.horRor.Draw(); }
     },
-    clean: function() {
+    earlyclean: function() {
         clearInterval(worldmap.fullAnimIdx);
         clearInterval(worldmap.animIdx);
+    },
+    clean: function() {
+        worldmap.earlyclean();
         gfx.clearAll();
     },
     clearTarget: function() {

@@ -59,6 +59,7 @@ var game = {
     transitioning: false,
     transition: function(from, to, arg) {
         game.transitioning = true;
+        if(from.earlyclean !== undefined) { from.earlyclean(); }
         game.startTransitionAnim(1, from, to, arg);
         return true;
     },
@@ -87,6 +88,7 @@ var game = {
     finishTransition: function() {
         clearInterval(game.transitionInfo.animIdx);
         game.transitioning = false;
+        if(game.currentInputHandler.latestart !== undefined) { game.currentInputHandler.latestart(); }
         gfx.clearLayer("tutorial");
     },
     drawTransitionAnim: function() {
