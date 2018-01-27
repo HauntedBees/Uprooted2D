@@ -19,6 +19,8 @@ function CropDetail(name, displayname, price, type, size, time, frames, power, r
     this.time = time;
     this.frames = frames;
     this.power = power;
+	this.health = power * 5;
+	this.defense = power * power * 0.4;
     this.respawn = re;
     this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }

@@ -966,7 +966,7 @@ var mapentities = {
     ],
     "hq_6": function() {
         var x = [
-            { name: "OhMyGodThisIsTheEnd", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("final"), autoplay: true, postBattle: "youWon" },
+            { name: "OhMyGodThisIsTheEnd", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("final"), autoplay: true, boss: true, postBattle: "youWon", failedInteract: Cutscene("finalReturn") },
             { name: "youWon", storageKey: "youWon", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("theEnd") },
             GetCommonEntity("CryBeckett", 5, 9, 6, 0, undefined, undefined, { sheet: "hipster", sy: 2, sheetlen: 2, storageKey: "beckettCry" }),
             GetCommonEntity("chair", 8.5, 7, 1, 0, undefined, undefined, { sheet: "assistant", sy: 5, boring: true, visible: false, storageKey: "chair", forcedY: 13 }),

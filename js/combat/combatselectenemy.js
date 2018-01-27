@@ -1,7 +1,8 @@
 combat.selectTarget = {
     cursorx: 0, canSickle: false, canHumans: true, dy: 8, 
     sicklePos: {x: -1, y: -1}, targets: [], maxTargets: 0, 
-    layersToClear: ["menucursorA", "menucursorB", "menutext"], 
+    layersToClear: ["menucursorA", "menucursorB", "menutext"],
+    // Setup/Display Logic
     setup: function(args) {
         this.cursorx = 0;
         this.sicklePos = {x: -1, y: -1};
@@ -12,14 +13,12 @@ combat.selectTarget = {
             this.canSickle = player.canSickleCrops();
             this.canHumans = !args.isMelee || player.canAttackPeople();
         }
-        if(!this.canHumans) {
-            this.sicklePos = {x: combat.enemydx, y: (combat.enemyheight - 1 + combat.enemydy)};
-        }
+        if(!this.canHumans) { this.sicklePos = {x: combat.enemydx, y: (combat.enemyheight - 1 + combat.enemydy)}; }
         this.targets = [];
         var numAttacks = args.numAttacks || 1;
         if(this.canHumans && numAttacks >= combat.enemies.length && (!this.canSickle || this.enemyGridIsEmpty())) {
             for(var i = 0; i < combat.enemies.length; i++) { this.targets.push(i); }
-            this.attack();
+            this.Attack();
         } else {
             this.maxTargets = numAttacks;
             this.drawAll();
@@ -78,10 +77,10 @@ combat.selectTarget = {
         }
         combat.animHelper.DrawBottom();
     },
-
     clean: function() { gfx.clearSome(this.layersToClear); },
     cancel: function() { game.innerTransition(this, combat.menu); return true; },
     
+    // Selecting Logic
     keyPress: function(key) {
         var pos = { 
             x: (this.sicklePos.x < 0 ? (this.cursorx + (11 - combat.enemies.length)) : this.sicklePos.x), 
@@ -141,7 +140,7 @@ combat.selectTarget = {
         } else {
             doAttack = this.toggleTarget(this.cursorx, false);
         }
-        if(doAttack) { this.attack(); }
+        if(doAttack) { this.Attack(); }
         else { this.drawAll(); }
     },
     toggleTarget: function(idx, isPoint) {
@@ -163,122 +162,126 @@ combat.selectTarget = {
         this.targets.push(idx);
         return (this.targets.length === this.maxTargets);
     },
-    attack: function() {
-        var attackinfo = this.getAttackDetails();
-        var damage = attackinfo.damage;
-        var stunTurns = attackinfo.stun;
+
+    // Attacking Logic
+    Attack: function() {
+        var allAttacks = this.GetAttackDetails();
         var damagetext = "";
-        var criticalHit = false;
         var additionalTargets = [];
-        if(player.getRandomLuckyNumber() < 0.05) {
-            damage = Math.max(damage + 2, Math.ceil(damage * Math.max(1.5, 1 + Math.random())));
-            criticalHit = true;
-            if(stunTurns > 0) {
-                stunTurns = Math.round(stunTurns * 1.5);
-            } else if(attackinfo.stunPotential) {
-                stunTurns = 2;
-            }
-        }
-        var stunningEnemies = false, hasAnimals = false, hasRecoil = false;
-        var hasKills = false, hasDestroys = false;
+
+        var hasKills = false, hasDestroys = false, hasRecoil = false;
+        var hasAnimals = false, hasStuns = false;
         var avgDamage = 0, lastTargetName = "";
         var targArr = this.targets.length > 1;
         if(targArr) { combat.lastTarget = []; }
         var postHit = null;
         for(var i = 0; i < this.targets.length; i++) {
             var targetidx = this.targets[i];
-            if(targetidx.x !== undefined) { // attacking a crop
-                attackinfo.animals = [];
+            var attackData = allAttacks[i];
+            
+            if(targArr) { combat.lastTarget.push(targetidx); } // TODO: is this good?
+            else { combat.lastTarget = 0; }
+
+            if(targetidx.x !== undefined) {
                 var cropPos = {x: targetidx.x - combat.enemydx, y: targetidx.y - combat.enemydy};
                 var crop = combat.enemyGrid[cropPos.x][cropPos.y];
-                if(crop === null) { return false; }
-                if(crop.x !== undefined) {
+                if(crop === null) { continue; }
+                if(crop.x !== undefined) { // this is a size 2 crop
                     cropPos = {x: crop.x, y: crop.y};
                     crop = combat.enemyGrid[crop.x][crop.y];
                 }
-                if(targArr) {
-                    combat.lastTarget.push(targetidx);
-                } else {
-                    combat.lastTarget = 0;
-                }
-                combat.lastTargetCrop = false;
-                var innerDamage = Math.ceil(damage / 6);
-                avgDamage += innerDamage;
-                lastTargetName = GetText("cropWithDefArticle").replace(/\{0\}/g, crop.displayname);
-                if((crop.power - damage) <= 0) {
+
+                combat.lastTargetCrop = false; // TODO: uh?
+                lastTargetName = GetText("cropWithDefArticle").replace(/\{0\}/g, crop.displayname); // TODO: hmm
+                attackData.animals = []; // TODO: ?
+
+                avgDamage += attackData.damage;
+                crop.health -= attackData.damage;
+                crop.power -= attackData.cropPowerLower;
+                
+
+                if(crop.health <= 0) {
                     hasDestroys = true;
                     crop.hidden = true;
                     crop.flagged = true;
                     combat.animHelper.DrawCrops();
                     combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
-                }
-                crop.power -= innerDamage;
-                if(crop.power <= 0) {
-                    if(crop.size == 2) {
+                    // TODO: should this part be here?
+                    /*if(crop.size == 2) {
                         combat.enemyGrid[cropPos.x + 1][cropPos.y] = null;
                         combat.enemyGrid[cropPos.x][cropPos.y + 1] = null;
                         combat.enemyGrid[cropPos.x + 1][cropPos.y + 1] = null;
                     }
                     combat.enemyGrid[cropPos.x][cropPos.y] = null;
+                    */
                 }
-            } else { // attacking an enemy
-                if(targArr) {
-                    combat.lastTarget.push(targetidx);
-                } else {
-                    combat.lastTarget = targetidx;
-                }
+            } else {
                 combat.lastTargetCrop = false;
                 var target = combat.enemies[targetidx];
-                if(attackinfo.numCrops > 3 && combat.enemies.length > 1) {
-                    while((player.getRandomLuckyNumber(true) * attackinfo.numCrops--) > 0.9) {
+                lastTargetName = target.name;
+
+                var finalDamage = attackData.damage;
+                if(target.addtlHitCheck !== undefined) { finalDamage = addtlHitChecks[target.addtlHitCheck](attackData.crops, finalDamage); }
+                avgDamage += finalDamage;
+                combat.damageEnemy(targetidx, finalDamage);
+                if(target.health <= 0) { hasKills = true; }
+
+                if(attackData.animals.length > 0) { hasAnimals = true; }
+                if(attackData.stunLength > 0) { hasStuns = true; combat.stickEnemy(targetidx, attackData.stunLength); }
+                if(target.postHit !== undefined) { postHit = postHits[target.postHit](target); }
+
+                if(attackData.numCrops > 3 && combat.enemies.length > 1) {
+                    var recoilDamage = Math.ceil(finalDamage * 0.15);
+                    while((player.getRandomLuckyNumber(true) * attackData.numCrops--) > 0.9) {
                         var idx = Range(0, combat.enemies.length);
                         if(idx === targetidx) { idx = (idx + 1) % combat.enemies.length; }
                         additionalTargets.push(idx);
+                        combat.damageEnemy(idx, recoilDamage);
+                        hasRecoil = true;
                     }
                 }
-                var innerDamage = damage;
-                if(!criticalHit) { innerDamage = Math.max(1, innerDamage - target.def); }
-                if(target.addtlHitCheck !== undefined) {
-                    innerDamage = addtlHitChecks[target.addtlHitCheck](attackinfo.cropInfo, innerDamage);
-                }
-                avgDamage += innerDamage;
-                if(attackinfo.animals.length > 0) { hasAnimals = true; }
-                lastTargetName = target.name;
-                if(additionalTargets.length > 0) { hasRecoil = true; }
-                if((target.health - innerDamage) <= 0) {
-                    hasKills = true;
-                }
-                combat.damageEnemy(targetidx, innerDamage);
-                if(target.postHit !== undefined) { postHit = postHits[target.postHit](target); }
-
-                var recoilDamage = Math.ceil(innerDamage * 0.15);
-                for(var j = 0; j < additionalTargets.length; j++) {
-                    combat.damageEnemy(additionalTargets[j], recoilDamage);
-                }
-                if(stunTurns > 0) {
-                    stunningEnemies = true;
-                    combat.stickEnemy(targetidx, stunTurns);
-                }
             }
-            avgDamage = Math.floor(avgDamage / this.targets.length);
         }
+        avgDamage = Math.floor(avgDamage / this.targets.length);
         
-        if((player.health - attackinfo.selfHarm) <= 0) { attackinfo.selfHarm = player.health - 1; }
-        if(attackinfo.selfHarm > 0) { player.health -= attackinfo.selfHarm; }
-
-        var damagetext = this.GetDamageText(criticalHit, hasAnimals, hasRecoil, hasKills, hasDestroys, stunningEnemies, combat.isFalcon, 
-                                            avgDamage, lastTargetName, this.targets.length > 1, attackinfo.selfHarm);
+        if(allAttacks[0].knockback > 0) { player.health = Math.max(player.health - allAttacks[0].knockback, 1); }
+        var damagetext = this.GetDamageText(allAttacks[0].crit, hasAnimals,  hasRecoil, hasKills, hasDestroys, hasStuns, 
+                                            combat.isFalcon, avgDamage, lastTargetName, this.targets.length > 1, allAttacks[0].knockback);
 
         if(combat.isFalcon) {
             combat.animHelper.SetBirdAnimInfo([[2, 1], [3, 1], [2, 1], [3, 1, true]], undefined, undefined, undefined, GetFrameRate(12));
         } else {
             combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
         }
-        combat.flagFreshCrops(true, criticalHit, attackinfo.animals, additionalTargets);
+        combat.flagFreshCrops(true, allAttacks[0].crit, allAttacks[0].animals, additionalTargets);
 
         if(postHit === null) { postHit = function() { combat.endTurn(combat.inbetween); }; }
         game.innerTransition(this, combat.inbetween, { next: postHit, text: damagetext });
         return true;
+    },
+    GetAttackDetails: function() {
+        var myCrops = [];
+        for(var x = 0; x < player.gridWidth; x++) {
+            for(var y = 0; y < player.gridHeight; y++) {
+                var tile = combat.grid[x][y];
+                if(tile === null || tile.x !== undefined) { continue; }
+                if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
+                else if(tile.rotten || tile.activeTime > 0) { continue; }
+                myCrops.push(tile);
+            }
+        }
+        var targetParams = [];
+        for(var i = 0; i < this.targets.length; i++) {
+            if(this.targets[i].x === undefined) { // enemy
+                targetParams.push(combat.enemies[i].def);
+            } else { // crop
+                var x = this.targets[i].x - combat.enemydx;
+                var y = this.targets[i].y - combat.enemydy;
+                targetParams.push(combat.enemyGrid[x][y]);
+            }
+        }
+        if(myCrops.length === 0) { return dmgCalcs.MeleeAttack(true, combat.season, player.atk, targetParams, -1); }
+        else { return dmgCalcs.CropAttack(true, combat.season, player.atk, myCrops, targetParams, -1); }
     },
     GetDamageText: function(criticalHit, hasAnimals, hasRecoil, hasKills, hasDestroys, stunningEnemies, isFalcon, damage, target, multipleTargets, selfHarm) {
         var damagetext = GetText("attackMessageStruct");
@@ -326,102 +329,6 @@ combat.selectTarget = {
         else { damagetext = damagetext.replace(/\{gloves\}/g, ""); }
         
         return damagetext;
-    },
-    GetNerfs: function() {
-        if(combat.enemies[0].id !== "beckett") { return []; }
-        var nerfs = [];
-        var right = combat.enemywidth - 1, bottom = combat.enemyheight - 1;
-        for(var x = right - 1; x <= right; x++) {
-            for(var y = bottom - 1; y <= bottom; y++) {
-                var nerf = combat.enemyGrid[x][y];
-                if(nerf === null) { continue; }
-                switch(nerf.id) {
-                    case "mushNerf": nerfs.push("mush"); break;
-                    case "riceNerf": nerfs.push("rice"); break;
-                    case "treeNerf": nerfs.push("tree"); break;
-                    case "vegNerf": nerfs.push("veg"); break;
-                    case "fishNerf": nerfs.push("spear"); nerfs.push("rod"); nerfs.push("water"); break;
-                    case "beeNerf": nerfs.push("bee"); break;
-                    case "eggNerf": nerfs.push("egg"); break;
-                    case "reNerf": nerfs.push("RE"); break;
-                }
-            }
-        }
-        return nerfs;
-    },
-    GetNerfMultiplier: function(crop, nerfs) { 
-        if(combat.enemies[0].id !== "beckett") { return 1; }
-        if(nerfs.length === 0) { return 1; }
-        var nerfMult = 1;
-        for(var i = 0; i < nerfs.length; i++) {
-            if(nerfs[i] === "RE") {
-                if(crop.respawn > 0) { nerfMult *= 0.25; }
-            } else if(nerfs[i] === crop.type) {
-                nerfMult *= 0.25;
-            }
-        }
-        return nerfMult;
-    },
-    getAttackDetails: function() {
-        var dmg = 0, numCrops = 0;
-        var stickAmount = 0, potentialForStun = false;
-        var canHurt = (player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech);
-        var selHurt = 0;
-        var animals = [];
-        var cropInfo = [];
-        var nerfs = this.GetNerfs();
-        for(var x = 0; x < player.gridWidth; x++) {
-            for(var y = 0; y < player.gridHeight; y++) {
-                var tile = combat.grid[x][y];
-                if(tile === null || tile.x !== undefined) { continue; }
-                if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
-                else if(tile.rotten || tile.activeTime > 0) { continue; }
-                cropInfo.push({ type: tile.type, seasons: tile.seasons });
-                numCrops++;
-                var boost = 1, seasonVal = tile.seasons[combat.season];
-                if(seasonVal > 0.5) {
-                    boost *= 1 + (seasonVal - 0.5);
-                    if(player.equipment.soil !== null) {
-                        var equipInfo = GetEquipment(player.equipment.soil);
-                        boost *= 1 + (equipInfo.amplify || 0);
-                    }
-                } else if(seasonVal < 0.5) {
-                    boost *= 0.5 + seasonVal;
-                    if(player.equipment.soil !== null) {
-                        var equipInfo = GetEquipment(player.equipment.soil);
-                        boost *= 1 + (equipInfo.boost || 0);
-                    }
-                }
-                if(tile.stickChance !== undefined) {
-                    potentialForStun = true;
-                    if(stickAmount === 0 && player.getRandomLuckyNumber() < tile.stickChance) {
-                        stickAmount = combat.getStickTime(tile);
-                    } else {
-                        stickAmount = Math.max(stickAmount, 1.2 * combat.getStickTime(tile));
-                    }
-                }
-                if(canHurt && ["water", "rice", "spear", "rod"].indexOf(tile.type) >= 0) {
-                    selHurt += tile.power * 0.25;
-                }
-                var thisCropsDamage = tile.power * boost * this.GetNerfMultiplier(tile, nerfs);
-                if(tile.name === "app") { thisCropsDamage *= 2 / (tile.activeTime + 1); }
-                if(tile.animal !== undefined && player.getRandomLuckyNumber() <= tile.animalChance) {
-                    animals.push({ crop: tile.name, animal: tile.animal });
-                    thisCropsDamage *= tile.animalDamageMult;
-                }
-                dmg += thisCropsDamage * Math.max(1, Math.log10(player.atk));
-            }
-        }
-        dmg += (dmg === 0 ? Math.round((player.atk / 2) + player.getSickleAttackBonus(combat.season)) : player.atk);
-        return {
-            damage: Math.floor(dmg),
-            stun: Math.round(stickAmount),
-            stunPotential: potentialForStun,
-            animals: animals,
-            numCrops: numCrops,
-            cropInfo: cropInfo,
-            selfHarm: Math.ceil(selHurt)
-        };
     }
 };
 var postHits = {

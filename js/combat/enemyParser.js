@@ -117,7 +117,7 @@ var enemyHelpers = {
         return enemyHelpers.DoDamageCrop(e, x, y, 0);
     },
     DoDamageCrop: function(e, x, y, type, useDamage) { // 0 = water, 1 = fire, 2 = salt, -1 = general
-        var crop = combat.grid[x][y];
+        var crop = combat.grid[x][y]; // TODO: maybe refactor all of this to use new system
         if(crop === null) { return { status: false }; }
         var dmg = enemyHelpers.GetCropDamage(e, x, y, type, useDamage);
         crop.power -= dmg;

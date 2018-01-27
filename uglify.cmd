@@ -20,6 +20,7 @@ uglifyjs ^
     js/combat/enemyParser.js ^
     js/combat/combatcropfuncs.js ^
     js/animation/combatAnim.js ^
+    js/combat/calculations.js ^
     js/combat/enemyInitFuncs.js ^
     js/combat/combatmenu.js ^
     js/combat/combatplant.js ^

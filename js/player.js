@@ -3,7 +3,7 @@ var player = {
     c2: 0, c2Rate: 1, beeQueensFaced: 0, nathanSeeds: [["beet", 10], ["carrot", 10], ["ginger", 5]],
     level: 1, exp: 0, nextExp: 4, totalExp: 0, ethicsAxis: 0, techAxis: 0, // 1 = good/tech, -1 = bad/nature
     monies: 1000, playTime: 0, visitedMaps: [],
-    clearedEntities: [], achievements: [], 
+    clearedEntities: [], achievements: [], failedEntities: [], 
     questsCleared: [], activeQuests: {}, 
     lastInn: "start",
     options: {
@@ -37,6 +37,16 @@ var player = {
     },
     tutorialInventory: [["specialgrapes", 1], ["carrot", 2], ["beet", 3], ["!weakCompost", 1], ["!babySickle", 1]],
     tutorialEquipment: { weapon: "!goodSickle", compost: "!weakCompost", gloves: null, soil: null },
+    shiftEthics: function(d) { // + = good, - = bad
+        player.ethicsAxis += d;
+        if(player.ethicsAxis > 5) { player.ethicsAxis = 5; }
+        else if(player.ethicsAxis < -5) { player.ethicsAxis = -5; }
+    },
+    shiftTech: function(d) { // + = tech, - = nature
+        player.techAxis += d;
+        if(player.techAxis > 5) { player.techAxis = 5; }
+        else if(player.techAxis < -5) { player.techAxis = -5; }
+    },
     inventory: [
         ["specialgrapes", 1], ["carrot", 6], ["beet", 4], ["!weakCompost", 1], ["!babySickle", 1] // ACTUAL STARTING INVENTORY
         ["_shooter", 2], ["_hotspot", 1], ["_modulator", 1], ["battery", 4], ["spear", 5], 
@@ -99,7 +109,7 @@ var player = {
         this.health = this.maxhealth;
         this.atk = Math.ceil(this.atk + Math.log10(this.level));
         this.def = Math.ceil(this.def + Math.log10(this.level));
-        this.luck = 0.7 - (this.level / 400);
+        this.luck = 0.7 + (this.level / 300); // TODO: This may break things that rely on luck
         this.nextExp = Math.floor(this.level * this.level * 3 * Math.pow(1.005, this.level - 2));
         this.getLevelUpItemBonuses();
     },
@@ -113,26 +123,13 @@ var player = {
         }
     },
     getLevelUpItemBonuses: function() {
+        var items = [];
         switch(this.level) {
-            case 2:
-                this.increaseItem("carrot", 3);
-                this.increaseItem("beet", 3);
-                this.increaseItem("banana");
-                break;
-            case 3:
-                this.increaseItem("carrot", 3);
-                this.increaseItem("beet", 3);
-                this.increaseItem("ginger", 4);
-                this.increaseItem("banana");
-                break;
-            case 4:
-                this.increaseItem("carrot", 3);
-                this.increaseItem("beet", 3);
-                this.increaseItem("ginger", 3);
-                this.increaseItem("banana", 2);
-                this.increaseItem("pineapple", 2);
-                break;
+            case 2: items = [["carrot", 3], ["beet", 3], ["banana"]]; break;
+            case 3: items = [["carrot", 3], ["beet", 3], ["ginger", 4], ["banana"]]; break;
+            case 4: items = [["carrot", 3], ["beet", 3], ["ginger", 3], ["banana", 2], ["pineapple", 2]]; break;
         }
+        for(var i = 0; i < items.length; i++) { this.increaseItem(items[i][0], items[i][1] || 1); }
     },
     canAttackAfterPlanting: function() {
         if(this.equipment.gloves === null) { return 0; }

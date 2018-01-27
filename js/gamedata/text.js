@@ -5846,7 +5846,7 @@ var fulltext = {
 	},
 	"eq.sstr": {
 		"en-us": "", 
-		"en-dm": "Seasonal Strength:", 
+		"en-dm": "Seasonal Multiplier:", 
 		"type": "opts"
 	},
 	"eq.willkill1": {
@@ -7580,6 +7580,11 @@ var fulltext = {
 	"e.nathan0": {
 		"en-us": "", 
 		"en-dm": "Nathan", 
+		"type": "enemy"
+	},
+	"e.yourWorstFuckingNightmare0": {
+		"en-us": "", 
+		"en-dm": "Chuds McDaniels", 
 		"type": "enemy"
 	},
 	// Falcon Deliveries

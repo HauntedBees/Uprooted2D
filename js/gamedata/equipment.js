@@ -82,12 +82,12 @@ function GetEquipment(name) {
 		case "!ampSoil": return new EquipmentDetail(name, "Amplifying Water", 50, "can_1", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0.4 });
 		case "!speedSoil": return new EquipmentDetail(name, "Speedy Water", 50, "can_2", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.3, boost: 0, amplify: 0 });
 		case "!sturdSoil": return new EquipmentDetail(name, "Sturdy Water", 50, "can_3", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0.4, amplify: 0 });
-		case "!minSoil": return new EquipmentDetail(name, "Minmax Water", 50, "can_4", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0.6 });
+		case "!minSoil": return new EquipmentDetail(name, "Minmax Water", 50, "can_4", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 1 });
 		case "!sturdSpeed": return new EquipmentDetail(name, "Sturdy Speedy", 50, "can_5", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.25, boost: 0.35, amplify: 0 });
 		case "!fastAmp": return new EquipmentDetail(name, "Fast Amplifier", 50, "can_6", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.25, boost: 0, amplify: 0.5 });
 		case "!waterfall": return new EquipmentDetail(name, "Waterfall Can", 50, "can_7", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.5, boost: 0, amplify: 0 });
 		case "!immunity": return new EquipmentDetail(name, "Immunity Can", 50, "can_8", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0.65, amplify: 0 });
-		case "!seasonal": return new EquipmentDetail(name, "Seasonal Can", 50, "can_9", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0.9 });
+		case "!seasonal": return new EquipmentDetail(name, "Seasonal Can", 50, "can_9", "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 2 });
 		case "!pesticide2": return new EquipmentDetail(name, "Pesticide2", 50, "can_10", "soil", { tech: true, noEnemies: true, bonus: 0, def: 0, speed: 0.45, boost: 0.5, amplify: 0 });
 	}
 }

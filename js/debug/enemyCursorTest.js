@@ -84,11 +84,49 @@ var debug = {
         mapentities["farm"].push({ name: "DebugFriend", pos: { x: 0, y: 0 }, solid: false, autoplay: true, interact: allText });
         game.innerTransition(game.currentInputHandler, worldmap, { init: { x: 1, y: 1 }, map: "farm" });
     },
+    DoDamageTest: function() { game.innerTransition(game.currentInputHandler, debug.damageTest); },
+    damageTest: {
+        atk: 3, weaponidx: 0, season: 0, 
+        weapons: [null, "!babySickle", "!baseSickle", "!goodSickle", "!dblSickle", "!hvySickle", "!hoe", "!salthoe", "!sicklerang", "!sunSickle", "!pltSickle", "!sickle2", "!sickle2_weak"],
+        setup: function() { this.draw(); },
+        draw: function() {
+            gfx.clearAll();
+            var weapon = this.weaponidx === 0 ? { displayname: "None", power: 0 } : GetEquipment(this.weapons[this.weaponidx]);
+            gfx.drawText("Attack Power: " + this.atk, 5, 10);
+            gfx.drawText("Weapon: " + weapon.displayname + " (" + weapon.power + ")", 5, 20);
+            gfx.drawText("Season: " + this.season, 100, 10);
+            gfx.drawText("Def/Damage: ", 5, 30);
+            for(var def = 0; def < 100; def++) {
+                player.equipment.weapon = this.weapons[this.weaponidx];
+                var str = (def + 1) + "/" + dmgCalcs.MeleeAttack(true, this.season, this.atk, def + 1, -1);
+                gfx.drawText(str, 5 + Math.floor(def / 21) * 60, 35 + (def % 21) * 6);
+            }
+        },
+        keyPress: function(key) {
+            switch(key) {
+                case player.controls.up: this.atk++; break;
+                case player.controls.down: this.atk--; break;
+                case player.controls.left: this.weaponidx--; break;
+                case player.controls.right: this.weaponidx++; break;
+                case player.controls.confirm: this.season = (this.season + 1) % 4; break;
+                case player.controls.pause: this.weaponidx = 0; break;
+            }
+            if(this.weaponidx < 0) { this.weaponidx = this.weapons.length - 1; } 
+            else if(this.weaponidx >= this.weapons.length) { this.weaponidx = 0; }
+            this.draw();
+        },
+        clean: function() { gfx.clearAll(); }
+    },
     QuickTest: function() { worldmap.noClip = true; me.PLAYERMOVESPEED = 0.5; },
     UndoQuickTest: function() { worldmap.noClip = false; me.PLAYERMOVESPEED = 0.25; },
     UnlockTruck: function(i) { 
         if(i >= 1) { player.questsCleared.push("researchLab"); }
         if(i >= 2) { player.questsCleared.push("helpSeaMonster"); }
         if(i >= 3) { player.questsCleared.push("gotTire"); }
+    },
+    GiveAllCrops: function() {
+        for(var i = 0; i < debug.AllCrops.length; i++) {
+            player.increaseItem(debug.AllCrops[i]);
+        }
     }
 };
