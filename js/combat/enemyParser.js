@@ -39,6 +39,23 @@ var enemyHelpers = {
             return { status: true, crop: true, destroyed: false, special: "" };
         }
     },
+    GetEnemyCropAttackDataObj: function(e, targs) {
+        var crops = [], elems = [-1], animCrops = [];
+        for(var x = 0; x < combat.enemyGrid.length; x++) {
+            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
+                if(tile.activeTime > 0 || tile.rotten || tile.type === "babby") { continue; }
+                crops.push(tile);
+                animCrops.push([tile.name, x, y, tile.type, enemyHelpers.GetSideEffect(e, tile)]);
+                if(tile.burnChance !== undefined && elems.indexOf(1) < 0) { elems.push(1); }
+                if(tile.saltChance !== undefined && elems.indexOf(2) < 0) { elems.push(2); }
+            }
+        }
+        var res = dmgCalcs.CropAttack(false, combat.season, e.atk, crops, targs, elems);
+        res.animCrops = animCrops;
+        return res;
+    },
     GetEnemyFieldData: function(e, justBabies, includeInactive) {
         var dmg = 0;
         var crops = [];
@@ -117,13 +134,13 @@ var enemyHelpers = {
         return enemyHelpers.DoDamageCrop(e, x, y, 0);
     },
     DoDamageCrop: function(e, x, y, type, useDamage) { // 0 = water, 1 = fire, 2 = salt, -1 = general
-        var crop = combat.grid[x][y]; // TODO: maybe refactor all of this to use new system
+        var crop = combat.grid[x][y];
         if(crop === null) { return { status: false }; }
         var dmg = enemyHelpers.GetCropDamage(e, x, y, type, useDamage);
-        crop.power -= dmg;
-        if(crop.rotten) { crop.power = 0; }
-        if(crop.power <= 0) {
-            combat.grid[x][y] = null;
+        crop.health -= dmg;
+        if(crop.rotten) { crop.health = 0; }
+        if(crop.health <= 0) {
+            combat.grid[x][y] = null; // TODO: no animation?!
             if(crop.size === 2) {
                 combat.grid[x + 1][y] = null;
                 combat.grid[x][y + 1] = null;
@@ -137,14 +154,17 @@ var enemyHelpers = {
     },
     GetCropDamage: function(e, x, y, type, useDamage) { // type: 0 = water, 1 = fire, salt = 2, -1 = general
         var crop = combat.grid[x][y];
+        var isBig = (crop.x !== undefined);
+        if(isBig) { crop = combat.grid[crop.x][crop.y]; }
+
+        var attackInfo = dmgCalcs.MeleeAttack(false, combat.season, (useDamage === undefined ? e.atk : useDamage), [crop], type);
+        var dmg = attackInfo.damage;
+        if(isBig) { dmg /= 2; }
+
         var itemTile = player.itemGrid[x][y];
-        var dmg = Math.ceil((useDamage === undefined ? e.atk : useDamage) / 2);
-        if(type === 0 && crop.waterResist) { dmg /= 0.5 + crop.waterResist; }
-        else if(type === 1 && crop.fireResist) { dmg /= 0.5 + crop.fireResist; }
-        else if(type === 1 && crop.saltResist) { dmg /= 0.5 + crop.saltResist; }
-        if(crop.x !== undefined) { crop = combat.grid[crop.x][crop.y]; dmg = Math.ceil(dmg / 2); }
-        if(itemTile === "_strongsoil") { dmg = Math.round(dmg / 2); }
-        return dmg;
+        if(itemTile === "_strongsoil") { dmg /= 2; }
+
+        return Math.ceil(dmg);
     },
     GetWeakestPlayerCrop: function() {
         var pos = { x: -1, y: -1 };
@@ -177,6 +197,28 @@ var enemyHelpers = {
             }
         }
         return busiestRow;
+    },
+    TryDisturbRandomTile: function(type) {
+        var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), type);
+        if(!res) { return false; }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
+    },
+    DoSomethingToBusiestRow: function(somethingFunc, killText, dmgText, regText) {
+        var busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
+        var hasDamage = false, hasKills = false;
+        for(var x = 0; x < player.gridWidth; x++) {
+            var res = somethingFunc(e, x, busiestRow);
+            if(!res.status) { continue; }
+            else if(!res.crop) { continue; }
+            else if(!res.destroyed) { hasDamage = true; }
+            else { hasKills = true; }
+        }
+        if(hasKills) { EnemyParser.current.data.textID = killText; }
+        else if(hasDamage) { EnemyParser.current.data.textID = dmgText; }
+        else { EnemyParser.current.data.textID = regText; }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        return true;
     }
 };
 var EnemyParser = {
@@ -755,10 +797,10 @@ var actions = {
         return true;
     },
     "LAUNCH_CROPS": function(e) {
-        var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
+        var fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [player.def]);
         var damage = combat.damagePlayer(fieldData.damage);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
-        EnemyParser.outputData.throwables = fieldData.crops;
+        EnemyParser.outputData.throwables = fieldData.animCrops;
         return true;
     },
     "LAUNCH_CROPS_AT_CROPS": function(e) {
@@ -783,6 +825,7 @@ var actions = {
             }
         }
         if(pos === null) { return false; }
+        var fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [combat.grid[pos.x][pos.y]]);
         var res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1, fieldData.damage);
         if(res.destroyed) {
             EnemyParser.current.data.textID = "cropKill";
@@ -793,68 +836,11 @@ var actions = {
         EnemyParser.outputData.throwables = fieldData.crops;
         return true;
     },
-    "TRY_THROW_ROCK": function(e) { // TODO: merge this function and the next several
-        var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "rock");
-        if(!res) { return false; }
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-        return true;
-    },
-    "TECH_THROW_ROCK": function(e) { 
-        var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "engine");
-        if(!res) { return false; }
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-        return true;
-    },
-    "TIRE_CHUCK": function(e) { 
-        var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "tire");
-        if(!res) { return false; }
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-        return true;
-    },
-    "BECKETT_WATER": function(e) {
-        var busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
-        var hasDamage = false, hasKills = false;
-        for(var x = 0; x < player.gridWidth; x++) {
-            var res = enemyHelpers.TrySplashTile(e, x, busiestRow);
-            if(!res.status) { continue; }
-            else if(!res.crop) { continue; }
-            else if(!res.destroyed) { hasDamage = true; }
-            else { hasKills = true; }
-        }
-        if(hasKills) {
-            EnemyParser.current.data.textID = "splashRowKill";
-        } else if(hasDamage) {
-            EnemyParser.current.data.textID = "splashRowDamage";
-        } else {
-            EnemyParser.current.data.textID = "splashRow";
-        }
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-        return true;
-    },
-    "BECK_FIRE_ROW": function(e) {
-        var busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
-        var hasDamage = false, hasKills = false;
-        for(var x = 0; x < player.gridWidth; x++) {
-            var res = enemyHelpers.BurnTile(e, x, busiestRow);
-            console.log(res);
-            if(!res.status) { continue; }
-            else if(!res.crop) { continue; }
-            else if(!res.destroyed) { hasDamage = true; }
-            else { hasKills = true; }
-        }
-        if(hasKills) {
-            console.log("hk");
-            EnemyParser.current.data.textID = "burnKill";
-        } else if(hasDamage) {
-            console.log("hd");
-            EnemyParser.current.data.textID = "burnDamage";
-        } else {
-            console.log("hm");
-            EnemyParser.current.data.textID = "burnSucc";
-        }
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-        return true;
-    },
+    "TRY_THROW_ROCK": function(e) { return enemyHelpers.TryDisturbRandomTile("rock"); },
+    "TECH_THROW_ROCK": function(e) { return enemyHelpers.TryDisturbRandomTile("engine"); },
+    "TIRE_CHUCK": function(e) { return enemyHelpers.TryDisturbRandomTile("tire"); },
+    "BECKETT_WATER": function(e) { return enemyHelpers.DoSomethingToBusiestRow(enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"); },
+    "BECK_FIRE_ROW": function(e) { return enemyHelpers.BurnTile(enemyHelpers.TrySplashTile, "burnKill", "burnDamage", "burnSucc"); },
     "BECK_THROW_SALT": function(e) { 
         var row = Math.floor(Math.random() * player.gridHeight);
         var hasKills = false;
