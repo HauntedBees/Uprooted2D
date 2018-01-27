@@ -9,16 +9,13 @@ combat.getArrIdx = function(arr, x, y) {
     return -1;
 };
 
-combat.getEnemyCatchChance = function(crop) {
-    if(crop.type === "bee" && ["beeQueenA", "beeQueenB", "beeQueenC"].indexOf(combat.enemies[0].id) >= 0) {
-        return 0.65;
-    } else {
-        return combat.getCatchChance(crop);
-    }
+combat.GetEnemyCatchChance = function(crop) {
+    if(crop.type === "bee" && ["beeQueenA", "beeQueenB", "beeQueenC"].indexOf(combat.enemies[0].id) >= 0) { return 0.65; }
+    else { return combat.GetCatchChance(crop); }
 };
-combat.getCatchChance = function(crop) {
-    if(crop.type === "water") { return 0.05; }
-    if(crop.type === "spear") { return 0.5; }
+combat.GetCatchChance = function(crop) { // rods, nets, bees, spears
+    if(crop.type === "water") { return 0.2; }
+    if(crop.type === "spear") { return 0.65; }
     var val = 0.3;
     if(crop.power < 2) { val = 0.15; }
     else if(crop.power < 6) { val = 0.175; }
@@ -26,21 +23,16 @@ combat.getCatchChance = function(crop) {
     if(crop.type === "bee") { val *= 0.75; }
     return val;
 };
-combat.getCatchLuck = function(crop) {
-    if(crop.power < 2) { return 0.99; }
-    else if(crop.power < 6) { return 0.8; }
-    else if(crop.power < 10) { return 0.7; }
-    return 0.65;
-};
-combat.getStickTime = function(crop) {
-    var min = 0; max = 0;
-    switch(crop.stickChance) {
-        case 1: min = 1; max = 1; break;
-        case 2: min = 1; max = 3; break;
-        case 3: min = 2; max = 5; break;
+combat.GetFish = function(crop, luck) { // rods & spears
+    var fishArr = [0, 1, 2];
+    switch(crop.name) {
+        case "rod": fishArr = [0, 0, 1]; break;
+        case "goodrod": fishArr = [0, 1, 1, 2]; break;
+        case "metalrod": fishArr = [1, 1, 1, 2]; break;
+        case "ultrarod": fishArr = [2, 3, 3, 3]; break;
     }
-    return Range(min, max);
-}
+    return fishArr[Math.floor(fishArr.length * Math.random() * luck)];
+};
 
 combat.ageCrops = function() {
     for(var x = 0; x < this.grid.length; x++) {
@@ -48,26 +40,26 @@ combat.ageCrops = function() {
             if(this.grid[x][y] === null || this.grid[x][y].name === undefined) { continue; }
             var crop = this.grid[x][y];
             if(crop.type === "water" || crop.type === "rod") {
-                var success = (Math.random() * player.luck) < combat.getCatchChance(crop);
-                if((crop.name === "net" || crop.name === "bignet") && crop.rotten && success) {
-                    crop.rotten = false;
-                    crop.power += Range(0, 5);
-                    crop.activeTime = crop.time;
-                } else if(crop.type === "rod" && !crop.ready && !crop.rotten && success) {
-                    crop.ready = true;
-                    crop.activeTime = 0;
-                    var fishNum = 0;
-                    while(fishNum < 2 && Math.random() > (combat.getCatchLuck(crop) * player.luck)) { fishNum++; }
-                    crop.power = 10 + fishNum * 10;
-                    crop.fishNum = fishNum;
+                var success = Math.random() <= (combat.GetCatchChance(crop) * player.luck);
+                if(success) {
+                    if((crop.name === "net" || crop.name === "bignet") && crop.rotten) {
+                        crop.rotten = false;
+                        crop.power += InclusiveRange(-2, 2);
+                        crop.activeTime = crop.time;
+                    } else if(crop.type === "rod" && !crop.ready && !crop.rotten) {
+                        crop.ready = true;
+                        crop.activeTime = 0;
+                        crop.fishNum = combat.GetFish(crop, player.luck);
+                        crop.power += crop.fishNum;
+                    }
                 }
-            } else if(crop.type === "bee" && (Math.random() * player.luck) < combat.getCatchChance(crop)) {
+            } else if(crop.type === "bee" && Math.random() <= (combat.GetCatchChance(crop) * player.luck)) {
                 crop.rotten = false;
                 crop.activeTime = 0;   
             }
             if(crop.activeTime > 0) {
                 crop.activeTime -= 1;
-                if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock")) { this.removeCrop({x: x, y: y}); }
+                if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock" || (crop.type === "rod" && !crop.ready))) { this.removeCrop({x: x, y: y}); }
             } else if(crop.activeTime === 0) {
                 if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = crop.respawn; }
                 else if(crop.type === "veg") { crop.rotten = true; }
@@ -83,7 +75,7 @@ combat.ageCrops = function() {
                 var crop = this.enemyGrid[x][y];
                 if(crop.activeTime > 0) {
                     if(crop.type === "water" || crop.type === "rod") {
-                        var success = Math.random() < combat.getCatchChance(crop);
+                        var success = Math.random() < combat.GetCatchChance(crop);
                         if((crop.name === "net" || crop.name === "bignet") && crop.rotten && success) {
                             crop.rotten = false;
                             crop.power += Range(0, 5);
@@ -91,12 +83,10 @@ combat.ageCrops = function() {
                         } else if(crop.type === "rod" && !crop.ready && !crop.rotten && success) {
                             crop.ready = true;
                             crop.activeTime = 0;
-                            var fishNum = 0;
-                            while(fishNum < 2 && Math.random() > (combat.getCatchLuck(crop) * player.luck)) { fishNum++; }
-                            crop.power = 10 + fishNum * 10;
-                            crop.fishNum = fishNum;
+                            crop.fishNum = combat.GetFish(crop, 0.8);
+                            crop.power += crop.fishNum;
                         }
-                    } else if(crop.type === "bee" && Math.random() < combat.getEnemyCatchChance(crop)) {
+                    } else if(crop.type === "bee" && Math.random() < combat.GetEnemyCatchChance(crop)) {
                         crop.rotten = false;
                         crop.activeTime = 0;
                     } else {

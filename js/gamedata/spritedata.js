@@ -449,7 +449,7 @@ var spriteData = {
         "metalrod": [21, 8], "metalrodseed": [21, 8],
         "ultrarod": [25, 13], "ultrarodseed": [25, 13],
         "rod0": [19, 9], "goodrod0": [20, 9], "metalrod0": [21, 9], "ultrarod0": [25, 14],
-        "fish0": [19, 10], "fish1": [20, 10], "fish2": [21, 10],
+        "fish0": [19, 10], "fish1": [20, 10], "fish2": [21, 10], "fish3": [40, 11],
         "net": [19, 7], "netseed": [19, 7],
         "net0": [20, 7],
         "net1": [21, 7],
