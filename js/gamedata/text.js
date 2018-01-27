@@ -4426,7 +4426,7 @@ var fulltext = {
 	},
 	"hungyFoodBin0": {
 		"en-us": "", 
-		"en-dm": "You scoop several handfuls of fruit and veggie seeds out of the bin. (TODO: actually give some shit here)", 
+		"en-dm": "You scoop several handfuls of fruit and veggie seeds out of the bin.", 
 		"type": "text"
 	},
 	"hungyFoodBin1": {
@@ -6726,6 +6726,11 @@ var fulltext = {
 		"type": "combat"
 	},
 	// Combat - Enemy Attacks
+	"enemyRemoveWeeds": {
+		"en-us": "", 
+		"en-dm": "{0} removes some weeds from their field.", 
+		"type": "combat"
+	},
 	"stuckTurn": {
 		"en-us": "", 
 		"en-dm": "{0} tries to attack, but they are stuck in honey!", 

@@ -53,8 +53,8 @@ var enemyHelpers = {
             }
         }
         var res = dmgCalcs.CropAttack(false, combat.season, e.atk, crops, targs, elems);
-        res.animCrops = animCrops;
-        return res;
+        res[0].animCrops = animCrops;
+        return res[0];
     },
     GetEnemyFieldData: function(e, justBabies, includeInactive) {
         var dmg = 0;
@@ -80,6 +80,8 @@ var enemyHelpers = {
     CanPlantInSpot: function(x, y, isLarge) {
         if(combat.enemyGrid[x][y] !== null) { return false; }
         if(!isLarge) { return true; } 
+        if(combat.enemywidth === (x + 1)) { return false; }
+        if(combat.enemyheight === (y + 1)) { return false; }
         if(combat.enemyGrid[x + 1][y] !== null) { return false; }
         if(combat.enemyGrid[x][y + 1] !== null) { return false; }
         if(combat.enemyGrid[x + 1][y + 1] !== null) { return false; }
@@ -219,6 +221,26 @@ var enemyHelpers = {
         else { EnemyParser.current.data.textID = regText; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
+    },
+    HasRottenCrops: function() {
+        for(var x = 0; x < combat.enemyGrid.length; x++) {
+            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
+                if(tile.rotten) { return true; }
+            }
+        }
+        return false;
+    },
+    RemoveWeeds: function() {
+        for(var x = 0; x < combat.enemyGrid.length; x++) {
+            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
+                var tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
+                if(tile.rotten) { combat.enemyGrid[x][y] = null; }
+            }
+        }
+        return false;
     }
 };
 var EnemyParser = {
@@ -229,12 +251,16 @@ var EnemyParser = {
         EnemyParser.enemy = enemy;
         EnemyParser.done = false;
         EnemyParser.outputData = null;
-        EnemyParser.ParseCurrentNode();
+        if(enemyHelpers.HasRottenCrops() && Math.random() < enemy.rotClearChance) {
+            enemyHelpers.RemoveWeeds();
+            EnemyParser.outputData = { text: GetText("enemyRemoveWeeds").replace(/\{0\}/g, enemy.name), animFPS: 4, animData: [[0, 4], [0, 5]] };
+        } else {
+            EnemyParser.ParseCurrentNode();
+        }
         return EnemyParser.outputData;
     },
     ParseCurrentNode: function() {
         var nodeContent = EnemyParser.current.data.message;
-        console.log(nodeContent);
         var actionResult = true;
         if(nodeContent !== undefined && nodeContent !== "") { actionResult = actions[nodeContent](EnemyParser.enemy, EnemyParser.current.data.action); }
         var conds = EnemyParser.current.next;

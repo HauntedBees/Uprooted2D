@@ -118,7 +118,7 @@ var dmgCalcs = {
 
             if(isPlayer) {
                 if(crop.stickChance !== undefined && stunLength === 0) { // Stickiness
-                    switch(crop.stickChance) {
+                    switch(crop.stickChance) { // TODO: add enemy resistance to stickiness
                         case 1: stunLength = ((player.luck * Math.random()) > 0.6 ? InclusiveRange(1, 2) : 0); break;
                         case 2: stunLength = ((player.luck * Math.random()) > 0.5 ? InclusiveRange(1, 3) : 0); break;
                         case 3: stunLength = ((player.luck * Math.random()) > 0.45 ? InclusiveRange(2, 5) : 0); break;

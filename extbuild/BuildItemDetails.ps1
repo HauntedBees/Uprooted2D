@@ -323,6 +323,7 @@ function GetEnemy(name) {
 		if($row.addtlHitCheck) { $addtl += "addtlHitCheck: `"_`"".replace("_", $row.addtlHitCheck); }
 		if($row.initFunc) { $addtl += "initFunc: `"_`"".replace("_", $row.initFunc); }
 		if($row.turnFunc) { $addtl += "turnFunc: `"_`"".replace("_", $row.turnFunc); }
+		if($row.RCC) { $addtl += "rotClearChance: _".replace("_", $row.RCC); } else { $addtl += "rotClearChance: 0"; }
 		
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
