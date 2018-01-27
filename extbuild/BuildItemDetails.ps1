@@ -62,8 +62,8 @@ function GetCrop(name) {
 		$addtl = @();
 		if($row.WaterR) { $addtl += "waterResist: _".replace("_", $row.WaterR); }
 		if($row.FireR) { $addtl += "fireResist: _".replace("_", $row.FireR); }
-		if($row.SaltR) { $addtl += "saltResist: _".replace("_", $row.SaltR); } # TODO: IMPLEMENT
-		if($row.SaltClean) { $addtl += "saltClean: true"; } # TODO: IMPLEMENT
+		if($row.SaltR) { $addtl += "saltResist: _".replace("_", $row.SaltR); }
+		if($row.SaltClean) { $addtl += "saltClean: true"; }
 		if($row.Stick) { $addtl += "stickChance: _".replace("_", $row.Stick); }
 		if($row.Animal) {
 			$anInfo = $row.Animal.split("/");
@@ -71,8 +71,8 @@ function GetCrop(name) {
 			$addtl += "animalChance: _".replace("_", $anInfo[1]);
 			$addtl += "animalDamageMult: _".replace("_", $anInfo[2]);
 		}
-		if($row.Rot) { $addtl += "rotten: true"; }
-		if($row.NoRot) { $addtl += "noRot: true"; }
+		if($row.Rot) { $addtl += "rotten: true"; } # TODO: why are these
+		if($row.NoRot) { $addtl += "noRot: true"; } # TODO: why are these
 		if($row.Baby) { $addtl += "baby: `"_`"".replace("_", $row.Baby); }
 		if($row.SaltChance) { $addtl += "saltChance: _".replace("_", $row.SaltChance); }
 		if($row.BurnChance) { $addtl += "burnChance: _".replace("_", $row.BurnChance); }

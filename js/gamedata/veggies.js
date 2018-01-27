@@ -31,71 +31,71 @@ function GetCropDesc(cropInfo) {
 function GetCrop(name) {
     switch(name) {
 		/* Veggies */
-		case "asparagus": return new CropDetail(name, "Asparagus", 10, "veg", 1, 18, 4, 8, 3, 2, 0, 0, 0);
-		case "beet": return new CropDetail(name, "Beet", 10, "veg", 1, 1, 2, 5, 0, 0, 1, 2, 2, { waterResist: 1 });
-		case "bellpepper": return new CropDetail(name, "Bell Pepper", 10, "veg", 1, 2, 3, 3, 0, 0, 1, 2, 0);
-		case "carrot": return new CropDetail(name, "Carrot", 10, "veg", 1, 2, 2, 3, 0, 2, 1, 2, 1, { animal: "Rabbit", animalChance: 0.03, animalDamageMult: 4 });
-		case "corn": return new CropDetail(name, "Corn", 10, "veg", 1, 5, 3, 4, 0, 0, 2, 0, 0);
-		case "garlic": return new CropDetail(name, "Garlic", 10, "veg", 1, 6, 3, 10, 0, 2, 1, 1, 0);
-		case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 0, 0, 2, 0);
-		case "leek": return new CropDetail(name, "Leek", 10, "veg", 1, 3, 3, 8, 0, 0, 0, 0, 2);
-		case "pineapple": return new CropDetail(name, "Pineapple", 10, "veg", 1, 12, 4, 10, 0, 2, 0, 1, 1, { fireResist: 1 });
+		case "asparagus": return new CropDetail(name, "Asparagus", 10, "veg", 1, 10, 4, 3, 3, 2, 1, 1, 0);
+		case "beet": return new CropDetail(name, "Beet", 10, "veg", 1, 1, 2, 1, 0, 0, 1, 2, 2, { waterResist: 1, saltChance: 0.5 });
+		case "bellpepper": return new CropDetail(name, "Bell Pepper", 10, "veg", 1, 2, 3, 6, 0, 0, 1, 2, 0);
+		case "carrot": return new CropDetail(name, "Carrot", 10, "veg", 1, 2, 2, 2, 0, 2, 1, 2, 1, { animal: "Rabbit", animalChance: 0.03, animalDamageMult: 4 });
+		case "corn": return new CropDetail(name, "Corn", 10, "veg", 1, 5, 3, 5, 0, 0, 2, 1, 0, { saltClean: true });
+		case "garlic": return new CropDetail(name, "Garlic", 10, "veg", 1, 6, 3, 9, 0, 2, 1, 1, 0);
+		case "ginger": return new CropDetail(name, "Ginger", 10, "veg", 1, 5, 4, 4, 0, 1, 1, 2, 0, { burnChance: 0.5 });
+		case "leek": return new CropDetail(name, "Leek", 10, "veg", 1, 3, 3, 6, 0, 0, 0, 0, 2);
+		case "pineapple": return new CropDetail(name, "Pineapple", 10, "veg", 1, 12, 4, 8, 0, 2, 0, 1, 1, { fireResist: 1 });
 		case "radish": return new CropDetail(name, "Radish", 10, "veg", 1, 1, 2, 3, 0, 2, 0, 1, 0);
-		case "rhubarb": return new CropDetail(name, "Rhubarb", 10, "veg", 1, 20, 4, 1000, 0, 1, 0, 0, 0);
-		case "spinach": return new CropDetail(name, "Spinach", 10, "veg", 1, 1, 2, 2, 0, 1, 0, 2, 0);
-		case "tomato": return new CropDetail(name, "Tomato", 10, "veg", 1, 1, 2, 2, 0, 0, 2, 0, 0, { saltClean: true });
+		case "rhubarb": return new CropDetail(name, "Rhubarb", 10, "veg", 1, 8, 4, 7, 0, 1, 0, 0, 0, { burnChance: 0.25 });
+		case "spinach": return new CropDetail(name, "Spinach", 10, "veg", 1, 1, 2, 1, 0, 1, 0, 2, 0, { saltChance: 0.5 });
+		case "tomato": return new CropDetail(name, "Tomato", 10, "veg", 1, 3, 2, 2, 0, 0, 2, 0, 0, { saltClean: true, burnChance: 0.25 });
 		/* Trees */
-		case "apple": return new CropDetail(name, "Apple", 10, "tree", 2, 5, 5, 2, 2, 1, 1, 2, 1);
-		case "apricot": return new CropDetail(name, "Apricot", 10, "tree", 2, 24, 5, 10, 5, 2, 1, 0, 0);
-		case "avocado": return new CropDetail(name, "Avocado", 10, "tree", 2, 24, 5, 8, 5, 2, 2, 0, 1);
-		case "banana": return new CropDetail(name, "Banana", 10, "tree", 2, 7, 5, 3, 3, 1, 1, 1, 1, { animal: "Monkey", animalChance: 0.01, animalDamageMult: 10, treeSprite: "tropictree" });
-		case "blackberry": return new CropDetail(name, "Blackberry", 10, "tree", 2, 14, 5, 5, 1, 0, 2, 0, 0);
-		case "grapes": return new CropDetail(name, "Grapes", 10, "tree", 2, 20, 5, 6, 4, 0, 0, 2, 0);
-		case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 6, 3, 0, 0, 2, 0);
-		case "kiwi": return new CropDetail(name, "Kiwi", 10, "tree", 2, 50, 5, 10, 4, 0, 2, 0, 1);
+		case "apple": return new CropDetail(name, "Apple", 10, "tree", 2, 5, 5, 2, 2, 1, 1, 2, 1, { saltChance: 0.25 });
+		case "apricot": return new CropDetail(name, "Apricot", 10, "tree", 2, 24, 5, 9, 5, 2, 1, 0, 0);
+		case "avocado": return new CropDetail(name, "Avocado", 10, "tree", 2, 21, 5, 8, 4, 2, 2, 0, 1);
+		case "banana": return new CropDetail(name, "Banana", 10, "tree", 2, 7, 5, 3, 3, 1, 1, 1, 1, { animal: "Monkey", animalChance: 0.01, animalDamageMult: 10, burnChance: 0.25, treeSprite: "tropictree" });
+		case "blackberry": return new CropDetail(name, "Blackberry", 10, "tree", 2, 14, 5, 4, 1, 0, 2, 0, 0);
+		case "grapes": return new CropDetail(name, "Grapes", 10, "tree", 2, 20, 5, 5, 4, 0, 0, 2, 0);
+		case "specialgrapes": return new CropDetail(name, "Grapes+", 10, "tree", 2, 4, 5, 5, 3, 0, 0, 2, 0);
+		case "kiwi": return new CropDetail(name, "Kiwi", 10, "tree", 2, 40, 5, 10, 1, 0, 2, 0, 1);
 		case "lemon": return new CropDetail(name, "Lemon", 10, "tree", 2, 5, 5, 4, 2, 1, 2, 1, 0);
-		case "mango": return new CropDetail(name, "Mango", 10, "tree", 2, 3, 5, 3, 2, 0, 2, 1, 0);
+		case "mango": return new CropDetail(name, "Mango", 10, "tree", 2, 3, 5, 1, 2, 0, 2, 1, 0, { burnChance: 0.25 });
 		/* Bees */
-		case "beeR": return new CropDetail(name, "Killer Bee", 10, "bee", 1, 999, 2, 7, 999, 1, 1, 1, 0, { stickChance: 1 });
-		case "beeG": return new CropDetail(name, "Stingless Bee", 10, "bee", 1, 999, 2, 6, 999, 1, 1, 1, 0, { stickChance: 2 });
-		case "beeB": return new CropDetail(name, "Honey Bee", 10, "bee", 1, 999, 2, 5, 999, 1, 1, 1, 0, { stickChance: 3 });
-		case "hbee": return new CropDetail(name, "Haunted Bee", 10, "bee", 1, 999, 2, 10, 999, 1, 1, 1, 0, { stickChance: 3 });
+		case "beeR": return new CropDetail(name, "Killer Bee", 10, "bee", 1, 999, 2, 7, 999, 1, 1, 2, 0, { stickChance: 1 });
+		case "beeG": return new CropDetail(name, "Stingless Bee", 10, "bee", 1, 999, 2, 3, 999, 1, 2, 1, 0, { stickChance: 2 });
+		case "beeB": return new CropDetail(name, "Honey Bee", 10, "bee", 1, 999, 2, 5, 999, 2, 1, 1, 0, { stickChance: 3 });
+		case "hbee": return new CropDetail(name, "Haunted Bee", 10, "bee", 1, 999, 2, 10, 999, 1, 1, 1, 2, { stickChance: 3 });
 		/* Rice */
-		case "rice": return new CropDetail(name, "Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
-		case "arborio": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
-		case "blackrice": return new CropDetail(name, "Black Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
-		case "shortgrain": return new CropDetail(name, "Short-Grain Rice", 10, "rice", 1, 5, 4, 5, 0, 1, 1, 0, 1);
-		case "chestnut": return new CropDetail(name, "Water Chestnut", 10, "rice", 1, 5, 4, 5, 0, 0, 1, 1, 1);
+		case "rice": return new CropDetail(name, "Rice", 10, "rice", 1, 9, 4, 8, 0, 1, 1, 0, 1);
+		case "arborio": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 11, 4, 9, 0, 1, 1, 0, 1);
+		case "blackrice": return new CropDetail(name, "Black Rice", 10, "rice", 1, 7, 4, 7, 0, 1, 1, 0, 1);
+		case "shortgrain": return new CropDetail(name, "Short-Grain Rice", 10, "rice", 1, 4, 4, 6, 0, 2, 1, 0, 1, { saltClean: true });
+		case "chestnut": return new CropDetail(name, "Water Chestnut", 10, "rice", 1, 14, 4, 10, 0, 0, 1, 1, 2);
 		/* Fishing */
-		case "spear": return new CropDetail(name, "Fish Spear", 10, "spear", 1, 0, 2, 5, 0, 0, 0, 0, 0);
-		case "rod": return new CropDetail(name, "Fish Rod", 10, "rod", 1, 10, 2, 5, 0, 0, 0, 0, 0);
-		case "goodrod": return new CropDetail(name, "Better Rod", 10, "rod", 1, 10, 2, 5, 0, 0, 0, 0, 0);
-		case "metalrod": return new CropDetail(name, "Metal Rod", 10, "rod", 1, 10, 2, 5, 0, 0, 0, 0, 0);
-		case "net": return new CropDetail(name, "Fish Net", 10, "water", 1, -1, 2, 10, 0, 0, 0, 0, 0, { rotten: true });
-		case "bignet": return new CropDetail(name, "Big Net", 10, "water", 2, -1, 2, 10, 0, 0, 0, 0, 0, { rotten: true });
+		case "spear": return new CropDetail(name, "Fish Spear", 10, "spear", 1, 0, 2, 5, 0, 1, 1, 1, 1);
+		case "rod": return new CropDetail(name, "Fish Rod", 10, "rod", 1, 10, 2, 2, 0, 1, 1, 1, 0);
+		case "goodrod": return new CropDetail(name, "Better Rod", 10, "rod", 1, 10, 2, 4, 0, 1, 1, 1, 0);
+		case "metalrod": return new CropDetail(name, "Metal Rod", 10, "rod", 1, 10, 2, 6, 0, 1, 1, 1, 0);
+		case "net": return new CropDetail(name, "Fish Net", 10, "water", 1, -1, 2, 5, 0, 1, 1, 1, 0, { rotten: true });
+		case "bignet": return new CropDetail(name, "Big Net", 10, "water", 2, -1, 2, 10, 0, 1, 1, 1, 0, { rotten: true });
 		/* Cow */
-		case "fodder": return new CropDetail(name, "Fodder", 10, "food", 1, 0, 1, 4, 0, 0, 0, 0, 0);
+		case "fodder": return new CropDetail(name, "Fodder", 10, "food", 1, 0, 1, 4, 0, 1, 1, 1, 1, { saltClean: true });
 		/* Mushrooms */
-		case "shiitake": return new CropDetail(name, "Shiitake", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-		case "milkcap": return new CropDetail(name, "Milk Cap", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-		case "portobello": return new CropDetail(name, "Portobello", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-		case "greenshroom": return new CropDetail(name, "Parrot Toadstool", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-		case "blackshroom": return new CropDetail(name, "Black Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
-		case "poisnshroom": return new CropDetail(name, "Definitely Poisonous Mushroom", 10, "mush", 1, 5, 3, 5, 3, 1, 1, 1, 1);
+		case "shiitake": return new CropDetail(name, "Shiitake", 10, "mush", 1, 6, 3, 5, 3, 1, 1, 1, 1);
+		case "milkcap": return new CropDetail(name, "Milk Cap", 10, "mush", 1, 20, 3, 8, 1, 1, 1, 1, 1);
+		case "portobello": return new CropDetail(name, "Portobello", 10, "mush", 1, 3, 3, 4, 3, 1, 1, 1, 1);
+		case "greenshroom": return new CropDetail(name, "Parrot Toadstool", 10, "mush", 1, 7, 3, 6, 4, 1, 1, 1, 1);
+		case "blackshroom": return new CropDetail(name, "Black Mushroom", 10, "mush", 1, 10, 3, 7, 2, 1, 1, 1, 1);
+		case "poisnshroom": return new CropDetail(name, "Definitely Poisonous Mushroom", 10, "mush", 1, 6, 3, 10, 5, 1, 1, 1, 1);
 		/* Eggs */
-		case "egg": return new CropDetail(name, "Chicken Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
-		case "quail": return new CropDetail(name, "Quail Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
-		case "goose": return new CropDetail(name, "Goose Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
-		case "turkey": return new CropDetail(name, "Turkey Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
-		case "platypus": return new CropDetail(name, "Platypus Egg", 10, "egg", 1, 4, 4, 8, 0, 1, 1, 1, 1);
+		case "egg": return new CropDetail(name, "Chicken Egg", 10, "egg", 1, 7, 4, 3, 0, 1, 1, 1, 1);
+		case "quail": return new CropDetail(name, "Quail Egg", 10, "egg", 1, 6, 4, 2, 0, 1, 1, 1, 1);
+		case "goose": return new CropDetail(name, "Goose Egg", 10, "egg", 1, 11, 4, 5, 0, 1, 1, 1, 1);
+		case "turkey": return new CropDetail(name, "Turkey Egg", 10, "egg", 1, 10, 4, 4, 0, 1, 1, 1, 1);
+		case "platypus": return new CropDetail(name, "Platypus Egg", 10, "egg", 1, 4, 4, 9, 0, 1, 1, 1, 1);
 		/* Technology */
-		case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 3, 0, 1, 1, 1, 1);
-		case "headphones": return new CropDetail(name, "Earbuds", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
-		case "printer": return new CropDetail(name, "3D Printer", 10, "tech", 1, 5, 6, 3, 0, 1, 1, 1, 1);
+		case "battery": return new CropDetail(name, "Battery", 10, "tech", 1, 5, 5, 5, 0, 1, 1, 1, 1);
+		case "headphones": return new CropDetail(name, "Earbuds", 10, "tech", 1, 3, 3, 2, 0, 1, 1, 1, 1);
+		case "printer": return new CropDetail(name, "3D Printer", 10, "tech", 1, 6, 6, 4, 4, 1, 1, 1, 1);
 		case "app": return new CropDetail(name, "App", 10, "tech", 1, 3, 4, 3, 0, 1, 1, 1, 1);
-		case "drone": return new CropDetail(name, "Drone", 10, "tech", 1, 5, 3, 3, 0, 1, 1, 1, 1);
-		case "frogbot": return new CropDetail(name, "Fwoggybot", 10, "tech", 2, 5, 4, 3, 0, 1, 1, 1, 1);
-		case "coffee": return new CropDetail(name, "Coffee Machine", 10, "tech", 2, 5, 5, 3, 0, 1, 1, 1, 1);
+		case "drone": return new CropDetail(name, "Drone", 10, "tech", 1, 5, 3, 7, 0, 1, 1, 1, 1);
+		case "frogbot": return new CropDetail(name, "Fwoggybot", 10, "tech", 2, 8, 4, 9, 0, 1, 1, 1, 1);
+		case "coffee": return new CropDetail(name, "Coffee Machine", 10, "tech", 2, 10, 5, 10, 0, 1, 1, 1, 1);
 		case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 10, "sickle2", 1, 5, 4, 0, 0, 1, 1, 1, 1);
 		/* Rare */
 		case "goldegg": return new CropDetail(name, "Golden Egg", 500, "egg", 1, 4, 4, 11, 0, 1, 1, 1, 1);

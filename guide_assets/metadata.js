@@ -16,6 +16,64 @@ var shopNames = {
     "trout": "crazy4trout", "cityInn": "Hotel", "cityFixtures": "Fixtures", "gordonsFarming": "Gordon's Farming", "cityTech": "Tech Supplies",
     "cityExpansions": "Farm Expansions"
 };
+
+function DoEnemyGen() {
+    var $enemies = $("#enemies > .content");
+    for(var i = 0; i < debug.AllEnemies.length; i++) {
+        var $template = $("#enemyTemplate").clone();
+        $template.removeClass("template").removeAttr("id");
+        var enemy = GetEnemy(debug.AllEnemies[i]);
+        $template.find(".txt_name").text(enemy.name);
+        
+        if(enemy.size === "xl") {
+            $template.find(".sp_final").addClass("enemySpriteBig huge").css("background-position", "-" + (enemy.spriteidx * 64) + "px 0");
+        } else if(enemy.size === "lg") {
+            $template.find(".sp_final").addClass("enemySpriteBig").css("background-position", "-" + (enemy.spriteidx * 64) + "px 0");
+        } else {
+            $template.find(".sp_final").addClass("enemySprite").css("background-position", "-" + (enemy.spriteidx * 48) + "px 0");
+        }
+        
+        $template.find(".sp_sp").addClass( enemy.seasonDistribution[0] > 0.5 ? "stspring" : "stnoSeason" ).attr("title", "Spring Chance: " + enemy.seasonDistribution[0]);
+        $template.find(".sp_su").addClass( enemy.seasonDistribution[1] > 0.5 ? "stsummer" : "stnoSeason" ).attr("title", "Summer Chance: " + enemy.seasonDistribution[1]);
+        $template.find(".sp_au").addClass( enemy.seasonDistribution[2] > 0.5 ? "stautumn" : "stnoSeason" ).attr("title", "Autumn Chance: " + enemy.seasonDistribution[2]);
+        $template.find(".sp_wi").addClass( enemy.seasonDistribution[3] > 0.5 ? "stwinter" : "stnoSeason" ).attr("title", "Winter Chance: " + enemy.seasonDistribution[3]);
+        
+        $template.find(".txt_hp").text(enemy.health);
+        $template.find(".txt_atk").text(enemy.atk);
+        $template.find(".txt_def").text(enemy.def);
+        $template.find(".txt_size").text(enemy.fieldwidth + "x" + enemy.fieldheight);
+        $template.find(".txt_exp").text(enemy.exp);
+        
+        var drops = [];
+        if(enemy.drops !== undefined) {
+            for(var j = 0; j < enemy.drops.length; j++) {
+                var drop = enemy.drops[j];
+                if(drop.money) {
+                    if(drop.min === drop.max) {
+                        drops.push(drop.min + "G");
+                    } else {
+                        drops.push(drop.min + "-" + drop.max + "G");
+                    }
+                } else {
+                    var name = GetCrop(drop.seed).displayname;
+                    if(drop.min === drop.max) {
+                        drops.push(drop.min + " " + name);
+                    } else {
+                        drops.push(drop.min + "-" + drop.max + " " + name);
+                    }
+                }
+            }
+        }
+        $template.find(".txt_attacks").text(GetDocumentationAttackPatterns(enemy.attackType));
+        if(drops.length === 0) {
+            $template.find(".txt_drops").text("None");
+        } else {
+            $template.find(".txt_drops").text(drops.join(", "));
+        }
+        
+        $enemies.append($template);
+    }
+}
 function GetEnemyName(name) { 
     switch(name) {
         case "Jeff": name = "ScienceMan"; break;
@@ -34,13 +92,152 @@ function GetEnemyName(name) {
     }
     return GetText("e." + name + "0");
 }
-function GetBossHTML(enemyKey) {
-    var $template = $("#bossTemplate").clone();
+function GetEnemyHTML(enemyKey) {
+    var $template = $("#innerEnemyTemplate").clone();
     $template.removeClass("template").removeAttr("id");
-    $template.find(".txt_name").text("Boss: " + GetEnemyName(enemyKey));
+    $template.find(".txt_name").text(GetEnemyName(enemyKey));
+    if(enemyKey === "research") { enemyKey = "robo2"; }
+    if(enemyMetadata[enemyKey] !== undefined) {
+        var enemyData = enemyMetadata[enemyKey];
+        var amt = enemyData.min + (enemyData.max === enemyData.min ? "" : "-" + enemyData.max);
+        $template.find(".txt_amount").text(amt);
+        var typ = [];
+        for(var i = 0; i < enemyData.enemies.length; i++) {
+            var myName = GetEnemyName(enemyData.enemies[i]);
+            if(typ.indexOf(myName) < 0) { typ.push(myName); }
+        }
+        $template.find(".txt_types").text(typ.join(", "));
+    } else { console.log(enemyKey); }
+    return $template;
+}
+function GetShopHTML(shopKey) {
+    var $template = $("#shopTemplate").clone();
+    $template.removeClass("template").removeAttr("id");
+    $template.find(".txt_name").text(shopNames[shopKey]);
+    var shopInfo = stores[shopKey];
+    if(shopInfo.innId !== undefined) {
+        $template.find(".price").text(shopInfo.wares[0].price);
+        $template.find(".wares,.sell").remove();
+    } else {
+        $template.find(".inn").remove();
+        var $wares = $template.find(".wares");
+        if(shopInfo.doesSell) {
+            $template.find(".percent").text(shopInfo.sellMult * 100);
+        } else {
+            $template.find(".sell").remove();
+        }
+        for(var i = 0; i < shopInfo.wares.length; i++) {
+            var name = "ass";
+            var price = shopInfo.wares[i].price * (shopInfo.buyMult || 1);
+            switch(shopInfo.wares[i].type) {
+                case "seed": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetCrop(shopInfo.wares[i].product).displayname; break;
+                case "farm": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetFarmInfo(shopInfo.wares[i].product).displayname; break;
+                case "equipment": name = "<span class='spriteTiny st" + GetEquipment(shopInfo.wares[i].product).sprite + "'></span>" + GetEquipment(shopInfo.wares[i].product).displayname; break;
+                case "upgrade": name = "Field Size Upgrade"; break;
+            }
+            $wares.append($("<div class='shopItem'>" + name + " (" + price + "G)</div>"));
+        }
+    }
     return $template;
 }
 
+function DoCropGen() {
+    var $crops = $("#crops > .content");
+    for(var i = 0; i < debug.AllCrops.length; i++) {
+        var $template = $("#cropTemplate").clone();
+        $template.removeClass("template").removeAttr("id");
+        var crop = GetCrop(debug.AllCrops[i]);
+        $template.find(".txt_name").text(crop.displayname);
+        $template.find(".txt_info").text(GetText(crop.name));
+        var typeName = ""; var typeClass = "";
+        switch(crop.type) {
+            case "veg": typeName = "Vegetable"; typeClass = "dirt"; break;
+            case "tree": typeName = "Fruit"; typeClass = "dirt"; break;
+            case "bee": typeName = "Bee"; typeClass = "_beehive"; break;
+            case "rice": typeName = "Paddy Crop"; typeClass = "_paddy"; break;
+            case "spear":
+            case "rod": 
+            case "water": typeName = "Water"; typeClass = "_lake"; break;
+            case "food": typeName = "Feed"; typeClass = "_cow"; break;
+            case "mush": typeName = "Mushroom"; typeClass = "_log"; break;
+            case "egg": typeName = "Egg"; typeClass = "_coop"; break;
+            case "tech": 
+            case "sickle2": typeName = "Technology"; typeClass = "_hotspot"; break;
+        }
+        $template.find(".txt_type").text(typeName);
+        $template.find(".txt_size").text(crop.size === 1 ? "Small" : "Large");
+        $template.find(".txt_size").attr("title", crop.size === 1 ? "1x1 tiles" : "2x2 tiles");
+        $template.find(".sp_type").addClass("st" + typeClass);
+        
+        if(SameSprites(crop.name, crop.name + "seed")) {
+            $template.find(".sp_seed").remove();
+        } else {
+            $template.find(".sp_seed").addClass("s" + crop.name + "seed");
+        }
+        $template.find(".sp_final").addClass("s" + crop.name);
+        
+        if(["veg", "tree", "rice", "water", "mush", "egg", "tech"].indexOf(crop.type) >= 0) {
+            var $stages = $template.find(".txt_stages");
+            if(crop.type === "tree") {
+                $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree0'></span>"));
+                $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree1'></span>"));
+                $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree2'></span>"));
+                for(var j = 3; j < crop.frames; j++) {
+                    $stages.append($("<span class='treeFill'><span class = 'spriteTiny spriteTinyDouble sttree2'></span><span class = 'spriteTiny spriteTinyDouble st" + crop.name + (j - 3) + "'></span></span>"));
+                }
+            } else {
+                for(var j = 0; j < crop.frames; j++) {
+                    if(crop.size === 2) {
+            $stages.append($("<span class = 'spriteTiny spriteTinyDouble st" + crop.name + j + "'></span>"));
+                    } else {
+            $stages.append($("<span class = 'spriteTiny st" + crop.name + j + "'></span>"));
+                    }
+                }
+            }
+        }
+
+        $template.find(".sp_sp").addClass( crop.seasons[0] > 0.5 ? "stspring" : "stnoSeason" ).attr("title", "Spring Power: " + crop.seasons[0]);
+        $template.find(".sp_su").addClass( crop.seasons[1] > 0.5 ? "stsummer" : "stnoSeason" ).attr("title", "Summer Power: " + crop.seasons[1]);
+        $template.find(".sp_au").addClass( crop.seasons[2] > 0.5 ? "stautumn" : "stnoSeason" ).attr("title", "Autumn Power: " + crop.seasons[2]);
+        $template.find(".sp_wi").addClass( crop.seasons[3] > 0.5 ? "stwinter" : "stnoSeason" ).attr("title", "Winter Power: " + crop.seasons[3]);
+
+        $template.find(".txt_price").text(crop.price + "G");
+        $template.find(".txt_power").text(crop.power);
+        $template.find(".txt_time").text(crop.time);
+        if(crop.respawn === 0) {
+            $template.find(".txt_regrow").parent().remove();
+        } else {
+            $template.find(".txt_regrow").text(crop.respawn);
+        }
+            
+        var locations = GetNonstandardLocationsForItem(crop.name);
+        for(var key in stores) {
+            var wares = stores[key].wares;
+            for(var j = 0; j < wares.length; j++) {
+                if(wares[j].product !== crop.name) { continue; }
+                locations.push(shopNames[key]);
+                break;
+            }
+        }
+        for(var key in mapentities) {
+            var entities = mapentities[key];
+            for(var j = 0; j < entities.length; j++) {
+                if(entities[j].isChest !== true) { continue; }
+                var contents = entities[j].contents;
+                for(var k = 0; k < contents.length; k++) {
+                    if(contents[k][0] !== crop.name) { continue; }
+                    var name = mapNames[key] + " (Chest)";
+                    if(locations.indexOf(name) < 0) { locations.push(name); }
+                    break;
+                }
+            }
+        }
+        var $ul = $template.find(".txt_locations");
+        for(var j = 0; j < locations.length; j++) { $ul.append(("<li>" + locations[j] + "</li>")); }
+
+        $crops.append($template);
+    }
+}
 function GetNonstandardLocationsForItem(name) {
     switch(name) {
         case "egg":
@@ -59,7 +256,120 @@ function GetNonstandardLocationsForItem(name) {
     }
 }
 
+function DoCropTierGen() {
+    for(var i = 0; i < debug.AllCrops.length; i++) {
+        var crop = GetCrop(debug.AllCrops[i]);
+        var $c = $("<span class='sprite s" + crop.name + "' title='" + crop.displayname + "'></span>");
+        if(crop.power > 10) {
+            $("#tierX").append($c);
+        } else {
+            $("#tier" + crop.power).append($c);
+        }
+    }
+}
 
+function DoLevelGen() {
+    var $maps = $("#maps > .content");
+    for(var i = 0; i < debugAllMaps.length; i++) {
+        var $template = $("#mapTemplate").clone();
+        $template.removeClass("template").removeAttr("id");
+        var mapName = debugAllMaps[i];
+        var mapData = mapentities[mapName];
+        $template.find(".sp_final").attr("src", "guide_assets/map_" + mapName + ".png");
+        $template.find(".txt_name").text(mapNames[mapName]);
+        var $details = $template.find(".additionalDetails");
+        
+        var $mapDad = $template.find(".mapContainer");
+        var counts = {};
+        var existingObjs = {};
+        var lastObj = { name: "" };
+        var mapObjects = [];
+        for(var j = 0; j < mapData.length; j++) {
+            var obj = mapData[j];
+            if(obj.name === undefined) { continue; }
+            if(obj.name.replace("R", "L") === lastObj.name) { continue; }
+            lastObj = obj;
+            if(obj.name.indexOf("H_") === 0) { continue; }
+            if(namesToIgnore.indexOf(obj.name) >= 0) { continue; }
+            if(obj.pos.x < 0 && obj.pos.y < 0) { continue; }
+            if(obj.boring === true || obj.jumbo === true) { continue; }
+            if(obj.name.indexOf("waterfall") === 0 && obj.name[obj.name.length - 1] !== "0") { continue; }
+            
+            var mapObj = GetMapObjData(obj, $details);
+            if(mapObj.type === "?") { console.log(obj); continue; }
+            
+            var count = 1;
+            if(counts[mapObj.type] === undefined) {
+                if(mapObj.subtype === undefined) {
+                    counts[mapObj.type] = 2;
+                } else {
+                    counts["full"] = 2;
+                    counts[mapObj.type] = {};
+                    counts[mapObj.type][mapObj.subtype] = 1;
+                }
+            } else {
+                if(mapObj.subtype === undefined) {
+                    count = counts[mapObj.type]++;
+                    if(mapObj.type === "Treasure") { mapObj.dontShowOnBottom = true; }
+                } else if(counts[mapObj.type][mapObj.subtype] === undefined) {
+                    count = counts["full"]++;
+                    counts[mapObj.type][mapObj.subtype] = count;
+                } else {
+                    count = counts[mapObj.type][mapObj.subtype];
+                    mapObj.dontShowOnBottom = true;
+                }
+            }
+            if(mapObj.dispCount === undefined) { mapObj.dispCount = count; }
+            if(mapObj.sortCount === undefined) { mapObj.sortCount = count; }
+            if(!mapObj.dontShowOnBottom) { mapObjects.push(mapObj); }
+            
+            if(mapObj.infoText !== undefined && !mapObj.dontShowOnBottom) {
+                var $specialTemplate = $("#specialTemplate").clone();
+                $specialTemplate.removeClass("template").removeAttr("id");
+                $specialTemplate.find(".txt_name").text(mapObj.text);
+                $specialTemplate.find(".txt_info").text(mapObj.infoText);
+                $details.append($specialTemplate);
+            }
+            var $md = $("<div class='badge badge-pill " + mapObj.badgeclass + " mapDetail'>" + mapObj.dispCount + "</div>");
+            $md.css("top", (16 * (obj.big ? (obj.pos.y + 1) : obj.pos.y)) + "px").css("left", (16 * obj.pos.x) + "px").attr("title", obj.name);
+            $mapDad.append($md);
+        }
+        mapObjects = mapObjects.sort(function(x, y) {
+            if(x.order < y.order) { return -1; }
+            if(x.order > y.order) { return 1; }
+            if(x.sortCount < y.sortCount) { return -1; }
+            if(x.sortCount > y.sortCount) { return 1; }
+            return 0;
+        });
+        
+        var numCols = 2;
+        //if(smallMaps.indexOf(mapName) >= 0) {
+        $template.find(".row.wide").remove();
+        /*} else {
+        $template.find(".row.narrow").remove();
+        numCols = 3;
+        }*/
+        var breakPoint = mapObjects.length / numCols;
+        var $l = $template.find(".left");
+        var $m = $template.find(".mid");
+        var $r = $template.find(".right");
+        for(var j = 0; j < mapObjects.length; j++) {
+            var obj = mapObjects[j];
+            if(obj.dontShowOnBottom) { continue; }
+            if(obj.type === "Treasure") { obj.dispCount = "#"; }
+            var $obj = $("<div><label><div class='badge badge-pill " + obj.badgeclass + "'>" + obj.dispCount + "</div></label> <span>" + obj.text + "</span></div>");
+            if(j < breakPoint) {
+                $l.append($obj);
+            } else if(numCols === 3 && j < (breakPoint * 2)) {
+                $m.append($obj);
+            } else {
+                $r.append($obj);
+            }
+        }
+        
+        $maps.append($template);
+    }
+}
 function GetMapObjData(e, $details) {
     if(e.name === "hungryboy") {
         return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Hungry Boy", infoText: "He'll share some of his fruits and veggies with you if you keep his secret safe." };
@@ -193,52 +503,9 @@ function GetMapObjData(e, $details) {
     }
     return { type: "?" };
 }
-
-function GetEnemyHTML(enemyKey) {
-    var $template = $("#innerEnemyTemplate").clone();
+function GetBossHTML(enemyKey) {
+    var $template = $("#bossTemplate").clone();
     $template.removeClass("template").removeAttr("id");
-    $template.find(".txt_name").text(GetEnemyName(enemyKey));
-    if(enemyKey === "research") { enemyKey = "robo2"; }
-    if(enemyMetadata[enemyKey] !== undefined) {
-        var enemyData = enemyMetadata[enemyKey];
-        var amt = enemyData.min + (enemyData.max === enemyData.min ? "" : "-" + enemyData.max);
-        $template.find(".txt_amount").text(amt);
-        var typ = [];
-        for(var i = 0; i < enemyData.enemies.length; i++) {
-            var myName = GetEnemyName(enemyData.enemies[i]);
-            if(typ.indexOf(myName) < 0) { typ.push(myName); }
-        }
-        $template.find(".txt_types").text(typ.join(", "));
-    } else { console.log(enemyKey); }
-    return $template;
-}
-function GetShopHTML(shopKey) {
-    var $template = $("#shopTemplate").clone();
-    $template.removeClass("template").removeAttr("id");
-    $template.find(".txt_name").text(shopNames[shopKey]);
-    var shopInfo = stores[shopKey];
-    if(shopInfo.innId !== undefined) {
-        $template.find(".price").text(shopInfo.wares[0].price);
-        $template.find(".wares,.sell").remove();
-    } else {
-        $template.find(".inn").remove();
-        var $wares = $template.find(".wares");
-        if(shopInfo.doesSell) {
-            $template.find(".percent").text(shopInfo.sellMult * 100);
-        } else {
-            $template.find(".sell").remove();
-        }
-        for(var i = 0; i < shopInfo.wares.length; i++) {
-            var name = "ass";
-            var price = shopInfo.wares[i].price * (shopInfo.buyMult || 1);
-            switch(shopInfo.wares[i].type) {
-                case "seed": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetCrop(shopInfo.wares[i].product).displayname; break;
-                case "farm": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetFarmInfo(shopInfo.wares[i].product).displayname; break;
-                case "equipment": name = "<span class='spriteTiny st" + GetEquipment(shopInfo.wares[i].product).sprite + "'></span>" + GetEquipment(shopInfo.wares[i].product).displayname; break;
-                case "upgrade": name = "Field Size Upgrade"; break;
-            }
-            $wares.append($("<div class='shopItem'>" + name + " (" + price + "G)</div>"));
-        }
-    }
+    $template.find(".txt_name").text("Boss: " + GetEnemyName(enemyKey));
     return $template;
 }
