@@ -29,9 +29,9 @@ var enemyHelpers = {
         if(crop === null) { return { status: true, crop: false, destroyed: false }; }
         var dmg = enemyHelpers.GetCropDamage(e, x, y, 1);
 
-        crop.power -= dmg;
-        if(crop.rotten) { crop.power = 0; }
-        if(crop.power <= 0) {
+        crop.health -= dmg;
+        if(crop.rotten) { crop.health = 0; }
+        if(crop.health <= 0) {
             combat.grid[x][y] = null;
             combat.animHelper.DrawCrops();
             return { status: true, crop: true, destroyed: true, special: "" };
@@ -814,7 +814,7 @@ var actions = {
     },
     "HEAL_FROM_CROPS": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
-        var amountToHeal = fieldData.damage;
+        var amountToHeal = Math.ceil(fieldData.damage / 3);
         var prevHealth = e.health;
         e.health = Math.min(e.maxhealth, (e.health + amountToHeal));
         var adjustedAmountToHeal = (e.health - prevHealth);

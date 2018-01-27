@@ -155,6 +155,7 @@ combat.compost = {
     },
     isCompostable: function(tile) {
         if(tile.name === "coffee" && tile.activeTime === 0) { return true; }
+        if(tile.type === "bee" && tile.activeTime > 0) { return false; }
         if(tile.type === "egg" || tile.type === "tech") { return false; }
         return (player.equipment.compost !== null && (!GetEquipment(player.equipment.compost).rotOnly || tile.rotten));
     },
@@ -175,47 +176,11 @@ combat.compost = {
         this.drawAll();
         return true;
     },
-    addCompostAnimsAndGetValue: function(args) {
-        var outputAmount = 0, thereAreCows = false;
-        var nerfs = dmgCalcs.GetNerfs();
-        for(var i = 0; i < this.selectedCrops.length; i++) {
-            var croppos = this.selectedCrops[i];
-            if(croppos.cow !== undefined) {
-                outputAmount += args.cowMult * combat.happyCows[croppos.cow].feed;
-                combat.happyCows[croppos.cow].removeMe = true;
-                thereAreCows = true;
-                croppos = combat.happyCows[croppos.cow];
-                combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 250, "puff", 5));
-                combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 4, 6, 1000, "milk"));
-            } else {
-                var crop = combat.clearFlagAndReturnCrop(croppos);
-                if(crop.type === "bee") {
-                    if(crop.activeTime === 0) {
-                        outputAmount += args.beeMult * crop.power;
-                    } else {
-                        outputAmount *= args.beeFraction;//0.75;
-                    }
-                } else if(crop.name === "coffee") {
-                    outputAmount += args.coffeeMult * crop.power;
-                } else {
-                    outputAmount += (args.baseMult - (crop.activeTime / crop.time)) * crop.power;
-                }
-                outputAmount *= dmgCalcs.GetNerfMultiplier(crop, nerfs);
-                var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds)
-                combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x, combat.dy + croppos.y, 250, "puff", 5));
-                combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x, combat.dy + croppos.y, 4, 6, 1000, cropSprite));
-            }
-        }
-        return {
-            total: Math.max(1, outputAmount),
-            cows: thereAreCows
-        };
-    },
     compostFailureCheck: function() {
         if(player.equipment.compost === null) { return false; }
         if(!GetEquipment(player.equipment.compost).tech) { return false; }
         if(Math.random() > 0.5) { return false; }
-        this.addCompostAnimsAndGetValue({ cowMult: 0, beeMult: 0, beeFraction: 0, baseMult: 0, coffeeMult: 0 });
+        dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, true);
         var anim = new NotAnAnim(4, 6, 1000, "compost");
         anim.finish = function() {
             var anim = new ShakeAnim(4, 6, 500, "compost", 0.25, 20);
@@ -234,7 +199,7 @@ combat.compost = {
     healAction: function() {
         if(this.selectedCrops.length == 0) { return false; }
         if(this.compostFailureCheck()) { return true; }
-        var res = this.addCompostAnimsAndGetValue({ cowMult: 1.5, beeMult: 1.45, beeFraction: 0.75, baseMult: 1.1, coffeeMult: 2.5 });
+        var res = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, false);
         var healAmount = res.total, thereAreCows = res.cows;
 
         var anim = new NotAnAnim(4, 6, 1000, "compost");
@@ -259,7 +224,7 @@ combat.compost = {
     attackAction: function() {
         if(this.selectedCrops.length == 0) { return false; }
         if(this.compostFailureCheck()) { return true; }
-        var res = this.addCompostAnimsAndGetValue({ cowMult: 0.01, beeMult: 0.1, beeFraction: 1, baseMult: 0.1, coffeeMult: 0.5 });
+        var res = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, true);
         var damage = res.total, thereAreCows = res.cows;
         var anim = new NotAnAnim(4, 6, 1000, "compost");
         anim.finish = function() {
