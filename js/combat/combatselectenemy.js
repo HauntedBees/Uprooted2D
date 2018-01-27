@@ -198,7 +198,6 @@ combat.selectTarget = {
                 avgDamage += attackData.damage;
                 crop.health -= attackData.damage;
                 crop.power -= attackData.cropPowerLower;
-                
 
                 if(crop.health <= 0) {
                     hasDestroys = true;
@@ -227,7 +226,14 @@ combat.selectTarget = {
                 if(target.health <= 0) { hasKills = true; }
 
                 if(attackData.animals.length > 0) { hasAnimals = true; }
-                if(attackData.stunLength > 0) { hasStuns = true; combat.stickEnemy(targetidx, attackData.stunLength); }
+                if(attackData.stunLength > 0) {
+                    var stunResistCheck = (Math.random() < combat.enemies[targetidx].stickRes);
+                    if(!stunResistCheck) {
+                        hasStuns = true;
+                        combat.enemies[targetidx].stickRes += 0.025;
+                        combat.stickEnemy(targetidx, attackData.stunLength);
+                    }
+                }
                 if(target.postHit !== undefined) { postHit = postHits[target.postHit](target); }
 
                 if(attackData.numCrops > 3 && combat.enemies.length > 1) {
