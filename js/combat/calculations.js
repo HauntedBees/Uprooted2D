@@ -143,6 +143,7 @@ var dmgCalcs = {
                 }
             }
             var dmg = (modAtk * (crop.power + 1) * (crop.power + 1) * (crop.power + 1) * seasonVal * dmgCalcs.GetNerfMultiplier(crop, nerfs)) / 10;
+            if(crop.type === "rice") { dmg *= 1.5; }
             if(crop.name === "app") { dmg *= 2 / (crop.activeTime + 1); }
             if(crop.animal !== undefined && ((1 - player.luck) * Math.random()) < (crop.animalChance / 8)) {
                 animals.push({ crop: crop.name, animal: crop.animal });
