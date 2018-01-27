@@ -124,11 +124,23 @@ var player = {
     },
     getLevelUpItemBonuses: function() {
         var items = [];
-        switch(this.level) {
-            case 2: items = [["carrot", 3], ["beet", 3], ["banana"]]; break;
-            case 3: items = [["carrot", 3], ["beet", 3], ["ginger", 4], ["banana"]]; break;
-            case 4: items = [["carrot", 3], ["beet", 3], ["ginger", 3], ["banana", 2], ["pineapple", 2]]; break;
-        }
+        if(this.level % 2 === 0) { items.push(["carrot", this.level - 1]); items.push(["beet", this.level - 1]); }
+        if(this.level % 3 === 0) { items.push(["ginger", Math.ceil(this.level / 2)]); }
+        if(this.level % 4 === 0) { items.push(["corn", Math.ceil(this.level / 3)]); }
+        if(this.level % 5 === 0) { items.push(["bellpepper", Math.ceil(this.level / 4)]); }
+        if(this.level % 6 === 0) { items.push(["asparagus", Math.ceil(this.level / 2)]); }
+        if(this.level % 7 === 0) { items.push(["spinach", 2]); items.push(["tomato", 2]); items.push(["beet", 2]); items.push(["radish", 2]); }
+        if(this.level % 8 === 0) { items.push(["pineapple", Math.ceil(this.level / 3)]); }
+        if(this.level % 9 === 0) { items.push(["leek", Math.ceil(this.level / 2)]); }
+        if(this.level % 10 === 0) { items.push(["garlic", this.level]); }
+
+        if(this.level < 10) { items.push(["banana"]); items.push(["apple"]); }
+        else if(this.level < 20) { items.push(["grapes", 2]); items.push(["blackberry", 2]); }
+        else if(this.level < 30) { items.push(["avocado"]); items.push(["blackberry", 3]); items.push(["banana", 2]); }
+        else if(this.level < 40) { items.push(["avocado", 2]); items.push(["apricot"]); items.push(["blackberry", 2]); }
+        else { items.push(["kiwi", 2]); items.push(["avocado", 2]); items.push(["apricot", 2]); }
+        
+        console.log(items);
         for(var i = 0; i < items.length; i++) { this.increaseItem(items[i][0], items[i][1] || 1); }
     },
     canAttackAfterPlanting: function() {
