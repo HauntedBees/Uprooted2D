@@ -59,7 +59,6 @@ function GetCrop(name) {
 		case "beeR": return new CropDetail(name, "Killer Bee", 10, "bee", 1, 999, 2, 7, 999, 1, 1, 2, 0, { stickChance: 1 });
 		case "beeG": return new CropDetail(name, "Stingless Bee", 10, "bee", 1, 999, 2, 3, 999, 1, 2, 1, 0, { stickChance: 2 });
 		case "beeB": return new CropDetail(name, "Honey Bee", 10, "bee", 1, 999, 2, 5, 999, 2, 1, 1, 0, { stickChance: 3 });
-		case "hbee": return new CropDetail(name, "Haunted Bee", 10, "bee", 1, 999, 2, 10, 999, 1, 1, 1, 2, { stickChance: 3 });
 		/* Rice */
 		case "rice": return new CropDetail(name, "Rice", 10, "rice", 1, 9, 4, 8, 0, 1, 1, 0, 1);
 		case "arborio": return new CropDetail(name, "Arborio Rice", 10, "rice", 1, 11, 4, 9, 0, 1, 1, 0, 1);
@@ -105,6 +104,7 @@ function GetCrop(name) {
 		case "goodfood": return new CropDetail(name, "Delicious Food", 500, "food", 1, 0, 1, 11, 0, 1, 1, 1, 1);
 		case "notdrugs": return new CropDetail(name, "Funny Mushroom", 500, "mush", 1, 5, 3, 11, 3, 1, 1, 2, 1, { stickChance: 2 });
 		case "lotus": return new CropDetail(name, "Sacred Lotus", 500, "rice", 1, 30, 5, 11, 0, 2, 2, 1, 0);
+		case "hbee": return new CropDetail(name, "Haunted Bee", 10, "bee", 1, 999, 2, 11, 999, 1, 1, 1, 2, { stickChance: 3 });
 		/* Enemy-Only */
 		case "algae": return new CropDetail(name, "Algae", 0, "rice", 1, 2, 2, 1, 0, 1, 2, 1, 0, { noRot: true });
 		case "kelp": return new CropDetail(name, "Kelp", 0, "rice", 1, 5, 5, 3, 0, 2, 2, 1, 1, { noRot: true });
@@ -177,4 +177,4 @@ function GetCrop(name) {
 		case "soybaby": return new CropDetail(name, "Soy Baby", 0, "babby", 1, 5, 5, 0, 0, 1, 1, 1, 1, { baby: "soyChild" });
 	}
 }
-debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "hbee", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus"];
+debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus", "hbee"];

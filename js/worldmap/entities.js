@@ -723,6 +723,11 @@ var mapentities = {
             SwitchMap("GoUpstairs", 5.5, 1, true, false, 5, 2, "hq_2"),
             SwitchMap("Leave", 15, 30, false, false, 39, 10, "northcity"),
 
+            GetTreasureChest("HQ1Chest1", 1, 26, [["spear", 20]]),
+            GetTreasureChest("HQ1Chest2 ", 17, 3, [["goodrod", 10]]),
+            GetTreasureChest("HQ1Chest3", 1, 19, [["metalrod", 10]]),
+            GetTreasureChest("HQ1Chest4", 14, 4, [["rod", 12]]),
+
             GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
             GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
 
@@ -790,6 +795,13 @@ var mapentities = {
     }(),
     "hq_2": function() {
         var x = [
+            GetTreasureChest("HQ2Chest1", 9, 6, [["greenshroom", 20]]),
+            GetTreasureChest("HQ2Chest2", 15, 27, [["blackshroom", 20]]),
+            GetTreasureChest("HQ2Chest3", 15, 28, [["poisnshroom", 20]]),
+            GetTreasureChest("HQ2Chest4", 12, 17, [["poisnshroom", 20]]),
+            GetTreasureChest("HQ2Chest5", 17, 24, [["blackrice", 20]]),
+            GetTreasureChest("HQ2Chest6", 14, 21, [["shortgrain", 20]]),
+
             SwitchMap("GoUpstairsL", 24, 1, false, false, 24.5, 2, "hq_3"),
             SwitchMap("GoUpstairsR", 25, 1, false, false, 24.5, 2, "hq_3"),
             SwitchMap("GoDownstairsL", 5, 1, false, false, 5.5, 2, "hq_1"),
@@ -859,6 +871,19 @@ var mapentities = {
     }(),
     "hq_3": function() {
         var x = [
+            GetTreasureChest("HQ3Chest1", 29, 23, [["apricot", 10]]),
+            GetTreasureChest("HQ3Chest2", 20, 17, [["arborio", 10]]),
+            GetTreasureChest("HQ3Chest3", 13, 24, [["platypus", 5]]),
+            GetTreasureChest("HQ3Chest4", 16, 16, [["goose", 5]]),
+            GetTreasureChest("HQ3Chest5", 18, 8, [["frogbot", 8]]),
+            GetTreasureChest("HQ3Chest6", 15, 12, [["platypus", 5]]),
+            GetTreasureChest("HQ3Chest7", 15, 11, [["kiwi", 2]]),
+            GetTreasureChest("HQ3Chest8", 11, 18, [["kiwi", 2]]),
+            GetTreasureChest("HQ3Chest9", 5, 28, [["kiwi", 2]]),
+            GetTreasureChest("HQ3Chest10", 9, 22, [["platypus", 5]]),
+            GetTreasureChest("HQ3Chest11", 9, 23, [["goose", 5]]),
+            GetTreasureChest("HQ3Chest12", 18, 6, [["kiwi", 2]]),
+
             GetCommonEntity("HurtWorker", 24, 27, 20, 0, undefined, Cutscene("hurtNerd"), { sy: 16, noChange: true, sheetlen: 2, storageKey: "trent" }),
 
             GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, [ GetSpeak("elevator3") ], { visible: false, isElevator: true }),
@@ -926,6 +951,15 @@ var mapentities = {
             SwitchMap("GoUpstairsM", 25, 1, false, false, 8, 51, "hq_5"),
             SwitchMap("GoUpstairsR", 26, 1, false, false, 8, 51, "hq_5"),
             
+            GetTreasureChest("HQ4Chest1", 10, 8, [["pineapple", 10]]),
+            GetTreasureChest("HQ4Chest2", 10, 13, [["avocado", 5]]),
+            GetTreasureChest("HQ4Chest3", 14, 13, [["rice", 10]]),
+            GetTreasureChest("HQ4Chest4", 14, 8, [["milkcap", 10]]),
+            GetTreasureChest("HQ4Chest5", 19, 13, [["rhubarb", 10]]),
+            GetTreasureChest("HQ4Chest6", 19, 8, [["drone", 10]]),
+            GetTreasureChest("HQ4Chest7", 23, 13, [["leek", 10]]),
+            GetTreasureChest("HQ4Chest8", 23, 8, [["spinach", 20]]),
+
             GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
             GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, Cutscene("elevator"), { visible: false, isElevator: true }),
 

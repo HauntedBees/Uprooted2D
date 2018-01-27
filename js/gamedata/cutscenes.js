@@ -88,7 +88,7 @@ var scripts = {
 	"enemy0": "_CUSTOM:ENEMY0",
 	"enemy1": "_CUSTOM:ENEMY1",
 	// Farm: Beehive
-	"FarmHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
+	"FarmHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeG,5",
 	"FarmHive1": "_CUSTOM:BEEGUARDIANAPPEAR&_TEXT:FarmHive(0-3)",
 	"FarmHive2": "_TEXT:FarmHive4&_CLEARTARGET",
 	// Forest: Optional Boss (Turkey)
@@ -268,10 +268,10 @@ var scripts = {
 	"kelpHive1": "_TEXT:vaseDo5&_SETSTATE:3",
 	"kelpHive2": "_TEXT:vaseDo4",
 	"kelpHive3": "_FIGHT:kelpBoy",
-	"kelpHive4": "_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
+	"kelpHive4": "_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeR,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
 	// Underwater: Kelp Boy Defeated At Beehive
 	"kelpDeadBee0": "_CUSTOM:KELPDEAD",
-	"kelpDeadBee1": "_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
+	"kelpDeadBee1": "_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeR,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
 	// Bridge: Cow
 	"bridgeCow0": "?[{\"q\":\"player.hasQuestState('kelpBoy', 'wantMilk')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
 	"bridgeCow1": "targ_SHIFTY:5&_TEXT:kelpCow0",
@@ -576,7 +576,7 @@ var scripts = {
 	"strobbery15": "NewCop0_SETDIR:2&NewCop0_MOVE:y12",
 	"strobbery16": "_CUSTOM:FINISHCOPS&_QUIT",
 	// North City: Beehive
-	"OfficeHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5&_COMPLETEQUEST:officeBeehive&_CLEARTARGET",
+	"OfficeHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,3&_GIVE:beeG,4&_GIVE:beeR,2&_COMPLETEQUEST:officeBeehive&_CLEARTARGET",
 	// North City: Office Lady
 	"officeLady0": "?[{\"q\":\"player.completedQuest('officeBeehive')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"officeLady1": "_TEXT:officeLady2&_END",
@@ -621,7 +621,7 @@ var scripts = {
 	// Food2: Hungry Boy's Food Bin
 	"hungyBin0": "?[{\"q\":\"player.completedQuest('hungybin')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"hungyBin1": "_TEXT:hungyFoodBin1&_END",
-	"hungyBin2": "_COMPLETEQUEST:hungybin&_TEXT:hungyFoodBin0",
+	"hungyBin2": "_COMPLETEQUEST:hungybin&_TEXT:hungyFoodBin0&_GIVE:rhubarb,10&_GIVE:lemon,10&_GIVE:mango,10",
 	// Food2: Hurt Nerd
 	"hurtNerd0": "?[{\"q\":\"player.hasQuest('helpNerd')\",\"v\":6},{\"q\":\"true\",\"v\":1}]",
 	"hurtNerd1": "trent_ISMOVING:true&_TEXT:hurtNerd(0-4)",

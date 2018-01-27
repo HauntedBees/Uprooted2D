@@ -216,6 +216,7 @@ function DoCropGen() {
             }
         }
         for(var j = 0; j < debug.AllEnemies.length; j++) {
+            if(debug.AllEnemies[j].indexOf("beeQueen") === 0 || debug.AllEnemies[j] === "nathan") { continue; }
             var enemy = GetEnemy(debug.AllEnemies[j]);
             var drops = enemy.drops;
             for(var k = 0; k < drops.length; k++) {
@@ -263,6 +264,7 @@ function GetCutsceneIdentifier(c) {
     if(c.match(/crouton\d+/) !== null) { return "Fake Farm (Crouton)"; }
     if(c.match(/rap\d+/) !== null) { return "Mysterious Research Lab (RAPBATTLE)"; }
     if(c.match(/eggfairy\d+/) !== null) { return "Produce Stand (Egg Fairy)"; }
+    if(c.match(/hungyBin\d+/) !== null) { return "Food2 Headquarters 1F"; }
     console.log(c);
     return c;
 }
