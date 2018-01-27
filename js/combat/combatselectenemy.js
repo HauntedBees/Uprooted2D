@@ -232,7 +232,7 @@ combat.selectTarget = {
 
                 if(attackData.numCrops > 3 && combat.enemies.length > 1) {
                     var recoilDamage = Math.ceil(finalDamage * 0.15);
-                    while((player.getRandomLuckyNumber(true) * attackData.numCrops--) > 0.9) {
+                    while((Math.random() * player.luck * attackData.numCrops--) > 0.9) {
                         var idx = Range(0, combat.enemies.length);
                         if(idx === targetidx) { idx = (idx + 1) % combat.enemies.length; }
                         additionalTargets.push(idx);

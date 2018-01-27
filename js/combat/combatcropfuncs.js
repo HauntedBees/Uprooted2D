@@ -132,7 +132,7 @@ combat.flagFreshCrops = function(isPlayer, isCritical, animals, additionalTarget
                 additionalTargets.splice(0, 1);
             }
             combat.animHelper.AddPlayerThrowable(throwableData);
-            var seedChance = player.getRandomLuckyNumber() * (isCritical ? 0.5 : 1);
+            var seedChance = (Math.random() * (1 - player.luck)) * (isCritical ? 0.5 : 1);
             if(crop.name.indexOf("special") === 0) { seedChance = 1; }
             if(seedChance < 0.05) {
                 crop.seedDrop = crop.name + "seed";

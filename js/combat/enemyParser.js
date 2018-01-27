@@ -18,7 +18,7 @@ var enemyHelpers = {
         if(effect !== null && effect.type === "splashed") { return { status: false, wet: true }; }
         if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
         if(["_cow", "_lake", "_paddy", "_shooter", "_hotspot", "_modulator", "_sprinkler"].indexOf(itemTile) >= 0) { return { status: false }; }
-        if(itemTile === "_strongsoil" && (Math.random() * player.luck) > 0.75) { return { status: false }; }
+        if(itemTile === "_strongsoil" && (Math.random() * player.luck) > 0.4) { return { status: false }; }
 
         combat.effectGrid[x][y] = { type: "burned", duration: Math.ceil(Math.log2(e.atk)) };
         if(["_log", "_coop", "_beehive"].indexOf(itemTile) >= 0) {
@@ -113,7 +113,7 @@ var enemyHelpers = {
             itemPos = player.itemGrid[itemPos.x][itemPos.y];
         }
         if(["_sprinkler", "_paddy", "_lake", "_cow", "_log", "_coop", "_beehive"].indexOf(itemPos) >= 0) { return { status: false }; }
-        if(itemPos === "_strongsoil" && (Math.random() * player.luck) > 0.75) { return { status: false }; }
+        if(itemPos === "_strongsoil" && (Math.random() * player.luck) > 0.4) { return { status: false }; }
 
         if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
             if(!noRecursion && itemPos !== "_shooter") {
