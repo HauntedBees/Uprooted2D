@@ -44,8 +44,15 @@ pausemenu.equipment = {
     cancel: function() { game.innerTransition(this, pausemenu, 1); },
     mouseMove: function(pos) {
         if(pos.x < 0 || pos.y < 0) { return false; }
+        var dy = pos.y - this.cursor.y;
         if(pos.y >= this.rowData.length) { return false; }
-        if(pos.x >= this.rowData[pos.y].length) { return false; }
+        if(pos.x >= this.rowData[pos.y].length) {
+            pos.x = this.rowData[pos.y].length - 1;
+        } 
+        while(pos.x < 0 && pos.y < (this.rowData.length - 1)) {
+            pos.y += dy;
+            pos.x = Math.min(this.cursor.x, this.rowData[pos.y].length - 1);
+        }
         this.cursor = { x: pos.x, y: pos.y };
         this.drawAll();
         return true;
