@@ -257,7 +257,7 @@ var mapentities = {
 		for(var i = 0; i < invisSpeaks.length; i++) { var s = invisSpeaks[i]; x.push(GetCommonInvisibleSpeakingEntity("Spk" + i, s[0], s[1], s[2])); }
 		
 		var chests = [
-			[21, 3, [["ginger", 10]]], [21, 2, [["asparagus", 3]]], [29, 27, [["shiitake", 5]]], [8, 12, [["portobello", 5]]], [9, 12, [["milkcap", 2]]],
+			[21, 3, [["ginger", 10]]], [21, 2, [["lemon", 3]]], [29, 27, [["shiitake", 5]]], [8, 12, [["portobello", 5]]], [9, 12, [["milkcap", 2]]],
 			[10, 12, [["egg", 3]]], [11, 12, [["quail", 5]]], [27, 6, [["goose", 1]]], [28, 6, [["leek", 1]]], [29, 6, [["garlic", 1]]], 
 			[30, 6, [["headphones", 2]]] 
 		];
@@ -388,7 +388,7 @@ var mapentities = {
             GetTreasureChest("UWChestLeftFriend", 10, 12, [["metalrod", 6]]),
             GetTreasureChest("UWChestRightFriend", 13, 12, [["goodrod", 5]]),
             GetTreasureChest("UWChestByBoat", 21, 18, [["chestnut", 3]]),
-            GetTreasureChest("UWChestHiddenByCurrent", 34, 13, [["bignet", 2]])
+            GetTreasureChest("UWChestHiddenByCurrent", 34, 13, [["lemon", 6]])
         ];
         for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallA" + i, 36, 21 - i, 0, "A")); }
         x.push(GetRock("rockA", 37, 21, 1, "A"));
@@ -567,6 +567,11 @@ var mapentities = {
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
 
         GetCommonEntity("Mailman", 25, 20, 24, 0, undefined, Cutscene("mailman"), { sy: 15, sheetlen: 2, noChange: true, inside: true, visible: false }),
+        GetIndoorTreasureChest("NCChest1", 21, 20, [["lemon", 5]]),
+        GetIndoorTreasureChest("NCChest2", 37, 22, [["arborio", 5], ["rice", 5]]),
+        GetIndoorTreasureChest("NCChest3", 24, 15, [["goose", 6]]),
+        GetIndoorTreasureChest("NCChest4", 54, 15, [["coffee", 4]]),
+        GetIndoorTreasureChest("NCChest5", 57, 15, [["ginger", 6]]),
 
         GetCommonEntity("Car1", 8, 28, 0, 2, commonMovementDatas.fastdownrect(8, 28, 52, 16), Cutscene("enemy"), enemyMetadata.car1),
         GetCommonEntity("Car2", 8, 44, 0, 3, commonMovementDatas.fastdownrect(8, 28, 52, 16, 1), Cutscene("enemy"), enemyMetadata.car2),

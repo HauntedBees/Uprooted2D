@@ -184,6 +184,12 @@ function GetTreasureChest(name, x, y, contents) {
         }
     }], { sy: 4, open: false, contents: contents, noChange: true, isChest: true });
 }
+function GetIndoorTreasureChest(name, x, y, contents) {
+    var x = GetTreasureChest(name, x, y, contents);
+    x.inside = true;
+    x.visible = false;
+    return x;
+}
 function GetItemDisplayName(name, plural) {
     var pluralSuf = plural ? "s" : "";
     switch(name[0]) {
