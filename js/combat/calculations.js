@@ -142,7 +142,7 @@ var dmgCalcs = {
                     damageToAttacker += crop.power * 1.5;
                 }
             }
-            var dmg = (modAtk * crop.power * crop.power * crop.power * seasonVal * dmgCalcs.GetNerfMultiplier(crop, nerfs)) / 10;
+            var dmg = (modAtk * (crop.power + 1) * (crop.power + 1) * (crop.power + 1) * seasonVal * dmgCalcs.GetNerfMultiplier(crop, nerfs)) / 10;
             if(crop.name === "app") { dmg *= 2 / (crop.activeTime + 1); }
             if(crop.animal !== undefined && ((1 - player.luck) * Math.random()) < (crop.animalChance / 8)) {
                 animals.push({ crop: crop.name, animal: crop.animal });
