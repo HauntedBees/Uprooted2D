@@ -62,6 +62,7 @@
             #cropTiers { margin-left: 50px }
             #cropTiers > .row { margin-left: 20px }
             #cropTiers > .row > div > div { display: inline-block }
+            li.warning { font-weight: bold; font-style: italic; font-size: x-large; color: #990000 }
         </style>
         <title>Farming Fantasy Guide</title>
     </head>
@@ -92,6 +93,10 @@
                                 <div class="font-weight-bold txt_name"></div>
                                 <div><label>Amount:</label> <span class="txt_amount"></span></div>
                                 <div><label>Types:</label> <span class="txt_types"></span></div>
+                            </div>
+                            <div id="treasureTemplate" class="card template text-center">
+                                <div class="font-weight-bold">Chest <span class="badge badge-pill badge-warning txt_num"></span></div>
+                                <div class="wares"></div>
                             </div>
                             <div id="bossTemplate" class="card template text-center">
                                 <div class="font-weight-bold txt_name"></div>
@@ -143,8 +148,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6"><label>Can be found at:</label></div>
-                                    <div class="col-6"><ul class="txt_locations"></ul></div>
+                                    <div class="col-3"><label>Found at:</label></div>
+                                    <div class="col-9"><ul class="txt_locations"></ul></div>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +266,7 @@
                 DoCropGen();
                 DoCropTierGen();
                 //DoEnemyGen();
-                //DoLevelGen();
+                DoLevelGen();
 
                 var generatedSections = [];
                 var $sb = $("#sidebar");

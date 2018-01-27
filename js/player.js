@@ -140,7 +140,6 @@ var player = {
         else if(this.level < 40) { items.push(["avocado", 2]); items.push(["apricot"]); items.push(["blackberry", 2]); }
         else { items.push(["kiwi", 2]); items.push(["avocado", 2]); items.push(["apricot", 2]); }
         
-        console.log(items);
         for(var i = 0; i < items.length; i++) { this.increaseItem(items[i][0], items[i][1] || 1); }
     },
     canAttackAfterPlanting: function() {

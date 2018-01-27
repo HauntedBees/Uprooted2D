@@ -257,9 +257,9 @@ var mapentities = {
 		for(var i = 0; i < invisSpeaks.length; i++) { var s = invisSpeaks[i]; x.push(GetCommonInvisibleSpeakingEntity("Spk" + i, s[0], s[1], s[2])); }
 		
 		var chests = [
-			[21, 3, [["carrot", 20]]], [21, 2, [["carrot", 20]]], [29, 27, [["carrot", 20]]], [8, 12, [["carrot", 20]]], [9, 12, [["carrot", 20]]],
-			[10, 12, [["carrot", 20]]], [11, 12, [["carrot", 20]]], [27, 6, [["carrot", 20]]], [28, 6, [["carrot", 20]]], [29, 6, [["carrot", 20]]], 
-			[30, 6, [["carrot", 20]]] 
+			[21, 3, [["ginger", 10]]], [21, 2, [["asparagus", 3]]], [29, 27, [["shiitake", 5]]], [8, 12, [["portobello", 5]]], [9, 12, [["milkcap", 2]]],
+			[10, 12, [["egg", 3]]], [11, 12, [["quail", 5]]], [27, 6, [["goose", 1]]], [28, 6, [["leek", 1]]], [29, 6, [["garlic", 1]]], 
+			[30, 6, [["headphones", 2]]] 
 		];
 		for(var i = 0; i < chests.length; i++) { var c = chests[i]; x.push(GetTreasureChest("RLChest" + i, c[0], c[1], c[2])); }
 		
@@ -385,10 +385,10 @@ var mapentities = {
             GetWaterfall("waterfallMSB3", 43, 7, 1, "M"),
             GetWaterfall("waterfallMSB4", 42, 7, 0, "M"),
             GetWaterfallEnd("wfendM", 39, 6, 1, "M"),
-            GetTreasureChest("UWChestLeftFriend", 10, 12, [["carrot", 20]]),
-            GetTreasureChest("UWChestRightFriend", 13, 12, [["carrot", 20]]),
-            GetTreasureChest("UWChestByBoat", 21, 18, [["carrot", 20]]),
-            GetTreasureChest("UWChestHiddenByCurrent", 34, 13, [["carrot", 20]])
+            GetTreasureChest("UWChestLeftFriend", 10, 12, [["metalrod", 6]]),
+            GetTreasureChest("UWChestRightFriend", 13, 12, [["goodrod", 5]]),
+            GetTreasureChest("UWChestByBoat", 21, 18, [["chestnut", 3]]),
+            GetTreasureChest("UWChestHiddenByCurrent", 34, 13, [["bignet", 2]])
         ];
         for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallA" + i, 36, 21 - i, 0, "A")); }
         x.push(GetRock("rockA", 37, 21, 1, "A"));

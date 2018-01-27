@@ -100,9 +100,9 @@ var stores = {
     "cworker": {
         img: "shops/dwarf",
         wares: [
-            { product: "carrot", price: 5, type: "seed" },
-            { product: "beet", price: 6, type: "seed" },
-            { product: "pineapple", price: 12, type: "seed" },
+            { product: "corn", price: 5, type: "seed" },
+            { product: "bellpepper", price: 6, type: "seed" },
+            { product: "ginger", price: 12, type: "seed" },
             { product: "!strongCompost", price: 50, type: "equipment" },
             { product: "!sturdyCompost", price: 50, type: "equipment" },
             { product: "!dblSickle", price: 50, type: "equipment" },
@@ -221,8 +221,11 @@ var stores = {
     "cityFixtures": {
         img: "shops/dwarf2",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "_sprinkler", price: 100, type: "farm" },
+            { product: "_hotspot", price: 100, type: "farm" },
+            { product: "_modulator", price: 100, type: "farm" },
+            { product: "_shooter", price: 100, type: "farm" },
+            { product: "_strongsoil", price: 100, type: "farm" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
@@ -235,8 +238,15 @@ var stores = {
     "gordonsFarming": {
         img: "shops/dwarf2",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "portobello", price: 0, type: "seed" },
+            { product: "milkcap", price: 0, type: "seed" },
+            { product: "blackshroom", price: 0, type: "seed" },
+            { product: "shortgrain", price: 0, type: "seed" },
+            { product: "blackrice", price: 0, type: "seed" },
+            { product: "mango", price: 0, type: "seed" },
+            { product: "lemon", price: 0, type: "seed" },
+            { product: "blackberry", price: 0, type: "seed" },
+            { product: "apricot", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
@@ -244,8 +254,20 @@ var stores = {
     "cityTech": {
         img: "shops/dwarf2",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "!sickle2", price: 0, type: "equipment" },
+            { product: "_charger", price: 0, type: "farm" },
+            { product: "sicklebattery", price: 0, type: "seed" },
+            { product: "!gloves2", price: 0, type: "equipment" },
+            { product: "!pesticide2", price: 0, type: "equipment" },
+            { product: "!pltSickle", price: 0, type: "equipment" },
+            { product: "!sbGloves", price: 0, type: "equipment" },
+            { product: "!waterfall", price: 0, type: "equipment" },
+            { product: "!immunity", price: 0, type: "equipment" },
+            { product: "!seasonal", price: 0, type: "equipment" },
+            { product: "frogbot", price: 0, type: "seed" },
+            { product: "app", price: 0, type: "seed" },
+            { product: "printer", price: 0, type: "seed" },
+            { product: "headphones", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
@@ -253,8 +275,11 @@ var stores = {
     "cityExpansions": {
         img: "shops/dwarf2",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "farmupgradeI", price: 0, type: "upgrade" },
+            { product: "farmupgradeO", price: 0, type: "upgrade" },
+            { product: "farmupgrade_", price: 0, type: "upgrade" },
+            { product: "farmupgradeOO", price: 0, type: "upgrade" },
+            { product: "farmupgrade__", price: 0, type: "upgrade" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
@@ -263,8 +288,19 @@ var stores = {
     "vendo_veg": {
         img: "shops/vendo",
         wares: [
+            { product: "asparagus", price: 0, type: "seed" },
+            { product: "beet", price: 0, type: "seed" },
+            { product: "bellpepper", price: 0, type: "seed" },
             { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "corn", price: 0, type: "seed" },
+            { product: "garlic", price: 0, type: "seed" },
+            { product: "ginger", price: 0, type: "seed" },
+            { product: "leek", price: 0, type: "seed" },
+            { product: "pineapple", price: 0, type: "seed" },
+            { product: "radish", price: 0, type: "seed" },
+            { product: "rhubarb", price: 0, type: "seed" },
+            { product: "spinach", price: 0, type: "seed" },
+            { product: "tomato", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
@@ -272,8 +308,15 @@ var stores = {
     "vendo_tree": {
         img: "shops/vendo",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "apple", price: 0, type: "seed" },
+            { product: "apricot", price: 0, type: "seed" },
+            { product: "avocado", price: 0, type: "seed" },
+            { product: "banana", price: 0, type: "seed" },
+            { product: "blackberry", price: 0, type: "seed" },
+            { product: "grapes", price: 0, type: "seed" },
+            { product: "kiwi", price: 0, type: "seed" },
+            { product: "lemon", price: 0, type: "seed" },
+            { product: "mango", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
@@ -281,8 +324,12 @@ var stores = {
     "vendo_mush": {
         img: "shops/vendo",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "shiitake", price: 0, type: "seed" },
+            { product: "milkcap", price: 0, type: "seed" },
+            { product: "portobello", price: 0, type: "seed" },
+            { product: "greenshroom", price: 0, type: "seed" },
+            { product: "blackshroom", price: 0, type: "seed" },
+            { product: "poisnshroom", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
@@ -290,8 +337,11 @@ var stores = {
     "vendo_paddy": {
         img: "shops/vendo",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "rice", price: 0, type: "seed" },
+            { product: "arborio", price: 0, type: "seed" },
+            { product: "blackrice", price: 0, type: "seed" },
+            { product: "shortgrain", price: 0, type: "seed" },
+            { product: "chestnut", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
@@ -299,8 +349,11 @@ var stores = {
     "vendo_coop": {
         img: "shops/vendo",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "egg", price: 0, type: "seed" },
+            { product: "quail", price: 0, type: "seed" },
+            { product: "goose", price: 0, type: "seed" },
+            { product: "turkey", price: 0, type: "seed" },
+            { product: "platypus", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
@@ -308,8 +361,12 @@ var stores = {
     "vendo_water": {
         img: "shops/vendo",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "spear", price: 0, type: "seed" },
+            { product: "rod", price: 0, type: "seed" },
+            { product: "goodrod", price: 0, type: "seed" },
+            { product: "metalrod", price: 0, type: "seed" },
+            { product: "net", price: 0, type: "seed" },
+            { product: "bignet", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
@@ -317,8 +374,14 @@ var stores = {
     "vendo_tech": {
         img: "shops/vendo",
         wares: [
-            { product: "carrot", price: 0, type: "seed" },
-            { product: "carrot", price: 0, type: "seed" }
+            { product: "battery", price: 0, type: "seed" },
+            { product: "headphones", price: 0, type: "seed" },
+            { product: "printer", price: 0, type: "seed" },
+            { product: "app", price: 0, type: "seed" },
+            { product: "drone", price: 0, type: "seed" },
+            { product: "frogbot", price: 0, type: "seed" },
+            { product: "coffee", price: 0, type: "seed" },
+            { product: "sicklebattery", price: 0, type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"

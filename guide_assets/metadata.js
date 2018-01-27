@@ -14,7 +14,8 @@ var shopNames = {
     "cworker": "Lazy Construction Worker's Shop", "upgrade2": "The Upgrade Barn", "fixture2": "The Fixture Stall", "skumpys": "Skumpy's Pub", "mantools": "MAN TOOLS",
     "seedshack": "The Seed Shack", "catalinas": "Catalina's Fixtures", "tinker": "Tinker Tierra", "pawn": "Pawn Shop", "church": "Las Abejas Church",
     "trout": "crazy4trout", "cityInn": "Hotel", "cityFixtures": "Fixtures", "gordonsFarming": "Gordon's Farming", "cityTech": "Tech Supplies",
-    "cityExpansions": "Farm Expansions"
+    "cityExpansions": "Farm Expansions", "vendo_veg": "Veggie Vendo", "vendo_tree": "Fruity Vendo", "vendo_mush": "Fungy Vendo", "vendo_paddy": "Paddy Vendo",
+    "vendo_coop": "Eggy Vendo", "vendo_water": "Fishy Vendo", "vendo_tech": "Vendy Vendo"
 };
 
 function DoEnemyGen() {
@@ -83,7 +84,10 @@ function GetEnemyName(name) {
         case "seamonk": name = "seaMonk"; break;
         case "chickbot": name = "chickBot"; break;
         case "pig": name = "piggun"; break;
-        case "wildmobsty": return "Mobster"; break;
+        case "mobsty1": 
+        case "wildmobsty": 
+        return "Mobster"; break;
+        case "mobsty2": return "Stronger Mobster"; break;
         case "MobBoss": name = "mobBoss"; break;
         case "HOUSEKEEPER": name = "housekeeper"; break;
         case "carBr": name = "brownCar"; break;
@@ -110,40 +114,10 @@ function GetEnemyHTML(enemyKey) {
     } else { console.log(enemyKey); }
     return $template;
 }
-function GetShopHTML(shopKey) {
-    var $template = $("#shopTemplate").clone();
-    $template.removeClass("template").removeAttr("id");
-    $template.find(".txt_name").text(shopNames[shopKey]);
-    var shopInfo = stores[shopKey];
-    if(shopInfo.innId !== undefined) {
-        $template.find(".price").text(shopInfo.wares[0].price);
-        $template.find(".wares,.sell").remove();
-    } else {
-        $template.find(".inn").remove();
-        var $wares = $template.find(".wares");
-        if(shopInfo.doesSell) {
-            $template.find(".percent").text(shopInfo.sellMult * 100);
-        } else {
-            $template.find(".sell").remove();
-        }
-        for(var i = 0; i < shopInfo.wares.length; i++) {
-            var name = "ass";
-            var price = shopInfo.wares[i].price * (shopInfo.buyMult || 1);
-            switch(shopInfo.wares[i].type) {
-                case "seed": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetCrop(shopInfo.wares[i].product).displayname; break;
-                case "farm": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetFarmInfo(shopInfo.wares[i].product).displayname; break;
-                case "equipment": name = "<span class='spriteTiny st" + GetEquipment(shopInfo.wares[i].product).sprite + "'></span>" + GetEquipment(shopInfo.wares[i].product).displayname; break;
-                case "upgrade": name = "Field Size Upgrade"; break;
-            }
-            $wares.append($("<div class='shopItem'>" + name + " (" + price + "G)</div>"));
-        }
-    }
-    return $template;
-}
-
 function DoCropGen() {
     var $crops = $("#crops > .content");
     for(var i = 0; i < debug.AllCrops.length; i++) {
+        if(debug.AllCrops[i] === "specialgrapes") { continue; }
         var $template = $("#cropTemplate").clone();
         $template.removeClass("template").removeAttr("id");
         var crop = GetCrop(debug.AllCrops[i]);
@@ -189,9 +163,9 @@ function DoCropGen() {
             } else {
                 for(var j = 0; j < crop.frames; j++) {
                     if(crop.size === 2) {
-            $stages.append($("<span class = 'spriteTiny spriteTinyDouble st" + crop.name + j + "'></span>"));
+                        $stages.append($("<span class = 'spriteTiny spriteTinyDouble st" + crop.name + j + "'></span>"));
                     } else {
-            $stages.append($("<span class = 'spriteTiny st" + crop.name + j + "'></span>"));
+                        $stages.append($("<span class = 'spriteTiny st" + crop.name + j + "'></span>"));
                     }
                 }
             }
@@ -233,11 +207,64 @@ function DoCropGen() {
                 }
             }
         }
-        var $ul = $template.find(".txt_locations");
-        for(var j = 0; j < locations.length; j++) { $ul.append(("<li>" + locations[j] + "</li>")); }
+        for(var k = 2; k <= 50; k++) {
+            player.level = k;
+            player.inventory = [];
+            player.getLevelUpItemBonuses();
+            for(var j = 0; j < player.inventory.length; j++) {
+                if(player.inventory[j][0] === crop.name) { if(locations.indexOf("Level Up Bonuses") < 0) { locations.push("Level Up Bonuses"); break; } }
+            }
+        }
+        for(var j = 0; j < debug.AllEnemies.length; j++) {
+            var enemy = GetEnemy(debug.AllEnemies[j]);
+            var drops = enemy.drops;
+            for(var k = 0; k < drops.length; k++) {
+                if(drops[k].seed === crop.name) { locations.push("Enemy: " + GetEnemyName(debug.AllEnemies[j])); }
+            }
+        }
+        for(var c in scripts) {
+            var vals = scripts[c].split("&");
+            for(var j = 0; j < vals.length; j++) {
+                if(vals[j].indexOf("_GIVE:") < 0) { continue; }
+                var givey = vals[j].replace("_GIVE:", "").split(",")[0];
+                if(givey === crop.name) { 
+                    var val = GetCutsceneIdentifier(c);
+                    if(locations.indexOf(val) < 0) { locations.push(val); }
+                }
+            }
+        }
 
+        var $ul = $template.find(".txt_locations");
+        if(locations.length === 0) {
+            $ul.append("<li class='warning'>NOWHERE</li>");
+        } else {
+            for(var j = 0; j < locations.length; j++) { $ul.append("<li>" + locations[j] + "</li>"); }
+        }
         $crops.append($template);
     }
+}
+function GetCutsceneIdentifier(c) {
+    if(c.match(/abuela\d+/) !== null) { return "South Las Abejas (Old Lady)"; }
+    if(c.match(/bigBotW\d+/) !== null) { return "Your Farm (MegaByte Buddy)"; }
+    if(c.match(/piratemonk\d+/) !== null) { return "Underwater (Dowel)"; }
+    if(c.match(/lime\d+/) !== null) { return "Agrios Forest (Lime)"; }
+    if(c.match(/theHappening\d+/) !== null) { return "Produce Stand (Nathan)"; }
+    if(c.match(/freeRadish\d+/) !== null) { return "Central Las Abejas"; }
+    if(c.match(/brandt\d+/) !== null) { return "Central Las Abejas (Brandt)"; }
+    if(c.match(/jeffW\d+/) !== null) { return "Mysterious Research Lab (Dr. Jeff)"; }
+    if(c.match(/OfficeHive\d+/) !== null) { return "Central Las Abejas (Beehive)"; }
+    if(c.match(/kelpBoy\d+/) !== null || c.match(/kelpHive\d+/) !== null || c.match(/kelpDeadBee\d+/) !== null) { return "Underwater (Kelp Boy)"; }
+    if(c.match(/FarmHive\d+/) !== null) { return "Your Farm (Beehive)"; }
+    if(c.match(/ForestHive\d+/) !== null) { return "Agrios Forest (Beehive)"; }
+    if(c.match(/BelowHive\d+/) !== null) { return "South of Town (Beehive)"; }
+    if(c.match(/lotus\d+/) !== null) { return "Food2 Headquarters 4F"; }
+    if(c.match(/mushman\d+/) !== null) { return "Central Las Abejas (Daveothy)"; }
+    if(c.match(/crazy4trout\d+/) !== null) { return "Central Las Abejas (Jeromy)"; }
+    if(c.match(/crouton\d+/) !== null) { return "Fake Farm (Crouton)"; }
+    if(c.match(/rap\d+/) !== null) { return "Mysterious Research Lab (RAPBATTLE)"; }
+    if(c.match(/eggfairy\d+/) !== null) { return "Produce Stand (Egg Fairy)"; }
+    console.log(c);
+    return c;
 }
 function GetNonstandardLocationsForItem(name) {
     switch(name) {
@@ -245,14 +272,9 @@ function GetNonstandardLocationsForItem(name) {
         case "quail":
         case "goose":
         case "turkey":
-        case "platypus": return ["Central Las Abejas (Egg Dealer)"];
-        case "goldegg": return ["Produce Stand (Egg Fairy)", "Central Las Abejas (Egg Dealer)"];
-        case "coconut": return ["Agrios Forest (Lime)"];
-        case "gmocorn": return ["Mysterious Research Lab (RAPBATTLE)"];
+        case "platypus":
+        case "goldegg": return ["Central Las Abejas (Egg Dealer)"];
         case "ultrarod": return ["Underwater (Dowel)"];
-        case "goodfood": return ["Fake Farm (Crouton)"];
-        case "notdrugs": return ["South Las Abejas (Old Lady)"];
-        case "lotus": return ["Central Las Abejas (Daveothy)"];
         default: return [];
     }
 }
@@ -296,7 +318,7 @@ function DoLevelGen() {
             if(obj.boring === true || obj.jumbo === true) { continue; }
             if(obj.name.indexOf("waterfall") === 0 && obj.name[obj.name.length - 1] !== "0") { continue; }
             
-            var mapObj = GetMapObjData(obj, $details);
+            var mapObj = GetMapObjData(obj, $details, counts);
             if(mapObj.type === "?") { console.log(obj); continue; }
             
             var count = 1;
@@ -371,7 +393,7 @@ function DoLevelGen() {
         $maps.append($template);
     }
 }
-function GetMapObjData(e, $details) {
+function GetMapObjData(e, $details, counts) {
     if(e.name === "hungryboy") {
         return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Hungry Boy", infoText: "He'll share some of his fruits and veggies with you if you keep his secret safe." };
     } else if(e.name === "fuzurusenpai") {
@@ -478,7 +500,16 @@ function GetMapObjData(e, $details) {
         var dC = ["RB", "BB", "GB"][e.type];
         return { order: 8, type: "RFButton", subtype: dC, badgeclass: "badge-primary", dispCount: dC, text: ["Red", "Blue", "Green"][e.type] + " Switch" };
     } else if(e.isChest) {
-        // TODO
+        var $template = $("#treasureTemplate").clone();
+        $template.removeClass("template");
+        $template.find(".txt_num").text(counts["Treasure"] || 1);
+        var items = e.contents;
+        var $wares = $template.find(".wares");
+        for(var ii = 0; ii < items.length; ii++) {
+            var item = items[ii];
+            $wares.append($("<div class='shopItem'><span class='spriteTiny st" + item[0] + "'></span>" + GetCrop(item[0]).displayname + " x"  + item[1] + "</div>"));
+        }
+        $details.append($template);
         return { order: 11, type: "Treasure", badgeclass: "badge-warning", text: "Treasure Chest" };
     } else if(e.boss) {
         $details.append(GetBossHTML(e.name));
@@ -508,5 +539,35 @@ function GetBossHTML(enemyKey) {
     var $template = $("#bossTemplate").clone();
     $template.removeClass("template").removeAttr("id");
     $template.find(".txt_name").text("Boss: " + GetEnemyName(enemyKey));
+    return $template;
+}
+function GetShopHTML(shopKey) {
+    var $template = $("#shopTemplate").clone();
+    $template.removeClass("template").removeAttr("id");
+    $template.find(".txt_name").text(shopNames[shopKey]);
+    var shopInfo = stores[shopKey];
+    if(shopInfo.innId !== undefined) {
+        $template.find(".price").text(shopInfo.wares[0].price);
+        $template.find(".wares,.sell").remove();
+    } else {
+        $template.find(".inn").remove();
+        var $wares = $template.find(".wares");
+        if(shopInfo.doesSell) {
+            $template.find(".percent").text(shopInfo.sellMult * 100);
+        } else {
+            $template.find(".sell").remove();
+        }
+        for(var i = 0; i < shopInfo.wares.length; i++) {
+            var name = "ass";
+            var price = shopInfo.wares[i].price * (shopInfo.buyMult || 1);
+            switch(shopInfo.wares[i].type) {
+                case "seed": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetCrop(shopInfo.wares[i].product).displayname; break;
+                case "farm": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetFarmInfo(shopInfo.wares[i].product).displayname; break;
+                case "equipment": name = "<span class='spriteTiny st" + GetEquipment(shopInfo.wares[i].product).sprite + "'></span>" + GetEquipment(shopInfo.wares[i].product).displayname; break;
+                case "upgrade": name = "Field Size Upgrade"; break;
+            }
+            $wares.append($("<div class='shopItem'>" + name + " (" + price + "G)</div>"));
+        }
+    }
     return $template;
 }
