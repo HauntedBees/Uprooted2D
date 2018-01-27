@@ -97,7 +97,6 @@ var pausemenu = {
     },
     drawInfoText: function(text, x, y) {
         var xi = 1;
-        var tile = 7;
         var width = gfx.getTextWidth(text) + 20;
         var xiimax = x + Math.ceil(width / 64);
         while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }

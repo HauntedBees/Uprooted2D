@@ -119,6 +119,10 @@ var spriteData = {
             spriteData.names["titleSelActive" + i] = [7 + i, 21];
         }
         for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
+        for(var i = 0; i < 6; i++) {
+            if(i < 4) { spriteData.names["animCoin" + i] = [40 + i, 13]; }
+            spriteData.names["animBin" + i] = [40 + i, 14];
+        }
     },
     names: {
         "a.boss1": [40, 19], 

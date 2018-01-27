@@ -1,12 +1,15 @@
 pausemenu.inventory = {
     cursor: { x: 0, y: 0 }, inventoryWidth: 3,
-    layersToClear: ["menuA", "menucursorA", "menutext"],
-    actualIndexes: [],
+    layersToClear: ["menuA", "menucursorA", "menucursorB", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
+    actualIndexes: [], selectedCrop: -1, trashInfo: [], trashIdx: 0,
     setup: function() {
         this.cursor = {x: 0, y: 0};
-        this.drawAll();
+        this.selectedCrop = -1;
+        this.trashInfo = [];
+        this.trashIdx = setInterval(this.HandleTrashCan, 50);
+        this.DrawAll();
     },
-    drawAll: function() {
+    DrawAll: function() {
         gfx.clearSome(this.layersToClear);
         this.actualIndexes = [];
         var j = 0;
@@ -14,22 +17,121 @@ pausemenu.inventory = {
             if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
             gfx.drawInventoryItem(player.inventory[i], j % this.inventoryWidth + 0.25, Math.floor(j / this.inventoryWidth) + 0.5, "menuA");
             this.actualIndexes.push(i);
+            if(i === this.selectedCrop) { gfx.drawCursor(j % this.inventoryWidth + 0.25, Math.floor(j / this.inventoryWidth) + 0.5, 0, 0, "xcursor"); }
             j++;
         }
-        gfx.drawCursor(this.cursor.x + 0.25, this.cursor.y + 0.5, 0, 0);
+        if(this.cursor.x < this.inventoryWidth) {
+            gfx.drawCursor(this.cursor.x + 0.25, this.cursor.y + 0.5, 0, 0);
+        } else {
+            gfx.drawCursor(this.cursor.x + 0.5, this.cursor.y + 0.5, 0, 0);
+        }
+        if(this.selectedCrop >= 0) { this.DrawSelectInfo(); }
+        this.HandleTrashCan(true);
         this.setCrop();
     },
-    clean: function() { gfx.clearSome(this.layersToClear); },
-    cancel: function() { game.innerTransition(this, pausemenu); },
+    clean: function() { clearInterval(this.trashIdx); gfx.clearSome(this.layersToClear); },
+    cancel: function() {
+        if(this.selectedCrop < 0) { game.innerTransition(this, pausemenu); }
+        else { this.selectedCrop = -1; if(this.cursor.x >= this.inventoryWidth) { this.cursor.x = this.inventoryWidth - 1; } this.DrawAll(); }
+    },
     mouseMove: function(pos) {
-        if(pos.x < 0 || pos.y < 0 || pos.x >= this.inventoryWidth) { return false; }
-        var idx = pos.y * this.inventoryWidth + pos.x;
-        if(idx >= this.actualIndexes.length) { return false; }
+        if(pos.x < 0 || pos.y < 0) { return false; }
+        if(this.selectedCrop < 0) {
+            if(pos.x >= this.inventoryWidth) { return false; }
+            var idx = pos.y * this.inventoryWidth + pos.x;
+            if(idx >= this.actualIndexes.length) { return false; }
+        } else {
+            if(pos.x > this.inventoryWidth) { return false; }
+        }
         this.cursor = { x: pos.x, y: pos.y };
-        this.drawAll();
+        this.DrawAll();
         return true;
     },
-    click: function(pos) { return true; },
+    HandleTrashCan: function(fromDrawAll) {
+        gfx.clearLayer("tutorial");
+        if(pausemenu.inventory.selectedCrop < 0 && pausemenu.inventory.trashInfo.length === 0) { return; }
+        if(pausemenu.inventory.selectedCrop >= 0) { gfx.drawTileToGrid("animBin0", 3.5, pausemenu.inventory.cursor.y + 0.5, "tutorial"); }
+        if(pausemenu.inventory.trashInfo.length > 0) {
+            for(var i = pausemenu.inventory.trashInfo.length - 1; i >= 0; i--) {
+                var ti = pausemenu.inventory.trashInfo[i];
+                var trashFrame = ti.frame > 5 ? 0 : ti.frame;
+                gfx.drawTileToGrid("animBin" + trashFrame, ti.x, ti.y, "tutorial");
+                if(!fromDrawAll) { ti.frame++; }
+                if(ti.numCoins > 0 && ti.frame % 3 === 0) {
+                    ti.numCoins -= 1;
+                    ti.coinStates.push({ frame: 0, x: ti.x, y: ti.y, done: false });
+                }
+                var allCoinsDone = true;
+                for(var j = 0; j < ti.coinStates.length; j++) {
+                    var coin = ti.coinStates[j];
+                    if(coin.done) { continue; }
+                    allCoinsDone = false;
+                    var coinFrame = coin.frame > 3 ? 0 : coin.frame;
+                    coin.done = (coin.frame > 4);
+                    coin.y -= 0.25;
+                    coin.frame++;
+                    gfx.drawTileToGrid("animCoin" + coinFrame, coin.x, coin.y, "tutorial");
+                }
+                if(allCoinsDone && ti.frame > 6) { pausemenu.inventory.trashInfo.splice(i, 1); }
+            }
+        }
+    },
+    DrawSelectInfo: function() {
+        var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
+        var actIdx = this.actualIndexes[idx];
+        var text = "";
+        if(actIdx === this.selectedCrop) {
+            text = GetText("inv.unselect");
+        } else if(this.cursor.x === this.inventoryWidth) {
+            text = GetText("inv.drop");
+            var invfo = player.inventory[this.selectedCrop];
+            var price = Math.ceil(GetCrop(invfo[0]).price * invfo[1] * 0.1);
+            text = text.replace(/\{0\}/g, price);
+        } else {
+            text = GetText("inv.swap");
+        }
+
+        var y = this.cursor.y + 0.5, x = 4.5;
+        var xi = 1;
+        var width = gfx.getTextWidth(text) + 20;
+        var xiimax = x + Math.ceil(width / 64);
+        while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
+        gfx.drawSprite("sheet", 41, 15, x * 16, 2 + y * 16, "menuOverBlack");
+        while(width > 128) {
+            width -= 64;
+            gfx.drawSprite("sheet", 42, 15, x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
+        }
+        gfx.drawSprite("sheet", 43, 15, x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
+        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
+    },
+    click: function(pos) {
+        if(this.cursor.x === this.inventoryWidth) {
+            var invfo = player.inventory[this.selectedCrop];
+            var price = Math.ceil(GetCrop(invfo[0]).price * invfo[1] * 0.1);
+            player.monies += price;
+            player.inventory.splice(this.selectedCrop, 1);
+            this.trashInfo.push({ frame: 0, coinStates: [], x: 3.5, y: (pausemenu.inventory.cursor.y + 0.5), numCoins: Math.ceil(price / 20) });
+            this.selectedCrop = -1;
+            this.cursor.x = this.inventoryWidth - 1;
+        } else {
+            var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
+            var actIdx = this.actualIndexes[idx];
+            if(actIdx === undefined) { return false; }
+            if(this.selectedCrop < 0) {
+                this.selectedCrop = actIdx;
+            } else if(this.selectedCrop === this.actIdx) {
+                this.selectedCrop = -1;
+                if(this.cursor.x >= this.inventoryWidth) { this.cursor.x = this.inventoryWidth - 1; }
+            } else {
+                var temp = player.inventory[actIdx];
+                player.inventory[actIdx] = player.inventory[this.selectedCrop];
+                player.inventory[this.selectedCrop] = temp;
+                this.selectedCrop = -1;
+            }
+        }
+        this.DrawAll();
+        return true;
+    },
     keyPress: function(key) {
         var pos = { x: this.cursor.x, y: this.cursor.y };
         var isEnter = false;

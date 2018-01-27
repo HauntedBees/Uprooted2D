@@ -5864,6 +5864,21 @@ var fulltext = {
 		"en-dm": "Power:", 
 		"type": "opts"
 	},
+	"inv.swap": {
+		"en-us": "", 
+		"en-dm": "Swap Positions", 
+		"type": "opts"
+	},
+	"inv.drop": {
+		"en-us": "", 
+		"en-dm": "Toss Seeds for {0}G", 
+		"type": "opts"
+	},
+	"inv.unselect": {
+		"en-us": "", 
+		"en-dm": "Unselect Crop", 
+		"type": "opts"
+	},
 	"alignment": {
 		"en-us": "", 
 		"en-dm": "Alignment", 
