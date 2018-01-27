@@ -179,11 +179,12 @@ function DoCropGen() {
         if(["veg", "tree", "rice", "water", "mush", "egg", "tech"].indexOf(crop.type) >= 0) {
             var $stages = $template.find(".txt_stages");
             if(crop.type === "tree") {
-                $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree0'></span>"));
-                $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree1'></span>"));
-                $stages.append($("<span class = 'spriteTiny spriteTinyDouble sttree2'></span>"));
+                var treeType = crop.treeSprite || "tree";
+                $stages.append($("<span class = 'spriteTiny spriteTinyDouble st" + treeType + "0'></span>"));
+                $stages.append($("<span class = 'spriteTiny spriteTinyDouble st" + treeType + "1'></span>"));
+                $stages.append($("<span class = 'spriteTiny spriteTinyDouble st" + treeType + "2'></span>"));
                 for(var j = 3; j < crop.frames; j++) {
-                    $stages.append($("<span class='treeFill'><span class = 'spriteTiny spriteTinyDouble sttree2'></span><span class = 'spriteTiny spriteTinyDouble st" + crop.name + (j - 3) + "'></span></span>"));
+                    $stages.append($("<span class='treeFill'><span class = 'spriteTiny spriteTinyDouble st" + treeType + "2'></span><span class = 'spriteTiny spriteTinyDouble st" + crop.name + (j - 3) + "'></span></span>"));
                 }
             } else {
                 for(var j = 0; j < crop.frames; j++) {
