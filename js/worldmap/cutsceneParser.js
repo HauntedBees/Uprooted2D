@@ -251,6 +251,7 @@ var SpecialFunctions = {
         worldmap.importantEntities["n2"].pos = { x: -1, y: -1 };
         worldmap.importantEntities["n3"].pos = { x: -1, y: -1 };
         worldmap.importantEntities["n4"].pos = { x: -1, y: -1 };
+        worldmap.refreshMap();
         if(!player.completedQuest("nathanned")) { return true; }
         if(player.completedQuest("keycard")) {
             if(!player.hasFalcon) { worldmap.importantEntities["n4"].pos = { x: 13, y: 3 }; }
@@ -268,6 +269,7 @@ var SpecialFunctions = {
             worldmap.importantEntities["n4"].pos = { x: 9, y: 5 };
             worldmap.importantEntities["n0"].pos = { x: 10, y: 6 };
         }
+        worldmap.refreshMap();
         return true;
     },
     "THEGIFTOFEGG": function() {
