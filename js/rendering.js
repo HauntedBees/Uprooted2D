@@ -72,6 +72,11 @@ var gfx = {
         ctx.fillStyle = "#64A5FF";
         ctx.fillRect((x - offset.x * 16) * gfx.scale, (y - offset.y * 16) * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
+    drawFGCover: function(file, y, yoffset, w, offset) {
+        var imgy = y - yoffset;
+        if(imgy < 0) { return; }
+        gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets[file], 0, imgy * 16, w, 16, (-offset.x * 16), (y - offset.y) * 16, w, 16);
+    },
     drawJumbo: function(file, x, y, w, h, ox, oy) {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h); // TODO: this might be wrong??
     },
