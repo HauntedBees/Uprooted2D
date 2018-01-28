@@ -161,12 +161,12 @@ var worldmap = {
             if(e.fov) { fov.push({ x: e.pos.x - offset.x, y: e.pos.y - offset.y, dir: e.dir }); }
             var roundedY = e.forcedY ? e.forcedY : Math.round(e.pos.y);
             if(roundedY < 0 || roundedY >= ymax) { continue; }
+            if(e.big) { roundedY++; }
             layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
         }
         if(this.mapName !== "gameover") {
             layers[playery].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
         }
-        
         for(var y = 0; y < ymax; y++) {
             var funcs = layers[y];
             for(var i = 0; i < funcs.length; i++) {
