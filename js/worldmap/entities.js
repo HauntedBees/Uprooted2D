@@ -27,6 +27,7 @@ var mapentities = {
     "farm": [
         SwitchMap("ExitAreaWest", 23, 12, false, true, 1, 20, "producestand"),
         GetInvisibleEntity("CS_enterfarm", [ SpecialFunctions["ENTERFARM"] ], { autoplay: true }),
+        GetForeground("farm", 7, 1536),
 
         GetCommonEntity("NathanOnTheFarm0", 10, 6, 9, 0, undefined, [ GetSpeak("yaBoiA") ], { big: true, moving: true, sheetlen: 8, storageKey: "n0", noChange: true }),
         GetCommonEntity("NathanOnTheFarm1", 12, 6, 9, 1, undefined, [ GetSpeak("yaBoiB") ], { big: true, moving: true, sheetlen: 3, storageKey: "n1", noChange: true }),
@@ -34,7 +35,7 @@ var mapentities = {
         GetCommonEntity("NathanOnTheFarm3", 12, 2, 6, 0, undefined, [ GetSpeak("yaBoiD") ], { sheet: "assistant", storageKey: "n3", noChange: true }),
         GetCommonEntity("IiiOnTheFarm", 16, 9, 4, 0, undefined, Cutscene("iiiTalk"), { sheet: "assistant", storageKey: "n4", noChange: true }),
 
-        GetCommonEntity("Fucker", 10, 3, 0, 2, undefined, Cutscene("bigBot"), { boss: true, big: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
+        GetCommonEntity("Fucker", 10, 2, 0, 2, undefined, Cutscene("bigBot"), { boss: true, big: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
         GetInvisibleEntity("PostBoss", Cutscene("bigBotW"), { storageKey: "PostBoss" }),
         
         GetBeehive("FarmHive", 3, 1),
