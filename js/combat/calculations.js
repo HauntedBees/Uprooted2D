@@ -114,7 +114,7 @@ var dmgCalcs = {
         for(var i = 0; i < myCrops.length; i++) {
             var crop = myCrops[i];
             var seasonVal = crop.seasons[season];
-            if(seasonVal === 0) { seasonVal = 0.2; }
+            if(seasonVal === 0) { seasonVal = 0.2; } else if(isPlayer) { player.miscdata.seasonsPlanted[season]++; }
 
             if(isPlayer) {
                 if(crop.stickChance !== undefined && stunLength === 0) { // Stickiness
@@ -152,6 +152,7 @@ var dmgCalcs = {
             totalDamage += dmg;
         }
         totalDamage *= 1 + (Math.floor(myCrops.length / 3) / 10); // boost by number of crops (launch 10 crops to get 1.3x boost, 20 for 1.6x, 30 for 2x)
+        if(totalDamage < myAtk && isPlayer) { totalDamage = myAtk; }
         var attacksArr = [];
         for(var i = 0; i < theirDef.length; i++) {
             var finalDamage = totalDamage - (isCritical ? 0 : (theirDef / 4));
@@ -178,7 +179,7 @@ var dmgCalcs = {
             } else {
                 var crop = combat.clearFlagAndReturnCrop(croppos);
                 var seasonVal = crop.seasons[season];
-                if(seasonVal === 0) { seasonVal = 0.2; }
+                if(seasonVal === 0) { seasonVal = 0.2; } else if(isPlayer) { player.miscdata.seasonsPlanted[season]++; }
                 var cropPowVal = (modAtk * (crop.power + 1) * (crop.power + 1) * (seasonVal + 1)) / 5;
                 if(crop.type === "bee") {
                     outputAmount += beeMult * cropPowVal;

@@ -232,13 +232,7 @@ var SpecialFunctions = {
     "SETNERDBED": function() { player.lastInn = "nerdBed"; },
     "CATMAIL": function() { player.activeQuests["catmail"] = 1; },
     "CREDITS": function() {
-        if(player.techAxis <= 0) {
-            if(player.ethicsAxis >= 0) { player.achievements.push("natureGood"); }
-            else { player.achievements.push("natureBad"); }
-        } else {
-            if(player.ethicsAxis >= 0) { player.achievements.push("techGood"); }
-            else { player.achievements.push("techBad"); }
-        }
+        JustBeatGameChievoCheck();
         return game.transition(game.currentInputHandler, worldmap.credits);
     },
     "WIPEFARMBOTS": function() {

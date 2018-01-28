@@ -189,6 +189,7 @@ combat.plant = {
             if(player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") {
                 cropIsKill = false;
                 var cowIdx = combat.getCowIndex(px - 1, py - 1);
+                player.miscdata.typesPlanted["cow"] += 1;
                 if(cowIdx >= 0) {
                     combat.happyCows[cowIdx].feed += newCrop.power;
                 } else {
@@ -199,6 +200,7 @@ combat.plant = {
                 newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
                 var effects = combat.effectGrid[px][py];
                 var divider = (player.itemGrid[px][py] !== null && player.itemGrid[px][py] === "_strongsoil") ? 1.25 : 2;
+                player.miscdata.typesPlanted[newCrop.type] += 1;
                 if(!cropIsKill) {
                     if(effects !== null) {
                         if(effects.type === "shocked") {
@@ -256,6 +258,7 @@ combat.plant = {
     },
     throwSpear: function(x, y) {
         var success = (Math.random() * player.luck) < combat.GetCatchChance(this.activeCrop);
+        player.miscdata.typesPlanted["water"] += 1;
         player.shiftTech(-0.01);
         player.decreaseItem(this.activeCrop.name);
         if(!success) { return this.finishTurn("You chuck the spear, but do not catch any fish."); }
