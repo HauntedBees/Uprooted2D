@@ -255,17 +255,17 @@ worldmap.shop = {
     },
     getEquipText: function(productInfo) {
         var equipInfo = GetEquipment(productInfo.product);
-        var price = (productInfo.price === undefined) ? Math.floor(equipInfo.price * (this.details.buyMult || 1)) : productInfo.price;
+        var price = Math.floor(equipInfo.price * (this.details.buyMult || 1));
         return equipInfo.displayname + " (" + price + " coins)\n " + GetEquipmentDesc(equipInfo);
     },
     getFarmText: function(productInfo) {
         var farmInfo = GetFarmInfo(productInfo.product);
-        var price = (productInfo.price === undefined) ? Math.floor(farmInfo.price * (this.details.buyMult || 1)) : productInfo.price;
+        var price = Math.floor(farmInfo.price * (this.details.buyMult || 1));
         return farmInfo.displayname + " (" + price + " coins)\n " + farmInfo.desc;
     },
     getSeedText: function(productInfo) {
         var cropInfo = GetCrop(productInfo.product);
-        var price = (productInfo.price === undefined) ? Math.floor(cropInfo.price * (this.details.buyMult || 1)) : productInfo.price;
+        var price = Math.floor(cropInfo.price * (this.details.buyMult || 1));
         return cropInfo.displayname + " (" + price + " coins)\n " + GetCropDesc(cropInfo);
     },
     click: function(pos) {
@@ -336,15 +336,13 @@ worldmap.shop = {
         if(this.isUpgradeShop && this.availableIndexes.length === 0) { return false; }
         var productInfo = this.details.wares[cursor];
         var price = 0;
-        if(productInfo.price === undefined) {
-            switch(productInfo.type) {
-                case "seed": price = Math.floor(GetCrop(productInfo.product).price * (this.details.buyMult || 1)); break;
-                case "farm": price = Math.floor(GetFarmInfo(productInfo.product).price * (this.details.buyMult || 1)); break;
-                case "equipment": price = Math.floor(GetEquipment(productInfo.product).price * (this.details.buyMult || 1)); break;
-                default: price = 10; break;
-            }
-        } else {
-            price = productInfo.price;
+
+        var mult = this.details.buyMult || 1;
+        switch(productInfo.type) {
+            case "seed": price = Math.floor(GetCrop(productInfo.product).price * mult); break;
+            case "farm": price = Math.floor(GetFarmInfo(productInfo.product).price * mult); break;
+            case "equipment": price = Math.floor(GetEquipment(productInfo.product).price * mult); break;
+            default: price = 10; break;
         }
         
         if(price > player.monies) { this.drawDetails(GetText(this.details.notEnough)); return true; }
