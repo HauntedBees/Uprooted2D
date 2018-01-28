@@ -139,6 +139,8 @@ var worldmap = {
         else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
         else { moving = this.forceMove; }
 
+        var playery = this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY;
+
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];
             if(!e.visible || e.pos.y < 0 || (!e.chungus && e.pos.y >= ymax)) { continue; }
@@ -150,20 +152,30 @@ var worldmap = {
                 gfx.drawChungus(e.pos.x, e.pos.y, e.width, e.height, offset);
                 continue;
             }
+            if(e.isForeground) {
+                var fgy = playery + 1;
+                if(fgy >= ymax) { continue; }
+                layers[fgy].push({ foreground: true, img: e.img, dy: e.yoff, w: e.width });
+                continue;
+            }
             if(e.fov) { fov.push({ x: e.pos.x - offset.x, y: e.pos.y - offset.y, dir: e.dir }); }
             var roundedY = e.forcedY ? e.forcedY : Math.round(e.pos.y);
             if(roundedY < 0 || roundedY >= ymax) { continue; }
             layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
         }
         if(this.mapName !== "gameover") {
-            layers[this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
+            layers[playery].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
         }
         
         for(var y = 0; y < ymax; y++) {
             var funcs = layers[y];
             for(var i = 0; i < funcs.length; i++) {
                 var e = funcs[i];
-                gfx.drawAnimCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big, e.other);
+                if(e.foreground) {
+                    gfx.drawFGCover(e.img, y, e.dy, e.w, offset);
+                } else {
+                    gfx.drawAnimCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big, e.other);
+                }
             }
         }
         for(var i = 0; i < fov.length; i++) { gfx.drawFOV(fov[i].x, fov[i].y, fov[i].dir, fov[i].ox, fov[i].oy); }

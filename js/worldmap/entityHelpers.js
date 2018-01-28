@@ -367,6 +367,10 @@ function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
 function Cutscene(s) { return [ function() { iHandler.Start(s); } ]; }
 
+function GetForeground(mapname, yoffset, width) {
+    return { name: "fg" + mapname, img: "foregrounds/" + mapname, visible: true, yoff: yoffset, width: width, isForeground: true, pos: { x: 0, y: 0 } };
+}
+
 function GetJumbo(id, img, x, y, w, h, ox, oy) {
     return { name: id, storageKey: id, jumbo: true, filename: "covers/" + img, visible: true, w: w, h: h, offset: { x: ox, y: oy }, pos: { x: x, y: y }, boring: true };
 }
