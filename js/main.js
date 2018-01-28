@@ -25,7 +25,8 @@ var game = {
                     "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home",
                     "maps/fakefarm", "covers/barn", "maps/southcity", "covers/mob", "covers/skumpy", "maps/gameover", "fov", "smartphone", "maps/northcity",
                     "covers/northcity1", "covers/northcity2", "covers/northcity2_post", "covers/northcity3", "maps/hq_1", "maps/hq_2", "maps/hq_3",
-                    "maps/hq_4", "maps/hq_5", "maps/hq_6", "falconsheet", "horRorTop", "horRorBottom", "ayudame", "mapplayer_help", "shops/vendo"],
+                    "maps/hq_4", "maps/hq_5", "maps/hq_6", "falconsheet", "horRorTop", "horRorBottom", "ayudame", "mapplayer_help", "shops/vendo",
+                    "foregrounds/farm"],
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
