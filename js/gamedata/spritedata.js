@@ -123,6 +123,10 @@ var spriteData = {
             if(i < 4) { spriteData.names["animCoin" + i] = [40 + i, 13]; }
             spriteData.names["animBin" + i] = [40 + i, 14];
         }
+        for(var i = 0; i < 7; i++) {
+            spriteData.names["hp" + (14 - i)] = [41 + i , 10];
+            spriteData.names["hp" + (7 - i)] = [41 + i , 11];
+        }
     },
     names: {
         "recycleArrow": [44, 15],

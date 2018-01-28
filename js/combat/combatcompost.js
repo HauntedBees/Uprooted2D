@@ -155,7 +155,7 @@ combat.compost = {
     },
     isCompostable: function(tile) {
         if(tile.name === "coffee" && tile.activeTime === 0) { return true; }
-        if(tile.type === "bee" && tile.activeTime > 0) { return false; }
+        if(tile.type === "bee") { return tile.activeTime === 0; }
         if(tile.type === "egg" || tile.type === "tech") { return false; }
         return (player.equipment.compost !== null && (!GetEquipment(player.equipment.compost).rotOnly || tile.rotten));
     },

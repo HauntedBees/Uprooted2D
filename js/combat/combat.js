@@ -261,6 +261,7 @@ var combat = {
     wrapUpCombat: function() {
         if(player.equipment.weapon === "!sickle2_weak") { player.equipment.weapon = "!sickle2"; }
         player.health = player.maxhealth;
+        gfx.clearLayer("menucursorC");
         CombatChievoCheck();
     },
     fuckingDead: function() {

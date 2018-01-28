@@ -298,15 +298,15 @@ function GetEnemy(name) {
 		}
 		if($row.drop0 -ne "") {
 			$i = $row.drop0.split(",");
-			$drops += "{ seed: `"A`", min: B, max: C }".replace("A", $i[0]).replace("B", $i[1]).replace("C", $i[2]);
+			$drops += "{ seed: `"$`", min: @, max: # }".replace("$", $i[0]).replace("@", $i[1]).replace("#", $i[2]);
 		}
 		if($row.drop1 -ne "") {
 			$i = $row.drop1.split(",");
-			$drops += "{ seed: `"A`", min: B, max: C }".replace("A", $i[0]).replace("B", $i[1]).replace("C", $i[2]);
+			$drops += "{ seed: `"$`", min: @, max: # }".replace("$", $i[0]).replace("@", $i[1]).replace("#", $i[2]);
 		}
 		if($row.drop2 -ne "") {
 			$i = $row.drop2.split(",");
-			$drops += "{ seed: `"A`", min: B, max: C }".replace("A", $i[0]).replace("B", $i[1]).replace("C", $i[2]);
+			$drops += "{ seed: `"$`", min: @, max: # }".replace("$", $i[0]).replace("@", $i[1]).replace("#", $i[2]);
 		}
 		if($drops.Count -gt 0) {
 			$folded = $drops -join ", ";

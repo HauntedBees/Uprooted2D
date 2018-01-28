@@ -93,7 +93,7 @@ var scripts = {
 	"FarmHive2": "_TEXT:FarmHive4&_CLEARTARGET",
 	// Forest: Optional Boss (Turkey)
 	"turky0": "_ALIGNGOOD:-1&_TEXT:bossturky(0-1)",
-	"turky1": "_FIGHT:bossturky,turky,turky",
+	"turky1": "_FIGHT:bossturky",
 	// Forest: Beehive
 	"ForestHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
 	"ForestHive1": "_TEXT:ForestHive(0-1)",

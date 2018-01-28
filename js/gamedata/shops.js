@@ -45,7 +45,7 @@ var stores = {
     "upgrade1": {
         img: "shops/dwarf2",
         wares: [
-            { product: "farmupgradeI", price: 2000, type: "upgrade" }
+            { product: "farmupgradeI", price: 1000, type: "upgrade" }
         ],
         opening: "s.up1o", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up1p"
     },
@@ -120,9 +120,9 @@ var stores = {
     "upgrade2": {
         img: "shops/dwarf2",
         wares: [
-            { product: "farmupgradeI", price: 2000, type: "upgrade" },
-            { product: "farmupgradeO", price: 4000, type: "upgrade" },
-            { product: "farmupgrade_", price: 4000, type: "upgrade" }
+            { product: "farmupgradeI", price: 1000, type: "upgrade" },
+            { product: "farmupgradeO", price: 2000, type: "upgrade" },
+            { product: "farmupgrade_", price: 2000, type: "upgrade" }
         ],
         opening: "s.up2", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up2p"
     },
@@ -275,11 +275,11 @@ var stores = {
     "cityExpansions": {
         img: "shops/dwarf2",
         wares: [
-            { product: "farmupgradeI", price: 2000, type: "upgrade" },
-            { product: "farmupgradeO", price: 4000, type: "upgrade" },
-            { product: "farmupgrade_", price: 4000, type: "upgrade" },
-            { product: "farmupgradeOO", price: 8000, type: "upgrade" },
-            { product: "farmupgrade__", price: 8000, type: "upgrade" }
+            { product: "farmupgradeI", price: 1000, type: "upgrade" },
+            { product: "farmupgradeO", price: 2000, type: "upgrade" },
+            { product: "farmupgrade_", price: 2000, type: "upgrade" },
+            { product: "farmupgradeOO", price: 6000, type: "upgrade" },
+            { product: "farmupgrade__", price: 6000, type: "upgrade" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"

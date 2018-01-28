@@ -60,7 +60,11 @@ EnemyAnimInfo.prototype.InnerAnimate = function() {
         this.throwables.splice(0, 1);
     }
 };
-EnemyAnimInfo.prototype.Animate = function() {
+EnemyAnimInfo.prototype.Animate = function(myidx) {
+    var myEnemy = combat.enemies[myidx];
+    var hp = Math.round(myEnemy.health / myEnemy.maxhealth * 14);
+    if(hp > 14) { hp = 14; }
+    if(hp > 0) { gfx.drawTileToGrid("hp" + hp, this.x + 0.25, this.y - 1.5, "menucursorC"); } // TODO: make this less shit
     if(this.dead) {
         gfx.drawDitheredCharacter(this.spriteidx, 1, this.sheet, this.size, this.x, this.y, (this.deadFrame++));
     } else if(this.hit) {
@@ -318,7 +322,7 @@ function CombatAnimHelper(enemies) {
     var AnimateEntities = function() {
         if(birdAnimInfo !== null) { birdAnimInfo.Animate(); }
         playerAnimInfo.Animate();
-        for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Animate(); }
+        for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Animate(i); }
         for(var i = 0; i < combat.enemies.length; i++) {
             if(combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck) {
                 if(combat.enemies[i].size === "lg" || combat.enemies[i].size === "xl") {

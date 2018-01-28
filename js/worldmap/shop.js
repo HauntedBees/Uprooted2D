@@ -342,7 +342,7 @@ worldmap.shop = {
             case "seed": price = Math.floor(GetCrop(productInfo.product).price * mult); break;
             case "farm": price = Math.floor(GetFarmInfo(productInfo.product).price * mult); break;
             case "equipment": price = Math.floor(GetEquipment(productInfo.product).price * mult); break;
-            default: price = 10; break;
+            default: price = productInfo.price; break;
         }
         
         if(price > player.monies) { this.drawDetails(GetText(this.details.notEnough)); return true; }
