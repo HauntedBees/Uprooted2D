@@ -561,12 +561,28 @@ function GetShopHTML(shopKey) {
         }
         for(var i = 0; i < shopInfo.wares.length; i++) {
             var name = "ass";
-            var price = shopInfo.wares[i].price * (shopInfo.buyMult || 1);
+            var mult = (shopInfo.buyMult || 1);
+            var price = 10;
             switch(shopInfo.wares[i].type) {
-                case "seed": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetCrop(shopInfo.wares[i].product).displayname; break;
-                case "farm": name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + GetFarmInfo(shopInfo.wares[i].product).displayname; break;
-                case "equipment": name = "<span class='spriteTiny st" + GetEquipment(shopInfo.wares[i].product).sprite + "'></span>" + GetEquipment(shopInfo.wares[i].product).displayname; break;
-                case "upgrade": name = "Field Size Upgrade"; break;
+                case "seed": 
+                    var sd = GetCrop(shopInfo.wares[i].product);
+                    name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + sd.displayname;
+                    price = sd.price * mult;
+                    break;
+                case "farm": 
+                    var finfo = GetFarmInfo(shopInfo.wares[i].product);
+                    name = "<span class='spriteTiny st" + shopInfo.wares[i].product + "'></span>" + finfo.displayname;
+                    price = finfo.price * mult;
+                    break;
+                case "equipment": 
+                    var eq = GetEquipment(shopInfo.wares[i].product);
+                    name = "<span class='spriteTiny st" + eq.sprite + "'></span>" + eq.displayname;
+                    price = eq.price * mult;
+                    break;
+                case "upgrade": 
+                    name = "Field Size Upgrade";
+                    price = shopInfo.wares[i].price * mult;
+                    break;
             }
             $wares.append($("<div class='shopItem'>" + name + " (" + price + "G)</div>"));
         }
