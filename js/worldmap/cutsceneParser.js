@@ -1,9 +1,9 @@
 var iHandler = {
     moveSpeed: 0.025,
-    state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null },
+    state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] },
     Start: function(startkey) {
         worldmap.dialogData = {};
-        iHandler.state = { key: startkey, idx: 0, activeAnim: null, done: false, texts: [], animHandler: null };
+        iHandler.state = { key: startkey, idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] };
         iHandler.Advance();
     },
     SpeedUpAnimation: function() {
@@ -31,7 +31,13 @@ var iHandler = {
         var curKey = iHandler.state.key + (iHandler.state.idx++);
         var action = scripts[curKey];
         if(action === undefined) { iHandler.state.done = true; }
-        if(iHandler.state.done) { return worldmap.finishDialog(); }
+        if(iHandler.state.done) {
+            if(iHandler.state.postItems.length > 0) {
+                game.transition(game.currentInputHandler, worldmap.invClean, iHandler.state.postItems);
+                iHandler.state.postItems = [];
+            }
+            return worldmap.finishDialog();
+        }
         CommandParser.Parse(action);
     },
     HandleAnim: function(spedUp) {
@@ -101,7 +107,7 @@ var CommandParser = {
                 case "PUSHCLEAREDTARGET": player.clearedEntities.push(actSuffix); break;
                 case "SETTARGET": game.target = target; break;
                 case "END": iHandler.state.done = true; break;
-                case "GIVE": var a = actSuffix.split(","); player.increaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
+                case "GIVE": CommandParser.Parse_TryGive(actSuffix.split(",")); break;
                 case "TAKE": var a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
                 case "SHIFTY": target.anim.shiftY(parseInt(actSuffix)); break;
                 case "COMPLETEQUEST": quests.completeQuest(actSuffix); break;
@@ -122,6 +128,12 @@ var CommandParser = {
                 case "SETPOSX": target.pos.x = parseFloat(actSuffix); break;
             }
         }
+    },
+    Parse_TryGive: function(itemArr) {
+        var itemName = itemArr[0].replace("~", "_");
+        var itemAmt = parseInt(itemArr[1]);
+        if(player.increaseItem(itemName, itemAmt)){ return; }
+        iHandler.state.postItems.push([itemName, itemAmt]);
     },
     Parse_ShiftsAndFPS: function(target, args) { // [shifty, shiftx, sheetlen, fps, moving]
         target.anim.shiftY(args[0]).shiftX(args[1], args[2]).setFPS(args[3]);

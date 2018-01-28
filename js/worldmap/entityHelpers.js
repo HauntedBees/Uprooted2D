@@ -160,14 +160,14 @@ function GetTreasureChest(name, x, y, contents) {
         if(game.target.open) {
             worldmap.writeText("openchest");
         } else {
-            game.target.open = true;
-            game.target.anim.shiftY(5);
             var conts = game.target.contents;
             var clen = conts.length - 1;
             var contentString = "";
+            var hasRoom = true;
             if(clen === 0) {
                 contentString = conts[0][1] + " " + GetItemDisplayName(conts[0][0], conts[0][1] > 1);
-                player.increaseItem(conts[0][0], conts[0][1]);
+                hasRoom = player.increaseItem(conts[0][0], 0);
+                
             } else {
                 for(var i = clen; i >= 0; i--) {
                     var itdata = conts[i]; // format = [itemname, amount]
@@ -177,8 +177,23 @@ function GetTreasureChest(name, x, y, contents) {
                         contentString += ", ";
                     }
                     contentString += itdata[1] + " " + GetItemDisplayName(itdata[0], itdata[1] > 1);
-                    player.increaseItem(itdata[0], itdata[1]);
+                    hasRoom &= player.increaseItem(itdata[0], 0);
+                    if(!hasRoom) { break; }
                 }
+            }
+            if(hasRoom) {
+                game.target.open = true;
+                game.target.anim.shiftY(5);
+                if(clen === 0) {
+                    player.increaseItem(conts[0][0], conts[0][1]);
+                } else {
+                    for(var i = clen; i >= 0; i--) {
+                        var itdata = conts[i];
+                        player.increaseItem(itdata[0], itdata[1]);
+                    }
+                }
+            } else {
+                iHandler.state.texts = ["closedchestinvfull"];
             }
             worldmap.writeText("closedchest", undefined, false, contentString);
         }
@@ -190,7 +205,7 @@ function GetIndoorTreasureChest(name, x, y, contents) {
     x.visible = false;
     return x;
 }
-function GetItemDisplayName(name, plural) {
+function GetItemDisplayName(name, plural) { // TODO: move this fucker to the language parsing shit
     var pluralSuf = plural ? "s" : "";
     switch(name[0]) {
         case "_": return GetFarmInfo(name).displayname + pluralSuf; break;

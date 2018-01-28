@@ -5628,6 +5628,11 @@ var fulltext = {
 		"en-dm": "You open the chest. Inside you find {0}!", 
 		"type": "map"
 	},
+	"closedchestinvfull": {
+		"en-us": "", 
+		"en-dm": "...But you don't have enough room in your inventory.", 
+		"type": "map"
+	},
 	"truck.where": {
 		"en-us": "", 
 		"en-dm": "Where would you like to drive to?", 
@@ -5871,7 +5876,7 @@ var fulltext = {
 	},
 	"inv.drop": {
 		"en-us": "", 
-		"en-dm": "Toss Seeds for {0}G", 
+		"en-dm": "Recycle for {0}G", 
 		"type": "opts"
 	},
 	"inv.unselect": {
@@ -7606,6 +7611,17 @@ var fulltext = {
 		"en-us": "", 
 		"en-dm": "Chuds McDaniels", 
 		"type": "enemy"
+	},
+	// Full Inventory Bullshit
+	"fullSelect": {
+		"en-us": "", 
+		"en-dm": "You don't have enough room in your inventory for all the items you just acquired. Swap out your inventory items with any of the new items you want to keep. Anything remaining will be recycled.", 
+		"type": "text"
+	},
+	"fullToss": {
+		"en-us": "", 
+		"en-dm": "Recycle these for {0}G.", 
+		"type": "text"
 	},
 	// Falcon Deliveries
 	"falconNoGifts": {

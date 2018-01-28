@@ -43,6 +43,7 @@ uglifyjs ^
     js/worldmap/smartphone.js ^
     js/worldmap/horRor.js ^
     js/worldmap/falconSelect.js ^
+    js/worldmap/inventoryClean.js ^
     js/playerstats/pausemenu.js ^
     js/playerstats/chievosmenu.js ^
     js/playerstats/viewinventory.js ^

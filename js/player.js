@@ -95,11 +95,6 @@ var player = {
         this.gridHeight = newheight;
         this.gridLevel = newLevel;
     },
-    getRandomLuckyNumber: function(inverse) {
-        var num = (Math.random() * player.luck);
-        if(inverse) { num = 1 - num; }
-        return num;
-    },
     initGridDimensions: function() { if(this.itemGrid === null) { this.itemGrid = combat.getGrid(this.gridWidth, this.gridHeight); } },
     addExp: function(n) { this.totalExp += n; if(this.level < 50) { this.exp += n; } },
     levelUp: function() {
@@ -219,21 +214,20 @@ var player = {
         return false;
     },
     increaseItem: function(name, amount) {
+        if(amount === undefined) { amount = 1; }
         var numOfType = 0;
         var type = name[0] === "!" ? "!" : (name[0] === "_" ? "_" : "C");
         for(var i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0] === name) {
-                player.inventory[i][1] += (amount || 1);
+                player.inventory[i][1] += amount;
                 return true;
             }
             var front = player.inventory[i][0][0];
-            if(front === "!" || front === "_") {
-                if(type === front) { numOfType++; }
-            } else if(type === "C") {
-                numOfType++;
-            }
-        }   
-        if(numOfType === 27) { console.log("NOT ENOUGH ROOM!"); return false; }
-        player.inventory.push([name, (amount || 1)]);
+            if(front !== "!" && front !== "_" && type === "C") { numOfType++; }
+        }
+        if(numOfType === 27) { return false; }
+        if(amount === 0) { return true; }
+        player.inventory.push([name, amount]);
+        return true;
     }
 };

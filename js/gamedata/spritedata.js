@@ -125,6 +125,7 @@ var spriteData = {
         }
     },
     names: {
+        "recycleArrow": [44, 15],
         "a.boss1": [40, 19], 
         "a.lakeFairy": [41, 19], 
         "a.badrabbit": [42, 19], 
