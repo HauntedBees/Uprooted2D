@@ -155,6 +155,7 @@ function GetRFDoorButton(name, x, y, type, isDown) {
 function GetRFDoor(name, x, y, type, isDown) {
     return GetCommonEntity(name, x, y, 15 + type, 0, undefined, undefined, { sy: (isDown ? 3 : 2), active: isDown, initActive: isDown, type: type, solid: !isDown, rfd: true });
 }
+function ForceChestOpen(e) { e.open = true; e.anim.shiftY(5); }
 function GetTreasureChest(name, x, y, contents) {
     return GetCommonEntity(name, x, y, 13, 0, undefined, [function() {
         if(game.target.open) {
@@ -192,6 +193,7 @@ function GetTreasureChest(name, x, y, contents) {
                         player.increaseItem(itdata[0], itdata[1]);
                     }
                 }
+                player.openedChests.push(game.target.name);
             } else {
                 iHandler.state.texts = ["closedchestinvfull"];
             }

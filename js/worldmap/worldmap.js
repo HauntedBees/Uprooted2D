@@ -29,6 +29,8 @@ var worldmap = {
                 for(var i = this.entities.length - 1; i >= 0; i--) {
                     if(player.clearedEntities.indexOf(this.entities[i].name) >= 0 || (this.entities[i].showIf && player.questsCleared.indexOf(this.entities[i].showIf) < 0)) {
                         this.entities.splice(i, 1);
+                    } else if(player.openedChests.indexOf(this.entities[i].name) >= 0) {
+                        ForceChestOpen(this.entities[i]);
                     }
                 }
             } else {
