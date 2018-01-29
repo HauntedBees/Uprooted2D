@@ -273,7 +273,7 @@ var EnemyParser = {
                 var weight = parseFloat(rval.weight);
                 if(rand <= weight) {
                     nextNodeId = rval.next;
-                    console.log("randomly picked " + nextNodeId);
+                    //console.log("randomly picked " + nextNodeId);
                     break;
                 } else { rand -= weight; }
             }
@@ -282,7 +282,7 @@ var EnemyParser = {
                 var val = conds.data[i];
                 var success = conditions[val.condition](EnemyParser.enemy, actionResult);
                 if(success) { 
-                    console.log("picked " + nextNodeId + " because it passed the '" + val.condition + "' condition");
+                    //console.log("picked " + nextNodeId + " because it passed the '" + val.condition + "' condition");
                     nextNodeId = val.next;
                     break;
                 }
@@ -823,7 +823,7 @@ var actions = {
         return true;
     },
     "LAUNCH_CROPS": function(e) {
-        var fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [player.def]);
+        var fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [dmgCalcs.GetPlayerCombatDefense()]);
         var damage = combat.damagePlayer(fieldData.damage);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         EnemyParser.outputData.throwables = fieldData.animCrops;
@@ -1230,7 +1230,8 @@ var actions = {
         return true;
     },
     "WEAK_ATTACK": function(e) {
-        var damage = combat.damagePlayer(Math.max(1, Math.round(e.atk)));
+        var damage = dmgCalcs.MeleeAttack(false, combat.season, e.atk, [dmgCalcs.GetPlayerCombatDefense()])[0].damage;
+        damage = combat.damagePlayer(damage);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
     },

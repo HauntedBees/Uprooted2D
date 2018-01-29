@@ -10,6 +10,17 @@ function AttackData(approximateDamage, isCritical, stunLength, animals, crops, k
     this.knockback = Math.ceil(knockback || 0);
 }
 var dmgCalcs = {
+    GetPlayerCombatDefense: function() {
+        var d = player.def;
+        for(var x = 0; x < player.gridWidth; x++) {
+            for(var y = 0; y < player.gridHeight; y++) {
+                var tile = combat.grid[x][y]
+                if(tile === null || tile.x !== undefined) { continue; }
+                d += tile.power / 5;
+            }
+        }
+        return Math.min(Math.round(d), player.def * 3);
+    },
     GetNerfs: function() {
         if(combat.enemies[0].id !== "beckett") { return []; }
         var nerfs = [];

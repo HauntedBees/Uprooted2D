@@ -102,7 +102,7 @@ var player = {
     levelUp: function() {
         this.level++;
         this.exp -= this.nextExp;
-        this.maxhealth = Math.floor(this.maxhealth * 1.1);
+        this.maxhealth = Math.ceil(this.maxhealth * 1.1255);
         this.health = this.maxhealth;
         this.atk = Math.ceil(this.atk + Math.log10(this.level));
         this.def = Math.ceil(this.def + Math.log10(this.level));
