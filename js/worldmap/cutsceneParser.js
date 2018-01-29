@@ -131,7 +131,7 @@ var CommandParser = {
     },
     Parse_TryGive: function(itemArr) {
         var itemName = itemArr[0].replace("~", "_");
-        var itemAmt = parseInt(itemArr[1]);
+        var itemAmt = parseInt(itemArr[1]) || 1;
         if(player.increaseItem(itemName, itemAmt)){ return; }
         iHandler.state.postItems.push([itemName, itemAmt]);
     },
