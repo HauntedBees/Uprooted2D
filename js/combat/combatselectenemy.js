@@ -125,7 +125,23 @@ combat.selectTarget = {
             if(!this.canSickle) { return false; }
             var dpos = { x: pos.x - combat.enemydx, y: pos.y - combat.enemydy };
             if(dpos.x < 0 || dpos.y < 0 || dpos.x >= combat.enemywidth || dpos.y >= combat.enemyheight) { return false; }
-            this.sicklePos = pos;
+            var cropObj = combat.enemyGrid[dpos.x][dpos.y];
+            var doSicklePos = true;
+            if(cropObj !== null && cropObj.x !== undefined) {
+                var newpos = { x: cropObj.x + combat.enemydx, y: cropObj.y + combat.enemydy };
+                if(this.sicklePos.x === newpos.x && this.sicklePos.y === newpos.y) {
+                    pos.x += (pos.x - this.sicklePos.x);
+                    pos.y += (pos.y - this.sicklePos.y);
+                    if(pos.y == (combat.enemyheight + combat.enemydy)) {
+                        if(!this.canHumans) { return false; }
+                        this.sicklePos = { x: -1, y: -1 };
+                        pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 8 };
+                        return this.mouseMove(pos);
+                    }
+                    if((pos.x - combat.enemydx) >= combat.enemywidth) { return false; }
+                } else { pos.x = newpos.x; pos.y = newpos.y; }
+            }
+            if(doSicklePos) { this.sicklePos = pos; }
         }
         this.drawAll();
         return true;
@@ -279,7 +295,7 @@ combat.selectTarget = {
         var targetParams = [];
         for(var i = 0; i < this.targets.length; i++) {
             if(this.targets[i].x === undefined) { // enemy
-                targetParams.push(combat.enemies[i].def);
+                targetParams.push(combat.enemies[this.targets[i]].def);
             } else { // crop
                 var x = this.targets[i].x - combat.enemydx;
                 var y = this.targets[i].y - combat.enemydy;
