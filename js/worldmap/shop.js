@@ -249,7 +249,7 @@ worldmap.shop = {
         } else if(productInfo.product.slice(-1) === "O") {
             str += GetText("s.fieldO");
         } else if(productInfo.product.slice(-1) === "_") {
-            str += GetText("s.field_");
+            str += GetText("s.field.");
         }
         return str;
     },
