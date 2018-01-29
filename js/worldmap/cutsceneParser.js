@@ -650,7 +650,6 @@ var SpecialFunctions = {
         worldmap.playerDir = 0;
         worldmap.waitForAnimation = true;
         player.activeQuests["gotTire"] = 1;
-        player.lastInn = "fakefarm";
         worldmap.importantEntities["FarmerJeff"].dir = 2;
         worldmap.importantEntities["FarmerJeff"].pos = { x: worldmap.pos.x, y: 25 };
         worldmap.importantEntities["FarmerJeff"].visible = true;
@@ -697,6 +696,7 @@ var SpecialFunctions = {
             worldmap.writeText("farmTV5");
             game.target.pos = { x: -1, y: -1 };
             player.activeQuests["fakeFarm"] = 0;
+            player.lastInn = "fakefarm";
         }
         for(var i = 0; i < worldmap.entities.length; i++) {
             if(worldmap.entities[i].changeType === undefined) { continue; }
