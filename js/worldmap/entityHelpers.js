@@ -121,7 +121,7 @@ function SwitchMapSeamless(name, x, y, requiredDir, newx, newy) {
 function EnterShop(name, x, y, shop) {
     return { 
         name: name, 
-        solid: false, pos: {x: x, y: y}, 
+        solid: true, pos: {x: x, y: y}, 
         isShop: true, shopName: shop,
         interact: [ function() { game.transition(game.currentInputHandler, worldmap.shop, shop); return true; } ]
     };

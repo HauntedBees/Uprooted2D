@@ -43,7 +43,7 @@ var worldmap = {
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
             if(e.autoplay && targetToAutoplay === null) { targetToAutoplay = e; } // always autoplay first one
         }
-        if(args.fromLoad) { mapRefreshes.resetData(this.mapName); }
+        if(args.fromLoad) { mapRefreshes.resetData(this.mapName); } else if(args.isInn) { JumboToggle(false); }
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {

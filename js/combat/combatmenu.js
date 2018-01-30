@@ -166,6 +166,7 @@ combat.menu = {
             game.innerTransition(this, combat.inbetween, {
                 next: function() {
                     clearInterval(combat.charAnimIdx);
+                    combat.wrapUpCombat();
                     game.transition(combat.inbetween, worldmap, {
                         init: worldmap.pos,
                         map: worldmap.mapName,
