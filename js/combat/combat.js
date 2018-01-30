@@ -1,5 +1,6 @@
 var combat = {
-    enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false, doingFinalKill: false,
+    enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false,
+    doingFinalKill: false, playerInDanger: false, saveChance: 1,
     lastTarget: 0, lastTargetCrop: false, lastSelectedSeed: { x: 0, y: 0 }, 
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
@@ -15,6 +16,8 @@ var combat = {
         this.lastTargetCrop = false;
         this.lastTarget = 0;
         this.lastSelectedSeed = { x: 0, y: 0 };
+        this.playerInDanger = false;
+        this.saveChance = 1;
         this.setSeason(enemies);
         this.expEarned = 0;
         this.moniesEarned = 0;
@@ -108,6 +111,7 @@ var combat = {
         this.isFalcon = false;
         combat.enemyTurn.lastIdx = -1;
         this.numPlantTurns = player.getPlantingTurns();
+        combat.playerInDanger = false;
         for(var i = 0; i < combat.enemies.length; i++) {
             combat.enemies[i].stickTurns = Math.max(0, combat.enemies[i].stickTurns - 1);
         }
@@ -124,7 +128,19 @@ var combat = {
             var mult = (g.def === undefined) ? 1 : (1 - g.def);
             damage = Math.max(1, Math.floor(damage * mult));
         }
-        player.health = Math.max(0, player.health - damage);
+        
+        if(combat.playerInDanger) {
+            damage = 0;
+        } else if(damage >= (player.maxhealth / 5) && damage >= player.health && Math.random() < combat.saveChance) {
+            combat.playerInDanger = true;
+            combat.saveChance -= 0.25;
+            damage = player.health - 1;
+            player.health = 1;
+        } else {
+            var prevHealth = player.health;
+            player.health = player.health - damage;
+            if(player.health < 0) { player.health = 0; damage = prevHealth; }
+        }
         return damage;
     },
     damageEnemy: function(enemyidx, damage) {
