@@ -5852,7 +5852,7 @@ var fulltext = {
 	},
 	"eq.attacksome": {
 		"en-us": "", 
-		"en-dm": "Attacks {0} enemies.", 
+		"en-dm": "Attacks {0} targets.", 
 		"type": "opts"
 	},
 	"eq.holds": {
