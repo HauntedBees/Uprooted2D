@@ -5541,6 +5541,72 @@ var fulltext = {
 		"en-dm": "Transaction Completed.", 
 		"type": "shop"
 	},
+	"s.upgrade": {
+		"en-us": "", 
+		"en-dm": "{1} Upgrade ({0} coins)", 
+		"type": "shop"
+	},
+	"s.sleepsy": {
+		"en-us": "", 
+		"en-dm": "Take a Sleepsy Nappsy ({0} coins)\n You get some bonus health, and will wake up here if you lose a battle.", 
+		"type": "shop"
+	},
+	"s.coins": {
+		"en-us": "", 
+		"en-dm": "Coins: {0}", 
+		"type": "shop"
+	},
+	// Books
+	"bookA": {
+		"en-us": "", 
+		"en-dm": "\"Paddy Crops\" by Patrick Wack \n A primer on the Rice Paddy Fixture and the Crops that can be planted on it.", 
+		"type": "bname"
+	},
+	"bookA0": {
+		"en-us": "", 
+		"en-dm": "Unique crops can be grown on Rice Paddy fixtures. Rice Paddies can only be placed on the bottom row of your farm.", 
+		"type": "book"
+	},
+	"bookA1": {
+		"en-us": "", 
+		"en-dm": "Paddy Crops grow just like regular Crops and do not regrow, but a fresh Paddy Crop is much stronger than a Field Crop of the same Star Rating.", 
+		"type": "book"
+	},
+	"bookA2": {
+		"en-us": "", 
+		"en-dm": "Paddy Crops also have a much higher chance of inflicting Recoil Damage, hitting not just your target, but their crops and other enemies.", 
+		"type": "book"
+	},
+	"bookB": {
+		"en-us": "", 
+		"en-dm": "\"Stunning Enemies\" by Perry Alasis \n A primer on crops that can stun enemies.", 
+		"type": "bname"
+	},
+	"bookB0": {
+		"en-us": "", 
+		"en-dm": "When attacking with Bees or certain other crops, there is a chance that they will be stunned by the attack, preventing them from performing any actions for one or more turns.", 
+		"type": "book"
+	},
+	"bookB1": {
+		"en-us": "", 
+		"en-dm": "How likely a crop is to stun enemies is denoted by these symbols in the crop's description:", 
+		"type": "book"
+	},
+	"bookC": {
+		"en-us": "", 
+		"en-dm": "\"Rare Crops\" by Dale McOneOfAKind \n A primer on rare and unique crops.", 
+		"type": "bname"
+	},
+	"bookC0": {
+		"en-us": "", 
+		"en-dm": "Certain crops are especially powerful, and can only be found in a few places. A certain fairy north of San Ambrosio might have one for you.", 
+		"type": "book"
+	},
+	"bookC1": {
+		"en-us": "", 
+		"en-dm": "Keep an eye out for a peculiar fellow in Agrios Forest, a studious robot in a research lab, and a smooth talking pirate, as they just might have rare items for you, too!", 
+		"type": "book"
+	},
 	// Bees
 	"hiveGet": {
 		"en-us": "", 

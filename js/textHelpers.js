@@ -9,6 +9,14 @@ function GetText(key) {
 		return "fucko"; //throw e;
 	}
 }
+function TryGetText(key) {
+    try {
+		var lang = (game !== undefined) ? game.language : "en-dm";
+		var d = fulltext[key];
+		if(d[lang] !== undefined) { return d[lang]; }
+		return d["en-us"];
+	} catch(e) { return false; }
+}
 function HandleArticles(mainStr, subject) {
     if(lingHelpers.ArticleHandler[game.language] != undefined) { return lingHelpers.ArticleHandler[game.language](mainStr, subject); }
     return lingHelpers.ArticleHandler["en-us"](mainStr, subject);

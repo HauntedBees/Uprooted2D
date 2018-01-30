@@ -139,7 +139,12 @@ var stores = {
     // Area 4: South City
     "skumpys": {
         img: "shops/dwarf2", innId: "skumpys",
-        wares: [ { product: "sleep", price: 20, type: "inn" } ],
+        wares: [
+            { product: "sleep", price: 20, type: "inn" },
+            { product: "book0", name: "bookA", price: 0, type: "book" },
+            { product: "book3", name: "bookB", price: 0, type: "book" },
+            { product: "book4", name: "bookC", price: 0, type: "book" }
+        ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     "mantools": {

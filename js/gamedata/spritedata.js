@@ -34,6 +34,8 @@ var spriteData = {
                 spriteData.names["beet" + i] = [5 + i, 7];
             }
             if(i < 3) {
+                spriteData.names["book" + i] = [32 + i, 8];
+                spriteData.names["book" + (i + 3)] = [32 + i, 9];
                 spriteData.names["printer" + i] = [25 + i, 9];
                 spriteData.names["printer" + (i + 3)] = [28 + i, 9];
                 spriteData.names["drone" + i] = [29 + i, 10];

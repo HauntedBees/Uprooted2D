@@ -1,8 +1,4 @@
-me.sellStates = {
-    BUYING: 0,
-    SELLSELECT: 1, 
-    SELLING: 2
-};
+me.sellStates = { BUYING: 0, SELLSELECT: 1, SELLING: 2, READING: 3 };
 me.sellTypes = {
     CROPS: "", CROPSIDX: 1, 
     EQUIPMENT: "!", EQUIPIDX: 2, 
@@ -13,6 +9,7 @@ worldmap.shop = {
     initx: 1, dx: 2, yPos: 5, cursorInitx: 0,
     sellingState: me.sellStates.BUYING, sellingType: me.sellTypes.CROPS, actualIdxs: [],
     maxSell: 12, sellOffset: 0, numArrows: 0, isUpgradeShop: false,
+    bookReading: null, bookState: 0,
     layersToClear: ["characters", "menutext", "menucursorA"],
     availableIndexes: [], hasTalk: "",
     setup: function(shopName) {
@@ -22,6 +19,8 @@ worldmap.shop = {
         this.hasTalk = (this.details.talk && player.questsCleared.indexOf(this.details.talk) < 0) ? this.details.talk : "";
         this.sellOffset = 0;
         this.numArrows = 0;
+        this.bookReading = null;
+        this.bookState = 0;
         if(this.details.wares.length > 6 || (this.details.doesSell && this.details.wares.length > 5)) {
             this.dx = 1;
             this.initx = (this.hasTalk || this.details.doesSell) ? 3 : 2;
@@ -49,10 +48,11 @@ worldmap.shop = {
         switch(this.sellingState) {
             case me.sellStates.SELLING: this.drawDetailsSelling(); break;
             case me.sellStates.SELLSELECT: this.drawDetailsSellingSelect(); break;
+            case me.sellStates.READING:
             case me.sellStates.BUYING: this.drawDetailsBuying(); break;
         }
         if(this.isUpgradeShop && this.availableIndexes.length === 0 && isopening) { text = GetText(this.details.empty); }
-        gfx.drawText("Coins: " + player.monies, 2, 16 * 6.75, "#FFFFFF");
+        gfx.drawText(GetText("s.coins").replace(/\{0\}/g, player.monies), 2, 16 * 6.75, "#FFFFFF");
         gfx.drawWrappedText(text, 2, 16 * 7.25, 235, "#FFFFFF");
     },
     isValidSellIdx: function(i) {
@@ -227,11 +227,12 @@ worldmap.shop = {
         else if(this.details.doesSell && this.cursorX == 1) { return GetText(this.details.selling); }
         var cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
         var productInfo = this.details.wares[cursor];
-        if(productInfo.type == "seed") { return this.getSeedText(productInfo); }
-        if(productInfo.type == "farm") { return this.getFarmText(productInfo); }
-        if(productInfo.type == "equipment") { return this.getEquipText(productInfo); }
-        if(productInfo.type == "upgrade") { return this.getUpgradeText(productInfo); }
-        if(productInfo.type == "inn") { return "Take a Sleepsy Nappsy (" + productInfo.price + " coins)\n You get some bonus health, and will wake up here if you lose a battle."; }
+        if(productInfo.type === "seed") { return this.getSeedText(productInfo); }
+        if(productInfo.type === "farm") { return this.getFarmText(productInfo); }
+        if(productInfo.type === "equipment") { return this.getEquipText(productInfo); }
+        if(productInfo.type === "upgrade") { return this.getUpgradeText(productInfo); }
+        if(productInfo.type === "inn") { return GetText("s.sleepsy").replace(/\{0\}/g, productInfo.price); }
+        if(productInfo.type === "book") { return GetText(productInfo.name); }
         return "i don't know what this is";
     },
     getUpgradeText: function(productInfo) {
@@ -243,7 +244,7 @@ worldmap.shop = {
             case "farmupgradeOO": size = "8x6"; break;
             case "farmupgrade__": size = "10x5"; break;
         }
-        var str = size + " Upgrade (" + productInfo.price + " coins)\n ";
+        var str = GetText("s.upgrade").replace(/\{0\}/g, productInfo.price).replace(/\{1\}/g, size) + "\n";
         if(productInfo.product.slice(-1) === "I") {
             str += GetText("s.fieldI");
         } else if(productInfo.product.slice(-1) === "O") {
@@ -269,6 +270,7 @@ worldmap.shop = {
         return cropInfo.displayname + " (" + price + " coins)\n " + GetCropDesc(cropInfo);
     },
     click: function(pos) {
+        if(this.sellingState === me.sellStates.READING) { return this.clickBook(pos); }
         if(this.cursorX == 0) {
             if(this.sellingState === me.sellStates.SELLING && this.sellOffset > 0) {
                 this.sellOffset--;
@@ -323,6 +325,22 @@ worldmap.shop = {
         this.mouseMove({x: this.cursorX + 1, y: this.yPos});
         return true;
     },
+    clickBook: function(pos) {
+        this.bookState++;
+        var newText = TryGetText(this.bookReading + this.bookState);
+        if(newText === false) {
+            this.sellingState = me.sellStates.BUYING;
+            this.mouseMoveBuying(pos);
+        } else {
+            this.drawDetails(newText);
+            if(this.bookReading === "bookB" && this.bookState === 1) {
+                gfx.drawTileToGrid("stunIco1", 2, 8.5, "menutext");
+                gfx.drawTileToGrid("stunIco2", 4, 8.5, "menutext");
+                gfx.drawTileToGrid("stunIco3", 6, 8.5, "menutext");
+            }
+        }
+        return true;
+    },
     clickBuying: function(pos) {
         if(this.hasTalk && this.cursorX === 1) {
             this.drawDetails(quests.getQuestText(this.hasTalk));
@@ -335,6 +353,15 @@ worldmap.shop = {
         var cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
         if(this.isUpgradeShop && this.availableIndexes.length === 0) { return false; }
         var productInfo = this.details.wares[cursor];
+
+        if(productInfo.type === "book") {
+            this.sellingState = me.sellStates.READING;
+            this.bookReading = productInfo.name;
+            this.bookState = 0;
+            this.drawDetails(GetText(this.bookReading + this.bookState));
+            return true;
+        }
+
         var price = 0;
 
         var mult = this.details.buyMult || 1;
@@ -420,6 +447,7 @@ worldmap.shop = {
             }
         }
         if(moveDir === 0 && !isEnter) { return false; }
+        if(moveDir !== 0 && this.sellingState === me.sellStates.READING) { this.sellingState = me.sellStates.BUYING; }
         if(isEnter) {
             return this.click(pos);
         } else {
