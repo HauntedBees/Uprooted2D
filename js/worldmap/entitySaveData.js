@@ -10,6 +10,7 @@ var mapStates = {
 };
 var stateBinders = {
     "storePositions": function(mapName) {
+        if(mapStates[mapName] === undefined) { return; }
         mapStates[mapName].ents = {};
         for(var i = 0; i < worldmap.entities.length; i++) {
             var e = worldmap.entities[i];
@@ -20,13 +21,13 @@ var stateBinders = {
     "hq_3": function() { mapStates["hq_3"].room = worldmap.horRor.playerRoom; }
 };
 var mapRefreshes = {
-    "resetData": function(mapname) {
+    "resetData": function(mapname, justStateLoad) {
         var ents = mapStates[mapname].ents;
         var addtlFunc = mapRefreshes[mapname];
         for(var i = 0; i < worldmap.entities.length; i++) {
             var e = worldmap.entities[i];
             if(addtlFunc !== undefined) { addtlFunc(e); }
-            mapRefreshes.extractPosition(e, ents);
+            if(!justStateLoad) { mapRefreshes.extractPosition(e, ents); }
         }
     },
     "extractPosition": function(e, ents) {

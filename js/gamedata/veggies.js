@@ -39,7 +39,7 @@ function GetCrop(name) {
 		case "garlic": return new CropDetail(name, "Garlic", 180, "veg", 1, 6, 3, 9, 0, 2, 1, 1, 0);
 		case "ginger": return new CropDetail(name, "Ginger", 30, "veg", 1, 5, 4, 4, 0, 1, 1, 2, 0, { burnChance: 0.5 });
 		case "leek": return new CropDetail(name, "Leek", 90, "veg", 1, 3, 3, 6, 0, 0, 0, 0, 2);
-		case "pineapple": return new CropDetail(name, "Pineapple", 75, "veg", 1, 12, 4, 8, 0, 2, 0, 1, 1, { fireResist: 1 });
+		case "pineapple": return new CropDetail(name, "Pineapple", 75, "veg", 1, 12, 4, 8, 0, 1, 2, 0, 0, { fireResist: 1 });
 		case "radish": return new CropDetail(name, "Radish", 30, "veg", 1, 1, 2, 3, 0, 2, 0, 1, 0);
 		case "rhubarb": return new CropDetail(name, "Rhubarb", 75, "veg", 1, 8, 4, 7, 0, 1, 0, 0, 0, { burnChance: 0.25 });
 		case "spinach": return new CropDetail(name, "Spinach", 15, "veg", 1, 1, 2, 1, 0, 1, 0, 2, 0, { saltChance: 0.5 });

@@ -128,7 +128,6 @@ var combat = {
             var mult = (g.def === undefined) ? 1 : (1 - g.def);
             damage = Math.max(1, Math.floor(damage * mult));
         }
-        
         if(combat.playerInDanger) {
             damage = 0;
         } else if(damage >= (player.maxhealth / 5) && damage >= player.health && Math.random() < combat.saveChance) {

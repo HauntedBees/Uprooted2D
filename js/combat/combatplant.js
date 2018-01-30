@@ -399,10 +399,11 @@ combat.plant = {
             str += " Time: " + Math.ceil(iteminfo.time / player.getCropSpeedMultiplier()) + "\n";
         }
         if(iteminfo.respawn > 0) { str += " Regrowth: " + iteminfo.respawn + "\n"; }
-        if(iteminfo.seasons[0] > 0.5) { str += " SP"; }
-        if(iteminfo.seasons[1] > 0.5) { str += " SU"; }
-        if(iteminfo.seasons[2] > 0.5) { str += " AU"; }
-        if(iteminfo.seasons[3] > 0.5) { str += " WI"; }
+        switch(iteminfo.seasons[combat.season]) {
+            case 2: str += " GOOD"; break;
+            case 1: str += " OK"; break;
+            case 0: str += " BAD"; break;
+        }
         gfx.drawWrappedText(str, 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 85);
     }
 };

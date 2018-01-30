@@ -15,7 +15,8 @@ var worldmap = {
         this.waitForAnimation = false;
         this.dialogState = 0;
         this.mapName = args.map;
-        if(player.visitedMaps.indexOf(args.map) < 0) { player.visitedMaps.push(args.map); }
+        var justStateLoad = false;
+        if(player.visitedMaps.indexOf(args.map) < 0) { player.visitedMaps.push(args.map); } else { justStateLoad = !args.fromLoad; }
         this.pos = args.init;
         this.playerDir = (args.playerDir === undefined ? (this.playerDir === undefined ? 2 : this.playerDir) : args.playerDir);
         this.dialogData = null;
@@ -43,7 +44,7 @@ var worldmap = {
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
             if(e.autoplay && targetToAutoplay === null) { targetToAutoplay = e; } // always autoplay first one
         }
-        if(args.fromLoad) { mapRefreshes.resetData(this.mapName); } else if(args.isInn) { JumboToggle(false); }
+        if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, justStateLoad); } else if(args.isInn) { JumboToggle(false); }
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {

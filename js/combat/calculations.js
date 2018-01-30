@@ -184,8 +184,8 @@ var dmgCalcs = {
     },
 
     CompostFunc: function(isPlayer, season, myAtk, myCrops, isAttack) { // isAttack: true = attack, false = heal
-        var cowMult = isAttack ? 0.01 : 1.5, coffeeMult = isAttack ? 0.5 : 2.5, beeMult = isAttack ? 0.5 : 2;
-        var baseMult = isAttack ? 0.5 : 2, modAtk = Math.log2(myAtk * myAtk * 0.15); // min atk is 3; log2(n) <= 0 where n <= 1; 3 * 3 * 0.15 = 1.35
+        var cowMult = isAttack ? 0.01 : 3, coffeeMult = isAttack ? 0.5 : 3.5, beeMult = isAttack ? 0.5 : 3;
+        var baseMult = isAttack ? 0.5 : 1.25, modAtk = Math.log2(myAtk * myAtk * 0.15); // min atk is 3; log2(n) <= 0 where n <= 1; 3 * 3 * 0.15 = 1.35
 
         var outputAmount = 0, thereAreCows = false;
         var nerfs = dmgCalcs.GetNerfs();
@@ -202,13 +202,13 @@ var dmgCalcs = {
                 var crop = combat.clearFlagAndReturnCrop(croppos);
                 var seasonVal = crop.seasons[season];
                 if(seasonVal === 0) { seasonVal = 0.2; } else if(isPlayer) { player.miscdata.seasonsPlanted[season]++; }
-                var cropPowVal = (modAtk * (crop.power + 1) * (crop.power + 1) * (seasonVal + 1)) / 5;
+                var cropPowVal = (modAtk * (crop.power + 1) * (crop.power + 1) * (seasonVal + 1)) / 20;
                 if(crop.type === "bee") {
                     outputAmount += beeMult * cropPowVal;
                 } else if(crop.name === "coffee") {
                     outputAmount += coffeeMult * cropPowVal;
                 } else {
-                    outputAmount += baseMult - (crop.rotten ? -1 : (crop.activeTime / crop.time)) * cropPowVal;
+                    outputAmount += baseMult * cropPowVal;
                 }
                 outputAmount *= dmgCalcs.GetNerfMultiplier(crop, nerfs);
                 var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds) (but we can't compost fish anyway so that doesn't matter probably)
