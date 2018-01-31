@@ -12,3 +12,42 @@ var inns = {
     "nerdBed": { x: 13, y: 8, map: "hq_1" },
     "lastInn": { x: 5, y: 6, map: "hq_5" }
 };
+var levelStats = {
+    hp: [25, 30, 35, 45, 55, 65, 75, 95, 115, 135, 160, 195, 235, 280, 340, 400, 500, 600, 700, 850],
+    atk: [3,  5,  7, 10, 13, 16, 19, 22,  25,  28,  32,  36,  40,  44,  48,  52,  56,  60,  64,  70],
+    def: [2,  4,  6,  8, 12, 15, 18, 20,  24,  25,  30,  35,  39,  43,  45,  50,  55,  59,  63,  65]
+};
+
+
+function GetPriceMultiplier() {
+    switch(player.options.difficulty) {
+        case 0: return 0.5;
+        case 1: return 1;
+        case 2: return 1.5;
+    }
+    return 1;
+};
+
+function UpdateStatsForCurrentDifficulty() {
+    var idx = player.level - 1;
+    var oldmaxhealth = player.maxhealth;
+    player.maxhealth = levelStats.hp[idx];
+    player.atk = levelStats.atk[idx];
+    player.def = levelStats.def[idx];
+    player.luck = 0.7 + (player.level / 100);
+    switch(player.options.difficulty) {
+        case 0: // easy
+            player.maxhealth = Math.ceil(player.maxhealth * 1.6);
+            player.atk = Math.ceil(player.atk * 1.6);
+            player.def = Math.ceil(player.def * 1.6);
+            player.luck += 0.08;
+            break;
+        case 2: // hard
+            player.maxhealth = Math.ceil(player.maxhealth * 0.6);
+            player.atk = Math.ceil(player.atk * 0.75);
+            player.def = Math.ceil(player.def * 0.75);
+            player.luck -= 0.1;
+            break;
+    }
+    player.health = Math.round((player.health / oldmaxhealth) * player.maxhealth);    
+};

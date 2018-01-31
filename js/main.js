@@ -137,10 +137,11 @@ var game = {
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
         localStorage.setItem("player" + savenum, game.obj2str(player));
         stateBinders.storePositions(worldmap.mapName);
-        if(stateBinders[worldmap.mapName] !== undefined) { stateBinders[worldmap.mapName](); }
-        if(worldmap.smartphone !== null) {
-            mapStates["northcity"].phoneData = worldmap.smartphone.GetPhoneData();
+        for(var i = 0; i < player.visitedMaps.length; i++) {
+            var map = player.visitedMaps[i];
+            if(stateBinders[map] !== undefined) { stateBinders[map](); }
         }
+        if(worldmap.smartphone !== null) { mapStates["northcity"].phoneData = worldmap.smartphone.GetPhoneData(); }
         localStorage.setItem("mapent" + savenum, game.obj2str(mapStates));
     },
     load: function(savenum) {

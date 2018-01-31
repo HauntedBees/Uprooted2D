@@ -182,6 +182,7 @@ worldmap.optionsMenu = {
         player.controls = Object.assign(player.controls, worldmap.optionsMenu.localControls);
         //var f = player.options.font;
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
+        UpdateStatsForCurrentDifficulty();
         //player.options.font = f;
         worldmap.optionsMenu.QuitWithoutSaving(true);
     },

@@ -98,15 +98,16 @@ var player = {
         this.gridLevel = newLevel;
     },
     initGridDimensions: function() { if(this.itemGrid === null) { this.itemGrid = combat.getGrid(this.gridWidth, this.gridHeight); } },
-    addExp: function(n) { this.totalExp += n; if(this.level < 50) { this.exp += n; } },
+    addExp: function(n) { this.totalExp += n; if(this.level < 20) { this.exp += n; } },
     levelUp: function() {
+        if(this.level >= 20) { return; }
         this.level++;
         this.exp -= this.nextExp;
-        this.maxhealth = Math.ceil(this.maxhealth * 1.1255);
+        this.maxhealth = levelStats.hp[this.level - 1];
         this.health = this.maxhealth;
-        this.atk = Math.ceil(this.atk + Math.log10(this.level));
-        this.def = Math.ceil(this.def + Math.log10(this.level));
-        this.luck = 0.7 + (this.level / 300); // TODO: This may break things that rely on luck
+        this.atk = levelStats.atk[this.level - 1];
+        this.def = levelStats.def[this.level - 1];
+        this.luck = 0.7 + (this.level / 100);
         this.nextExp = Math.floor(this.level * this.level * 3 * Math.pow(1.005, this.level - 2));
         this.getLevelUpItemBonuses();
     },
