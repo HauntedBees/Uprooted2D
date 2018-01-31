@@ -18,7 +18,7 @@ var stateBinders = {
             mapStates[mapName].ents[e.name] = { pos: e.pos, movement: e.movement, dir: e.dir };
         }
     },
-    "hq_3": function() { mapStates["hq_3"].room = worldmap.horRor.playerRoom; }
+    "hq_3": function() { if(worldmap.horRor !== null) { mapStates["hq_3"].room = worldmap.horRor.playerRoom; } }
 };
 var mapRefreshes = {
     "resetData": function(mapname, justStateLoad) {

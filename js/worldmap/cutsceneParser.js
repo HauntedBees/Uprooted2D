@@ -467,13 +467,13 @@ var SpecialFunctions = {
         worldmap.animData = new MapAnim("mapplayer_help", 0, 0, 20, 25, 2);
         worldmap.entities.push(GetCommonEntity("BarricadeL", 23, 2, 6, 0, undefined, [ GetSpeak("blockedOff3F") ], { big: true, noChange: true }));
         worldmap.entities.push(GetCommonEntity("BarricadeR", 25, 2, 6, 0, undefined, [ GetSpeak("blockedOff3F") ], { big: true, sy: true, noChange: true }));
-        me.PLAYERMOVESPEED /= 2;
+        me.PLAYERMOVESPEED = me.BASEMOVESPEED / 2;
     },
     "NERDDOWN": function() {
         player.hasNerd = false;
         worldmap.clearTarget();
         worldmap.animData = new MapAnim("mapplayer", 0, 0, 16, 20, 2);
-        me.PLAYERMOVESPEED *= 2;
+        me.PLAYERMOVESPEED = me.BASEMOVESPEED;
         worldmap.importantEntities["trentSafe"].interact = [GetSpeak("sleepingSavedNerd")];
         worldmap.importantEntities["trentSafe"].visible = true;
         worldmap.importantEntities["trentSafe"].solid = true;

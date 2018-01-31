@@ -401,7 +401,7 @@ var addtlHitChecks = {
     },
     "check_RICE": function(cropInfo, damage) {
         var hasRice = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type === "rice"; }
+        for(var i = 0; i < cropInfo.length; i++) { hasRice |= cropInfo[i].type === "rice"; }
         return hasRice ? damage : 0;
     },
     "check_VEG": function(cropInfo, damage) {

@@ -37,7 +37,7 @@ var worldmap = {
             } else {
                 this.entities = [];
             }
-        }
+        } else { justStateLoad = false; args.fromLoad = false; }
         var targetToAutoplay = null;
         for(var i = 0; i < this.entities.length; i++) {
             var e = this.entities[i];

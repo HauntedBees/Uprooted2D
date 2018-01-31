@@ -206,7 +206,7 @@ var enemyHelpers = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     },
-    DoSomethingToBusiestRow: function(somethingFunc, killText, dmgText, regText) {
+    DoSomethingToBusiestRow: function(e, somethingFunc, killText, dmgText, regText) {
         var busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
         var hasDamage = false, hasKills = false;
         for(var x = 0; x < player.gridWidth; x++) {
@@ -865,7 +865,7 @@ var actions = {
     "TRY_THROW_ROCK": function(e) { return enemyHelpers.TryDisturbRandomTile("rock"); },
     "TECH_THROW_ROCK": function(e) { return enemyHelpers.TryDisturbRandomTile("engine"); },
     "TIRE_CHUCK": function(e) { return enemyHelpers.TryDisturbRandomTile("tire"); },
-    "BECKETT_WATER": function(e) { return enemyHelpers.DoSomethingToBusiestRow(enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"); },
+    "BECKETT_WATER": function(e) { return enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"); },
     "BECK_FIRE_ROW": function(e) { return enemyHelpers.BurnTile(enemyHelpers.TrySplashTile, "burnKill", "burnDamage", "burnSucc"); },
     "BECK_THROW_SALT": function(e) { 
         var row = Math.floor(Math.random() * player.gridHeight);
