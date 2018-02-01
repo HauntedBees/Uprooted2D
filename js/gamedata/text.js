@@ -5561,6 +5561,11 @@ var fulltext = {
 		"en-dm": "Sorry, but you don't have room for this in your inventory!", 
 		"type": "shop"
 	},
+	"s.alreadyown": {
+		"en-us": "", 
+		"en-dm": "You already own one of these! You don't need another!", 
+		"type": "shop"
+	},
 	// Books
 	"bookA": {
 		"en-us": "", 
