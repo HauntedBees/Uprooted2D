@@ -5556,6 +5556,11 @@ var fulltext = {
 		"en-dm": "Coins: {0}", 
 		"type": "shop"
 	},
+	"s.invfull": {
+		"en-us": "", 
+		"en-dm": "Sorry, but you don't have room for this in your inventory!", 
+		"type": "shop"
+	},
 	// Books
 	"bookA": {
 		"en-us": "", 

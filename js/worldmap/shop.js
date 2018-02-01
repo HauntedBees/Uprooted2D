@@ -389,8 +389,10 @@ worldmap.shop = {
             }
             player.expandGrid(dims.x, dims.y, dims.new);
             this.cursorX = 1;
-        } else {
-            player.increaseItem(productInfo.product, 1);
+        } else if(!player.increaseItem(productInfo.product, 1)) {
+            player.monies += price;
+            this.drawDetails(GetText("s.invfull"));
+            return true;
         }
         this.drawDetails(GetText(this.details.purchased));
         return true;
