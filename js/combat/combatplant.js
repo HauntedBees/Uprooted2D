@@ -34,6 +34,7 @@ combat.plant = {
     },
     isValidPlantingLocation: function(px, py, diff) {
         if(diff == 1) {
+            if(player.itemGrid[px][py] === "_cow") { return this.isValidLocationForCrop(px + 1, py + 1); }
             if(combat.grid[px][py] !== null) { return false; }
             if(combat.grid[px + 1][py] !== null) { return false; }
             if(combat.grid[px][py + 1] !== null) { return false; }
@@ -73,7 +74,7 @@ combat.plant = {
             var okspot = y === (player.itemGrid[x][y].y + 1) && x === player.itemGrid[x][y].x;
             return okspot && this.activeCrop.type == "sickle2";
         }
-        if(type.corner === "_cow") { return this.activeCrop.type === "food" || this.activeCrop.type === "veg"; }
+        if(type.corner === "_cow") { return ["food", "veg", "rice", "mush", "tree"].indexOf(this.activeCrop.type) >= 0; }
     },
     getSprinklerMultiplier: function(x, y, size) {
         var isNearASprinkler = (this.isSprinkler(x - 1, y - 1) || this.isSprinkler(x - 1, y) || this.isSprinkler(x - 1, y + 1)
@@ -168,11 +169,6 @@ combat.plant = {
                     killType = 3;
                 }
             }
-            if(diff == 1 && !cropIsKill) {
-                combat.grid[px + 1][py] = ppos;
-                combat.grid[px][py + 1] = ppos;
-                combat.grid[px + 1][py + 1] = ppos;
-            }
             if(player.itemGrid[px][py] === "_shooter") {
                 if(combat.getUsedShooterIndex(px, py) >= 0) { return false; }
                 combat.usedShooters.push({x: px, y: py});
@@ -186,14 +182,16 @@ combat.plant = {
                 return true;
             }
             player.shiftTech(newCrop.type === "tech" ? 0.04 : -0.01);
-            if(player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") {
+            if((diff === 0 && player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") ||
+                (diff === 1 && player.itemGrid[px + 1][py + 1] !== null && player.itemGrid[px + 1][py + 1].corner === "_cow")) {
                 cropIsKill = false;
-                var cowIdx = combat.getCowIndex(px - 1, py - 1);
+                var cowDelta = (diff === 1 ? 0 : 1);
+                var cowIdx = combat.getCowIndex(px - cowDelta, py - cowDelta);
                 player.miscdata.typesPlanted["cow"] += 1;
                 if(cowIdx >= 0) {
                     combat.happyCows[cowIdx].feed += newCrop.power;
                 } else {
-                    combat.happyCows.push({ x: px - 1, y: py - 1, feed: newCrop.power });
+                    combat.happyCows.push({ x: px - cowDelta, y: py - cowDelta, feed: newCrop.power });
                 }
                 combat.animHelper.DrawBackground();
             } else {
@@ -214,6 +212,11 @@ combat.plant = {
                         }
                     }
                     combat.grid[px][py] = newCrop;
+                    if(diff === 1) {
+                        combat.grid[px + 1][py] = ppos;
+                        combat.grid[px][py + 1] = ppos;
+                        combat.grid[px + 1][py + 1] = ppos;
+                    }
                 }
             }
             this.cursor = { x: 0, y: this.dy };
