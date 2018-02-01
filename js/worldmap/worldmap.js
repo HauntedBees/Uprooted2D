@@ -70,8 +70,9 @@ var worldmap = {
             game.target = beeQueen;
             beeQueen.interact[0](0, beeQueen);
         }
-        if(args.isInn && worldmap.entities[0].innCheck) {
-            worldmap.entities[0].action();
+        if(args.isInn) {
+            JumboToggle(false);
+            if(worldmap.entities[0].innCheck) { worldmap.entities[0].action(); }
         }
     },
     latestart: function() {

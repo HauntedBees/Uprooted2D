@@ -437,6 +437,7 @@ var mapentities = {
     "fakefarm": [
         { name: "Falcon2", pos: { x: 14, y: 32 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
         { pos: { x: -1, y: -1 }, innCheck: true, action: function() {
+            JumboToggle(true);
             worldmap.importantEntities["barnCover"].visible = false;
             worldmap.importantEntities["FarmerJeff"].visible = true;
             worldmap.importantEntities["FarmerJeff"].pos = { x: 14.5, y: 31.5 };
