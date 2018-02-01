@@ -866,7 +866,7 @@ var actions = {
     "TECH_THROW_ROCK": function(e) { return enemyHelpers.TryDisturbRandomTile("engine"); },
     "TIRE_CHUCK": function(e) { return enemyHelpers.TryDisturbRandomTile("tire"); },
     "BECKETT_WATER": function(e) { return enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"); },
-    "BECK_FIRE_ROW": function(e) { return enemyHelpers.BurnTile(enemyHelpers.TrySplashTile, "burnKill", "burnDamage", "burnSucc"); },
+    "BECK_FIRE_ROW": function(e) { return enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"); },
     "BECK_THROW_SALT": function(e) { 
         var row = Math.floor(Math.random() * player.gridHeight);
         var hasKills = false;

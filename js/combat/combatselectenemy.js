@@ -374,6 +374,14 @@ var postHits = {
     }
 };
 var addtlHitChecks = {
+    "beckett": function(cropInfo, damage) {
+        for(var i = 0; i < cropInfo.length; i++) {
+            var crop = cropInfo[i];
+            if(["carrot", "lemon"].indexOf(crop.name) >= 0 || ["spear", "rod", "water"].indexOf(crop.type) >= 0) { damage *= 1.25; }
+            else if(["spear", "rod", "water"].indexOf(crop.type) >= 0) { damage *= 1.3; }
+        }
+        return Math.ceil(damage);
+    },
     "check_SP_SU": function(cropInfo, damage) {
         var hasSpringSummer = false;
         for(var i = 0; i < cropInfo.length; i++) { hasSpringSummer |= (cropInfo[i].seasons[0] === 2 || cropInfo[i].seasons[1] === 2); }
