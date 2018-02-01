@@ -188,7 +188,7 @@ combat.plant = {
                 var cowDelta = (diff === 1 ? 0 : 1);
                 var cowIdx = combat.getCowIndex(px - cowDelta, py - cowDelta);
                 player.miscdata.typesPlanted["cow"] += 1;
-                if(cowIdx >= 0) {
+                if(cowIdx >= 0) { // TODO: adjust how much health different crops/types give?
                     combat.happyCows[cowIdx].feed += newCrop.power;
                 } else {
                     combat.happyCows.push({ x: px - cowDelta, y: py - cowDelta, feed: newCrop.power });

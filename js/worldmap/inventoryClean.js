@@ -118,7 +118,7 @@ worldmap.invClean = {
         gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     ConfirmSelection: function() {
-        this.trashInfo.push({ frame: 0, coinStates: [], x: 4, y: 9, numCoins: Math.ceil(this.topPrice / 20) });
+        this.trashInfo.push({ frame: 0, coinStates: [], x: 4, y: 9, numCoins: Math.min(10, Math.ceil(this.topPrice / 30)) });
         player.monies += this.topPrice;
         this.didConfirm = true;
     },

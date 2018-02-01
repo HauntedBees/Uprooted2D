@@ -110,7 +110,7 @@ pausemenu.inventory = {
             var price = Math.ceil(GetCrop(invfo[0]).price * invfo[1] * 0.1);
             player.monies += price;
             player.inventory.splice(this.selectedCrop, 1);
-            this.trashInfo.push({ frame: 0, coinStates: [], x: 3.5, y: (pausemenu.inventory.cursor.y + 0.5), numCoins: Math.ceil(price / 20) });
+            this.trashInfo.push({ frame: 0, coinStates: [], x: 3.5, y: (pausemenu.inventory.cursor.y + 0.5), numCoins: Math.min(10, Math.ceil(price / 30)) });
             this.selectedCrop = -1;
             this.cursor.x = this.inventoryWidth - 1;
         } else {
