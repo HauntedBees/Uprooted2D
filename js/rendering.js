@@ -116,8 +116,9 @@ var gfx = {
     },
     drawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
         layer = layer || "characters"; dx = dx || 0; dy = dy || 0;
+        var sw = dims.dw || dims.w;
         var adjustedy = (dims.y + dy) * 16 - dims.h;
-        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * dims.w, sy * dims.h, dims.w, dims.h, (dims.x + dx) * 16, adjustedy, dims.w, dims.h);
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * sw, sy * dims.h, dims.w, dims.h, (dims.x + dx) * 16, adjustedy, dims.w, dims.h);
     },
     drawCharacter: function(sx, sy, sheet, size, x, y, layer) {
         layer = layer || "characters";

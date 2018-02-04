@@ -12,6 +12,14 @@ var inns = {
     "nerdBed": { x: 13, y: 8, map: "hq_1" },
     "lastInn": { x: 5, y: 6, map: "hq_5" }
 };
+
+var mapBattleXref = {
+    "underwater": "bgs/underwater"
+};
+var mapBattleTileXref = {
+    "underwater": "seaGrass"
+};
+
 var levelStats = {
     hp: [25, 30, 35, 45, 55, 65, 75, 95, 115, 135, 160, 195, 235, 280, 340, 400, 500, 600, 700, 850],
     atk: [3,  5,  7, 10, 13, 16, 19, 22,  25,  28,  32,  36,  40,  44,  48,  52,  56,  60,  64,  70],
