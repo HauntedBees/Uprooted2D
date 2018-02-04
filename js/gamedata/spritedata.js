@@ -131,6 +131,12 @@ var spriteData = {
         }
     },
     names: {
+        "eggFly0": [34, 6], "eggFly1": [35, 6],
+        "quailFly0": [36, 6], "quailFly1": [37, 6],
+        "gooseFly0": [38, 6], "gooseFly1": [39, 6],
+        "goldeggFly0": [34, 7], "goldeggFly1": [35, 7],
+        "turkeyFly0": [36, 7], "turkeyFly1": [37, 7],
+        "platypusFly0": [38, 7], "platypusFly1": [39, 7],
         "bigFish": [15, 0, true],
         "wedgeWA": [45, 6],
         "wedgeW": [46, 6],

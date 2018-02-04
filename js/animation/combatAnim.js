@@ -112,6 +112,7 @@ function CombatAnimHelper(enemies) {
     this.StartPlayerAnimSequence = function() { playerAnimInfo.StartAnimQueue(); };
     
     this.GetPlayerTopPos = function() { return { x: playerPos.x, y: playerPos.y - 1 }; };
+    this.GetPlayerBottomPos = function() { return { x: playerPos.x + 0.5, y: playerPos.y }; };
     this.PushPlayerOverlay = function(name) { playerAnimInfo.PushOverlayAnim(weaponAnims[name]); };
     this.SetPlayerAnimArg = function(key, val) { playerAnimInfo.PushArg(key, val); };
     this.SetPlayerAnimState = function(name, resetPos) { playerAnimInfo.SetAnim(name); if(resetPos) { this.ResetPlayerAnimPos(); } };
@@ -139,6 +140,10 @@ function CombatAnimHelper(enemies) {
     this.GetEnemyTopPos = function(idx) {
         var edims = enemyAnimInfos[idx].dims;
         return { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) };
+    };
+    this.GetEnemyBottomPos = function(idx) {
+        var edims = enemyAnimInfos[idx].dims;
+        return { x: edims.x, y: edims.y };
     };
 
     this.SetBirdAnimInfo = function(anims, x, y, top, fr) { if(birdAnimInfo === null) { return; } birdAnimInfo = new FalconAnimInfo(anims, x, y, fr, top); };

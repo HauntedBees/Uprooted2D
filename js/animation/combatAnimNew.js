@@ -28,6 +28,39 @@ function TileAnim(x, y, tileArray, shake, fps, loop) {
         gfx.drawTileToGrid(tiles[frame], x, y, "menucursorC");
     }
 }
+function MovingLinearAnim(sprites, start, end, dy, fps, animfps, doneFunc) {
+    var dir = (start.x < end.x) ? 1 : -1;
+    var startPos = dir === 1 ? start : end, endPos = dir === 1 ? end : start, DoneFunction = doneFunc;
+    var diffX = endPos.x - startPos.x;
+    var diffY = endPos.y - startPos.y;
+    var GetY = function(x) { return startPos.y + ((x - startPos.x) / diffX) * diffY; };
+    var dt = 0.25;
+    var frame = 0, timePerFrame = 1000 / fps, numFrames = (endPos.x - startPos.x) / dt;
+    var animframe = 0, timePerAnimFrame = 1000 / animfps;
+    var lastRan = +new Date(), lastAnimRan = +new Date(), isDone = false;
+    var spriteLen = sprites.length;
+    this.Animate = function() {
+        if(isDone) { return; }
+        var now = +new Date();
+        if((now - lastAnimRan) >= timePerAnimFrame) {
+            animframe = (animframe + 1) % spriteLen;
+            lastAnimRan = now;
+        }
+        if((now - lastRan) >= timePerFrame) {
+            if(frame < numFrames) {
+                frame++;
+            } else {
+                if(DoneFunction !== undefined) { DoneFunction(); }
+                isDone = true;
+                return;
+            }
+            lastRan = now;
+        }
+        var x = dir === 1 ? (startPos.x + (frame * dt)) : (endPos.x - (frame * dt));
+        var y = GetY(x);
+        gfx.drawTileToGrid(sprites[animframe], x, y - dy, "menucursorC");
+    }
+}
 function ParabolicThrowAnim(crop, start, end, fps, doneFunc) {
     var dir = (start.x < end.x) ? 1 : -1;
     var startPos = dir === 1 ? start : end, endPos = dir === 1 ? end : start, DoneFunction = doneFunc;
@@ -50,6 +83,7 @@ function ParabolicThrowAnim(crop, start, end, fps, doneFunc) {
     var dt = 1;
     var frame = 0, timePerFrame = 1000 / fps, numFrames = (endPos.x - startPos.x) * dt;
     var lastRan = +new Date(), isDone = false;
+
     this.Animate = function() {
         if(isDone) { return; }
         var now = +new Date();
@@ -120,6 +154,8 @@ function CropAttackAnim(targtype, grid, x, y) {
     if(this.crop.fishNum !== undefined) {
         if(this.crop.fishNum >= 3) { this.animset = "FISH_TOSS"; }
         else { this.animset = "FISH_SLAP"; }
+    } else if(this.crop.type === "egg") {
+        this.animset = "THROW_BIRD";
     } else {// TODO: more different anims
         this.animset = "THROW" + this.targtype; 
     }

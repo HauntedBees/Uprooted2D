@@ -67,7 +67,7 @@ var playerCombatAnims = {
     "FATALBLOW": JustOne(3, 2, { doShake: true }),
     "THROW_ENEMY": new AnimSet([new AnimFrame(0, 3, "player_pullCrop"), new AnimFrame(0, 4, "player_throwCropAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "THROW_COMPOST": new AnimSet([new AnimFrame(0, 3), new AnimFrame(0, 4, "player_throwCompostAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
-    "THROW_BIRD": new AnimSet([new AnimFrame(0, 3), new AnimFrame(0, 2)], false),
+    "THROW_BIRD": new AnimSet([new AnimFrame(0, 3, "player_pullCrop"), new AnimFrame(0, 2, "player_launchBird"), new AnimFrame(0, 2), new AnimFrame(0, 2)], false),
     "FISH_SLAP": new AnimSet([new AnimFrame(1, 3, "getFish"), new AnimFrame(1, 4, "player_damageFoes"), new AnimFrame(1, 4)], false, 8),
     "FISH_TOSS": new AnimSet([new AnimFrame(0, 5, "getBigFish"), new AnimFrame(0, 5), new AnimFrame(0, 5), 
                               new AnimFrame(0, 4, "player_throwFishAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
@@ -122,6 +122,14 @@ var animCallbacks = {
     "player_throwCompostAtEnemy": function(animProcess, animEntity) {
         animProcess.AddBaby(new ParabolicThrowAnim("compostpile", combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(0), 24, 
                             function() { animCallbackHelpers.HurtTargets(animProcess, combat.enemies.map(function(e, i) { return i; })) }));
+    },
+    "player_launchBird": function(animProcess, animEntity) {
+        var resetti = animEntity.animQueue[0];
+        var arr = [resetti.crop.name + "Fly0", resetti.crop.name + "Fly1"]; // TODO: account for targets that are crops
+        var dy = (resetti.crop.name === "platypus" ? 1 : 1.5);
+        var fps = (resetti.crop.name === "platypus" ? 24 : 12);
+        animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetPlayerBottomPos(), combat.animHelper.GetEnemyBottomPos(animEntity.bonusArgs.targets[0]), dy, 24, fps, 
+                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
     "player_throwCropAtEnemy": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
