@@ -1,7 +1,7 @@
 combat.plant = {
     activeCrop: null, actualIndexes: [],
     cursor: {x: 0, y: 0}, isValid: true, 
-    inventoryWidth: 9, dy: 6, addHalf: true, 
+    inventoryWidth: 9, dy: 8.5,
     layersToClean: ["menuA", "menuB", "menucursorA", "menucursorB", "menutext"],
     setup: function() {
         this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy };
@@ -348,20 +348,21 @@ combat.plant = {
         gfx.clearSome(this.layersToClean);
         var size = 0;
         var cursorX = this.cursor.x, cursorY = this.cursor.y;
+        combat.animHelper.SetPlayerAnimLayer("characters");
         if(this.activeCrop === null) {
             this.setText();
             if(combat.isFalcon) {
-                combat.animHelper.SetBirdAnimInfo([[0, 1]]);
-                combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+                combat.animHelper.SetBirdAnimInfo([[0, 1]]);            
+                combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
             } else {
                 combat.animHelper.SetBirdAnimInfo([[0, 0]]);
-                combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
+                combat.animHelper.SetPlayerAnimState("THINK", true);
             }
             this.drawXs();
         } else {
             size = this.activeCrop.size - 1;
             if(combat.isFalcon) {
-                combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                combat.animHelper.ResetPlayerAnimState();
                 if(size == 1) {
                     combat.animHelper.SetBirdAnimInfo([[1, 1]], cursorX + 2, cursorY - 1, true);
                 } else {
@@ -369,15 +370,17 @@ combat.plant = {
                 }
             } else {
                 combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                combat.animHelper.SetPlayerAnimState("PLANT", true);
+                combat.animHelper.SetPlayerAnimLayer("menucursorC");
                 if(size == 1) {
-                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX + 0.5, cursorY + 0.25, true);
+                    combat.animHelper.SetPlayerAnimPos(cursorX + 0.5, cursorY + 0.25);
                 } else {
-                    combat.animHelper.SetPlayerAnimInfo([[7, 0]], cursorX, cursorY - 0.25, true);
+                    combat.animHelper.SetPlayerAnimPos(cursorX - 0.25, cursorY + 0.125);
                 }
             }
         }
-        gfx.drawInfobox(16, 3, this.dy + 0.5);
-        gfx.drawInfobox(6, 3, this.dy + 0.5);
+        gfx.drawInfobox(17, 5, this.dy + 0.5);
+        gfx.drawInfobox(7, 5, this.dy + 0.5);
         if(this.activeCrop === null) {
             gfx.drawCursor(cursorX, cursorY + 0.5, size, size);
         } else if(this.isValid) {
@@ -395,18 +398,47 @@ combat.plant = {
         var idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
         var item = player.inventory[this.actualIndexes[idx]];
         if(item === null || item === undefined) { return; }
-        var iteminfo = GetCrop(item[0]);
-        var str = iteminfo.displayname + " (" + item[1] + ")\n";
-        str += " Power: " + iteminfo.power + "\n";
-        if(iteminfo.time > 0) {
-            str += " Time: " + Math.ceil(iteminfo.time / player.getCropSpeedMultiplier()) + "\n";
+        var crop = GetCrop(item[0]);
+        var str = "x" + item[1] + " " + crop.displayname;
+        pausemenu.inventory.DrawCropPower(crop, 9.5, 9.75, "menutext");
+        var row2y = 10.75;
+        var leftMostX = 9.5;
+        if(crop.time > 0) {
+            gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
+            if(crop.time === 999 || crop.time === -1) { // TODO: -1 vs 999 what is the diff?
+                gfx.drawTileToGrid("bigNum?", leftMostX + 1, row2y, "menutext");
+            }  else {
+                gfx.drawBigNumber(crop.time, leftMostX + 1, row2y, "menutext");
+            }
+            leftMostX += 2;
         }
-        if(iteminfo.respawn > 0) { str += " Regrowth: " + iteminfo.respawn + "\n"; }
-        switch(iteminfo.seasons[combat.season]) {
-            case 2: str += " GOOD"; break;
-            case 1: str += " OK"; break;
-            case 0: str += " BAD"; break;
+        var maxBonuses = 4;
+        if(crop.respawn > 0) {
+            gfx.drawTileToGrid("inv_regrow", leftMostX, row2y, "menutext");
+            if(crop.respawn === 999 || crop.respawn === -1) {
+                gfx.drawTileToGrid("bigNum?", leftMostX + 1, row2y, "menutext");
+            }  else {
+                gfx.drawBigNumber(crop.respawn, leftMostX + 1, row2y, "menutext");
+            }
+            leftMostX += 2;
+            maxBonuses = 2;
         }
-        gfx.drawWrappedText(str, 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 85);
+        var bonusesToPush = [];
+        if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); }
+        if(crop.fireResist) { bonusesToPush.push("fireIco" + crop.fireResist); }
+        if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); }
+        if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
+        if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
+        if(crop.animal) { bonusesToPush.push("animal" + crop.animal); }
+        leftMostX += 0.5;
+        for(var i = 0; i < Math.min(bonusesToPush.length, maxBonuses); i++) {
+            gfx.drawTileToGrid(bonusesToPush[i], leftMostX + i, row2y, "menutext");
+        }
+        var seasons = ["spring", "summer", "autumn", "winter"];
+        gfx.drawTileToGrid("curseason" + crop.seasons[combat.season], 9.5, 12, "menutext");
+        for(var i = 0; i < 4; i++) {
+            gfx.drawTileToGrid(seasons[i] + crop.seasons[i], 10.5 + i, 12, "menutext");
+        }
+        gfx.drawWrappedText(str, 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 115);
     }
 };

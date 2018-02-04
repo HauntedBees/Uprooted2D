@@ -18,161 +18,6 @@ EntityAnimInfo.prototype.Reset = function() {
     this.animState = 0;
 };
 
-function EnemyAnimInfo(ani, x, y, fr, size, spriteidx, sheet) {
-    EntityAnimInfo.call(this, ani, x, y, fr);
-    this.spriteidx = spriteidx;
-    this.sheet = sheet;
-    this.size = size;
-}
-EnemyAnimInfo.prototype = Object.create(EntityAnimInfo.prototype);
-EnemyAnimInfo.prototype.constructor = EnemyAnimInfo;
-EnemyAnimInfo.prototype.Reset = function() {
-    EntityAnimInfo.prototype.Reset.call(this);
-    this.animArray = [[this.spriteidx, 0]];
-};
-EnemyAnimInfo.prototype.InnerAnimate = function() {
-    var dt = (+new Date()) - this.lastRan;
-    if(dt >= this.timePerFrame) {
-        if(this.animArray[this.animState][2]) {
-            if(this.throwables.length > 0) {
-                this.lastRan = +new Date();
-                this.animState = 0;
-                this.lastThrownFrame = -1;
-            } else if(this.lastThrownFrame < 0) {
-                combat.animHelper.GivePlayerAHit();
-                this.lastThrownFrame = 0;
-            }
-        } else {
-            this.lastRan = +new Date();
-            this.animState = (this.animState + 1) % this.animArray.length;
-        }
-    }
-    var animData = this.animArray[this.animState];
-    gfx.drawCharacter(this.spriteidx, animData[1], this.sheet, this.size, this.x, this.y);
-    if(this.throwables.length > 0 && this.lastThrownFrame < this.animState && this.animState === 0) {
-        var b = 2 + Math.random() * 1, c = (4 + this.x + 0.5) / 2;
-        var gx = this.throwables[0][1], gy = this.throwables[0][2];
-        var isTree = combat.purgeFlaggedCrop(combat.enemyGrid, gx, gy);
-        if(isTree) { gx += 0.5; gy += 0.5; }
-        combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + gx, combat.enemydy + gy, 250, "puff", 5));
-        combat.animHelper.AddAnim(new EnemyThrowAnim(this.y - 0.5, 500, this.throwables[0][0], b, c, combat.playerAnimInfo));
-        this.lastThrownFrame = this.animState;
-        this.throwables.splice(0, 1);
-    }
-};
-EnemyAnimInfo.prototype.Animate = function(myidx) {
-    var myEnemy = combat.enemies[myidx];
-    var hp = Math.round(myEnemy.health / myEnemy.maxhealth * 14);
-    if(hp > 14) { hp = 14; }
-    if(hp > 0) { gfx.drawTileToGrid("hp" + hp, this.x + 0.25, this.y - 1.5, "menucursorC"); } // TODO: make this less shit
-    if(this.dead) {
-        gfx.drawDitheredCharacter(this.spriteidx, 1, this.sheet, this.size, this.x, this.y, (this.deadFrame++));
-    } else if(this.hit) {
-        var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
-        var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-        gfx.drawCharacter(this.spriteidx, 1, this.sheet, this.size, this.x + dx, this.y + dy);
-    } else {
-        this.InnerAnimate();
-    }
-};
-
-function PlayerAnimInfo(ani, x, y, fr, top) {
-    EntityAnimInfo.call(this, ani, x, y, fr);
-    this.onTop = top;
-}
-PlayerAnimInfo.prototype = Object.create(EntityAnimInfo.prototype);
-PlayerAnimInfo.prototype.constructor = PlayerAnimInfo;
-PlayerAnimInfo.prototype.Animate = function() {
-    var dt = (+new Date()) - this.lastRan;
-    if(dt >= this.timePerFrame) {
-        if(this.animArray[this.animState][2]) {
-            if(this.throwables.length > 0) {
-                this.lastRan = +new Date();
-                this.animState = 0;
-                this.lastThrownFrame = -1;
-            } else if(this.lastThrownFrame < 0 && !this.isRun) {
-                if(combat.lastTargetCrop) {
-                    // TODO: targeting crops
-                } else if(Array.isArray(combat.lastTarget)) {
-                    for(var q = 0; q < combat.lastTarget.length; q++) {
-                        combat.animHelper.DisplayEnemyDamage(combat.lastTarget[q]);
-                    }
-                } else {
-                    combat.animHelper.DisplayEnemyDamage(combat.lastTarget);
-                }
-                this.lastThrownFrame = 0;
-            }
-        } else {
-            this.lastRan = +new Date();
-            this.animState = (this.animState + 1) % this.animArray.length;
-        }
-    } else if(this.isRun && !this.animArray[this.animState][2]) {
-        this.x -= 0.1;
-    }
-    var animData = this.animArray[this.animState];
-    if(this.hit) {
-        var dx = Math.random() > 0.5 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
-        var dy = Math.random() > 0.5 ? -0.25 : (Math.random() > 0.5 ? -0.125 : 0);
-        gfx.drawPlayer(0, (player.health <= 0) ? 2 : 1, this.x + dx, this.y + dy);
-    } else if(animData[3] !== undefined) {
-        gfx.drawWidePlayer(animData[0], animData[1], this.x, this.y, this.onTop ? "menucursorC" : "characters");
-    } else {
-        gfx.drawPlayer(animData[0], animData[1], this.x, this.y, this.onTop ? "menucursorC" : "characters");
-    }
-    if(this.throwables.length > 0 && this.lastThrownFrame < this.animState && this.animState === 0) {
-        var b = 2 + Math.random();
-        var initx = 11 - combat.enemies.length;
-        var customtarget = this.throwables[0].customtarget !== undefined;
-        var targetidx = (this.throwables[0].customtarget === undefined ? combat.lastTarget: this.throwables[0].customtarget);
-        var realtarget = targetidx;
-        if(Array.isArray(targetidx)) {
-            realtarget = targetidx;
-            targetidx = targetidx[0];
-        }
-        var c = (initx + targetidx + this.x - 0.5) / 2;
-        var gx = this.throwables[0].x, gy = this.throwables[0].y;
-        if(gx >= 0) {
-            var seedDrop = combat.grid[gx][gy].seedDrop;
-            if(seedDrop !== undefined) {
-                combat.animHelper.AddAnim(new MoveAnim(combat.dx + gx, combat.dy + gy, this.x, this.y, 250, seedDrop));
-            }
-            var isTree = combat.purgeFlaggedCrop(combat.grid, gx, gy);
-            if(isTree) { gx += 0.5; gy += 0.5; }
-            combat.animHelper.AddAnim(new SheetAnim(combat.dx + gx, combat.dy + gy, 250, "puff", 5));
-        }
-        var throwAnim = new PlayerThrowAnim(this.y - 0.5, 500, this.throwables[0].name, b, c, realtarget, customtarget || this.throwables.length === 1, this.throwables[0].stickChance);
-        throwAnim.additionalFinishes = [];
-        if(this.throwables[0].animal !== undefined) {
-            var sprite = "animal" + this.throwables[0].animal;
-            var yPos = this.y;
-            throwAnim.additionalFinishes.push(function() {
-                var numAnimals = Range(2, 10);
-                while(numAnimals-- > 0) {
-                    var yP = yPos - 2 + 2 * Math.random();
-                    combat.animHelper.AddAnim(new MoveAnim(-1, yP, 16, yP, 1000, sprite));
-                }
-            });
-        }
-        if(this.throwables[0].bonusTarget !== undefined) {
-            var sprite2 = this.throwables[0].name;
-            var b2 = 0.5 + Math.random();
-            var secondX = this.throwables[0].bonusTarget;
-            var c2 = (Math.min(secondX, targetidx) + targetidx + secondX) / 2;
-            var y2 = this.y - 0.5;
-            var dir2 = (secondX > targetidx) ? 1 : - 1;
-            throwAnim.additionalFinishes.push(function() {
-                var secanim = new PlayerThrowAnim(y2, 500, sprite2, b2, c2, secondX, true, false);
-                secanim.dir = dir2;
-                secanim.xmult = initx + 1;
-                combat.animHelper.AddAnim(secanim);
-            });
-        }
-        combat.animHelper.AddAnim(throwAnim);
-        this.lastThrownFrame = this.animState;
-        this.throwables.splice(0, 1);
-    }
-};
-
 function FalconAnimInfo(ani, x, y, fr, top) {
     EntityAnimInfo.call(this, ani, x || 3.5, y || 5, fr);
     this.onTop = top;
@@ -184,15 +29,6 @@ FalconAnimInfo.prototype.Animate = function() {
     if(dt >= this.timePerFrame) {
         if(this.animArray[this.animState][2]) {
             if(this.lastThrownFrame < 0 && !this.isRun) {
-                if(combat.lastTargetCrop) {
-                    // TODO: targeting crops
-                } else if(Array.isArray(combat.lastTarget)) {
-                    for(var q = 0; q < combat.lastTarget.length; q++) {
-                        combat.animHelper.DisplayEnemyDamage(combat.lastTarget[q]);
-                    }
-                } else {
-                    combat.animHelper.DisplayEnemyDamage(combat.lastTarget);
-                }
                 this.lastThrownFrame = 0;
             }
         } else {
@@ -207,25 +43,12 @@ FalconAnimInfo.prototype.Animate = function() {
 };
 
 function CombatAnimHelper(enemies) {
-    var playerAnimInfo = new PlayerAnimInfo();
+    var playerPos = { x: 3, y: 9.25 };
+
+    var playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     var enemyAnimInfos = [];
     var birdAnimInfo = (player.hasFalcon ? new FalconAnimInfo() : null);
     var currentx = 11 - enemies.length;
-    for(var i = 0; i < enemies.length; i++) {
-        var e = enemies[i];
-        var y = 5.75;
-        switch(e.size) {
-            case "lg": y = 5; break;
-            case "xl": y = 3; currentx -= 4; break;
-        }
-        enemyAnimInfos.push(new EnemyAnimInfo([[e.spriteidx, 0]], currentx, y, 0, e.size, e.spriteidx, e.sheet));
-        switch(e.size) {
-            case "sm": currentx += 1; break;
-            case "md": currentx += 1.5; break;
-            case "lg": currentx += 2; break;
-            case "xl": currentx += 4; break;
-        }
-    }
     var anims = [];
 
     this.ResetEnemyAnimHelper = function(enemies) {
@@ -233,12 +56,8 @@ function CombatAnimHelper(enemies) {
         var currentx = 11 - enemies.length;
         for(var i = 0; i < enemies.length; i++) {
             var e = enemies[i];
-            var y = 5.75;
-            switch(e.size) {
-                case "lg": y = 5; break;
-                case "xl": y = 3; currentx -= 4; break;
-            }
-            enemyAnimInfos.push(new EnemyAnimInfo([[e.spriteidx, 0]], currentx, y, 0, e.size, e.spriteidx, e.sheet));
+            if(e.size === "xl") { currentx -= 4; } // TODO: this shit
+            enemyAnimInfos.push(GetEnemyCombatAnim(currentx, playerPos.y, e.spriteidx, e.size));
             switch(e.size) {
                 case "sm": currentx += 1; break;
                 case "md": currentx += 1.5; break;
@@ -247,6 +66,8 @@ function CombatAnimHelper(enemies) {
             }
         }
     }
+    this.ResetEnemyAnimHelper(enemies);
+
 
     this.GetCursorInfo = function(x) {
         var currentx = 11 - combat.enemies.length;
@@ -254,14 +75,10 @@ function CombatAnimHelper(enemies) {
             if(x === i) {
                 var info = combat.enemies[i].cursorinfo;
                 var size = combat.enemies[i].size;
-                var y = 0, posy = 5.75;
-                switch(size) {
-                    case "sm": y = 5.25; break;
-                    case "md": y = 5.0; break;
-                    case "lg": y = 4.5; posy = 5; break;
-                    case "xl": y = 3; posy = 3; currentx -= 4; break;
-                }
-                return { x: currentx + info.dx, rawX: currentx, y: y + info.dy, rawY: posy, w: info.w, h: info.h };
+                var y = playerPos.y;
+                var rawy = y - GetEnemyCombatDims(combat.enemies[i].size).h;
+                if(combat.enemies[i].size === "xl") { currentx -= 4; }
+                return { x: currentx + info.dx, rawX: currentx, y: y + info.dy, rawY: rawy, w: info.w, h: info.h };
             }
             switch(combat.enemies[i].size) {
                 case "sm": currentx += 1; break;
@@ -273,57 +90,67 @@ function CombatAnimHelper(enemies) {
     };
 
     this.DrawBottom = function() {
-        for(var x = 0; x < gfx.tileWidth; x++) { gfx.drawSprite("sheet", 15, 11, x * 16, 9.25 * 16, "menuA"); }
-        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, 9.9 * 16);
-        var season = "";
-        switch(combat.season) {
-            case 0: season = "Spring"; break;
-            case 1: season = "Summer"; break;
-            case 2: season = "Autumn"; break;
-            case 3: season = "Winter"; break;
-        }
-        gfx.drawSprite("sheet", 12 + combat.season, 10, 12 * 16 - 3, 9 * 16 + 1, "menuA");
-        gfx.drawText(season, 13 * 16 - 1, 9.9 * 16);
+        var y = game.tileh - 0.75;
+        var texty = y + 0.65;
+        for(var x = 0; x < gfx.tileWidth; x++) { gfx.drawSprite("sheet", 15, 11, x * 16, y * 16, "menuA"); }
+        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, texty * 16);
+        var season = GetText("season" + combat.season);
+        gfx.drawSprite("sheet", 12 + combat.season, 10, 13 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
+        gfx.drawText(season, 14 * 16 - 1, texty * 16);
     };
 
-    this.GetPlayerPos = function() { return { x: playerAnimInfo.x, y: playerAnimInfo.y }; };
 
-    this.SetPlayerAnimInfo = function(anims, x, y, top, fr) { playerAnimInfo = new PlayerAnimInfo(anims, x, y, fr, top); };
-    this.SetBirdAnimInfo = function(anims, x, y, top, fr) { if(birdAnimInfo === null) { return; } birdAnimInfo = new FalconAnimInfo(anims, x, y, fr, top); };
-    this.SetUpPlayerForRun = function() { playerAnimInfo.isRun = true; }
-    this.SetEnemyAnimInfo = function(idx, anims, fr, throwables) {
-        var e = combat.enemies[idx];
-        var pos = this.GetCursorInfo(idx);
-        enemyAnimInfos[idx] = new EnemyAnimInfo(anims, pos.rawX, pos.rawY, fr, e.size, e.spriteidx, e.sheet);
-        enemyAnimInfos[idx].throwables = throwables || [];
-        this.Animate();
-    };
-
-    this.GetEnemyPos = function(idx) { return { x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y } };
-
-    this.GivePlayerAHit = function() { playerAnimInfo.hit = true; };
-    this.GiveEnemyAHit = function(idx) { enemyAnimInfos[idx].hit = true; };
-    this.MakeEnemyACorpse = function(idx) {
+    this.SetEnemyAnimState = function(idx, name) { enemyAnimInfos[idx].SetAnim(name); }
+    this.MakeEnemyACorpse = function(idx) { // TODO
         var e = enemyAnimInfos[idx];
         e.dead = true;
         e.deadFrame = 0;
     };
-    this.DisplayEnemyDamage = function(idx) {
-        if(idx.x !== undefined) { return; }
-        if(idx >= combat.enemies.length) { return; }
-        if(combat.enemies[idx].health <= 0) {
-            this.MakeEnemyACorpse(idx);
+
+
+    this.AddPlayerAttackAnim = function(caa) { playerAnimInfo.animQueue.push(caa); };
+    this.StartPlayerAnimSequence = function() { playerAnimInfo.StartAnimQueue(); };
+    
+    this.GetPlayerTopPos = function() { return { x: playerPos.x, y: playerPos.y - 1 }; };
+    this.PushPlayerOverlay = function(name) { playerAnimInfo.PushOverlayAnim(weaponAnims[name]); };
+    this.SetPlayerAnimArg = function(key, val) { playerAnimInfo.PushArg(key, val); };
+    this.SetPlayerAnimState = function(name, resetPos) { playerAnimInfo.SetAnim(name); if(resetPos) { this.ResetPlayerAnimPos(); } };
+    this.SetPlayerAnimLayer = function(layer) { playerAnimInfo.layer = layer; }
+    this.ResetPlayerAnimState = function() {
+        if(player.health < (player.maxhealth / 4)) { playerAnimInfo.SetAnim("STAND_WEAK"); }
+        else { playerAnimInfo.SetAnim("STAND"); }
+        playerAnimInfo.layer = "characters";
+        playerAnimInfo.ClearAnimQueue();
+        this.ResetPlayerAnimPos();
+    };
+    this.ResetPlayerAnimPos = function() { this.SetPlayerAnimPos(playerPos.x, playerPos.y); };
+    this.SetPlayerAnimPos = function(x, y) { playerAnimInfo.dims.x = x; playerAnimInfo.dims.y = y; };
+    this.GivePlayerAHit = function() {
+        // TODO: account for crop attacks
+        if(player.health <= 0) {
+            this.SetPlayerAnimState("FATALBLOW");
         } else {
-            this.GiveEnemyAHit(idx);
+            this.SetPlayerAnimState("HURT");
         }
     };
 
-    this.AddPlayerThrowable = function(t) { playerAnimInfo.throwables.push(t); };
+    this.AddEnemyAttackAnim = function(idx, caa) { enemyAnimInfos[idx].animQueue.push(caa); }
+    this.StartEnemyAnimSequence = function(idx) { enemyAnimInfos[idx].StartAnimQueue(); };
+    this.GetEnemyTopPos = function(idx) {
+        var edims = enemyAnimInfos[idx].dims;
+        return { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) };
+    };
+
+    this.SetBirdAnimInfo = function(anims, x, y, top, fr) { if(birdAnimInfo === null) { return; } birdAnimInfo = new FalconAnimInfo(anims, x, y, fr, top); };
+    this.GetEnemyPos = function(idx) { return { x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y } };
+
+    this.DEBUG_DrawEnemy = function(idx) { enemyAnimInfos[idx].Animate(idx); };
+
     var AnimateEntities = function() {
         if(birdAnimInfo !== null) { birdAnimInfo.Animate(); }
         playerAnimInfo.Animate();
         for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Animate(i); }
-        for(var i = 0; i < combat.enemies.length; i++) {
+        for(var i = 0; i < combat.enemies.length; i++) { // TODO: probably shouldn't be this
             if(combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck) {
                 if(combat.enemies[i].size === "lg" || combat.enemies[i].size === "xl") {
                     gfx.drawTileToGrid("hgoop", enemyAnimInfos[i].x + 0.5, enemyAnimInfos[i].y + 1, "characters");
@@ -345,8 +172,8 @@ function CombatAnimHelper(enemies) {
         }
     };
     this.CleanEntities = function() {
-        playerAnimInfo.Reset();
-        for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].Reset(); }
+        this.ResetPlayerAnimState();
+        for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].SetAnim("STAND"); }
     };
     this.RemoveEnemy = function(idx) { enemyAnimInfos.splice(idx, 1); };
 
@@ -474,6 +301,17 @@ function CombatAnimHelper(enemies) {
 
     this.DrawBackground = function() {
         gfx.clearLayer("background");
+
+        gfx.drawFullImage("bgs/outside");
+        var top = Math.min(combat.enemydy, combat.dy);
+        var bottom = Math.max(combat.enemydy + combat.enemyheight, combat.dy + player.gridHeight);
+        for(var x = 0; x < game.tilew; x++) {
+            gfx.drawTileToGrid("grassTop", x, top - 1, "background");
+            gfx.drawTileToGrid("grassBottom", x, bottom, "background");
+            for(var y = top; y < bottom; y++) {
+                gfx.drawTileToGrid("grass", x, y, "background");
+            }
+        }
         
         if(combat.enemyTile === "dirt" || combat.enemyTile === "nathan") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
         for(var x = 0; x < combat.enemywidth; x++) { // enemy field

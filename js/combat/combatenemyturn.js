@@ -1,8 +1,8 @@
 combat.enemyTurn = {
-    dy: 7, lastIdx: -1,
+    dy: 9.5, lastIdx: -1,
     setup: function(args) {
         var enemy = args.enemy;
-        combat.animHelper.SetPlayerAnimInfo();
+        combat.animHelper.ResetPlayerAnimState();
         combat.animHelper.SetBirdAnimInfo();
         gfx.drawFullbox(this.dy);
         if(enemy.stickTurns > 0) {
@@ -18,14 +18,18 @@ combat.enemyTurn = {
             combat.endTurn(this);
             return;
         }
-        if(attackData.throwables !== undefined && attackData.throwables.length > 0) {
+        
+        var newAnimData = attackData.animData.length > 2 ? "ATTACK" : "PLANT"; // TODO: this is a fucking PLACEHOLDER
+        combat.animHelper.SetEnemyAnimState(args.idx, newAnimData);
+
+        if(attackData.throwables !== undefined && attackData.throwables !== null && attackData.throwables.length > 0) {
             for(var i = 0; i < attackData.throwables.length; i++) {
-                var x = attackData.throwables[i][1];
-                var y = attackData.throwables[i][2];
+                var x = attackData.throwables[i][1], y = attackData.throwables[i][2];
+                combat.animHelper.AddEnemyAttackAnim(args.idx, new CropAttackAnim("_ENEMY", combat.enemyGrid, x, y)); // todo: type shudnt just be _ENEMY
                 combat.enemyGrid[x][y].flagged = true;
+                combat.animHelper.StartEnemyAnimSequence(args.idx);
             }
         }
-        combat.animHelper.SetEnemyAnimInfo(args.idx, attackData.animData, GetFrameRate(attackData.animFPS), attackData.throwables);
         gfx.drawFullText(attackData.text, this.dy * 16);
         combat.animHelper.DrawBottom();
     },

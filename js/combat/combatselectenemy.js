@@ -1,5 +1,5 @@
 combat.selectTarget = {
-    cursorx: 0, canSickle: false, canHumans: true, dy: 8, 
+    cursorx: 0, canSickle: false, canHumans: true, dy: 10, 
     sicklePos: {x: -1, y: -1}, targets: [], maxTargets: 0, 
     layersToClear: ["menucursorA", "menucursorB", "menutext"],
     // Setup/Display Logic
@@ -36,10 +36,10 @@ combat.selectTarget = {
         gfx.clearSome(this.layersToClear);
         if(combat.isFalcon) {
             combat.animHelper.SetBirdAnimInfo([[2, 0]]);
-            combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+            combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
         } else {
             combat.animHelper.SetBirdAnimInfo([[0, 0]]);
-            combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
+            combat.animHelper.SetPlayerAnimState("WANTATTACK", true);
         }
         for(var i = 0; i < this.targets.length; i++) {
             var idx = this.targets[i];
@@ -58,22 +58,23 @@ combat.selectTarget = {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 gfx.drawCursor(this.sicklePos.x, this.sicklePos.y, crop.size - 1, crop.size - 1);
             }
-        } else {
+        } else { // TODO: recalibrate
             var cursorInfo = combat.animHelper.GetCursorInfo(this.cursorx);
             gfx.drawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
         }
         combat.menu.highlightReadyCropsAndReturnCount();
-        gfx.drawInfobox(9, 1.5, this.dy);
+        gfx.drawInfobox(10, 1.5, this.dy);
         if(this.sicklePos.x >= 0) {
             var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
-            if(crop === null) {
-                gfx.drawWrappedText("", me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
-            } else {
+            if(crop !== null) {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
-                gfx.drawWrappedText(crop.name, me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
+                gfx.drawTileToGrid(GetHPFrame(crop), me.INFOBOXWIDTH, this.dy, "menucursorB");
+                gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 85);
             }
         } else {
-            gfx.drawWrappedText(combat.enemies[this.cursorx].name, me.INFOBOXWIDTH * 16, 11 + (this.dy * 16), 85);
+            var enemy = combat.enemies[this.cursorx];
+            gfx.drawTileToGrid(GetHPFrame(enemy), me.INFOBOXWIDTH, this.dy, "menucursorB");
+            gfx.drawWrappedText(enemy.name, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 85);
         }
         combat.animHelper.DrawBottom();
     },
@@ -214,21 +215,10 @@ combat.selectTarget = {
                 avgDamage += attackData.damage;
                 crop.health -= attackData.damage;
                 crop.power -= attackData.cropPowerLower;
-
                 if(crop.health <= 0) {
                     hasDestroys = true;
-                    crop.hidden = true;
                     crop.flagged = true;
                     combat.animHelper.DrawCrops();
-                    combat.animHelper.AddAnim(new SheetAnim(combat.enemydx + cropPos.x, combat.enemydy + cropPos.y, 250, "puff", 5));
-                    // TODO: should this part be here?
-                    /*if(crop.size == 2) {
-                        combat.enemyGrid[cropPos.x + 1][cropPos.y] = null;
-                        combat.enemyGrid[cropPos.x][cropPos.y + 1] = null;
-                        combat.enemyGrid[cropPos.x + 1][cropPos.y + 1] = null;
-                    }
-                    combat.enemyGrid[cropPos.x][cropPos.y] = null;
-                    */
                 }
             } else {
                 combat.lastTargetCrop = false;
@@ -269,13 +259,22 @@ combat.selectTarget = {
         if(allAttacks[0].knockback > 0) { player.health = Math.max(player.health - allAttacks[0].knockback, 1); }
         var damagetext = this.GetDamageText(allAttacks[0].crit, hasAnimals,  hasRecoil, hasKills, hasDestroys, hasStuns, 
                                             combat.isFalcon, avgDamage, lastTargetName, this.targets.length > 1, allAttacks[0].knockback);
-
+        var targType = (this.targets[0].x === undefined) ? "_ENEMY" : "_CROP";
         if(combat.isFalcon) {
             combat.animHelper.SetBirdAnimInfo([[2, 1], [3, 1], [2, 1], [3, 1, true]], undefined, undefined, undefined, GetFrameRate(12));
         } else {
-            combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
+            var attackType = (allAttacks[0].numCrops === 0) ? "MELEE" : "THROW";
+            combat.animHelper.SetPlayerAnimState(attackType + targType, true);
+            combat.animHelper.SetPlayerAnimArg("targets", this.targets);
+            if(attackType === "MELEE") { combat.animHelper.PushPlayerOverlay(player.equipment.weapon + targType); }
+            else {
+                var cropAnims = combat.FlagFreshCropsAndReturnAnimData(true, allAttacks[0].crit, allAttacks[0].animals, additionalTargets);
+                for(var i = 0; i < cropAnims.length; i++) {
+                    combat.animHelper.AddPlayerAttackAnim(new CropAttackAnim(targType, combat.grid, cropAnims[i][0], cropAnims[i][1]));
+                }
+                combat.animHelper.StartPlayerAnimSequence();
+            }
         }
-        combat.flagFreshCrops(true, allAttacks[0].crit, allAttacks[0].animals, additionalTargets);
 
         if(postHit === null) { postHit = function() { combat.endTurn(combat.inbetween); }; }
         game.innerTransition(this, combat.inbetween, { next: postHit, text: damagetext });

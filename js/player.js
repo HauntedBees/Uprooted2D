@@ -228,7 +228,7 @@ var player = {
             var front = player.inventory[i][0][0];
             if(front !== "!" && front !== "_" && type === "C") { numOfType++; }
         }
-        if(numOfType === 27) { return false; }
+        if(numOfType === 36) { return false; }
         if(amount === 0) { return true; }
         player.inventory.push([name, amount]);
         return true;

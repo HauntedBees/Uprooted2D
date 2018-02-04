@@ -1,23 +1,29 @@
 combat.compost = {
-    selectedCrops: [], 
-    cursor: {x: 1, y: 5}, dy: 7.5, compostMultiplier: 1, 
+    selectedCrops: [], binSprite: "compost", binx: 3.75, biny: 8.75,
+    cursor: {x: 1, y: 5}, dy: 9, compostMultiplier: 1, 
+    healY: 0, attackY: 0, canAttack: false, 
     healButtonWidth: 0, healButtonSelected: false, 
     attackButtonWidth: 0, attackButtonSelected: false, 
     layersToClean: ["menuA", "menucursorA", "menucursorB", "menutext"],
     setup: function() {
+        this.canAttack = player.canAttackWithCompost();
         this.selectedCrops = [];
+        this.healY = 2 + (this.dy + 0.5) * 16;
+        this.atkY = 2 + (this.dy + 1.5) * 16;
+        this.binSprite = GetEquipment(player.equipment.compost).sprite;
         this.cursor = {x: combat.dx, y: combat.dy};
         this.healButtonSelected = false;
         this.attackButtonSelected = false;
         if(player.equipment.compost !== null) {
-            compostMultiplier = 1 + (GetEquipment(player.equipment.compost).bonus || 0);
-        } else { compostMultiplier = 1; }
+            this.compostMultiplier = 1 + (GetEquipment(player.equipment.compost).bonus || 0);
+        } else { this.compostMultiplier = 1; }
         this.mouseMove(this.cursor);
         this.drawAll();
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClean);
-        gfx.drawInfobox(me.INFOBOXWIDTH, 2, this.dy);
+        gfx.drawInfobox(me.INFOBOXWIDTH + 4.5, 5, this.dy);
+        gfx.drawInfobox(me.INFOBOXWIDTH - 0.5, 5, this.dy);
         for(var i = 0; i < this.selectedCrops.length; i++) {
             var pos = this.selectedCrops[i];
             if(pos.cow !== undefined) {
@@ -28,84 +34,124 @@ combat.compost = {
                 gfx.drawCursor(pos.x + combat.dx, pos.y + combat.dy, size, size, "xcursor");
             }
         }
-        var xi = 1, tile = 7, text = "Heal";
+        var xi = 1, tile = 7, text = GetText("cmp_healsel");
         if(this.healButtonSelected) { tile = 9; }
-        gfx.drawSprite("sheet", tile, 11, 0, 2 + this.dy * 16, "menuA");
+        
+        gfx.drawSprite("sheet", tile, 11, 0, this.healY, "menuA");
         var width = gfx.getTextWidth(text);
         while(width > 128) {
             width -= 64;
-            gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + this.dy * 16, "menuA");
+            gfx.drawSprite("sheet", tile, 11, 16 * xi++, this.healY, "menuA");
         }
-        gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, 2 + this.dy * 16, "menuA");
+        gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, this.healY, "menuA");
         this.healButtonWidth = xi;
-        gfx.drawText(text, 2, 10.5 + this.dy * 16, 2);
+        gfx.drawText(text, 2, this.healY + 8.5);
+        gfx.drawText(GetText("cmp_healpow"), 88, 155);
+        
+        var hdmg = 0, admg = 0;
+        if(this.selectedCrops.length > 0) {
+            var results = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, false, true);
+            hdmg = Math.ceil(results.total * this.compostMultiplier);
+            if(this.canAttack) {
+                results = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, true, true);
+                admg = Math.ceil(this.compostMultiplier * results.total / 3.5);
+            }
+        }
+        gfx.drawText(hdmg, 88, 165); // TODO: right align
+        if(this.canAttack) {
+            gfx.drawText(GetText("cmp_atkpow"), 88, 175);
+            gfx.drawText(admg, 88, 185); // TODO: right align
+        }
 
-        if(player.canAttackWithCompost()) {
-            xi = 1; tile = 7; text = "Attack";
+        if(this.canAttack) {
+            xi = 1; tile = 7; text = GetText("cmp_atksel");
             if(this.attackButtonSelected) { tile = 9; }
-            gfx.drawSprite("sheet", tile, 11, 0, 2 + (this.dy + 1) * 16, "menuA");
+            gfx.drawSprite("sheet", tile, 11, 0, this.atkY, "menuA");
             width = gfx.getTextWidth(text);
             while(width > 128) {
                 width -= 64;
-                gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + (this.dy + 1) * 16, "menuA");
+                gfx.drawSprite("sheet", tile, 11, 16 * xi++, this.atkY, "menuA");
             }
-            gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, 2 + (this.dy + 1) * 16, "menuA");
+            gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, this.atkY, "menuA");
             this.attackButtonWidth = xi;
-            gfx.drawText(text, 2, 10.5 + (this.dy + 1) * 16);
+            gfx.drawText(text, 2, this.atkY + 8.5);
         }
         if(this.healButtonSelected) {
-            gfx.drawCursor(0, this.dy, this.healButtonWidth, 0);
+            combat.animHelper.SetPlayerAnimLayer("characters");
+            gfx.drawCursor(0, this.dy + 0.5, this.healButtonWidth, 0);
+            if(this.selectedCrops.length > 0) {
+                var str = GetText("cmp_doHeal");
+                str = HandlePlurals(str, this.selectedCrops.length);
+                str = str.replace(/\{0\}/g, this.selectedCrops.length).replace(/\{1\}/g, hdmg);
+                this.WriteSideText(str);
+            } else {
+                this.WriteSideText(GetText("cmp_needOne"));
+            }
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimInfo([[0, 1]]);
-                combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+                combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
             } else {
                 combat.animHelper.SetBirdAnimInfo([[0, 0]]);
-                combat.animHelper.SetPlayerAnimInfo([[6, 0]]);
+                combat.animHelper.SetPlayerAnimState("THINK", true);
             }
         } else if(this.attackButtonSelected) {
-            gfx.drawCursor(0, this.dy + 1, this.attackButtonWidth, 0);
+            combat.animHelper.SetPlayerAnimLayer("characters");
+            gfx.drawCursor(0, this.dy + 1.5, this.attackButtonWidth, 0);
+            if(this.selectedCrops.length > 0) {
+                var str = GetText("cmp_doAttack");
+                str = HandlePlurals(str, this.selectedCrops.length);
+                str = str.replace(/\{0\}/g, this.selectedCrops.length);
+                this.WriteSideText(str);
+            } else {
+                this.WriteSideText(GetText("cmp_needOne"));
+            }
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimInfo([[2, 0]]);
-                combat.animHelper.SetPlayerAnimInfo([[5, 0]]);
+                combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
             } else {
                 combat.animHelper.SetBirdAnimInfo([[0, 0]]);
-                combat.animHelper.SetPlayerAnimInfo([[2, 0]]);
+                combat.animHelper.SetPlayerAnimState("WANTATTACK", true);
             }
         } else {
+            combat.animHelper.SetPlayerAnimLayer("menucursorC");
             var px = this.cursor.x - combat.dx; var py = this.cursor.y - combat.dy;
             var tile = combat.grid[px][py];
             if(tile !== null) {
                 if(tile.x !== undefined) { // part of a tree
+                    this.WriteAboutCrop(combat.grid[tile.x][tile.y]);
                     if(this.isCompostable(combat.grid[tile.x][tile.y])) {
                         gfx.drawCursor(tile.x + combat.dx, tile.y + combat.dy, 1, 1);
                     } else {
                         gfx.drawCursor(tile.x + combat.dx, tile.y + combat.dy, 1, 1, "bcursor");
                     }
                     if(combat.isFalcon) {
-                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        combat.animHelper.ResetPlayerAnimState();
                         combat.animHelper.SetBirdAnimInfo([[1, 1]], tile.x + 4, tile.y + combat.dy - 1, true);
                     } else {
-                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25, true);
+                        combat.animHelper.SetPlayerAnimState("PLANT");
+                        combat.animHelper.SetPlayerAnimPos(tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25);
                     }
                 } else {
+                    this.WriteAboutCrop(tile);
                     if(this.isCompostable(tile)) {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1);
                     } else {
                         gfx.drawCursor(this.cursor.x, this.cursor.y, tile.size - 1, tile.size - 1, "bcursor");
                     }
                     if(combat.isFalcon) {
-                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        combat.animHelper.ResetPlayerAnimState();
                         if(tile.size === 2) {
-                            combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x + 2, this.cursor.y - 1, true);
+                            combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x + 0.5, this.cursor.y + 0.25, true);
                         } else {
-                            combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x + 1, this.cursor.y - 0.75, true);
+                            combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x - 0.25, this.cursor.y + 0.125, true);
                         }
                     } else {
                         combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                        combat.animHelper.SetPlayerAnimState("PLANT");
                         if(tile.size === 2) {
-                            combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x + 0.5, this.cursor.y + 0.25, true);
+                            combat.animHelper.SetPlayerAnimPos(this.cursor.x + 0.5, this.cursor.y + 0.25);
                         } else {
-                            combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                            combat.animHelper.SetPlayerAnimPos(this.cursor.x - 0.25, this.cursor.y + 0.125);
                         }
                     }
                 }
@@ -121,23 +167,30 @@ combat.compost = {
                 if(cowIdx < 0) {
                     gfx.drawCursor(this.cursor.x, this.cursor.y, 0, 0, "bcursor");
                     if(combat.isFalcon) {
-                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        combat.animHelper.ResetPlayerAnimState();
                         combat.animHelper.SetBirdAnimInfo([[1, 1]], this.cursor.x + 1, this.cursor.y - 0.75, true);
                     } else {
-                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], this.cursor.x, this.cursor.y - 0.25, true);
+                        combat.animHelper.SetPlayerAnimState("PLANT");
+                        combat.animHelper.SetPlayerAnimPos(this.cursor.x - 0.25, this.cursor.y + 0.125);
                     }
                 } else {
                     gfx.drawCursor(cowPos.x, cowPos.y, 1, 1);
+                    this.WriteAboutCrop({
+                        displayname: GetText("cmp_cow"),
+                        power: Math.min(11, Math.round(Math.log2(Math.max(1.1, combat.happyCows[cowIdx].feed) * 3))),
+                        seasons: [2, 2, 2, 2]
+                    });
                     if(combat.isFalcon) { 
-                        combat.animHelper.SetPlayerAnimInfo([[0, 0]]);
+                        combat.animHelper.ResetPlayerAnimState();
                         combat.animHelper.SetBirdAnimInfo([[1, 1]], cowPos.x + 2, cowPos.y - 1, true);
                     } else {
-                        combat.animHelper.SetPlayerAnimInfo([[7, 0]], cowPos.x + 0.5, cowPos.y + 0.25, true);
+                        combat.animHelper.SetPlayerAnimState("PLANT");
+                        combat.animHelper.SetPlayerAnimPos(cowPos.x + 0.5, cowPos.y + 0.25);
                     }
                 }
             }
         }
-        gfx.drawTileToGrid("compost", 4, 6, "menucursorB");
+        gfx.drawTileToGrid(this.binSprite, this.binx, this.biny, "menucursorB");
         combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
@@ -165,7 +218,7 @@ combat.compost = {
         if(pos.y == this.dy && pos.x < 3) { // heal button
             this.cursor = pos;
             this.healButtonSelected = true;
-        } else if(pos.y == (this.dy + 1) && pos.x < 3 && player.canAttackWithCompost()) { // attack button
+        } else if(pos.y == (this.dy + 1) && pos.x < 3 && this.canAttack) { // attack button
             this.cursor = pos;
             this.attackButtonSelected = true;
         } else { // compost selection
@@ -192,7 +245,7 @@ combat.compost = {
             next: function() { combat.endTurn(combat.inbetween) },
             text: "You attempt to compost your crops, but your compost bin backfires!"
         });
-        combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
+        combat.animHelper.SetPlayerAnimState("WON", true);
         combat.animHelper.DrawCrops();
         return true;
     },
@@ -202,40 +255,17 @@ combat.compost = {
         var res = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, false);
         var healAmount = res.total, thereAreCows = res.cows;
 
-        var anim = new NotAnAnim(4, 6, 1000, "compost");
-        anim.finish = function() { combat.animHelper.AddAnim(new ShakeAnim(4, 6, 500, "compost", 0.25, 20)); };
-        combat.animHelper.AddAnim(anim);
-        if(thereAreCows) {
-            for(var i = combat.happyCows.length - 1; i >= 0; i--) {
-                if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
-            }
-            combat.animHelper.DrawBackground();
-        }
-        healAmount = Math.ceil(healAmount * compostMultiplier);
-        player.health = Math.min(player.maxhealth, player.health + healAmount);
-        game.innerTransition(this, combat.inbetween, {
-            next: function() { combat.endTurn(combat.inbetween) },
-            text: GetText("compost_heal").replace(/\{0\}/g, healAmount)
-        });
-        combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
-        combat.animHelper.DrawCrops();
-        return true;
-    },
-    attackAction: function() {
-        if(this.selectedCrops.length == 0) { return false; }
-        if(this.compostFailureCheck()) { return true; }
-        var res = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, true);
-        var damage = res.total, thereAreCows = res.cows;
-        var anim = new NotAnAnim(4, 6, 1000, "compost");
+        var anim = new NotAnAnim(this.binx, this.biny, 1000, this.binSprite);
         anim.finish = function() {
-            var anim = new ShakeAnim(4, 6, 500, "compost", 0.25, 20);
-            anim.finish = function() {
-                combat.animHelper.SetPlayerAnimInfo([[1, 2], [1, 2], [1, 3], [0, 0, true]], undefined, undefined, undefined, GetFrameRate(12));
-                for(var i = 0; i < combat.enemies.length; i++) {
-                    combat.animHelper.AddPlayerThrowable({name: "compostpile", x: -1, y: -1, customtarget: i});
-                }
+            var shake = new ShakeAnim(combat.compost.binx, combat.compost.biny, 500, combat.compost.binSprite, 0.25, 20);
+            shake.finish = function() {
+                combat.animHelper.SetPlayerAnimState((res.cows || res.bees || res.coffee) ? "DRINK" : "EAT");
+                if(res.coffee) { combat.animHelper.PushPlayerOverlay("COFFEE"); }
+                else if(res.cows) { combat.animHelper.PushPlayerOverlay("MILK"); }
+                else if(res.bees) { combat.animHelper.PushPlayerOverlay("HONEY"); }
+                else { combat.animHelper.PushPlayerOverlay("COMPOST"); }
             };
-            combat.animHelper.AddAnim(anim);
+            combat.animHelper.AddAnim(shake);
         };
         combat.animHelper.AddAnim(anim);
         if(thereAreCows) {
@@ -244,7 +274,38 @@ combat.compost = {
             }
             combat.animHelper.DrawBackground();
         }
-        damage = Math.ceil(compostMultiplier * damage / 3.5);
+        healAmount = Math.ceil(healAmount * this.compostMultiplier);
+        player.health = Math.min(player.maxhealth, player.health + healAmount);
+        game.innerTransition(this, combat.inbetween, {
+            next: function() { combat.endTurn(combat.inbetween) },
+            text: GetText("compost_heal").replace(/\{0\}/g, healAmount)
+        });
+        combat.animHelper.SetPlayerAnimState("WON", true);
+        combat.animHelper.DrawCrops();
+        return true;
+    },
+    attackAction: function() {
+        if(this.selectedCrops.length == 0) { return false; }
+        if(this.compostFailureCheck()) { return true; }
+        var res = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, true);
+        var damage = res.total, thereAreCows = res.cows;
+        var anim = new NotAnAnim(this.binx, this.biny, 1000, this.binSprite);
+        anim.finish = function() {
+            var shake = new ShakeAnim(combat.compost.binx, combat.compost.biny, 500, combat.compost.binSprite, 0.25, 20);
+            shake.finish = function() {
+                combat.animHelper.AddPlayerAttackAnim({ animset: "THROW_COMPOST" });
+                combat.animHelper.StartPlayerAnimSequence();
+            };
+            combat.animHelper.AddAnim(shake);
+        };
+        combat.animHelper.AddAnim(anim);
+        if(thereAreCows) {
+            for(var i = combat.happyCows.length - 1; i >= 0; i--) {
+                if(combat.happyCows[i].removeMe) { combat.happyCows.splice(i, 1); }
+            }
+            combat.animHelper.DrawBackground();
+        }
+        damage = Math.ceil(this.compostMultiplier * damage / 3.5);
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
             combat.damageEnemy(i, damage);
         }
@@ -258,7 +319,7 @@ combat.compost = {
     click: function(pos) {
         if(pos.y == this.dy && pos.x < 3) {
             return this.healAction();
-        } else if(pos.y == (this.dy + 1) && pos.x < 3 && player.canAttackWithCompost()) {
+        } else if(pos.y == (this.dy + 1) && pos.x < 3 && this.canAttack) {
             return this.attackAction();
         }
         if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }
@@ -316,5 +377,16 @@ combat.compost = {
         } else {
             return this.mouseMove(pos);
         }
+    },
+    WriteSideText: function(text) { gfx.drawWrappedText(text, 10.5 * 16, 11 + (16 * this.dy), 90); },
+    WriteAboutCrop: function(crop) {
+        var str = crop.displayname;
+        pausemenu.inventory.DrawCropPower(crop, 9.5, 9.75, "menutext", true);
+        var seasons = ["spring", "summer", "autumn", "winter"];
+        gfx.drawTileToGrid("curseason" + crop.seasons[combat.season], 10.5, 11, "menutext");
+        for(var i = 0; i < 4; i++) {
+            gfx.drawTileToGrid(seasons[i] + crop.seasons[i], 11.5 + i, 11, "menutext");
+        }
+        gfx.drawWrappedText(str, 10.5 * 16, 11 + (16 * this.dy), 115);
     }
 };

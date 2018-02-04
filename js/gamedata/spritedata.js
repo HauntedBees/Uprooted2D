@@ -131,6 +131,10 @@ var spriteData = {
         }
     },
     names: {
+        "curseason2": [44, 13],
+        "curseason1": [45, 13],
+        "curseason0": [46, 13],
+        "vein": [45, 15],
         "recycleArrow": [44, 15],
         "a.boss1": [40, 19], 
         "a.lakeFairy": [41, 19], 
@@ -427,6 +431,8 @@ var spriteData = {
         "bigbin": [10, 1, true],
         "puff4": [4, 15],
         "grass": [9, 14],
+        "grassTop": [35, 8],
+        "grassBottom": [35, 9],
         "edgeWA": [8, 13],
         "edgeW": [9, 13],
         "edgeWD": [10, 13],

@@ -104,8 +104,9 @@ combat.ageCrops = function() {
     }
     combat.animHelper.DrawCrops();
 };
-combat.flagFreshCrops = function(isPlayer, isCritical, animals, additionalTargets) {
+combat.FlagFreshCropsAndReturnAnimData = function(isPlayer, isCritical, animals, additionalTargets) {
     var grid = (isPlayer ? this.grid : this.enemyGrid);
+    var res = [];
     for(var x = 0; x < grid.length; x++) {
         for(var y = 0; y < grid[0].length; y++) {
             if(grid[x][y] === null || grid[x][y].name === undefined) { continue; }
@@ -121,17 +122,7 @@ combat.flagFreshCrops = function(isPlayer, isCritical, animals, additionalTarget
                 animals.splice(i, 1);
                 break;
             }
-            var throwableData = {
-                name: crop.name,
-                x: x, y: y,
-                stickChance: crop.stickChance !== undefined,
-                animal: animal
-            };
-            if(additionalTargets.length > 0) {
-                throwableData.bonusTarget = additionalTargets[0];
-                additionalTargets.splice(0, 1);
-            }
-            combat.animHelper.AddPlayerThrowable(throwableData);
+            res.push([x, y]);
             var seedChance = (Math.random() * (1 - player.luck)) * (isCritical ? 0.5 : 1);
             if(crop.name.indexOf("special") === 0) { seedChance = 1; }
             if(seedChance < 0.05) {
@@ -140,8 +131,9 @@ combat.flagFreshCrops = function(isPlayer, isCritical, animals, additionalTarget
             }
         }
     }
+    return res;
 };
-combat.clearFlagAndReturnCrop = function(pos) {
+combat.ClearAndReturnCrop = function(pos) {
     var crop = this.grid[pos.x][pos.y];
     this.grid[pos.x][pos.y] = null;
     crop.flagged = true;

@@ -166,7 +166,9 @@ var worldmap = {
             var roundedY = e.forcedY ? e.forcedY : Math.round(e.pos.y);
             if(roundedY < 0 || roundedY >= ymax) { continue; }
             if(e.big) { roundedY++; }
-            layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
+            if(layers[roundedY] !== undefined) { // TODO: address new screen size
+                layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
+            }
         }
         if(this.mapName !== "gameover") {
             layers[playery].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);

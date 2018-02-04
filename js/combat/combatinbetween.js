@@ -1,5 +1,5 @@
 combat.inbetween = {
-    next: null, dy: 7, 
+    next: null, dy: 9.5, 
     setup: function(args) {
         this.next = args.next;
         gfx.drawFullbox(this.dy);

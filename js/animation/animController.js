@@ -14,7 +14,7 @@ function NotAnAnim(x, y, time, sprite) {
 NotAnAnim.prototype = Object.create(CombatAnim.prototype);
 NotAnAnim.prototype.constructor = NotAnAnim;
 NotAnAnim.prototype.getFrame = function(dt) {
-    gfx.drawTileToGrid(this.sprite, this.x, this.y, "menucursorC");
+    gfx.drawTileToGrid(this.sprite, this.x, this.y, "characters");
     this.current += dt;
 };
 
@@ -36,7 +36,7 @@ ShakeAnim.prototype.getFrame = function(dt) {
         this.dy = this.delta * ((a & 8) == 0 ? 1 : -1);
         this.lastShake = shakeNum;
     }
-    gfx.drawTileToGrid(this.sprite, this.x + this.dx, this.y + this.dy, "menucursorC");
+    gfx.drawTileToGrid(this.sprite, this.x + this.dx, this.y + this.dy, "characters");
     this.current += dt;
 };
 
@@ -66,77 +66,6 @@ SheetAnim.prototype.getFrame = function(dt) {
     gfx.drawTileToGrid(this.sprite + idx, this.x, this.y, "menucursorC");
     this.current += dt;
 };
-
-function ThrowAnim(y, time, sprite, b, c, dir) {
-    CombatAnim.call(this, 0, y, time, sprite);
-    this.b = b;
-    this.c = c;
-    this.dir = dir;
-    this.xmult = c;
-}
-ThrowAnim.prototype = Object.create(CombatAnim.prototype);
-ThrowAnim.prototype.constructor = ThrowAnim;
-ThrowAnim.prototype.getFrame = function(dt) {
-    var radians = Math.PI * (this.dir < 0 ? (this.current / this.time) : (1 - (this.current / this.time)));
-    var x = this.xmult + (0.4 * this.c) * Math.cos(radians);
-    var y = this.y + this.b * Math.sin(-radians);
-    gfx.drawTileToGrid(this.sprite, x, y, "characters");
-    this.current += dt;
-};
-
-function EnemyThrowAnim(y, time, sprite, b, c) { ThrowAnim.call(this, y, time, sprite, b, c, -1); }
-EnemyThrowAnim.prototype = Object.create(ThrowAnim.prototype);
-EnemyThrowAnim.prototype.constructor = EnemyThrowAnim;
-EnemyThrowAnim.prototype.finish = function() { combat.animHelper.GivePlayerAHit(); }
-
-function PlayerThrowAnim(y, time, sprite, b, c, tidx, last, stick) {
-    ThrowAnim.call(this, y, time, sprite, b, c, 1);
-    this.tidx = tidx;
-    this.last = last;
-    this.stick = stick;
-}
-PlayerThrowAnim.prototype = Object.create(ThrowAnim.prototype);
-PlayerThrowAnim.prototype.constructor = PlayerThrowAnim;
-PlayerThrowAnim.prototype.finish = function() {
-    if(this.stick) {
-        var pos = combat.animHelper.GetEnemyPos(this.tidx);
-        var anim = new MoveAnim(pos.x, pos.y - 0.25, pos.x, pos.y + 0.25, 1000, "goopdrop");
-        anim.tidx = this.tidx;
-        anim.finish = function() { 
-            if(Array.isArray(this.tidx)) {
-                for(var i = 0; i < this.tidx.length; i++) {
-                    combat.enemies[this.tidx[i]].justStuck = false;
-                }
-            } else {
-                combat.enemies[this.tidx].justStuck = false;
-            }
-        };
-        combat.animHelper.AddAnim(anim);
-    }
-    if(this.additionalFinishes !== undefined) { 
-        for(var i = 0; i < this.additionalFinishes.length; i++) {
-            this.additionalFinishes[i]();
-        }
-    }
-    if(Array.isArray(this.tidx)) {
-        if(this.last) {
-            for(var i = 0; i < this.tidx.length; i++) {
-                combat.animHelper.DisplayEnemyDamage(this.tidx[i]);
-            }
-        } else {
-            for(var i = 0; i < this.tidx.length; i++) {
-                combat.animHelper.GiveEnemyAHit(this.tidx[i]);
-            }
-        }
-    } else {
-        if(this.last) {
-            combat.animHelper.DisplayEnemyDamage(this.tidx);
-        } else {
-            combat.animHelper.GiveEnemyAHit(this.tidx);
-        }
-    }
-}
-
 
 function MapAnim(sheet, sx, sy, w, h, dir, sheetlen, dontDoThat) {
     this.sheet = sheet;

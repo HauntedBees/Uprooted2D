@@ -114,6 +114,11 @@ var gfx = {
         layer = layer || "characters";
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["falconsheet"], sx * 24, sy * 30, 24, 30, x * 16, y * 16 - 2, 24, 30);
     },
+    drawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
+        layer = layer || "characters"; dx = dx || 0; dy = dy || 0;
+        var adjustedy = (dims.y + dy) * 16 - dims.h;
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * dims.w, sy * dims.h, dims.w, dims.h, (dims.x + dx) * 16, adjustedy, dims.w, dims.h);
+    },
     drawCharacter: function(sx, sy, sheet, size, x, y, layer) {
         layer = layer || "characters";
         var srcX, srcY, w, h, dy;
@@ -190,7 +195,8 @@ var gfx = {
             var info = GetEquipment(item[0]);
             gfx.drawTileToGrid(info.sprite, x, y, layer);
         } else {
-            gfx.drawTileToGrid(item[0] + "seed", x, y, layer);
+            gfx.drawTileToGrid(item[0], x, y, layer);
+            //gfx.drawTileToGrid(item[0] + "seed", x, y, layer);
         }
         gfx.drawItemNumber(item[1], x, y, layer);
     },
@@ -261,8 +267,8 @@ var gfx = {
         }
         ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
     },
-    setAlpha: function(layer, value) { gfx.ctx[layer].globalAlpha = value; },
-    drawFullbox: function(y, overBlack) { gfx.drawInfobox(16, 2.5, y || 0, (overBlack ? "menuOverBlack" : undefined)); },
+    setAlpha: function(layer, value) { gfx.ctx[layer].globalAlpha = value; }, // TODO: not used anywhere
+    drawFullbox: function(y, overBlack) { gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)); },
     drawInfobox: function(w, h, y, layer) {
         y = (y || 0) * 16;
         layer = layer || "menuA";

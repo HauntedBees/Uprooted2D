@@ -157,7 +157,6 @@ pausemenu.inventory = {
         var leftMostX = 4.25;
         var rightMostX = 14;
         var leftMostTextX = 88;
-        var starStartX = leftMostX + 1, starDx = 1;
         
         gfx.drawInfobox(11, 10, 0);
 
@@ -192,33 +191,16 @@ pausemenu.inventory = {
         for(var i = 0; i < 4; i++) {
             gfx.drawTileToGrid(seasons[i] + crop.seasons[i], leftMostX + 6.75 + i, rowYs[1], "menutext");
         }
-
-        gfx.drawTileToGrid("inv_power", leftMostX, rowYs[1], "menutext");
-        var numStars = crop.power / 2;
-        if(numStars > 5) {
-            for(var i = 0; i < 5; i++) {
-                gfx.drawTileToGrid("starMax", starStartX + i * starDx, rowYs[1], "menutext");
-            }
-        } else {
-            for(var i = 0; i < numStars; i++) {
-                gfx.drawTileToGrid("starFull", starStartX + i * starDx, rowYs[1], "menutext");
-            }
-            if(numStars % 1 !== 0) { gfx.drawTileToGrid("starHalf", starStartX + (numStars - 0.5) * starDx, rowYs[1], "menutext"); }
-            for(var i = Math.ceil(numStars); i < 5; i++) {
-                gfx.drawTileToGrid("starNone", starStartX + i * starDx, rowYs[1], "menutext");
-            }
-        }
+        this.DrawCropPower(crop, leftMostX, rowYs[1], "menutext");
 
         // Row 2
         gfx.drawTileToGrid("inv_time", leftMostX, rowYs[2], "menutext");
-        var timeNum = crop.time;
         if(crop.time === 999 || crop.time === -1) { // TODO: -1 vs 999 what is the diff?
             gfx.drawTileToGrid("bigNum?", leftMostX + 1, rowYs[2], "menutext");
         }  else {
             gfx.drawBigNumber(crop.time, leftMostX + 1, rowYs[2], "menutext");
         }
         if(crop.respawn > 0) {
-            //timeNum = crop.respawn;
             gfx.drawTileToGrid("inv_regrow", leftMostX + 2, rowYs[2], "menutext");
             if(crop.respawn === 999 || crop.respawn === -1) {
                 gfx.drawTileToGrid("bigNum?", leftMostX + 3, rowYs[2], "menutext");
@@ -240,5 +222,22 @@ pausemenu.inventory = {
         
         // Row 3
         gfx.drawWrappedText(GetText(crop.name), leftMostTextX - 16, rowTextYs[3], 170);
+    },
+    DrawCropPower: function(crop, x, y, layer, ignoreSun) {
+        if(!ignoreSun) { gfx.drawTileToGrid("inv_power", x, y, layer); }
+        var numStars = crop.power / 2, starDx = 1;
+        if(numStars > 5) {
+            for(var i = 0; i < 5; i++) {
+                gfx.drawTileToGrid("starMax", x + 1 + i * starDx, y, layer);
+            }
+        } else {
+            for(var i = 0; i < numStars; i++) {
+                gfx.drawTileToGrid("starFull", x + 1 + i * starDx, y, layer);
+            }
+            if(numStars % 1 !== 0) { gfx.drawTileToGrid("starHalf", x + 1 + (numStars - 0.5) * starDx, y, layer); }
+            for(var i = Math.ceil(numStars); i < 5; i++) {
+                gfx.drawTileToGrid("starNone", x + 1 + i * starDx, y, layer);
+            }
+        }
     }
 };

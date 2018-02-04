@@ -1,7 +1,7 @@
 worldmap.falconSelect = {
     cursor: { x: 0, y: 0 }, cropsToSend: [], 
     layersToClean: ["menuA", "menuB", "menucursorA", "menucursorB", "menutext"],
-    actualIndexes: [], inventoryWidth: 9, dy: 6, addHalf: true,
+    actualIndexes: [], inventoryWidth: 9, dy: 6,
     setup: function() {
         this.cursor = { x: 0, y: 0 };
         this.cropsToSend = [];

@@ -183,11 +183,12 @@ var dmgCalcs = {
         return attacksArr;
     },
 
-    CompostFunc: function(isPlayer, season, myAtk, myCrops, isAttack) { // isAttack: true = attack, false = heal
+    CompostFunc: function(isPlayer, season, myAtk, myCrops, isAttack, noAction) { // isAttack: true = attack, false = heal
         var cowMult = isAttack ? 0.01 : 3, coffeeMult = isAttack ? 0.5 : 3.5, beeMult = isAttack ? 0.5 : 3;
         var baseMult = isAttack ? 0.5 : 1.25, modAtk = Math.log2(myAtk * myAtk * 0.15); // min atk is 3; log2(n) <= 0 where n <= 1; 3 * 3 * 0.15 = 1.35
+        noAction = noAction || false;
 
-        var outputAmount = 0, thereAreCows = false;
+        var outputAmount = 0, thereAreCows = false, thereAreBees = false, thereIsCoffee = false;
         var nerfs = dmgCalcs.GetNerfs();
         for(var i = 0; i < myCrops.length; i++) {
             var croppos = myCrops[i];
@@ -196,27 +197,33 @@ var dmgCalcs = {
                 combat.happyCows[croppos.cow].removeMe = true;
                 thereAreCows = true;
                 croppos = combat.happyCows[croppos.cow];
-                combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 250, "puff", 5));
-                combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 4, 6, 1000, "milk"));
+                if(!noAction) {
+                    combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, 250, "puff", 5));
+                    combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x + 0.25, combat.dy + croppos.y + 1, combat.compost.binx, combat.compost.biny, 1000, "milk"));
+                }
             } else {
-                var crop = combat.clearFlagAndReturnCrop(croppos);
+                var crop = noAction ? combat.grid[croppos.x][croppos.y] : combat.ClearAndReturnCrop(croppos);
                 var seasonVal = crop.seasons[season];
                 if(seasonVal === 0) { seasonVal = 0.2; } else if(isPlayer) { player.miscdata.seasonsPlanted[season]++; }
                 var cropPowVal = (modAtk * (crop.power + 1) * (crop.power + 1) * (seasonVal + 1)) / 20;
                 if(crop.type === "bee") {
+                    thereAreBees = true;
                     outputAmount += beeMult * cropPowVal;
                 } else if(crop.name === "coffee") {
+                    thereIsCoffee = true;
                     outputAmount += coffeeMult * cropPowVal;
                 } else {
                     outputAmount += baseMult * cropPowVal;
                 }
                 outputAmount *= dmgCalcs.GetNerfMultiplier(crop, nerfs);
-                var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds) (but we can't compost fish anyway so that doesn't matter probably)
-                combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x, combat.dy + croppos.y, 250, "puff", 5));
-                combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x, combat.dy + croppos.y, 4, 6, 1000, cropSprite));
+                if(!noAction) {
+                    var cropSprite = crop.rotten ? "weed" : crop.name; // TODO: replace (i.e. fish don't become weeds) (but we can't compost fish anyway so that doesn't matter probably)
+                    combat.animHelper.AddAnim(new SheetAnim(combat.dx + croppos.x, combat.dy + croppos.y, 250, "puff", 5));
+                    combat.animHelper.AddAnim(new MoveAnim(combat.dx + croppos.x, combat.dy + croppos.y, combat.compost.binx, combat.compost.biny, 1000, cropSprite));
+                }
             }
         }
         outputAmount *= 1 + (myCrops.length / 4);
-        return { total: Math.max(1, outputAmount), cows: thereAreCows };
+        return { total: Math.max(1, outputAmount), cows: thereAreCows, bees: thereAreBees, coffee: thereIsCoffee };
     }
 };

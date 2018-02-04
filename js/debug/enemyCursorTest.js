@@ -1,4 +1,11 @@
 var debug = {
+    ThrustSomeCropsUntoMineLoins: function(num) {
+        var items = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee"];
+        var numItems = num || 40;
+        while(numItems-- > 0) {
+            player.increaseItem(items[Math.floor(Math.random() * items.length)]);
+        }
+    },
     DoEnemyCursorTest: function() { game.transition(game.currentInputHandler, debug.enemyCursorTest); },
     enemyCursorTest: {
         enemyIdx: 0, enemy: null, 
@@ -17,10 +24,11 @@ var debug = {
         },
         drawShit: function() {
             gfx.clearAll();
-            var y = this.enemy.size == "lg" ? 5 : 5.75;
+            var y = 9.25;
             var x = 10;
             if(this.enemy.size === "xl") { x = 8; y = 3; }
-            gfx.drawCharacter(this.enemy.spriteidx, 0, this.enemy.sheet, this.enemy.size, x, y);
+            this.animHelp.DEBUG_DrawEnemy(0);
+            //gfx.drawCharacter(this.enemy.spriteidx, 0, this.enemy.sheet, this.enemy.size, x, y);
             gfx.drawInfobox(9, 1.5, combat.selectTarget.dy);
             gfx.drawWrappedText(this.enemy.name, me.INFOBOXWIDTH * 16, 11 + (combat.selectTarget.dy * 16), 85);
             var cursorInfo = this.animHelp.GetCursorInfo(0);

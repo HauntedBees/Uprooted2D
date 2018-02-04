@@ -19,6 +19,7 @@ function InventoryCopy(arr) {
     return copy;
  }
 var game = {
+    w: 1024, h: 896, tilew: 16, tileh: 14, //w: 960, h: 640,
     currentInputHandler: worldmap, target: null, language: "en-dm",
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
                     "maps/producestand","maps/forest", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
@@ -26,25 +27,25 @@ var game = {
                     "maps/fakefarm", "covers/barn", "maps/southcity", "covers/mob", "covers/skumpy", "maps/gameover", "fov", "smartphone", "maps/northcity",
                     "covers/northcity1", "covers/northcity2", "covers/northcity2_post", "covers/northcity3", "maps/hq_1", "maps/hq_2", "maps/hq_3",
                     "maps/hq_4", "maps/hq_5", "maps/hq_6", "falconsheet", "horRorTop", "horRorBottom", "ayudame", "mapplayer_help", "shops/vendo",
-                    "foregrounds/farm"],
+                    "foregrounds/farm", "combat_player", "combat_equipment", "bgs/outside"],
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
         var canvasObj = {};
         for(var i = 0; i < game.canvasLayers.length; i++) {
             var name = game.canvasLayers[i];
-            game.createCanvas(name)
+            //game.createCanvas(name) // TODO: why was I doing this??
             canvasObj[name] = document.getElementById(name);
         }
         var contextObj = {};
         for(var key in canvasObj) {
             contextObj[key] = canvasObj[key].getContext("2d");
         }
-        game.init(canvasObj, contextObj, 960, 640, 15, 10);
+        game.init(canvasObj, contextObj, game.w, game.h, 16, 14); // 15, 10)
     },
     createCanvas: function(name) {
         var canvas = document.createElement("canvas");
-        canvas.id = name; canvas.width = 960; canvas.height = 640;
+        canvas.id = name; canvas.width = game.w; canvas.height = game.h;
         document.body.appendChild(canvas);
     },
     init: function(canvasObj, ctxObj, width, height, tilewidth, tileheight) {
@@ -96,8 +97,8 @@ var game = {
     drawTransitionAnim: function() {
         gfx.clearLayer("tutorial");
         if(game.transitionInfo.size > 0) {
-            for(var y = 0; y < 12; y += 2) {
-                for(var x = 0; x < 18; x += 2) {
+            for(var y = 0; y < game.tileh + 2; y += 2) {
+                for(var x = 0; x < game.tilew + 2; x += 2) {
                     gfx.drawTransitionImage(game.transitionInfo.crop, x - (y % 4 ? 1 : 0), y + 0.5, game.transitionInfo.size);
                 }
             }
@@ -117,8 +118,8 @@ var game = {
         }
     },
     initListeners: function() {
-        //gfx.canvas["menutext"].addEventListener("mousemove", input.moveMouse);
-        gfx.canvas["menutext"].addEventListener("click", input.click);
+        //gfx.canvas["menutextOverBlack"].addEventListener("mousemove", input.moveMouse);
+        gfx.canvas["menutextOverBlack"].addEventListener("click", input.click);
         document.addEventListener("keypress", input.keyPress);
         document.addEventListener("keydown", input.keyDown);
         document.addEventListener("keyup", input.keyUp);

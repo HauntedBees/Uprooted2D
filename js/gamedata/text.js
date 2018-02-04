@@ -6547,6 +6547,26 @@ var fulltext = {
 		"type": "adesc"
 	},
 	// Combat - Player Actions
+	"season0": {
+		"en-us": "", 
+		"en-dm": "Spring", 
+		"type": "combat"
+	},
+	"season1": {
+		"en-us": "", 
+		"en-dm": "Summer", 
+		"type": "combat"
+	},
+	"season2": {
+		"en-us": "", 
+		"en-dm": "Autumn", 
+		"type": "combat"
+	},
+	"season3": {
+		"en-us": "", 
+		"en-dm": "Winter", 
+		"type": "combat"
+	},
 	"seeds_none": {
 		"en-us": "", 
 		"en-dm": "You can't plant any more seeds this turn.", 
@@ -6587,6 +6607,11 @@ var fulltext = {
 		"en-dm": "You need a Compost Bin equipped to perform this action.", 
 		"type": "combat"
 	},
+	"compost_nocrops": {
+		"en-us": "", 
+		"en-dm": "You don't have any Crops you can Compost on your Field right now.", 
+		"type": "combat"
+	},
 	"compost_can": {
 		"en-us": "", 
 		"en-dm": "Compost Crops in your Field to recover Health.", 
@@ -6605,6 +6630,46 @@ var fulltext = {
 	"run_falcon": {
 		"en-us": "", 
 		"en-dm": "Don't abandon your owner!", 
+		"type": "combat"
+	},
+	"cmp_healsel": {
+		"en-us": "", 
+		"en-dm": "Heal", 
+		"type": "combat"
+	},
+	"cmp_atksel": {
+		"en-us": "", 
+		"en-dm": "Attack", 
+		"type": "combat"
+	},
+	"cmp_healpow": {
+		"en-us": "", 
+		"en-dm": "Healing Power", 
+		"type": "combat"
+	},
+	"cmp_atkpow": {
+		"en-us": "", 
+		"en-dm": "Attack Power", 
+		"type": "combat"
+	},
+	"cmp_needOne": {
+		"en-us": "", 
+		"en-dm": "You must select at least one Crop to Compost.", 
+		"type": "combat"
+	},
+	"cmp_doHeal": {
+		"en-us": "", 
+		"en-dm": "Compost {0} Crop{s} and recover {1} health.", 
+		"type": "combat"
+	},
+	"cmp_doAttack": {
+		"en-us": "", 
+		"en-dm": "Compost {0} Crop{s} and attack all enemies.", 
+		"type": "combat"
+	},
+	"cmp_cow": {
+		"en-us": "", 
+		"en-dm": "Cow", 
 		"type": "combat"
 	},
 	"tryPlantStart": {

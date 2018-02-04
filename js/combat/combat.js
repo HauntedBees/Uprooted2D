@@ -195,12 +195,12 @@ var combat = {
         combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
-            combat.animHelper.SetPlayerAnimInfo([[3, 1, false, true]]);
+            combat.animHelper.SetPlayerAnimState("CORPSE", true);
             game.innerTransition(game.currentInputHandler, combat.inbetween, { next: combat.fuckingDead, text: GetText("diedInCombat") });
             return;
         } else if(this.enemies.length == 0) {
             player.addExp(this.expEarned);
-            combat.animHelper.SetPlayerAnimInfo([[1, 1]]);
+            combat.animHelper.SetPlayerAnimState("WON", true);
             var text = GetText("youDidATheWin");
             var resulties = [this.expEarned + "EXP"];
 
@@ -269,8 +269,9 @@ var combat = {
                 combat.enemies.splice(i, 1);
             }
         }
+        combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
         for(var i = 0; i < combat.enemies.length; i++) {
-            combat.animHelper.SetEnemyAnimInfo(i, [[combat.enemies[i].spriteidx, 0]]);
+            combat.animHelper.SetEnemyAnimState(i, "STAND");
         }
     },
     wrapUpCombat: function() {
@@ -304,9 +305,9 @@ var combat = {
         game.transition(game.currentInputHandler, worldmap, {  init: { x: inn.x,  y: inn.y }, map: inn.map, isInn: true });
     },
     checkForLevelUp: function() {
-        if(player.exp >= player.nextExp) {
+        if(player.exp >= player.nextExp && player.level < 20) {
             player.levelUp();
-            combat.animHelper.SetPlayerAnimInfo([[2, 2], [2, 3]]);
+            combat.animHelper.SetPlayerAnimState("LEVELUP", true);
             game.innerTransition(game.currentInputHandler, combat.inbetween, {
                 next: combat.checkForLevelUp,
                 text: GetText("levelUp").replace(/\{0\}/g, player.level)
