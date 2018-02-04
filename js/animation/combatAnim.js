@@ -56,7 +56,7 @@ function CombatAnimHelper(enemies) {
         var currentx = 11 - enemies.length;
         for(var i = 0; i < enemies.length; i++) {
             var e = enemies[i];
-            if(e.size === "xl") { currentx -= 4; } // TODO: this shit
+            if(e.size === "xl") { currentx -= 1; } // TODO: this shit
             enemyAnimInfos.push(GetEnemyCombatAnim(currentx, playerPos.y, e.spriteidx, e.size));
             switch(e.size) {
                 case "sm": currentx += 1; break;
@@ -77,7 +77,7 @@ function CombatAnimHelper(enemies) {
                 var size = combat.enemies[i].size;
                 var y = playerPos.y;
                 var rawy = y - GetEnemyCombatDims(combat.enemies[i].size).h;
-                if(combat.enemies[i].size === "xl") { currentx -= 4; }
+                if(combat.enemies[i].size === "xl") { currentx -= 1; }
                 return { x: currentx + info.dx, rawX: currentx, y: y + info.dy, rawY: rawy, w: info.w, h: info.h };
             }
             switch(combat.enemies[i].size) {

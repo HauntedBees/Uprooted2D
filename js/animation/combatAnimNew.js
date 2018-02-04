@@ -168,16 +168,18 @@ CombatAnimEnemy.prototype = Object.create(CombatAnimEntity.prototype);
 
 function GetEnemyCombatAnim(x, y, dx, size) {
     var dims = GetEnemyCombatDims(size);
-    return new CombatAnimEnemy(dims.sheet, dims.w, dims.h, x, y, dx);
+    var eca = new CombatAnimEnemy(dims.sheet, dims.w, dims.h, x, y, dx);
+    if(dims.dw > 0) { eca.dims.dw = dims.dw; }
+    return eca;
 }
 function GetEnemyCombatDims(size) {
-    var w = 24, h = 30, sheet = "charsheet";
+    var w = 24, h = 30, dw = 0, sheet = "charsheet";
     switch(size) {
         case "md": w = 24; h = 30; break;
         case "lg": w = 32; h = 40; sheet = "charsheetbig"; break;
-        case "xl": w = 96; h = 80; sheet = "charsheetbig"; break;
+        case "xl": w = 96; h = 80; dw = 32; sheet = "charsheetbig"; break;
     }
-    return { w: w, h: h, sheet: sheet };
+    return { w: w, h: h, dw: dw, sheet: sheet };
 }
 
 function GetHPFrame(enemy) {
