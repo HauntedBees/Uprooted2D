@@ -58,7 +58,7 @@ combat.selectTarget = {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 gfx.drawCursor(this.sicklePos.x, this.sicklePos.y, crop.size - 1, crop.size - 1);
             }
-        } else { // TODO: recalibrate
+        } else {
             var cursorInfo = combat.animHelper.GetCursorInfo(this.cursorx);
             gfx.drawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
         }
