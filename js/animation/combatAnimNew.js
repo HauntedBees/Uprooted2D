@@ -154,10 +154,12 @@ function CropAttackAnim(targtype, grid, x, y) {
     if(this.crop.fishNum !== undefined) {
         if(this.crop.fishNum >= 3) { this.animset = "FISH_TOSS"; }
         else { this.animset = "FISH_SLAP"; }
+    } else if(this.crop.name === "frogbot") {
+        this.animset = "THROW_ROBO";
     } else if(this.crop.type === "egg") {
         this.animset = "THROW_BIRD";
-    } else {// TODO: more different anims
-        this.animset = "THROW" + this.targtype; 
+    } else {// TODO: maybe one for rice?
+        this.animset = "THROW" + targtype; 
     }
 }
 

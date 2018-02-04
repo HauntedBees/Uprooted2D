@@ -68,13 +68,13 @@ var playerCombatAnims = {
     "THROW_ENEMY": new AnimSet([new AnimFrame(0, 3, "player_pullCrop"), new AnimFrame(0, 4, "player_throwCropAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "THROW_COMPOST": new AnimSet([new AnimFrame(0, 3), new AnimFrame(0, 4, "player_throwCompostAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "THROW_BIRD": new AnimSet([new AnimFrame(0, 3, "player_pullCrop"), new AnimFrame(0, 2, "player_launchBird"), new AnimFrame(0, 2), new AnimFrame(0, 2)], false),
+    "THROW_ROBO": new AnimSet([new AnimFrame(6, 3, "player_pullCrop"), new AnimFrame(6, 4, "player_launchBird"), new AnimFrame(6, 4), new AnimFrame(6, 3)], false),
     "FISH_SLAP": new AnimSet([new AnimFrame(1, 3, "getFish"), new AnimFrame(1, 4, "player_damageFoes"), new AnimFrame(1, 4)], false, 8),
     "FISH_TOSS": new AnimSet([new AnimFrame(0, 5, "getBigFish"), new AnimFrame(0, 5), new AnimFrame(0, 5), 
                               new AnimFrame(0, 4, "player_throwFishAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "DRINK": new AnimSet([new AnimFrame(2, 3), new AnimFrame(2, 4)], true, 6),
     "EAT": new AnimSet([new AnimFrame(3, 3), new AnimFrame(3, 4)], true, 6),
     "THROW_CROP": new AnimSet([new AnimFrame(5, 3, "player_pullCrop"), new AnimFrame(5, 4, "player_throwCropAtCrop"), new AnimFrame(5, 4), new AnimFrame(5, 4)], false),
-    "THROW_ROBO": new AnimSet([new AnimFrame(6, 3), new AnimFrame(6, 4), new AnimFrame(6, 3)], false, 4),
     "HURT_CROP": JustOne(7, 3, { doShake: true }),
     "STAND_WEAK": JustOne(7, 4)
 };
@@ -126,8 +126,9 @@ var animCallbacks = {
     "player_launchBird": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
         var arr = [resetti.crop.name + "Fly0", resetti.crop.name + "Fly1"]; // TODO: account for targets that are crops
-        var dy = (resetti.crop.name === "platypus" ? 1 : 1.5);
-        var fps = (resetti.crop.name === "platypus" ? 24 : 12);
+        var isGrounded = ["platypus", "frogbot"].indexOf(resetti.crop.name) >= 0;
+        var dy = (isGrounded ? 1 : 1.5);
+        var fps = (isGrounded ? 24 : 12);
         animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetPlayerBottomPos(), combat.animHelper.GetEnemyBottomPos(animEntity.bonusArgs.targets[0]), dy, 24, fps, 
                             function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
