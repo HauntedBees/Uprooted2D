@@ -36,6 +36,10 @@ function GetWeaponAnims() {
     w["HONEY"] = new OverlaySet("combat_equipment", [new OverlayFrame(6, 7), new OverlayFrame(6, 7)]);
     w["COFFEE"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 7), new OverlayFrame(7, 7)]);
     w["COMPOST"] = new OverlaySet("combat_equipment", [new OverlayFrame(8, 7), new OverlayFrame(8, 7)]);
+
+    w["FISH0"] = new OverlaySet("combat_equipment", [new OverlayFrame(5, 5, 0, -2), new OverlayFrame(6, 5), new OverlayFrame(6, 5)]);
+    w["FISH1"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 5, 0, -6), new OverlayFrame(8, 5), new OverlayFrame(8, 5)]);
+    w["FISH2"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 6), new OverlayFrame(8, 6, -5), new OverlayFrame(8, 6, -5)]);
     return w;
 }
 var weaponAnims = GetWeaponAnims();
@@ -64,7 +68,9 @@ var playerCombatAnims = {
     "THROW_ENEMY": new AnimSet([new AnimFrame(0, 3, "player_pullCrop"), new AnimFrame(0, 4, "player_throwCropAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "THROW_COMPOST": new AnimSet([new AnimFrame(0, 3), new AnimFrame(0, 4, "player_throwCompostAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "THROW_BIRD": new AnimSet([new AnimFrame(0, 3), new AnimFrame(0, 2)], false),
-    "FISH_SLAP": new AnimSet([new AnimFrame(1, 3), new AnimFrame(1, 4)], false),
+    "FISH_SLAP": new AnimSet([new AnimFrame(1, 3, "getFish"), new AnimFrame(1, 4, "player_damageFoes"), new AnimFrame(1, 4)], false, 8),
+    "FISH_TOSS": new AnimSet([new AnimFrame(0, 5, "getBigFish"), new AnimFrame(0, 5), new AnimFrame(0, 5), 
+                              new AnimFrame(0, 4, "player_throwFishAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "DRINK": new AnimSet([new AnimFrame(2, 3), new AnimFrame(2, 4)], true, 6),
     "EAT": new AnimSet([new AnimFrame(3, 3), new AnimFrame(3, 4)], true, 6),
     "THROW_CROP": new AnimSet([new AnimFrame(5, 3, "player_pullCrop"), new AnimFrame(5, 4, "player_throwCropAtCrop"), new AnimFrame(5, 4), new AnimFrame(5, 4)], false),
@@ -76,6 +82,26 @@ var playerCombatAnims = {
 
 var animCallbacks = {
     "enemy_damagePlayer": function() { animCallbackHelpers.HurtPlayer(); },
+    "getFish": function(animProcess, animEntity) {
+        var resetti = animEntity.animQueue[0];
+        var fish = resetti.crop.fishNum || 0;
+        animProcess.AddOverlay(weaponAnims["FISH" + fish]);
+        animCallbacks["player_pullCrop"](animProcess, animEntity);
+    },
+    "getBigFish": function(animProcess, animEntity) {
+        var resetti = animEntity.animQueue[0];
+        var head = combat.animHelper.GetPlayerTopPos();
+        animProcess.AddBaby(new TileAnim(head.x, head.y - 2, ["bigFish"], false, 12, true));
+        animCallbacks["player_pullCrop"](animProcess, animEntity);
+    },
+    "player_throwFishAtEnemy": function(animProcess, animEntity) {
+        var resetti = animEntity.animQueue[0];
+        animProcess.ClearBabies();
+        var pos = combat.animHelper.GetPlayerTopPos();
+        pos.y -= 2;
+        animProcess.AddBaby(new ParabolicThrowAnim("bigFish", pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
+                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
+    },
     "enemy_pullCrop": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
         var anim = new TileAnim(combat.enemydx + resetti.x, combat.enemydy + resetti.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
@@ -107,7 +133,7 @@ var animCallbacks = {
         animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, { x: 3, y: 9 }, { x: 10, y: 9 }, 24, // TODO: not a parabola
                             function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
-    "player_damageFoes": function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); },
+    "player_damageFoes": function(animProcess, animEntity) { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); },
     "player_damageFoesWithAnim": function(animProcess, animEntity) {
         animProcess.SetNewFPS(4);
         animProcess.SetShake(true);

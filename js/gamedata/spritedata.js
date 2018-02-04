@@ -131,6 +131,7 @@ var spriteData = {
         }
     },
     names: {
+        "bigFish": [15, 0, true],
         "wedgeWA": [45, 6],
         "wedgeW": [46, 6],
         "wedgeWD": [47, 6],

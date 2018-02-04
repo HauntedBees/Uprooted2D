@@ -79,6 +79,7 @@ function AnimProcess(ae, as, babies) {
     this.SetNewFPS = function(fps) { timePerFrame = 1000 / fps; };
     this.SetShake = function(val) { doShake = val; };
     this.AddBaby = function(baby) { this.animBabies.push(baby); };
+    this.ClearBabies = function() { this.animBabies = []; }
     this.AddOverlay = function(overlay) { overlays.push(overlay); }
     this.Animate = function() {
         var now = +new Date(), isEnd = false;
@@ -101,7 +102,7 @@ function AnimProcess(ae, as, babies) {
         overlays.forEach(function(e) {
             if(frame <= e.length) {
                 var f = e.frames[frame];
-                gfx.drawCombatWhatsit(e.sheet, f.x, f.y, animentity.dims, animentity.layer, dx + f.dx, dy + f.dy);
+                gfx.drawCombatWhatsit(e.sheet, f.x, f.y, animentity.dims, animentity.layer, dx + f.dx / 16, dy + f.dy / 16);
             }
         });
         this.animBabies.forEach(function(e) { e.Animate(); });
@@ -116,7 +117,12 @@ function CropAttackAnim(targtype, grid, x, y) {
     this.targtype = targtype; // _ENEMY or _CROP // TODO: might not even be useful
     this.grid = grid; this.x = x; this.y = y;
     this.crop = grid[x][y];
-    this.animset = "THROW" + this.targtype; // TODO: different anims
+    if(this.crop.fishNum !== undefined) {
+        if(this.crop.fishNum >= 3) { this.animset = "FISH_TOSS"; }
+        else { this.animset = "FISH_SLAP"; }
+    } else {// TODO: more different anims
+        this.animset = "THROW" + this.targtype; 
+    }
 }
 
 function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx) {
