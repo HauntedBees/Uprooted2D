@@ -6,10 +6,10 @@ me.sellTypes = {
 };
 worldmap.shop = {
     details: null, cursorX: 0,
-    initx: 1, dx: 2, yPos: 5, cursorInitx: 0,
+    initx: 1, dx: 2, yPos: 7, cursorInitx: 0,
     sellingState: me.sellStates.BUYING, sellingType: me.sellTypes.CROPS, actualIdxs: [],
     maxSell: 12, sellOffset: 0, numArrows: 0, isUpgradeShop: false,
-    bookReading: null, bookState: 0,
+    bookReading: null, bookState: -1,
     layersToClear: ["characters", "menutext", "menucursorA"],
     availableIndexes: [], hasTalk: "",
     setup: function(shopName) {
@@ -20,7 +20,7 @@ worldmap.shop = {
         this.sellOffset = 0;
         this.numArrows = 0;
         this.bookReading = null;
-        this.bookState = 0;
+        this.bookState = -1;
         if(this.details.wares.length > 6 || (this.details.doesSell && this.details.wares.length > 5)) {
             this.dx = 1;
             this.initx = (this.hasTalk || this.details.doesSell) ? 3 : 2;
@@ -52,8 +52,8 @@ worldmap.shop = {
             case me.sellStates.BUYING: this.drawDetailsBuying(); break;
         }
         if(this.isUpgradeShop && this.availableIndexes.length === 0 && isopening) { text = GetText(this.details.empty); }
-        gfx.drawText(GetText("s.coins").replace(/\{0\}/g, player.monies), 2, 16 * 6.75, "#FFFFFF");
-        gfx.drawWrappedText(text, 2, 16 * 7.25, 235, "#FFFFFF");
+        gfx.drawText(GetText("s.coins").replace(/\{0\}/g, player.monies), 2, 16 * 9.25 + 1.5, "#FFFFFF");
+        gfx.drawWrappedText(text, 4, 159, 250, "#FFFFFF"); // 16 * 10 - 1
     },
     isValidSellIdx: function(i) {
         if(this.sellingType === me.sellTypes.CROPS) {
@@ -129,6 +129,7 @@ worldmap.shop = {
         }
         this.availableIndexes = []; var j = 0;
         this.isUpgradeShop = false;
+        var widecursor = false;
         for(var i = 0; i < this.details.wares.length; i++) {
             if(this.details.wares[i].type === "upgrade") {
                 this.isUpgradeShop = true;
@@ -142,13 +143,18 @@ worldmap.shop = {
                 this.availableIndexes.push(i);
                 if(this.details.wares[i].type === "equipment") {
                     gfx.drawTileToGrid(GetEquipment(this.details.wares[i].product).sprite, this.initx + j * this.dx, this.yPos, "characters");
+                } else if(this.bookState >= 0 && (this.cursorX - 1) === i) {
+                    gfx.drawTileToGrid("bookOpenL", this.initx + j * this.dx - 0.5, this.yPos, "characters");
+                    gfx.drawTileToGrid("bookOpenR", this.initx + j * this.dx + 0.5, this.yPos, "characters");
+                    widecursor = true;
+                    gfx.drawCursor(0.75 + this.cursorX * this.dx, this.yPos, 0.5, 0);
                 } else {
                     gfx.drawTileToGrid(this.details.wares[i].product, this.initx + j * this.dx, this.yPos, "characters");
                 }
                 j++;
             }
         }
-        gfx.drawCursor(1 + this.cursorX * this.dx, this.yPos, 0, 0);
+        if(!widecursor) { gfx.drawCursor(1 + this.cursorX * this.dx, this.yPos, 0, 0); }
     },
 
     clean: function() { gfx.clearAll(); },
@@ -214,6 +220,7 @@ worldmap.shop = {
         return true;
     },
     mouseMoveBuying: function(pos) {
+        this.bookState = -1;
         var newCursorX = Math.floor((pos.x - 1) / this.dx);
         if(newCursorX < 0 || newCursorX >= (this.details.wares.length + this.cursorInitx)) { return false; }
         if(newCursorX > ((this.hasTalk || this.details.doesSell ? 1 : 0) + this.availableIndexes.length)) { return false; }
@@ -330,6 +337,7 @@ worldmap.shop = {
         var newText = TryGetText(this.bookReading + this.bookState);
         if(newText === false) {
             this.sellingState = me.sellStates.BUYING;
+            this.bookState = -1;
             this.mouseMoveBuying(pos);
         } else {
             this.drawDetails(newText);

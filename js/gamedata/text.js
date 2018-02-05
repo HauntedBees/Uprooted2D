@@ -5567,6 +5567,86 @@ var fulltext = {
 		"type": "shop"
 	},
 	// Books
+	"bookVeg": {
+		"en-us": "", 
+		"en-dm": "\"Intro to Farming\" by Dr. Farmhouse \n A guide to growing crops for beginners.", 
+		"type": "bname"
+	},
+	"bookVeg0": {
+		"en-us": "", 
+		"en-dm": "Farming battles are turn-based; during your turn you can choose to plant crops or attack with ripe crops. Once a crop is planted, its age counter will decrease by one after you and your enemies have all had a turn.", 
+		"type": "book"
+	},
+	"bookVeg1": {
+		"en-us": "", 
+		"en-dm": "When a crop's age counter hits 0, it is ripe and ready to be used in an attack. Some crops - like vegetables - will rot if left on the field after their age counter passes 0. Rotten crops can be removed by being composted to recover health.", 
+		"type": "book"
+	},
+	"bookVeg2": {
+		"en-us": "", 
+		"en-dm": "Other crops - like fruits - will regrow over time. If their age counter passes 0 the ripe crops will wither away, but the tree will still produce more crops later.", 
+		"type": "book"
+	},
+	"bookVeg3": {
+		"en-us": "", 
+		"en-dm": "Both vegetables and fruits can be planted anywhere on a standard farm field. However, there are other crop types out there, each with their own unique features, so be sure to try them all!", 
+		"type": "book"
+	},
+	"bookShop": {
+		"en-us": "", 
+		"en-dm": "\"Shops and Inns\" by Bryan Selz \n A handy reference about how capitalism works, in case you forgot.", 
+		"type": "bname"
+	},
+	"bookShop0": {
+		"en-us": "", 
+		"en-dm": "There are various establishments that will gladly take your hard-earned cash in exchange for goods and services: inns and shops selling fixtures, seeds, and equipment.", 
+		"type": "book"
+	},
+	"bookShop1": {
+		"en-us": "", 
+		"en-dm": "Sleeping at an inn will recover all your health and give you some bonus health. If you lose in a battle, you will wake up at the last inn you stayed at. Inns also have various books with helpful information in them.", 
+		"type": "book"
+	},
+	"bookShop2": {
+		"en-us": "", 
+		"en-dm": "At shops you can buy various items: seeds and other crop starters (like eggs), equipment like sickles, compost bins, gloves, and watering cans, and farm fixtures like mushroom logs and egg incubators.", 
+		"type": "book"
+	},
+	"bookShop3": {
+		"en-us": "", 
+		"en-dm": "Some shops will also let you sell items back to them. Keep an eye out for shopkeepers with a \"talk\" option available, as they might also have useful information or a special request for you.", 
+		"type": "book"
+	},
+	"bookEquip": {
+		"en-us": "", 
+		"en-dm": "\"Equipment and Fixtures\" by E.E. Quippings \n Information on equipment for your body and fixtures for your farm.", 
+		"type": "bname"
+	},
+	"bookEquip0": {
+		"en-us": "", 
+		"en-dm": "There are four types of equipment: weapons, compost bins, gloves, and watering cans. Weapons will affect your melee attack power (how much damage you do when you attack with no ripe crops available) and what types of targets you can attack.", 
+		"type": "book"
+	},
+	"bookEquip1": {
+		"en-us": "", 
+		"en-dm": "A Compost Bin is needed to compost crops and recover health during battle. The type of bin you use can determine how many crops you can compost at once. Gloves increase your damage resistance and can let you perform multiple actions in one turn.", 
+		"type": "book"
+	},
+	"bookEquip2": {
+		"en-us": "", 
+		"en-dm": "Watering Cans will affect how your crops grow. Some will make your crops grow faster, others will make your crops more resistant to growing in off seasons, and others will multiply a crop's seasonal bonuses or weaknesses.", 
+		"type": "book"
+	},
+	"bookEquip3": {
+		"en-us": "", 
+		"en-dm": "Fixtures can be placed on your Field to allow you to grow different types of crops. Without any Fixtures, all you can grow are fruits and vegetables. If you place a Mushroom Log on your Field, however, you will be able to plant Mushroom Seeds on it.", 
+		"type": "book"
+	},
+	"bookEquip4": {
+		"en-us": "", 
+		"en-dm": "Other Fixtures, like Egg Incubators, Paddy Fields, and Season Modulators, all have different effects. You can put as many on your Field as you can fit on there, but make sure you have the right Seeds to go with your Fixtures! Standard veggie seeds can't be planted on Mushroom Logs!", 
+		"type": "book"
+	},
 	"bookA": {
 		"en-us": "", 
 		"en-dm": "\"Paddy Crops\" by Patrick Wack \n A primer on the Rice Paddy Fixture and the Crops that can be planted on it.", 

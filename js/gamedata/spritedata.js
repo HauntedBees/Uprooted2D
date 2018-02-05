@@ -131,6 +131,7 @@ var spriteData = {
         }
     },
     names: {
+        "bookOpenL": [40, 12], "bookOpenR": [41, 12],
         "frogbotFly0": [30, 7], "frogbotFly1": [31, 7],
         "eggFly0": [34, 6], "eggFly1": [35, 6],
         "quailFly0": [36, 6], "quailFly1": [37, 6],
