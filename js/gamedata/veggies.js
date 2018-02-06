@@ -14,21 +14,6 @@ function CropDetail(name, displayname, price, type, size, time, frames, power, r
     this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
 }
-function GetCropDesc(cropInfo) {
-    var text = "Power: " + cropInfo.power;
-    if(cropInfo.type === "spear") {
-        text += "\n Catch Chance: " + (cropInfo.req * 100) + "%";
-        return text;
-    }
-    if(cropInfo.time > 0) { text += "\n Growth Time: " + Math.ceil(cropInfo.time / player.getCropSpeedMultiplier()); }
-    if(cropInfo.respawn > 0) { text += "\n Regrowth Time: " + cropInfo.respawn; }
-    text += "\n Seasons:";
-    if(cropInfo.seasons[0] > 0.5) { text += " SP"; }
-    if(cropInfo.seasons[1] > 0.5) { text += " SU"; }
-    if(cropInfo.seasons[2] > 0.5) { text += " AU"; }
-    if(cropInfo.seasons[3] > 0.5) { text += " WI"; }
-    return text;
-}
 function GetCrop(name) {
     switch(name) {
 		/* Veggies */
