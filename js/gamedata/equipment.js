@@ -22,18 +22,18 @@ function GetEquipmentDesc(equipInfo) {
             else { str += "\n " + GetText("eq.attacksome").replace(/\{0\}/g, equipInfo.attacks); }
         }
     } else if(equipInfo.type === "compost") {
-        str += GetText("eq.holds") + " "  + equipInfo.amount;
+        str += "\n " + GetText("eq.holds") + " "  + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n " + GetText("eq.compattack"); }
         if(equipInfo.rotOnly) { str += "\n " + GetText("eq.rotten"); }
         if(equipInfo.bonus) { str += "\n " + GetText("eq.bonus") + " " + (equipInfo.bonus * 100) + "%"; }
         if(equipInfo.tech) { str += "\n " + GetText("eq.backfire"); }
     } else if(equipInfo.type === "gloves") {
-        str += GetText("eq.spturn") + " "  + equipInfo.amount;
+        str += "\n " + GetText("eq.spturn") + " "  + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n " + GetText("eq.actafter"); }
         if(equipInfo.def) { str += "\n " + GetText("eq.dmgresist") + " " + (equipInfo.def * 100) + "%"; }
         if(equipInfo.tech) { str += "\n " + GetText("eq.mayshock1") + " " + GetText("eq.mayshock2"); }
     } else if(equipInfo.type === "soil") {
-        if(equipInfo.speed) { str += GetText("eq.growth") + " " + (equipInfo.speed * 100) + "%"; }
+        if(equipInfo.speed) { str += "\n " + GetText("eq.growth") + " " + (equipInfo.speed * 100) + "%"; }
         if(equipInfo.boost) { str += "\n " + GetText("eq.sres") + " " + (equipInfo.boost * 100) + "%"; }
         if(equipInfo.amplify) { str += "\n " + GetText("eq.sstr") + " " + (equipInfo.amplify * 100) + "%"; }
         if(equipInfo.tech) { str += "\n " + GetText("eq.willkill1") + " " + GetText("eq.willkill2"); }

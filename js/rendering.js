@@ -210,7 +210,7 @@ var gfx = {
     getTextFractionX: function(text, size, fraction) { return gfx.getFractionX(gfx.getTextWidth(text, size), (fraction || 0.5)); },
     getFractionX: function(width, fraction) { return ((gfx.canvasWidth * fraction) - (width / 2)) / 4; },
     getTextWidth: function(t, size) {
-        gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
+        gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
     drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = "#000000"; gfx.ctx["menutext"].fillRect(x, y, w, 5); },
@@ -220,14 +220,19 @@ var gfx = {
         if(selected) { gfx.drawCursor(0, y - 0.5, 14, -0.25); }
         gfx.drawText(t, 8, y * 16);
     },
+    GetFontSize: function(size, justNum) {
+        var size = size || 22;
+        if(gfx.GetFont() === "OpenDyslexic") { size += 2; }
+        return justNum === true ? size : size + "px ";
+    },
     drawText: function(t, x, y, color, size, layer) {
         layer = layer || "menutext";
-        gfx.ctx[layer].font = (size || 22) + "px " + gfx.GetFont();
+        gfx.ctx[layer].font = gfx.GetFontSize(size) + gfx.GetFont();
         gfx.ctx[layer].fillStyle = (color || "#000000");
         gfx.ctx[layer].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
     },
     getTextLength: function(t, size) {
-        gfx.ctx["menutext"].font = (size || 22) + "px " + gfx.GetFont();
+        gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
     drawBottomFullText: function(t, color) {  gfx.drawFullText(t, 121, color); },
@@ -255,7 +260,7 @@ var gfx = {
         maxWidth *= gfx.scale;
         var ctx = gfx.ctx[layer];
         ctx.fillStyle = (color || "#000000");
-        size = size || 22;
+        size = gfx.GetFontSize(size, true);
         ctx.font = size + "px " + gfx.GetFont();
         var ddy = size / 2.75;
         var ts = t.split(" ");
