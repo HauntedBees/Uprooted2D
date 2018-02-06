@@ -90,14 +90,19 @@ var gfx = {
         var delta = size * mult * 0.5;
         gfx.drawImage(gfx.ctx["tutorial"], sheet, data[0] * size, data[1] * size, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
     },
-    drawTileToGrid: function(spritename, x, y, layer) {
+    drawTileToGrid: function(spritename, x, y, layer, isHalfTile) {
         var data = spriteData.names[spritename];
-        gfx.drawSprite("sheet", data[0], data[1], x * 16, y * 16, layer, data.length == 3);
+        try {
+            gfx.drawSprite("sheet", data[0], data[1], x * 16, y * 16, layer, data.length == 3, isHalfTile);
+        } catch(e) {
+            console.log("couldn't find " + spritename);
+        }
     },
-    drawSprite: function(sheetpath, sx, sy, x, y, layer, big) {
+    drawSprite: function(sheetpath, sx, sy, x, y, layer, big, isHalfTile) {
         var sheet = gfx.spritesheets[sheetpath];
         var size = big ? 32 : 16;
-        gfx.drawImage(gfx.ctx[layer], sheet, sx * size, sy * size, size, size, x, y, size, size);
+        var xmult = (isHalfTile === true ? 0.5 : 1);
+        gfx.drawImage(gfx.ctx[layer], sheet, sx * size, sy * size, size * xmult, size, x, y, size * xmult, size);
     },
     drawBigCharacter: function(sx, sy, x, y) {
         gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["charsheetbig"], sx * 32, sy * 40, 32, 40, x * 16 - 8, y * 16 - 10, 32, 40);
@@ -288,14 +293,14 @@ var gfx = {
         ctx.fillStyle = "#8B8CDE";
         ctx.fillRect((startx + 1) * 16 * gfx.scale, (y + 16) * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
     },
-    drawBigNumber: function(number, x, y, layer) {
-        if(number > 100 || number <= 0) { return; }
+    drawBigNumber: function(number, x, y, layer, white) {
+        if(number > 100 || number < 0) { return; }
         var digits = ("" + number).split("");
         var sheet = gfx.spritesheets["sheet"];
         var ctx = gfx.ctx[layer];
         for(var i = 0; i < digits.length; i++) {
-            var d = spriteData.names["bigNum" + digits[i]];
-            gfx.drawTileToGrid("bigNum" + digits[i], x + 0.5 * i, y, layer);
+            //var d = spriteData.names[(white === true ? "bigNum" : "bigNumW") + digits[i]];
+            gfx.drawTileToGrid((white === true ? "bigNumW" : "bigNum") + digits[i], x + 0.5 * i, y, layer, true);
         }
     },
     drawItemNumber: function(number, x, y, layer, top) {

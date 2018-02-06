@@ -15,15 +15,13 @@ var stores = {
     "coop": {
         img: "shops/cock",
         wares: [
-            { product: "_coop", type: "farm" },
-            { product: "egg", type: "seed" },
             { product: "carrot", type: "seed" },
             { product: "beet", type: "seed" },
             { product: "pineapple", type: "seed" },
             { product: "grapes", type: "seed" }
         ],
-        buyMult: 1, sellMult: 0.5, doesSell: true,
-        opening: "s.co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.cpurch"
+        buyMult: 1, doesSell: false,
+        opening: "s.co", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.cpurch"
     },
     "inn0": {
         img: "shops/home", innId: "inn0",

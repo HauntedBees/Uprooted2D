@@ -9,7 +9,7 @@ function EquipmentDetail(name, displayname, price, sprite, type, addtl) {
 function GetEquipmentDesc(equipInfo) {
     var str = "";
     if(equipInfo.type === "weapon") {
-        str += GetText("eq.power") + " " + equipInfo.power;
+        str += "\n " + GetText("eq.power") + " " + equipInfo.power;
         if(equipInfo.targetCrops) { str += "\n " + GetText("eq.hitCrops"); }
         if(!equipInfo.noEnemies) { str += "\n " + GetText("eq.hitEnemies"); }
         if(equipInfo.sp) { str += "\n " + GetText("eq.su"); }

@@ -5521,6 +5521,11 @@ var fulltext = {
 		"en-dm": "hly faulk lass is that a fucken golden mushroom? I'll trade you for this log! AND I'll start selling you my special mushroom selection!", 
 		"type": "shop"
 	},
+	"s.youHave": {
+		"en-us": "", 
+		"en-dm": "You have {0}.", 
+		"type": "shop"
+	},
 	"s.vendoEnter": {
 		"en-us": "", 
 		"en-dm": "Welcome to the Vending Machine.", 

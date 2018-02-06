@@ -73,6 +73,12 @@ var player = {
         }
         return false;
     },
+    getItemAmount: function(item) {
+        for(var i = 0; i < player.inventory.length; i++) {
+            if(player.inventory[i][0] === item) { return player.inventory[i][1]; }
+        }
+        return 0;
+    },
     isEquipped: function(item) {
         return this.equipment.weapon === item || this.equipment.compost === item || this.equipment.gloves === item || this.equipment.soil === item || this.equipment.armor === item;
     },
