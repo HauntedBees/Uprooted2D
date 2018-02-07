@@ -46,7 +46,7 @@ var enemyHelpers = {
                 var tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
                 if(tile.activeTime > 0 || tile.rotten || tile.type === "babby") { continue; }
-                crops.push(tile);
+                crops.push({crop: tile, x: x, y: y });
                 animCrops.push([tile.name, x, y, tile.type, enemyHelpers.GetSideEffect(e, tile)]);
                 if(tile.burnChance !== undefined && elems.indexOf(1) < 0) { elems.push(1); }
                 if(tile.saltChance !== undefined && elems.indexOf(2) < 0) { elems.push(2); }

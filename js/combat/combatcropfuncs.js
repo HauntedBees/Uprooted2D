@@ -106,6 +106,25 @@ combat.ageCrops = function() {
     }
     combat.animHelper.DrawCrops();
 };
+combat.FlagFreshCrops = function(isPlayer, isCritical) { // TODO: this probably shun't even exist
+    var grid = (isPlayer ? this.grid : this.enemyGrid);
+    for(var x = 0; x < grid.length; x++) {
+        for(var y = 0; y < grid[0].length; y++) {
+            if(grid[x][y] === null || grid[x][y].name === undefined) { continue; }
+            var crop = grid[x][y];
+            if(crop.name === "app") { if(crop.activeTime > 2) { continue; } }
+            else if(crop.rotten || crop.activeTime > 0) { continue; }
+            crop.flagged = true;
+            if(!isPlayer) { continue; }
+            var seedChance = (Math.random() * (1 - player.luck)) * (isCritical ? 0.5 : 1); // TODO: move to somewhere else probably
+            if(crop.name.indexOf("special") === 0) { seedChance = 1; }
+            if(seedChance < 0.05) {
+                crop.seedDrop = crop.name + "seed";
+                player.increaseItem(crop.name);
+            }
+        }
+    }
+};
 combat.FlagFreshCropsAndReturnAnimData = function(isPlayer, isCritical, animals, additionalTargets) {
     var grid = (isPlayer ? this.grid : this.enemyGrid);
     var res = [];

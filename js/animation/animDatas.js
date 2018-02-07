@@ -143,17 +143,33 @@ var animCallbacks = {
         var isGrounded = ["platypus", "frogbot"].indexOf(resetti.crop.name) >= 0;
         var dy = (isGrounded ? 1 : 1.5);
         var fps = (isGrounded ? 24 : 12);
+        // TODO: handle recoil
         animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetPlayerBottomPos(), combat.animHelper.GetEnemyBottomPos(animEntity.bonusArgs.targets[0]), dy, 24, fps, 
                             function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
     "player_throwCropAtEnemy": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
-        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
-                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
+        var recoil = animEntity.bonusArgs.recoils[resetti.idx];
+        var callback = undefined;
+        if(recoil === null || recoil === undefined) {
+            callback = function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); };
+        } else {
+            callback = function() {
+                for(var i = 0; i < combat.enemies.length; i++) {
+                    var f = function(idx) {
+                        return function() { animCallbackHelpers.HurtTargets(animProcess, [idx]) };
+                    }(i);
+                    animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]),
+                                                                combat.animHelper.GetEnemyTopPos(i), 24, f, true));
+                }
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+            };
+        }
+        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, callback));
     },
     "player_throwCropAtCrop": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
-        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, { x: 3, y: 9 }, { x: 10, y: 9 }, 24, // TODO: not a parabola
+        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, { x: 3, y: 9 }, { x: 10, y: 9 }, 24, // TODO: should not be a parabola
                             function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
     "player_damageFoes": function(animProcess, animEntity) { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); },

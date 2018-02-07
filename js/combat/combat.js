@@ -151,7 +151,8 @@ var combat = {
     damageEnemy: function(enemyidx, damage) {
         this.enemies[enemyidx].health -= damage;
         var isFinalKill = false;
-        if(this.enemies[enemyidx].health <= 0) {
+        if(this.enemies[enemyidx].health <= 0 && !this.enemies[enemyidx].alreadyDead) {
+            this.enemies[enemyidx].alreadyDead = true;
             var e = this.enemies[enemyidx];
             this.expEarned += e.exp;
             if(e.soleKill && !this.doingFinalKill) { isFinalKill = true; this.doingFinalKill = true; }

@@ -102,7 +102,9 @@ var dmgCalcs = {
             attacksArr.push(new AttackData(finalDamage, isCritical));
         }
         console.log(attacksArr);
-        return attacksArr;
+        
+        if(isPlayer) { return { isCritical: isCritical, attackDatas: attacksArr, animData: null, recoilInfo: null }; }
+        else { return attacksArr; }
     },
 
     CropAttack: function(isPlayer, season, myAtk, myCrops, targets, attackElements) {
@@ -122,9 +124,10 @@ var dmgCalcs = {
         var hasShockGloves = isPlayer && player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech;
         var nerfs = dmgCalcs.GetNerfs(), modAtk = Math.log10(5 + myAtk * myAtk);
         var totalDamage = 0, stunLength = 0, damageToAttacker = 0, animals = [];
+        var recoilInfos = [], animInfos = [];
 
         for(var i = 0; i < myCrops.length; i++) {
-            var crop = myCrops[i];
+            var crop = myCrops[i].crop;
             var seasonVal = crop.seasons[season];
             if(seasonVal === 0) { seasonVal = 0.2; } else if(isPlayer) { player.miscdata.seasonsPlanted[season]++; }
 
@@ -162,7 +165,20 @@ var dmgCalcs = {
                 animals.push({ crop: crop.name, animal: crop.animal });
                 dmg *= crop.animalDamageMult;
             }
+            var recoilInfo = null;
+            if(isPlayer && ["rice", "veg", "tree", "mush", "bee", "egg", "tech"].indexOf(crop.type) >= 0) {
+                if(crop.type === "rice" || (myCrops.length > 3 && combat.enemies.length > 1)) {
+                    var power = crop.type === "rice" ? 1 : 0;
+                    var numCrops = myCrops.length;
+                    while((Math.random() * player.luck * numCrops--) > 0.9) {
+                        power++;
+                    }
+                    if(power > 0) { recoilInfo = power * Math.max(3, dmg / 6 / combat.enemies.length); }
+                }
+            }
             totalDamage += dmg;
+            animInfos.push({ x: myCrops[i].x, y: myCrops[i].y, recoil: recoilInfo });
+            recoilInfos.push(recoilInfo);
         }
         if(isPlayer) {
             totalDamage *= 1 + (Math.floor(myCrops.length / 3) / 10); // boost by number of crops (launch 10 crops to get 1.3x boost, 20 for 1.6x, 30 for 2x)
@@ -174,13 +190,18 @@ var dmgCalcs = {
         for(var i = 0; i < theirDef.length; i++) {
             var finalDamage = totalDamage;
             if(isPlayer) {
-                finalDamage -= (isCritical ? 0 : (theirDef[i] / 4));
+                finalDamage = this.GetDefendedPlayerDamage(finalDamage, isCritical, theirDef[i]);
             } else {
                 finalDamage -= theirDef[i] / 1.5;
             }
             attacksArr.push(new AttackData(finalDamage, isCritical, stunLength, animals, myCrops, damageToAttacker));
         }
-        return attacksArr;
+        if(isPlayer) { return { isCritical: isCritical, attackDatas: attacksArr, animData: animInfos, recoilInfo: recoilInfos }; }
+        else { return attacksArr; }
+    },
+    GetDefendedPlayerDamage: function(initDamage, isCritical, theirDefense) {
+        if(isCritical) { return initDamage; }
+        return Math.ceil(initDamage - (theirDefense / 4));
     },
 
     CompostFunc: function(isPlayer, season, myAtk, myCrops, isAttack, noAction) { // isAttack: true = attack, false = heal

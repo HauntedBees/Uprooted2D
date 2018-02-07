@@ -61,10 +61,11 @@ function MovingLinearAnim(sprites, start, end, dy, fps, animfps, doneFunc) {
         gfx.drawTileToGrid(sprites[animframe], x, y - dy, "menucursorC");
     }
 }
-function ParabolicThrowAnim(crop, start, end, fps, doneFunc) {
+function ParabolicThrowAnim(crop, start, end, fps, doneFunc, tiny) {
     var dir = (start.x < end.x) ? 1 : -1;
     var startPos = dir === 1 ? start : end, endPos = dir === 1 ? end : start, DoneFunction = doneFunc;
     var midPoint = { x: (endPos.x + startPos.x) / 2, y: startPos.y - 3 };
+    if(tiny === true) { midPoint.y += 2; }
 
     var A1 = -(startPos.x * startPos.x) + (midPoint.x * midPoint.x);
     var B1 = -startPos.x + midPoint.x;
@@ -80,7 +81,7 @@ function ParabolicThrowAnim(crop, start, end, fps, doneFunc) {
     var b = (D1 - A1 * a)/B1;
     var c = startPos.y - a * (startPos.x * startPos.x) - b * startPos.x;
     var GetY = function(x) { return (a*x*x + b*x + c); };
-    var dt = 1;
+    var dt = tiny ? 3 : 1;
     var frame = 0, timePerFrame = 1000 / fps, numFrames = (endPos.x - startPos.x) * dt;
     var lastRan = +new Date(), isDone = false;
 
@@ -147,10 +148,11 @@ function AnimProcess(ae, as, babies) {
     };
 }
 
-function CropAttackAnim(targtype, grid, x, y) {
+function CropAttackAnim(targtype, grid, x, y, idx) {
     this.targtype = targtype; // _ENEMY or _CROP // TODO: might not even be useful
     this.grid = grid; this.x = x; this.y = y;
     this.crop = grid[x][y];
+    this.idx = idx || 0;
     if(this.crop.fishNum !== undefined) {
         if(this.crop.fishNum >= 4) { this.animset = "FISH_TOSS"; }
         else { this.animset = "FISH_SLAP"; }

@@ -182,11 +182,13 @@ combat.selectTarget = {
 
     // Attacking Logic
     Attack: function() {
-        var allAttacks = this.GetAttackDetails();
+        var allAttackInfo = this.GetAttackDetails();
+        var allAttacks = allAttackInfo.attackDatas;
         var damagetext = "";
         var additionalTargets = [];
 
-        var hasKills = false, hasDestroys = false, hasRecoil = false;
+        var hasKills = false, hasDestroys = false;
+        var hasRecoil = allAttackInfo.recoilInfo !== null && allAttackInfo.recoilInfo.some(function(e) { return e !== null; });
         var hasAnimals = false, hasStuns = false;
         var avgDamage = 0, lastTargetName = "";
         var targArr = this.targets.length > 1;
@@ -204,7 +206,7 @@ combat.selectTarget = {
                 var crop = combat.enemyGrid[cropPos.x][cropPos.y];
                 if(crop === null) { continue; }
                 if(crop.x !== undefined) { // this is a size 2 crop
-                    cropPos = {x: crop.x, y: crop.y};
+                    cropPos = { x: crop.x, y: crop.y };
                     crop = combat.enemyGrid[crop.x][crop.y];
                 }
 
@@ -241,23 +243,20 @@ combat.selectTarget = {
                     }
                 }
                 if(target.postHit !== undefined) { postHit = postHits[target.postHit](target); }
-
-                if(attackData.numCrops > 3 && combat.enemies.length > 1) {
-                    var recoilDamage = Math.ceil(finalDamage * 0.15);
-                    while((Math.random() * player.luck * attackData.numCrops--) > 0.9) {
-                        var idx = Range(0, combat.enemies.length);
-                        if(idx === targetidx) { idx = (idx + 1) % combat.enemies.length; }
-                        additionalTargets.push(idx);
-                        combat.damageEnemy(idx, recoilDamage);
-                        hasRecoil = true;
-                    }
-                }
+            }
+        }
+        if(hasRecoil) {
+            var fullRecoilDamage = allAttackInfo.recoilInfo.reduce(function(a, c) { return a + c; }, 0);
+            for(var j = 0; j < combat.enemies.length; j++) {
+                var dmg = dmgCalcs.GetDefendedPlayerDamage(fullRecoilDamage, allAttackInfo.isCritical, combat.enemies[j].def);
+                combat.damageEnemy(j, dmg);
+                if(combat.enemies[j].health <= 0) { hasKills = true; }
             }
         }
         avgDamage = Math.floor(avgDamage / this.targets.length);
         
         if(allAttacks[0].knockback > 0) { player.health = Math.max(player.health - allAttacks[0].knockback, 1); }
-        var damagetext = this.GetDamageText(allAttacks[0].crit, hasAnimals,  hasRecoil, hasKills, hasDestroys, hasStuns, 
+        var damagetext = this.GetDamageText(allAttackInfo.isCritical, hasAnimals, hasRecoil, hasKills, hasDestroys, hasStuns, 
                                             combat.isFalcon, avgDamage, lastTargetName, this.targets.length > 1, allAttacks[0].knockback);
         var targType = (this.targets[0].x === undefined) ? "_ENEMY" : "_CROP";
         if(combat.isFalcon) {
@@ -266,11 +265,13 @@ combat.selectTarget = {
             var attackType = (allAttacks[0].numCrops === 0) ? "MELEE" : "THROW";
             combat.animHelper.SetPlayerAnimState(attackType + targType, true);
             combat.animHelper.SetPlayerAnimArg("targets", this.targets);
+            combat.animHelper.SetPlayerAnimArg("recoils", allAttackInfo.recoilInfo);
             if(attackType === "MELEE") { combat.animHelper.PushPlayerOverlay(player.equipment.weapon + targType); }
             else {
-                var cropAnims = combat.FlagFreshCropsAndReturnAnimData(true, allAttacks[0].crit, allAttacks[0].animals, additionalTargets);
-                for(var i = 0; i < cropAnims.length; i++) {
-                    combat.animHelper.AddPlayerAttackAnim(new CropAttackAnim(targType, combat.grid, cropAnims[i][0], cropAnims[i][1]));
+                combat.FlagFreshCrops(true, allAttackInfo.isCritical);
+                for(var i = 0; i < allAttackInfo.animData.length; i++) {
+                    var info = allAttackInfo.animData[i];
+                    combat.animHelper.AddPlayerAttackAnim(new CropAttackAnim(targType, combat.grid, info.x, info.y, i));
                 }
                 combat.animHelper.StartPlayerAnimSequence();
             }
@@ -288,7 +289,7 @@ combat.selectTarget = {
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
                 else if(tile.rotten || tile.activeTime > 0) { continue; }
-                myCrops.push(tile);
+                myCrops.push({ crop: tile, x: x, y: y });
             }
         }
         var targetParams = [];
