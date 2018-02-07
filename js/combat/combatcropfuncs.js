@@ -29,7 +29,7 @@ combat.GetFish = function(crop, luck) { // rods & spears
         case "rod": fishArr = [0, 0, 1]; break;
         case "goodrod": fishArr = [0, 1, 1, 2]; break;
         case "metalrod": fishArr = [1, 1, 1, 2]; break;
-        case "ultrarod": fishArr = [2, 3, 3, 3]; break;
+        case "ultrarod": fishArr = [2, 4, 4, 4]; break; // 3 = net
     }
     return fishArr[Math.floor(fishArr.length * Math.random() * luck)];
 };
@@ -46,8 +46,7 @@ combat.ageCrops = function() {
                         crop.rotten = false;
                         var range = InclusiveRange(-2, 2);
                         crop.power += range;
-                        crop.fishNum = (range < 0 ? 0 : 1);
-                        if(crop.name === "bignet") { crop.fishNum += 1; }
+                        crop.fishNum = crop.name === "bignet" ? 5 : 3;
                         crop.activeTime = crop.time;
                     } else if(crop.type === "rod" && !crop.ready && !crop.rotten) {
                         crop.ready = true;

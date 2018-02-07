@@ -152,7 +152,7 @@ function CropAttackAnim(targtype, grid, x, y) {
     this.grid = grid; this.x = x; this.y = y;
     this.crop = grid[x][y];
     if(this.crop.fishNum !== undefined) {
-        if(this.crop.fishNum >= 3) { this.animset = "FISH_TOSS"; }
+        if(this.crop.fishNum >= 4) { this.animset = "FISH_TOSS"; }
         else { this.animset = "FISH_SLAP"; }
     } else if(this.crop.name === "frogbot") {
         this.animset = "THROW_ROBO";

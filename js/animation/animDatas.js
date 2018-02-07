@@ -27,10 +27,21 @@ function GetWeaponAnims() {
         w[weaps[i] + "_ENEMY"] = new OverlaySet("combat_equipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 3), new OverlayFrame(i, 3) ]);
         w[weaps[i] + "_CROP"] = new OverlaySet("combat_equipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 4), new OverlayFrame(i, 4) ]);
     }
-    weaps = ["!pltSickle", "!sickle2", "!sickle2_weak"];
+    weaps = ["!pltSickle", "!sickle2"];
     for(var i = 0; i < weaps.length; i++) {
-        w[weaps[i] + "_ENEMY"] = new OverlaySet("combat_equipment", [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i), new OverlayFrame(3, 5 + i), new OverlayFrame(3, 5 + i) ]);
-        w[weaps[i] + "_CROP"] = new OverlaySet("combat_equipment", [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i), new OverlayFrame(4, 5 + i), new OverlayFrame(4, 5 + i) ]);
+        var enemy = [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i), new OverlayFrame(3, 5 + i) ];
+        var crop = [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i) ];
+        if(i === 1) {
+            enemy.push(new OverlayFrame(4, 6));
+            crop.push(new OverlayFrame(5, 6));
+            crop.push(new OverlayFrame(6, 6));
+        } else {
+            enemy.push(new OverlayFrame(3, 5));
+            crop.push(new OverlayFrame(4, 5));
+            crop.push(new OverlayFrame(4, 5));
+        }
+        w[weaps[i] + "_ENEMY"] = new OverlaySet("combat_equipment", enemy);
+        w[weaps[i] + "_CROP"] = new OverlaySet("combat_equipment", crop);
     }
     w["MILK"] = new OverlaySet("combat_equipment", [new OverlayFrame(5, 7), new OverlayFrame(5, 7)]);
     w["HONEY"] = new OverlaySet("combat_equipment", [new OverlayFrame(6, 7), new OverlayFrame(6, 7)]);
@@ -40,6 +51,7 @@ function GetWeaponAnims() {
     w["FISH0"] = new OverlaySet("combat_equipment", [new OverlayFrame(5, 5, 0, -2), new OverlayFrame(6, 5), new OverlayFrame(6, 5)]);
     w["FISH1"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 5, 0, -6), new OverlayFrame(8, 5), new OverlayFrame(8, 5)]);
     w["FISH2"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 6), new OverlayFrame(8, 6, -5), new OverlayFrame(8, 6, -5)]);
+    w["FISH3"] = new OverlaySet("combat_equipment", [new OverlayFrame(0, 7, -4), new OverlayFrame(1, 7), new OverlayFrame(1, 7)]);
     return w;
 }
 var weaponAnims = GetWeaponAnims();
@@ -90,16 +102,18 @@ var animCallbacks = {
     },
     "getBigFish": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
+        var fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
         var head = combat.animHelper.GetPlayerTopPos();
-        animProcess.AddBaby(new TileAnim(head.x, head.y - 2, ["bigFish"], false, 12, true));
+        animProcess.AddBaby(new TileAnim(head.x, head.y - 2, [fish], false, 12, true));
         animCallbacks["player_pullCrop"](animProcess, animEntity);
     },
     "player_throwFishAtEnemy": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
+        var fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
         animProcess.ClearBabies();
         var pos = combat.animHelper.GetPlayerTopPos();
         pos.y -= 2;
-        animProcess.AddBaby(new ParabolicThrowAnim("bigFish", pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
+        animProcess.AddBaby(new ParabolicThrowAnim(fish, pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
                             function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
     "enemy_pullCrop": function(animProcess, animEntity) {
