@@ -84,7 +84,9 @@ worldmap.title = {
                     //init: { x: 8.5, y: 14 }, map: "hq_6" // by entrance
                     //init: { x: 8, y: 51 }, map: "hq_5" // by entrance
                 });
-            case 1: return game.innerTransition(this, pausemenu.savemenu, { saving: false }); // this is probably wrong
+            case 1:
+                if(this.showContinue) { return game.innerTransition(this, pausemenu.savemenu, { saving: false }); }
+                else { return game.innerTransition(this, worldmap.optionsMenu); }
             case 2: return game.innerTransition(this, worldmap.optionsMenu);
         }
     },
