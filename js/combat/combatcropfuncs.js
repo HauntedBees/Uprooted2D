@@ -44,7 +44,10 @@ combat.ageCrops = function() {
                 if(success) {
                     if((crop.name === "net" || crop.name === "bignet") && crop.rotten) {
                         crop.rotten = false;
-                        crop.power += InclusiveRange(-2, 2);
+                        var range = InclusiveRange(-2, 2);
+                        crop.power += range;
+                        crop.fishNum = (range < 0 ? 0 : 1);
+                        if(crop.name === "bignet") { crop.fishNum += 1; }
                         crop.activeTime = crop.time;
                     } else if(crop.type === "rod" && !crop.ready && !crop.rotten) {
                         crop.ready = true;
