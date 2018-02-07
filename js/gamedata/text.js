@@ -5597,6 +5597,31 @@ var fulltext = {
 		"en-dm": "Both vegetables and fruits can be planted anywhere on a standard farm field. However, there are other crop types out there, each with their own unique features, so be sure to try them all!", 
 		"type": "book"
 	},
+	"bookSeasons": {
+		"en-us": "", 
+		"en-dm": "\"The Story of Seasons\" by Victor Wada \n A primer on how seasons will affect your crops.", 
+		"type": "bname"
+	},
+	"bookSeasons0": {
+		"en-us": "", 
+		"en-dm": "At the start of every farming battle, a season is chosen depending on the enemies you are fighting. The season will change every 30 turns, or after you or one of your enemies uses a Season Modulator.", 
+		"type": "book"
+	},
+	"bookSeasons1": {
+		"en-us": "", 
+		"en-dm": "How powerful your crops are depends on the current season. A crop is either GOOD, OKAY, or BAD in a given season. GOOD crops will do twice as much damage, and BAD crops will do very little damage.", 
+		"type": "book"
+	},
+	"bookSeasons2": {
+		"en-us": "", 
+		"en-dm": "Keep the current season in mind when planting new crops. If you're planting a regrowing crop like a tree or mushroom, keep the future seasons in mind, too. Planting a slow-growing Summer tree in the Spring is smart, but maybe don't plant it in the middle of Summer!", 
+		"type": "book"
+	},
+	"bookSeasons3": {
+		"en-us": "", 
+		"en-dm": "Winter is the hardest season, since very few crops are GOOD in Winter, and many crops are BAD. Make sure you have a balanced inventory so you're never stuck in a season with only BAD crops!", 
+		"type": "book"
+	},
 	"bookShop": {
 		"en-us": "", 
 		"en-dm": "\"Shops and Inns\" by Bryan Selz \n A handy reference about how capitalism works, in case you forgot.", 

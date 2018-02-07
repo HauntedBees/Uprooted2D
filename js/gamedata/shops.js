@@ -28,6 +28,7 @@ var stores = {
         wares: [
             { product: "sleep", price: 0, type: "inn" },
             { product: "book0", name: "bookVeg", price: 0, type: "book" },
+            { product: "book3", name: "bookSeasons", price: 0, type: "book" },
             { product: "book1", name: "bookEquip", price: 0, type: "book" },
             { product: "book2", name: "bookShop", price: 0, type: "book" }
         ],
