@@ -966,6 +966,8 @@ var SpecialFunctions = {
         player.equipment = player.tempEquipment;
         player.hasFalcon = player.hadFalcon;
         player.tempInventory = undefined;
+        game.target = worldmap.importantEntities["hipster"];
+        worldmap.clearTarget();
     },
     "FINISHTUTORIALATSTART": function() {
         if(tutorial.completed) {
