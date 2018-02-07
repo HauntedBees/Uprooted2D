@@ -294,6 +294,7 @@ combat.plant = {
         }
         if(seasons.length === 0) { seasons = [0, 1, 2, 3]; }
         combat.season = seasons[Range(0, seasons.length)];
+        combat.seasonTime = 0;
         var displaySeason = "";
         switch(combat.season) {
             case 0: displaySeason = "Spring"; break;

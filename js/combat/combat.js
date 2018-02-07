@@ -1,6 +1,6 @@
 var combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false,
-    doingFinalKill: false, playerInDanger: false, saveChance: 1,
+    doingFinalKill: false, playerInDanger: false, saveChance: 1, seasonTime: 0,
     lastTarget: 0, lastTargetCrop: false, lastSelectedSeed: { x: 0, y: 0 }, 
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
@@ -18,6 +18,7 @@ var combat = {
         this.lastSelectedSeed = { x: 0, y: 0 };
         this.playerInDanger = false;
         this.saveChance = 1;
+        this.seasonTime = 0;
         this.setSeason(enemies);
         this.expEarned = 0;
         this.moniesEarned = 0;
@@ -121,6 +122,11 @@ var combat = {
         }
         this.ageCrops();
         this.state = 0;
+        this.seasonTime += 1;
+        if(this.seasonTime >= me.TURNSINSEASON) {
+            this.season = (this.season + 1) % 4;
+            this.seasonTime = 0;
+        }
     },
     damagePlayer: function(damage) {
         if(player.equipment.gloves !== null) {
@@ -166,6 +172,7 @@ var combat = {
         }
     },
     adjustEnemyStatsWeather: function() {
+        this.seasonTime = 0;
         for(var i = 0; i < this.enemies.length; i++) {
             if(this.enemies[i].weakSeason !== undefined && this.season === this.enemies[i].weakSeason) {
                 this.enemies[i].atk = 0.5;

@@ -131,6 +131,11 @@ var spriteData = {
         }
     },
     names: {
+        "seasonbar0": [44, 9],
+        "seasonbar1": [45, 9],
+        "seasonbar2": [46, 9],
+        "seasonbar3": [47, 9],
+        "seasonico": [43, 9],
         "bookOpenL": [40, 12], "bookOpenR": [41, 12],
         "frogbotFly0": [30, 7], "frogbotFly1": [31, 7],
         "eggFly0": [34, 6], "eggFly1": [35, 6],

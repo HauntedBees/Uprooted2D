@@ -94,6 +94,12 @@ function CombatAnimHelper(enemies) {
         var texty = y + 0.65;
         for(var x = 0; x < gfx.tileWidth; x++) { gfx.drawSprite("sheet", 15, 11, x * 16, y * 16, "menuA"); }
         gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, texty * 16);
+        gfx.drawTileToGrid("seasonbar0", 8.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar1", 9.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar2", 10.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar3", 11.5, y, "menuA");
+        var diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
+        gfx.drawTileToGrid("seasonico", 8.25 + combat.season + diff, y, "menuA");
         var season = GetText("season" + combat.season);
         gfx.drawSprite("sheet", 12 + combat.season, 10, 13 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
         gfx.drawText(season, 14 * 16 - 1, texty * 16);
