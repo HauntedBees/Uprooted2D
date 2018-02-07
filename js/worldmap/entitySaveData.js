@@ -102,5 +102,10 @@ var mapRefreshes = {
                 SpecialFunctions["NERDUP"]();
             }
         }
+    },
+    "hq_4": function(e) {
+        if(e.name === "EndOfTheRoad" && player.completedQuest("theBeeQuest")) {
+            e.visible = true;
+        }
     }
 };
