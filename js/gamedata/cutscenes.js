@@ -41,7 +41,7 @@ var scripts = {
 	"pstand13": "pl_SETDIR:0&convince_VISIBLE:true&hipster_MOVE:x12",
 	"pstand14": "pl_SETDIR:3&hipster_MOVE:x20",
 	"pstand15": "pl_SETDIR:0&_TEXT:intro23",
-	"pstand16": "_CLEARTARGET&hipster_SETTARGET&_CUSTOM:TUTORIAL",
+	"pstand16": "_CLEARTARGET&hipster_VISIBLE:false&hipster_SOLID:false&hipster_SETTARGET&_CUSTOM:TUTORIAL",
 	// Produce Stand: Completion of Opening Cutscene
 	"finTut0": "_CUSTOM:LEAVETUTORIAL&_CLEARTARGET&_CUSTOM:FINISHTUTORIALATSTART&_TEXT:Pb0.0",
 	"finTut1": "_TEXT:Pb0.1",
