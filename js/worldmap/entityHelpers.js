@@ -1,4 +1,4 @@
-var specialtyHelpers = {
+const specialtyHelpers = {
     getLimeItems: function() {
         var items = [];
         if(player.hasItem("lemon")) { items.push("lime.lemon"); }
@@ -130,8 +130,8 @@ function GetInvisibleEntity(name, interact, additional) {
     var res = { name: name, pos: {x: -1, y: -1}, solid: false, interact: interact };
     return Object.assign(res, additional);
 };
-function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: [ GetSpeak(text) ] }; };
-function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, [ GetSpeak(textKey) ], {visible: false, boring: true}); };
+function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: OneSpeak(text) }; };
+function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, OneSpeak(textKey), {visible: false, boring: true}); };
 function GetBeehive(hiveId, x, y, inside) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true, inside: inside, visible: !inside }); };
 function ToggleRFDoors(type) {
     mapStates[worldmap.mapName].rf[type] = !mapStates[worldmap.mapName].rf[type];
@@ -364,10 +364,10 @@ function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional
     if(big) { res.anim.big = true; }
     return Object.assign(res, additional);
 }
-function GetSpeak(t, choices) { return function(i, e) { console.log(e.name); worldmap.writeText(t, choices); }  }
 function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
-function Cutscene(s) { return [ function() { iHandler.Start(s); } ]; }
+function Cutscene(s) { return [ () => iHandler.Start(s) ]; }
+function OneSpeak(t) { return [ (i, e) => { iHandler.isFirst = true; worldmap.writeText(t); } ]; }
 
 function GetForeground(mapname, yoffset, width) {
     return { name: "fg" + mapname, img: "foregrounds/" + mapname, visible: true, yoff: yoffset, width: width, isForeground: true, pos: { x: 0, y: 0 } };
@@ -391,7 +391,7 @@ function JumboToggle(inside) {
     worldmap.finishDialog();
 }
 
-var enemyMetadata = {
+const enemyMetadata = {
     prophet: function(type) { return { interactname: "prophet", dialogMax: 4, enemies: ["bot" + type], min: 1, max: 1, sy: 18, noChange: true, noRunKill: true } },
     buffNerd: { interactname: "buffNerd", dialogMax: 3, enemies: ["buffNerd"], min: 1, max: 2, sy: 1, sheetlen: 2, moving: true },
     tinyNerd: { interactname: "tinyNerd", dialogMax: 5, enemies: ["tinyNerd"], min: 1, max: 2, sy: 14 },
@@ -420,7 +420,7 @@ var enemyMetadata = {
     chick: function(ct) { return { interactname: "chickbot", dialogMax: 3, enemies: ["chickBot"], min: 1, max: 3, sy: 10, changeType: ct } },
     mower: function(ct) { return { sy: 10, noChange: true, changeType: ct, sheetlen: 2, visible: false, inside: true } }
 };
-var commonMovementDatas = {
+const commonMovementDatas = {
     fuckinBottle: function(x, y, w, h, initState) { return { 
             state: (initState || 0), loop: true, 
             points: [ { x: x, y: y + h, dx: 0, dy: 1 }, { x: x + w, y: y + h, dx: 1, dy: 0 }, { x: x + w, y: y, dx: 0, dy: -1 }, { x: x, y: y, dx: -1, dy: 0 } ],

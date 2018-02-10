@@ -1,5 +1,5 @@
-var beeQueen = { interact: Cutscene("angryBee") };
-var mapentities = {
+const beeQueen = { interact: Cutscene("angryBee") };
+let mapentities = {
     "farm_init": [
         GetInvisibleEntity("CS_farminit", Cutscene("farminit"), { autoplay: true }),
         GetCommonEntity("Nathan", 24, 11, 0, 1, undefined, undefined, { sheet: "assistant", storageKey: "nathanA" }),
@@ -29,10 +29,10 @@ var mapentities = {
         GetInvisibleEntity("CS_enterfarm", [ SpecialFunctions["ENTERFARM"] ], { autoplay: true }),
         GetForeground("farm", 7, 1536),
 
-        GetCommonEntity("NathanOnTheFarm0", 10, 6, 9, 0, undefined, [ GetSpeak("yaBoiA") ], { big: true, moving: true, sheetlen: 8, storageKey: "n0", noChange: true }),
-        GetCommonEntity("NathanOnTheFarm1", 12, 6, 9, 1, undefined, [ GetSpeak("yaBoiB") ], { big: true, moving: true, sheetlen: 3, storageKey: "n1", noChange: true }),
-        GetCommonEntity("NathanOnTheFarm2", 14, 6, 9, 1, undefined, [ GetSpeak("yaBoiC") ], { big: true, sy: 3, storageKey: "n2", noChange: true }),
-        GetCommonEntity("NathanOnTheFarm3", 12, 2, 6, 0, undefined, [ GetSpeak("yaBoiD") ], { sheet: "assistant", storageKey: "n3", noChange: true }),
+        GetCommonEntity("NathanOnTheFarm0", 10, 6, 9, 0, undefined, OneSpeak("yaBoiA"), { big: true, moving: true, sheetlen: 8, storageKey: "n0", noChange: true }),
+        GetCommonEntity("NathanOnTheFarm1", 12, 6, 9, 1, undefined, OneSpeak("yaBoiB"), { big: true, moving: true, sheetlen: 3, storageKey: "n1", noChange: true }),
+        GetCommonEntity("NathanOnTheFarm2", 14, 6, 9, 1, undefined, OneSpeak("yaBoiC"), { big: true, sy: 3, storageKey: "n2", noChange: true }),
+        GetCommonEntity("NathanOnTheFarm3", 12, 2, 6, 0, undefined, OneSpeak("yaBoiD"), { sheet: "assistant", storageKey: "n3", noChange: true }),
         GetCommonEntity("IiiOnTheFarm", 16, 9, 4, 0, undefined, Cutscene("iiiTalk"), { sheet: "assistant", storageKey: "n4", noChange: true }),
 
         GetCommonEntity("Fucker", 10, 2, 0, 2, undefined, Cutscene("bigBot"), { boss: true, big: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
@@ -118,10 +118,10 @@ var mapentities = {
         SwitchMap("ExitAreaNorth", 21, 0, true, false, 16, 22, "producestand"),
         SwitchMap("ExitAreaWest", 0, 22, false, true, 44, 49, "forest"),
         SwitchMap("ExitAreaSouth", 21, 30, true, false, 21.5, 1, "belowvillage"),
-        GetCommonEntity("Dean", 10, 13, 12, 3, undefined, [GetSpeak("villager0")], { sy: 14 }),
-        GetCommonEntity("June", 20, 5, 16, 2, undefined, [GetSpeak("villager1")], { sy: 14 }),
-        GetCommonEntity("Aiko", 27, 10, 0, 3, undefined, [GetSpeak("villager2")], { sy: 16 }),
-        GetCommonEntity("Tanner", 3, 18, 0, 0, undefined, [GetSpeak("villager3")], { sy: 17 }),
+        GetCommonEntity("Dean", 10, 13, 12, 3, undefined, OneSpeak("villager0"), { sy: 14 }),
+        GetCommonEntity("June", 20, 5, 16, 2, undefined, OneSpeak("villager1"), { sy: 14 }),
+        GetCommonEntity("Aiko", 27, 10, 0, 3, undefined, OneSpeak("villager2"), { sy: 16 }),
+        GetCommonEntity("Tanner", 3, 18, 0, 0, undefined, OneSpeak("villager3"), { sy: 17 }),
         EnterShop("EquipmentShop", 17, 12, "equip1"),
         GetSign(18, 13, "SignWeapon0"),
         EnterShop("UpgradeShop", 18, 20, "upgrade1"),
@@ -309,7 +309,7 @@ var mapentities = {
         GetCommonEntity("H_Barrier3", 4, 6, 0, 0, undefined, undefined, { visible: false }),
         GetCommonEntity("H_Barrier4", 4, 7, 0, 0, undefined, undefined, { visible: false }),
         GetCommonEntity("SeaLeftTop", 6, 3, 1, 0, undefined, undefined, { big: true, sy: 3, visible: false, storageKey: "slt", solid: false, boring: true }),
-        GetCommonEntity("SeaMidTop", 8, 0, 1, 1, undefined, [ GetSpeak("smD7") ], { big: true, sy: 3, visible: false, storageKey: "smt", noChange: true, boring: true }),
+        GetCommonEntity("SeaMidTop", 8, 0, 1, 1, undefined, OneSpeak("smD7"), { big: true, sy: 3, visible: false, storageKey: "smt", noChange: true, boring: true }),
         GetCommonEntity("SeaRightTop", 10, 3, 1, 2, undefined, undefined, { big: true, sy: 3, visible: false, storageKey: "srt", solid: false, boring: true }),
         GetInvisibleEntity("FishMoved", Cutscene("seahelp"), { storageKey: "FishMoved" })
     ],
@@ -479,14 +479,14 @@ var mapentities = {
         GetInvisibleEntity("beatDweeb", Cutscene("beatBarn"), { storageKey: "beatDweeb" }),
         GetCommonEntity("HOUSEKEEPER", 13, 30, 17, 0, undefined, Cutscene("housekeeper"), { boss: true, visible: false, inside: true, storageKey: "HK", sy: 5, noChange: true } ),
 
-        GetCommonEntity("CoveredDoorL1", 11, 15, 6, 0, undefined, [ GetSpeak("barndoorChick") ], { sy: 12, noChange: true, solid: true, changeType: 0 }), // 0 = open door
-        GetCommonEntity("CoveredDoorL2", 11, 18, 6, 0, undefined, [ GetSpeak("barndoorPig") ], { sy: 12, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorL3", 11, 21, 6, 0, undefined, [ GetSpeak("barndoorChick") ], { sy: 12, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorL4", 11, 24, 6, 0, undefined, [ GetSpeak("barndoorCrop") ], { sy: 12, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorR1", 18, 15, 6, 0, undefined, [ GetSpeak("barndoorEmpty") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorR2", 18, 18, 6, 0, undefined, [ GetSpeak("barndoorChick") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorR3", 18, 21, 6, 0, undefined, [ GetSpeak("barndoorShop") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorR4", 18, 24, 6, 0, undefined, [ GetSpeak("barndoorPig") ], { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorL1", 11, 15, 6, 0, undefined, OneSpeak("barndoorChick"), { sy: 12, noChange: true, solid: true, changeType: 0 }), // 0 = open door
+        GetCommonEntity("CoveredDoorL2", 11, 18, 6, 0, undefined, OneSpeak("barndoorPig"), { sy: 12, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorL3", 11, 21, 6, 0, undefined, OneSpeak("barndoorChick"), { sy: 12, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorL4", 11, 24, 6, 0, undefined, OneSpeak("barndoorCrop"), { sy: 12, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR1", 18, 15, 6, 0, undefined, OneSpeak("barndoorEmpty"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR2", 18, 18, 6, 0, undefined, OneSpeak("barndoorChick"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR3", 18, 21, 6, 0, undefined, OneSpeak("barndoorShop"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR4", 18, 24, 6, 0, undefined, OneSpeak("barndoorPig"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
         GetCommonEntity("Chicky1", 10, 15, 0, 3, undefined, Cutscene("enemy"), enemyMetadata.chick(1)), // 1 = full left to right
         GetCommonEntity("Chicky2", 19, 18, 0, 1, undefined, Cutscene("enemy"), enemyMetadata.chick(2)), // 2 = half right to left
         GetCommonEntity("Chicky3", 10, 21, 0, 3, undefined, Cutscene("enemy"), enemyMetadata.chick(3)), // 3 = half left to right 
@@ -634,7 +634,7 @@ var mapentities = {
         GetCommonEntity("MushMan", 16, 22, 15, 0, undefined, Cutscene("mushman"), { noChange: true, sy: 6, visible: false, inside: true }),
 
         GetCommonEntity("SomeNerd", 15, 17, 0, 3, undefined, Cutscene("someNerd"), { sy: 15, visible: false, inside: true }),
-        GetCommonEntity("SomeNerd2", 22, 15, 0, 2, undefined, [ GetSpeak("bathroomNerd") ], { sy: 15, visible: false, inside: true }),
+        GetCommonEntity("SomeNerd2", 22, 15, 0, 2, undefined, OneSpeak("bathroomNerd"), { sy: 15, visible: false, inside: true }),
 
         GetCommonEntity("crazy4trout", 34, 17, 0, 2, undefined, Cutscene("crazy4trout"), { sy: 14, visible: false, inside: true }),
         GetCommonEntity("brandt", 54, 22, 15, 0, undefined, Cutscene("brandt"), { noChange: true, sy: 8, visible: false, inside: true }),
@@ -656,10 +656,10 @@ var mapentities = {
         GetCommonEntity("Hazard", 12, 11, 0, 0, undefined, undefined, { boring: true, big: true, noChange: true, sy: 1, robbery: true }),
         GetCommonEntity("Hazard2", 0, 11, 0, 0, undefined, undefined, { boring: true, big: true, noChange: true, sy: 1, robbery: true }),
 
-        GetCommonEntity("Officer1", 9, 13, 16, 0, undefined, [GetSpeak("officer1")], { noChange: true, sy: 10, robbery: true }),
-        GetCommonEntity("Officer2", 7, 10, 8, 0, undefined, [GetSpeak("officer2")], { noChange: true, sy: 15, robbery: true }),
-        GetCommonEntity("Officer3", 10, 11, 8, 2, undefined, [GetSpeak("officer4")], { noChange: true, sy: 15, robbery: true }),
-        GetCommonEntity("Officer4", 3, 11, 16, 1, undefined, [GetSpeak("officer3")], { noChange: true, sy: 10, robbery: true }),
+        GetCommonEntity("Officer1", 9, 13, 16, 0, undefined, OneSpeak("officer1"), { noChange: true, sy: 10, robbery: true }),
+        GetCommonEntity("Officer2", 7, 10, 8, 0, undefined, OneSpeak("officer2"), { noChange: true, sy: 15, robbery: true }),
+        GetCommonEntity("Officer3", 10, 11, 8, 2, undefined, OneSpeak("officer4"), { noChange: true, sy: 15, robbery: true }),
+        GetCommonEntity("Officer4", 3, 11, 16, 1, undefined, OneSpeak("officer3"), { noChange: true, sy: 10, robbery: true }),
 
         GetCommonEntity("ConeThing1L", 2, 7, 16, 0, undefined, undefined, { boring: true, sy: 11, inside: true, visible: false }),
         GetCommonEntity("ConeThing1R", 3, 7, 16, 1, undefined, undefined, { boring: true, sy: 11, inside: true, visible: false }),
@@ -695,11 +695,11 @@ var mapentities = {
         GetCommonEntity("OfficeLady", 54, 35, 4, 1, undefined, Cutscene("officeLady"), { sy: 16, visible: false, inside: true }),
         GetCommonEntity("EggBoy", 58, 30, 17, 0, undefined, Cutscene("eggBoy"), { sy: 13, noChange: true }),
 
-        GetCommonEntity("CorpseBuddy", 55, 17, 16, 0, undefined, [ GetSpeak("corpseBuddy") ], { sy: 13, noChange: true, visible: false, inside: true, boring: true }),
+        GetCommonEntity("CorpseBuddy", 55, 17, 16, 0, undefined, OneSpeak("corpseBuddy"), { sy: 13, noChange: true, visible: false, inside: true, boring: true }),
         GetCommonEntity("CityMonk", 36, 22, 4, 2, undefined, Cutscene("cityMonk"), { sy: 8, visible: false, inside: true }),
         GetSign(24, 19, "forRentSign"),
 
-        GetCommonEntity("UndergroundMan", 16, 6, 16, 0, undefined, [ GetSpeak("undergroundNotYet") ], { sy: 6, noChange: true, visible: false, inside: true } ),
+        GetCommonEntity("UndergroundMan", 16, 6, 16, 0, undefined, OneSpeak("undergroundNotYet"), { sy: 6, noChange: true, visible: false, inside: true } ),
         GetCommonEntity("UndergroundHole", 17, 6, 16, 0, undefined, undefined, { sy: 7, visible: false, inside: true, boring: true } ),
 
         GetCommonEntity("12thSt", 4, 43, 7, 0, undefined, undefined, { boring: true, big: true }),
@@ -888,8 +888,8 @@ var mapentities = {
 
             GetCommonEntity("HurtWorker", 24, 27, 20, 0, undefined, Cutscene("hurtNerd"), { sy: 16, noChange: true, sheetlen: 2, storageKey: "trent" }),
 
-            GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, [ GetSpeak("elevator3") ], { visible: false, isElevator: true }),
-            GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, [ GetSpeak("elevator3") ], { visible: false, isElevator: true }),
+            GetCommonEntity("ElevatorL", 11, 2, 0, 0, undefined, OneSpeak("elevator3"), { visible: false, isElevator: true }),
+            GetCommonEntity("ElevatorR", 12, 2, 0, 0, undefined, OneSpeak("elevator3"), { visible: false, isElevator: true }),
 
             GetCommonEntity("PodBaby1", 1.5, 20.75, 20, 1, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),
             GetCommonEntity("PodBaby2", 1.5, 24.75, 20, 2, undefined, undefined, { sy: 16, noChange: true, sheetlen: 2, moving: true }),

@@ -272,7 +272,10 @@ var worldmap = {
         if(!this.inDialogue) { if(worldmap.smartphone !== null) { return worldmap.smartphone.Read(); } return false; }
         if(this.waitForAnimation) { iHandler.SpeedUpAnimation(); }
         else {
-            if(!isFresh && worldmap.dialogData.choices !== undefined && worldmap.dialogData.choices.length > 0) { return false; }
+            if(!isFresh) {
+                if(iHandler.isFirst) { return false; }
+                if(worldmap.dialogData.choices !== undefined && worldmap.dialogData.choices.length > 0) { return false; }
+            }
             iHandler.Advance();
         }
     },

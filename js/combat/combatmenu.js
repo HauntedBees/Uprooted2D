@@ -174,7 +174,8 @@ combat.menu = {
         this.setup(pos.y - this.dy);
         return true;
     },
-    click: function(pos) {
+    click: function(pos, isFresh) {
+        if(!isFresh) { return false; }
         if(pos.x > 4) { return false; }
         switch(pos.y - this.dy) {
             case 0: if(combat.numPlantTurns > 0) { game.innerTransition(this, combat.plant); } break;
@@ -227,7 +228,7 @@ combat.menu = {
         }
         if(pos.y < 0) { return false; }
         if(isEnter) {
-            return this.click(pos);
+            return this.click(pos, input.IsFreshPauseOrConfirmPress());
         } else {
             return this.mouseMove(pos);
         }

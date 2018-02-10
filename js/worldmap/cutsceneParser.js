@@ -1,10 +1,10 @@
 const iHandler = {
-    moveSpeed: 0.025,
+    moveSpeed: 0.025, isFirst: true,
     state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] },
     Start: function(startkey) {
         worldmap.dialogData = {};
         iHandler.state = { key: startkey, idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] };
-        iHandler.Advance();
+        iHandler.Advance(true);
     },
     SpeedUpAnimation: function() {
         clearInterval(worldmap.animIdx);
@@ -21,7 +21,8 @@ const iHandler = {
         clearInterval(worldmap.animIdx);
         iHandler.Advance();
     },
-    Advance: function() {
+    Advance: function(isFirst) {
+        iHandler.isFirst = isFirst || false;
         worldmap.inDialogue = true;
         if(iHandler.state.texts.length > 0) {
             const newText = iHandler.state.texts.splice(0, 1)[0];
@@ -463,8 +464,8 @@ const SpecialFunctions = {
         player.hasNerd = true;
         worldmap.clearTarget();
         worldmap.animData = new MapAnim("mapplayer_help", 0, 0, 20, 25, 2);
-        worldmap.entities.push(GetCommonEntity("BarricadeL", 23, 2, 6, 0, undefined, [ GetSpeak("blockedOff3F") ], { big: true, noChange: true }));
-        worldmap.entities.push(GetCommonEntity("BarricadeR", 25, 2, 6, 0, undefined, [ GetSpeak("blockedOff3F") ], { big: true, sy: true, noChange: true }));
+        worldmap.entities.push(GetCommonEntity("BarricadeL", 23, 2, 6, 0, undefined, OneSpeak("blockedOff3F"), { big: true, noChange: true }));
+        worldmap.entities.push(GetCommonEntity("BarricadeR", 25, 2, 6, 0, undefined, OneSpeak("blockedOff3F"), { big: true, sy: true, noChange: true }));
         me.PLAYERMOVESPEED = me.BASEMOVESPEED / 2;
     },
     "NERDDOWN": function() {
@@ -472,7 +473,7 @@ const SpecialFunctions = {
         worldmap.clearTarget();
         worldmap.animData = new MapAnim("mapplayer", 0, 0, 16, 20, 2);
         me.PLAYERMOVESPEED = me.BASEMOVESPEED;
-        worldmap.importantEntities["trentSafe"].interact = [GetSpeak("sleepingSavedNerd")];
+        worldmap.importantEntities["trentSafe"].interact = OneSpeak("sleepingSavedNerd");
         worldmap.importantEntities["trentSafe"].visible = true;
         worldmap.importantEntities["trentSafe"].solid = true;
     },
