@@ -222,7 +222,7 @@ var animCallbackHelpers = {
         for(let i = 0; i < targets.length; i++) {
             const cropPos = targets[i];
             const targ = { x: cropPos.x + combat.dx, y: cropPos.y + combat.dy };
-            let crop = combat.enemyGrid[cropPos.x][cropPos.y];
+            let crop = combat.grid[cropPos.x][cropPos.y];
             if(crop === null) { continue; }
             if(crop.health <= 0) {
                 let anim = new TileAnim(targ.x, targ.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);

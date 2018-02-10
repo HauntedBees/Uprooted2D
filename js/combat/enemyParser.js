@@ -139,6 +139,7 @@ const enemyHelpers = {
         const dmg = enemyHelpers.GetCropDamage(e, x, y, type, useDamage);
         crop.health -= dmg;
         if(crop.rotten) { crop.health = 0; }
+        if(crop.health <= 0) { crop.flagged = true; }
         return { status: true, crop: true, destroyed: (crop.health <= 0) };
     },
     GetCropDamage: function(e, x, y, type, useDamage) { // type: 0 = water, 1 = fire, salt = 2, -1 = general
