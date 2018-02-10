@@ -269,7 +269,7 @@ var combat = {
     clearAnimsAndRemoveCorpses: function() {
         combat.animHelper.CleanAnims();
         combat.animHelper.CleanEntities();
-        combat.cleanFlaggedCrops();
+        combat.RemoveFlaggedCrops();
         for(var i = combat.enemies.length - 1; i >= 0; i--) {
             combat.enemies[i].justStuck = false;
             if(combat.enemies[i].health <= 0) {

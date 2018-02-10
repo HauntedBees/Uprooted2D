@@ -1,4 +1,4 @@
-var gfx = {
+const gfx = {
     canvas: [],  ctx: [],
     canvasHeight: 0, canvasWidth: 0,
     tileWidth: 0, tileHeight: 0, scale: 4,
@@ -119,61 +119,39 @@ var gfx = {
         layer = layer || "characters";
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["falconsheet"], sx * 24, sy * 30, 24, 30, x * 16, y * 16 - 2, 24, 30);
     },
-    drawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
+    DrawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
         layer = layer || "characters"; dx = dx || 0; dy = dy || 0;
-        var sw = dims.dw || dims.w;
-        var adjustedy = (dims.y + dy) * 16 - dims.h;
+        const sw = dims.dw || dims.w;
+        const adjustedy = (dims.y + dy) * 16 - dims.h;
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * sw, sy * dims.h, dims.w, dims.h, (dims.x + dx) * 16, adjustedy, dims.w, dims.h);
     },
-    drawCharacter: function(sx, sy, sheet, size, x, y, layer) {
+    DrawDitheredWhatsit: function(sheet, sx, sy, dims, layer, d, size, gelf) {
         layer = layer || "characters";
-        var srcX, srcY, w, h, dy;
+        const sw = dims.dw || dims.w;
+        const adjustedy = dims.y * 16 - dims.h;
+        const ctx = gfx.ctx[layer], img = gfx.spritesheets[sheet];
+        let ditherAmounts = [], imax = 32, mod = 32;
         switch(size) {
             case "sm":
-                w = 16; h = 20; dy = 4;
-                srcX = sx * 24 + 4;
-                srcY = sy * 30 + 10;
+                imax = 16;
+                ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
                 break;
             case "md":
-                w = 24; h = 30; dy = 14;
-                srcX = sx * 24;
-                srcY = sy * 30;
+                imax = 24;
+                ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
                 break;
             case "lg":
-                w = 32; h = 40; dy = 8;
-                srcX = sx * 32;
-                srcY = sy * 40;
+                imax = 32; mod = 16;
+                ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
                 break;
             case "xl":
-                w = 96; h = 80; dy = 14;
-                srcX = sx * 32;
-                srcY = sy * 80;
+                imax = 96; mod = 16;
+                ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
                 break;
         }
-        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], srcX, srcY, w, h, x * 16, y * 16 - dy, w, h);
-    },
-    drawDitheredCharacter: function(sx, sy, sheet, size, x, y, d, layer) {
-        if(d === 0) { return gfx.drawCharacter(sx, sy, sheet, size, x, y, layer); }
-        var ctx = gfx.ctx[(layer || "characters")];
-        var sheet = gfx.spritesheets[sheet];
-        if(size === "sm") {
-            var ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
-            for(var i = 0; i < 16; i++) {
-                if(!ditherAmounts[i]) { continue; }
-                gfx.drawImage(ctx, sheet, sx * 24 + 4 + i, sy * 30 + 10, 1, 20, x * 16 + i, y * 16 - 4, 1, 20);
-            }
-        } else if(size === "md") {
-            var ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
-            for(var i = 0; i < 24; i++) {
-                if(!ditherAmounts[i]) { continue; }
-                gfx.drawImage(ctx, sheet, sx * 24 + i, sy * 30, 1, 30, x * 16 + i, y * 16 - 14, 1, 30);
-            }
-        } else if(size === "lg") {
-            var ditherAmounts = [d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4, d < 3, d < 5, d < 2, d < 4, d < 3, d < 6, false, d < 4];
-            for(var i = 0; i < 32; i++) {
-                if(!ditherAmounts[i % 16]) { continue; }
-                gfx.drawImage(ctx, sheet, sx * 32 + i, sy * 40, 1, 40, x * 16 - 8 + i, y * 16 - 10, 1, 40);
-            }
+        for(let i = 0; i < imax; i++) {
+            if(!ditherAmounts[i % mod]) { continue; }
+            gfx.drawImage(ctx, img, sx * sw + i, sy * dims.h, 1, dims.h, dims.x * 16 + i, adjustedy, 1, dims.h);
         }
     },
     drawAnimCharacter: function(sx, sy, pos, offset, sheet, big, other) {
@@ -349,16 +327,5 @@ var gfx = {
     drawImage: function(ctx, image, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH) {
         ctx.drawImage(image, srcX * gfx.scale, srcY * gfx.scale, srcW * gfx.scale, srcH * gfx.scale, dstX * gfx.scale, dstY * gfx.scale, dstW * gfx.scale, dstH * gfx.scale);  
     },
-    numberDeltas: {
-        "1": [1, 0],
-        "2": [2, 0],
-        "3": [3, 0],
-        "4": [4, 0],
-        "5": [5, 0],
-        "6": [1, 1],
-        "7": [2, 1],
-        "8": [3, 1],
-        "9": [4, 1],
-        "0": [5, 1]
-    }
+    numberDeltas: { "1": [1, 0], "2": [2, 0], "3": [3, 0], "4": [4, 0], "5": [5, 0], "6": [1, 1], "7": [2, 1], "8": [3, 1], "9": [4, 1], "0": [5, 1] }
 };

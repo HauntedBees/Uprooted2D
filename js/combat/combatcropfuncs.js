@@ -61,12 +61,12 @@ combat.ageCrops = function() {
             }
             if(crop.activeTime > 0) {
                 crop.activeTime -= 1;
-                if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock" || (crop.type === "rod" && !crop.ready))) { this.removeCrop({x: x, y: y}); }
+                if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock" || (crop.type === "rod" && !crop.ready))) { this.PurgeCrop(this.grid, x, y, true); }
             } else if(crop.activeTime === 0) {
                 if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = crop.respawn; }
                 else if(crop.type === "veg") { crop.rotten = true; }
                 else if(crop.type === "egg") { crop.power += 1; }
-                else if(crop.type === "rod" && !crop.ready) { this.removeCrop({x: x, y: y}); }
+                else if(crop.type === "rod" && !crop.ready) { this.PurgeCrop(this.grid, x, y, true); }
             }
         }
     }
@@ -106,7 +106,7 @@ combat.ageCrops = function() {
     }
     combat.animHelper.DrawCrops();
 };
-combat.FlagFreshCrops = function(isPlayer, isCritical) { // TODO: this probably shun't even exist
+combat.FlagFreshCropsAndGetSeedDrops = function(isPlayer, isCritical) {
     var grid = (isPlayer ? this.grid : this.enemyGrid);
     for(var x = 0; x < grid.length; x++) {
         for(var y = 0; y < grid[0].length; y++) {
@@ -116,89 +116,55 @@ combat.FlagFreshCrops = function(isPlayer, isCritical) { // TODO: this probably 
             else if(crop.rotten || crop.activeTime > 0) { continue; }
             crop.flagged = true;
             if(!isPlayer) { continue; }
-            var seedChance = (Math.random() * (1 - player.luck)) * (isCritical ? 0.5 : 1); // TODO: move to somewhere else probably
-            if(crop.name.indexOf("special") === 0) { seedChance = 1; }
-            if(seedChance < 0.05) {
-                crop.seedDrop = crop.name + "seed";
-                player.increaseItem(crop.name);
-            }
-        }
-    }
-};
-combat.FlagFreshCropsAndReturnAnimData = function(isPlayer, isCritical, animals, additionalTargets) {
-    var grid = (isPlayer ? this.grid : this.enemyGrid);
-    var res = [];
-    for(var x = 0; x < grid.length; x++) {
-        for(var y = 0; y < grid[0].length; y++) {
-            if(grid[x][y] === null || grid[x][y].name === undefined) { continue; }
-            var crop = grid[x][y];
-            if(crop.name === "app") { if(crop.activeTime > 2) { continue; } }
-            else if(crop.rotten || crop.activeTime > 0) { continue; }
-            crop.flagged = true;
-            if(!isPlayer) { continue; }
-            var animal = undefined;
-            for(var i = animals.length - 1; i >= 0; i--) {
-                if(animals[i].crop !== crop.name) { continue; }
-                animal = animals[i].animal;
-                animals.splice(i, 1);
-                break;
-            }
-            res.push([x, y]);
             var seedChance = (Math.random() * (1 - player.luck)) * (isCritical ? 0.5 : 1);
             if(crop.name.indexOf("special") === 0) { seedChance = 1; }
-            if(seedChance < 0.05) {
-                crop.seedDrop = crop.name + "seed";
+            if(seedChance <= 0.05) {
                 player.increaseItem(crop.name);
+                crop.seedDrop = true;
             }
         }
     }
-    return res;
 };
 combat.ClearAndReturnCrop = function(pos) {
     var crop = this.grid[pos.x][pos.y];
     this.grid[pos.x][pos.y] = null;
+    if(crop.size === 2) {
+        this.grid[pos.x + 1][pos.y] = null;
+        this.grid[pos.x][pos.y + 1] = null;
+        this.grid[pos.x + 1][pos.y + 1] = null;
+    }
     crop.flagged = true;
     return crop;
 };
-combat.cleanFlaggedCrops = function() {
+combat.RemoveFlaggedCrops = function() {
     for(var x = 0; x < this.grid.length; x++) {
         for(var y = 0; y < this.grid[0].length; y++) {
             if(this.grid[x][y] === null || this.grid[x][y].name === undefined || !this.grid[x][y].flagged) { continue; }
-            combat.purgeFlaggedCrop(this.grid, x, y);
+            combat.PurgeCrop(this.grid, x, y);
         }
     }
     for(var x = 0; x < combat.enemywidth; x++) {
         for(var y = 0; y < combat.enemyheight; y++) {
             if(this.enemyGrid[x][y] === null || this.enemyGrid[x][y].name === undefined || !this.enemyGrid[x][y].flagged) { continue; }
-            combat.purgeFlaggedCrop(this.enemyGrid, x, y);
+            combat.PurgeCrop(this.enemyGrid, x, y);
         }
     }
 };
-combat.purgeFlaggedCrop = function(grid, x, y) {
+combat.PurgeCrop = function(grid, x, y, forceKill) {
     if(grid[x][y] === null || grid[x][y].name === undefined) { return false; }
     var crop = grid[x][y];
     //if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; } // TODO: why was this even here
-    if(crop.respawn > 0) {
+    if(crop.respawn > 0 && !forceKill) {
         crop.activeTime = crop.respawn;
         crop.flagged = false;
     } else {
         grid[x][y] = null;
-        if(crop.size === 2 && crop.type !== "tree") {
-            grid[x+1][y] = null;
-            grid[x][y+1] = null;
-            grid[x+1][y+1] = null;
+        if(crop.size === 2 && (crop.type !== "tree" || forceKill)) {
+            grid[x + 1][y] = null;
+            grid[x][y + 1] = null;
+            grid[x + 1][y + 1] = null;
         }
     }
     combat.animHelper.DrawCrops();
     return (crop.size === 2);
-};
-combat.removeCrop = function(pos) {
-    var crop = this.grid[pos.x][pos.y];
-    this.grid[pos.x][pos.y] = null;
-    if(crop.size == 2) {
-        this.grid[pos.x + this.dx][pos.y] = null;
-        this.grid[pos.x][pos.y + 1] = null;
-        this.grid[pos.x + this.dx][pos.y + 1] = null;
-    }
-    return crop;
 };

@@ -3,13 +3,12 @@ function AnimSet(anims, loop, fps, options) {
     this.lastFrame = this.anims.length - 1;
     this.fps = fps || 12;
     this.loop = loop || false;
-    if(options !== undefined) { for(var key in options) { this[key] = options[key]; } }
+    if(options !== undefined) { for(let key in options) { this[key] = options[key]; } }
 }
 function AnimFrame(sx, sy, callback) { this.x = sx; this.y = sy; this.callback = callback; }
 
 function OverlaySet(sheet, frames) { this.sheet = sheet; this.frames = frames; this.length = this.frames.length - 1; }
 function OverlayFrame(sx, sy, dx, dy) { this.x = sx; this.y = sy; this.dx = dx || 0; this.dy = dy || 0; }
-
 
 function JustOne(sx, sy, options) { return new AnimSet([new AnimFrame(sx, sy)], false, 12, options); }
 var enemyCombatAnims = {
@@ -21,16 +20,16 @@ var enemyCombatAnims = {
 }
 
 function GetWeaponAnims() {
-    var w = {};
-    var weaps = ["!hoe", "!babySickle", "!baseSickle", "!goodSickle", "!dblSickle", "!hvySickle", "!salthoe", "!sicklerang", "!sunSickle"];
-    for(var i = 0; i < weaps.length; i++) {
+    let w = {};
+    let weaps = ["!hoe", "!babySickle", "!baseSickle", "!goodSickle", "!dblSickle", "!hvySickle", "!salthoe", "!sicklerang", "!sunSickle"];
+    for(let i = 0; i < weaps.length; i++) {
         w[weaps[i] + "_ENEMY"] = new OverlaySet("combat_equipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 3), new OverlayFrame(i, 3) ]);
         w[weaps[i] + "_CROP"] = new OverlaySet("combat_equipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 4), new OverlayFrame(i, 4) ]);
     }
     weaps = ["!pltSickle", "!sickle2"];
-    for(var i = 0; i < weaps.length; i++) {
-        var enemy = [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i), new OverlayFrame(3, 5 + i) ];
-        var crop = [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i) ];
+    for(let i = 0; i < weaps.length; i++) {
+        let enemy = [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i), new OverlayFrame(3, 5 + i) ];
+        let crop = [ new OverlayFrame(0, 5 + i), new OverlayFrame(1, 5 + i), new OverlayFrame(2, 5 + i) ];
         if(i === 1) {
             enemy.push(new OverlayFrame(4, 6));
             crop.push(new OverlayFrame(5, 6));
@@ -55,7 +54,6 @@ function GetWeaponAnims() {
     return w;
 }
 var weaponAnims = GetWeaponAnims();
-
 
 var playerCombatAnims = {
     "STAND": JustOne(0, 0),
@@ -91,74 +89,92 @@ var playerCombatAnims = {
     "STAND_WEAK": JustOne(7, 4)
 };
 
-
 var animCallbacks = {
-    "enemy_damagePlayer": function() { animCallbackHelpers.HurtPlayer(); },
+    "enemy_damagePlayer": () => animCallbackHelpers.HurtPlayer(),
     "getFish": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var fish = resetti.crop.fishNum || 0;
+        const resetti = animEntity.animQueue[0];
+        const fish = resetti.crop.fishNum || 0;
         animProcess.AddOverlay(weaponAnims["FISH" + fish]);
         animCallbacks["player_pullCrop"](animProcess, animEntity);
     },
     "getBigFish": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
-        var head = combat.animHelper.GetPlayerTopPos();
+        const resetti = animEntity.animQueue[0];
+        const fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
+        const head = combat.animHelper.GetPlayerTopPos();
         animProcess.AddBaby(new TileAnim(head.x, head.y - 2, [fish], false, 12, true));
         animCallbacks["player_pullCrop"](animProcess, animEntity);
     },
     "player_throwFishAtEnemy": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
+        const resetti = animEntity.animQueue[0];
+        const fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
         animProcess.ClearBabies();
-        var pos = combat.animHelper.GetPlayerTopPos();
+        let pos = combat.animHelper.GetPlayerTopPos();
         pos.y -= 2;
         animProcess.AddBaby(new ParabolicThrowAnim(fish, pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
                             function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
     "enemy_pullCrop": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var anim = new TileAnim(combat.enemydx + resetti.x, combat.enemydy + resetti.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
+        const resetti = animEntity.animQueue[0];
+        let anim = new TileAnim(combat.enemydx + resetti.x, combat.enemydy + resetti.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
         anim.AddFrameFunc(3, function() { resetti.crop.hidden = true; combat.animHelper.DrawCrops(); });
         animProcess.AddBaby(anim);
     },
     "enemy_throwCropAtEnemy": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var edims = animEntity.dims;
-        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, {x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, combat.animHelper.GetPlayerTopPos(), 24, animCallbackHelpers.HurtPlayer));
+        const resetti = animEntity.animQueue[0];
+        const edims = animEntity.dims;
+        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, {x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, 
+                            combat.animHelper.GetPlayerTopPos(), 24, animCallbackHelpers.HurtPlayer));
     },
     "player_pullCrop": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var anim = new TileAnim(combat.dx + resetti.x, combat.dy + resetti.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
+        const resetti = animEntity.animQueue[0];
+        const x = combat.dx + resetti.x, y = combat.dy + resetti.y;
+        let anim = new TileAnim(x, y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
         anim.AddFrameFunc(3, function() { resetti.crop.hidden = true; combat.animHelper.DrawCrops(); });
         animProcess.AddBaby(anim);
+        if(resetti.crop.seedDrop === true) {
+            animProcess.AddBaby(new MovingLinearAnim([resetti.crop.name + "seed"], { x: x, y: y }, combat.animHelper.GetPlayerTopPos(), 0.25, 0, 24, 24));
+        }
     },
     "player_throwCompostAtEnemy": function(animProcess, animEntity) {
-        animProcess.AddBaby(new ParabolicThrowAnim("compostpile", combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(0), 24, 
-                            function() { animCallbackHelpers.HurtTargets(animProcess, combat.enemies.map(function(e, i) { return i; })) }));
+        for(let i = 0; i < combat.enemies.length; i++) {
+            animProcess.AddBaby(new ParabolicThrowAnim("compostpile", combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(i), 24, 
+                function() { animCallbackHelpers.HurtTargets(animProcess, [i]) }));
+        }
     },
     "player_launchBird": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var arr = [resetti.crop.name + "Fly0", resetti.crop.name + "Fly1"]; // TODO: account for targets that are crops
-        var isGrounded = ["platypus", "frogbot"].indexOf(resetti.crop.name) >= 0;
-        var dy = (isGrounded ? 1 : 1.5);
-        var fps = (isGrounded ? 24 : 12);
-        // TODO: handle recoil
-        animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetPlayerBottomPos(), combat.animHelper.GetEnemyBottomPos(animEntity.bonusArgs.targets[0]), dy, 24, fps, 
-                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
-    },
-    "player_throwCropAtEnemy": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var recoil = animEntity.bonusArgs.recoils[resetti.idx];
-        var callback = undefined;
-        if(recoil === null || recoil === undefined) {
-            callback = function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); };
+        const resetti = animEntity.animQueue[0];
+        const arr = [resetti.crop.name + "Fly0", resetti.crop.name + "Fly1"];
+        const isGrounded = ["platypus", "frogbot"].indexOf(resetti.crop.name) >= 0;
+        const dy = (isGrounded ? 1 : 1.5);
+        const fps = (isGrounded ? 24 : 12);
+        let callback = undefined;
+        if(animEntity.bonusArgs.recoils[resetti.idx] === null) {
+            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
         } else {
             callback = function() {
-                for(var i = 0; i < combat.enemies.length; i++) {
-                    var f = function(idx) {
-                        return function() { animCallbackHelpers.HurtTargets(animProcess, [idx]) };
-                    }(i);
+                const allTargs = combat.enemies.map((e, i) => i);
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+                animCallbackHelpers.HurtTargets(animProcess, allTargs);
+            };
+        }
+        let targetPos = null;
+        if(animEntity.bonusArgs.targets[0].x === undefined) {
+            targetPos = combat.animHelper.GetEnemyBottomPos(animEntity.bonusArgs.targets[0]);
+        } else {
+            const origPos = animEntity.bonusArgs.targets[0];
+            targetPos = { x: origPos.x, y: origPos.y + 1 };
+        }
+        animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetPlayerBottomPos(), targetPos, 0.25, dy, 24, fps, callback));
+    },
+    "player_throwCropAtEnemy": function(animProcess, animEntity) {
+        const resetti = animEntity.animQueue[0];
+        let callback = undefined;
+        if(animEntity.bonusArgs.recoils[resetti.idx] === null) {
+            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+        } else {
+            callback = function() {
+                for(let i = 0; i < combat.enemies.length; i++) {
+                    let f = () => animCallbackHelpers.HurtTargets(animProcess, [i]);
                     animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]),
                                                                 combat.animHelper.GetEnemyTopPos(i), 24, f, true));
                 }
@@ -169,8 +185,20 @@ var animCallbacks = {
     },
     "player_throwCropAtCrop": function(animProcess, animEntity) {
         var resetti = animEntity.animQueue[0];
-        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, { x: 3, y: 9 }, { x: 10, y: 9 }, 24, // TODO: should not be a parabola
-                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
+        var recoil = animEntity.bonusArgs.recoils[resetti.idx];
+        var callback = undefined;
+        if(recoil === null || recoil === undefined) {
+            callback = function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); };
+        } else {
+            callback = function() {
+                for(var i = 0; i < combat.enemies.length; i++) {
+                    var f = function(idx) { return function() { animCallbackHelpers.HurtTargets(animProcess, [idx]) }; }(i);
+                    animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], animEntity.bonusArgs.targets[0], combat.animHelper.GetEnemyTopPos(i), 1, 0, 24, 24, f));
+                }
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+            };
+        }
+        animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], combat.animHelper.GetPlayerTopPos(), animEntity.bonusArgs.targets[0], 1, 0, 24, 24, callback));
     },
     "player_damageFoes": function(animProcess, animEntity) { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); },
     "player_damageFoesWithAnim": function(animProcess, animEntity) {
@@ -181,22 +209,22 @@ var animCallbacks = {
     "player_damageFoes2": function(animProcess) { animProcess.SetNewFPS(10); animProcess.SetShake(false); }
 };
 var animCallbackHelpers = {
-    "HurtPlayer": function() { combat.animHelper.GivePlayerAHit(); },
+    "HurtPlayer": () => combat.animHelper.GivePlayerAHit(),
     "HurtTargets": function(animProcess, targets) {
-        for(var i = 0; i < targets.length; i++) {
-            var targ = targets[i];
+        for(let i = 0; i < targets.length; i++) {
+            const targ = targets[i];
             if(targ.x === undefined) { // enemy
                 if(combat.enemies[targ].health <= 0) {
-                    combat.animHelper.MakeEnemyACorpse(targ); // TODO
+                    combat.animHelper.MakeEnemyACorpse(targ);
                 } else {
                     combat.animHelper.SetEnemyAnimState(targ, "HURT");
                 }
             } else { // crop
-                var cropPos = {x: targ.x - combat.enemydx, y: targ.y - combat.enemydy};
-                var crop = combat.enemyGrid[cropPos.x][cropPos.y];
+                const cropPos = {x: targ.x - combat.enemydx, y: targ.y - combat.enemydy};
+                let crop = combat.enemyGrid[cropPos.x][cropPos.y];
                 if(crop === null) { continue; }
                 if(crop.health <= 0) {
-                    var anim = new TileAnim(targ.x, targ.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
+                    let anim = new TileAnim(targ.x, targ.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
                     anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
                     animProcess.AddBaby(anim);
                 } else {

@@ -28,7 +28,6 @@ var debug = {
             var x = 10;
             if(this.enemy.size === "xl") { x = 8; y = 3; }
             this.animHelp.DEBUG_DrawEnemy(0);
-            //gfx.drawCharacter(this.enemy.spriteidx, 0, this.enemy.sheet, this.enemy.size, x, y);
             gfx.drawInfobox(9, 1.5, combat.selectTarget.dy);
             gfx.drawWrappedText(this.enemy.name, me.INFOBOXWIDTH * 16, 11 + (combat.selectTarget.dy * 16), 85);
             var cursorInfo = this.animHelp.GetCursorInfo(0);

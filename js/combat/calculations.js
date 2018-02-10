@@ -148,7 +148,7 @@ var dmgCalcs = {
                             case 1: seasonVal += soil.boost / 2; break;
                         }
                     } else if(soil.amp !== undefined) {
-                        switch(crop.seasons[season]) { // currently values are 1 and 2
+                        switch(crop.seasons[season]) { // currently values are 0, 1 and 2
                             case 0: seasonVal -= soil.amp * 0.1; break; // brings from 0.2 to 0.1 or 0 respectively
                             case 2: seasonVal *= soil.amp * 2; break; // brings from 2 to 4 or 8 respectively
                         }
