@@ -122,8 +122,15 @@ var animCallbacks = {
     "enemy_throwCropAtEnemy": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
         const edims = animEntity.dims;
-        animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, {x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, 
-                            combat.animHelper.GetPlayerTopPos(), 24, animCallbackHelpers.HurtPlayer));
+        if(animEntity.bonusArgs.targets.length === 0) {
+            animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, 
+                combat.animHelper.GetPlayerTopPos(), 24, animCallbackHelpers.HurtPlayer));
+        } else {
+            const targx = animEntity.bonusArgs.targets[0].x + combat.dx;
+            const targy = animEntity.bonusArgs.targets[0].y + combat.dy;
+            animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, { x: targx, y: targy }, 
+                1, 0, 24, 24, function() { animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets) } ));
+        }
     },
     "player_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
@@ -188,7 +195,7 @@ var animCallbacks = {
         var recoil = animEntity.bonusArgs.recoils[resetti.idx];
         var callback = undefined;
         if(recoil === null || recoil === undefined) {
-            callback = function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); };
+            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
         } else {
             callback = function() {
                 for(var i = 0; i < combat.enemies.length; i++) {
@@ -210,6 +217,22 @@ var animCallbacks = {
 };
 var animCallbackHelpers = {
     "HurtPlayer": () => combat.animHelper.GivePlayerAHit(),
+    "HurtPlayerCrops": function(animProcess, targets) {
+        combat.animHelper.GivePlayerAHit(true);
+        for(let i = 0; i < targets.length; i++) {
+            const cropPos = targets[i];
+            const targ = { x: cropPos.x + combat.dx, y: cropPos.y + combat.dy };
+            let crop = combat.enemyGrid[cropPos.x][cropPos.y];
+            if(crop === null) { continue; }
+            if(crop.health <= 0) {
+                let anim = new TileAnim(targ.x, targ.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
+                anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
+                animProcess.AddBaby(anim);
+            } else {
+                animProcess.AddBaby(new TileAnim(targ.x, targ.y, ["vein"], true, 12, true));
+            }
+        }
+    },
     "HurtTargets": function(animProcess, targets) {
         for(let i = 0; i < targets.length; i++) {
             const targ = targets[i];
@@ -220,7 +243,7 @@ var animCallbackHelpers = {
                     combat.animHelper.SetEnemyAnimState(targ, "HURT");
                 }
             } else { // crop
-                const cropPos = {x: targ.x - combat.enemydx, y: targ.y - combat.enemydy};
+                const cropPos = { x: targ.x - combat.enemydx, y: targ.y - combat.enemydy };
                 let crop = combat.enemyGrid[cropPos.x][cropPos.y];
                 if(crop === null) { continue; }
                 if(crop.health <= 0) {

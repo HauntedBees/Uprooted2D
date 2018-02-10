@@ -107,6 +107,7 @@ function CombatAnimHelper(enemies) {
 
 
     this.SetEnemyAnimState = (idx, name) => enemyAnimInfos[idx].SetAnim(name);
+    this.SetEnemyAnimArg = (idx, key, val) => enemyAnimInfos[idx].PushArg(key, val);
     this.MakeEnemyACorpse = function(idx) { const e = enemyAnimInfos[idx]; e.dead = true; e.deadFrame = 0; };
 
 
@@ -128,13 +129,10 @@ function CombatAnimHelper(enemies) {
     };
     this.ResetPlayerAnimPos = () => this.SetPlayerAnimPos(playerPos.x, playerPos.y);
     this.SetPlayerAnimPos = function(x, y) { playerAnimInfo.dims.x = x; playerAnimInfo.dims.y = y; };
-    this.GivePlayerAHit = function() {
-        // TODO: account for crop attacks
-        if(player.health <= 0) {
-            this.SetPlayerAnimState("FATALBLOW");
-        } else {
-            this.SetPlayerAnimState("HURT");
-        }
+    this.GivePlayerAHit = function(isCrop) {
+        if(isCrop) { this.SetPlayerAnimState("HURT_CROP"); }
+        else if(player.health <= 0) { this.SetPlayerAnimState("FATALBLOW"); }
+        else { this.SetPlayerAnimState("HURT"); }
     };
 
     this.AddEnemyAttackAnim = (idx, caa) => enemyAnimInfos[idx].animQueue.push(caa);

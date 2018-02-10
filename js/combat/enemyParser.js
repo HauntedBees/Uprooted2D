@@ -1,4 +1,4 @@
-var enemyHelpers = {
+const enemyHelpers = {
     GetNode: function(name) { for(var i = 0; i < EnemyParser.nodes.length; i++) { if(EnemyParser.nodes[i].id === name) { return EnemyParser.nodes[i]; } } },
     GetSideEffect: function(e, tile) {
         if(tile.saltChance === undefined && tile.burnChance === undefined) { return ""; }
@@ -89,12 +89,10 @@ var enemyHelpers = {
     },
     GetAttackData: function(dmg, secondArg, thirdArg, fourthArg) {
         secondArg = secondArg || "";
-        var node = EnemyParser.current;
-        
-        var outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg)
+        const node = EnemyParser.current;
+        let outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg)
                             .replace(/\{2\}/g, secondArg).replace(/\{3\}/g, thirdArg).replace(/\{4\}/g, fourthArg);
         outputText = HandleArticles(outputText, secondArg);
-
         return { text: outputText, animFPS: node.data.animFPS, animData: node.data.animData };
     },
     TryDisturbTile: function(x, y, type) {
@@ -136,36 +134,25 @@ var enemyHelpers = {
         return enemyHelpers.DoDamageCrop(e, x, y, 0);
     },
     DoDamageCrop: function(e, x, y, type, useDamage) { // 0 = water, 1 = fire, 2 = salt, -1 = general
-        var crop = combat.grid[x][y];
+        let crop = combat.grid[x][y];
         if(crop === null) { return { status: false }; }
-        var dmg = enemyHelpers.GetCropDamage(e, x, y, type, useDamage);
+        const dmg = enemyHelpers.GetCropDamage(e, x, y, type, useDamage);
         crop.health -= dmg;
         if(crop.rotten) { crop.health = 0; }
-        if(crop.health <= 0) {
-            combat.grid[x][y] = null; // TODO: no animation?!
-            if(crop.size === 2) {
-                combat.grid[x + 1][y] = null;
-                combat.grid[x][y + 1] = null;
-                combat.grid[x + 1][y + 1] = null;
-            }
-            combat.animHelper.DrawCrops();
-            return { status: true, crop: true, destroyed: true };
-        } else {
-            return { status: true, crop: true, destroyed: false };
-        }
+        return { status: true, crop: true, destroyed: (crop.health <= 0) };
     },
     GetCropDamage: function(e, x, y, type, useDamage) { // type: 0 = water, 1 = fire, salt = 2, -1 = general
-        var crop = combat.grid[x][y];
-        var isBig = (crop.x !== undefined);
+        let crop = combat.grid[x][y];
+        const isBig = (crop.x !== undefined);
         if(isBig) { crop = combat.grid[crop.x][crop.y]; }
 
-        var attackInfo = dmgCalcs.MeleeAttack(false, combat.season, (useDamage === undefined ? e.atk : useDamage), [crop], type);
-        var dmg = attackInfo.damage;
+        const attackInfo = dmgCalcs.MeleeAttack(false, combat.season, (useDamage === undefined ? e.atk : useDamage), [crop], type)[0];
+        let dmg = attackInfo.damage;
         if(isBig) { dmg /= 2; }
-
-        var itemTile = player.itemGrid[x][y];
+        const itemTile = player.itemGrid[x][y];
         if(itemTile === "_strongsoil") { dmg /= 2; }
-
+        const d = isBig ? 1 : 0;
+        EnemyParser.targets.push({ x: x + d, y: y + d, type: type });
         return Math.ceil(dmg);
     },
     GetWeakestPlayerCrop: function() {
@@ -243,20 +230,22 @@ var enemyHelpers = {
         return false;
     }
 };
-var EnemyParser = {
-    nodes: [], current: null, enemy: null, done: false, outputData: null,
+const EnemyParser = {
+    nodes: [], current: null, enemy: null, done: false, outputData: null, targets: [],
     Parse: function(enemy) {
         EnemyParser.nodes = enemyPatterns[enemy.attackType].nodes;
         EnemyParser.current = enemyHelpers.GetNode("node0");
         EnemyParser.enemy = enemy;
         EnemyParser.done = false;
         EnemyParser.outputData = null;
+        EnemyParser.targets = [];
         if(enemyHelpers.HasRottenCrops() && Math.random() < enemy.rotClearChance) {
             enemyHelpers.RemoveWeeds();
             EnemyParser.outputData = { text: GetText("enemyRemoveWeeds").replace(/\{0\}/g, enemy.name), animFPS: 4, animData: [[0, 4], [0, 5]] };
         } else {
             EnemyParser.ParseCurrentNode();
         }
+        EnemyParser.outputData.targets = EnemyParser.targets;
         return EnemyParser.outputData;
     },
     ParseCurrentNode: function() {
@@ -292,7 +281,7 @@ var EnemyParser = {
         EnemyParser.ParseCurrentNode();
     }
 };
-var conditions = {
+const conditions = {
     "HAS_CLOUD": function(e) {
         var crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
         if(crops.length === 0) { return false; }
@@ -336,10 +325,31 @@ var conditions = {
     },
     "ELSE": function(e) { return true; }
 };
-var actions = {
-    "INIT": function() { return true; },
-    "END": function() { return true; },
+const actions = {
+    "INIT": () =>  true,
+    "END": () =>  true,
     "SKIP": function() { EnemyParser.outputData = { skip: true }; return true; },
+    "TESTSKILL": function(e) { 
+        switch(debug.testEnemyState) {
+            case "attack":
+                EnemyParser.current.data.animData = [[0, 2], [0, 3], [0, 4]];
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["WEAK_ATTACK"](e);
+            case "plantandattack":
+                combat.enemyGrid[0][0] = GetCrop("kelp");
+                combat.enemyGrid[0][0].activeTime = 0;
+                EnemyParser.current.data.animData = [[0, 2], [0, 3], [0, 4]];
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["LAUNCH_CROPS"](e);
+            case "plantandattackcrop":
+                combat.enemyGrid[0][0] = GetCrop("kelp");
+                combat.enemyGrid[0][0].activeTime = 0;
+                EnemyParser.current.data.animData = [[0, 2], [0, 3], [0, 4]];
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["LAUNCH_CROPS_AT_CROPS"](e);
+        }
+        console.log("could not find " + debug.testEnemyState);
+    },
     "NATHAN_PLANT": function(e) {
         var cropsToGrow = [ // these should only be 4 star or higher crops in the end, with a 2 for the season, if possible
             { // spring
@@ -830,20 +840,19 @@ var actions = {
         return true;
     },
     "LAUNCH_CROPS_AT_CROPS": function(e) {
-        var attempts = 5;
-        var pos = null;
+        let attempts = 5, pos = null;
         while(attempts-- > 0) {
-            var x = Math.floor(Math.random() * player.gridWidth);
-            var y = Math.floor(Math.random() * player.gridHeight);
-            var tile = combat.grid[x][y];
+            const x = Math.floor(Math.random() * player.gridWidth);
+            const y = Math.floor(Math.random() * player.gridHeight);
+            const tile = combat.grid[x][y];
             if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
             pos = { x: x, y: y };
         }
         if(pos === null) {
-            for(var x = 0; x < player.gridWidth; x++) {
+            for(let x = 0; x < player.gridWidth; x++) {
                 if(pos !== null) { break; }
-                for(var y = 0; y < player.gridHeight; y++) {
-                    var tile = combat.grid[x][y];
+                for(let y = 0; y < player.gridHeight; y++) {
+                    const tile = combat.grid[x][y];
                     if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
                     pos = { x: x, y: y };
                     break;
@@ -851,22 +860,22 @@ var actions = {
             }
         }
         if(pos === null) { return false; }
-        var fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [combat.grid[pos.x][pos.y]]);
-        var res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1, fieldData.damage);
+        const fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [combat.grid[pos.x][pos.y]]);
+        const res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1, fieldData.damage);
         if(res.destroyed) {
             EnemyParser.current.data.textID = "cropKill";
         } else {
             EnemyParser.current.data.textID = "cropAttack";
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-        EnemyParser.outputData.throwables = fieldData.crops;
+        EnemyParser.outputData.throwables = fieldData.animCrops;
         return true;
     },
-    "TRY_THROW_ROCK": function(e) { return enemyHelpers.TryDisturbRandomTile("rock"); },
-    "TECH_THROW_ROCK": function(e) { return enemyHelpers.TryDisturbRandomTile("engine"); },
-    "TIRE_CHUCK": function(e) { return enemyHelpers.TryDisturbRandomTile("tire"); },
-    "BECKETT_WATER": function(e) { return enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"); },
-    "BECK_FIRE_ROW": function(e) { return enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"); },
+    "TRY_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("rock"),
+    "TECH_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("engine"),
+    "TIRE_CHUCK": (e) => enemyHelpers.TryDisturbRandomTile("tire"),
+    "BECKETT_WATER": (e) => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
+    "BECK_FIRE_ROW": (e) => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
     "BECK_THROW_SALT": function(e) { 
         var row = Math.floor(Math.random() * player.gridHeight);
         var hasKills = false;
@@ -1109,8 +1118,8 @@ var actions = {
         combat.adjustEnemyStatsWeather();
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, seasonStr);
     },
-    "RANDOM_GT": function(e, amt) { return (Math.random() > parseFloat(amt)); },
-    "WRITE_TEXT": function(e) { EnemyParser.outputData = enemyHelpers.GetAttackData(0); },
+    "RANDOM_GT": (e, amt) => (Math.random() > parseFloat(amt)),
+    "WRITE_TEXT": (e) => EnemyParser.outputData = enemyHelpers.GetAttackData(0),
     "HEAL_RANGE": function(e, amountRange) {
         var rangeVals = amountRange.split(",");
         var base = parseInt(rangeVals[0]);

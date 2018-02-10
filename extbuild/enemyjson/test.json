@@ -1,0 +1,1 @@
+{"nodes":[{"id":"node0","data":{"message":"INIT"},"next":"node1"},{"id":"node1","data":{"message":"TESTSKILL"}}]}
