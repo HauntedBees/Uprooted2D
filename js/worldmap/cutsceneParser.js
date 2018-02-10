@@ -1,4 +1,4 @@
-var iHandler = {
+const iHandler = {
     moveSpeed: 0.025,
     state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] },
     Start: function(startkey) {
@@ -24,12 +24,12 @@ var iHandler = {
     Advance: function() {
         worldmap.inDialogue = true;
         if(iHandler.state.texts.length > 0) {
-            var newText = iHandler.state.texts.splice(0, 1)[0];
+            const newText = iHandler.state.texts.splice(0, 1)[0];
             worldmap.writeText(newText);
             return;
         }
-        var curKey = iHandler.state.key + (iHandler.state.idx++);
-        var action = scripts[curKey];
+        const curKey = iHandler.state.key + (iHandler.state.idx++);
+        const action = scripts[curKey];
         if(action === undefined) { iHandler.state.done = true; }
         if(iHandler.state.done) {
             if(iHandler.state.postItems.length > 0) {
@@ -58,7 +58,7 @@ var iHandler = {
         return finished;
     }
 };
-var CommandParser = {
+const CommandParser = {
     ConditionCheck: function(json) {
         var d = worldmap.dialogData === null ? -1 : worldmap.dialogData.idx;
         for(var i = 0; i < json.length; i++) {
@@ -76,16 +76,14 @@ var CommandParser = {
                 return CommandParser.ConditionCheck(JSON.parse(s.substring(1)));
             }
         }
-        var actions = s.split("&");
-        for(var i = 0; i < actions.length;i++) {
-            var splitter = actions[i].split("_");
-            var name = splitter[0];
-            var action = splitter[1];
-            var isPlayer = (name === "pl");
-            var isTarget = (name === "targ");
-            var target = name === "" ? null : (isPlayer ? worldmap : (isTarget ? game.target : worldmap.importantEntities[name]));
-            var actDeets = action.split(":");
-            var actSuffix = actDeets[1];
+        const actions = s.split("&");
+        for(let i = 0; i < actions.length; i++) {
+            const splitter = actions[i].split("_");
+            const name = splitter[0], action = splitter[1];
+            const isPlayer = (name === "pl"), isTarget = (name === "targ");
+            const target = name === "" ? null : (isPlayer ? worldmap : (isTarget ? game.target : worldmap.importantEntities[name]));
+            const actDeets = action.split(":");
+            const actSuffix = actDeets[1];
             switch(actDeets[0]) {
                 case "CHIEVO": player.achievements.push(actSuffix); break;
                 case "ALIGNTECH": player.shiftTech(parseFloat(actSuffix)); break;
@@ -226,7 +224,7 @@ function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
     if(refreshMap) { worldmap.refreshMap(); }
 }
 
-var SpecialFunctions = {
+const SpecialFunctions = {
     "WAIT": function() { },
     "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
     "SETNERDBED": function() { player.lastInn = "nerdBed"; },

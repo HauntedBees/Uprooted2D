@@ -268,10 +268,13 @@ var worldmap = {
         this.waitForAnimation = false;
         this.click(null);
     },
-    click: function(pos) {
+    click: function(pos, isFresh) {
         if(!this.inDialogue) { if(worldmap.smartphone !== null) { return worldmap.smartphone.Read(); } return false; }
         if(this.waitForAnimation) { iHandler.SpeedUpAnimation(); }
-        else { iHandler.Advance(); }
+        else {
+            if(!isFresh && worldmap.dialogData.choices !== undefined && worldmap.dialogData.choices.length > 0) { return false; }
+            iHandler.Advance();
+        }
     },
     finishDialog: function() {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
@@ -286,7 +289,7 @@ var worldmap = {
             case player.controls.up: dy--; break;
             case player.controls.down: dy++; break;
             case player.controls.confirm:
-            case player.controls.pause: return this.click(null);
+            case player.controls.pause: return this.click(null, input.IsFreshPauseOrConfirmPress());
         }
         if(worldmap.dialogData.choices === undefined || worldmap.dialogData.choices.length === 0) { return; }
         var newchoice = worldmap.dialogData.idx + dy;
@@ -335,10 +338,7 @@ var worldmap = {
                 game.transition(this, pausemenu);
                 return;
         }
-        var newPos = {
-            x: Math.round(pos.x),
-            y: Math.round(pos.y)
-        }
+        var newPos = { x: Math.round(pos.x), y: Math.round(pos.y) }
         if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
         if(worldmap.noClip) {
             this.pos = pos;

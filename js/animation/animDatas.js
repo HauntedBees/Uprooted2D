@@ -79,8 +79,8 @@ var playerCombatAnims = {
     "THROW_COMPOST": new AnimSet([new AnimFrame(0, 3), new AnimFrame(0, 4, "player_throwCompostAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "THROW_BIRD": new AnimSet([new AnimFrame(0, 3, "player_pullCrop"), new AnimFrame(0, 2, "player_launchBird"), new AnimFrame(0, 2), new AnimFrame(0, 2)], false),
     "THROW_ROBO": new AnimSet([new AnimFrame(6, 3, "player_pullCrop"), new AnimFrame(6, 4, "player_launchBird"), new AnimFrame(6, 4), new AnimFrame(6, 3)], false),
-    "FISH_SLAP": new AnimSet([new AnimFrame(1, 3, "getFish"), new AnimFrame(1, 4, "player_damageFoes"), new AnimFrame(1, 4)], false, 8),
-    "FISH_TOSS": new AnimSet([new AnimFrame(0, 5, "getBigFish"), new AnimFrame(0, 5), new AnimFrame(0, 5), 
+    "FISH_SLAP": new AnimSet([new AnimFrame(1, 3, "player_getFish"), new AnimFrame(1, 4, "player_damageFoes"), new AnimFrame(1, 4)], false, 8),
+    "FISH_TOSS": new AnimSet([new AnimFrame(0, 5, "player_getBigFish"), new AnimFrame(0, 5), new AnimFrame(0, 5), 
                               new AnimFrame(0, 4, "player_throwFishAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
     "DRINK": new AnimSet([new AnimFrame(2, 3), new AnimFrame(2, 4)], true, 6),
     "EAT": new AnimSet([new AnimFrame(3, 3), new AnimFrame(3, 4)], true, 6),
@@ -91,28 +91,6 @@ var playerCombatAnims = {
 
 var animCallbacks = {
     "enemy_damagePlayer": () => animCallbackHelpers.HurtPlayer(),
-    "getFish": function(animProcess, animEntity) {
-        const resetti = animEntity.animQueue[0];
-        const fish = resetti.crop.fishNum || 0;
-        animProcess.AddOverlay(weaponAnims["FISH" + fish]);
-        animCallbacks["player_pullCrop"](animProcess, animEntity);
-    },
-    "getBigFish": function(animProcess, animEntity) {
-        const resetti = animEntity.animQueue[0];
-        const fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
-        const head = combat.animHelper.GetPlayerTopPos();
-        animProcess.AddBaby(new TileAnim(head.x, head.y - 2, [fish], false, 12, true));
-        animCallbacks["player_pullCrop"](animProcess, animEntity);
-    },
-    "player_throwFishAtEnemy": function(animProcess, animEntity) {
-        const resetti = animEntity.animQueue[0];
-        const fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
-        animProcess.ClearBabies();
-        let pos = combat.animHelper.GetPlayerTopPos();
-        pos.y -= 2;
-        animProcess.AddBaby(new ParabolicThrowAnim(fish, pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
-                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
-    },
     "enemy_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
         if(resetti === undefined) {
@@ -135,6 +113,28 @@ var animCallbacks = {
             animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, { x: targx, y: targy }, 
                 1, 0, 24, 24, function() { animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets) } ));
         }
+    },
+    "player_getFish": function(animProcess, animEntity) {
+        const resetti = animEntity.animQueue[0];
+        const fish = resetti.crop.fishNum || 0;
+        animProcess.AddOverlay(weaponAnims["FISH" + fish]);
+        animCallbacks["player_pullCrop"](animProcess, animEntity);
+    },
+    "player_getBigFish": function(animProcess, animEntity) {
+        const resetti = animEntity.animQueue[0];
+        const fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
+        const head = combat.animHelper.GetPlayerTopPos();
+        animProcess.AddBaby(new TileAnim(head.x, head.y - 2, [fish], false, 12, true));
+        animCallbacks["player_pullCrop"](animProcess, animEntity);
+    },
+    "player_throwFishAtEnemy": function(animProcess, animEntity) {
+        const resetti = animEntity.animQueue[0];
+        const fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
+        animProcess.ClearBabies();
+        let pos = combat.animHelper.GetPlayerTopPos();
+        pos.y -= 2;
+        animProcess.AddBaby(new ParabolicThrowAnim(fish, pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
+                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
     },
     "player_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];

@@ -7,8 +7,8 @@ var input = {
         var p = input.getMousePos(e);
         if(game.currentInputHandler.mouseMove(p)) { return; }
     },
-
-    keys: {}, mainKey: undefined,
+    justPressed: {}, keys: {}, mainKey: undefined,
+    IsFreshPauseOrConfirmPress: () => (input.justPressed[player.controls.pause] === 0) || (input.justPressed[player.controls.confirm] === 0),
     setMainKey: function(key) {
         if(key === undefined) {
             if(input.keys[player.controls.up] !== undefined) { input.mainKey = 0; }
@@ -28,6 +28,7 @@ var input = {
         }
     },
     keyDown: function(e) {
+        input.justPressed[e.key] = input.justPressed[e.key] === undefined ? 0 : input.justPressed[e.key] + 1;
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             input.setMainKey(e.key);
             if(input.keys[e.key] !== undefined) { return; }
@@ -37,6 +38,7 @@ var input = {
         }
     },
     keyUp: function(e) {
+        input.justPressed[e.key] = -1;
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             clearInterval(input.keys[e.key]);
             input.keys[e.key] = undefined;
@@ -48,6 +50,7 @@ var input = {
             return;
         }
         game.currentInputHandler.keyPress(e.key);
+        input.justPressed[e.key]++;
     },
     getMousePos: function(e) {
         var rect = gfx.canvas["menutext"].getBoundingClientRect();
