@@ -370,7 +370,7 @@ var worldmap = {
                 var e = this.entities[i];
                 if(worldmap.isCollision(e, newPos) && e.interact !== undefined) {
                     didInteract = true;
-                    if(!e.noChange) { e.dir = this.invertDir(this.playerDir); }
+                    if(!e.noChange) { e.dir = this.InvertDir(this.playerDir); }
                     this.inDialogue = true;
                     this.forceEndDialog = false;
                     worldmap.toggleMovement(false);
@@ -410,7 +410,7 @@ var worldmap = {
         this.refreshMap();
         return true;
     },
-    invertDir: function(dir) {
+    InvertDir: function(dir) {
         switch(dir) {
             case directions.UP: return directions.DOWN;
             case directions.LEFT: return directions.RIGHT;

@@ -118,12 +118,21 @@ function SwitchMapSeamless(name, x, y, requiredDir, newx, newy) {
         } ]
     }
 };
-function EnterShop(name, x, y, shop) {
+function EnterShop(name, x, y, shop, shopDir) {
+    shopDir = (shopDir === undefined ? directions.DOWN : shopDir);
     return { 
-        name: name, 
-        solid: true, pos: {x: x, y: y}, 
-        isShop: true, shopName: shop,
-        interact: [ function() { game.transition(game.currentInputHandler, worldmap.shop, shop); return true; } ]
+        name: name, solid: false, pos: { x: x, y: y }, isShop: true, shopName: shop, shopDir: shopDir,
+        interact: [ (i, e) => {
+            switch(e.shopDir) {
+                case directions.UP: worldmap.pos.y -= 0.5; break;
+                case directions.LEFT: worldmap.pos.x -= 0.5; break;
+                case directions.DOWN: worldmap.pos.y += 0.5; break;
+                case directions.RIGHT: worldmap.pos.x += 0.5; break;
+            }
+            worldmap.playerDir = e.shopDir;
+            game.transition(game.currentInputHandler, worldmap.shop, shop);
+            return true;
+        }]
     };
 };
 function GetInvisibleEntity(name, interact, additional) {
@@ -384,7 +393,7 @@ function JumboExit() { JumboToggle(false); }
 function JumboToggle(inside) {
     worldmap.forceEndDialog = true;
     mapStates[worldmap.mapName].inside = inside;
-    for(var i = 0; i < worldmap.entities.length; i++) {
+    for(let i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].inside) { worldmap.entities[i].visible = inside; }
         else if(worldmap.entities[i].jumbo) { worldmap.entities[i].visible = !inside; }
     }

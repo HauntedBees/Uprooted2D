@@ -281,7 +281,7 @@ let mapentities = {
         GetSign(26, 3, "SignConstWork"),
         GetSign(20, 12, "SignMermaidInn"),
 
-        EnterShop("MermaidInn", 20, 11, "mermaidinn"),
+        EnterShop("MermaidInn", 20, 11, "mermaidinn", directions.RIGHT),
         EnterShop("MermaidShoppe", 10, 13, "mermaid"),
         EnterShop("ConstructionShoppe", 25, 3, "cworker"),
 

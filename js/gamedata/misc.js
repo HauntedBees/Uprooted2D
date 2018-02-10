@@ -1,7 +1,11 @@
-function Range(min, max) { return min + Math.floor(Math.random() * (max - min)); }
-function InclusiveRange(min, max) { return min + Math.round(Math.random() * (max - min)); }
-function RoundNear(x, num) { return Math.round(x * num) / num; }
-var inns = {
+const Range = (min, max) => min + Math.floor(Math.random() * (max - min));
+const InclusiveRange = (min, max) => Range(min, max + 1);
+const RoundNear = (x, num) => Math.round(x * num) / num;
+/*const DiffPoints = (p1, p2) => ({ x: p1.x - p2.x, y: p1.y - p2.y });
+const AddPoints = (p1, p2) => ({ x: p1.x + p2.x, y: p1.y + p2.y });
+const MultPoint = (p, m) => ({ x: p.x * m, y: p.y * m });*/ // TODO: UNUSED BUT MAYBE USEFUL
+
+const inns = {
     "start": { x: 21, y: 5.25, map: "farm" },
     "inn0": { x : 10, y: 3, map: "farm" },
     "inn1": { x : 16, y: 5, map: "firstvillage" },
@@ -13,14 +17,14 @@ var inns = {
     "lastInn": { x: 5, y: 6, map: "hq_5" }
 };
 
-var mapBattleXref = {
+const mapBattleXref = {
     "underwater": "bgs/underwater"
 };
-var mapBattleTileXref = {
+const mapBattleTileXref = {
     "underwater": "seaGrass"
 };
 
-var levelStats = {
+const levelStats = {
     hp: [25, 30, 35, 45, 55, 65, 75, 95, 115, 135, 160, 195, 235, 280, 340, 400, 500, 600, 700, 850],
     atk: [3,  5,  7, 10, 13, 16, 19, 22,  25,  28,  32,  36,  40,  44,  48,  52,  56,  60,  64,  70],
     def: [2,  4,  6,  8, 12, 15, 18, 20,  24,  25,  30,  35,  39,  43,  45,  50,  55,  59,  63,  65]
@@ -37,8 +41,8 @@ function GetPriceMultiplier() {
 };
 
 function UpdateStatsForCurrentDifficulty() {
-    var idx = player.level - 1;
-    var oldmaxhealth = player.maxhealth;
+    const idx = player.level - 1;
+    const oldmaxhealth = player.maxhealth;
     player.maxhealth = levelStats.hp[idx];
     player.atk = levelStats.atk[idx];
     player.def = levelStats.def[idx];
