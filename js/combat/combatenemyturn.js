@@ -18,9 +18,7 @@ combat.enemyTurn = {
             combat.endTurn(this);
             return;
         }
-        console.log(attackData);
-        const newAnimData = attackData.animData !== undefined && attackData.animData.length > 2 ? "ATTACK" : "PLANT"; // TODO: this is a fucking PLACEHOLDER
-        combat.animHelper.SetEnemyAnimState(args.idx, newAnimData);
+        combat.animHelper.SetEnemyAnimState(args.idx, attackData.animData);
         combat.animHelper.SetEnemyAnimArg(args.idx, "targets", attackData.targets);
 
         if(attackData.throwables !== undefined && attackData.throwables !== null && attackData.throwables.length > 0) {

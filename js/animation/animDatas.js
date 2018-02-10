@@ -115,6 +115,10 @@ var animCallbacks = {
     },
     "enemy_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
+        if(resetti === undefined) {
+            console.log("you probably got some fucker with a THROW_ENEMY where they should have an ATTACK");
+            return;
+        }
         let anim = new TileAnim(combat.enemydx + resetti.x, combat.enemydy + resetti.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
         anim.AddFrameFunc(3, function() { resetti.crop.hidden = true; combat.animHelper.DrawCrops(); });
         animProcess.AddBaby(anim);
