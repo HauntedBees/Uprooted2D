@@ -15,22 +15,41 @@ combat.selectTarget = {
         }
         if(!this.canHumans) { this.sicklePos = {x: combat.enemydx, y: (combat.enemyheight - 1 + combat.enemydy)}; }
         this.targets = [];
-        var numAttacks = args.numAttacks || 1;
-        if(this.canHumans && numAttacks >= combat.enemies.length && (!this.canSickle || this.enemyGridIsEmpty())) {
-            for(var i = 0; i < combat.enemies.length; i++) { this.targets.push(i); }
+        const numAttacks = args.numAttacks || 1;
+        if(this.SetUpAttackTargetsAndReturnIfCanAttackAll(numAttacks)) {
             this.Attack();
         } else {
             this.maxTargets = numAttacks;
             this.drawAll();
         }
     },
-    enemyGridIsEmpty: function() {
-        for(var x = 0; x < combat.enemywidth; x++) {
-            for(var y = 0; y < combat.enemyheight; y++) {
-                if(combat.enemyGrid[x][y] !== null) { return false; }
+    SetUpAttackTargetsAndReturnIfCanAttackAll: function(numAttacks) {
+        let enemyCrops = [];
+        for(let x = 0; x < combat.enemywidth; x++) {
+            for(let y = 0; y < combat.enemyheight; y++) {
+                if(combat.enemyGrid[x][y] !== null) { enemyCrops.push({ x: x, y: y }); }
             }
         }
-        return true;
+        const canHitCrops = this.canSickle && enemyCrops.length > 0;
+        if(this.canHumans) {
+            if(canHitCrops) { // can hit enemies AND crops
+                const bothCount = combat.enemies.length + enemyCrops.length;
+                if(numAttacks < bothCount) { return false; }
+                const enemyTargs = combat.enemies.map((e, i) => i);
+                const cropTargs = enemyCrops.map((e) => ({x: e.x + combat.enemydx, y: e.y + combat.enemydy}));
+                combat.selectTarget.targets = [...enemyTargs, ...cropTargs];
+                return true;
+            } else { // can hit enemies but not crops
+                if(numAttacks < combat.enemies.length) { return false; }
+                combat.selectTarget.targets = combat.enemies.map((e, i) => i);
+                return true;
+            }
+        } else if(canHitCrops) { // can hit crops but not enemies
+            if(numAttacks < enemyCrops.length) { return false; }
+            combat.selectTarget.targets = enemyCrops.map((e) => ({x: e.x + combat.enemydx, y: e.y + combat.enemydy}));
+            return true;
+        }
+        return false; // should never be able to be unable to hit enemies OR crops...
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
@@ -78,7 +97,7 @@ combat.selectTarget = {
         }
         combat.animHelper.DrawBottom();
     },
-    clean: function() { gfx.clearSome(this.layersToClear); },
+    clean: () => gfx.clearSome(combat.selectTarget.layersToClear),
     cancel: function() { game.innerTransition(this, combat.menu); return true; },
     
     // Selecting Logic
@@ -353,73 +372,70 @@ combat.selectTarget = {
         return damagetext;
     }
 };
-var postHits = {
+const postHits = {
     "unplug": function(e) {
-        if(e.unplugged) {
-            return null;
-        } else {
-            if(e.health > 170 || e.health <= 0) { return null; }
-            return function() {
-                e.spriteidx = 25;
-                e.unplugged = true;
-                e.plugTimer = InclusiveRange(2, 3);
-                e.health = 50;
-                e.def = 5;
-                game.innerTransition(this, combat.inbetween, {
-                    next: function() { combat.endTurn(combat.inbetween) },
-                    text: GetText("outletUnplugged")
-                });
-            };
-        }
+        if(e.unplugged) { return null; } 
+        if(e.health > 170 || e.health <= 0) { return null; }
+        return function() {
+            e.spriteidx = 25;
+            e.unplugged = true;
+            e.plugTimer = InclusiveRange(2, 3);
+            e.health = 50;
+            e.def = 5;
+            game.innerTransition(this, combat.inbetween, {
+                next: function() { combat.endTurn(combat.inbetween) },
+                text: GetText("outletUnplugged")
+            });
+        };
     }
 };
-var addtlHitChecks = {
+const addtlHitChecks = {
     "beckett": function(cropInfo, damage) {
-        for(var i = 0; i < cropInfo.length; i++) {
-            var crop = cropInfo[i];
+        for(let i = 0; i < cropInfo.length; i++) {
+            const crop = cropInfo[i];
             if(["carrot", "lemon"].indexOf(crop.name) >= 0 || ["spear", "rod", "water"].indexOf(crop.type) >= 0) { damage *= 1.25; }
             else if(["spear", "rod", "water"].indexOf(crop.type) >= 0) { damage *= 1.3; }
         }
         return Math.ceil(damage);
     },
     "check_SP_SU": function(cropInfo, damage) {
-        var hasSpringSummer = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasSpringSummer |= (cropInfo[i].seasons[0] === 2 || cropInfo[i].seasons[1] === 2); }
+        let hasSpringSummer = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasSpringSummer |= (cropInfo[i].seasons[0] === 2 || cropInfo[i].seasons[1] === 2); }
         return hasSpringSummer ? (damage * 50) : 0;
     },
     "check_AU_WI": function(cropInfo, damage) {
-        var hasFallWinter = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasFallWinter |= (cropInfo[i].seasons[2] === 2 || cropInfo[i].seasons[3] === 2); }
+        let hasFallWinter = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasFallWinter |= (cropInfo[i].seasons[2] === 2 || cropInfo[i].seasons[3] === 2); }
         return hasFallWinter ? (damage * 50) : 0;
     },
     "check_MUSH": function(cropInfo, damage) {
-        var hasMushroom = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type === "mush"; }
+        let hasMushroom = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type === "mush"; }
         return hasMushroom ? (damage * 50) : 0;
     },
     "check_FISH": function(cropInfo, damage) {
-        var hasFish = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasFish |= (cropInfo[i].type === "spear" || cropInfo[i].type === "rod" || cropInfo[i].type === "water"); }
+        let hasFish = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasFish |= (cropInfo[i].type === "spear" || cropInfo[i].type === "rod" || cropInfo[i].type === "water"); }
         return hasFish ? (damage * 50) : 0;
     },
     "check_MUSH_w": function(cropInfo, damage) {
-        var hasMushroom = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type === "mush"; }
+        let hasMushroom = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type === "mush"; }
         return hasMushroom ? damage : 0;
     },
     "check_RICE": function(cropInfo, damage) {
-        var hasRice = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasRice |= cropInfo[i].type === "rice"; }
+        let hasRice = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasRice |= cropInfo[i].type === "rice"; }
         return hasRice ? damage : 0;
     },
     "check_VEG": function(cropInfo, damage) {
-        var hasVeg = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasVeg |= cropInfo[i].type === "veg"; }
+        let hasVeg = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasVeg |= cropInfo[i].type === "veg"; }
         return hasVeg ? damage : 0;
     },
     "check_FRUIT": function(cropInfo, damage) {
-        var hasTree = false;
-        for(var i = 0; i < cropInfo.length; i++) { hasTree |= cropInfo[i].type === "tree"; }
+        let hasTree = false;
+        for(let i = 0; i < cropInfo.length; i++) { hasTree |= cropInfo[i].type === "tree"; }
         return hasTree ? damage : 0;
     }
 };
