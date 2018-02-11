@@ -1,12 +1,9 @@
 function CombatAnimHelper(enemies) {
     let playerPos = { x: 3, y: 9.25 };
-
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
-    let enemyAnimInfos = [];
     let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
-    let currentx = 11 - enemies.length;
-    let anims = [];
-
+    let enemyAnimInfos = [];
+    let currentx = 11 - enemies.length, anims = [];
     this.ResetEnemyAnimHelper = function(enemies) {
         enemyAnimInfos = [];
         let currentx = 11 - enemies.length;
@@ -23,8 +20,6 @@ function CombatAnimHelper(enemies) {
         }
     }
     this.ResetEnemyAnimHelper(enemies);
-
-
     this.GetCursorInfo = function(x) {
         let currentx = 11 - combat.enemies.length;
         for(let i = 0; i < combat.enemies.length; i++) {
@@ -45,36 +40,15 @@ function CombatAnimHelper(enemies) {
         }
     };
 
-    this.DrawBottom = function() {
-        const y = game.tileh - 0.75;
-        const texty = y + 0.65;
-        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawSprite("sheet", 15, 11, x * 16, y * 16, "menuA"); }
-        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, texty * 16);
-        gfx.drawTileToGrid("seasonbar0", 8.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar1", 9.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar2", 10.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar3", 11.5, y, "menuA");
-        const diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
-        gfx.drawTileToGrid("seasonico", 8.25 + combat.season + diff, y, "menuA");
-        const season = GetText("season" + combat.season);
-        gfx.drawSprite("sheet", 12 + combat.season, 10, 13 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
-        gfx.drawText(season, 14 * 16 - 1, texty * 16);
-    };
-
-
-    this.SetEnemyAnimState = (idx, name) => enemyAnimInfos[idx].SetAnim(name);
-    this.SetEnemyAnimArg = (idx, key, val) => enemyAnimInfos[idx].PushArg(key, val);
-    this.MakeEnemyACorpse = function(idx) { const e = enemyAnimInfos[idx]; e.dead = true; e.deadFrame = 0; };
-
-    this.AddPlayerAttackAnim = (caa) => playerAnimInfo.animQueue.push(caa);
-    this.StartPlayerAnimSequence = () => playerAnimInfo.StartAnimQueue();
-    
     this.GetPlayerTopPos = () => ({ x: playerPos.x, y: playerPos.y - 1 });
     this.GetPlayerBottomPos = () => ({ x: playerPos.x + 0.5, y: playerPos.y });
-    this.PushPlayerOverlay = name => playerAnimInfo.PushOverlayAnim(weaponAnims[name]);
+    this.AddPlayerAttackAnim = caa => playerAnimInfo.animQueue.push(caa);
+    this.StartPlayerAnimSequence = () => playerAnimInfo.StartAnimQueue();
     this.SetPlayerAnimArg = (key, val) => playerAnimInfo.PushArg(key, val);
+    this.SetPlayerAnimPos = function(x, y) { playerAnimInfo.dims.x = x; playerAnimInfo.dims.y = y; };
     this.SetPlayerAnimState = function(name, resetPos) { playerAnimInfo.SetAnim(name); if(resetPos) { this.ResetPlayerAnimPos(); } };
     this.SetPlayerAnimLayer = (layer) => playerAnimInfo.layer = layer;
+    this.ResetPlayerAnimPos = () => this.SetPlayerAnimPos(playerPos.x, playerPos.y);
     this.ResetPlayerAnimState = function() {
         if(player.health < (player.maxhealth / 4)) { playerAnimInfo.SetAnim("STAND_WEAK"); }
         else { playerAnimInfo.SetAnim("STAND"); }
@@ -82,30 +56,18 @@ function CombatAnimHelper(enemies) {
         playerAnimInfo.ClearAnimQueue();
         this.ResetPlayerAnimPos();
     };
-    this.ResetPlayerAnimPos = () => this.SetPlayerAnimPos(playerPos.x, playerPos.y);
-    this.SetPlayerAnimPos = function(x, y) { playerAnimInfo.dims.x = x; playerAnimInfo.dims.y = y; };
+    this.PushPlayerOverlay = name => playerAnimInfo.PushOverlayAnim(weaponAnims[name]);
     this.GivePlayerAHit = function(isCrop) {
         if(isCrop) { this.SetPlayerAnimState("HURT_CROP"); }
         else if(player.health <= 0) { this.SetPlayerAnimState("FATALBLOW"); }
         else { this.SetPlayerAnimState("HURT"); }
     };
 
-    this.AddEnemyAttackAnim = (idx, caa) => enemyAnimInfos[idx].animQueue.push(caa);
-    this.StartEnemyAnimSequence = idx => enemyAnimInfos[idx].StartAnimQueue();
-    this.GetEnemyTopPos = function(idx) {
-        const edims = enemyAnimInfos[idx].dims;
-        return { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) };
-    };
-    this.GetEnemyBottomPos = function(idx) {
-        const edims = enemyAnimInfos[idx].dims;
-        return { x: edims.x, y: edims.y };
-    };
-
     this.SetBirdAnimArg = (key, val) => birdAnimInfo.PushArg(key, val);
-    this.SetBirdAnimPos = function(x, y) { birdAnimInfo.dims.x = x; birdAnimInfo.dims.y = y; };
-    this.ResetBirdAnimPos = () => this.SetBirdAnimPos(playerPos.x - 1.5, playerPos.y);
+    this.SetBirdAnimPos = (x, y) => { birdAnimInfo.dims.x = x; birdAnimInfo.dims.y = y; };
     this.SetBirdAnimState = function(name, resetPos) { birdAnimInfo.SetAnim(name); if(resetPos) { this.ResetBirdAnimPos(); } };
-    this.SetBirdAnimLayer = (layer) => birdAnimInfo.layer = layer;
+    this.SetBirdAnimLayer = layer => birdAnimInfo.layer = layer;
+    this.ResetBirdAnimPos = () => this.SetBirdAnimPos(playerPos.x - 1.5, playerPos.y);
     this.ResetBirdAnimState = function() {
         birdAnimInfo.SetAnim("STAND");
         birdAnimInfo.layer = "characters";
@@ -113,10 +75,22 @@ function CombatAnimHelper(enemies) {
         this.ResetBirdAnimPos();
     };
 
-    this.GetEnemyPos = (idx) => ({ x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y });
-
+    this.GetEnemyTopPos = idx => { const edims = enemyAnimInfos[idx].dims; return { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }; };
+    this.GetEnemyPos = idx => ({ x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y });
+    this.GetEnemyBottomPos = idx => ({ x: enemyAnimInfos[idx].dims.x, y: enemyAnimInfos[idx].dims.y });
+    this.AddEnemyAttackAnim = (idx, caa) => enemyAnimInfos[idx].animQueue.push(caa);
+    this.StartEnemyAnimSequence = idx => enemyAnimInfos[idx].StartAnimQueue();
+    this.SetEnemyAnimArg = (idx, key, val) => enemyAnimInfos[idx].PushArg(key, val);
+    this.SetEnemyAnimState = (idx, name) => enemyAnimInfos[idx].SetAnim(name);
+    this.MakeEnemyACorpse = (idx) => { const e = enemyAnimInfos[idx]; e.dead = true; e.deadFrame = 0; };
+    this.RemoveEnemy = idx => enemyAnimInfos.splice(idx, 1);
     this.DEBUG_DrawEnemy = (idx) => enemyAnimInfos[idx].Animate(idx);
 
+    this.Animate = function() {
+        gfx.clearSome(["characters", "menucursorC"]);
+        AnimateEntities();
+        AnimateParticles();
+    };
     const AnimateEntities = function() {
         if(birdAnimInfo !== null) { birdAnimInfo.Animate(); }
         playerAnimInfo.Animate();
@@ -134,6 +108,11 @@ function CombatAnimHelper(enemies) {
             }
         }
     };
+    this.CleanEntities = function() {
+        this.ResetPlayerAnimState();
+        this.ResetBirdAnimState();
+        for(let i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].SetAnim("STAND"); }
+    };
     const AnimateParticles = function() {
         for(let i = anims.length - 1; i >= 0; i--) {
             const t = anims[i];
@@ -143,19 +122,9 @@ function CombatAnimHelper(enemies) {
             } else { t.getFrame(timers.CHARANIM); }
         }
     };
-    this.CleanEntities = function() {
-        this.ResetPlayerAnimState();
-        for(var i = 0; i < enemyAnimInfos.length; i++) { enemyAnimInfos[i].SetAnim("STAND"); }
-    };
-    this.RemoveEnemy = function(idx) { enemyAnimInfos.splice(idx, 1); };
-
     this.AddAnim = function(a) { anims.push(a); };
     this.CleanAnims = function() { anims = []; };
-    this.Animate = function() {
-        gfx.clearSome(["characters", "menucursorC"]);
-        AnimateEntities();
-        AnimateParticles();
-    };
+
     const DrawCropGrid = function(grid, dx, dy, drawWeed) {
         for(let x = 0; x < grid.length; x++) {
             const xdx = x + dx;
@@ -212,48 +181,7 @@ function CombatAnimHelper(enemies) {
         DrawCropGrid(combat.grid, combat.dx, combat.dy, true);
         DrawCropGrid(combat.enemyGrid, combat.enemydx, combat.enemydy);
     };
-
-    this.GetActualTile = function(tile, x, y) {
-        const rightmost = combat.enemywidth - 1, bottommost = combat.enemyheight - 1;
-        switch(tile) {
-            case "nathan":
-                if(y === 0) {
-                    if(x < 3) { return "_coop"; }
-                    else { return "_log"; }
-                } else if(y === 1) {
-                    switch(x) {
-                        case 0: return "lakeD";
-                        case 1: return "lakeAD";
-                        case 2: return "lakeA";
-                        default: return "_log";
-                    }
-                } else if(y >= 2 && y <= 4 && x === 4) {
-                    return "_beehive";
-                } else if(y === 6) { return "_paddy"; }
-                return "dirt";
-            case "beckett":
-                if(y < 3) {
-                    if(x === 0) { return "conveyorL"; }
-                    else if(x === rightmost) { return "conveyorR"; }
-                    else { return "conveyorM"; }    
-                } else {
-                    const rightCorner = (x === rightmost), bottomCorner = (y === bottommost);
-                    if(rightCorner && bottomCorner) { return "chargingBayLR"; }
-                    else if(rightCorner && y === (bottommost - 1)) { return "chargingBayUR"; }
-                    else if(bottomCorner && x === (rightmost - 1)) { return "chargingBayLL"; }
-                    else if(x === (rightmost - 1) && y === (bottommost - 1)) { return "chargingBayUL"; }
-                    else { return "tech"; }
-                }
-            case "conveyor":
-                if(y === 0) { return "tech"; }
-                if(x === 0) { return "conveyorL"; }
-                else if(x === rightmost) { return "conveyorR"; }
-                else { return "conveyorM"; }    
-        }
-        return tile;
-    };
-
-    this.DrawWrapper = function(x, y, w, h, name) {
+    this.DrawWrapper = function(x, y, w, h, name) { // TODO: make private if not used elsewhere
         name = name || "edge";
         gfx.drawTileToGrid(name + "WA", x - 1, y - 1, "background");
         gfx.drawTileToGrid(name + "WD", x + w, y - 1, "background");
@@ -271,7 +199,6 @@ function CombatAnimHelper(enemies) {
 
     this.DrawBackground = function() {
         gfx.clearLayer("background");
-
         gfx.drawFullImage(mapBattleXref[worldmap.mapName] || "bgs/outside");
         const tileType = mapBattleTileXref[worldmap.mapName] || "grass";
         const top = Math.min(combat.enemydy, combat.dy);
@@ -283,7 +210,6 @@ function CombatAnimHelper(enemies) {
                 gfx.drawTileToGrid(tileType, x, y, "background");
             }
         }
-        
         if(combat.enemyTile === "dirt" || combat.enemyTile === "nathan") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
         else if(combat.enemyTile === "watertile") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "wedge"); }
         for(let x = 0; x < combat.enemywidth; x++) { // enemy field
@@ -337,5 +263,59 @@ function CombatAnimHelper(enemies) {
             const item = toDrawAfterwards[i];
             gfx.drawTileToGrid(item.sprite, item.x, item.y, "background");
         }
+    };
+    const GetActualTile = function(tile, x, y) {
+        const rightmost = combat.enemywidth - 1, bottommost = combat.enemyheight - 1;
+        switch(tile) {
+            case "nathan":
+                if(y === 0) {
+                    if(x < 3) { return "_coop"; }
+                    else { return "_log"; }
+                } else if(y === 1) {
+                    switch(x) {
+                        case 0: return "lakeD";
+                        case 1: return "lakeAD";
+                        case 2: return "lakeA";
+                        default: return "_log";
+                    }
+                } else if(y >= 2 && y <= 4 && x === 4) {
+                    return "_beehive";
+                } else if(y === 6) { return "_paddy"; }
+                return "dirt";
+            case "beckett":
+                if(y < 3) {
+                    if(x === 0) { return "conveyorL"; }
+                    else if(x === rightmost) { return "conveyorR"; }
+                    else { return "conveyorM"; }    
+                } else {
+                    const rightCorner = (x === rightmost), bottomCorner = (y === bottommost);
+                    if(rightCorner && bottomCorner) { return "chargingBayLR"; }
+                    else if(rightCorner && y === (bottommost - 1)) { return "chargingBayUR"; }
+                    else if(bottomCorner && x === (rightmost - 1)) { return "chargingBayLL"; }
+                    else if(x === (rightmost - 1) && y === (bottommost - 1)) { return "chargingBayUL"; }
+                    else { return "tech"; }
+                }
+            case "conveyor":
+                if(y === 0) { return "tech"; }
+                if(x === 0) { return "conveyorL"; }
+                else if(x === rightmost) { return "conveyorR"; }
+                else { return "conveyorM"; }    
+        }
+        return tile;
+    };
+    this.DrawBottom = function() {
+        const y = game.tileh - 0.75;
+        const texty = y + 0.65;
+        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawSprite("sheet", 15, 11, x * 16, y * 16, "menuA"); }
+        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, texty * 16);
+        gfx.drawTileToGrid("seasonbar0", 8.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar1", 9.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar2", 10.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar3", 11.5, y, "menuA");
+        const diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
+        gfx.drawTileToGrid("seasonico", 8.25 + combat.season + diff, y, "menuA");
+        const season = GetText("season" + combat.season);
+        gfx.drawSprite("sheet", 12 + combat.season, 10, 13 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
+        gfx.drawText(season, 14 * 16 - 1, texty * 16);
     };
 }
