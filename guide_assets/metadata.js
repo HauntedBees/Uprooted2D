@@ -1,14 +1,14 @@
-var debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity", "northcity", 
+const debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity", "northcity", 
                     "hq_1", "hq_2", "hq_3", "hq_4", "hq_5"]; // TODO: forest is too big
-var smallMaps = ["farm"];
-var namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
-var mapNames = {
+const smallMaps = ["farm"];
+const namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
+const mapNames = {
     "farm": "Your Farm", "producestand": "Produce Stand", "forest": "Agrios Forest", "firstvillage": "San Ambrosio", "belowvillage": "South of Town",
     "researchfacility": "Mysterious Research Lab", "bridge": "Bridge Crossing", "underwater": "Underwater", "fakefarm": "Jeff's Farm",
     "southcity": "South Las Abejas", "northcity": "Central Las Abejas", "hq_1": "Food2 Headquarters 1F", "hq_2": "Food2 Headquarters 2F",
     "hq_3": "Food2 Headquarters 3F", "hq_4": "Food2 Headquarters 4F", "hq_5": "Food2 Headquarters 5F"
 };
-var shopNames = {
+const shopNames = {
     "coop": "Chicken Coop", "inn0": "Your House", "equip1": "Dave's Hoes and Sickles", "fixture1": "Fuckster's Fixtures", "seed1": "Seedy Pete's Petey Seeds",
     "upgrade1": "Andrew D's Farm Expansions", "inn1": "Frothybarf Inn", "mermaidinn": "The Mermaid Inn", "mermaid": "Ye Mermaid Shoppe",
     "cworker": "Lazy Construction Worker's Shop", "upgrade2": "The Upgrade Barn", "fixture2": "The Fixture Stall", "skumpys": "Skumpy's Pub", "mantools": "MAN TOOLS",
@@ -21,10 +21,10 @@ var shopNames = {
 function DoEnemyGen() {
     var $enemies = $("#enemies > .content");
     for(var i = 0; i < debug.AllEnemies.length; i++) {
-        var $template = $("#enemyTemplate").clone();
+        const $template = $("#enemyTemplate").clone();
         $template.removeClass("template").removeAttr("id");
-        var enemy = GetEnemy(debug.AllEnemies[i]);
-        $template.find(".txt_name").text(enemy.name);
+        const enemy = GetEnemy(debug.AllEnemies[i]);
+        $template.find(".txt_name").html("<a name='" + debug.AllEnemies[i] + "'>" + enemy.name + "</a>");
         
         if(enemy.size === "xl") {
             $template.find(".sp_final").addClass("enemySpriteBig huge").css("background-position", "-" + (enemy.spriteidx * 64) + "px 0");
@@ -56,7 +56,7 @@ function DoEnemyGen() {
                         drops.push(drop.min + "-" + drop.max + "G");
                     }
                 } else {
-                    var name = GetCrop(drop.seed).displayname;
+                    var name = GetCrop(drop.seed).displayame;
                     if(drop.min === drop.max) {
                         drops.push(drop.min + " " + name);
                     } else {
@@ -75,7 +75,17 @@ function DoEnemyGen() {
         $enemies.append($template);
     }
 }
-function GetEnemyName(name) { 
+function GetBossRecommendedLevel(enemyKey) {
+    switch(enemyKey) {
+        case "Fucker": return 2;
+        case "Jeff": return 4;
+        case "HOUSEKEEPER": return 8;
+        case "MobBoss": return 9;
+        case "ReturnOfTheFucker": return 12;
+    }
+    return "?";
+}
+function GetEnemyName(name, justKey) { 
     switch(name) {
         case "Jeff": name = "ScienceMan"; break;
         case "Fucker": name = "bigBot"; break;
@@ -85,29 +95,30 @@ function GetEnemyName(name) {
         case "chickbot": name = "chickBot"; break;
         case "pig": name = "piggun"; break;
         case "mobsty1": 
-        case "wildmobsty": 
-        return "Mobster"; break;
+        case "wildmobsty": return "Mobster"; break;
         case "mobsty2": return "Stronger Mobster"; break;
         case "MobBoss": name = "mobBoss"; break;
         case "HOUSEKEEPER": name = "housekeeper"; break;
         case "carBr": name = "brownCar"; break;
         case "carBl": name = "blueCar"; break;
         case "carRe": name = "redCar"; break;
+        case "ReturnOfTheFucker": name = "discuss2"; break;
     }
+    if(justKey) { return name; }
     return GetText("e." + name + "0");
 }
 function GetEnemyHTML(enemyKey) {
-    var $template = $("#innerEnemyTemplate").clone();
+    let $template = $("#innerEnemyTemplate").clone();
     $template.removeClass("template").removeAttr("id");
-    $template.find(".txt_name").text(GetEnemyName(enemyKey));
+    $template.find(".txt_name").html("<a href='#" + enemyKey + "'>" + GetEnemyName(enemyKey) + "</a>");
     if(enemyKey === "research") { enemyKey = "robo2"; }
     if(enemyMetadata[enemyKey] !== undefined) {
-        var enemyData = enemyMetadata[enemyKey];
-        var amt = enemyData.min + (enemyData.max === enemyData.min ? "" : "-" + enemyData.max);
+        const enemyData = enemyMetadata[enemyKey];
+        const amt = enemyData.min + (enemyData.max === enemyData.min ? "" : "-" + enemyData.max);
         $template.find(".txt_amount").text(amt);
-        var typ = [];
-        for(var i = 0; i < enemyData.enemies.length; i++) {
-            var myName = GetEnemyName(enemyData.enemies[i]);
+        let typ = [];
+        for(let i = 0; i < enemyData.enemies.length; i++) {
+            const myName = GetEnemyName(enemyData.enemies[i]);
             if(typ.indexOf(myName) < 0) { typ.push(myName); }
         }
         $template.find(".txt_types").text(typ.join(", "));
@@ -316,7 +327,7 @@ function DoLevelGen() {
             lastObj = obj;
             if(obj.name.indexOf("H_") === 0) { continue; }
             if(namesToIgnore.indexOf(obj.name) >= 0) { continue; }
-            if(obj.pos.x < 0 && obj.pos.y < 0) { continue; }
+            if(obj.pos.x < 0 || obj.pos.y < 0) { continue; }
             if(obj.boring === true || obj.jumbo === true) { continue; }
             if(obj.name.indexOf("waterfall") === 0 && obj.name[obj.name.length - 1] !== "0") { continue; }
             
@@ -352,7 +363,7 @@ function DoLevelGen() {
                 var $specialTemplate = $("#specialTemplate").clone();
                 $specialTemplate.removeClass("template").removeAttr("id");
                 $specialTemplate.find(".txt_name").text(mapObj.text);
-                $specialTemplate.find(".txt_info").text(mapObj.infoText);
+                $specialTemplate.find(".txt_info").html(mapObj.infoText);
                 $details.append($specialTemplate);
             }
             var $md = $("<div class='badge badge-pill " + mapObj.badgeclass + " mapDetail'>" + mapObj.dispCount + "</div>");
@@ -410,7 +421,8 @@ function GetMapObjData(e, $details, counts) {
         return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Susantha" };
     } else if(e.name === "KeycardTrap") {
         // TODO
-        return { order: 4, sortCount: 9999, type: "Boss", badgeclass: "badge-danger", dispCount: "X", text: "Dweeblord" };
+        return { order: 4, sortCount: 9999, type: "Boss", badgeclass: "badge-danger", dispCount: "X", text: "Dweeblord",
+        infoText: "<span class='font-weight-bold'>Recommended Level:</span> 11<br/>Attempting to take the Food2 Security Card from this apartment will trigger an attack!" };
     } else if(e.name === "Keycard") {
         return { order: 5, type: "NPC", badgeclass: "badge-info", text: "Food2 Keycard", infoText: "You need this to get into the Food2 Building." };
     } else if(e.name.indexOf("Robber") >= 0) {
@@ -464,7 +476,7 @@ function GetMapObjData(e, $details, counts) {
         infoText: "These doors will be unlocked after Farmer Jeff tells you about his plan." };
     } else if(e.name === "SeaCreatureMiddle") {
         return { order: 4, sortCount: 9999, type: "Boss", badgeclass: "badge-danger", dispCount: "X", text: "Sea Monster",
-        infoText: "You can choose to help the help the Sea Monster and fight the Construction Workers, or help the Workers and kill the Sea Monster." };
+        infoText: "<span class='font-weight-bold'>Recommended Level:</span> 6<br/>You can choose to help the help the Sea Monster and fight the Construction Workers, or help the Workers and kill the Sea Monster." };
     } else if(e.name === "PirateFriend") {
         return { order: 0, type: "NPC", badgeclass: "badge-info", dispCount: "Q", text: "Dowel",
         infoText: "This pirate will give you seeds in exchange for Paddy Crop Seeds, or the Sea Monk Key in exchange for GMO Corn Seeds." };
@@ -477,7 +489,7 @@ function GetMapObjData(e, $details, counts) {
     } else if(e.name === "HeadWorker") {
         // TODO
         return { order: 4, sortCount: 9999, type: "Boss", badgeclass: "badge-danger", dispCount: "X", text: "Head Construction Worker",
-        infoText: "You can choose to help the Construction Workers and kill the Sea Monster, or help the Sea Monster and fight the Workers." };
+        infoText: "<span class='font-weight-bold'>Recommended Level:</span> 5<br/>You can choose to help the Construction Workers and kill the Sea Monster, or help the Sea Monster and fight the Workers." };
     } else if(e.name.indexOf("Worker") === 0) {
         // TODO
         return { order: 4, type: "Enemy", subtype: "worker", badgeclass: "badge-danger", text: "Construction Worker" };
@@ -538,9 +550,10 @@ function GetMapObjData(e, $details, counts) {
     return { type: "?" };
 }
 function GetBossHTML(enemyKey) {
-    var $template = $("#bossTemplate").clone();
+    const $template = $("#bossTemplate").clone();
     $template.removeClass("template").removeAttr("id");
-    $template.find(".txt_name").text("Boss: " + GetEnemyName(enemyKey));
+    $template.find(".txt_name").html("Boss: <a href='#" + GetEnemyName(enemyKey, true) + "'>" + GetEnemyName(enemyKey) + "</a>");
+    $template.find(".txt_recLvl").text(GetBossRecommendedLevel(enemyKey));
     return $template;
 }
 function GetShopHTML(shopKey) {
