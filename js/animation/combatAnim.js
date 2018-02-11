@@ -215,7 +215,7 @@ function CombatAnimHelper(enemies) {
         for(let x = 0; x < combat.enemywidth; x++) { // enemy field
             for(let y = 0; y < combat.enemyheight; y++) {
                 if(combat.enemyTile === "nathan") { gfx.drawTileToGrid("dirt", combat.enemydx + x, y + combat.enemydy, "background"); }
-                gfx.drawTileToGrid(this.GetActualTile(combat.enemyTile, x, y), combat.enemydx + x, y + combat.enemydy, "background");
+                gfx.drawTileToGrid(GetActualTile(combat.enemyTile, x, y), combat.enemydx + x, y + combat.enemydy, "background");
             }
         }
         let toDrawAfterwards = [];
