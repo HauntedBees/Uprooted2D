@@ -1,4 +1,4 @@
-var stores = {
+const stores = {
     // Debug
     "farmupgradeFull": {
         img: "shops/cock",
@@ -30,7 +30,8 @@ var stores = {
             { product: "book0", name: "bookVeg", price: 0, type: "book" },
             { product: "book3", name: "bookSeasons", price: 0, type: "book" },
             { product: "book1", name: "bookEquip", price: 0, type: "book" },
-            { product: "book2", name: "bookShop", price: 0, type: "book" }
+            { product: "book2", name: "bookShop", price: 0, type: "book" },
+            { product: "book4", name: "bookStun", price: 0, type: "book" }
         ],
         opening: "s.home", leaving: "s.homeleave", purchased: "s.homesleep"
     },
@@ -80,7 +81,14 @@ var stores = {
     },
     "inn1": {
         img: "shops/dwarf2", innId: "inn1",
-        wares: [ { product: "sleep", price: 6, type: "inn" } ],
+        wares: [
+            { product: "sleep", price: 6, type: "inn" },
+            { product: "book1", name: "bookForest", price: 0, type: "book" },
+            { product: "book4", name: "bookMush", price: 0, type: "book" },
+            { product: "book5", name: "bookEgg", price: 0, type: "book" },
+            { product: "book3", name: "bookExpand", price: 0, type: "book" },
+            { product: "book2", name: "bookRare", price: 0, type: "book" }
+        ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     // Area 2: Bridge
@@ -98,7 +106,13 @@ var stores = {
     },
     "mermaidinn": {
         img: "shops/merm", innId: "mermaidinn",
-        wares: [ { product: "sleep", price: 8, type: "inn" } ],
+        wares: [
+            { product: "sleep", price: 8, type: "inn" },
+            { product: "book5", name: "bookPaddy", price: 0, type: "book" },
+            { product: "book2", name: "bookFish", price: 0, type: "book" },
+            { product: "book0", name: "bookBees", price: 0, type: "book" },
+            { product: "book4", name: "bookCows", price: 0, type: "book" }
+        ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     "cworker": {
@@ -145,9 +159,9 @@ var stores = {
         img: "shops/dwarf2", innId: "skumpys",
         wares: [
             { product: "sleep", price: 20, type: "inn" },
-            { product: "book0", name: "bookA", price: 0, type: "book" },
-            { product: "book3", name: "bookB", price: 0, type: "book" },
-            { product: "book4", name: "bookC", price: 0, type: "book" }
+            { product: "book1", name: "bookTech", price: 0, type: "book" },
+            { product: "book1", name: "bookTechs", price: 0, type: "book" },
+            { product: "book5", name: "bookTips", price: 0, type: "book" }
         ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
@@ -241,7 +255,12 @@ var stores = {
     },
     "cityInn": {
         img: "shops/dwarf2", innId: "bigCity",
-        wares: [ { product: "sleep", price: 500, type: "inn" } ],
+        wares: [
+            { product: "sleep", price: 500, type: "inn" },
+            { product: "book1", name: "bookCard", price: 0, type: "book" },
+            { product: "book5", name: "bookMan", price: 0, type: "book" },
+            { product: "book0", name: "bookApp", price: 0, type: "book" }
+        ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     "gordonsFarming": {
@@ -397,7 +416,10 @@ var stores = {
     },
     "lastInn": {
         img: "shops/dwarf2", innId: "lastInn",
-        wares: [ { product: "sleep", type: "inn" } ],
+        wares: [
+            { product: "sleep", type: "inn" },
+            { product: "book3", name: "bookEnt", price: 0, type: "book" }
+        ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
 

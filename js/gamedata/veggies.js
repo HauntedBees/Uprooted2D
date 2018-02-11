@@ -74,14 +74,14 @@ function GetCrop(name) {
 		case "turkey": return new CropDetail(name, "Turkey Egg", 15, "egg", 1, 10, 4, 4, 0, 1, 1, 1, 1);
 		case "platypus": return new CropDetail(name, "Platypus Egg", 255, "egg", 1, 4, 4, 9, 0, 1, 1, 1, 1);
 		/* Technology */
-		case "battery": return new CropDetail(name, "Battery", 45, "tech", 1, 5, 5, 5, 0, 1, 1, 1, 1);
-		case "headphones": return new CropDetail(name, "Earbuds", 15, "tech", 1, 3, 3, 2, 0, 1, 1, 1, 1);
-		case "printer": return new CropDetail(name, "3D Printer", 45, "tech", 1, 6, 6, 4, 4, 1, 1, 1, 1);
-		case "app": return new CropDetail(name, "App", 15, "tech", 1, 3, 4, 3, 0, 1, 1, 1, 1);
-		case "drone": return new CropDetail(name, "Drone", 105, "tech", 1, 5, 3, 7, 0, 1, 1, 1, 1);
-		case "frogbot": return new CropDetail(name, "Fwoggybot", 135, "tech", 2, 8, 4, 9, 0, 1, 1, 1, 1);
-		case "coffee": return new CropDetail(name, "Coffee Machine", 165, "tech", 2, 10, 5, 10, 0, 1, 1, 1, 1);
-		case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 100, "sickle2", 1, 5, 4, 0, 0, 1, 1, 1, 1);
+		case "battery": return new CropDetail(name, "Battery", 45, "tech", 1, 5, 5, 5, 0, 2, 2, 2, 2);
+		case "headphones": return new CropDetail(name, "Earbuds", 15, "tech", 1, 3, 3, 2, 0, 2, 2, 2, 2);
+		case "printer": return new CropDetail(name, "3D Printer", 60, "tech", 1, 6, 6, 4, 4, 2, 2, 2, 2);
+		case "app": return new CropDetail(name, "App", 15, "tech", 1, 3, 4, 3, 0, 2, 2, 2, 2);
+		case "drone": return new CropDetail(name, "Drone", 105, "tech", 1, 5, 3, 7, 0, 2, 2, 2, 2);
+		case "frogbot": return new CropDetail(name, "Fwoggybot", 135, "tech", 2, 8, 4, 9, 0, 2, 2, 2, 2);
+		case "coffee": return new CropDetail(name, "Coffee Machine", 165, "tech", 2, 10, 5, 10, 0, 2, 2, 2, 2);
+		case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 100, "sickle2", 1, 5, 4, 0, 0, 2, 2, 2, 2);
 		/* Rare */
 		case "goldegg": return new CropDetail(name, "Golden Egg", 500, "egg", 1, 4, 4, 11, 0, 1, 1, 1, 1);
 		case "coconut": return new CropDetail(name, "Coconut", 500, "tree", 2, 10, 5, 11, 3, 1, 2, 0, 0, { treeSprite: "tropictree" });

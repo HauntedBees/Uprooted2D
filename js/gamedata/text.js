@@ -5677,54 +5677,439 @@ var fulltext = {
 		"en-dm": "Other Fixtures, like Egg Incubators, Paddy Fields, and Season Modulators, all have different effects. You can put as many on your Field as you can fit on there, but make sure you have the right Seeds to go with your Fixtures! Standard veggie seeds can't be planted on Mushroom Logs!", 
 		"type": "book"
 	},
-	"bookA": {
+	"bookMush": {
+		"en-us": "", 
+		"en-dm": "\"Mushroom Logs\" by Megan Obello \n An introduction to Mushroom Log Fixtures.", 
+		"type": "bname"
+	},
+	"bookMush0": {
+		"en-us": "", 
+		"en-dm": "If a Mushroom Log Fixture is added to your field, you will be able to plant and grow any of the several different types of Mushroom seeds during combat.", 
+		"type": "book"
+	},
+	"bookMush1": {
+		"en-us": "", 
+		"en-dm": "Mushrooms are similar to Fruit Trees since they regrow after being harvested and do not rot. However, they only take up one tile like Vegetables, and unlike both Fruits and Vegetables they do not fall off the log if they are not harvested when they are ripe.", 
+		"type": "book"
+	},
+	"bookMush2": {
+		"en-us": "", 
+		"en-dm": "Ripe mushrooms will remain on their logs until they are harvested. Mushroom Logs are, however, susceptible to fire, and if a Log is burned it will kill any mushrooms growing on it and will render the Log unusable for several turns.", 
+		"type": "book"
+	},
+	"bookEgg": {
+		"en-us": "", 
+		"en-dm": "\"Eggs and Incubators\" by Greggory Hatch \n A guide raising and hatching Eggs with Incubators.", 
+		"type": "bname"
+	},
+	"bookEgg0": {
+		"en-us": "", 
+		"en-dm": "If an Incubator Fixture is added to your field, you will be able to place and hatch any of the several different types of Eggs during combat.", 
+		"type": "book"
+	},
+	"bookEgg1": {
+		"en-us": "", 
+		"en-dm": "Once an egg hatches, it can be harvested like any other crop and the hatched animal can be thrown at enemies. Unlike vegetables, hatched eggs will not rot if they are unused, but their power will increase with every turn they are unused.", 
+		"type": "book"
+	},
+	"bookEgg2": {
+		"en-us": "", 
+		"en-dm": "The longer you leave a hatched egg on your field, the more damage it will do when finally used for an attack. Unlike most other crop types, eggs cannot be composted in any stage of their development no matter what kind of Compost Bin you have.", 
+		"type": "book"
+	},
+	"bookEgg3": {
+		"en-us": "", 
+		"en-dm": "Like Mushroom Logs, Incubators are resistant to most elemental attacks, but are can be burned by fire attacks, making them unusable for several turns.", 
+		"type": "book"
+	},
+	"bookExpand": {
+		"en-us": "", 
+		"en-dm": "\"Farm Expansions\" by Marge Fields \n Information on Farm Expansions and Upgrades.", 
+		"type": "bname"
+	},
+	"bookExpand0": {
+		"en-us": "", 
+		"en-dm": "Some shops don't sell any items, but will increase the size of your Field in exchange for cash monies. Each Upgrade Shop will have more sizes available than the previous one.", 
+		"type": "book"
+	},
+	"bookExpand1": {
+		"en-us": "", 
+		"en-dm": "Initially your Field is only 3x3 tiles big, but it can be expanded to be much bigger than that. Later on, you will be able to choose between different upgrades, with some offering more tiles overall, while others offer more space to place larger Fixtures and Crops (like Trees).", 
+		"type": "book"
+	},
+	"bookExpand2": {
+		"en-us": "", 
+		"en-dm": "There are three tiers of upgrade after the initial 3x3 size. The first tier brings your field size to 4x4, and the following two tiers offer two different upgrade sizes each - but once you pick one, you can't switch to the other, so choose wisely!", 
+		"type": "book"
+	},
+	"bookExpand3": {
+		"en-us": "", 
+		"en-dm": "Be sure to upgrade your Field size as soon as you can afford to do so, as it will be much harder to defeat stronger enemies when your Field is tiny!", 
+		"type": "book"
+	},
+	"bookForest": {
+		"en-us": "", 
+		"en-dm": "\"The Curse of Agrios Forest\" by Lana Ranja \n This book describes the mysterious forest west of this town.", 
+		"type": "bname"
+	},
+	"bookForest0": {
+		"en-us": "", 
+		"en-dm": "It's very easy to get lost in the forest, but few forests are as hard to navigate as the Agrios Forest, just west of the town of San Ambrosio in central California. Rumor has it that the whole forest has been cursed by unknown spirits.", 
+		"type": "book"
+	},
+	"bookForest1": {
+		"en-us": "", 
+		"en-dm": "Compasses don't work in this forest, as if there were strong magnetic interference, and when walking down certain paths, people claim to feel as though they have been \"warped\" to another part of the forest entirely by supernatural forces.", 
+		"type": "book"
+	},
+	"bookForest2": {
+		"en-us": "", 
+		"en-dm": "The forest is home to wildlife like turkeys, mice, squirrels, and bears, as well as rare flora like golden mushrooms, so many adventurers decide to enter the forest despite the townsfolk's stories and warnings.", 
+		"type": "book"
+	},
+	"bookForest3": {
+		"en-us": "", 
+		"en-dm": "Should you choose to enter Agrios Forest, keep your eyes out for familar landmarks to act as your guide, and don't bother setting a trail of breadcrumbs or trying to draw a map; they won't help you!", 
+		"type": "book"
+	},
+	"bookPaddy": {
 		"en-us": "", 
 		"en-dm": "\"Paddy Crops\" by Patrick Wack \n A primer on the Rice Paddy Fixture and the Crops that can be planted on it.", 
 		"type": "bname"
 	},
-	"bookA0": {
+	"bookPaddy0": {
 		"en-us": "", 
-		"en-dm": "Unique crops can be grown on Rice Paddy fixtures. Rice Paddies can only be placed on the bottom row of your farm.", 
+		"en-dm": "If a Rice Paddy Fixture is added to your field, you will be able to plant and grow any of the several different types of Rice seeds during combat. Unlike other Fixtures, Rice Paddy Fixtures can ONLY be placed on the bottom row of your Field.", 
 		"type": "book"
 	},
-	"bookA1": {
+	"bookPaddy1": {
 		"en-us": "", 
-		"en-dm": "Paddy Crops grow just like regular Crops and do not regrow, but a fresh Paddy Crop is much stronger than a Field Crop of the same Star Rating.", 
+		"en-dm": "Paddy Crops grow just like regular Vegetables and do not regrow, but they do not rot, and a fresh Paddy Crop is much stronger than a Field Crop of the same Star Rating.", 
 		"type": "book"
 	},
-	"bookA2": {
+	"bookPaddy2": {
 		"en-us": "", 
-		"en-dm": "Paddy Crops also have a much higher chance of inflicting Recoil Damage, hitting not just your target, but their crops and other enemies.", 
+		"en-dm": "Paddy Crops will always inflict Recoil Damage, so attacks with Paddy Crops won't just hit your target, but will also hit all other enemies in the battle.", 
 		"type": "book"
 	},
-	"bookB": {
-		"en-us": "", 
-		"en-dm": "\"Stunning Enemies\" by Perry Alasis \n A primer on crops that can stun enemies.", 
-		"type": "bname"
-	},
-	"bookB0": {
-		"en-us": "", 
-		"en-dm": "When attacking with Bees or certain other crops, there is a chance that they will be stunned by the attack, preventing them from performing any actions for one or more turns.", 
-		"type": "book"
-	},
-	"bookB1": {
-		"en-us": "", 
-		"en-dm": "How likely a crop is to stun enemies is denoted by these symbols in the crop's description:", 
-		"type": "book"
-	},
-	"bookC": {
+	"bookRare": {
 		"en-us": "", 
 		"en-dm": "\"Rare Crops\" by Dale McOneOfAKind \n A primer on rare and unique crops.", 
 		"type": "bname"
 	},
-	"bookC0": {
+	"bookRare0": {
 		"en-us": "", 
 		"en-dm": "Certain crops are especially powerful, and can only be found in a few places. A certain fairy north of San Ambrosio might have one for you.", 
 		"type": "book"
 	},
-	"bookC1": {
+	"bookRare1": {
 		"en-us": "", 
 		"en-dm": "Keep an eye out for a peculiar fellow in Agrios Forest, a studious robot in a research lab, and a smooth talking pirate, as they just might have rare items for you, too!", 
+		"type": "book"
+	},
+	"bookStun": {
+		"en-us": "", 
+		"en-dm": "\"Stunning Enemies\" by Perry Alasis \n A primer on crops that can stun enemies.", 
+		"type": "bname"
+	},
+	"bookStun0": {
+		"en-us": "", 
+		"en-dm": "When attacking with Bees or certain other crops, there is a chance that they will be stunned by the attack, preventing them from performing any actions for one or more turns.", 
+		"type": "book"
+	},
+	"bookStun1": {
+		"en-us": "", 
+		"en-dm": "How likely a crop is to stun enemies is denoted by these symbols in the crop's description:", 
+		"type": "book"
+	},
+	"bookFish": {
+		"en-us": "", 
+		"en-dm": "\"Fishing and Lake Fixtures\" by Misty Waters \n Information on Lake Fixtures and the items that can be used on them.", 
+		"type": "bname"
+	},
+	"bookFish0": {
+		"en-us": "", 
+		"en-dm": "If a Lake Fixture is added to your field, you will be able to place fishing rods, nets, and spears in them. Each item behaves differently, but all of them will give you fish. Like eggs, fish do not rot and cannot be composted.", 
+		"type": "book"
+	},
+	"bookFish1": {
+		"en-us": "", 
+		"en-dm": "The main difference between Fish and most other types of crops is their randomness - there is no set time from when a Lake item is placed and when a fish is caught, but the power of the item increases the odds of catching a fish on any given turn.", 
+		"type": "book"
+	},
+	"bookFish2": {
+		"en-us": "", 
+		"en-dm": "When placed, Fishing Rods and Fishing Nets will both randomly catch a fish after some number of turns. If a Fishing Rod does not catch any fish after its specified number of turns, it will break down. Fishing nets, however, will not go away until they catch a fish.", 
+		"type": "book"
+	},
+	"bookFish3": {
+		"en-us": "", 
+		"en-dm": "Fishing Spears will either catch a fish or fail to do so on the same turn they are used. Lake Fixtures and all of their crops are immune to all elemental attack types.", 
+		"type": "book"
+	},
+	"bookBees": {
+		"en-us": "", 
+		"en-dm": "\"Beekeeping 101\" by Honey Boy \n A beginner's guide to raising bees.", 
+		"type": "bname"
+	},
+	"bookBees0": {
+		"en-us": "", 
+		"en-dm": "Unlike most other Fixtures, Beehives can't be found in stores. Beehives are on trees all around the world, and if you find one, it will give you a Beehive Fixture as well as some bees to put in it.", 
+		"type": "book"
+	},
+	"bookBees1": {
+		"en-us": "", 
+		"en-dm": "Once a Beehive Fixture is placed, bees can be placed in it. Bees will produce honey after a random number of turns, which can be used for attacking or composting. When attacking with honey, there is a chance the enemy will become stunned.", 
+		"type": "book"
+	},
+	"bookBees2": {
+		"en-us": "", 
+		"en-dm": "Composting honey recovers much more health than other crops with similar Star Ratings. When attacking with honey, the bees will continue producing more honey, but composting it will clear out the Beehive, so more bees will need to be placed inside.", 
+		"type": "book"
+	},
+	"bookBees3": {
+		"en-us": "", 
+		"en-dm": "Like Mushroom Logs and Incubators, Beehives are susceptible to fire-based attacks and can be made unusable for several turns by them. Bees are very sensitive, so please do not use pesticides when working with them!!", 
+		"type": "book"
+	},
+	"bookCows": {
+		"en-us": "", 
+		"en-dm": "\"Cows\" by Boh Vyn. \n What is cows? Read this book to find out!", 
+		"type": "bname"
+	},
+	"bookCows0": {
+		"en-us": "", 
+		"en-dm": "Cows are large Fixtures that can be placed on your Field. During combat, you can feed cows various seeds and Animal Feed. After a cow has been fed, you can compost to get Milk from it.", 
+		"type": "book"
+	},
+	"bookCows1": {
+		"en-us": "", 
+		"en-dm": "Milk recovers much more health than composting standard crops. You can feed a cow multiple times, which will increase the recovery power of its Milk once it is composted. Once fed, the cow remain ready until it is milked or until the end of the battle.", 
+		"type": "book"
+	},
+	"bookTech": {
+		"en-us": "", 
+		"en-dm": "\"What's Technology?\" by Lil' Willy Fences \n The premiere resource on Technology Fixtures.", 
+		"type": "bname"
+	},
+	"bookTech0": {
+		"en-us": "", 
+		"en-dm": "Technology is an amazing thing. In fact, it's probably the best thing. Technology is great. You can use technology on your Field to make it a better Field that is good and better than a Field that does not have technology on it.", 
+		"type": "book"
+	},
+	"bookTech1": {
+		"en-us": "", 
+		"en-dm": "Are you tired of waiting 30 turns for the season to change? Sick of being at the whim of your foes messing with the laws of nature? Mess right back! With a Season Modulator, you can make this season be ANY season!", 
+		"type": "book"
+	},
+	"bookTech2": {
+		"en-us": "", 
+		"en-dm": "Farming is the WORST. You have to plant seeds, then you have to wait for them to grow, then you have to throw them! Seeds are too tiny to throw! But with a Seed Shooter, you can load it up with seeds and then fire them at all of your foes IN JUST ONE TURN!", 
+		"type": "book"
+	},
+	"bookTech3": {
+		"en-us": "", 
+		"en-dm": "Sick of planting \"fruits\" and \"vegetables\" in your Field? Wish you could plant batteries and apps instead? Place a Hotspot on your Field and you'll be able to plant up to four hip tech devices on it!", 
+		"type": "book"
+	},
+	"bookTech4": {
+		"en-us": "", 
+		"en-dm": "Finally, if you insist on doing things the old fashioned way, you can give your boring crops a veritable speed boost by placing Sprinklers on your Field! All crops in the 8 tile radius of a Sprinkler will grow much faster! German engineering! Made in China!", 
+		"type": "book"
+	},
+	"bookTechs": {
+		"en-us": "", 
+		"en-dm": "\"What's Hotspot?\" by Lil' Stevey Duties \n The premiere resource on Hotspot Crops.", 
+		"type": "bname"
+	},
+	"bookTechs0": {
+		"en-us": "", 
+		"en-dm": "Hotspot Fixtures allow you to place Technology on your Field. Tech items do not rot, grow perfectly in every season, and are significantly more powerful than other crops with similar Star Ratings.", 
+		"type": "book"
+	},
+	"bookTechs1": {
+		"en-us": "", 
+		"en-dm": "Tech items vary greatly in their usage. Some regrow after being harvested, some get more powerful as they stay on the field, they can be big or small, and some can even be composted. Their only weakness is water, which will fry an entire Hotspot and all items on it for several turns.", 
+		"type": "book"
+	},
+	"bookTips": {
+		"en-us": "", 
+		"en-dm": "\"Advanced Farming Tips\" by Skumpy \n A guide to growing crops for more experienced farmers.", 
+		"type": "bname"
+	},
+	"bookTips0": {
+		"en-us": "", 
+		"en-dm": "If you've gotten this far, you've probably gotten the hang of timing your harvests so you can attack with a large number of crops at once. The more crops you harvest in one turn, the more damage you will do, and the chance of recoil hitting other enemies will be higher.", 
+		"type": "book"
+	},
+	"bookTips1": {
+		"en-us": "", 
+		"en-dm": "However, don't forget that with certain weapons, you can also target enemy crops in addition to the enemies themselves with your attacks. If you see that a very powerful crop has been planted, it might be wise to take it out before it's ripe to avoid being hit by it.", 
+		"type": "book"
+	},
+	"bookTips2": {
+		"en-us": "", 
+		"en-dm": "It's also a good idea to keep a variety of different Fixtures on your Field. Stronger enemies will target your crops and may have elemental powers, which affect each Fixture differently. You don't want to have a Field full of Mushroom Logs when fighting someone with fire attacks!", 
+		"type": "book"
+	},
+	"bookTips3": {
+		"en-us": "", 
+		"en-dm": "Don't forget to keep buying new equipment! Buy the right stuff that suits your playstyle so you can fight more effectively. Make sure you are on the top of your Compost game, because all the power in the world won't help you if you don't have any way of recovering health!", 
+		"type": "book"
+	},
+	"bookCard": {
+		"en-us": "", 
+		"en-dm": "\"The WACG Card Game\" by cardBoy240 \n A beginner's guide to the hottest new card game sweeping the nation.", 
+		"type": "bname"
+	},
+	"bookCard0": {
+		"en-us": "", 
+		"en-dm": "\"Wow! Another Card Game!\" or WACG for short, is a collectable card game adored by techies in hip cities like Las Abejas. Like many other CCGs, the goal of the game is to assemble a good deck and use your cards to defeat your opponent.", 
+		"type": "book"
+	},
+	"bookCard1": {
+		"en-us": "", 
+		"en-dm": "This is mostly accomplished by spending lots of money on booster packs to get cards that aren't shit, but some strategy is involved in the gameplay itself. There are three types of cards: Character Cards, Element Cards, and Effect Cards.", 
+		"type": "book"
+	},
+	"bookCard2": {
+		"en-us": "", 
+		"en-dm": "A player must have one Character Card on their field to play the game - if they do not have a Character Card in their hand or on the field, they will have to discard a card from their hand and draw a new card until they have a Character Card in their hand to place on the field.", 
+		"type": "book"
+	},
+	"bookCard3": {
+		"en-us": "", 
+		"en-dm": "Character Cards can be in Attack or Defense positions. When in the Attack Position, the player will do more damage when attacking, but be more vulnerable to attacks themselves. Likewise, when in the Defense Position, the player will take less damage when attacked.", 
+		"type": "book"
+	},
+	"bookCard4": {
+		"en-us": "", 
+		"en-dm": "Up to two Element Cards can be placed on the player's field at once. When in play, Element Cards affect the types of attack the player can perform. For example, with a Fire Element Card in play, a player's attacks will also inflict burn damage.", 
+		"type": "book"
+	},
+	"bookCard5": {
+		"en-us": "", 
+		"en-dm": "Up to three Effect Cards can be placed on the player's field. Each Effect Card has a different effect that lasts as long as the card is in play. For example, the \"Gobulin Shield\" card increases the player's defense and \"The Blue Winter\" ensures that it is always Winter.", 
+		"type": "book"
+	},
+	"bookCard6": {
+		"en-us": "", 
+		"en-dm": "Now that you've read this guide, you should have the knowledge to make fun of nerds playing this game in more detail than you would have previously! Have fun!", 
+		"type": "book"
+	},
+	"bookMan": {
+		"en-us": "", 
+		"en-dm": "\"The Food2 Manifesto\" by Beckett \n An official statement by the VP of Food2 Co., Beckett.", 
+		"type": "bname"
+	},
+	"bookMan0": {
+		"en-us": "", 
+		"en-dm": "When the very first human thought \"me hungry, me want food,\" it was already clear that we had failed as a species. To be ruled by such primal instincts like hunger puts us on the same tier as animals: the worthless tier.", 
+		"type": "book"
+	},
+	"bookMan1": {
+		"en-us": "", 
+		"en-dm": "But as mankind evolved, so too have our methods of solving the hunger issue. Food used to come from hunting and farming, but now we have reached a point where we can order food on our smartphones. An improvement, but not improvement enough.", 
+		"type": "book"
+	},
+	"bookMan2": {
+		"en-us": "", 
+		"en-dm": "Much has been done to speed up the process of acquiring food, but the task of eating it remains as wasteful and time consuming as ever. And don't get me started on COOKING. Who has time to put frozen waffles in a toaster and wait two minutes in THIS economy??", 
+		"type": "book"
+	},
+	"bookMan3": {
+		"en-us": "", 
+		"en-dm": "At Food2, we know we can do better, because we ARE better. I have a degree! When our founder saw people leaving work in the afternoon to \"eat\" \"lunch\" at his old job, he knew there was a problem that needed to be solved.", 
+		"type": "book"
+	},
+	"bookMan4": {
+		"en-us": "", 
+		"en-dm": "His solution? Food2: a proprietary meal replacement beverage that requires no preparation, no refrigeration, no need to leave the cubicle! Just shake, open, and drink! And yes, we are working very hard on getting rid of those \"shake\" and \"open\" steps.", 
+		"type": "book"
+	},
+	"bookMan5": {
+		"en-us": "", 
+		"en-dm": "Early experiments into Food2 revealed another flaw in human biology: taste buds. Apparently we evolved the ability to taste \"bitter\" foods to make sure we don't consume \"poison.\" Come on, cavemen, just don't eat things if they're poisonous! DUH!", 
+		"type": "book"
+	},
+	"bookMan6": {
+		"en-us": "", 
+		"en-dm": "After several meetings, it was decided that making Food2 taste better was probably less expensive than giving everyone surgery to remove their taste buds, so the various flavors of Food2 we all know and love came to be!", 
+		"type": "book"
+	},
+	"bookMan7": {
+		"en-us": "", 
+		"en-dm": "Now that the Food2 formula has been perfected, I can say with certainty that it is the best invention since cryptocurrency, and after one sip, I'm sure you'll agree! And if you don't, consider not having bad opinions.", 
+		"type": "book"
+	},
+	"bookApp": {
+		"en-us": "", 
+		"en-dm": "\"Food2 Job Application\" by Food2 Co. \n Interested in joining a fast-paced start-up with a commitment to making investors happy above all else? Look no further!", 
+		"type": "bname"
+	},
+	"bookApp0": {
+		"en-us": "", 
+		"en-dm": "1. Full Legal Name: ____________ \n 2. Gender, Race, Religion, and National Origin: _________________ \n 3. Do you have reliable transportation?: ________ \n 4. You Aren't Gonna Get Pregnant, Are You?: ___", 
+		"type": "book"
+	},
+	"bookApp1": {
+		"en-us": "", 
+		"en-dm": "5. Education History: \n _____________ \n _____________ \n _____________ \n 6. Work History: \n _____________ \n _____________ \n _____________", 
+		"type": "book"
+	},
+	"bookApp2": {
+		"en-us": "", 
+		"en-dm": "7. What are your thoughts on unions? Explain why you dislike them. \n ____________________________ \n __________________________ \n 8. Please enter all social media usernames and passwords below: \n ________________________ \n ________________________", 
+		"type": "book"
+	},
+	"bookApp3": {
+		"en-us": "", 
+		"en-dm": "By signing below, you consent to our background checks and admit that the above information is factually correct and comprehensive. If any of the above information is inaccurate, your application will be rendered void and you will not be considered for employment.", 
+		"type": "book"
+	},
+	"bookEnt": {
+		"en-us": "", 
+		"en-dm": "\"Entrepreneurship and You.!\" by Chet Tweeterson \n Let's be real here, we both know there's nothing of substance in this book. Don't even bother.", 
+		"type": "bname"
+	},
+	"bookEnt0": {
+		"en-us": "", 
+		"en-dm": "There are two kinds of people in this world: winners and losers. And there's only one thing that separates them: Entrepreneurship. Motivation. A Go-Getter Attitude. The Urge. Gumption. You either got it, or you got nothin'.", 
+		"type": "book"
+	},
+	"bookEnt1": {
+		"en-us": "", 
+		"en-dm": "Some people might say that this attitude is overly simplistic and doesn't take into account the various, complicated, and intersecting reasons that some people might not succeed. To them I say \"sounds like SOMEONE is mad they're not a winner!\"", 
+		"type": "book"
+	},
+	"bookEnt2": {
+		"en-us": "", 
+		"en-dm": "Point is, some people are destined to be winners. You call them \"privileged\" or \"born into money\" or \"robber barons,\" but I call them \"entrepreneurs!\"", 
+		"type": "book"
+	},
+	"bookEnt3": {
+		"en-us": "", 
+		"en-dm": "Moving on, you may ask yourself \"I know I am destined to be a winner, but how do I go about changing from a pre-winner to a True Entrepreneur?\" The answer is simple: to make money you need to spend money, and to spend money you need to have money.", 
+		"type": "book"
+	},
+	"bookEnt4": {
+		"en-us": "", 
+		"en-dm": "If you don't already have money, you might not be cut out to be a winner, but there's still hope! Seek funding from investors, crowdfunding, and rich parents to acquire the funds you need to start your entrepreneuring.", 
+		"type": "book"
+	},
+	"bookEnt5": {
+		"en-us": "", 
+		"en-dm": "Once you have money, you need an idea for your start-up. But worry not, we're entrepreneurs, not artists, so there's no need to be creative! The big money is all in reinventing the wheel. Find an industry that already works fine the way it is, and DISRUPT it!", 
+		"type": "book"
+	},
+	"bookEnt6": {
+		"en-us": "", 
+		"en-dm": "After hiring marketing and sales teams and hyping up your revolutionary new product or service, it's time to finally hire some engineers to actually make it! And by \"hire\" I mean \"remember that part-time employees and contractors don't get health insurance.\"", 
+		"type": "book"
+	},
+	"bookEnt7": {
+		"en-us": "", 
+		"en-dm": "Follow all these steps, and you'll be a billionaire in no time! And if it doesn't work? It was probably your fault! Scrap everything and start over! You'll get it right eventually, as long as you still have other people's money!", 
 		"type": "book"
 	},
 	// Bees

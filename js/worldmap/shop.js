@@ -403,7 +403,7 @@ worldmap.shop = {
             this.mouseMoveBuying(pos);
         } else {
             this.DrawDetails(newText);
-            if(this.bookReading === "bookB" && this.bookState === 1) {
+            if(this.bookReading === "bookStun" && this.bookState === 1) {
                 gfx.drawTileToGrid("stunIco1", 2, 8.5, "menutext");
                 gfx.drawTileToGrid("stunIco2", 4, 8.5, "menutext");
                 gfx.drawTileToGrid("stunIco3", 6, 8.5, "menutext");
