@@ -21,7 +21,7 @@ function TileAnim(x, y, tileArray, shake, fps, loop) {
             }
             lastRan = now;
         }
-        let x = pos.x; var y = pos.y;
+        let x = pos.x, y = pos.y;
         if(doShake) {
             x += Math.random() < 0.33 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
             y += Math.random() < 0.33 ? -0.125 : (Math.random() > 0.5 ? -0.125 : 0);

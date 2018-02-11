@@ -110,9 +110,8 @@ combat.menu = {
         combat.animHelper.DrawBottom();
     },
     GetEnemyNameInfo: function(e, useLong) {
-        var name = e.name;
-        var len = Math.ceil(gfx.getTextLength(name) / 16 / gfx.scale * 2) / 2;
-        var maxLen = useLong ? 10 : 4;
+        let name = e.name, len = Math.ceil(gfx.getTextLength(e.name) / 16 / gfx.scale * 2) / 2;
+        const maxLen = useLong ? 10 : 4;
         while(len > maxLen) {
             name = name.substring(0, name.length - 4) + "...";
             len = Math.ceil(gfx.getTextLength(name) / 16 / gfx.scale * 2) / 2;
@@ -120,10 +119,10 @@ combat.menu = {
         return { name: name, len: len };
     },
     getEnemyCropCount: function() {
-        var count = 0;
-        for(var x = 0; x < combat.enemywidth; x++) {
-            for(var y = 0; y < combat.enemyheight; y++) {
-                var tile = combat.enemyGrid[x][y];
+        let count = 0;
+        for(let x = 0; x < combat.enemywidth; x++) {
+            for(let y = 0; y < combat.enemyheight; y++) {
+                const tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 count++;
             }
@@ -132,12 +131,11 @@ combat.menu = {
     },
     HasCompostableCrops: function() {
         if(combat.happyCows.length > 0) { return true; }
-        for(var x = 0; x < player.gridWidth; x++) {
-            for(var y = 0; y < player.gridHeight; y++) {
-                var tile = combat.grid[x][y];
+        for(let x = 0; x < player.gridWidth; x++) {
+            for(let y = 0; y < player.gridHeight; y++) {
+                const tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
-                var canCompost = combat.compost.isCompostable(tile);
-                if(canCompost) { return true; }
+                if(combat.compost.isCompostable(tile)) { return true; }
             }
         }
         return false;
@@ -160,10 +158,10 @@ combat.menu = {
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
     drawOption: function(text, y, selected) {
-        var xi = 1, tile = 7;
+        let xi = 1, tile = 7;
         if(selected) { tile = 9; }
         gfx.drawSprite("sheet", tile, 11, 0, 2 + (this.dy + y) * 16, "menuA");
-        var width = gfx.getTextWidth(text);
+        let width = gfx.getTextWidth(text);
         while(width > 128) {
             width -= 64;
             gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + (this.dy + y) * 16, "menuA");
@@ -184,10 +182,10 @@ combat.menu = {
         switch(pos.y - this.dy) {
             case 0: if(combat.numPlantTurns > 0) { game.innerTransition(this, combat.plant); } break;
             case 1:
-                var count = this.highlightReadyCropsAndReturnCount();
-                var theircount = this.getEnemyCropCount();
+                const count = this.highlightReadyCropsAndReturnCount();
+                const theircount = this.getEnemyCropCount();
                 if(count === 0 && !player.canMelee(theircount)) { return; }
-                var attackCount = 1;
+                let attackCount = 1;
                 if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
                 game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
                 break;

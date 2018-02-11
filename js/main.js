@@ -1,24 +1,9 @@
-if (typeof Object.assign != 'function') {
-    Object.assign = function(target, varArgs) {
-        if (target == null) { throw new TypeError('Cannot convert undefined or null to object'); }
-        var to = Object(target);
-        for (var index = 1; index < arguments.length; index++) {
-            var nextSource = arguments[index];
-            for (var nextKey in nextSource) {
-                if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-                    to[nextKey] = nextSource[nextKey];
-                }
-            }
-        }
-        return to;
-    };
-}
 function InventoryCopy(arr) {
-    var copy = [];
-    for (var i = 0; i < arr.length; i++) { copy[i] = (typeof arr[i] === "object") ? InventoryCopy(arr[i]) : arr[i]; }
+    let copy = [];
+    for (let i = 0; i < arr.length; i++) { copy[i] = (typeof arr[i] === "object") ? InventoryCopy(arr[i]) : arr[i]; }
     return copy;
  }
-var game = {
+const game = {
     w: 1024, h: 896, tilew: 16, tileh: 14, //w: 960, h: 640,
     currentInputHandler: worldmap, target: null, language: "en-dm",
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
@@ -31,20 +16,20 @@ var game = {
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
-        var canvasObj = {};
-        for(var i = 0; i < game.canvasLayers.length; i++) {
-            var name = game.canvasLayers[i];
+        let canvasObj = {};
+        for(let i = 0; i < game.canvasLayers.length; i++) {
+            const name = game.canvasLayers[i];
             //game.createCanvas(name) // TODO: why was I doing this??
             canvasObj[name] = document.getElementById(name);
         }
-        var contextObj = {};
-        for(var key in canvasObj) {
+        let contextObj = {};
+        for(const key in canvasObj) {
             contextObj[key] = canvasObj[key].getContext("2d");
         }
         game.init(canvasObj, contextObj, game.w, game.h, 16, 14); // 15, 10)
     },
     createCanvas: function(name) {
-        var canvas = document.createElement("canvas");
+        let canvas = document.createElement("canvas");
         canvas.id = name; canvas.width = game.w; canvas.height = game.h;
         document.body.appendChild(canvas);
     },
@@ -97,8 +82,8 @@ var game = {
     drawTransitionAnim: function() {
         gfx.clearLayer("tutorial");
         if(game.transitionInfo.size > 0) {
-            for(var y = 0; y < game.tileh + 2; y += 2) {
-                for(var x = 0; x < game.tilew + 2; x += 2) {
+            for(let y = 0; y < game.tileh + 2; y += 2) {
+                for(let x = 0; x < game.tilew + 2; x += 2) {
                     gfx.drawTransitionImage(game.transitionInfo.crop, x - (y % 4 ? 1 : 0), y + 0.5, game.transitionInfo.size);
                 }
             }
@@ -138,15 +123,15 @@ var game = {
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
         localStorage.setItem("player" + savenum, game.obj2str(player));
         stateBinders.storePositions(worldmap.mapName);
-        for(var i = 0; i < player.visitedMaps.length; i++) {
-            var map = player.visitedMaps[i];
+        for(let i = 0; i < player.visitedMaps.length; i++) {
+            const map = player.visitedMaps[i];
             if(stateBinders[map] !== undefined) { stateBinders[map](); }
         }
         if(worldmap.smartphone !== null) { mapStates["northcity"].phoneData = worldmap.smartphone.GetPhoneData(); }
         localStorage.setItem("mapent" + savenum, game.obj2str(mapStates));
     },
     load: function(savenum) {
-        var loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
+        let loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
         player = Object.assign(player, loadedPlayer);
         mapStates = game.str2obj(localStorage.getItem("mapent" + savenum));
         stores["skumpys"].wares[0].price = (player.achievements.indexOf("skumpy") < 0 ? 20 : 0);
