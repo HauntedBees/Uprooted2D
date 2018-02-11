@@ -1,5 +1,5 @@
 const enemyHelpers = {
-    GetNode: function(name) { for(var i = 0; i < EnemyParser.nodes.length; i++) { if(EnemyParser.nodes[i].id === name) { return EnemyParser.nodes[i]; } } },
+    GetNode: function(name) { for(let i = 0; i < EnemyParser.nodes.length; i++) { if(EnemyParser.nodes[i].id === name) { return EnemyParser.nodes[i]; } } },
     GetSideEffect: function(e, tile) {
         if(tile.saltChance === undefined && tile.burnChance === undefined) { return ""; }
         if(tile.saltChance !== undefined && tile.saltChance > Math.random()) { 
@@ -250,17 +250,17 @@ const EnemyParser = {
         return EnemyParser.outputData;
     },
     ParseCurrentNode: function() {
-        var nodeContent = EnemyParser.current.data.message;
-        var actionResult = true;
+        const nodeContent = EnemyParser.current.data.message;
+        let actionResult = true;
         if(nodeContent !== undefined && nodeContent !== "") { actionResult = actions[nodeContent](EnemyParser.enemy, EnemyParser.current.data.action); }
-        var conds = EnemyParser.current.next;
+        const conds = EnemyParser.current.next;
         if(conds === undefined) { EnemyParser.done = true; return; }
-        var nextNodeId = "";
+        let nextNodeId = "";
         if(conds.condition === "random") {
-            var rand = Math.random();
+            let rand = Math.random();
             for(var i = 0; i < conds.data.length; i++) {
-                var rval = conds.data[i];
-                var weight = parseFloat(rval.weight);
+                const rval = conds.data[i];
+                const weight = parseFloat(rval.weight);
                 if(rand <= weight) {
                     nextNodeId = rval.next;
                     //console.log("randomly picked " + nextNodeId);
@@ -268,9 +268,9 @@ const EnemyParser = {
                 } else { rand -= weight; }
             }
         } else if(conds.data !== undefined) {
-            for(var i = 0; i < conds.data.length; i++) {
-                var val = conds.data[i];
-                var success = conditions[val.condition](EnemyParser.enemy, actionResult);
+            for(let i = 0; i < conds.data.length; i++) {
+                const val = conds.data[i];
+                const success = conditions[val.condition](EnemyParser.enemy, actionResult);
                 if(success) { 
                     //console.log("picked " + nextNodeId + " because it passed the '" + val.condition + "' condition");
                     nextNodeId = val.next;
@@ -327,25 +327,25 @@ const conditions = {
     "ELSE": function(e) { return true; }
 };
 const actions = {
-    "INIT": () =>  true,
-    "END": () =>  true,
+    "INIT": () => true,
+    "END": () => true,
     "SKIP": function() { EnemyParser.outputData = { skip: true }; return true; },
     "TESTSKILL": function(e) { 
         switch(debug.testEnemyState) {
             case "attack":
-                EnemyParser.current.data.animData = [[0, 2], [0, 3], [0, 4]];
+                EnemyParser.current.data.animData = "ATTACK";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["WEAK_ATTACK"](e);
             case "plantandattack":
                 combat.enemyGrid[0][0] = GetCrop("kelp");
                 combat.enemyGrid[0][0].activeTime = 0;
-                EnemyParser.current.data.animData = [[0, 2], [0, 3], [0, 4]];
+                EnemyParser.current.data.animData = "THROW_ENEMY";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["LAUNCH_CROPS"](e);
             case "plantandattackcrop":
                 combat.enemyGrid[0][0] = GetCrop("kelp");
                 combat.enemyGrid[0][0].activeTime = 0;
-                EnemyParser.current.data.animData = [[0, 2], [0, 3], [0, 4]];
+                EnemyParser.current.data.animData = "THROW_ENEMY";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["LAUNCH_CROPS_AT_CROPS"](e);
         }

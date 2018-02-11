@@ -382,6 +382,7 @@ var spriteData = {
         "arborioB2": [28, 16],
         "arborioB3": [29, 16],
         "arborioB": [15, 18],
+        "titlecloud": [17, 2, true],
         "cloud0": [15, 2, true],
         "cloud": [30, 12],
         "lightbulb0": [23, 15],

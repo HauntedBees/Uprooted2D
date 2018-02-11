@@ -319,9 +319,10 @@ const gfx = {
         //gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["maps/" + map + "_fg"], offset.x * 16, midy + offset.y * 16, gfx.canvasWidth, midy, 0, midy, gfx.canvasWidth, midy);
         return offset;
     },
-    drawFullImage: function(store) {
-        var storeImg = gfx.spritesheets[store];
-        gfx.drawImage(gfx.ctx["background"], storeImg, 0, 0, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
+    drawFullImage: function(store, layer) {
+        layer = layer || "background";
+        const storeImg = gfx.spritesheets[store];
+        gfx.drawImage(gfx.ctx[layer], storeImg, 0, 0, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
         return true;
     },
     drawImage: function(ctx, image, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH) {
