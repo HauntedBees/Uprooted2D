@@ -61,6 +61,7 @@ const iHandler = {
 };
 const CommandParser = {
     ConditionCheck: function(json) {
+        let d = worldmap.dialogData === null ? -1 : worldmap.dialogData.idx;
         for(let i = 0; i < json.length; i++) {
             if(!eval(json[i].q)) { continue; }
             iHandler.state.idx = json[i].v;
