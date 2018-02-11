@@ -61,8 +61,7 @@ const iHandler = {
 };
 const CommandParser = {
     ConditionCheck: function(json) {
-        var d = worldmap.dialogData === null ? -1 : worldmap.dialogData.idx;
-        for(var i = 0; i < json.length; i++) {
+        for(let i = 0; i < json.length; i++) {
             if(!eval(json[i].q)) { continue; }
             iHandler.state.idx = json[i].v;
             iHandler.Advance();
@@ -129,8 +128,8 @@ const CommandParser = {
         }
     },
     Parse_TryGive: function(itemArr) {
-        var itemName = itemArr[0].replace("~", "_");
-        var itemAmt = parseInt(itemArr[1]) || 1;
+        const itemName = itemArr[0].replace("~", "_");
+        const itemAmt = parseInt(itemArr[1]) || 1;
         if(player.increaseItem(itemName, itemAmt)){ return; }
         iHandler.state.postItems.push([itemName, itemAmt]);
     },
@@ -147,7 +146,7 @@ const CommandParser = {
     },
     Parse_BlackText: function(args) { worldmap.writeText(args, undefined, undefined, undefined, true); },
     Parse_Text: function(args) {
-        var text = args.splice(0, 1)[0];
+        let text = args.splice(0, 1)[0];
         if(text.indexOf("(") >= 0) {
             var rgx = /\((\d*)-(\d*)\)/g;
             var range = text.match(rgx)[0];
@@ -163,7 +162,7 @@ const CommandParser = {
         }
     },
     Parse_Cash2Text: function(args) {
-        var text = args.splice(0, 1)[0];
+        const text = args.splice(0, 1)[0];
         if(args.length > 0) {
             if(player.c2 === 0) {
                 player.c2Rate = 500 + Math.floor(Math.random() * 500);
@@ -171,7 +170,7 @@ const CommandParser = {
                 player.c2Rate = RoundNear(player.c2Rate * (0.5 + Math.random() * 0.45), 100);
             }
         }
-        var formatting = [
+        const formatting = [
             RoundNear(1000 / player.c2Rate, 100),      // 0 = C2 per 1000G
             player.c2Rate,                              // 1 = G per 1C2
             player.monies, player.c2,                   // 2 = your G, 3 = your C2
@@ -181,15 +180,15 @@ const CommandParser = {
     },
     Parse_BasicPlayerFrame: function(args) { // sx, sy, time
         worldmap.waitForAnimation = true;
-        var sx = parseInt(args[0]);
-        var sy = parseInt(args[1]);
-        var time = parseInt(args[2]);
+        const sx = parseInt(args[0]);
+        const sy = parseInt(args[1]);
+        const time = parseInt(args[2]);
         worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, sx, sy);
         worldmap.refreshMap();
         worldmap.animIdx = setTimeout(iHandler.Finish, time);
     },
     Parse_Movement: function(target, isPlayer, moveData) {
-        var dx = 0; var dy = 0;
+        let dx = 0, dy = 0;
         if(moveData[0] === "y") {
             moveData = parseFloat(moveData.substring(1));
             dy = (moveData > target.pos.y) ? 1 : -1;
@@ -215,8 +214,8 @@ const CommandParser = {
 };
 
 function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
-    for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-        var e = worldmap.entities[i];
+    for(let i = worldmap.entities.length - 1; i >= 0; i--) {
+        const e = worldmap.entities[i];
         if(conditionFunc(e)) { 
             player.clearedEntities.push(e.name);
             worldmap.entities.splice(i, 1);
@@ -227,9 +226,9 @@ function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
 
 const SpecialFunctions = {
     "WAIT": function() { },
-    "GOTOTITLE": function() { game.transition(game.currentInputHandler, worldmap.title); },
-    "SETNERDBED": function() { player.lastInn = "nerdBed"; },
-    "CATMAIL": function() { player.activeQuests["catmail"] = 1; },
+    "GOTOTITLE": () => game.transition(game.currentInputHandler, worldmap.title),
+    "SETNERDBED": () => player.lastInn = "nerdBed",
+    "CATMAIL": () => player.activeQuests["catmail"] = 1,
     "CREDITS": function() {
         JustBeatGameChievoCheck();
         return game.transition(game.currentInputHandler, worldmap.credits);
@@ -427,8 +426,8 @@ const SpecialFunctions = {
         };
         worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
     },
-    "FINISHCOPS": function() { ClearEntitiesUnderCondition(function(e) { return e.robbery === true; }, false); },
-    "SWITCHTOFALCON": function() { iHandler.Start("falcon"); },
+    "FINISHCOPS": () => ClearEntitiesUnderCondition(e => e.robbery === true, false),
+    "SWITCHTOFALCON": () => iHandler.Start("falcon"),
     "SCREENSHAKE": function() {
         // TODO
     },
@@ -600,7 +599,7 @@ const SpecialFunctions = {
                 worldmap.entities[i].solid = false;
                 worldmap.entities[i].visible = false;
                 worldmap.entities[i].inside = false;
-            } else if(worldmap.entities[i].name.indexOf("XNerndHaus") > 0) {
+            } else if(worldmap.entities[i].name.indexOf("XNerndHaus") >= 0) {
                 worldmap.entities[i].pos.y += 27;
             }
         }
@@ -643,8 +642,8 @@ const SpecialFunctions = {
         worldmap.importantEntities["bruno"].anim.shiftY(4);
         worldmap.importantEntities["bruno"].dir = 0;
     },
-    "FORCEYZERO": function() { worldmap.forcedY = 0; },
-    "UNFORCEYZERO": function() { worldmap.forcedY = -1; },
+    "FORCEYZERO": () => worldmap.forcedY = 0,
+    "UNFORCEYZERO": () => worldmap.forcedY = -1,
     "SETUPJEFF": function() {
         worldmap.playerDir = 0;
         worldmap.waitForAnimation = true;
@@ -654,8 +653,8 @@ const SpecialFunctions = {
         worldmap.importantEntities["FarmerJeff"].visible = true;
         worldmap.importantEntities["FarmerJeff"].moving = true;
     },
-    "ENTERBARN": function() { JumboEntrance(); },
-    "EXITBARN": function() { JumboExit(); },
+    "ENTERBARN": JumboEntrance,
+    "EXITBARN": JumboExit,
     "FIXTIRE": function() {
         worldmap.writeText("bustedTruck1");
         quests.completeQuest("truckRepair");
@@ -781,7 +780,7 @@ const SpecialFunctions = {
         player.activeQuests["helpSeaMonster"] = "gotEgg";
         ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("Worker") >= 0; }, false);
     },
-    "SEEDSHOT": function() { player.health -= 2; game.target.hasShot = 5; },
+    "SEEDSHOT": () => { player.health -= 2; game.target.hasShot = 5; },
     "SEEDSHOTKILL": function() {
         player.health = player.maxhealth;
         for(var i = 0; i < worldmap.entities.length; i++) {
@@ -927,8 +926,8 @@ const SpecialFunctions = {
             case "lime.nope": worldmap.writeText("lime.denied"); iHandler.state.done = true; break;
         }
     },
-    "PWIDE": function() { worldmap.animData.width = 32; worldmap.animData.other.forceWide = true; iHandler.Finish(); },
-    "PUNWIDE": function() { worldmap.animData.width = 16; worldmap.animData.other.forceWide = false; iHandler.Finish(); },
+    "PWIDE": () => { worldmap.animData.width = 32; worldmap.animData.other.forceWide = true; iHandler.Finish(); },
+    "PUNWIDE": () => { worldmap.animData.width = 16; worldmap.animData.other.forceWide = false; iHandler.Finish(); },
     "HIPMOV": function() {
         worldmap.waitForAnimation = true;
         iHandler.state.animHandler = function(spedUp) {
@@ -974,7 +973,7 @@ const SpecialFunctions = {
             worldmap.clearTarget();
         }
     },
-    "FINISHTUTORIALSTANDALONE": function() { worldmap.writeText(tutorial.completed ? "finTut" : "quitTut"); },
+    "FINISHTUTORIALSTANDALONE": () => worldmap.writeText(tutorial.completed ? "finTut" : "quitTut"),
     "ENEMY0": function() { worldmap.writeText(game.target.interactname + Math.floor(Math.random() * game.target.dialogMax)); },
     "ENEMY1": function() {
         var numEnemies = game.target.min + Math.round(Math.random() * (game.target.max - game.target.min));

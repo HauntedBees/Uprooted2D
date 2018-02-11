@@ -1,4 +1,4 @@
-var mapStates = {
+let mapStates = {
     "producestand": {}, "farm": {}, "firstvillage": {}, "forest": {}, "belowvillage": {},
     "researchfacility": { rf: [false, false, false] }, 
     "bridge": {}, "underwater": {}, 
@@ -8,24 +8,24 @@ var mapStates = {
     "hq_1": { rf: [false, false, false] }, 
     "hq_2": {}, "hq_3": {}, "hq_4": {}, "hq_5": {}, "hq_6": {}
 };
-var stateBinders = {
+let stateBinders = {
     "storePositions": function(mapName) {
         if(mapStates[mapName] === undefined) { return; }
         mapStates[mapName].ents = {};
-        for(var i = 0; i < worldmap.entities.length; i++) {
-            var e = worldmap.entities[i];
+        for(let i = 0; i < worldmap.entities.length; i++) {
+            const e = worldmap.entities[i];
             if(e.movement === undefined) { continue; }
             mapStates[mapName].ents[e.name] = { pos: e.pos, movement: e.movement, dir: e.dir };
         }
     },
-    "hq_3": function() { if(worldmap.horRor !== null) { mapStates["hq_3"].room = worldmap.horRor.playerRoom; } }
+    "hq_3": () => { if(worldmap.horRor !== null) { mapStates["hq_3"].room = worldmap.horRor.playerRoom; } }
 };
 var mapRefreshes = {
     "resetData": function(mapname, justStateLoad) {
-        var ents = mapStates[mapname].ents;
-        var addtlFunc = mapRefreshes[mapname];
-        for(var i = 0; i < worldmap.entities.length; i++) {
-            var e = worldmap.entities[i];
+        const ents = mapStates[mapname].ents;
+        const addtlFunc = mapRefreshes[mapname];
+        for(let i = 0; i < worldmap.entities.length; i++) {
+            const e = worldmap.entities[i];
             if(addtlFunc !== undefined) { addtlFunc(e); }
             if(!justStateLoad) { mapRefreshes.extractPosition(e, ents); }
         }
@@ -38,31 +38,29 @@ var mapRefreshes = {
         }
     },
     "insideCheck": function(e, mapName) {
-        var inside = mapStates[mapName].inside;
+        const inside = mapStates[mapName].inside;
         if(e.inside) { e.visible = inside; }
         else if(e.jumbo) { e.visible = !inside; }
     },
     "switchCheck": function(e, mapName) {
-        var rfinfo = mapStates[mapName].rf;
+        const rfinfo = mapStates[mapName].rf;
         if(e.rfd) {
             if(!rfinfo[e.type]) { return; }
-            var newActive = !e.active;
+            const newActive = !e.active;
             e.active = newActive;
             e.anim.shiftY(newActive ? 3 : 2);
             e.solid = !newActive;
         } else if(e.rf) {
             if(!rfinfo[e.type]) { return; }
-            var newActive = !e.active;
+            const newActive = !e.active;
             e.active = newActive;
             e.anim.shiftY(newActive ? 1 : 0);
         }
     },
-    "producestand": function(e) {
-        if(e.name === "ConvinceATron") { e.visible = true; }
-    },
-    "researchfacility": function(e) { mapRefreshes.switchCheck(e, "researchfacility"); },
+    "producestand": function(e) { if(e.name === "ConvinceATron") { e.visible = true; } },
+    "researchfacility": e => mapRefreshes.switchCheck(e, "researchfacility"),
     "fakefarm": function(e) {
-        var paq = (player.activeQuests["fakeFarm"] === undefined ? -1 : player.activeQuests["fakeFarm"]);
+        const paq = (player.activeQuests["fakeFarm"] === undefined ? -1 : player.activeQuests["fakeFarm"]);
         if(paq >= 0) {
             SpecialFunctions["FARMTVEND"](true);
             worldmap.importantEntities["fuckOffFarmerJeff"].pos = { x: -1, y: -1 };
@@ -90,22 +88,20 @@ var mapRefreshes = {
         }
         mapRefreshes.insideCheck(e, "fakefarm");
     },
-    "southcity": function(e) { mapRefreshes.insideCheck(e, "southcity"); },
-    "northcity": function(e) { mapRefreshes.insideCheck(e, "northcity"); },
-    "hq_1": function(e) { mapRefreshes.switchCheck(e, "hq_1"); },
+    "southcity": e => mapRefreshes.insideCheck(e, "southcity"),
+    "northcity": function(e) {
+        if(e.name === "Mailman" && player.hasOrHasHadQuest("keycard")) { SpecialFunctions["DESTROYBUILDING"](); }
+        mapRefreshes.insideCheck(e, "northcity");
+    },
+    "hq_1": e => mapRefreshes.insideCheck(e, "hq_1"),
     "hq_3": function(e) {
-        if(e.name === "TheMonster") {
-            var startingRoom = mapStates["hq_3"].room;
-            worldmap.horRor = new HorRor(startingRoom);
-            ToggleChungus(true, { chungi: [startingRoom] });
-            if(player.hasQuestState("helpNerd", "helping")) {
-                SpecialFunctions["NERDUP"]();
-            }
+        if(e.name !== "TheMonster") { return; }
+        const startingRoom = mapStates["hq_3"].room;
+        worldmap.horRor = new HorRor(startingRoom);
+        ToggleChungus(true, { chungi: [startingRoom] });
+        if(player.hasQuestState("helpNerd", "helping")) {
+            SpecialFunctions["NERDUP"]();
         }
     },
-    "hq_4": function(e) {
-        if(e.name === "EndOfTheRoad" && player.completedQuest("theBeeQuest")) {
-            e.visible = true;
-        }
-    }
+    "hq_4": function(e) { if(e.name === "EndOfTheRoad" && player.completedQuest("theBeeQuest")) { e.visible = true; } }
 };
