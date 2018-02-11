@@ -111,7 +111,7 @@ var animCallbacks = {
             return;
         }
         let anim = new TileAnim(combat.enemydx + resetti.x, combat.enemydy + resetti.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-        anim.AddFrameFunc(3, function() { resetti.crop.hidden = true; combat.animHelper.DrawCrops(); });
+        anim.AddFrameFunc(3, function() { if(resetti.crop.respawn === 0) { resetti.crop.hidden = true; } combat.animHelper.DrawCrops(); });
         animProcess.AddBaby(anim);
     },
     "enemy_throwCropAtEnemy": function(animProcess, animEntity) {
@@ -153,7 +153,7 @@ var animCallbacks = {
         const resetti = animEntity.animQueue[0];
         const x = combat.dx + resetti.x, y = combat.dy + resetti.y;
         let anim = new TileAnim(x, y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-        anim.AddFrameFunc(3, function() { resetti.crop.hidden = true; combat.animHelper.DrawCrops(); });
+        anim.AddFrameFunc(3, function() { if(resetti.crop.respawn === 0) { resetti.crop.hidden = true; } combat.animHelper.DrawCrops(); });
         animProcess.AddBaby(anim);
         if(resetti.crop.seedDrop === true) {
             animProcess.AddBaby(new MovingLinearAnim([resetti.crop.name + "seed"], { x: x, y: y }, combat.animHelper.GetPlayerTopPos(), 0.25, 0, 24, 24));
