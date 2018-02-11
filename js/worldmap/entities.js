@@ -209,7 +209,7 @@ let mapentities = {
         GetCommonEntity("BVRobo6", 22, 36, 4, 3, undefined, Cutscene("enemy"), enemyMetadata.robo2)
     ],
     "researchfacility": function() {
-		var x = [
+		let x = [
 			GetCommonEntity("RFRobo1", 1, 15, 4, 2, GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
 			GetCommonEntity("RFRobo2", 25, 14, 4, 2, GetStdMovement([ [25, 14, 3], [30, 14, 3], [30, 22, 2], [25, 22, 1], [25, 14, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
 			GetCommonEntity("RFRobo3", 14, 7, 4, 2, GetStdMovement([ [14, 7, 3], [23, 7, 3], [23, 13, 2], [14, 13, 1], [14, 7, 0] ]), Cutscene("enemy"), enemyMetadata.robo2),
@@ -234,7 +234,7 @@ let mapentities = {
             GetCommonEntity("Jeff", 7, 2, 0, 0, undefined, Cutscene("jeff"), { sy: 4, boss: true, postBattle: "PostBoss2", noChange: true, failedInteract: Cutscene("jeffL") }),
             GetInvisibleEntity("PostBoss2", Cutscene("jeffW"), { storageKey: "PostBoss2" })
 		];
-		var doors = [
+		let doors = [
 			[5, 31, 0, false], [5, 32, 0, false], [10, 28, 0, true], [10, 29, 0, true], [6, 17, 0, true], [6, 18, 0, true], [6, 19, 0, true], [6, 20, 0, true],
 			[28, 23, 0, false], [29, 23, 0, false], [30, 23, 0, false], [27, 3, 0, false], [28, 3, 0, false], [29, 3, 0, false], [30, 3, 0, false], [13, 11, 0, false],
 			[7, 14, 0, false], [20, 35, 1, false], [20, 36, 1, false], [14, 14, 1, false], [15, 14, 1, false], [16, 14, 1, false], [20, 14, 1, true], [21, 14, 1, true],
@@ -242,12 +242,12 @@ let mapentities = {
 			[13, 29, 2, false], [13, 9, 2, true], [26, 24, 2, false], [25, 24, 2, false], [25, 13, 2, true], [26, 13, 2, true], [27, 13, 2, true], [27, 5, 2, false],
 			[28, 5, 2, false], [29, 5, 2, false], [30, 5, 2, false], [17, 6, 2, false], [18, 6, 2, false]
 		];
-		for(var i = 0; i < doors.length; i++) { var d = doors[i]; x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3])); }
+		for(let i = 0; i < doors.length; i++) { const d = doors[i]; x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3])); }
 		
-		var buttons = [ [2, 35, 0, false], [12, 7, 0, false], [18, 32, 1, false], [22, 8, 1, false], [4, 13, 2, false], [29, 15, 2, false] ];
-		for(var i = 0; i < buttons.length; i++) { var b = buttons[i]; x.push(GetRFDoorButton("Btn" + i, b[0], b[1], b[2], b[3])); }
+		let buttons = [ [2, 35, 0, false], [12, 7, 0, false], [18, 32, 1, false], [22, 8, 1, false], [4, 13, 2, false], [29, 15, 2, false] ];
+		for(let i = 0; i < buttons.length; i++) { const b = buttons[i]; x.push(GetRFDoorButton("Btn" + i, b[0], b[1], b[2], b[3])); }
 		
-		var invisSpeaks = [
+		let invisSpeaks = [
 			[28, 9, "growingpeppie"], [28, 11, "growingpeppie"], [29, 11, "rottencrop"], [28, 10, "rottencrop"], [18, 17, "seedshooter"], [18, 16, "seedshooter"], [23, 17, "seedshooter"], 
 			[23, 16, "seedshooter"], [12, 16, "seasmod"], [13, 16, "seasmod"], [12, 15, "seasmod"], [13, 15, "seasmod"], [2, 13, "flask"], [2, 11, "sink"], [3, 11, "sink"], [6, 24, "labprinter"],
 			[16, 26, "bookshelf.left"], [17, 26, "bookshelf.left"], [18, 26, "bookshelf.mid"], [19, 26, "bookshelf.mid"], [20, 26, "bookshelf.mid"], [21, 26, "bookshelf.mid"],
@@ -255,20 +255,20 @@ let mapentities = {
 			[12, 31, "broken.robot"], [13, 31, "broken.robot"], [1, 7, "devbed"], [2, 7, "devbed"], [1, 3, "devmachines"], [2, 3, "devmachines"], [3, 2, "devmachines"], [4, 1, "devmonitor"],
 			[5, 1, "devmachines"], [6, 1, "devmachines"], [7, 1, "devmachines"], [8, 1, "devmachines"], [9, 1, "devmachines"], [10, 2, "devmachines"], [11, 3, "devmachines"], [12, 3, "devmachines"]
 		];
-		for(var i = 0; i < invisSpeaks.length; i++) { var s = invisSpeaks[i]; x.push(GetCommonInvisibleSpeakingEntity("Spk" + i, s[0], s[1], s[2])); }
+		for(let i = 0; i < invisSpeaks.length; i++) { const s = invisSpeaks[i]; x.push(GetCommonInvisibleSpeakingEntity("Spk" + i, s[0], s[1], s[2])); }
 		
-		var chests = [
+		let chests = [
 			[21, 3, [["ginger", 10]]], [21, 2, [["lemon", 3]]], [29, 27, [["shiitake", 5]]], [8, 12, [["portobello", 5]]], [9, 12, [["milkcap", 2]]],
 			[10, 12, [["egg", 3]]], [11, 12, [["quail", 5]]], [27, 6, [["goose", 1]]], [28, 6, [["leek", 1]]], [29, 6, [["garlic", 1]]], 
 			[30, 6, [["headphones", 2]]] 
 		];
-		for(var i = 0; i < chests.length; i++) { var c = chests[i]; x.push(GetTreasureChest("RLChest" + i, c[0], c[1], c[2])); }
+		for(let i = 0; i < chests.length; i++) { const c = chests[i]; x.push(GetTreasureChest("RLChest" + i, c[0], c[1], c[2])); }
 		
-		var stationaryRobos = [
+		let stationaryRobos = [
 			[22, 2], [23, 2], [24, 2], [25, 2], [22, 3], [23, 3], [24, 3], [25, 3], [20, 4], [21, 4],
 			[22, 4], [23, 4], [24, 4], [25, 4], [20, 1], [21, 1], [22, 1], [23, 1], [24, 1], [25, 1]
 		]
-		for(var i = 0; i < stationaryRobos.length; i++) { var r = stationaryRobos[i]; x.push(GetCommonEntity("StRobo" + i, r[0], r[1], 4, 2, undefined, Cutscene("enemy"), enemyMetadata.robo2)); }
+		for(let i = 0; i < stationaryRobos.length; i++) { const r = stationaryRobos[i]; x.push(GetCommonEntity("StRobo" + i, r[0], r[1], 4, 2, undefined, Cutscene("enemy"), enemyMetadata.robo2)); }
 		
 		return x;
 	}(),
@@ -314,7 +314,7 @@ let mapentities = {
         GetInvisibleEntity("FishMoved", Cutscene("seahelp"), { storageKey: "FishMoved" })
     ],
     "underwater": function() {
-        var x = [
+        let x = [
             SwitchMap("GoAboveGround", 42, 20, false, false, 5, 14, "bridge"),
             GetCommonEntity("FishFace1", 34, 5, 0, 3, commonMovementDatas.rectangle(34, 5, 4, 4), Cutscene("enemy"), enemyMetadata.fish),
             GetCommonEntity("FishFace2", 38, 24, 0, 2, commonMovementDatas.downrectangle(38, 24, 4, 5), Cutscene("enemy"), enemyMetadata.fish),
@@ -391,46 +391,46 @@ let mapentities = {
             GetTreasureChest("UWChestByBoat", 21, 18, [["chestnut", 3]]),
             GetTreasureChest("UWChestHiddenByCurrent", 34, 13, [["lemon", 6]])
         ];
-        for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallA" + i, 36, 21 - i, 0, "A")); }
+        for(let i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallA" + i, 36, 21 - i, 0, "A")); }
         x.push(GetRock("rockA", 37, 21, 1, "A"));
 
-        for(var i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallB" + i, 32, 21 - i, 0, "B")); }
+        for(let i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallB" + i, 32, 21 - i, 0, "B")); }
         x.push(GetRock("rockB", 31, 20, 3, "B"));
         
-        for(var i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallC" + i, 13, 17 + i, 2, "C")); }
-        for(var i = 0; i < 14; i++) { x.push(GetWaterfall("waterfallCL" + i, 13 + i, 23, 3, "C")); }
+        for(let i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallC" + i, 13, 17 + i, 2, "C")); }
+        for(let i = 0; i < 14; i++) { x.push(GetWaterfall("waterfallCL" + i, 13 + i, 23, 3, "C")); }
         x.push(GetRock("rockC", 12, 17, 3, "C"));
         
-        for(var i = 0; i < 9; i++) { x.push(GetWaterfall("waterfallD" + i, 8, 19 - i, 0, "D")); }
-        for(var i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallDR" + i, 8 + i, 10, 3, "D")); }
+        for(let i = 0; i < 9; i++) { x.push(GetWaterfall("waterfallD" + i, 8, 19 - i, 0, "D")); }
+        for(let i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallDR" + i, 8 + i, 10, 3, "D")); }
         x.push(GetRock("rockD", 7, 19, 3, "D"));
 
-        for(var i = 0; i < 18; i++) { x.push(GetWaterfall("waterfallE" + i, 25 - i, 14, 1, "E")); }
+        for(let i = 0; i < 18; i++) { x.push(GetWaterfall("waterfallE" + i, 25 - i, 14, 1, "E")); }
         x.push(GetRock("rockE", 25, 15, 0, "E"));
 
-        for(var i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallF" + i, 39, 12 + i, 2, "F")); }
+        for(let i = 0; i < 6; i++) { x.push(GetWaterfall("waterfallF" + i, 39, 12 + i, 2, "F")); }
         x.push(GetRock("rockF", 40, 12, 1, "F"));
 
-        for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallG" + i, 47 - i, 20, 1, "G")); }
+        for(let i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallG" + i, 47 - i, 20, 1, "G")); }
         x.push(GetRock("rockG", 48, 19, 2, "G"));
         
-        for(var i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallH" + i, 33 - i, 3, 1, "H")); }
-        for(var i = 0; i < 10; i++) { x.push(GetWaterfall("waterfallI" + i, 21 + i, 5, 3, "I")); }
+        for(let i = 0; i < 13; i++) { x.push(GetWaterfall("waterfallH" + i, 33 - i, 3, 1, "H")); }
+        for(let i = 0; i < 10; i++) { x.push(GetWaterfall("waterfallI" + i, 21 + i, 5, 3, "I")); }
         
-        for(var i = 0; i < 8; i++) { x.push(GetWaterfall("waterfallJ" + i, 40 + i, 1, 3, "I")); }
-        for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallJD" + i, 48, 1 + i, 2, "I")); }
+        for(let i = 0; i < 8; i++) { x.push(GetWaterfall("waterfallJ" + i, 40 + i, 1, 3, "I")); }
+        for(let i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallJD" + i, 48, 1 + i, 2, "I")); }
         x.push(GetWaterfall("waterfallJLA", 48, 6, 1, "I"));
-        for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallJU" + i, 47, 6 - i, 0, "I")); }
-        for(var i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallJL" + i, 47 - i, 2, 1, "I")); }
+        for(let i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallJU" + i, 47, 6 - i, 0, "I")); }
+        for(let i = 0; i < 7; i++) { x.push(GetWaterfall("waterfallJL" + i, 47 - i, 2, 1, "I")); }
         
-        for(var i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallK" + i, 46, 4 + i, 2, "K")); }
+        for(let i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallK" + i, 46, 4 + i, 2, "K")); }
         
         x.push(GetWaterfall("waterfallLU", 46, 9, 0, "L"));
-        for(var i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallLR" + i, 46 + i, 8, 3, "L")); }
-        for(var i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallLD" + i, 48, 8 + i, 2, "L")); }
+        for(let i = 0; i < 2; i++) { x.push(GetWaterfall("waterfallLR" + i, 46 + i, 8, 3, "L")); }
+        for(let i = 0; i < 4; i++) { x.push(GetWaterfall("waterfallLD" + i, 48, 8 + i, 2, "L")); }
         
-        for(var i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallM" + i, 43, 12 - i, 0, "M")); }
-        for(var i = 0; i < 3; i++) { x.push(GetWaterfall("waterfallML" + i, 42 - i, 6, 1, "M")); }
+        for(let i = 0; i < 5; i++) { x.push(GetWaterfall("waterfallM" + i, 43, 12 - i, 0, "M")); }
+        for(let i = 0; i < 3; i++) { x.push(GetWaterfall("waterfallML" + i, 42 - i, 6, 1, "M")); }
 
         return x;
     }(),
@@ -720,7 +720,7 @@ let mapentities = {
         GetCommonEntity("cashboy1", 27, 37, 4, 2, undefined, Cutscene("cashBoy"), { inside: true, visible: false, sy: 15 })
     ],
     "hq_1": function() {
-        var x = [ 
+        let x = [ 
             { name: "Falcon5", pos: { x: 15, y: 27 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
             SwitchMap("GoUpstairs", 5.5, 1, true, false, 5, 2, "hq_2"),
             SwitchMap("Leave", 15, 30, false, false, 39, 10, "northcity"),
@@ -779,24 +779,24 @@ let mapentities = {
             GetCommonEntity("hungyBinU", 14, 11, 0, 0, undefined, Cutscene("hungyBin"), { visible: false, boring: true }),
             GetCommonEntity("hungyBinB", 14, 12, 0, 0, undefined, Cutscene("hungyBin"), { visible: false, boring: true })
         ];
-        var doors = [ [20, 10, 0, false], [7, 10, 0, true],  [20, 3, 1, false], [25, 7, 1, true], [18, 6, 1, false], [17, 14, 1, true], [15, 8, 1, false],
+        let doors = [ [20, 10, 0, false], [7, 10, 0, true],  [20, 3, 1, false], [25, 7, 1, true], [18, 6, 1, false], [17, 14, 1, true], [15, 8, 1, false],
                  [4, 17, 1, true], [10, 17, 1, false], [4, 8, 2, false], [4, 12, 2, true], [10, 12, 2, false], [7, 14, 2, true] ];
-        for(var i = 0; i < doors.length; i++) { var d = doors[i]; x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3])); }
+        for(let i = 0; i < doors.length; i++) { const d = doors[i]; x.push(GetRFDoor("Door" + i, d[0], d[1], d[2], d[3])); }
          
-        var buttons = [ [24, 4, 0, false], [1, 15, 0, false], [10, 8, 1, false], [26, 4, 1, false], [19, 19, 1, false], [1, 8, 2, false] ];
-        for(var i = 0; i < buttons.length; i++) { var b = buttons[i]; x.push(GetRFDoorButton("Btn" + i, b[0], b[1], b[2], b[3])); }
+        let buttons = [ [24, 4, 0, false], [1, 15, 0, false], [10, 8, 1, false], [26, 4, 1, false], [19, 19, 1, false], [1, 8, 2, false] ];
+        for(let i = 0; i < buttons.length; i++) { const b = buttons[i]; x.push(GetRFDoorButton("Btn" + i, b[0], b[1], b[2], b[3])); }
         
-        var lookables = [ [3, 24, "smartDesk"], [4, 24, "smartDesk"], [5, 24, "smartDesk"], [6, 24, "smartDesk"], [7, 24, "smartDesk"],
+        let lookables = [ [3, 24, "smartDesk"], [4, 24, "smartDesk"], [5, 24, "smartDesk"], [6, 24, "smartDesk"], [7, 24, "smartDesk"],
                           [3, 25, "smartDesk"], [3, 26, "smartDesk"], [7, 25, "smartDesk"], [7, 26, "smartDesk"],
                           [3, 27, "smartDesk"], [4, 27, "smartDesk"], [5, 27, "smartDesk"], [6, 27, "smartDesk"], [7, 27, "smartDesk"],
                           [2, 22, "secondMonitor"], [3, 22, "secondMonitor"], [4, 22, "secondMonitor"], [5, 22, "secondMonitor"],
                           [6, 22, "whiteboard"], [7, 22, "whiteboard"], [8, 22, "whiteboard"], [26, 21, "theFirstBottle"],
                           [26, 22, "theFirstBottle"], [27, 22, "theFirstBottle"], [28, 22, "theFirstBottle"], [26, 29, "theFirstBottle"] ];
-        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
+        for(let i = 0; i < lookables.length; i++) { const l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
     "hq_2": function() {
-        var x = [
+        let x = [
             GetTreasureChest("HQ2Chest1", 9, 6, [["greenshroom", 20]]),
             GetTreasureChest("HQ2Chest2", 15, 27, [["blackshroom", 20]]),
             GetTreasureChest("HQ2Chest3", 15, 28, [["poisnshroom", 20]]),
@@ -851,28 +851,28 @@ let mapentities = {
             GetCommonEntity("HQ2BuffNerd2", 15, 22, 8, 2, undefined, Cutscene("enemy"), enemyMetadata.buffNerd)
         ];
         
-        for(var i = 11; i < 17; i++) { x.push(GetWaterfall("tech_waterfallB" + i, 1, i, 2, "B", true)); }
-        for(var i = 2; i < 11; i++) { x.push(GetWaterfall("tech_waterfallF" + i, i, 19, 3, "F", true)); }
-        for(var i = 16; i < 27; i++) { x.push(GetWaterfall("tech_waterfallG" + i, 9, i, 0, "G", true)); }
-        for(var i = 14; i < 19; i++) { x.push(GetWaterfall("tech_waterfallK" + i, i, 9, 1, "K", true)); }
-        for(var i = 14; i < 19; i++) { x.push(GetWaterfall("tech_waterfallL" + i, i, 4, 1, "L", true)); }
-        for(var i = 5; i < 17; i++) { x.push(GetWaterfall("tech_waterfallO" + i, i, 25, 1, "O", true)); }
-        for(var i = 20; i < 23; i++) { x.push(GetWaterfall("tech_waterfallP" + i, 18, i, 0, "P", true)); }
-        for(var i = 20; i < 27; i++) { x.push(GetWaterfall("tech_waterfallQ" + i, 21, i, 2, "Q", true)); }
-        for(var i = 16; i < 24; i++) { x.push(GetWaterfall("tech_waterfallR" + i, i, 21, 3, "R", true)); }
-        for(var i = 16; i < 21; i++) { x.push(GetWaterfall("tech_waterfallS" + i, 13, i, 0, "S", true)); }
-        for(var i = 16; i < 25; i++) { x.push(GetWaterfall("tech_waterfallU" + i, 26, i, 2, "U", true)); }
-        for(var i = 16; i < 25; i++) { x.push(GetWaterfall("tech_waterfallV" + i, 28, i, 2, "V", true)); }
-        for(var i = 14; i < 20; i++) { x.push(GetWaterfall("tech_waterfallX" + i, 29, i, 0, "X", true)); }
+        for(let i = 11; i < 17; i++) { x.push(GetWaterfall("tech_waterfallB" + i, 1, i, 2, "B", true)); }
+        for(let i = 2; i < 11; i++) { x.push(GetWaterfall("tech_waterfallF" + i, i, 19, 3, "F", true)); }
+        for(let i = 16; i < 27; i++) { x.push(GetWaterfall("tech_waterfallG" + i, 9, i, 0, "G", true)); }
+        for(let i = 14; i < 19; i++) { x.push(GetWaterfall("tech_waterfallK" + i, i, 9, 1, "K", true)); }
+        for(let i = 14; i < 19; i++) { x.push(GetWaterfall("tech_waterfallL" + i, i, 4, 1, "L", true)); }
+        for(let i = 5; i < 17; i++) { x.push(GetWaterfall("tech_waterfallO" + i, i, 25, 1, "O", true)); }
+        for(let i = 20; i < 23; i++) { x.push(GetWaterfall("tech_waterfallP" + i, 18, i, 0, "P", true)); }
+        for(let i = 20; i < 27; i++) { x.push(GetWaterfall("tech_waterfallQ" + i, 21, i, 2, "Q", true)); }
+        for(let i = 16; i < 24; i++) { x.push(GetWaterfall("tech_waterfallR" + i, i, 21, 3, "R", true)); }
+        for(let i = 16; i < 21; i++) { x.push(GetWaterfall("tech_waterfallS" + i, 13, i, 0, "S", true)); }
+        for(let i = 16; i < 25; i++) { x.push(GetWaterfall("tech_waterfallU" + i, 26, i, 2, "U", true)); }
+        for(let i = 16; i < 25; i++) { x.push(GetWaterfall("tech_waterfallV" + i, 28, i, 2, "V", true)); }
+        for(let i = 14; i < 20; i++) { x.push(GetWaterfall("tech_waterfallX" + i, 29, i, 0, "X", true)); }
         x.push(GetWaterfall("tech_waterfallW", 28, 20, 3, "W", true));
 
-        var lookables = [ [18, 13, "coffeeBottle"], [18, 14, "coffeeBottle"], [19, 14, "coffeeBottle"], [20, 14, "coffeeBottle"], [20, 13, "coffeeBottle"],
+        let lookables = [ [18, 13, "coffeeBottle"], [18, 14, "coffeeBottle"], [19, 14, "coffeeBottle"], [20, 14, "coffeeBottle"], [20, 13, "coffeeBottle"],
                           [27, 8, "gamerBottle"], [28, 8, "gamerBottle"], [29, 8, "gamerBottle"] ];
-        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
+        for(let i = 0; i < lookables.length; i++) { const l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
     "hq_3": function() {
-        var x = [
+        let x = [
             GetTreasureChest("HQ3Chest1", 29, 23, [["apricot", 10]]),
             GetTreasureChest("HQ3Chest2", 20, 17, [["arborio", 10]]),
             GetTreasureChest("HQ3Chest3", 13, 24, [["platypus", 5]]),
@@ -911,18 +911,18 @@ let mapentities = {
             GetChungus(13, 1, 376, 103, 105, 64),
             { id: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
                 if(worldmap.horRor === null) {
-                    var startingRoom = worldmap.pos.x < 10 ? 0 : 13;
+                    const startingRoom = worldmap.pos.x < 10 ? 0 : 13;
                     worldmap.horRor = new HorRor(startingRoom);
                     ToggleChungus(true, { chungi: [startingRoom] });
                     Cutscene("food2Third")[0]();
                 } else {
-                    var startingRoom = worldmap.horRor.playerRoom;
+                    const startingRoom = worldmap.horRor.playerRoom;
                     ToggleChungus(true, { chungi: [startingRoom] });
                 }
                 return true;
             } ], pos: { x: -1, y: -1 } }
         ];
-        var doors = [ 
+        let doors = [ 
             { x: 21, y: 5, dx: 0, dy: 1, doors: [13, 6] }, { x: 28, y: 9, dx: 0, dy: 1, doors: [13, 12] }, { x: 29, y: 15, dx: 0, dy: 1, doors: [12, 5] },
             { x: 28, y: 21, dx: 0, dy: 1, doors: [5, 11] }, { x: 29, y: 26, dx: 0, dy: 1, doors: [11, 10] }, { x: 21, y: 15, dx: 0, dy: 1, doors: [12, 4] },
             { x: 21, y: 25, dx: 0, dy: 1, doors: [4, 10] }, { x: 1, y: 6, dx: 0, dy: 1, doors: [0, 1] }, { x: 6, y: 18, dx: 0, dy: 1, doors: [7, 2] },
@@ -932,21 +932,21 @@ let mapentities = {
             { x: 11, y: 20, dx: 1, dy: 0, doors: [2, 9] }, { x: 11, y: 26, dx: 1, dy: 0, doors: [2, 3] }, { x: 18, y: 27, dx: 1, dy: 0, doors: [3, 10] },
             { x: 25, y: 25, dx: 1, dy: 0, doors: [4, 11] }
         ];
-        for(var i = 0; i < doors.length; i++) { 
-            var door = doors[i];
+        for(let i = 0; i < doors.length; i++) { 
+            const door = doors[i];
             x.push(GetChungusDoor(i, door.x, door.y, [door.doors[0]]));
             x.push(GetChungusDoor(i, door.x + door.dx, door.y + door.dy, door.doors, (door.dx > 0 ? 1 : 0)));
             x.push(GetChungusDoor(i, door.x + door.dx * 2, door.y + door.dy * 2, [door.doors[1]]));
         }
-        var lookables = [ [2, 20, "soybeanBaby"], [2, 21, "soybeanBaby"], [2, 22, "brokenIncubator"], [2, 23, "brokenIncubator"], [2, 24, "kelpFishBaby"],
+        let lookables = [ [2, 20, "soybeanBaby"], [2, 21, "soybeanBaby"], [2, 22, "brokenIncubator"], [2, 23, "brokenIncubator"], [2, 24, "kelpFishBaby"],
                           [2, 25, "kelpFishBaby"], [2, 27, "veggieGolemBaby"], [2, 28, "veggieGolemBaby"], [22, 19, "crispyBottle"], [22, 20, "crispyBottle"],
                           [23, 20, "crispyBottle"], [24, 20, "crispyBottle"], [24, 19, "crispyBottle"], [9, 12, "salsaBottle"], [9, 13, "salsaBottle"], [10, 13, "salsaBottle"],
                           [11, 13, "salsaBottle"], [2, 10, "cookiesBottle"], [2, 11, "cookiesBottle"], [3, 11, "cookiesBottle"], [4, 11, "cookiesBottle"] ];
-        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
+        for(let i = 0; i < lookables.length; i++) { const l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
     "hq_4": function() {
-        var x = [
+        let x = [
             SwitchMap("GoDownstairsL", 5, 1, false, false, 5.5, 2, "hq_3"),
             SwitchMap("GoDownstairsR", 6, 1, false, false, 5.5, 2, "hq_3"),
             SwitchMap("GoUpstairsL", 24, 1, false, false, 8, 51, "hq_5"),
@@ -988,10 +988,10 @@ let mapentities = {
             GetCommonEntity("Reached4F", 0, 0, 0, 0, undefined, Cutscene("to4F"), { boring: true, solid: false, visible: false, autoplay: true }),
             GetCommonEntity("SavedWorker", 10, 3, 20, 0, undefined, undefined, { sy: 16, noChange: true, visible: false, solid: false, sheetlen: 2, storageKey: "trentSafe", boring: true })
         ];
-        var lookables = [ [1, 11, "midniteBottle"], [2, 11, "midniteBottle"], [3, 11, "midniteBottle"], [3, 10, "midniteBottle"],
+        let lookables = [ [1, 11, "midniteBottle"], [2, 11, "midniteBottle"], [3, 11, "midniteBottle"], [3, 10, "midniteBottle"],
                           [27, 10, "purpleBottle"], [27, 11, "purpleBottle"], [28, 11, "purpleBottle"], [29, 11, "purpleBottle"], 
                           [27, 3, "crystalBottle"], [27, 4, "crystalBottle"], [28, 4, "crystalBottle"], [4, 11, "crystalBottle"] ];
-        for(var i = 0; i < lookables.length; i++) { var l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
+        for(let i = 0; i < lookables.length; i++) { const l = lookables[i]; x.push(GetCommonInvisibleSpeakingEntity("Invis" + i, l[0], l[1], l[2])); }
         return x;
     }(),
     "hq_5": [
@@ -1006,7 +1006,7 @@ let mapentities = {
         SwitchMap("GoUpstairs", 8, 0, false, false, 8.5, 15, "hq_6")
     ],
     "hq_6": function() {
-        var x = [
+        let x = [
             { name: "OhMyGodThisIsTheEnd", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("final"), autoplay: true, boss: true, postBattle: "youWon", failedInteract: Cutscene("finalReturn") },
             { name: "youWon", storageKey: "youWon", pos: { x: 0, y: 0 }, boring: true, interact: Cutscene("theEnd") },
             GetCommonEntity("CryBeckett", 5, 9, 6, 0, undefined, undefined, { sheet: "hipster", sy: 2, sheetlen: 2, storageKey: "beckettCry" }),
@@ -1015,8 +1015,8 @@ let mapentities = {
             GetCommonEntity("button", 7.75, 7, 5, 2, undefined, undefined, { sheet: "assistant", sy: 5, boring: true, storageKey: "btn", forcedY: 14 }),
             GetCommonEntity("desk", 8, 7, 7, 0, undefined, undefined, { big: true, sy: 3, boring: true, storageKey: "table", forcedY: 15 })
         ];
-        for(var xx = 6; xx < 12; xx++) {
-            for(var yy = 8; yy < 10; yy++) {
+        for(let xx = 6; xx < 12; xx++) {
+            for(let yy = 8; yy < 10; yy++) {
                 x.unshift(GetCommonEntity("flipTile" + xx + "." + yy, xx, yy, 24, 0, undefined, undefined, { boring: true, isFlippy: true }));
             }
         }
