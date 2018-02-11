@@ -9,12 +9,12 @@ function AttackData(approximateDamage, isCritical, stunLength, animals, crops, k
     this.numCrops = this.crops.length;
     this.knockback = Math.ceil(knockback || 0);
 }
-var dmgCalcs = {
+const dmgCalcs = {
     GetPlayerCombatDefense: function() {
-        var d = player.def;
-        for(var x = 0; x < player.gridWidth; x++) {
-            for(var y = 0; y < player.gridHeight; y++) {
-                var tile = combat.grid[x][y]
+        let d = player.def;
+        for(let x = 0; x < player.gridWidth; x++) {
+            for(let y = 0; y < player.gridHeight; y++) {
+                const tile = combat.grid[x][y]
                 if(tile === null || tile.x !== undefined) { continue; }
                 d += tile.power / 5;
             }
@@ -23,11 +23,11 @@ var dmgCalcs = {
     },
     GetNerfs: function() {
         if(combat.enemies[0].id !== "beckett") { return []; }
-        var nerfs = [];
-        var right = combat.enemywidth - 1, bottom = combat.enemyheight - 1;
-        for(var x = right - 1; x <= right; x++) {
-            for(var y = bottom - 1; y <= bottom; y++) {
-                var nerf = combat.enemyGrid[x][y];
+        let nerfs = [];
+        const right = combat.enemywidth - 1, bottom = combat.enemyheight - 1;
+        for(let x = right - 1; x <= right; x++) {
+            for(let y = bottom - 1; y <= bottom; y++) {
+                const nerf = combat.enemyGrid[x][y];
                 if(nerf === null) { continue; }
                 switch(nerf.id) {
                     case "mushNerf": nerfs.push("mush"); break;
@@ -46,21 +46,21 @@ var dmgCalcs = {
     GetNerfMultiplier: function(crop, nerfs) { 
         if(combat.enemies[0].id !== "beckett") { return 1; }
         if(nerfs.length === 0) { return 1; }
-        var nerfMult = 1;
-        for(var i = 0; i < nerfs.length; i++) {
+        let nerfMult = 1;
+        for(let i = 0; i < nerfs.length; i++) {
             if(nerfs[i] === "RE") { if(crop.respawn > 0) { nerfMult *= 0.25; } }
             else if(nerfs[i] === crop.type) { nerfMult *= 0.25; }
         }
         return nerfMult;
     },
     CropToDef: function(crop, season, attackElements) {
-        var cropDef = crop.defense;
+        let cropDef = crop.defense;
         switch(crop.seasons[season]) {
             case 2: cropDef *= 2; break;
             case 0: cropDef /= 3; break;
         }
-        for(var i = 0; i < attackElements; i++) {
-            var attackElement = attackElements[i];
+        for(let i = 0; i < attackElements; i++) {
+            const attackElement = attackElements[i];
             switch(attackElement) { // 0 = water, 1 = fire, salt = 2, -1 = general
                 case 0: cropDef *= 1.5 * (crop.waterResist || 0); break;
                 case 1: cropDef *= 1.5 * (crop.fireResist || 0); break;
@@ -109,8 +109,8 @@ var dmgCalcs = {
 
     CropAttack: function(isPlayer, season, myAtk, myCrops, targets, attackElements) {
         if(attackElements === undefined) { attackElement = [-1]; }
-        var formattedDefs = [];
-        for(var i = 0; i < targets.length; i++) {
+        let formattedDefs = [];
+        for(let i = 0; i < targets.length; i++) {
             if(targets[i].name === undefined) { // enemy; value is just an integer for their defense
                 formattedDefs.push(targets[i]);
             } else { // crop; value is a crop object
@@ -120,18 +120,18 @@ var dmgCalcs = {
         return dmgCalcs.CropInner(isPlayer, season, myAtk, myCrops, formattedDefs);
     },
     CropInner: function(isPlayer, season, myAtk, myCrops, theirDef) {
-        var isCritical = isPlayer && (Math.random() < (player.luck - 0.69));
-        var hasShockGloves = isPlayer && player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech;
-        var nerfs = dmgCalcs.GetNerfs(), modAtk = Math.log10(5 + myAtk * myAtk);
-        var totalDamage = 0, stunLength = 0, damageToAttacker = 0, animals = [];
-        var recoilInfos = [], animInfos = [];
+        const isCritical = isPlayer && (Math.random() < (player.luck - 0.69));
+        const hasShockGloves = isPlayer && player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech;
+        const nerfs = dmgCalcs.GetNerfs(), modAtk = Math.log10(5 + myAtk * myAtk);
+        let totalDamage = 0, stunLength = 0, damageToAttacker = 0, animals = [];
+        let recoilInfos = [], animInfos = [];
 
-        for(var i = 0; i < myCrops.length; i++) {
-            var crop = myCrops[i].crop;
-            var seasonVal = crop.seasons[season];
+        for(let i = 0; i < myCrops.length; i++) {
+            const crop = myCrops[i].crop;
+            let seasonVal = crop.seasons[season];
             if(seasonVal === 0) { seasonVal = 0.2; } else if(isPlayer) { player.miscdata.seasonsPlanted[season]++; }
 
-            var pow = crop.power + 1;
+            let pow = crop.power + 1;
             if(isPlayer) {
                 if(crop.stickChance !== undefined && stunLength === 0) { // Stickiness
                     switch(crop.stickChance) { // TODO: add enemy resistance to stickiness
@@ -141,7 +141,7 @@ var dmgCalcs = {
                     }
                 }
                 if(player.equipment.soil !== null) { // Watering Cans
-                    var soil = GetEquipment(player.equipment.soil);
+                    const soil = GetEquipment(player.equipment.soil);
                     if(soil.boost !== undefined) {
                         switch(crop.seasons[season]) {
                             case 0: seasonVal += soil.boost; break;
@@ -158,14 +158,15 @@ var dmgCalcs = {
                     damageToAttacker += crop.power * 1.5;
                 }
             } else if(crop.type === "tech") { pow -= 1; }
-            var dmg = (modAtk * pow * pow  * seasonVal * dmgCalcs.GetNerfMultiplier(crop, nerfs)) / 6;
+
+            let dmg = (modAtk * pow * pow * seasonVal * dmgCalcs.GetNerfMultiplier(crop, nerfs)) / 5;
             if(crop.type === "rice") { dmg *= 1.5; }
             if(crop.name === "app") { dmg *= 2 / (crop.activeTime + 1); }
             if(crop.animal !== undefined && ((1 - player.luck) * Math.random()) < (crop.animalChance / 8)) {
                 animals.push({ crop: crop.name, animal: crop.animal });
                 dmg *= crop.animalDamageMult;
             }
-            var recoilInfo = null;
+            let recoilInfo = null;
             if(isPlayer && ["rice", "veg", "tree", "mush", "bee", "egg", "tech"].indexOf(crop.type) >= 0) {
                 if(crop.type === "rice" || (myCrops.length > 3 && combat.enemies.length > 1)) {
                     var power = crop.type === "rice" ? 1 : 0;
@@ -185,7 +186,7 @@ var dmgCalcs = {
         } else {
             totalDamage *= 1 + Math.floor(myCrops.length / 6) / 10; // boost by number of crops (launch 10 crops to get 1.1x boost, 20 for 1.3x, 30 for 1.5x)
         }
-        if(totalDamage < myAtk && isPlayer) { totalDamage += myAtk + 1; }
+        if(isPlayer) { totalDamage += myAtk + 1; }
         var attacksArr = [];
         for(var i = 0; i < theirDef.length; i++) {
             var finalDamage = totalDamage;
