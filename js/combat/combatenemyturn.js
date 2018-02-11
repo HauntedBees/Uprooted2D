@@ -3,7 +3,7 @@ combat.enemyTurn = {
     setup: function(args) {
         var enemy = args.enemy;
         combat.animHelper.ResetPlayerAnimState();
-        combat.animHelper.SetBirdAnimInfo();
+        combat.animHelper.ResetBirdAnimState();
         gfx.drawFullbox(this.dy);
         if(enemy.stickTurns > 0) {
             var text = GetText("stuckTurn").replace(/\{0\}/g, enemy.name);

@@ -4,11 +4,11 @@ combat.menu = {
     setup: function(sel) {
         gfx.clearSome(this.layersToClean);
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
-            var hasCharger = false;
-            for(var x = 0; x < player.gridWidth; x++) {
+            let hasCharger = false;
+            for(let x = 0; x < player.gridWidth; x++) {
                 if(hasCharger) { break; }
-                for(var y = 0; y < player.gridHeight; y++) {
-                    var item = combat.grid[x][y]
+                for(let y = 0; y < player.gridHeight; y++) {
+                    const item = combat.grid[x][y]
                     if(item !== null && item.type === "sickle2") {
                         hasCharger = true;
                         break;
@@ -24,14 +24,13 @@ combat.menu = {
         this.drawOption("Compost", 2, this.cursorY === 2);
         this.drawOption("Run", 3, this.cursorY === 3);
         gfx.drawCursor(0, this.dy + this.cursorY, this.options[this.cursorY], 0);
-        var text = "abba is a band";
-        var charAnim = "STAND", birdX = 0, birdY = 0;
+        let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
         switch(this.cursorY) {
             case 0:
                 if(combat.isFalcon) {
                     text = GetText("seeds_one");
                     charAnim = "LOOKBACK";
-                    birdX = 1;
+                    birdAnim = "WANTPLANT";
                 } else if(combat.numPlantTurns == 0) {
                     text = GetText("seeds_none");
                     charAnim = "CANTDO";
@@ -44,11 +43,11 @@ combat.menu = {
                 }
                 break;
             case 1:
-                var count = this.highlightReadyCropsAndReturnCount();
+                const count = this.highlightReadyCropsAndReturnCount();
                 if(combat.isFalcon) {
                     text = GetText("attack_falcon");
                     charAnim = "LOOKBACK";
-                    birdX = 2;
+                    birdAnim = "WANTATTACK";
                 } else if(count === 0) {
                     if(player.canMelee(this.getEnemyCropCount())) {
                         text = GetText("attack_melee");
@@ -65,14 +64,17 @@ combat.menu = {
             case 2: 
                 if(player.equipment.compost === null) {
                     text = GetText("compost_cant");
-                    charAnim = "CANTDO";
+                    if(combat.isFalcon) { birdAnim = "CANTDO"; }
+                    else { charAnim = "CANTDO"; }
                 } else if(!this.HasCompostableCrops()) {
                     text = GetText("compost_nocrops");
-                    charAnim = "CANTDO";
+                    if(combat.isFalcon) { birdAnim = "CANTDO"; }
+                    else { charAnim = "CANTDO"; }
                 } else {
                     text = GetText("compost_can");
                     if(combat.isFalcon) {
                         charAnim = "LOOKBACK";
+                        birdAnim = "WANTCOMPOST";
                     } else {
                         charAnim = "WANTCOMPOST";
                     }
@@ -82,6 +84,7 @@ combat.menu = {
                 if(combat.isFalcon) {
                     text = GetText("run_falcon");
                     charAnim = "LOOKBACK";
+                    birdAnim = "CANTDO";
                 } else if(combat.isBossBattle) {
                     text = GetText("run_cant");
                     charAnim = "CANTDO";
@@ -92,13 +95,13 @@ combat.menu = {
                 break;
         }
         combat.animHelper.SetPlayerAnimState(charAnim, true);
-        combat.animHelper.SetBirdAnimInfo([[birdX, birdY]]);
+        combat.animHelper.SetBirdAnimState(birdAnim, true);
         gfx.drawInfobox(12, 3, this.dy);
-        var topy = 9.25;
-        var useLongNames = combat.enemies.length < 3;
-        for(var i = 0; i < combat.enemies.length; i++) {
-            var enemy = combat.enemies[i];
-            var enemyNameInfo = this.GetEnemyNameInfo(enemy, useLongNames);
+        const topy = 9.25;
+        const useLongNames = combat.enemies.length < 3;
+        for(let i = 0; i < combat.enemies.length; i++) {
+            const enemy = combat.enemies[i];
+            const enemyNameInfo = this.GetEnemyNameInfo(enemy, useLongNames);
             gfx.drawText(enemyNameInfo.name, (5.75 + 6 * Math.floor(i / 2)) * 16, (topy + 1 + (i % 2)) * 16);
             gfx.drawTileToGrid(GetHPFrame(enemy), 4.5 + 6 * Math.floor(i / 2), topy + (i % 2), "menucursorB");
         }
@@ -140,15 +143,16 @@ combat.menu = {
         return false;
     },
     highlightReadyCropsAndReturnCount: function() {
-        var count = 0;
-        for(var x = 0; x < player.gridWidth; x++) {
-            for(var y = 0; y < player.gridHeight; y++) {
-                var tile = combat.grid[x][y];
+        if(combat.isFalcon) { return 0; }
+        let count = 0;
+        for(let x = 0; x < player.gridWidth; x++) {
+            for(let y = 0; y < player.gridHeight; y++) {
+                const tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
                 else if(tile.rotten || tile.activeTime > 0) { continue; }
                 count++;
-                var size = tile.size - 1;
+                const size = tile.size - 1;
                 gfx.drawCursor(x + combat.dx, y + combat.dy, size, size, "xcursor");
             }
         }
@@ -218,8 +222,8 @@ combat.menu = {
         }
     },
     keyPress: function(key) {
-        var pos = { x: 0, y: this.cursorY + this.dy };
-        var isEnter = false;
+        let pos = { x: 0, y: this.cursorY + this.dy };
+        let isEnter = false;
         switch(key) {
             case player.controls.up: pos.y--; break;
             case player.controls.down: pos.y++; break;

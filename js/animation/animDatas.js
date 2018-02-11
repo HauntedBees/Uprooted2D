@@ -10,8 +10,8 @@ function AnimFrame(sx, sy, callback) { this.x = sx; this.y = sy; this.callback =
 function OverlaySet(sheet, frames) { this.sheet = sheet; this.frames = frames; this.length = this.frames.length - 1; }
 function OverlayFrame(sx, sy, dx, dy) { this.x = sx; this.y = sy; this.dx = dx || 0; this.dy = dy || 0; }
 
-function JustOne(sx, sy, options) { return new AnimSet([new AnimFrame(sx, sy)], false, 12, options); }
-var enemyCombatAnims = {
+const JustOne = (sx, sy, options) => new AnimSet([new AnimFrame(sx, sy)], false, 12, options);
+const enemyCombatAnims = {
     "STAND": JustOne(0, 0),
     "HURT": JustOne(0, 1, { doShake: true }),
     "PLANT": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
@@ -53,9 +53,22 @@ function GetWeaponAnims() {
     w["FISH3"] = new OverlaySet("combat_equipment", [new OverlayFrame(0, 7, -4), new OverlayFrame(1, 7), new OverlayFrame(1, 7)]);
     return w;
 }
-var weaponAnims = GetWeaponAnims();
+const weaponAnims = GetWeaponAnims();
 
-var playerCombatAnims = {
+const falconAnims = {
+    "STAND": JustOne(1, 5),
+    "WANTPLANT": JustOne(2, 5),
+    "WANTATTACK": JustOne(3, 5),
+    "CANTDO": JustOne(5, 5),
+    "WANTCOMPOST": JustOne(4, 5),
+    "THINK": JustOne(0, 6),
+    "PLANT": JustOne(1, 6),
+    "ATTACK": new AnimSet([new AnimFrame(2, 6), new AnimFrame(3, 6, "player_damageFoes"), new AnimFrame(2, 6), new AnimFrame(3, 6)], false),
+    "MOURN": JustOne(4, 6),
+    "WON": new AnimSet([new AnimFrame(6, 5), new AnimFrame(7, 5)], true, 4)
+};
+
+const playerCombatAnims = {
     "STAND": JustOne(0, 0),
     "WANTPLANT": JustOne(1, 0),
     "WANTATTACK": new AnimSet([new AnimFrame(2, 0), new AnimFrame(2, 1)], true, 2),
@@ -211,7 +224,7 @@ var animCallbacks = {
         }
         animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], combat.animHelper.GetPlayerTopPos(), animEntity.bonusArgs.targets[0], 1, 0, 24, 24, callback));
     },
-    "player_damageFoes": function(animProcess, animEntity) { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets); },
+    "player_damageFoes": (animProcess, animEntity) => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets),
     "player_damageFoesWithAnim": function(animProcess, animEntity) {
         animProcess.SetNewFPS(4);
         animProcess.SetShake(true);

@@ -203,11 +203,13 @@ var combat = {
         combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
+            combat.animHelper.SetBirdAnimState("MOURN", true);
             combat.animHelper.SetPlayerAnimState("CORPSE", true);
             game.innerTransition(game.currentInputHandler, combat.inbetween, { next: combat.fuckingDead, text: GetText("diedInCombat") });
             return;
         } else if(this.enemies.length == 0) {
             player.addExp(this.expEarned);
+            combat.animHelper.SetBirdAnimState("WON", true);
             combat.animHelper.SetPlayerAnimState("WON", true);
             var text = GetText("youDidATheWin");
             var resulties = [this.expEarned + "EXP"];

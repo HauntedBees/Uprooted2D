@@ -54,10 +54,10 @@ combat.selectTarget = {
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
         if(combat.isFalcon) {
-            combat.animHelper.SetBirdAnimInfo([[2, 0]]);
+            combat.animHelper.SetBirdAnimState("WANTATTACK", true);
             combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
         } else {
-            combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+            combat.animHelper.SetBirdAnimState("STAND", true);
             combat.animHelper.SetPlayerAnimState("WANTATTACK", true);
         }
         for(var i = 0; i < this.targets.length; i++) {
@@ -279,7 +279,8 @@ combat.selectTarget = {
                                             combat.isFalcon, avgDamage, lastTargetName, this.targets.length > 1, allAttacks[0].knockback);
         var targType = (this.targets[0].x === undefined) ? "_ENEMY" : "_CROP";
         if(combat.isFalcon) {
-            combat.animHelper.SetBirdAnimInfo([[2, 1], [3, 1], [2, 1], [3, 1, true]], undefined, undefined, undefined, GetFrameRate(12));
+            combat.animHelper.SetBirdAnimState("ATTACK", true);
+            combat.animHelper.SetBirdAnimArg("targets", this.targets);
         } else {
             var attackType = (allAttacks[0].numCrops === 0) ? "MELEE" : "THROW";
             combat.animHelper.SetPlayerAnimState(attackType + targType, true);

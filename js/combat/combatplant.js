@@ -350,13 +350,14 @@ combat.plant = {
         var size = 0;
         var cursorX = this.cursor.x, cursorY = this.cursor.y;
         combat.animHelper.SetPlayerAnimLayer("characters");
+        combat.animHelper.SetBirdAnimLayer("characters");
         if(this.activeCrop === null) {
             this.setText();
             if(combat.isFalcon) {
-                combat.animHelper.SetBirdAnimInfo([[0, 1]]);            
+                combat.animHelper.SetBirdAnimState("THINK", true);            
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
             } else {
-                combat.animHelper.SetBirdAnimInfo([[0, 0]]);
+                combat.animHelper.SetBirdAnimState("STAND", true);  
                 combat.animHelper.SetPlayerAnimState("THINK", true);
             }
             this.drawXs();
@@ -364,14 +365,16 @@ combat.plant = {
             size = this.activeCrop.size - 1;
             if(combat.isFalcon) {
                 combat.animHelper.ResetPlayerAnimState();
+                combat.animHelper.SetBirdAnimState("PLANT");
+                combat.animHelper.SetBirdAnimLayer("menucursorC");
                 if(size == 1) {
-                    combat.animHelper.SetBirdAnimInfo([[1, 1]], cursorX + 2, cursorY - 1, true);
+                    combat.animHelper.SetBirdAnimPos(cursorX + 0.5, cursorY + 1.25);
                 } else {
-                    combat.animHelper.SetBirdAnimInfo([[1, 1]], cursorX + 1, cursorY - 0.75, true);
+                    combat.animHelper.SetBirdAnimPos(cursorX - 0.25, cursorY + 1.125);
                 }
             } else {
-                combat.animHelper.SetBirdAnimInfo([[0, 0]]);
-                combat.animHelper.SetPlayerAnimState("PLANT", true);
+                combat.animHelper.ResetBirdAnimState();
+                combat.animHelper.SetPlayerAnimState("PLANT");
                 combat.animHelper.SetPlayerAnimLayer("menucursorC");
                 if(size == 1) {
                     combat.animHelper.SetPlayerAnimPos(cursorX + 0.5, cursorY + 0.25);

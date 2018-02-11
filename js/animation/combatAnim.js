@@ -1,53 +1,9 @@
-function EntityAnimInfo(ani, x, y, fr) {
-    this.animState = 0;
-    this.animArray = ani || [[0, 0]];
-    this.x = x || 4;
-    this.y = y || 5.75;
-    this.initX = this.x;
-    this.initY = this.y;
-    this.throwables = [];
-    this.timePerFrame = fr || anim.timePerFrame;
-    this.lastRan = +new Date();
-    this.lastThrownFrame = -1;
-    this.hit = false;
-}
-EntityAnimInfo.prototype.Animate = function() { };
-EntityAnimInfo.prototype.Reset = function() {
-    this.throwables = [];
-    this.hit = false;
-    this.animState = 0;
-};
-
-function FalconAnimInfo(ani, x, y, fr, top) {
-    EntityAnimInfo.call(this, ani, x || 3.5, y || 5, fr);
-    this.onTop = top;
-}
-FalconAnimInfo.prototype = Object.create(EntityAnimInfo.prototype);
-FalconAnimInfo.prototype.constructor = FalconAnimInfo;
-FalconAnimInfo.prototype.Animate = function() {
-    var dt = (+new Date()) - this.lastRan;
-    if(dt >= this.timePerFrame) {
-        if(this.animArray[this.animState][2]) {
-            if(this.lastThrownFrame < 0 && !this.isRun) {
-                this.lastThrownFrame = 0;
-            }
-        } else {
-            this.lastRan = +new Date();
-            this.animState = (this.animState + 1) % this.animArray.length;
-        }
-    } else if(this.isRun && !this.animArray[this.animState][2]) {
-        this.x -= 0.1;
-    }
-    var animData = this.animArray[this.animState];
-    gfx.drawFalcon(animData[0], animData[1], this.x - 1, this.y, this.onTop ? "menucursorC" : "characters");
-};
-
 function CombatAnimHelper(enemies) {
     let playerPos = { x: 3, y: 9.25 };
 
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     let enemyAnimInfos = [];
-    let birdAnimInfo = (player.hasFalcon ? new FalconAnimInfo() : null);
+    let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
     let currentx = 11 - enemies.length;
     let anims = [];
 
@@ -110,13 +66,12 @@ function CombatAnimHelper(enemies) {
     this.SetEnemyAnimArg = (idx, key, val) => enemyAnimInfos[idx].PushArg(key, val);
     this.MakeEnemyACorpse = function(idx) { const e = enemyAnimInfos[idx]; e.dead = true; e.deadFrame = 0; };
 
-
     this.AddPlayerAttackAnim = (caa) => playerAnimInfo.animQueue.push(caa);
     this.StartPlayerAnimSequence = () => playerAnimInfo.StartAnimQueue();
     
-    this.GetPlayerTopPos = () => ({ x: playerPos.x, y: playerPos.y - 1 });;
+    this.GetPlayerTopPos = () => ({ x: playerPos.x, y: playerPos.y - 1 });
     this.GetPlayerBottomPos = () => ({ x: playerPos.x + 0.5, y: playerPos.y });
-    this.PushPlayerOverlay = (name) => playerAnimInfo.PushOverlayAnim(weaponAnims[name]);
+    this.PushPlayerOverlay = name => playerAnimInfo.PushOverlayAnim(weaponAnims[name]);
     this.SetPlayerAnimArg = (key, val) => playerAnimInfo.PushArg(key, val);
     this.SetPlayerAnimState = function(name, resetPos) { playerAnimInfo.SetAnim(name); if(resetPos) { this.ResetPlayerAnimPos(); } };
     this.SetPlayerAnimLayer = (layer) => playerAnimInfo.layer = layer;
@@ -146,7 +101,18 @@ function CombatAnimHelper(enemies) {
         return { x: edims.x, y: edims.y };
     };
 
-    this.SetBirdAnimInfo = function(anims, x, y, top, fr) { if(birdAnimInfo === null) { return; } birdAnimInfo = new FalconAnimInfo(anims, x, y, fr, top); };
+    this.SetBirdAnimArg = (key, val) => birdAnimInfo.PushArg(key, val);
+    this.SetBirdAnimPos = function(x, y) { birdAnimInfo.dims.x = x; birdAnimInfo.dims.y = y; };
+    this.ResetBirdAnimPos = () => this.SetBirdAnimPos(playerPos.x - 1.5, playerPos.y);
+    this.SetBirdAnimState = function(name, resetPos) { birdAnimInfo.SetAnim(name); if(resetPos) { this.ResetBirdAnimPos(); } };
+    this.SetBirdAnimLayer = (layer) => birdAnimInfo.layer = layer;
+    this.ResetBirdAnimState = function() {
+        birdAnimInfo.SetAnim("STAND");
+        birdAnimInfo.layer = "characters";
+        birdAnimInfo.ClearAnimQueue();
+        this.ResetBirdAnimPos();
+    };
+
     this.GetEnemyPos = (idx) => ({ x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y });
 
     this.DEBUG_DrawEnemy = (idx) => enemyAnimInfos[idx].Animate(idx);

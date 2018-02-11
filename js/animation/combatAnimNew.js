@@ -209,6 +209,9 @@ function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx) {
 function CombatAnimPlayer(x, y) { CombatAnimEntity.call(this, "combat_player", 32, 30, x, y, playerCombatAnims, "STAND"); }
 CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 
+function CombatAnimFalcon(x, y) { CombatAnimEntity.call(this, "combat_player", 32, 30, x, y, falconAnims, "STAND"); }
+CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
+
 function CombatAnimEnemy(sheet, w, h, x, y, dx) { CombatAnimEntity.call(this, sheet, w, h, x, y, enemyCombatAnims, "STAND", dx); }
 CombatAnimEnemy.prototype = Object.create(CombatAnimEntity.prototype);
 CombatAnimEnemy.prototype.CorpseItUp = function (d, size) { gfx.DrawDitheredWhatsit(this.sheet, this.dx, 1, this.dims, this.layer, d, size); };
