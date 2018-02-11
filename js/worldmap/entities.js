@@ -672,7 +672,7 @@ let mapentities = {
 
         GetCommonEntity("RealSleepyHoursWhoUp", 43, 15, 23, 0, undefined, undefined, { boring: true, nochange: true, inside: true, visible: false, storageKey: "dweeb" }),
         GetCommonEntity("Keycard", 45, 15, 23, 0, undefined, Cutscene("keycard"), { sy: 2, nochange: true, inside: true, visible: false }),
-        GetCommonEntity("KeycardTrap", 44, 20, 0, 0, undefined, Cutscene("keytrap"), { isRow: true, solid: false, visible: false, storageKey: "keytrap", postBattle: "scrungus" }),
+        GetCommonEntity("KeycardTrap", 44, 19, 0, 0, undefined, Cutscene("keytrap"), { isRow: true, solid: false, visible: false, storageKey: "keytrap", postBattle: "scrungus" }),
         GetCommonEntity("Mabingy", 44, 25.25, 0, 0, undefined, Cutscene("keyfail"), { boring: true, sy: 3, big: true, solid: false, visible: false, storageKey: "mech", postBattle: "scrungus" }),
         GetInvisibleEntity("scrungus", Cutscene("keywin"), { storageKey: "scrungus" }),
         GetCommonEntity("BottomWall1", 42, 26, 23, 0, undefined, undefined, { boring: true, visible: false, inside: true, sy: 6, destroyable: true }),

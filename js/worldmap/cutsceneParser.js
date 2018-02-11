@@ -593,7 +593,7 @@ const SpecialFunctions = {
     },
     "DESTROYBUILDING": function() {
         worldmap.importantEntities["13thStBuildings"].filename = "covers/northcity2_post";
-        for(var i = 0; i < worldmap.entities.length; i++) {
+        for(let i = 0; i < worldmap.entities.length; i++) {
             if(worldmap.entities[i].destroyable) {
                 player.clearedEntities.push(worldmap.entities[i].name);
                 worldmap.entities[i].solid = false;

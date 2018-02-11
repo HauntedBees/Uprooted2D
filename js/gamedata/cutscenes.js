@@ -481,7 +481,7 @@ var scripts = {
 	"keytrap2": "dweeb_SHIFTY:1&_TEXT:keycard1&_CUSTOM:SCREENSHAKE&_CUSTOM:DESTROYBUILDING",
 	"keytrap3": "_CLEARTEXT&mech_VISIBLE:true&pl_MOVE:y22.25",
 	"keytrap4": "_HISPEED&dweeb_SHIFTY:3&dweeb_SETPOSX:44.5&_CUSTOM:FORCEYZERO&dweeb_MOVE:y25.25",
-	"keytrap5": "_LOSPEED&_TEXT:keycard3",
+	"keytrap5": "_LOSPEED&_TEXT:keycard(2-3)",
 	"keytrap6": "_FIGHT:dweebLord",
 	"keyfail0": "_TEXT:keycard4",
 	"keyfail1": "_FIGHT:dweebLord",
