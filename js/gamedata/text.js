@@ -6112,6 +6112,41 @@ var fulltext = {
 		"en-dm": "Follow all these steps, and you'll be a billionaire in no time! And if it doesn't work? It was probably your fault! Scrap everything and start over! You'll get it right eventually, as long as you still have other people's money!", 
 		"type": "book"
 	},
+	"bookElem": {
+		"en-us": "", 
+		"en-dm": "\"Elemental Attacks\" by Ellen Mentol, \n Information about elemental attacks and how to defend against them.", 
+		"type": "bname"
+	},
+	"bookElem0": {
+		"en-us": "", 
+		"en-dm": "Stronger enemies might choose to attack your Crops and Field instead of attacking you directly. While these attacks won't lower your HP, they can destroy or weaken your crops and temporarily damage your Fixtures and Field.", 
+		"type": "book"
+	},
+	"bookElem1": {
+		"en-us": "", 
+		"en-dm": "In addition to standard attacks, there are three elements that enemies can attack with: water, fire, and salt. These elements will affect different types of crops in different ways - Mushroom Logs, for example, are immune to water and salt, but can be burnt by fire.", 
+		"type": "book"
+	},
+	"bookElem2": {
+		"en-us": "", 
+		"en-dm": "If a water or fire attack hits your crops, they will be damaged and possibly destroyed. These attacks can also make empty tiles wet or burnt, which will make crops planted on them weaker. These effects can be reduced by crops with Water or Fire Resistance.", 
+		"type": "book"
+	},
+	"bookElem3": {
+		"en-us": "", 
+		"en-dm": "Crops with Fire or Water Resistance are marked with these symbols:", 
+		"type": "book"
+	},
+	"bookElem4": {
+		"en-us": "", 
+		"en-dm": "Salt attacks can also damage crops, but when salt lands on an empty tile, nothing will be able to be planted on that tile until it the salt goes away! Like water and fire, some crops have salt resistance, while other crops can absorb salt and be planted on salted tiles.", 
+		"type": "book"
+	},
+	"bookElem5": {
+		"en-us": "", 
+		"en-dm": "Crops with Salt Resistance or Salt Absorption are marked with these symbols:", 
+		"type": "book"
+	},
 	// Bees
 	"hiveGet": {
 		"en-us": "", 

@@ -159,8 +159,9 @@ const stores = {
         img: "shops/dwarf2", innId: "skumpys",
         wares: [
             { product: "sleep", price: 20, type: "inn" },
+            { product: "book0", name: "bookElem", price: 0, type: "book" },
             { product: "book1", name: "bookTech", price: 0, type: "book" },
-            { product: "book1", name: "bookTechs", price: 0, type: "book" },
+            { product: "book4", name: "bookTechs", price: 0, type: "book" },
             { product: "book5", name: "bookTips", price: 0, type: "book" }
         ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
@@ -417,7 +418,7 @@ const stores = {
     "lastInn": {
         img: "shops/dwarf2", innId: "lastInn",
         wares: [
-            { product: "sleep", type: "inn" },
+            { product: "sleep", type: "inn", price: 1 },
             { product: "book3", name: "bookEnt", price: 0, type: "book" }
         ],
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"

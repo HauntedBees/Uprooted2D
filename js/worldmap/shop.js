@@ -404,9 +404,20 @@ worldmap.shop = {
         } else {
             this.DrawDetails(newText);
             if(this.bookReading === "bookStun" && this.bookState === 1) {
-                gfx.drawTileToGrid("stunIco1", 2, 8.5, "menutext");
-                gfx.drawTileToGrid("stunIco2", 4, 8.5, "menutext");
-                gfx.drawTileToGrid("stunIco3", 6, 8.5, "menutext");
+                gfx.drawTileToGrid("stunIco1", 2, 11, "menutext");
+                gfx.drawTileToGrid("stunIco2", 4, 11, "menutext");
+                gfx.drawTileToGrid("stunIco3", 6, 11, "menutext");
+            } else if(this.bookReading === "bookElem") {
+                if(this.bookState === 3) {
+                    gfx.drawTileToGrid("fireIco1", 2, 10.5, "menutext");
+                    gfx.drawTileToGrid("fireIco2", 4, 10.5, "menutext");
+                    gfx.drawTileToGrid("waterIco1", 2, 12, "menutext");
+                    gfx.drawTileToGrid("waterIco2", 4, 12, "menutext");
+                } else if(this.bookState === 5) {
+                    gfx.drawTileToGrid("saltIco1", 2, 10.5, "menutext");
+                    gfx.drawTileToGrid("saltIco2", 4, 10.5, "menutext");
+                    gfx.drawTileToGrid("saltIcoX", 3, 12, "menutext");
+                }
             }
         }
         return true;
