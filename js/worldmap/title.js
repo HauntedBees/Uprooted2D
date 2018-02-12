@@ -5,7 +5,11 @@ worldmap.title = {
     menuItems: [], animIdx: 0, animPos: 0, animCrops: [], clouds: [],
     setup: function(cursy) {
         this.cursory = cursy || 0;
-        this.showContinue = this.hasSaves();
+        this.showContinue = this.HasSaves();
+        this.animPos = 0; this.animCrops = [];
+        this.clouds = [ { x: 0, y: 5 }, { x: 4, y: 0 }, { x: 12, y: 7 } ];
+        for(let i = 0; i < 7; i++) { this.AddAnimCrop(true); }
+        this.animIdx = setInterval(worldmap.title.Animate, 41.7);
         gfx.drawFullImage("title");
         gfx.drawFullImage("titleTop", "characters");
         this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options"] : ["title.new", "title.options"]);
