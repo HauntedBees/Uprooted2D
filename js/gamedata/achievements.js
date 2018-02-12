@@ -1,4 +1,4 @@
-var achievements = {
+const achievements = {
     "boss1": { fromQuest: true },
     "lakeFairy": { fromQuest: true },
     "goldshroom": { fromQuest: false },
@@ -51,6 +51,7 @@ var achievements = {
     "murderedToDeath": { fromQuest: false } // get killed by Mr. Bruno or The Monster (how get this to save?)
 };
 function JustBeatGameChievoCheck() {
+    const md = player.miscdata;
     if(player.ethicsAxis >= 0) {
         if(player.techAxis <= 0) { AddAchievementIfMissing("natureGood"); }
         else { AddAchievementIfMissing("techGood"); }
@@ -64,7 +65,7 @@ function JustBeatGameChievoCheck() {
     if(md.typesPlanted["tech"] === 0) { AddAchievementIfMissing("luddite"); }
 };
 function CombatChievoCheck() {
-    var md = player.miscdata;
+    const md = player.miscdata;
     if(md.seasonsPlanted[0] >= 500) { AddAchievementIfMissing("springKing"); }
     if(md.seasonsPlanted[1] >= 500) { AddAchievementIfMissing("summerHummer"); }
     if(md.seasonsPlanted[2] >= 500) { AddAchievementIfMissing("autumnBottom"); }

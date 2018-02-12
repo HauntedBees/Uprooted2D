@@ -14,9 +14,19 @@ const JustOne = (sx, sy, options) => new AnimSet([new AnimFrame(sx, sy)], false,
 const enemyCombatAnims = {
     "STAND": JustOne(0, 0),
     "HURT": JustOne(0, 1, { doShake: true }),
-    "PLANT": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
     "ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer")], false, 4),
-    "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4)
+    "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
+    "PLANT": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
+    "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
+    "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
+    
+    "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    
+    "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
+    "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
 }
 
 function GetWeaponAnims() {
@@ -103,6 +113,7 @@ const playerCombatAnims = {
 };
 
 var animCallbacks = {
+    "enemy_placeholder": () => console.log("TO BE IMPLEMENTED"),
     "enemy_damagePlayer": () => animCallbackHelpers.HurtPlayer(),
     "enemy_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];

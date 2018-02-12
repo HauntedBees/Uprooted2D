@@ -1,41 +1,70 @@
 worldmap.title = {
+    availableCrops: ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "lotus", "soybean"],
     cursory: 0, showContinue: false,
     layersToClear: ["menutext", "menucursorA"],
-    menuItems: [],
+    menuItems: [], animIdx: 0, animPos: 0, animCrops: [], clouds: [],
     setup: function(cursy) {
         this.cursory = cursy || 0;
         this.showContinue = this.hasSaves();
         gfx.drawFullImage("title");
-        this.menuItems = this.getMainMenuItems();
-        this.drawMenu();
+        gfx.drawFullImage("titleTop", "characters");
+        this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options"] : ["title.new", "title.options"]);
+        this.DrawMenu();
+        gfx.drawText(String.fromCharCode(169) + " 2018 Haunted Bees Productions", 2, 222, undefined, 20, "menutextOverBlack");
     },
-    getMainMenuItems: function() {
-        return (this.hasSaves() ? ["title.new", "title.cont", "title.options"] : ["title.new", "title.options"]);
-    },
-    hasSaves: function() {
-        for(var i = 0; i < 10; i++) {
+    HasSaves: function() {
+        for(let i = 0; i < 10; i++) {
             if(localStorage.getItem("file" + i) !== null) { return true; }
         }
         return false;
     },
-    drawMenu: function() {
+    Animate: function() {
+        const idx = (worldmap.title.animPos++) % 16;
+        gfx.clearLayer("background2");
+        gfx.drawJumbo("titleGround", 0, -10, 1024, 256, idx, 0);
+        gfx.drawJumbo("titleGround", -16, -10, 1024, 256, idx, 0);
+
+        for(let i = worldmap.title.animCrops.length - 1; i >= 0; i--) {
+            let e = worldmap.title.animCrops[i];
+            e.x -= 1/16;
+            gfx.drawTileToGrid(e.frame, e.x, e.y, "background2");
+            if(e.x <= -1) { worldmap.title.animCrops.splice(i, 1); }
+        }
+        for(let i = 0; i < worldmap.title.clouds.length; i++) {
+            let e = worldmap.title.clouds[i];
+            e.x += 0.001;
+            if(e.x > 17) { e.x = -2; }
+            gfx.drawTileToGrid("titlecloud", RoundNear(e.x, 16), e.y, "background2");
+        }
+        if(Math.random() < 0.05 && worldmap.title.animCrops.length < 30) { worldmap.title.AddAnimCrop(); }
+    },
+    AddAnimCrop: function(onScreen) {
+        const crop = GetCrop(RandomArrayItem(worldmap.title.availableCrops));
+        const frame = crop.name + Math.floor(Math.random() * crop.frames);
+        const x = onScreen ? RoundNear(Math.random() * 17, 4) : InclusiveRange(17, 20);
+        const y = 9.5 + RoundNear(Math.random() * 1, 2);
+        worldmap.title.animCrops.push({ frame: frame, x: x, y: y });
+        worldmap.title.animCrops.sort((a, b) => b.y - a.y);
+    },
+    DrawMenu: function() {
+        const dy = 7;
         gfx.clearSome(this.layersToClear);
-        for(var i = 0; i < this.menuItems.length; i++) {
-            var selected = this.cursory === i;
-            var spr = (selected ? "titleSelActive" : "titleSel");
-            if(selected) { gfx.drawTileToGrid("carrotSel", 5, i + 6, "menutext"); }
-            gfx.drawTileToGrid(spr + "0", 6, i + 6, "menutext");
-            gfx.drawTileToGrid(spr + "1", 7, i + 6, "menutext");
-            gfx.drawTileToGrid(spr + "2", 8, i + 6, "menutext");
-            var dispText = GetText(this.menuItems[i]);
-            var dx = (176 - gfx.getTextLength(dispText)) / 8;
-            gfx.drawText(dispText, 99.5 + dx, i * 16 + 106);
+        for(let i = 0; i < this.menuItems.length; i++) {
+            const selected = this.cursory === i;
+            const spr = (selected ? "titleSelActive" : "titleSel");
+            if(selected) { gfx.drawTileToGrid("carrotSel", 5.5, i + dy, "menutext"); }
+            gfx.drawTileToGrid(spr + "0", 6.5, i + dy, "menutext");
+            gfx.drawTileToGrid(spr + "1", 7.5, i + dy, "menutext");
+            gfx.drawTileToGrid(spr + "2", 8.5, i + dy, "menutext");
+            const dispText = GetText(this.menuItems[i]);
+            const dx = (184 - gfx.getTextLength(dispText)) / 8;
+            gfx.drawText(dispText, 106.5 + dx, (i + dy) * 16 + 10);
         }
     },
     mouseMove: function(pos) {
         if(pos.y < 0 || pos.y >= this.menuItems.length) { return false; }
         this.cursory = pos.y;
-        this.drawMenu();
+        this.DrawMenu();
         return true;
     },
     click: function(pos) {
@@ -90,10 +119,9 @@ worldmap.title = {
             case 2: return game.innerTransition(this, worldmap.optionsMenu);
         }
     },
-    clean: function() { gfx.clearAll(); },
+    clean: function() { clearInterval(this.animIdx); gfx.clearAll(); },
     keyPress: function(key) {
-        var pos = { x: 0, y: this.cursory };
-        var isEnter = false;
+        let pos = { x: 0, y: this.cursory }, isEnter = false;
         switch(key) {
             case player.controls.up: pos.y--; break;
             case player.controls.down: pos.y++; break;
@@ -102,10 +130,7 @@ worldmap.title = {
             //case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.y > 2) { return false; }
-        if(isEnter) {
-            return this.click(pos);
-        } else {
-            return this.mouseMove(pos);
-        }
+        if(isEnter) { return this.click(pos); }
+        else { return this.mouseMove(pos); }
     }
 };
