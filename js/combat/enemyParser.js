@@ -242,7 +242,7 @@ const EnemyParser = {
         EnemyParser.targets = [];
         if(enemyHelpers.HasRottenCrops() && Math.random() < enemy.rotClearChance) {
             enemyHelpers.RemoveWeeds();
-            EnemyParser.outputData = { text: GetText("enemyRemoveWeeds").replace(/\{0\}/g, enemy.name), animFPS: 4, animData: [[0, 4], [0, 5]] };
+            EnemyParser.outputData = { text: GetText("enemyRemoveWeeds").replace(/\{0\}/g, enemy.name), animFPS: 4, animData: "PLANT" };
         } else {
             EnemyParser.ParseCurrentNode();
         }
@@ -794,13 +794,13 @@ const actions = {
             EnemyParser.current.data = {
                 textID: "tutEnemy" + tutorial.state,
                 animFPS: 12,
-                animData: [ [0, 2], [0, 2], [0, 3], [0, 0, true] ]
+                animData: "ATTACK"
             };
         } else {
             EnemyParser.current.data = {
                 textID: "tutEnemy" + tutorial.state,
                 animFPS: 4,
-                animData: [ [0, 4], [0, 5] ]
+                animData: "PLANT"
             }
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
@@ -811,12 +811,12 @@ const actions = {
         var damage = 0;
         if(e.convinceState === undefined) {
             e.convinceState = 1;
-            EnemyParser.current.data = { textID: "convince2.0", animFPS: 4, animData: [ [0, 4], [0, 5] ] };
+            EnemyParser.current.data = { textID: "convince2.0", animFPS: 4, animData: "PLANT" };
         } else if(e.convinceState === 4) {
-            EnemyParser.current.data = { textID: "convince2.4", animFPS: 24, animData: [ [0, 0], [0, 2], [0, 3], [0, 2], [0, 3] ] };
+            EnemyParser.current.data = { textID: "convince2.4", animFPS: 24, animData: "ATTACK" };
             e.convinceState = 5;
         } else {
-            EnemyParser.current.data = { textID: "convince2." + e.convinceState, animFPS: 4, animData: [ [0, 4], [0, 5] ] };
+            EnemyParser.current.data = { textID: "convince2." + e.convinceState, animFPS: 4, animData: "PLANT" };
             e.convinceState++;
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
