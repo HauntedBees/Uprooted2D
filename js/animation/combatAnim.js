@@ -63,12 +63,13 @@ function CombatAnimHelper(enemies) {
         else { this.SetPlayerAnimState("HURT"); }
     };
 
-    this.SetBirdAnimArg = (key, val) => birdAnimInfo.PushArg(key, val);
-    this.SetBirdAnimPos = (x, y) => { birdAnimInfo.dims.x = x; birdAnimInfo.dims.y = y; };
-    this.SetBirdAnimState = function(name, resetPos) { birdAnimInfo.SetAnim(name); if(resetPos) { this.ResetBirdAnimPos(); } };
-    this.SetBirdAnimLayer = layer => birdAnimInfo.layer = layer;
-    this.ResetBirdAnimPos = () => this.SetBirdAnimPos(playerPos.x - 1.5, playerPos.y);
+    this.SetBirdAnimArg = (key, val) => { if(birdAnimInfo !== null) { birdAnimInfo.PushArg(key, val); }};
+    this.SetBirdAnimPos = (x, y) => { if(birdAnimInfo !== null) { birdAnimInfo.dims.x = x; birdAnimInfo.dims.y = y; }};
+    this.SetBirdAnimState = function(name, resetPos) { if(birdAnimInfo !== null) { birdAnimInfo.SetAnim(name); if(resetPos) { this.ResetBirdAnimPos(); } }};
+    this.SetBirdAnimLayer = layer => { if(birdAnimInfo !== null) { birdAnimInfo.layer = layer; }} 
+    this.ResetBirdAnimPos = () => { if(birdAnimInfo !== null) {this.SetBirdAnimPos(playerPos.x - 1.5, playerPos.y); }}
     this.ResetBirdAnimState = function() {
+        if(birdAnimInfo === null) { return; }
         birdAnimInfo.SetAnim("STAND");
         birdAnimInfo.layer = "characters";
         birdAnimInfo.ClearAnimQueue();

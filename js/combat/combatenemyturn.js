@@ -20,6 +20,11 @@ combat.enemyTurn = {
         }
         combat.animHelper.SetEnemyAnimState(args.idx, attackData.animData);
         combat.animHelper.SetEnemyAnimArg(args.idx, "targets", attackData.targets);
+        if(attackData.bonusArgs !== undefined) {
+            for(const key in attackData.bonusArgs) {
+                combat.animHelper.SetEnemyAnimArg(args.idx, key, attackData.bonusArgs[key]);
+            }
+        }
 
         if(attackData.throwables !== undefined && attackData.throwables !== null && attackData.throwables.length > 0) {
             for(let i = 0; i < attackData.throwables.length; i++) {

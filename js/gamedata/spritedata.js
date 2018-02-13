@@ -131,6 +131,14 @@ var spriteData = {
         }
     },
     names: {
+        "fireBall0": [43, 12],
+        "fireBall1": [44, 12],
+        "fireBurn0": [45, 12],
+        "fireBurn1": [46, 12],
+        "waterDrop0": [47, 12],
+        "waterDrop1": [47, 13],
+        "splashed0": [47, 14],
+        "splashed1": [47, 15],
         "seasonbar0": [44, 9],
         "seasonbar1": [45, 9],
         "seasonbar2": [46, 9],

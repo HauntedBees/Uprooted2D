@@ -38,6 +38,7 @@ function MovingLinearAnim(sprites, start, end, dt, dy, fps, animfps, doneFunc) {
     let frame = 0, timePerFrame = 1000 / fps, numFrames = (endPos.x - startPos.x) / dt;
     let animframe = 0, timePerAnimFrame = 1000 / animfps;
     let lastRan = +new Date(), lastAnimRan = +new Date(), isDone = false;
+    let prevX = start.x;
     const spriteLen = sprites.length;
     this.Animate = function() {
         if(isDone) { return; }
@@ -50,13 +51,17 @@ function MovingLinearAnim(sprites, start, end, dt, dy, fps, animfps, doneFunc) {
             if(frame < numFrames) {
                 frame++;
             } else {
-                if(DoneFunction !== undefined) { DoneFunction(); }
+                if(DoneFunction !== undefined) { DoneFunction(this); }
                 isDone = true;
                 return;
             }
             lastRan = now;
         }
         const x = dir === 1 ? (startPos.x + (frame * dt)) : (endPos.x - (frame * dt));
+        if(prevX !== Math.floor(x) && this.xFunc !== undefined) {
+            prevX = Math.floor(x);
+            this.xFunc(prevX);
+        }
         const y = GetY(x);
         gfx.drawTileToGrid(sprites[animframe], x, y - dy, "menucursorC");
     }

@@ -61,12 +61,12 @@ combat.ageCrops = function() {
             }
             if(crop.activeTime > 0) {
                 crop.activeTime -= 1;
-                if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock" || (crop.type === "rod" && !crop.ready))) { this.PurgeCrop(this.grid, x, y, true); }
+                if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock" || (crop.type === "rod" && !crop.ready))) { crop.health = 0; this.PurgeCrop(this.grid, x, y); }
             } else if(crop.activeTime === 0) {
                 if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = crop.respawn; }
                 else if(crop.type === "veg") { crop.rotten = true; }
                 else if(crop.type === "egg") { crop.power += 1; }
-                else if(crop.type === "rod" && !crop.ready) { this.PurgeCrop(this.grid, x, y, true); }
+                else if(crop.type === "rod" && !crop.ready) { crop.health = 0; this.PurgeCrop(this.grid, x, y); }
             }
         }
     }
@@ -150,16 +150,16 @@ combat.RemoveFlaggedCrops = function() {
         }
     }
 };
-combat.PurgeCrop = function(grid, x, y, forceKill) {
+combat.PurgeCrop = function(grid, x, y) {
     if(grid[x][y] === null || grid[x][y].name === undefined) { return false; }
-    var crop = grid[x][y];
+    const crop = grid[x][y];
     //if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; } // TODO: why was this even here
-    if(crop.respawn > 0 && !forceKill) {
+    if(crop.respawn > 0 && crop.health > 0) {
         crop.activeTime = crop.respawn;
         crop.flagged = false;
     } else {
         grid[x][y] = null;
-        if(crop.size === 2 && (crop.type !== "tree" || forceKill)) {
+        if(crop.size === 2) {//} && (crop.type !== "tree" || cro)) {
             grid[x + 1][y] = null;
             grid[x][y + 1] = null;
             grid[x + 1][y + 1] = null;
