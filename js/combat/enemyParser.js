@@ -96,8 +96,24 @@ const enemyHelpers = {
     TryDisturbTile: function(x, y, type) {
         let itemTile = player.itemGrid[x][y];
         if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
-        if((itemTile !== null && itemTile !== "_hotspot") || combat.grid[x][y] !== null) { return false; }
-        // TODO: destroy crops with rocks and salt (salt resistance!)
+        if((itemTile !== null && itemTile !== "_hotspot")) { return false; }
+        if(combat.grid[x][y] !== null) {
+            const crop = combat.grid[x][y];
+            if(crop.size === 2 || crop.x !== undefined) { return false; }
+            let failChance = player.luck + 0.05; // 0.75 to 0.95 (or 0.83 to 1.03 on easy mode)
+            if(type === "salt") {
+                const saltResist = crop.saltResist || 0;
+                switch(saltResist) {
+                    case 0: failChance -= 0.3; break; // at best, 0.95 to 0.65
+                    case 1: failChance -= 0.05; break; // at best, 0.95 to 0.9
+                    case 2: failChance = 1; break; // will always fail
+                }
+            } else {
+                if(crop.rotten || crop.health === 0) { failChance = 0; }
+                else { failChance -= (1 - crop.health / crop.maxhealth) / 2; } // assuming the lowest, 0.75, this ranges from 0.75 to ~0.25 for crops about to die
+            }
+            if(Math.random() <= failChance) { return false; }
+        }
         let newCrop = GetCrop(type);
         newCrop.activeTime = newCrop.time;
         combat.grid[x][y] = newCrop;
@@ -896,28 +912,25 @@ const actions = {
     "BECKETT_WATER": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
     "BECK_FIRE_ROW": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
     "BECK_THROW_SALT": function(e) { 
-        var row = Math.floor(Math.random() * player.gridHeight);
-        var hasKills = false;
-        for(var x = 0; x < player.gridWidth; x++) {
-            var tile = combat.grid[x][row];
+        const row = Math.floor(Math.random() * player.gridHeight);
+        let hasKills = false;
+        for(let x = 0; x < player.gridWidth; x++) {
+            const tile = combat.grid[x][row];
             if(tile === null) {
                 if(Math.random() < 0.33) {
                     enemyHelpers.TryDisturbTile(x, row, "salt");
                 }
             } else {
                 if(tile.x !== undefined || tile.type === "rock") { continue; }
-                var res = enemyHelpers.DoDamageCrop(e, x, row, -1);
+                const res = enemyHelpers.DoDamageCrop(e, x, row, -1);
                 if(res && Math.random() < 0.45) {
                     enemyHelpers.TryDisturbTile(x, row, "salt");
                 }
                 hasKills = hasKills || res;
             }
         }
-        if(hasKills) {
-            EnemyParser.current.data.textID = "beckettSaltKill";
-        } else {
-            EnemyParser.current.data.textID = "beckettSalt";
-        }
+        if(hasKills) { EnemyParser.current.data.textID = "beckettSaltKill"; }
+        else { EnemyParser.current.data.textID = "beckettSalt"; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     }, // TODO: FULL FLOW
@@ -1138,7 +1151,7 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, seasonStr);
     }, // TODO: FULL FLOW
     "RANDOM_GT": (e, amt) => (Math.random() > parseFloat(amt)), // TODO: FULL FLOW
-    "WRITE_TEXT": (e) => EnemyParser.outputData = enemyHelpers.GetAttackData(0), // TODO: FULL FLOW
+    "WRITE_TEXT": e => EnemyParser.outputData = enemyHelpers.GetAttackData(0), // TODO: FULL FLOW
     "HEAL_RANGE": function(e, amountRange) {
         var rangeVals = amountRange.split(",");
         var base = parseInt(rangeVals[0]);
@@ -1258,19 +1271,19 @@ const actions = {
         return true;
     }, // TODO: FULL FLOW
     "WEAK_ATTACK": function(e) {
-        var damage = dmgCalcs.MeleeAttack(false, combat.season, e.atk, [dmgCalcs.GetPlayerCombatDefense()])[0].damage;
+        let damage = dmgCalcs.MeleeAttack(false, combat.season, e.atk, [dmgCalcs.GetPlayerCombatDefense()])[0].damage;
         damage = combat.damagePlayer(damage);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
     },
     "WEAKEST_ATTACK": function(e) {
-        var damage = combat.damagePlayer(1);
+        const damage = combat.damagePlayer(1);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
     },
     "PIG_GUN": function(e) {
-        var damage = combat.damagePlayer(300);
+        const damage = combat.damagePlayer(300);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
-    } // TODO: FULL FLOW
+    }
 }
