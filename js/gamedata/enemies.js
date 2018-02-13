@@ -28,7 +28,7 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     this.drops = drops;
     this.boss = boss;
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
-	this.GetRandomArg = function() { return this.args[Math.floor(Math.random() * this.args.length)]; };
+	this.GetRandomArg = function() { return RandomArrayItem(this.args); };
 }
 function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math.floor(Math.random() * max)); }
 function GetEnemy(name) {
@@ -111,7 +111,7 @@ function GetEnemy(name) {
 		case "beeQueenB": return new EnemyDetail(name, GetDisplayName(name, 1), "md", 50, { dx: 0, dy: -1.75, w: 0.45, h: 0.65 }, 2000, 86, 76, 3, 3, false, [1, 0, 0, 0], "beeQueen", "beeR,beeG,beeB,hbee", [ { money: true, min: 1000, max: 1000 }, { seed: "beeR", min: 2, max: 8 }, { seed: "beeG", min: 2, max: 8 }, { seed: "beeB", min: 2, max: 8 } ], { tile: "_beehive", rotClearChance: 0, stickRes: 1 });
 		case "beeQueenC": return new EnemyDetail(name, GetDisplayName(name, 1), "md", 50, { dx: 0, dy: -1.75, w: 0.45, h: 0.65 }, 15000, 100, 100, 3, 3, false, [1, 0, 0, 0], "beeQueen", "beeR,beeG,beeB,hbee", [ { money: true, min: 9999, max: 9999 }, { seed: "beeR", min: 2, max: 8 }, { seed: "beeG", min: 2, max: 8 }, { seed: "beeB", min: 2, max: 8 } ], { tile: "_beehive", rotClearChance: 0, stickRes: 1 });
 		/* Test Enemy */
-		case "yourWorstFuckingNightmare": return new EnemyDetail(name, GetDisplayName(name, 1), "lg", 17, { dx: 0, dy: -2.45, w: 1.05, h: 1.45 }, 999999, 1, 0, 1, 1, false, [1, 0, 0, 0], "test", "kelp", [], { rotClearChance: 0, stickRes: 0 });
+		case "yourWorstFuckingNightmare": return new EnemyDetail(name, GetDisplayName(name, 1), "lg", 17, { dx: 0, dy: -2.45, w: 1.05, h: 1.45 }, 999999, 1, 0, 5, 5, false, [1, 0, 0, 0], "test", "kelp", [], { rotClearChance: 0, stickRes: 0 });
 	}
 }
 debug.AllEnemies = ["Discussly", "robo", "bigBot", "robo2", "robo3", "ScienceMan", "mouse", "sqorl", "bear", "turky", "bossturky", "Worker", "BossWorker", "kelpBoy", "fishFace", "seaMonk", "seaHandR", "seaMan", "seaHandL", "chickBot", "piggun", "golem", "lawnmower", "machineA", "machineB", "machineC", "machineD", "router", "server", "housekeeper", "outlet", "mrbruno", "mobsty1", "mobsty2", "mobBoss", "dweebLord", "robber", "brownCar", "blueCar", "redCar", "foodTruck", "delivTruck", "vendo", "hoverdweeb", "trendyNerd", "coffeeNerd", "buffNerd", "tinyNerd", "theFunnyOne", "robo4a", "robo4b", "robo4c", "discuss2", "discuss2big", "botMush", "botRice", "botFruit", "botVeggie", "theMonster", "soyChild", "soyStack", "beckett", "nathan", "beeQueenA", "beeQueenB", "beeQueenC", "yourWorstFuckingNightmare"];

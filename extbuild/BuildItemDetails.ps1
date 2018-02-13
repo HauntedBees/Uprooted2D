@@ -254,7 +254,7 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     this.drops = drops;
     this.boss = boss;
     if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
-	this.GetRandomArg = function() { return this.args[Math.floor(Math.random() * this.args.length)]; };
+	this.GetRandomArg = function() { return RandomArrayItem(this.args); };
 }
 function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math.floor(Math.random() * max)); }
 function GetEnemy(name) {
