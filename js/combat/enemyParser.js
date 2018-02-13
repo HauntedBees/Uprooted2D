@@ -25,11 +25,11 @@ const enemyHelpers = {
         if(["_log", "_coop", "_beehive"].indexOf(itemTile) >= 0) {
             const hadTile = (crop !== null);
             if(!doesBurn) { doesBurn = Math.random() > (player.luck / 2.5); }
-            if(doesBurn && hadTile) { crop.flagged = true; } // combat.grid[x][y] = null; } // TODO: don't kill until later!!
+            if(doesBurn && hadTile) { crop.health = 0; crop.flagged = true; }
             return { status: true, crop: hadTile, destroyed: doesBurn && hadTile, special: itemTile, groundAffected: doesBurn };
         }
         if(crop === null) { return { status: true, crop: false, destroyed: false, groundAffected: doesBurn }; }
-        let res = enemyHelpers.DoDamageCrop(e, x, y, 1); //crop.health -= enemyHelpers.GetCropDamage(e, x, y, 1);
+        let res = enemyHelpers.DoDamageCrop(e, x, y, 1);
         if(res.destroyed) {
             combat.animHelper.DrawCrops();
             return { status: true, crop: true, destroyed: true, special: "", groundAffected: doesBurn };
