@@ -58,7 +58,7 @@ const enemyCombatAnims = {
     "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
     
     "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_waterRow")], false, 4),
-    "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss")], false, 4),
     "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
     "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
     
@@ -113,6 +113,17 @@ const playerCombatAnims = {
 
 const animCallbacks = {
     "enemy_placeholder": () => console.log("TO BE IMPLEMENTED"),
+    "enemy_rockToss": function(animProcess, animEntity) {
+        const edims = animEntity.dims;
+        const crop = animEntity.bonusArgs.type + "0";
+        const targx = animEntity.bonusArgs.x + combat.dx;
+        const targy = animEntity.bonusArgs.y + combat.dy;
+        animProcess.AddBaby(new MovingLinearAnim([crop], { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, { x: targx, y: targy }, 
+                1, 0, 24, 24, function() {
+                    animProcess.AddBaby(new TileAnim(targx, targy, [crop], false, 12, true));
+                    animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets)
+                } ));
+    },
     "enemy_waterRow": function(animProcess, animEntity) {
         const y = combat.dy + animEntity.bonusArgs.row;
         const startPos = { x: combat.dx + player.gridWidth, y: y };

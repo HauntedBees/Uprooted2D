@@ -3,11 +3,11 @@ const enemyHelpers = {
     GetSideEffect: function(e, tile) {
         if(tile.saltChance === undefined && tile.burnChance === undefined) { return ""; }
         if(tile.saltChance !== undefined && tile.saltChance > Math.random()) { 
-            var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "salt");
+            const res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), "salt");
             return res ? "SALT" : "";
         }
         if(tile.burnChance !== undefined && tile.burnChance > Math.random()) { 
-            var res = enemyHelpers.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+            const res = enemyHelpers.BurnTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
             return res ? "BURN" : "";
         }
     },
@@ -94,11 +94,11 @@ const enemyHelpers = {
         return { text: outputText, animFPS: node.data.animFPS, animData: node.data.animData };
     },
     TryDisturbTile: function(x, y, type) {
-        var itemTile = player.itemGrid[x][y];
+        let itemTile = player.itemGrid[x][y];
         if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
         if((itemTile !== null && itemTile !== "_hotspot") || combat.grid[x][y] !== null) { return false; }
         // TODO: destroy crops with rocks and salt (salt resistance!)
-        var newCrop = GetCrop(type);
+        let newCrop = GetCrop(type);
         newCrop.activeTime = newCrop.time;
         combat.grid[x][y] = newCrop;
         return true;
@@ -188,9 +188,12 @@ const enemyHelpers = {
         return busiestRow;
     },
     TryDisturbRandomTile: function(type) {
-        var res = enemyHelpers.TryDisturbTile(Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight), type);
+        const x = Math.floor(Math.random() * player.gridWidth);
+        const y = Math.floor(Math.random() * player.gridHeight);
+        const res = enemyHelpers.TryDisturbTile(x, y, type);
         if(!res) { return false; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        EnemyParser.outputData.bonusArgs = { type: type, x: x, y: y };
         return true;
     },
     DoSomethingToBusiestRow: function(e, somethingFunc, killText, dmgText, regText) {
@@ -359,6 +362,10 @@ const actions = {
                 EnemyParser.current.data.animData = "HEAD_ON_SPLASH_ATTACK";
                 EnemyParser.current.data.textID = "splashRow";
                 return actions["BECKETT_WATER"](e);
+            case "rock":
+                EnemyParser.current.data.animData = "ROCK_TOSS";
+                EnemyParser.current.data.textID = "beckettRock";
+                return actions["TRY_THROW_ROCK"](e);
         }
         console.log("could not find " + debug.testEnemyState);
     },
@@ -799,7 +806,7 @@ const actions = {
         return true;
     }, // TODO: FULL FLOW
     "CONVINCEATRON": function(e) {
-        var damage = 0;
+        let damage = 0;
         if(tutorial.state === 23) {
             damage = combat.damagePlayer(1);
             EnemyParser.current.data = {
@@ -817,9 +824,9 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         EnemyParser.current.data = { message: "CONVINCEATRON" };
         return true;
-    }, // TODO: FULL FLOW
+    },
     "CONVINCEATRON2": function(e) {
-        var damage = 0;
+        let damage = 0;
         if(e.convinceState === undefined) {
             e.convinceState = 1;
             EnemyParser.current.data = { textID: "convince2.0", animFPS: 4, animData: "PLANT" };
@@ -833,7 +840,7 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         EnemyParser.current.data = { message: "CONVINCEATRON2" };
         return true;
-    }, // TODO: FULL FLOW
+    },
     "HEAL_FROM_CROPS": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
         var amountToHeal = Math.ceil(fieldData.damage / 3);
@@ -845,8 +852,8 @@ const actions = {
         return true;
     }, // TODO: FULL FLOW
     "LAUNCH_CROPS": function(e) {
-        var fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [dmgCalcs.GetPlayerCombatDefense()]);
-        var damage = combat.damagePlayer(fieldData.damage);
+        const fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [dmgCalcs.GetPlayerCombatDefense()]);
+        const damage = combat.damagePlayer(fieldData.damage);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         EnemyParser.outputData.throwables = fieldData.animCrops;
         return true;
@@ -883,11 +890,11 @@ const actions = {
         EnemyParser.outputData.throwables = fieldData.animCrops;
         return true;
     },
-    "TRY_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("rock"), // TODO: FULL FLOW
-    "TECH_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("engine"), // TODO: FULL FLOW
-    "TIRE_CHUCK": (e) => enemyHelpers.TryDisturbRandomTile("tire"), // TODO: FULL FLOW
-    "BECKETT_WATER": (e) => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
-    "BECK_FIRE_ROW": (e) => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
+    "TRY_THROW_ROCK": e => enemyHelpers.TryDisturbRandomTile("rock"),
+    "TECH_THROW_ROCK": e => enemyHelpers.TryDisturbRandomTile("engine"),
+    "TIRE_CHUCK": e => enemyHelpers.TryDisturbRandomTile("tire"),
+    "BECKETT_WATER": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
+    "BECK_FIRE_ROW": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
     "BECK_THROW_SALT": function(e) { 
         var row = Math.floor(Math.random() * player.gridHeight);
         var hasKills = false;
