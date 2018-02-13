@@ -131,6 +131,11 @@ var spriteData = {
         }
     },
     names: {
+        "bigpuff0": [21, 0, true],
+        "bigpuff1": [22, 0, true],
+        "bigpuff2": [23, 0, true],
+        "bigpuff3": [21, 1, true],
+        "bigpuff4": [22, 1, true],
         "fireBall0": [43, 12],
         "fireBall1": [44, 12],
         "fireBurn0": [45, 12],

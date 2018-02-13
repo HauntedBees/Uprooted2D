@@ -11,23 +11,6 @@ function OverlaySet(sheet, frames) { this.sheet = sheet; this.frames = frames; t
 function OverlayFrame(sx, sy, dx, dy) { this.x = sx; this.y = sy; this.dx = dx || 0; this.dy = dy || 0; }
 
 const JustOne = (sx, sy, options) => new AnimSet([new AnimFrame(sx, sy)], false, 12, options);
-const enemyCombatAnims = {
-    "STAND": JustOne(0, 0),
-    "HURT": JustOne(0, 1, { doShake: true }),
-    "ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer")], false, 4),
-    "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
-    "PLANT": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
-    "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
-    "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
-    
-    "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_waterRow")], false, 4),
-    "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
-    "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
-    "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
-    
-    "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
-    "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
-}
 
 function GetWeaponAnims() {
     let w = {};
@@ -65,6 +48,23 @@ function GetWeaponAnims() {
 }
 const weaponAnims = GetWeaponAnims();
 
+const enemyCombatAnims = {
+    "STAND": JustOne(0, 0),
+    "HURT": JustOne(0, 1, { doShake: true }),
+    "ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer")], false, 4),
+    "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
+    "PLANT": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
+    "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
+    "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
+    
+    "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_waterRow")], false, 4),
+    "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
+    
+    "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
+    "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
+}
 const falconAnims = {
     "STAND": JustOne(1, 5),
     "WANTPLANT": JustOne(2, 5),
@@ -77,7 +77,6 @@ const falconAnims = {
     "MOURN": JustOne(4, 6),
     "WON": new AnimSet([new AnimFrame(6, 5), new AnimFrame(7, 5)], true, 4)
 };
-
 const playerCombatAnims = {
     "STAND": JustOne(0, 0),
     "WANTPLANT": JustOne(1, 0),
@@ -124,12 +123,14 @@ const animCallbacks = {
             if(x >= combat.dx) {
                 const tileData = animEntity.bonusArgs.tiles[arrx];
                 const arry = y - combat.dy;
-                const crop = combat.grid[arrx][arry];
-                if(tileData.killed) {
-                    let anim = new TileAnim(x, y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-                    anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
-                    animProcess.AddBaby(anim);
+                let crop = combat.grid[arrx][arry];
+                let dispx = arrx, dispy = arry;
+                if(crop !== null && crop.x !== undefined) {
+                    dispx = crop.x + combat.dx;
+                    dispy = crop.y + combat.dy;
+                    crop = combat.grid[crop.x][crop.y];
                 }
+                if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
                 if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, ["splashed"], false, 24, true)); }
                 if(crop === null) {
                     animProcess.AddBaby(new TileAnim(x, y, ["splashed0", "splashed1"], false, 12, true));
@@ -137,12 +138,10 @@ const animCallbacks = {
                     if(crop.size === 1) {
                         animProcess.AddBaby(new TileAnim(x, y, ["splashed0", "splashed1"], false, 12, true));
                     } else if(crop.x !== undefined) {
-                        const newx = crop.x + combat.dx;
-                        const newy = crop.y + combat.dy;
-                        animProcess.AddBaby(new TileAnim(newx, newy, ["splashed0", "splashed1"], false, 12, true));
-                        animProcess.AddBaby(new TileAnim(newx + 1, newy, ["splashed0", "splashed1"], false, 12, true));
-                        animProcess.AddBaby(new TileAnim(newx, newy + 1, ["splashed0", "splashed1"], false, 12, true));
-                        animProcess.AddBaby(new TileAnim(newx + 1, newy + 1, ["splashed0", "splashed1"], false, 12, true));
+                        animProcess.AddBaby(new TileAnim(dispx, dispy, ["splashed0", "splashed1"], false, 12, true));
+                        animProcess.AddBaby(new TileAnim(dispx + 1, dispy, ["splashed0", "splashed1"], false, 12, true));
+                        animProcess.AddBaby(new TileAnim(dispx, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
+                        animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
                     }
                 }
             }
@@ -166,11 +165,7 @@ const animCallbacks = {
                     dispy = crop.y + combat.dy;
                     crop = combat.grid[crop.x][crop.y];
                 }
-                if(tileData.killed) {
-                    let anim = new TileAnim(arrx, arry, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-                    anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
-                    animProcess.AddBaby(anim);
-                }
+                if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
                 if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, ["burned"], false, 24, true)); }
                 if(crop === null) {
                     animProcess.AddBaby(new TileAnim(x, y, ["fireBurn0", "fireBurn1"], false, 12, true));
@@ -195,17 +190,15 @@ const animCallbacks = {
             console.log("you probably got some fucker with a THROW_ENEMY where they should have an ATTACK");
             return;
         }
-        let anim = new TileAnim(combat.enemydx + resetti.x, combat.enemydy + resetti.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-        anim.AddFrameFunc(3, function() { if(resetti.crop.respawn === 0) { resetti.crop.hidden = true; } combat.animHelper.DrawCrops(); });
-        animProcess.AddBaby(anim);
+        AddCropDeathAnim(animProcess, combat.enemydx + resetti.x, combat.enemydy + resetti.y, resetti.crop);
     },
     "enemy_throwCropAtEnemy": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
         const edims = animEntity.dims;
-        if(animEntity.bonusArgs.targets.length === 0) {
+        if(animEntity.bonusArgs.targets.length === 0) { // attacking player
             animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, 
                 combat.animHelper.GetPlayerTopPos(), 24, animCallbackHelpers.HurtPlayer));
-        } else {
+        } else { // attacking crop
             const targx = animEntity.bonusArgs.targets[0].x + combat.dx;
             const targy = animEntity.bonusArgs.targets[0].y + combat.dy;
             animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, { x: targx, y: targy }, 
@@ -237,9 +230,7 @@ const animCallbacks = {
     "player_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
         const x = combat.dx + resetti.x, y = combat.dy + resetti.y;
-        let anim = new TileAnim(x, y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-        anim.AddFrameFunc(3, function() { if(resetti.crop.respawn === 0) { resetti.crop.hidden = true; } combat.animHelper.DrawCrops(); });
-        animProcess.AddBaby(anim);
+        AddCropDeathAnim(animProcess, x, y, resetti.crop);
         if(resetti.crop.seedDrop === true) {
             animProcess.AddBaby(new MovingLinearAnim([resetti.crop.name + "seed"], { x: x, y: y }, combat.animHelper.GetPlayerTopPos(), 0.25, 0, 24, 24));
         }
@@ -317,21 +308,28 @@ const animCallbacks = {
     },
     "player_damageFoes2": function(animProcess) { animProcess.SetNewFPS(10); animProcess.SetShake(false); }
 };
-var animCallbackHelpers = {
+const animCallbackHelpers = {
     "HurtPlayer": () => combat.animHelper.GivePlayerAHit(),
     "HurtPlayerCrops": function(animProcess, targets) {
         combat.animHelper.GivePlayerAHit(true);
         for(let i = 0; i < targets.length; i++) {
             const cropPos = targets[i];
-            const targ = { x: cropPos.x + combat.dx, y: cropPos.y + combat.dy };
+            let targ = { x: cropPos.x + combat.dx, y: cropPos.y + combat.dy };
             let crop = combat.grid[cropPos.x][cropPos.y];
+            if(crop.x !== undefined) {
+                targ = { x: crop.x + combat.dx, y: crop.y + combat.dy };
+                crop = combat.grid[crop.x][crop.y];
+            }
             if(crop === null) { continue; }
             if(crop.health <= 0) {
-                let anim = new TileAnim(targ.x, targ.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-                anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
-                animProcess.AddBaby(anim);
+                AddCropDeathAnim(animProcess, targ.x, targ.y, crop);
             } else {
                 animProcess.AddBaby(new TileAnim(targ.x, targ.y, ["vein"], true, 12, true));
+                if(crop.size === 2) {
+                    animProcess.AddBaby(new TileAnim(targ.x + 1, targ.y, ["vein"], true, 12, true));
+                    animProcess.AddBaby(new TileAnim(targ.x, targ.y + 1, ["vein"], true, 12, true));
+                    animProcess.AddBaby(new TileAnim(targ.x + 1, targ.y + 1, ["vein"], true, 12, true));
+                }
             }
         }
     },
@@ -349,13 +347,17 @@ var animCallbackHelpers = {
                 let crop = combat.enemyGrid[cropPos.x][cropPos.y];
                 if(crop === null) { continue; }
                 if(crop.health <= 0) {
-                    let anim = new TileAnim(targ.x, targ.y, ["puff0", "puff1", "puff2", "puff3", "puff4"], false, 24, false);
-                    anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
-                    animProcess.AddBaby(anim);
+                    AddCropDeathAnim(animProcess, targ.x, targ.y, crop);
                 } else {
                     animProcess.AddBaby(new TileAnim(targ.x, targ.y, ["vein"], true, 12, true));
                 }
             }
         }
     }
+}
+function AddCropDeathAnim(animProcess, x, y, crop) {
+    const puffStart = crop.size === 2 ? "bigpuff" : "puff";
+    let anim = new TileAnim(x, y, [puffStart + "0", puffStart + "1", puffStart + "2", puffStart + "3", puffStart + "4"], false, 24, false);
+    anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
+    animProcess.AddBaby(anim);
 }

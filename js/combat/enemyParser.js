@@ -12,31 +12,29 @@ const enemyHelpers = {
         }
     },
     BurnTile: function(e, x, y) {
-        var itemTile = player.itemGrid[x][y];
-        var crop = combat.grid[x][y];
-        var effect = combat.effectGrid[x][y];
+        let itemTile = player.itemGrid[x][y];
+        let crop = combat.grid[x][y];
+        let effect = combat.effectGrid[x][y];
         if(effect !== null && effect.type === "splashed") { return { status: false, wet: true }; }
         if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
         if(["_cow", "_lake", "_paddy", "_shooter", "_hotspot", "_modulator", "_sprinkler"].indexOf(itemTile) >= 0) { return { status: false }; }
         if(itemTile === "_strongsoil" && (Math.random() * player.luck) > 0.4) { return { status: false }; }
 
-        combat.effectGrid[x][y] = { type: "burned", duration: Math.ceil(Math.log2(e.atk)) };
+        let doesBurn = Math.random() > (player.luck / 2.5);
+        if(doesBurn) { combat.effectGrid[x][y] = { type: "burned", duration: Math.ceil(Math.log2(e.atk)) }; }
         if(["_log", "_coop", "_beehive"].indexOf(itemTile) >= 0) {
-            var hadTile = (crop !== null);
-            if(hadTile) { combat.grid[x][y] = null; }
-            return { status: true, crop: hadTile, destroyed: true, special: itemTile };
+            const hadTile = (crop !== null);
+            if(!doesBurn) { doesBurn = Math.random() > (player.luck / 2.5); }
+            if(doesBurn && hadTile) { crop.flagged = true; } // combat.grid[x][y] = null; } // TODO: don't kill until later!!
+            return { status: true, crop: hadTile, destroyed: doesBurn && hadTile, special: itemTile, groundAffected: doesBurn };
         }
-        if(crop === null) { return { status: true, crop: false, destroyed: false }; }
-        var dmg = enemyHelpers.GetCropDamage(e, x, y, 1);
-
-        crop.health -= dmg;
-        if(crop.rotten) { crop.health = 0; }
-        if(crop.health <= 0) {
-            combat.grid[x][y] = null;
+        if(crop === null) { return { status: true, crop: false, destroyed: false, groundAffected: doesBurn }; }
+        let res = enemyHelpers.DoDamageCrop(e, x, y, 1); //crop.health -= enemyHelpers.GetCropDamage(e, x, y, 1);
+        if(res.destroyed) {
             combat.animHelper.DrawCrops();
-            return { status: true, crop: true, destroyed: true, special: "" };
+            return { status: true, crop: true, destroyed: true, special: "", groundAffected: doesBurn };
         } else {
-            return { status: true, crop: true, destroyed: false, special: "" };
+            return { status: true, crop: true, destroyed: false, special: "", groundAffected: doesBurn };
         }
     },
     GetEnemyCropAttackDataObj: function(e, targs) {
@@ -115,38 +113,39 @@ const enemyHelpers = {
         if(["_sprinkler", "_paddy", "_lake", "_cow", "_log", "_coop", "_beehive"].indexOf(itemPos) >= 0) { return { status: false }; }
         if(itemPos === "_strongsoil" && (Math.random() * player.luck) > 0.4) { return { status: false }; }
 
+        let doesWet = Math.random() > (player.luck / 2.5);
         if(["_shooter", "_hotspot", "_modulator"].indexOf(itemPos) >= 0) {
             if(!noRecursion && itemPos !== "_shooter") {
-                combat.effectGrid[initx][inity] = { type: "shocked", duration: Math.max(1, Math.round(e.atk)) };
+                combat.effectGrid[initx][inity] = { type: "shocked", duration: Math.ceil(Math.log2(e.atk)) };
                 enemyHelpers.TrySplashTile(e, initx + 1, inity, true);
                 enemyHelpers.TrySplashTile(e, initx, inity + 1, true);
                 enemyHelpers.TrySplashTile(e, initx + 1, inity + 1, true);
             } else {
-                combat.effectGrid[x][y] = { type: "shocked", duration: Math.max(1, Math.round(e.atk)) };
+                doesWet = true;
+                combat.effectGrid[x][y] = { type: "shocked", duration: Math.ceil(Math.log2(e.atk)) };
             }
-        } else {
-            combat.effectGrid[x][y] = { type: "splashed", duration: Math.max(1, Math.round(e.atk)) };
+        } else if(doesWet) {
+            combat.effectGrid[x][y] = { type: "splashed", duration: Math.ceil(Math.log2(e.atk)) };
         }
-        combat.animHelper.DrawBackground();
-        var crop = combat.grid[x][y];
-        if(crop === null || crop.type === "rock") { return { status: true, crop: false }; }
+        const crop = combat.grid[x][y];
+        if(crop === null || crop.type === "rock") { return { status: true, crop: false, groundAffected: doesWet }; }
 
-        return enemyHelpers.DoDamageCrop(e, x, y, 0);
+        let res = enemyHelpers.DoDamageCrop(e, x, y, 0);
+        res.groundAffected = doesWet;
+        return res;
     },
     DoDamageCrop: function(e, x, y, type, useDamage) { // 0 = water, 1 = fire, 2 = salt, -1 = general
         let crop = combat.grid[x][y];
         if(crop === null) { return { status: false }; }
-        const dmg = enemyHelpers.GetCropDamage(e, x, y, type, useDamage);
+        if(crop.x !== undefined) { crop = combat.grid[crop.x][crop.y]; }
+        const dmg = enemyHelpers.GetCropDamage(e, crop, x, y, type, useDamage);
         crop.health -= dmg;
         if(crop.rotten) { crop.health = 0; }
-        if(crop.health <= 0) { crop.flagged = true; }
+        if(crop.health <= 0) { console.log(`killed ${crop.name} at ${x}, ${y}`); crop.flagged = true; }
         return { status: true, crop: true, destroyed: (crop.health <= 0) };
     },
-    GetCropDamage: function(e, x, y, type, useDamage) { // type: 0 = water, 1 = fire, salt = 2, -1 = general
-        let crop = combat.grid[x][y];
-        const isBig = (crop.x !== undefined);
-        if(isBig) { crop = combat.grid[crop.x][crop.y]; }
-
+    GetCropDamage: function(e, crop, x, y, type, useDamage) { // type: 0 = water, 1 = fire, salt = 2, -1 = general
+        const isBig = (crop.size === 2);
         const attackInfo = dmgCalcs.MeleeAttack(false, combat.season, (useDamage === undefined ? e.atk : useDamage), [crop], type)[0];
         let dmg = attackInfo.damage;
         if(isBig) { dmg /= 2; }
@@ -195,10 +194,12 @@ const enemyHelpers = {
         return true;
     },
     DoSomethingToBusiestRow: function(e, somethingFunc, killText, dmgText, regText) {
-        var busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
-        var hasDamage = false, hasKills = false;
-        for(var x = 0; x < player.gridWidth; x++) {
-            var res = somethingFunc(e, x, busiestRow);
+        const busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
+        let hasDamage = false, hasKills = false;
+        let affectedTiles = [];
+        for(let x = 0; x < player.gridWidth; x++) {
+            const res = somethingFunc(e, x, busiestRow);
+            affectedTiles.push({ killed: res.destroyed || false, special: res.special || null, groundAffected: res.groundAffected || false });
             if(!res.status) { continue; }
             else if(!res.crop) { continue; }
             else if(!res.destroyed) { hasDamage = true; }
@@ -208,6 +209,7 @@ const enemyHelpers = {
         else if(hasDamage) { EnemyParser.current.data.textID = dmgText; }
         else { EnemyParser.current.data.textID = regText; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        EnemyParser.outputData.bonusArgs = { row: busiestRow, tiles: affectedTiles };
         return true;
     },
     HasRottenCrops: function() {
@@ -252,6 +254,7 @@ const EnemyParser = {
     ParseCurrentNode: function() {
         const nodeContent = EnemyParser.current.data.message;
         let actionResult = true;
+        console.log(EnemyParser.current);
         if(nodeContent !== undefined && nodeContent !== "") { actionResult = actions[nodeContent](EnemyParser.enemy, EnemyParser.current.data.action); }
         const conds = EnemyParser.current.next;
         if(conds === undefined) { EnemyParser.done = true; return; }
@@ -348,6 +351,14 @@ const actions = {
                 EnemyParser.current.data.animData = "THROW_ENEMY";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["LAUNCH_CROPS_AT_CROPS"](e);
+            case "burnRow":
+                EnemyParser.current.data.animData = "ROW_FIRE";
+                EnemyParser.current.data.textID = "burnSucc";
+                return actions["BECK_FIRE_ROW"](e);
+            case "wetRow":
+                EnemyParser.current.data.animData = "HEAD_ON_SPLASH_ATTACK";
+                EnemyParser.current.data.textID = "splashRow";
+                return actions["BECKETT_WATER"](e);
         }
         console.log("could not find " + debug.testEnemyState);
     },
@@ -432,7 +443,7 @@ const actions = {
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
         return true;
-    },
+    }, // TODO: FULL FLOW
     "RETRACT_CROPS": function(e) {
         var dmg = 0;
         var crops = [];
@@ -450,7 +461,7 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
         EnemyParser.outputData.throwables = fieldData.crops;
         return true;
-    },
+    }, // TODO: FULL FLOW
     "FUCKING_MAIM": function(e) {
         worldmap.angryBees = false;
         for(var x = 0; x < player.gridWidth; x++) {
@@ -463,7 +474,7 @@ const actions = {
         var damage = combat.damagePlayer(e.atk * 500);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "REPAIR_BECK_MACHINE": function(e, crop) {
         var pos = {x: combat.enemywidth - 1, y: 0 };
         var newCrop = GetCrop("conveyorEnd");
@@ -480,7 +491,7 @@ const actions = {
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
         return true;
-    },
+    }, // TODO: FULL FLOW
     "REPAIR_MACHINE": function(e, crop) {
         var pos = {x: combat.enemywidth - 1, y: 0 };
         var newCrop = GetCrop("conveyorEnd");
@@ -497,7 +508,7 @@ const actions = {
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
         return true;
-    },
+    }, // TODO: FULL FLOW
     "TRY_PLUG": function(e) {
         var plugged = (--e.plugTimer <= 0);
         if(plugged) {
@@ -511,7 +522,7 @@ const actions = {
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "CARDGAME": function(e) {
         EnemyParser.current.data.textID = "plantAttack";
         if(e.wacg === undefined) { e.wacg = new ChildrensCardGame(e); }
@@ -599,7 +610,7 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage, cardData.cardName, cardData.arg, cardData.arg2);
         if(attackAgain) { EnemyParser.outputData.attackAgain = true; }
         return true;
-    },
+    }, // TODO: FULL FLOW
     "HOUSEKEEPER": function(e) {
         var cropData = enemyHelpers.GetEnemyFieldData(e, false, false);
         var hasCrops = cropData.crops.length > 0;
@@ -773,7 +784,7 @@ const actions = {
                 }
             }
         }
-    },
+    }, // TODO: FULL FLOW
     "BOOST_CLOUD": function(e) {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0); 
         var crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
@@ -786,7 +797,7 @@ const actions = {
             }
         }
         return true;
-    },
+    }, // TODO: FULL FLOW
     "CONVINCEATRON": function(e) {
         var damage = 0;
         if(tutorial.state === 23) {
@@ -806,7 +817,7 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         EnemyParser.current.data = { message: "CONVINCEATRON" };
         return true;
-    },
+    }, // TODO: FULL FLOW
     "CONVINCEATRON2": function(e) {
         var damage = 0;
         if(e.convinceState === undefined) {
@@ -822,7 +833,7 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         EnemyParser.current.data = { message: "CONVINCEATRON2" };
         return true;
-    },
+    }, // TODO: FULL FLOW
     "HEAL_FROM_CROPS": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
         var amountToHeal = Math.ceil(fieldData.damage / 3);
@@ -832,7 +843,7 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
         EnemyParser.outputData.throwables = fieldData.crops;
         return true;
-    },
+    }, // TODO: FULL FLOW
     "LAUNCH_CROPS": function(e) {
         var fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [dmgCalcs.GetPlayerCombatDefense()]);
         var damage = combat.damagePlayer(fieldData.damage);
@@ -872,9 +883,9 @@ const actions = {
         EnemyParser.outputData.throwables = fieldData.animCrops;
         return true;
     },
-    "TRY_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("rock"),
-    "TECH_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("engine"),
-    "TIRE_CHUCK": (e) => enemyHelpers.TryDisturbRandomTile("tire"),
+    "TRY_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("rock"), // TODO: FULL FLOW
+    "TECH_THROW_ROCK": (e) => enemyHelpers.TryDisturbRandomTile("engine"), // TODO: FULL FLOW
+    "TIRE_CHUCK": (e) => enemyHelpers.TryDisturbRandomTile("tire"), // TODO: FULL FLOW
     "BECKETT_WATER": (e) => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
     "BECK_FIRE_ROW": (e) => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
     "BECK_THROW_SALT": function(e) { 
@@ -902,7 +913,7 @@ const actions = {
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "BECKETT_PLANT": function(e) {
         var pos = {x: -1, y: -1};
         var attempts = 5;
@@ -939,7 +950,7 @@ const actions = {
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
         return true;
-    },
+    }, // TODO: FULL FLOW
     "NERF_THIS": function(e) {
         var pos = {x: -1, y: -1};
 
@@ -963,12 +974,12 @@ const actions = {
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
         return true;
-    },
+    }, // TODO: FULL FLOW
     "REV_ENGINE": function(e) {
         e.atk += 2;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "CLEAR_CACHE": function(e) {
         for(var x = 0; x < combat.enemyGrid.length; x++) {
             for(var y = 0; y < combat.enemyGrid[0].length; y++) {
@@ -983,7 +994,7 @@ const actions = {
         combat.animHelper.DrawCrops();
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "ATTACK_CROP": function(e) {
         var attempts = 5;
         var pos = null;
@@ -1014,7 +1025,7 @@ const actions = {
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "HULK_PUNCH": function(e) {
         var row = Math.floor(Math.random() * player.gridHeight);
         var hasKills = false;
@@ -1031,7 +1042,7 @@ const actions = {
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "VINE_SMACK": function(e) {
         var row = Math.floor(Math.random() * player.gridHeight);
         var hasKills = false;
@@ -1057,7 +1068,7 @@ const actions = {
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "SPLASH_TILE": function(e) {
         var res = enemyHelpers.TrySplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
         if(!res.status) { EnemyParser.current.data.textID = "splashFail"; }
@@ -1066,11 +1077,11 @@ const actions = {
         else { EnemyParser.current.data.textID = "splashKill"; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "IDLE": function(e) {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    },
+    }, // TODO: FULL FLOW
     "THROW_BABY": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, true);
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetText("e." + GetCrop(fieldData.crops[0][0]).baby + "0"));
@@ -1094,7 +1105,7 @@ const actions = {
                 }
             }
         }
-    },
+    }, // TODO: FULL FLOW
     "MODULATE": function (e, season) {
         if(season === "args") {
             var attempts = 5;
@@ -1118,9 +1129,9 @@ const actions = {
         combat.season = season;
         combat.adjustEnemyStatsWeather();
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, seasonStr);
-    },
-    "RANDOM_GT": (e, amt) => (Math.random() > parseFloat(amt)),
-    "WRITE_TEXT": (e) => EnemyParser.outputData = enemyHelpers.GetAttackData(0),
+    }, // TODO: FULL FLOW
+    "RANDOM_GT": (e, amt) => (Math.random() > parseFloat(amt)), // TODO: FULL FLOW
+    "WRITE_TEXT": (e) => EnemyParser.outputData = enemyHelpers.GetAttackData(0), // TODO: FULL FLOW
     "HEAL_RANGE": function(e, amountRange) {
         var rangeVals = amountRange.split(",");
         var base = parseInt(rangeVals[0]);
@@ -1130,7 +1141,7 @@ const actions = {
         e.health = Math.min(e.maxhealth, (e.health + amountToHeal));
         var adjustedAmountToHeal = (e.health - prevHealth);
         EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
-    },
+    }, // TODO: FULL FLOW
     "TRY_PLANT_CROP_NERD": function(e, crop) {
         var pos = { x: -1, y: 0 };
         var attempts = 5;
@@ -1164,7 +1175,7 @@ const actions = {
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
         return true;
-    },
+    }, // TODO: FULL FLOW
     "TRY_PLANT_CROP": function(e, crop) {
         var pos = {x: -1, y: -1};
         var attempts = 5;
@@ -1206,7 +1217,7 @@ const actions = {
         combat.animHelper.DrawCrops(); // TODO: should this be here?
         combat.animHelper.DrawBottom();
         return true;
-    },
+    }, // TODO: FULL FLOW
     "MAYBE_TRY_DRINK_KOMBUCHA": function(e) {
         var kombuchaData = null;
         for(var x = 0; x < combat.enemyGrid.length; x++) {
@@ -1225,7 +1236,7 @@ const actions = {
         actions["HEAL_RANGE"](e, "60,35");
         EnemyParser.outputData.throwables = [kombuchaData];
         return true;
-    },
+    }, // TODO: FULL FLOW
     "TRY_PLANT_THREE_CROPS": function(e, crop) {
         var placeholderTitle = EnemyParser.current.data.textID;
         if(!actions["TRY_PLANT_CROP"](e, crop)) { return false; }
@@ -1238,7 +1249,7 @@ const actions = {
         actions["TRY_PLANT_CROP"](e, crop);
         EnemyParser.current.data.textID = placeholderTitle;
         return true;
-    },
+    }, // TODO: FULL FLOW
     "WEAK_ATTACK": function(e) {
         var damage = dmgCalcs.MeleeAttack(false, combat.season, e.atk, [dmgCalcs.GetPlayerCombatDefense()])[0].damage;
         damage = combat.damagePlayer(damage);
@@ -1254,5 +1265,5 @@ const actions = {
         var damage = combat.damagePlayer(300);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
-    }
+    } // TODO: FULL FLOW
 }

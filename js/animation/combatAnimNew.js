@@ -219,7 +219,7 @@ CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 
 function CombatAnimEnemy(sheet, w, h, x, y, dx) { CombatAnimEntity.call(this, sheet, w, h, x, y, enemyCombatAnims, "STAND", dx); }
 CombatAnimEnemy.prototype = Object.create(CombatAnimEntity.prototype);
-CombatAnimEnemy.prototype.CorpseItUp = function (d, size) { gfx.DrawDitheredWhatsit(this.sheet, this.dx, 1, this.dims, this.layer, d, size); };
+CombatAnimEnemy.prototype.CorpseItUp = function(d, size) { gfx.DrawDitheredWhatsit(this.sheet, this.dx, 1, this.dims, this.layer, d, size); };
 
 function GetEnemyCombatAnim(x, y, dx, size) {
     const dims = GetEnemyCombatDims(size);
