@@ -337,6 +337,8 @@ const actions = {
     "RANDOM_GT": (e, amt) => Math.random() > parseFloat(amt), // TODO: FULL FLOW (IS THIS NEEDED?)
     "WRITE_TEXT": e => EnemyParser.outputData = enemyHelpers.GetAttackData(0), // TODO: DO THESE TWO REALLY NEED TO BE DIFFERENT THINGS?
     "IDLE": e => { EnemyParser.outputData = enemyHelpers.GetAttackData(0); return true; }, // TODO: DO THESE TWO REALLY NEED TO BE DIFFERENT THINGS?
+    
+    // ---------------- MULTIPURPOSE
     "TESTSKILL": function(e) { 
         switch(debug.testEnemyState) {
             case "attack":
@@ -371,11 +373,12 @@ const actions = {
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "plantAttack";
                 return actions["TRY_PLANT_THREE_CROPS"](e, "kelp");
+            default:
+                EnemyParser.current.data.animData = "PLANT";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions[debug.testEnemyState](e);
         }
-        console.log("could not find " + debug.testEnemyState);
     },
-    
-    // ---------------- MULTIPURPOSE
     "CONVINCEATRON": function(e) {
         let damage = 0;
         if(tutorial.state === 23) {
@@ -727,19 +730,19 @@ const actions = {
     // ---------------- STATUS EFFECTS
     "MODULATE": function (e, season) {
         if(season === "args") {
-            var attempts = 5;
+            let attempts = 5;
             season = parseInt(e.GetRandomArg());
             while(attempts-- > 0 && season === combat.season) {
                 season = parseInt(e.GetRandomArg());
             }
         } else if(season.indexOf(",") >= 0) {
-            var ssns = season.split(",");
-            season = parseInt(Math.floor(Math.random() * ssns.length));
-            while(attempts-- > 0 && parseInt(season) === combat.season) {
-                season = parseInt(Math.floor(Math.random() * ssns.length));
+            let ssns = season.split(",");
+            season = parseInt(RandomArrayItem(ssns));
+            while(attempts-- > 0 && season === combat.season) {
+                season = parseInt(RandomArrayItem(ssns));
             }
         } else { season = parseInt(season); }
-        var seasonStr = "Spring";
+        let seasonStr = "Spring";
         switch(season) {
             case 1: seasonStr = "Summer"; break;
             case 2: seasonStr = "Autumn"; break;
@@ -753,14 +756,13 @@ const actions = {
         e.atk += 2;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    }, // TODO: FULL FLOW
+    },
     "BOOST_CLOUD": function(e) {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0); 
-        var crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
-        for(var i = 0; i < crops.length; i++) {
+        const crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
+        for(let i = 0; i < crops.length; i++) {
             if(crops[i][3] === "cloud") {
-                var x = crops[i][1];
-                var y = crops[i][2];
+                const x = crops[i][1], y = crops[i][2];
                 combat.enemyGrid[x][y].power++;
                 return true;
             }
