@@ -29,12 +29,12 @@ function TileAnim(x, y, tileArray, shake, fps, loop) {
         gfx.drawTileToGrid(tiles[frame], x, y, "menucursorC");
     }
 }
-function VineAnim(column, bottomy, delay) {
+function VineAnim(column, bottomy, delay, callback) {
     const x = column, by = bottomy;
     let timerBeforeStart = delay;
     let frame = 0, timePerFrame = 1000 / 24, timePerAnimFrame = 100;
     let lastRan = +new Date(), lastAnimRan = +new Date();
-    let animState = 0, height = 0;
+    let animState = 0, height = 0, done = false;
     this.Animate = function() {
         if(timerBeforeStart-- > 0) { return; }
         const now = +new Date();
@@ -42,8 +42,13 @@ function VineAnim(column, bottomy, delay) {
             animState = (animState === 1 ? 0 : 1);
             lastAnimRan = now;
         }
-        if((now - lastRan) >= timePerFrame && height < by) {
-            height += 0.25;
+        if((now - lastRan) >= timePerFrame) {
+            if(height < by) {
+                height += 0.25;
+            } else if(!done) {
+                done = true;
+                if(callback !== undefined) { callback(); }
+            }
             lastRan = now;
         }
         for(let y = 0; y < by; y++) {

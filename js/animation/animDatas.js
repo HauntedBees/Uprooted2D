@@ -63,6 +63,7 @@ const enemyCombatAnims = {
     "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
     "VINE_SMACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_vineSmack")], false, 4),
     "HULK_PUNCH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_thanksHulkYouBetKid")], false, 4),
+    "FUCKING_MAIM": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_letItFuckingBurn")], false, 4),
     
     "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
     "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
@@ -169,17 +170,13 @@ const animCallbacks = {
                 }
                 if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
                 if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, ["splashed"], false, 24, true)); }
-                if(crop === null) {
+                if(crop === null || crop.size === 1) {
                     animProcess.AddBaby(new TileAnim(x, y, ["splashed0", "splashed1"], false, 12, true));
-                } else {
-                    if(crop.size === 1) {
-                        animProcess.AddBaby(new TileAnim(x, y, ["splashed0", "splashed1"], false, 12, true));
-                    } else if(crop.x !== undefined) {
-                        animProcess.AddBaby(new TileAnim(dispx, dispy, ["splashed0", "splashed1"], false, 12, true));
-                        animProcess.AddBaby(new TileAnim(dispx + 1, dispy, ["splashed0", "splashed1"], false, 12, true));
-                        animProcess.AddBaby(new TileAnim(dispx, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
-                        animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
-                    }
+                } else if(crop.size === 2) {
+                    animProcess.AddBaby(new TileAnim(dispx, dispy, ["splashed0", "splashed1"], false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy, ["splashed0", "splashed1"], false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
                 }
             }
         };
@@ -204,21 +201,52 @@ const animCallbacks = {
                 }
                 if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
                 if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, ["burned"], false, 24, true)); }
-                if(crop === null) {
+                if(crop === null || crop.size === 1) {
                     animProcess.AddBaby(new TileAnim(x, y, ["fireBurn0", "fireBurn1"], false, 12, true));
-                } else {
-                    if(crop.size === 1) {
-                        animProcess.AddBaby(new TileAnim(x, y, ["fireBurn0", "fireBurn1"], false, 12, true));
-                    } else {
+                } else if(crop.size === 2) {
+                    animProcess.AddBaby(new TileAnim(dispx, dispy, ["fireBurn0", "fireBurn1"], false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy, ["fireBurn0", "fireBurn1"], false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx, dispy + 1, ["fireBurn0", "fireBurn1"], false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, ["fireBurn0", "fireBurn1"], false, 12, true));
+                }
+            }
+        };
+        animProcess.AddBaby(anim);
+    },
+    "enemy_letItFuckingBurn": function(animProcess, animEntity) {
+        animCallbackHelpers.HurtPlayer();
+        for(let y = 0; y < player.gridHeight; y++) {
+            const startPos = { x: combat.dx + player.gridWidth, y: combat.dy + y };
+            const endPos = { x: -1, y: startPos.y };
+            let anim = new MovingLinearAnim(["fireBall0", "fireBall1"], startPos, endPos, 0.25, 0, 24, 12, undefined);
+            anim.xFunc = function(x) {
+                const arrx = x - combat.dx;
+                if(x >= combat.dx) {
+                    const arry = y;
+                    let crop = combat.grid[arrx][arry];
+                    let dispx = arrx, dispy = arry;
+                    if(crop !== null) {
+                        if(crop.x !== undefined) {
+                            dispx = crop.x + combat.dx;
+                            dispy = crop.y + combat.dy;
+                            crop = combat.grid[crop.x][crop.y];
+                        }
+                        if(crop.health <= 0) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
+                    }
+                    if(player.itemGrid[x][y] === "_beehive") {
+                        // don't hurt bees!
+                    } else if(crop === null || crop.size === 1) {
+                        animProcess.AddBaby(new TileAnim(dispx + combat.dx, dispy + combat.dy, ["fireBurn0", "fireBurn1"], false, 12, true));
+                    } else if(crop.size === 2) {
                         animProcess.AddBaby(new TileAnim(dispx, dispy, ["fireBurn0", "fireBurn1"], false, 12, true));
                         animProcess.AddBaby(new TileAnim(dispx + 1, dispy, ["fireBurn0", "fireBurn1"], false, 12, true));
                         animProcess.AddBaby(new TileAnim(dispx, dispy + 1, ["fireBurn0", "fireBurn1"], false, 12, true));
                         animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, ["fireBurn0", "fireBurn1"], false, 12, true));
                     }
                 }
-            }
-        };
-        animProcess.AddBaby(anim);
+            };
+            animProcess.AddBaby(anim);
+        }
     },
     "enemy_damagePlayer": () => animCallbackHelpers.HurtPlayer(),
     "enemy_pullCrop": function(animProcess, animEntity) {

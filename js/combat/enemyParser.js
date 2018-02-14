@@ -381,6 +381,14 @@ const actions = {
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "plantAttack";
                 return actions["TRY_PLANT_THREE_CROPS"](e, "kelp");
+            case "modulate":
+                EnemyParser.current.data.animData = "PLANT";
+                EnemyParser.current.data.textID = "plantAttack";
+                return actions["MODULATE"](e, "0,1,2,3");
+            case "fuckyou":
+                EnemyParser.current.data.animData = "FUCKING_MAIM";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["FUCKING_MAIM"](e);
             default:
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "standardAttack";
@@ -737,14 +745,14 @@ const actions = {
 
     // ---------------- STATUS EFFECTS
     "MODULATE": function (e, season) {
+        let attempts = 5;
         if(season === "args") {
-            let attempts = 5;
             season = parseInt(e.GetRandomArg());
             while(attempts-- > 0 && season === combat.season) {
                 season = parseInt(e.GetRandomArg());
             }
         } else if(season.indexOf(",") >= 0) {
-            let ssns = season.split(",");
+            const ssns = season.split(",");
             season = parseInt(RandomArrayItem(ssns));
             while(attempts-- > 0 && season === combat.season) {
                 season = parseInt(RandomArrayItem(ssns));
@@ -759,7 +767,7 @@ const actions = {
         combat.season = season;
         combat.adjustEnemyStatsWeather();
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, seasonStr);
-    }, // TODO: FULL FLOW
+    },
     "REV_ENGINE": function(e) {
         e.atk += 2;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
@@ -871,6 +879,7 @@ const actions = {
         worldmap.angryBees = false;
         for(let x = 0; x < player.gridWidth; x++) {
             for(let y = 0; y < player.gridHeight; y++) {
+                if(player.itemGrid[x][y] === "_beehive") { continue; }
                 enemyHelpers.BurnTile(e, x, y);
                 enemyHelpers.BurnTile(e, x, y);
                 enemyHelpers.BurnTile(e, x, y);
@@ -879,7 +888,7 @@ const actions = {
         const damage = combat.damagePlayer(e.atk * 500);
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         return true;
-    }, // TODO: FULL FLOW
+    },
 
     // ---------------- CROP HARM
     "LAUNCH_CROPS_AT_CROPS": function(e) {
