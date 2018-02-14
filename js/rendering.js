@@ -90,8 +90,17 @@ const gfx = {
         var delta = size * mult * 0.5;
         gfx.drawImage(gfx.ctx["tutorial"], sheet, data[0] * size, data[1] * size, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
     },
+    drawYMaskedSprite: function(spritename, x, y, layer, bottomY, verbose) {
+        const data = spriteData.names[spritename];
+        const sx = data[0], sy = data[1];
+        const dy = bottomY - y;
+        if(dy <= -1) { return; }
+        const sheet = gfx.spritesheets["sheet"];
+        const size = (y <= bottomY ? 16 : 16 - 16 * (y - bottomY));
+        gfx.drawImage(gfx.ctx[layer], sheet, sx * 16, sy * 16, 16, size, x * 16, y * 16, 16, size);
+    },
     drawTileToGrid: function(spritename, x, y, layer, isHalfTile) {
-        var data = spriteData.names[spritename];
+        const data = spriteData.names[spritename];
         try {
             gfx.drawSprite("sheet", data[0], data[1], x * 16, y * 16, layer, data.length == 3, isHalfTile);
         } catch(e) {
@@ -99,9 +108,9 @@ const gfx = {
         }
     },
     drawSprite: function(sheetpath, sx, sy, x, y, layer, big, isHalfTile) {
-        var sheet = gfx.spritesheets[sheetpath];
-        var size = big ? 32 : 16;
-        var xmult = (isHalfTile === true ? 0.5 : 1);
+        const sheet = gfx.spritesheets[sheetpath];
+        const size = big ? 32 : 16;
+        const xmult = (isHalfTile === true ? 0.5 : 1);
         gfx.drawImage(gfx.ctx[layer], sheet, sx * size, sy * size, size * xmult, size, x, y, size * xmult, size);
     },
     drawBigCharacter: function(sx, sy, x, y) {

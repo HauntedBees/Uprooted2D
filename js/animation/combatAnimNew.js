@@ -29,6 +29,30 @@ function TileAnim(x, y, tileArray, shake, fps, loop) {
         gfx.drawTileToGrid(tiles[frame], x, y, "menucursorC");
     }
 }
+function VineAnim(column, bottomy, delay) {
+    const x = column, by = bottomy;
+    let timerBeforeStart = delay;
+    let frame = 0, timePerFrame = 1000 / 24, timePerAnimFrame = 100;
+    let lastRan = +new Date(), lastAnimRan = +new Date();
+    let animState = 0, height = 0;
+    this.Animate = function() {
+        if(timerBeforeStart-- > 0) { return; }
+        const now = +new Date();
+        if((now - lastAnimRan) >= timePerAnimFrame) {
+            animState = (animState === 1 ? 0 : 1);
+            lastAnimRan = now;
+        }
+        if((now - lastRan) >= timePerFrame && height < by) {
+            height += 0.25;
+            lastRan = now;
+        }
+        for(let y = 0; y < by; y++) {
+            gfx.drawYMaskedSprite("vineAnim" + (y % 4) + "." + animState, x, by + y + 1 - height, "menucursorC", by);
+        }
+        gfx.drawTileToGrid("vineAnimT." + animState, x, by - height, "menucursorC");
+        gfx.drawTileToGrid("vineBottom" + animState, x, by, "menucursorC");
+    }
+}
 function MovingLinearAnim(sprites, start, end, dt, dy, fps, animfps, doneFunc) {
     const dir = (start.x < end.x) ? 1 : -1;
     const startPos = dir === 1 ? start : end, endPos = dir === 1 ? end : start, DoneFunction = doneFunc;
