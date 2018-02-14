@@ -389,6 +389,10 @@ const actions = {
                 EnemyParser.current.data.animData = "FUCKING_MAIM";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["FUCKING_MAIM"](e);
+            case "crophit":
+                EnemyParser.current.data.animData = "ATTACK_CROP";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["ATTACK_CROP"](e);
             default:
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "standardAttack";
@@ -924,20 +928,19 @@ const actions = {
         return true;
     },
     "ATTACK_CROP": function(e) {
-        var attempts = 5;
-        var pos = null;
+        let attempts = 5, pos = null;
         while(attempts-- > 0) {
-            var x = Math.floor(Math.random() * player.gridWidth);
-            var y = Math.floor(Math.random() * player.gridHeight);
-            var tile = combat.grid[x][y];
+            const x = Range(0, player.gridWidth);
+            var y = Range(0, player.gridHeight);
+            const tile = combat.grid[x][y];
             if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
             pos = { x: x, y: y };
         }
         if(pos === null) {
-            for(var x = 0; x < player.gridWidth; x++) {
+            for(let x = 0; x < player.gridWidth; x++) {
                 if(pos !== null) { break; }
-                for(var y = 0; y < player.gridHeight; y++) {
-                    var tile = combat.grid[x][y];
+                for(let y = 0; y < player.gridHeight; y++) {
+                    const tile = combat.grid[x][y];
                     if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
                     pos = { x: x, y: y };
                     break;
@@ -945,15 +948,16 @@ const actions = {
             }
         }
         if(pos === null) { return false; }
-        var res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1);
+        const res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1);
         if(res.destroyed) {
             EnemyParser.current.data.textID = "cropKill";
         } else {
             EnemyParser.current.data.textID = "cropAttack";
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        EnemyParser.outputData.bonusArgs = { crop: [ pos ] };
         return true;
-    }, // TODO: FULL FLOW
+    },
     "HULK_PUNCH": function(e) {
         const row = Range(0, player.gridHeight - 1);
         let hasKills = false;
@@ -1008,8 +1012,13 @@ const actions = {
         EnemyParser.outputData.bonusArgs = { columns: cols, crops: crops };
         return true;
     },
+    "TRY_THROW_ROCK": e => enemyHelpers.TryDisturbRandomTile("rock"),
+    "TECH_THROW_ROCK": e => enemyHelpers.TryDisturbRandomTile("engine"),
+    "TIRE_CHUCK": e => enemyHelpers.TryDisturbRandomTile("tire"),
+    "BECKETT_WATER": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
+    "BECK_FIRE_ROW": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
     "SPLASH_TILE": function(e) {
-        var res = enemyHelpers.TrySplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
+        const res = enemyHelpers.TrySplashTile(e, Math.floor(Math.random() * player.gridWidth), Math.floor(Math.random() * player.gridHeight));
         if(!res.status) { EnemyParser.current.data.textID = "splashFail"; }
         else if(!res.crop) { EnemyParser.current.data.textID = "splashSucc"; }
         else if(!res.destroyed) { EnemyParser.current.data.textID = "splashDamage"; }
@@ -1017,11 +1026,6 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
     }, // TODO: FULL FLOW
-    "TRY_THROW_ROCK": e => enemyHelpers.TryDisturbRandomTile("rock"),
-    "TECH_THROW_ROCK": e => enemyHelpers.TryDisturbRandomTile("engine"),
-    "TIRE_CHUCK": e => enemyHelpers.TryDisturbRandomTile("tire"),
-    "BECKETT_WATER": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
-    "BECK_FIRE_ROW": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
     "BECK_THROW_SALT": function(e) { 
         const row = Math.floor(Math.random() * player.gridHeight);
         let hasKills = false;
@@ -1127,15 +1131,12 @@ const actions = {
         return true;
     },
     "NERF_THIS": function(e) {
-        var pos = {x: -1, y: -1};
-
-        var potentialCrops = ["mushNerf", "riceNerf", "treeNerf", "vegNerf", "fishNerf", "beeNerf", "eggNerf", "reNerf"];
-        var crop = potentialCrops[Math.floor(Math.random() * potentialCrops.length)];
-        var newCrop = GetCrop(crop);
-        
-        for(var x = 3; x < 5; x++) {
+        let pos = {x: -1, y: -1};
+        const crop = RandomArrayItem(["mushNerf", "riceNerf", "treeNerf", "vegNerf", "fishNerf", "beeNerf", "eggNerf", "reNerf"]);
+        let newCrop = GetCrop(crop);
+        for(let x = 3; x < 5; x++) {
             if(pos.x >= 0) { break; }
-            for(var y = 3; y < 5; y++) {
+            for(let y = 3; y < 5; y++) {
                 if(enemyHelpers.CanPlantInSpot(x, y, false)) {
                     pos = { x: x, y: y };
                     break;
@@ -1146,15 +1147,14 @@ const actions = {
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
-        combat.animHelper.DrawCrops(); // TODO: should this be here?
-        combat.animHelper.DrawBottom();
+        combat.animHelper.DrawCrops();
         return true;
     }, // TODO: FULL FLOW
     "REPAIR_MACHINE": function(e, crop) {
-        var pos = {x: combat.enemywidth - 1, y: 0 };
-        var newCrop = GetCrop("conveyorEnd");
+        let pos = {x: combat.enemywidth - 1, y: 0 };
+        let newCrop = GetCrop("conveyorEnd");
         
-        for(var y = 1; y < combat.enemyheight; y++) {
+        for(let y = 1; y < combat.enemyheight; y++) {
             if(combat.enemyGrid[pos.x][y] !== null) { continue; }
             pos.y = y;
             break;
@@ -1167,10 +1167,10 @@ const actions = {
         return true;
     }, // TODO: FULL FLOW
     "REPAIR_BECK_MACHINE": function(e, crop) {
-        var pos = {x: combat.enemywidth - 1, y: 0 };
-        var newCrop = GetCrop("conveyorEnd");
+        let pos = {x: combat.enemywidth - 1, y: 0 };
+        let newCrop = GetCrop("conveyorEnd");
         
-        for(var y = 0; y < 3; y++) {
+        for(let y = 0; y < 3; y++) {
             if(combat.enemyGrid[pos.x][y] !== null) { continue; }
             pos.y = y;
             break;

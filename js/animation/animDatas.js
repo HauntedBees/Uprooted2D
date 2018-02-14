@@ -52,8 +52,9 @@ const enemyCombatAnims = {
     "STAND": JustOne(0, 0),
     "HURT": JustOne(0, 1, { doShake: true }),
     "ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer")], false, 4),
-    "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
+    "ATTACK_CROP": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damageCrop")], false, 4),
     "PLANT": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
+    "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
     "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
     "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
     
@@ -248,6 +249,7 @@ const animCallbacks = {
             animProcess.AddBaby(anim);
         }
     },
+    "enemy_damageCrop": (animProcess, animEntity) => animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.crop),
     "enemy_damagePlayer": () => animCallbackHelpers.HurtPlayer(),
     "enemy_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
