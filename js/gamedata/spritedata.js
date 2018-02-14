@@ -131,6 +131,7 @@ var spriteData = {
         }
     },
     names: {
+        "hulkFist0": [18, 2, true], "hulkFist1": [19, 2, true],
         "vineBottom0": [45, 4], "vineBottom1": [46, 4],
         "vineAnimT.0": [43, 4], "vineAnimT.1": [44, 4],
         "vineAnim0.0": [43, 5], "vineAnim0.1": [44, 5],

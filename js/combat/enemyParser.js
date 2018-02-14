@@ -373,6 +373,10 @@ const actions = {
                 EnemyParser.current.data.animData = "VINE_SMACK";
                 EnemyParser.current.data.textID = "beckettRock";
                 return actions["VINE_SMACK"](e);
+            case "hulk":
+                EnemyParser.current.data.animData = "HULK_PUNCH";
+                EnemyParser.current.data.textID = "beckettRock";
+                return actions["HULK_PUNCH"](e);
             case "plantThree":
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "plantAttack";
@@ -942,22 +946,25 @@ const actions = {
         return true;
     }, // TODO: FULL FLOW
     "HULK_PUNCH": function(e) {
-        var row = Math.floor(Math.random() * player.gridHeight);
-        var hasKills = false;
-        for(var x = 0; x < player.gridWidth; x++) {
-            var tile = combat.grid[x][row];
-            if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
-            var res = enemyHelpers.DoDamageCrop(e, x, row, -1);
-            hasKills = hasKills || res;
+        const row = Range(0, player.gridHeight - 1);
+        let hasKills = false;
+        let hurtCrops = [];
+        for(let y = row; y <= (row + 1); y++) {
+            for(let x = 0; x < player.gridWidth; x++) {
+                let tile = combat.grid[x][y];
+                if(tile === null || tile.type === "rock") { continue; }
+                if(tile.x !== undefined) { tile = combat.grid[tile.x][tile.y]; }
+                const res = enemyHelpers.DoDamageCrop(e, x, y, -1);
+                hurtCrops.push({x: x, y: y});
+                hasKills = hasKills || (res.status && res.destroyed);
+            }
         }
-        if(hasKills) {
-            EnemyParser.current.data.textID = "hulkPunchKill";
-        } else {
-            EnemyParser.current.data.textID = "hulkPunch";
-        }
+        if(hasKills) { EnemyParser.current.data.textID = "hulkPunchKill"; }
+        else { EnemyParser.current.data.textID = "hulkPunch"; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        EnemyParser.outputData.bonusArgs = { punchRow: row, crops: hurtCrops };
         return true;
-    }, // TODO: FULL FLOW
+    },
     "VINE_SMACK": function(e) {
         let numCols = (Math.random() > player.luck) ? Range(1, 5) : Range(1, 3);
         let cols = [];
@@ -965,8 +972,7 @@ const actions = {
             const col = Math.floor(Math.random() * player.gridWidth);
             if(cols.indexOf(col) < 0) { cols.push(col); }
         }
-        
-        let hasKills = false;
+        let hasKills = false, crops = [];
         for(let colIdx = 0; colIdx < cols.length; colIdx++) {
             const x = cols[colIdx];
             for(let y = 0; y < player.gridHeight; y++) {
@@ -978,17 +984,19 @@ const actions = {
                 } else {
                     if(tile.x !== undefined || tile.type === "rock") { continue; }
                     const res = enemyHelpers.DoDamageCrop(e, x, y, -1);
-                    if(res && Math.random() < 0.33) {
+                    const didKill = res.status && res.destroyed;
+                    if(didKill && Math.random() < 0.33) {
                         enemyHelpers.TryDisturbTile(x, y, "salt");
                     }
-                    hasKills = hasKills || res;
+                    crops.push({x: x, y: y});
+                    hasKills = hasKills || didKill;
                 }
             }
         }
         if(hasKills) { EnemyParser.current.data.textID = "vineSmackKill"; }
         else { EnemyParser.current.data.textID = "vineSmack"; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-        EnemyParser.outputData.bonusArgs = { columns: cols };
+        EnemyParser.outputData.bonusArgs = { columns: cols, crops: crops };
         return true;
     },
     "SPLASH_TILE": function(e) {

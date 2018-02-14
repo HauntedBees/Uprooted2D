@@ -62,6 +62,7 @@ const enemyCombatAnims = {
     "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
     "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
     "VINE_SMACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_vineSmack")], false, 4),
+    "HULK_PUNCH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_thanksHulkYouBetKid")], false, 4),
     
     "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
     "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
@@ -114,13 +115,27 @@ const playerCombatAnims = {
 
 const animCallbacks = {
     "enemy_placeholder": () => console.log("TO BE IMPLEMENTED"),
+    "enemy_thanksHulkYouBetKid": function(animProcess, animEntity) {
+        const row = combat.dy + animEntity.bonusArgs.punchRow;
+        animProcess.AddBaby(new MovingLinearAnim(["hulkFist0"], { x: gfx.tileWidth, y: row }, { x: combat.dx, y: row }, 1, 0, 24, 24, function() {
+            animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.crops);
+            animProcess.AddBaby(new TileAnim(combat.dx, row, ["hulkFist0"], false, 24, true));
+            for(let x = 2; x < gfx.tileWidth; x += 2) {
+                animProcess.AddBaby(new TileAnim(combat.dx + x, row, ["hulkFist1"], false, 24, true));
+            }
+        }));
+        for(let x = 2; x < gfx.tileWidth; x += 2) {
+            animProcess.AddBaby(new MovingLinearAnim(["hulkFist1"], { x: gfx.tileWidth + x, y: row }, { x: combat.dx + x, y: row }, 1, 0, 24, 24));
+        }
+    },
     "enemy_vineSmack": function(animProcess, animEntity) {
-        const edims = animEntity.dims;
         const columns = animEntity.bonusArgs.columns.sort();
         const y = combat.dy + player.gridHeight - 1;
         let delay = 0;
         for(let colIdx = columns.length - 1; colIdx >= 0; colIdx--) {
-            animProcess.AddBaby(new VineAnim(combat.dx + columns[colIdx], y, delay));
+            let callback = undefined;
+            if(colIdx === 0) { callback = function() { animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.crops); }; }
+            animProcess.AddBaby(new VineAnim(combat.dx + columns[colIdx], y, delay, callback));
             delay += 12;
         }
     },
