@@ -147,6 +147,7 @@ const enemyHelpers = {
         const isBig = (crop.size === 2);
         const attackInfo = dmgCalcs.MeleeAttack(false, combat.season, (useDamage === undefined ? e.atk : useDamage), [crop], type)[0];
         let dmg = attackInfo.damage;
+        console.log(dmg);
         if(isBig) { dmg /= 2; }
         const itemTile = player.itemGrid[x][y];
         if(itemTile === "_strongsoil") { dmg /= 2; }
@@ -946,25 +947,7 @@ const actions = {
 
     // ---------------- CROP HARM
     "LAUNCH_CROPS_AT_CROPS": function(e) {
-        let attempts = 5, pos = null;
-        while(attempts-- > 0) {
-            const x = Math.floor(Math.random() * player.gridWidth);
-            const y = Math.floor(Math.random() * player.gridHeight);
-            const tile = combat.grid[x][y];
-            if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
-            pos = { x: x, y: y };
-        }
-        if(pos === null) {
-            for(let x = 0; x < player.gridWidth; x++) {
-                if(pos !== null) { break; }
-                for(let y = 0; y < player.gridHeight; y++) {
-                    const tile = combat.grid[x][y];
-                    if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
-                    pos = { x: x, y: y };
-                    break;
-                }
-            }
-        }
+        const pos = GetPlayerCrop();
         if(pos === null) { return false; }
         const fieldData = enemyHelpers.GetEnemyCropAttackDataObj(e, [combat.grid[pos.x][pos.y]]);
         const res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1, fieldData.damage);
@@ -978,25 +961,7 @@ const actions = {
         return true;
     },
     "ATTACK_CROP": function(e) {
-        let attempts = 5, pos = null;
-        while(attempts-- > 0) {
-            const x = Range(0, player.gridWidth);
-            var y = Range(0, player.gridHeight);
-            const tile = combat.grid[x][y];
-            if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
-            pos = { x: x, y: y };
-        }
-        if(pos === null) {
-            for(let x = 0; x < player.gridWidth; x++) {
-                if(pos !== null) { break; }
-                for(let y = 0; y < player.gridHeight; y++) {
-                    const tile = combat.grid[x][y];
-                    if(tile === null || tile.x !== undefined || tile.type === "rock") { continue; }
-                    pos = { x: x, y: y };
-                    break;
-                }
-            }
-        }
+        const pos = GetPlayerCrop();
         if(pos === null) { return false; }
         const res = enemyHelpers.DoDamageCrop(e, pos.x, pos.y, -1);
         if(res.destroyed) {
@@ -1102,31 +1067,13 @@ const actions = {
 
     // ---------------- PLANTING
     "TRY_PLANT_CROP": function(e, crop) {
-        let pos = { x: -1, y: -1 }, attempts = 5;
+        const delta = newCrop.size === 2 ? 1 : 0;
+        const pos = GetEnemyPlantablePosition(0, combat.enemyGrid.length, 0, combat.enemyGrid[0].length, delta === 1);
+        if(pos === null) { return false; }
+
         if(crop === "args") { crop = e.GetRandomArg(); }
         else if(crop.indexOf(",") >= 0) { crop = RandomArrayItem(crop.split(",")); }
         let newCrop = GetCrop(crop);
-        const delta = newCrop.size === 2 ? 1 : 0;
-        while(attempts-- >= 0 && pos.x < 0) {
-            const x = Range(0, combat.enemyGrid.length - delta);
-            const y = Range(0, combat.enemyGrid[0].length - delta);
-            if(enemyHelpers.CanPlantInSpot(x, y, newCrop.size === 2)) {
-                pos = { x: x, y: y };
-                break;
-            }
-        }
-        if(pos.x < 0) { // random selection didn't work - just go in order
-            for(let x = 0; x < combat.enemyGrid.length - delta; x++) {
-                if(pos.x >= 0) { break; }
-                for(let y = 0; y < combat.enemyGrid[0].length - delta; y++) {
-                    if(enemyHelpers.CanPlantInSpot(x, y, newCrop.size === 2)) {
-                        pos = { x: x, y: y };
-                        break;
-                    }
-                }
-            }
-        }
-        if(pos.x < 0) { return false; }
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         if(newCrop.size === 2) {        
@@ -1139,28 +1086,13 @@ const actions = {
         return true;
     },
     "TRY_PLANT_CROP_NERD": function(e, crop) {
-        let pos = { x: -1, y: 0 }, attempts = 5;
+        const delta = newCrop.size === 2 ? 1 : 0;
+        const pos = GetEnemyPlantablePosition(0, combat.enemyGrid.length, 0, 1, delta === 1);
+        if(pos === null) { return false; }
+
         if(crop === "args") { crop = e.GetRandomArg(); }
         else if(crop.indexOf(",") >= 0) { crop = RandomArrayItem(crop.split(",")); }
         let newCrop = GetCrop(crop);
-        const delta = newCrop.size === 2 ? 1 : 0;
-        while(attempts-- >= 0 && pos.x < 0) {
-            const x = Math.floor(Math.random() * (combat.enemyGrid.length - delta));
-            if(enemyHelpers.CanPlantInSpot(x, 0, false)) {
-                pos = { x: x, y: 0 };
-                break;
-            }
-        }
-        if(pos.x < 0) { // random selection didn't work - just go in order
-            for(let x = 0; x < combat.enemyGrid.length - delta; x++) {
-                if(pos.x >= 0) { break; }
-                if(enemyHelpers.CanPlantInSpot(x, 0, false)) {
-                    pos = { x: x, y: 0 };
-                    break;
-                }
-            }
-        }
-        if(pos.x < 0) { return false; }
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
@@ -1181,59 +1113,46 @@ const actions = {
         return true;
     },
     "NERF_THIS": function(e) {
-        let pos = {x: -1, y: -1};
-        const crop = RandomArrayItem(["mushNerf", "riceNerf", "treeNerf", "vegNerf", "fishNerf", "beeNerf", "eggNerf", "reNerf"]);
-        let newCrop = GetCrop(crop);
-        for(let x = 3; x < 5; x++) {
-            if(pos.x >= 0) { break; }
-            for(let y = 3; y < 5; y++) {
-                if(enemyHelpers.CanPlantInSpot(x, y, false)) {
-                    pos = { x: x, y: y };
-                    break;
-                }
-            }
-        }
-        if(pos.x < 0) { return false; }
+        const pos = GetFirstWithMatch(3, 5, 3, 5, (x, y) => enemyHelpers.CanPlantInSpot(x, y, false));
+        if(pos === null) { return false; }
+        let newCrop = GetCrop(RandomArrayItem(["mushNerf", "riceNerf", "treeNerf", "vegNerf", "fishNerf", "beeNerf", "eggNerf", "reNerf"]));
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
         combat.animHelper.DrawCrops();
         return true;
-    }, // TODO: FULL FLOW
+    },
     "REPAIR_MACHINE": function(e, crop) {
         let pos = {x: combat.enemywidth - 1, y: 0 };
         let newCrop = GetCrop("conveyorEnd");
-        
         for(let y = 1; y < combat.enemyheight; y++) {
             if(combat.enemyGrid[pos.x][y] !== null) { continue; }
             pos.y = y;
             break;
         }
-        
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
         combat.animHelper.DrawCrops();
         return true;
-    }, // TODO: FULL FLOW
+    },
     "REPAIR_BECK_MACHINE": function(e, crop) {
         let pos = {x: combat.enemywidth - 1, y: 0 };
         let newCrop = GetCrop("conveyorEnd");
-        
         for(let y = 0; y < 3; y++) {
             if(combat.enemyGrid[pos.x][y] !== null) { continue; }
             pos.y = y;
             break;
         }
-        
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
         combat.animHelper.DrawCrops();
         return true;
-    }, // TODO: FULL FLOW
+    },
     "BECKETT_PLANT": function(e) {
-        let pos = { x: -1, y: -1 }, attempts = 5;
+        const pos = GetEnemyPlantablePosition(0, 3, 3, 5, false);
+        if(pos === null) { return false; }
 
         const potentialCrops = ["bananaPill", "lightbulb", "food2bar", "food2barChoc", "food2powder", "gastank", "timebomb", "shotgun", "download", "drone", "battery"];
         const crop = RandomArrayItem(potentialCrops);
@@ -1241,26 +1160,6 @@ const actions = {
         console.log("getting " + crop);
         console.log(newCrop);
         
-        while(attempts-- >= 0 && pos.x < 0) {
-            const x = Range(0, 3);
-            const y = Range(3, 4);
-            if(enemyHelpers.CanPlantInSpot(x, y, false)) {
-                pos = { x: x, y: y };
-                break;
-            }
-        }
-        if(pos.x < 0) { // random selection didn't work - just go in order
-            for(let x = 0; x < 3; x++) {
-                if(pos.x >= 0) { break; }
-                for(let y = 3; y < 5; y++) {
-                    if(enemyHelpers.CanPlantInSpot(x, y, false)) {
-                        pos = { x: x, y: y };
-                        break;
-                    }
-                }
-            }
-        }
-        if(pos.x < 0) { return false; }
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
@@ -1345,8 +1244,7 @@ const actions = {
             combat.enemyGrid[pos.x + 1][pos.y + 1] = pos;
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
-        combat.animHelper.DrawCrops(); // TODO: should this be here?
-        combat.animHelper.DrawBottom();
+        combat.animHelper.DrawCrops();
         return true;
     } // TODO: FULL FLOW
 }

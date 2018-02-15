@@ -31,6 +31,38 @@ const levelStats = {
     def: [2,  4,  6,  8, 12, 15, 18, 20,  24,  25,  30,  35,  39,  43,  45,  50,  55,  59,  63,  65]
 };
 
+function IsPlayerCrop(x, y) {
+    const tile = combat.grid[x][y];
+    return (tile !== null && tile.x === undefined && tile.type !== "rock");
+}
+function GetPlayerCrop() {
+    let attempts = 5;
+    while(attempts-- > 0) { // try picking at random first
+        const x = Range(0, player.gridWidth);
+        const y = Range(0, player.gridHeight);
+        if(IsPlayerCrop(x, y)) { return { x: x, y: y }; }
+    }
+    return GetFirstWithMatch(0, player.gridWidth, 0, player.gridHeight, IsPlayerCrop);
+}
+function GetEnemyPlantablePosition(xmin, xmax, ymin, ymax, isBig) {
+    let attempts = 5;
+    const delta = isBig ? 1 : 0;
+    while(attempts-- > 0) { // try picking at random first
+        const x = Range(xmin, xmax - delta);
+        const y = Range(ymin, ymax - delta);
+        if(enemyHelpers.CanPlantInSpot(x, y, isBig)) { return { x: x, y: y }; }
+    }
+    return GetFirstWithMatch(xmin, xmax, ymin, ymax, (x, y) => enemyHelpers.CanPlantInSpot(x, y, isBig));
+}
+function GetFirstWithMatch(xmin, xmax, ymin, ymax, func) {
+    for(let x = xmin; x < xmax; x++) {
+        for(let y = ymin; y < ymax; y++) {
+            if(func(x, y)) { return { x: x, y: y }; }
+        }
+    }
+    return null;
+}
+
 
 function GetPriceMultiplier() {
     switch(player.options.difficulty) {
