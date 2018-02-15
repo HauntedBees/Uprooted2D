@@ -393,6 +393,33 @@ const actions = {
                 EnemyParser.current.data.animData = "ATTACK_CROP";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["ATTACK_CROP"](e);
+            case "plantandretract":
+                combat.enemyGrid[0][2] = GetCrop("kelp");
+                combat.enemyGrid[0][2].activeTime = 4;
+                combat.enemyGrid[1][3] = GetCrop("kelp");
+                combat.enemyGrid[1][3].activeTime = 4;
+                combat.enemyGrid[2][4] = GetCrop("kelp");
+                combat.enemyGrid[2][4].activeTime = 4;
+                EnemyParser.current.data.animData = "PLANT";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["RETRACT_CROPS"](e);
+            case "plantandcache":
+                for(let x = 0; x < combat.enemyGrid.length; x++) {
+                    for(let y = 0; y < combat.enemyGrid[0].length; y++) {
+                        let tile = GetCrop("kelp");
+                        tile.activeTime = 4;
+                        combat.enemyGrid[x][y] = tile;
+                    }
+                }
+                EnemyParser.current.data.animData = "PLANT";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["CLEAR_CACHE"](e);
+            case "cloud":
+                combat.enemyGrid[2][2] = GetCrop("cloud");
+                combat.enemyGrid[2][2].activeTime = 50;
+                EnemyParser.current.data.animData = "PLANT";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["BOOST_CLOUD"](e);
             default:
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "standardAttack";
@@ -714,12 +741,12 @@ const actions = {
 
     // ---------------- CLEANING
     "CLEAR_CACHE": function(e) {
-        for(var x = 0; x < combat.enemyGrid.length; x++) {
-            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
-                var tile = combat.enemyGrid[x][y];
+        for(let x = 0; x < combat.enemyGrid.length; x++) {
+            for(let y = 0; y < combat.enemyGrid[0].length; y++) {
+                const tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.size === 2) { continue; }
-                var kill = tile.rotten || Math.random() > 0.75;
+                const kill = tile.rotten || Math.random() > 0.75;
                 if(!kill) { continue; }
                 combat.enemyGrid[x][y] = null;
             }
@@ -727,25 +754,27 @@ const actions = {
         combat.animHelper.DrawCrops();
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    }, // TODO: FULL FLOW
+    },
     "RETRACT_CROPS": function(e) {
-        var dmg = 0;
-        var crops = [];
-        for(var x = 0; x < 4; x++) {
-            for(var y = 2; y < 6; y++) {
-                var tile = combat.enemyGrid[x][y];
+        let dmg = 0, crops = [];
+        for(let x = 0; x < 4; x++) {
+            for(let y = 2; y < 6; y++) {
+                const tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
-                if(crops.length === 0 || Math.random() > 0.25) { crops.push([tile.name, x, y, tile.type, ""]); }
+                if(crops.length === 0 || Math.random() > 0.25) {
+                    dmg += tile.power * tile.power;
+                    crops.push([tile.name, x, y, tile.type, ""]);
+                }
             }
         }
         if(dmg === 0 || crops.length === 0) { return false; }
-        var prevHealth = e.health;
+        let prevHealth = e.health;
         e.health = Math.min(e.maxhealth, (e.health + dmg));
-        var adjustedAmountToHeal = (e.health - prevHealth);
+        const adjustedAmountToHeal = (e.health - prevHealth);
         EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
-        EnemyParser.outputData.throwables = fieldData.crops;
+        EnemyParser.outputData.throwables = crops;
         return true;
-    }, // TODO: FULL FLOW
+    },
 
     // ---------------- STATUS EFFECTS
     "MODULATE": function (e, season) {
@@ -788,7 +817,7 @@ const actions = {
             }
         }
         return true;
-    }, // TODO: FULL FLOW
+    },
     "THROW_BABY": function(e) {
         var fieldData = enemyHelpers.GetEnemyFieldData(e, true);
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetText("e." + GetCrop(fieldData.crops[0][0]).baby + "0"));
