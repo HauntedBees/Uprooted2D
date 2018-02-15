@@ -65,6 +65,7 @@ const enemyCombatAnims = {
     "VINE_SMACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_vineSmack")], false, 4),
     "HULK_PUNCH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_thanksHulkYouBetKid")], false, 4),
     "FUCKING_MAIM": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_letItFuckingBurn")], false, 4),
+    "SLURP_KOMBUCH": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4),
     
     "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
     "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),

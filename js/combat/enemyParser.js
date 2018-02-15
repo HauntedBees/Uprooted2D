@@ -420,6 +420,27 @@ const actions = {
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["BOOST_CLOUD"](e);
+            case "kombuch":
+                combat.enemyGrid[2][2] = GetCrop("kombucha");
+                combat.enemyGrid[2][2].activeTime = 50;
+                EnemyParser.current.data.animData = "SLURP_KOMBUCH";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["MAYBE_TRY_DRINK_KOMBUCHA"](e);
+            case "heal":
+                EnemyParser.current.data.animData = "PLANT";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["HEAL_RANGE"](e, "50,25");
+            case "cropHeal":
+                for(let x = 0; x < combat.enemyGrid.length; x++) {
+                    for(let y = 0; y < combat.enemyGrid[0].length; y++) {
+                        let tile = GetCrop("kelp");
+                        tile.activeTime = 0;
+                        combat.enemyGrid[x][y] = tile;
+                    }
+                }
+                EnemyParser.current.data.animData = "SLURP_KOMBUCH";
+                EnemyParser.current.data.textID = "standardAttack";
+                return actions["HEAL_FROM_CROPS"](e);
             default:
                 EnemyParser.current.data.animData = "PLANT";
                 EnemyParser.current.data.textID = "standardAttack";
@@ -845,23 +866,23 @@ const actions = {
 
     // ---------------- HEALING
     "HEAL_RANGE": function(e, amountRange) {
-        var rangeVals = amountRange.split(",");
-        var base = parseInt(rangeVals[0]);
-        var rangeSize = parseInt(rangeVals[1]);
-        var amountToHeal = (base - rangeSize) + Math.floor(Math.random() * rangeSize * 2);
-        var prevHealth = e.health;
+        const rangeVals = amountRange.split(",");
+        const base = parseInt(rangeVals[0]);
+        const rangeSize = parseInt(rangeVals[1]);
+        const amountToHeal = InclusiveRange(base - rangeSize, base + rangeSize);
+        const prevHealth = e.health;
         e.health = Math.min(e.maxhealth, (e.health + amountToHeal));
-        var adjustedAmountToHeal = (e.health - prevHealth);
+        const adjustedAmountToHeal = (e.health - prevHealth);
         EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
-    }, // TODO: FULL FLOW
+        return true;
+    },
     "MAYBE_TRY_DRINK_KOMBUCHA": function(e) {
-        var kombuchaData = null;
-        for(var x = 0; x < combat.enemyGrid.length; x++) {
+        let kombuchaData = null;
+        for(let x = 0; x < combat.enemyGrid.length; x++) {
             if(kombuchaData !== null) { break; }
-            for(var y = 0; y < combat.enemyGrid[0].length; y++) {
-                var tile = combat.enemyGrid[x][y];
-                if(tile === null || tile.x !== undefined) { continue; }
-                if(tile.name !== "kombucha") { continue; }
+            for(let y = 0; y < combat.enemyGrid[0].length; y++) {
+                let tile = combat.enemyGrid[x][y];
+                if(tile === null || tile.name !== "kombucha") { continue; }
                 tile.flagged = true;
                 tile.activeTime = 0;
                 kombuchaData = [tile.name, x, y, tile.type];
@@ -872,17 +893,17 @@ const actions = {
         actions["HEAL_RANGE"](e, "60,35");
         EnemyParser.outputData.throwables = [kombuchaData];
         return true;
-    }, // TODO: FULL FLOW
+    },
     "HEAL_FROM_CROPS": function(e) {
-        var fieldData = enemyHelpers.GetEnemyFieldData(e, false);
-        var amountToHeal = Math.ceil(fieldData.damage / 3);
-        var prevHealth = e.health;
+        const fieldData = enemyHelpers.GetEnemyFieldData(e, false);
+        const amountToHeal = Math.ceil(fieldData.damage / 3);
+        const prevHealth = e.health;
         e.health = Math.min(e.maxhealth, (e.health + amountToHeal));
-        var adjustedAmountToHeal = (e.health - prevHealth);
+        const adjustedAmountToHeal = (e.health - prevHealth);
         EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal);
         EnemyParser.outputData.throwables = fieldData.crops;
         return true;
-    }, // TODO: FULL FLOW
+    },
 
     // ---------------- ATTACKING
     "WEAK_ATTACK": function(e) {
