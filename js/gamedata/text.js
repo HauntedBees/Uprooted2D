@@ -7622,6 +7622,11 @@ var fulltext = {
 		"en-dm": "{0}'s {2} harvest is ready!", 
 		"type": "combat"
 	},
+	"babyTossFail": {
+		"en-us": "", 
+		"en-dm": "{0}'s {2} harvest is ready... but there's no room for another one!", 
+		"type": "combat"
+	},
 	"fishSuccess": {
 		"en-us": "", 
 		"en-dm": "{0} reaches into the river and pulls out a fish, eating it and recovering {1} health.", 

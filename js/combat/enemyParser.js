@@ -893,29 +893,43 @@ const actions = {
         return true;
     },
     "THROW_BABY": function(e) {
-        var fieldData = enemyHelpers.GetEnemyFieldData(e, true);
+        const fieldData = enemyHelpers.GetEnemyFieldData(e, true);
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetText("e." + GetCrop(fieldData.crops[0][0]).baby + "0"));
         EnemyParser.outputData.throwables = fieldData.crops;
-        for(var i = 0; i < fieldData.crops.length; i++) {
-            var baby = GetCrop(fieldData.crops[0][0]).baby;
-            if(combat.enemies.length < 5) {
+        EnemyParser.current.data.textID = "babyToss";
+        const baby = GetCrop(fieldData.crops[0][0]).baby;
+        if(baby === "soyChild") {
+            if(combat.enemies.length < 3) {
                 combat.enemies.push(GetEnemy(baby));
-            } else if(baby === "soyChild") {
-                var enemiesRemoved = 0;
-                for(var j = combat.enemies.length - 1; j >= 0; j--) {
-                    if(combat.enemies[j].id === baby) {
-                        combat.enemies.splice(j, 1);
-                        enemiesRemoved++;
-                        if(enemiesRemoved === 2) { break; }
-                    }
-                }
-                if(enemiesRemoved === 2) {
+            } else if(combat.enemies.length === 3) {
+                const lastEnemy = combat.enemies[combat.enemies.length - 1];
+                const secondToLastEnemy = combat.enemies[combat.enemies.length - 2];
+                if(lastEnemy.id === baby && secondToLastEnemy.id === baby) {
+                    combat.enemies.splice(combat.enemies.length - 2, 2);
                     combat.enemies.push(GetEnemy("soyStack"));
                     combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
+                } else {
+                    combat.enemies.push(GetEnemy(baby));
+                }
+            } else if(combat.enemies.length === 4) {
+                const lastEnemy = combat.enemies[combat.enemies.length - 1];
+                const secondToLastEnemy = combat.enemies[combat.enemies.length - 2];
+                if(lastEnemy.id === baby && secondToLastEnemy.id === baby) {
+                    combat.enemies.splice(combat.enemies.length - 2, 2);
+                    combat.enemies.push(GetEnemy("soyStack"));
+                    combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
+                } else {
+                    EnemyParser.current.data.textID = "babyTossFail";
+                    return true;
                 }
             }
+        } else if(combat.enemies.length < 4) {
+            combat.enemies.push(GetEnemy(baby));
+        } else {
+            EnemyParser.current.data.textID = "babyTossFail";
         }
-    }, // TODO: FULL FLOW
+        return true;
+    },
 
     // ---------------- HEALING
     "HEAL_RANGE": function(e, amountRange) {
@@ -1116,8 +1130,7 @@ const actions = {
                 hasKills = hasKills || res.destroyed;
             }
         }
-        if(hasKills) { EnemyParser.current.data.textID = "beckettSaltKill"; }
-        else { EnemyParser.current.data.textID = "beckettSalt"; }
+        EnemyParser.current.data.textID = hasKills ? "beckettSaltKill" : "beckettSalt";
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         EnemyParser.outputData.bonusArgs = { row: row, tiles: affectedTiles };
         return true;
