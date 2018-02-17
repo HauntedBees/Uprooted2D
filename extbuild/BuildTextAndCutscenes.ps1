@@ -9,7 +9,7 @@ if($which.Contains("T")) {
 
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\text.js";
 	$out.WriteLine(@'
-var fulltext = {
+const fulltext = {
 '@);
 	$i = 0;
 	$maxlen = $csv.Length;
@@ -50,7 +50,7 @@ if($which.Contains("S")) {
 
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\cutscenes.js";
 	$out.WriteLine(@'
-var scripts = {
+const scripts = {
 '@);
 	$i = 0;
 	$maxlen = $csv.Length;

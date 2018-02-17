@@ -312,15 +312,15 @@ const animCallbacks = {
         animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, callback));
     },
     "player_throwCropAtCrop": function(animProcess, animEntity) {
-        var resetti = animEntity.animQueue[0];
-        var recoil = animEntity.bonusArgs.recoils[resetti.idx];
-        var callback = undefined;
+        const resetti = animEntity.animQueue[0];
+        const recoil = animEntity.bonusArgs.recoils[resetti.idx];
+        let callback = undefined;
         if(recoil === null || recoil === undefined) {
             callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
         } else {
             callback = function() {
-                for(var i = 0; i < combat.enemies.length; i++) {
-                    var f = function(idx) { return function() { animCallbackHelpers.HurtTargets(animProcess, [idx]) }; }(i);
+                for(let i = 0; i < combat.enemies.length; i++) {
+                    const f = function(idx) { return function() { animCallbackHelpers.HurtTargets(animProcess, [idx]) }; }(i);
                     animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], animEntity.bonusArgs.targets[0], combat.animHelper.GetEnemyTopPos(i), 1, 0, 24, 24, f));
                 }
                 animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);

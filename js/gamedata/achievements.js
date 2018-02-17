@@ -1,5 +1,5 @@
 const achievements = {
-    "boss1": { fromQuest: true },
+    "boss1": { fromQuest: true }, // this metadata is a bit useless it hink
     "lakeFairy": { fromQuest: true },
     "goldshroom": { fromQuest: false },
     "badrabbit": { fromQuest: true },

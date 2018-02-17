@@ -20,7 +20,7 @@ let stateBinders = {
     },
     "hq_3": () => { if(worldmap.horRor !== null) { mapStates["hq_3"].room = worldmap.horRor.playerRoom; } }
 };
-var mapRefreshes = {
+let mapRefreshes = {
     "resetData": function(mapname, justStateLoad) {
         const ents = mapStates[mapname].ents;
         const addtlFunc = mapRefreshes[mapname];

@@ -7,7 +7,7 @@ ForEach-Object {
 	$results += "`"$name`": $content";
 }
 $out = [System.IO.StreamWriter] "$rootpath\js\gamedata\enemy_patterns.js";
-$out.WriteLine("var enemyPatterns = {");
+$out.WriteLine("const enemyPatterns = {");
 $out.WriteLine(($results -join ",`n"));
 $out.Write("};");
 $out.Close();

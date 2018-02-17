@@ -1,4 +1,4 @@
-var fulltext = {
+const fulltext = {
 	// Items
 	"beeB": {
 		"en-us": "", 

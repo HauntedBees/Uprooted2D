@@ -4,12 +4,12 @@ function EquipmentDetail(name, displayname, price, sprite, type, addtl) {
     this.price = price;
     this.displayname = displayname;
     this.sprite = sprite;
-    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+    if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 }
 function GetEquipmentDesc(equipInfo) {
-    var str = "";
+    let str = "";
     if(equipInfo.type === "weapon") {
-        str += "\n " + GetText("eq.power") + " " + equipInfo.power;
+        str += GetText("eq.power") + " " + equipInfo.power;
         if(equipInfo.targetCrops) { str += "\n " + GetText("eq.hitCrops"); }
         if(!equipInfo.noEnemies) { str += "\n " + GetText("eq.hitEnemies"); }
         if(equipInfo.sp) { str += "\n " + GetText("eq.su"); }
@@ -22,18 +22,18 @@ function GetEquipmentDesc(equipInfo) {
             else { str += "\n " + GetText("eq.attacksome").replace(/\{0\}/g, equipInfo.attacks); }
         }
     } else if(equipInfo.type === "compost") {
-        str += "\n " + GetText("eq.holds") + " "  + equipInfo.amount;
+        str += GetText("eq.holds") + " "  + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n " + GetText("eq.compattack"); }
         if(equipInfo.rotOnly) { str += "\n " + GetText("eq.rotten"); }
         if(equipInfo.bonus) { str += "\n " + GetText("eq.bonus") + " " + (equipInfo.bonus * 100) + "%"; }
         if(equipInfo.tech) { str += "\n " + GetText("eq.backfire"); }
     } else if(equipInfo.type === "gloves") {
-        str += "\n " + GetText("eq.spturn") + " "  + equipInfo.amount;
+        str += GetText("eq.spturn") + " "  + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n " + GetText("eq.actafter"); }
         if(equipInfo.def) { str += "\n " + GetText("eq.dmgresist") + " " + (equipInfo.def * 100) + "%"; }
         if(equipInfo.tech) { str += "\n " + GetText("eq.mayshock1") + " " + GetText("eq.mayshock2"); }
     } else if(equipInfo.type === "soil") {
-        if(equipInfo.speed) { str += "\n " + GetText("eq.growth") + " " + (equipInfo.speed * 100) + "%"; }
+        if(equipInfo.speed) { str += GetText("eq.growth") + " " + (equipInfo.speed * 100) + "%"; }
         if(equipInfo.boost) { str += "\n " + GetText("eq.sres") + " " + (equipInfo.boost * 100) + "%"; }
         if(equipInfo.amplify) { str += "\n " + GetText("eq.sstr") + " " + (equipInfo.amplify * 100) + "%"; }
         if(equipInfo.tech) { str += "\n " + GetText("eq.willkill1") + " " + GetText("eq.willkill2"); }

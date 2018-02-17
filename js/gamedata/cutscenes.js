@@ -1,4 +1,4 @@
-var scripts = {
+const scripts = {
 	// Farm: Opening Cutscene
 	"farminit0": "_SLEEP:500",
 	"farminit1": "pl_MOVE:y10",

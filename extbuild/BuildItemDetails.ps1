@@ -24,7 +24,7 @@ function CropDetail(name, displayname, price, type, size, time, frames, power, r
 	this.defense = power * power * 0.4;
     this.respawn = re;
     this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
-    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+    if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 }
 function GetCrop(name) {
     switch(name) {
@@ -91,10 +91,10 @@ function EquipmentDetail(name, displayname, price, sprite, type, addtl) {
     this.price = price;
     this.displayname = displayname;
     this.sprite = sprite;
-    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+    if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 }
 function GetEquipmentDesc(equipInfo) {
-    var str = "";
+    let str = "";
     if(equipInfo.type === "weapon") {
         str += GetText("eq.power") + " " + equipInfo.power;
         if(equipInfo.targetCrops) { str += "\n " + GetText("eq.hitCrops"); }
@@ -204,7 +204,6 @@ function GetFarmInfo(name) {
 			continue;
 		}
 		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{shortdesc}", $row.ShortDesc).replace("{desc}", $row.Desc);
-		#$addtl = @();
 		if($row.DisplaySprite) { 
 			$endStr = $endStr.replace("{addtl}", ", `"" + $row.DisplaySprite + "`"");
 		} else {
@@ -253,7 +252,7 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     if(this.name === "Discussly" || this.name.indexOf("beeQueen") === 0) { this.exp = 0; }
     this.drops = drops;
     this.boss = boss;
-    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+    if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 	this.GetRandomArg = function() { return RandomArrayItem(this.args); };
 }
 function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math.floor(Math.random() * max)); }

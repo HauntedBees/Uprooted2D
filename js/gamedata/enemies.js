@@ -27,7 +27,7 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     if(this.name === "Discussly" || this.name.indexOf("beeQueen") === 0) { this.exp = 0; }
     this.drops = drops;
     this.boss = boss;
-    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+    if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 	this.GetRandomArg = function() { return RandomArrayItem(this.args); };
 }
 function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math.floor(Math.random() * max)); }

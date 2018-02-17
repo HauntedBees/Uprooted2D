@@ -34,11 +34,11 @@
     Falcon 4: north city
     Falcon 5: food2 HQ
 */
-var quests = {
+const quests = {
     getQuestText: function(name) {
         if(player.activeQuests[name] === undefined) { player.activeQuests[name] = 0; }
-        var state = player.activeQuests[name];
-        var questInfo = quests[name][state];
+        const state = player.activeQuests[name];
+        const questInfo = quests[name][state];
         if(questInfo.condition !== undefined) {
             if(questInfo.condition()) {
                 questInfo.success();

@@ -11,7 +11,7 @@ gulp.task("watch", function() {
     gulp.watch("./js/**/*.*", ["default"]);
 });
 gulp.task("buildcollisions", function() {
-    fs.writeFile("js/worldmap/collisions.js", "var collisions = {\r\n");
+    fs.writeFile("js/worldmap/collisions.js", "const collisions = {\r\n");
     return gulp.src("./collision/*.png").pipe(foreach(function(stream, file) {
         var pathArr = file.path.split("\\");
         var len = pathArr.length;

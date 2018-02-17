@@ -282,7 +282,7 @@ const EnemyParser = {
         let nextNodeId = "";
         if(conds.condition === "random") {
             let rand = Math.random();
-            for(var i = 0; i < conds.data.length; i++) {
+            for(let i = 0; i < conds.data.length; i++) {
                 const rval = conds.data[i];
                 const weight = parseFloat(rval.weight);
                 if(rand <= weight) {
@@ -669,7 +669,7 @@ const actions = {
             } else if(attack === "plantmult") {
                 EnemyParser.current.data.animData = "HOUSEKEEPER";
                 EnemyParser.current.data.textID = "hkAtkPlantOne";
-                var canPlantOne = actions["TRY_PLANT_CROP"](e, "lightbulb");
+                const canPlantOne = actions["TRY_PLANT_CROP"](e, "lightbulb");
                 if(!canPlantOne) {
                     EnemyParser.current.data.textID = "hkAtkCantPlant";
                     EnemyParser.outputData = enemyHelpers.GetAttackData(0);

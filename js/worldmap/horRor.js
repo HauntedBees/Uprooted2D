@@ -1,16 +1,16 @@
 function HorRor(playerStartingRoom) {
-    var intensity = 64;
-    var currentRoom = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11][Math.floor(Math.random() * 5)];
-    var timeToNextMove = 20;
-    var helpCounter = 0;
-    var showHelp = false;
-    var stopped = false;
-    var neighbors = [
+    let intensity = 64;
+    let currentRoom = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11][Math.floor(Math.random() * 5)];
+    let timeToNextMove = 20;
+    let helpCounter = 0;
+    let showHelp = false;
+    let stopped = false;
+    const neighbors = [
         [1], [7], [7, 9, 3], [9], [11, 5, 12], // 0 - 4
         [11, 4, 12], [9, 12], [1, 9, 8], [7, 9], [8, 6, 3], // 5 - 9
         [3, 4, 11], [4, 5], [6, 4, 5], [6, 12] // 10 - 13
     ];
-    var roomSizeMultiplier = [0, 0.5, 0, 1, 0.9, 1.25, 0.85, 0.5, 1, 0.5, 0, 1.5, 0.9, 0];
+    const roomSizeMultiplier = [0, 0.5, 0, 1, 0.9, 1.25, 0.85, 0.5, 1, 0.5, 0, 1.5, 0.9, 0];
     this.playerRoom = playerStartingRoom;
     this.Draw = function() {
         if(worldmap.mapName !== "hq_3") { return; }
@@ -36,7 +36,7 @@ function HorRor(playerStartingRoom) {
             return;
         }
         if(stopped) { return; }
-        var doAdvance = true;
+        let doAdvance = true;
         if(currentRoom === this.playerRoom) {
             intensity = Math.max(0, intensity - (0.15 * roomSizeMultiplier[currentRoom] * (player.hasQuestState("helpNerd", "helping") ? 0.8 : 1)));
             doAdvance = false;

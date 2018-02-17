@@ -12,7 +12,7 @@ function CropDetail(name, displayname, price, type, size, time, frames, power, r
 	this.defense = power * power * 0.4;
     this.respawn = re;
     this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
-    if(addtl !== undefined) { for(var key in addtl) { this[key] = addtl[key]; } }
+    if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 }
 function GetCrop(name) {
     switch(name) {
