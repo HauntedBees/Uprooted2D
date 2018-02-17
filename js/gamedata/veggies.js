@@ -66,7 +66,7 @@ function GetCrop(name) {
 		case "portobello": return new CropDetail(name, "Portobello", 60, "mush", 1, 3, 3, 4, 3, 1, 1, 1, 1);
 		case "greenshroom": return new CropDetail(name, "Parrot Toadstool", 90, "mush", 1, 7, 3, 6, 4, 1, 1, 1, 1);
 		case "blackshroom": return new CropDetail(name, "Black Mushroom", 180, "mush", 1, 10, 3, 7, 2, 1, 1, 1, 1);
-		case "poisnshroom": return new CropDetail(name, "Definitely Poisonous Mushroom", 345, "mush", 1, 6, 3, 10, 5, 1, 1, 1, 1);
+		case "poisnshroom": return new CropDetail(name, "Toxic Shroom", 345, "mush", 1, 6, 3, 10, 5, 1, 1, 1, 1);
 		/* Eggs */
 		case "egg": return new CropDetail(name, "Chicken Egg", 15, "egg", 1, 7, 4, 3, 0, 1, 1, 1, 1);
 		case "quail": return new CropDetail(name, "Quail Egg", 15, "egg", 1, 6, 4, 2, 0, 1, 1, 1, 1);

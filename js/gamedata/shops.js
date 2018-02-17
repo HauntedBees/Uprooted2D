@@ -184,8 +184,19 @@ const stores = {
     "seedshack": {
         img: "shops/dwarf2",
         wares: [
-            { product: "carrot", type: "seed" },
-            { product: "carrot", type: "seed" }
+            { product: "asparagus", type: "seed" },
+            { product: "bellpepper", type: "seed" },
+            { product: "corn", type: "seed" },
+            { product: "radish", type: "seed" },
+            { product: "blackberry", type: "seed" },
+            { product: "blackrice", type: "seed" },
+            { product: "shortgrain", type: "seed" },
+            { product: "greenshroom", type: "seed" },
+            { product: "blackshroom", type: "seed" },
+            { product: "poisnshroom", type: "seed" },
+            { product: "beet", type: "seed" },
+            { product: "garlic", type: "seed" },
+            { product: "apricot", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
