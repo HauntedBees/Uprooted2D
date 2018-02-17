@@ -69,8 +69,14 @@ const enemyCombatAnims = {
     
     "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
     "BUTTFIX": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3)], true, 2),
-    "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
-    "HOUSEKEEPER2": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 2),
+    "HOUSEKEEPER_ERROR": new AnimSet([new AnimFrame(0, 0), new AnimFrame(0, 1)], true, 4),
+    "HOUSEKEEPER_HARVEST": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6), new AnimFrame(0, 4, "enemy_pullCrop"), new AnimFrame(0, 6, "enemy_throwCropAtEnemy")], true, 4),
+    "HOUSEKEEPER_WHAPOW": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 4),
+    "HOUSEKEEPER_WHAPOWCROP": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6, "enemy_damageCrop"), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 4),
+    "HOUSEKEEPER_ROCK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6, "enemy_rockToss"), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 4),
+    "HOUSEKEEPER_SPLASH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6, "enemy_waterRow"), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 4),
+    "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 4),
+    "HOUSEKEEPER2": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 4),
 }
 const falconAnims = {
     "STAND": JustOne(1, 5),

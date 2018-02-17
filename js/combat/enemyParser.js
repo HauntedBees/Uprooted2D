@@ -42,8 +42,7 @@ const enemyHelpers = {
         return true;
     },
     TryDisturbRandomTile: function(type) {
-        const x = Range(0, player.gridWidth);
-        const y = Range(0, player.gridHeight);
+        const x = Range(0, player.gridWidth), y = Range(0, player.gridHeight);
         const res = enemyHelpers.TryDisturbTile(x, y, type);
         if(!res) { return false; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
@@ -53,7 +52,7 @@ const enemyHelpers = {
     TryDisturbTile: function(x, y, type) {
         let itemTile = player.itemGrid[x][y];
         if(itemTile !== null && itemTile.x !== undefined) { itemTile = player.itemGrid[itemTile.x][itemTile.y]; }
-        if((itemTile !== null && itemTile !== "_hotspot")) { return false; }
+        if((itemTile !== null && itemTile !== "_hotspot" && itemTile !== "_strongsoil")) { return false; }
         if(combat.grid[x][y] !== null) {
             const crop = combat.grid[x][y];
             if(crop.size === 2 || crop.x !== undefined) { return false; }
@@ -622,27 +621,25 @@ const actions = {
         return true;
     },
     "HOUSEKEEPER": function(e) {
-        var cropData = enemyHelpers.GetEnemyFieldData(e, false, false);
-        var hasCrops = cropData.crops.length > 0;
-        var attackAnim = "HOUSEKEEPER2"//[[0,2],[0,3],[0,4],[0,5,true]];
-        var stdAnim = "HOUSEKEEPER";//[[0,2],[0,3],[0,4],[0,5]];
-        EnemyParser.current.data.animData = attackAnim;
+        const cropData = enemyHelpers.GetEnemyFieldData(e, false, false);
+        const hasCrops = cropData.crops.length > 0;
+        EnemyParser.current.data.animData = "HOUSEKEEPER";
         if(conditions["HAS_CLOUD"](e)) {
             if(hasCrops && Math.random() > 0.75) {
                 EnemyParser.current.data.textID = "hkAtkAttack";
+                EnemyParser.current.data.animData = "HOUSEKEEPER_HARVEST";
                 return actions["LAUNCH_CROPS"](e);
             }
-            var cloudPower = 0;
-            var crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
-            for(var i = 0; i < crops.length; i++) {
+            let cloudPower = 0;
+            const crops = enemyHelpers.GetEnemyFieldData(e, false, true).crops;
+            for(let i = 0; i < crops.length; i++) {
                 if(crops[i][3] === "cloud") {
-                    var x = crops[i][1];
-                    var y = crops[i][2];
+                    const x = crops[i][1], y = crops[i][2];
                     cloudPower = combat.enemyGrid[x][y].power;
                     break;
                 }
             }
-            var abilities = ["rock"];
+            let abilities = ["rock"];
             if(cloudPower > 5) { abilities.push("splash"); }
             if(cloudPower > 10) { abilities.push("splashrow"); }
             if(cloudPower > 15) { abilities.push("plantmult"); }
@@ -650,97 +647,86 @@ const actions = {
             if(cloudPower > 25) { abilities.push("season"); }
             if(cloudPower > 30) { abilities.push("heal"); }
             if(cloudPower > 35) { abilities.push("threaten"); }
-            var attack = abilities[Math.floor(Math.random() * abilities.length)];
+            const attack = RandomArrayItem(abilities);
             if(attack === "rock") {
                 EnemyParser.current.data.textID = "hkAtkRock";
+                EnemyParser.current.data.animData = "HOUSEKEEPER_ROCK";
                 if(actions["TRY_THROW_ROCK"](e)) { return true; }
-                EnemyParser.current.data.animData = stdAnim;
+                EnemyParser.current.data.animData = "HOUSEKEEPER_ERROR";
                 EnemyParser.current.data.textID = "hkAtkError1";
                 EnemyParser.outputData = enemyHelpers.GetAttackData(0);
                 return true;
             } else if(attack === "splash") {
-                var weakestPos = enemyHelpers.GetWeakestPlayerCrop();
+                const weakestPos = enemyHelpers.GetWeakestPlayerCrop();
                 if(weakestPos.x < 0) {
                     EnemyParser.current.data.textID = "hkAtkError2";
-                    EnemyParser.current.data.animData = stdAnim;
+                    EnemyParser.current.data.animData = "HOUSEKEEPER_ERROR";
                     EnemyParser.outputData = enemyHelpers.GetAttackData(0);
                     return true;
                 } else {
-                    var res = enemyHelpers.TrySplashTile(e, weakestPos.x, weakestPos.y);
+                    const res = enemyHelpers.TrySplashTile(e, weakestPos.x, weakestPos.y);
                     if(!res.status) { EnemyParser.current.data.textID = "splashFail"; }
                     else if(!res.crop) { EnemyParser.current.data.textID = "splashSucc"; }
                     else if(!res.destroyed) { EnemyParser.current.data.textID = "splashDamage"; }
                     else { EnemyParser.current.data.textID = "splashKill"; }
+                    EnemyParser.current.data.animData = "HOUSEKEEPER_ROCK";
                     EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    EnemyParser.outputData.bonusArgs = { type: "waterDiag", x: weakestPos.x, y: weakestPos.y };
                     return true;
                 }
             } else if(attack === "splashrow") {
-                var busiestRow = enemyHelpers.GetPlayerRowWithMostCrops();
-                var hasDamage = false, hasKills = false;
-                for(var x = 0; x < player.gridWidth; x++) {
-                    var res = enemyHelpers.TrySplashTile(e, x, busiestRow);
-                    if(!res.status) { continue; }
-                    else if(!res.crop) { continue; }
-                    else if(!res.destroyed) { hasDamage = true; }
-                    else { hasKills = true; }
-                }
-                if(hasKills) {
-                    EnemyParser.current.data.textID = "splashRowKill";
-                } else if(hasDamage) {
-                    EnemyParser.current.data.textID = "splashRowDamage";
-                } else {
-                    EnemyParser.current.data.textID = "splashRow";
-                }
-                EnemyParser.outputData = enemyHelpers.GetAttackData(0);
-                return true;
+                EnemyParser.current.data.animData = "HOUSEKEEPER_SPLASH";
+                return enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow");
             } else if(attack === "plantmult") {
-                EnemyParser.current.data.animData = stdAnim;
+                EnemyParser.current.data.animData = "HOUSEKEEPER";
                 EnemyParser.current.data.textID = "hkAtkPlantOne";
                 var canPlantOne = actions["TRY_PLANT_CROP"](e, "lightbulb");
                 if(!canPlantOne) {
                     EnemyParser.current.data.textID = "hkAtkCantPlant";
                     EnemyParser.outputData = enemyHelpers.GetAttackData(0);
                     return true;
-                } 
+                }
                 EnemyParser.current.data.textID = "hkAtkPlantTwo";
                 if(actions["TRY_PLANT_CROP"](e, "lightbulb")) { return true; }
                 return true;
             } else if(attack === "attackweak") {
-                var weakestPos = enemyHelpers.GetWeakestPlayerCrop();
+                const weakestPos = enemyHelpers.GetWeakestPlayerCrop();
                 if(weakestPos.x < 0) {
-                    EnemyParser.current.data.animData = stdAnim;
+                    EnemyParser.current.data.animData = "HOUSEKEEPER_ERROR";
                     EnemyParser.current.data.textID = "hkAtkError3";
                     EnemyParser.outputData = enemyHelpers.GetAttackData(0);
                     return true;
                 } else {
-                    var res = enemyHelpers.DoDamageCrop(e, weakestPos.x, weakestPos.y, -1);
+                    const res = enemyHelpers.DoDamageCrop(e, weakestPos.x, weakestPos.y, -1);
+                    EnemyParser.current.data.animData = "HOUSEKEEPER_WHAPOWCROP";
                     if(res.destroyed) {
                         EnemyParser.current.data.textID = "hkCropKill";
                     } else {
                         EnemyParser.current.data.textID = "hkCropAttack";
                     }
                     EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+                    EnemyParser.outputData.bonusArgs = { crop: [ weakestPos ] };
                     return true;
                 }
             } else if(attack === "season") {
-                EnemyParser.current.data.animData = stdAnim;
-                var seasons = [0, 0, 0, 0];
-                for(var x = 0; x < combat.grid.length; x++) {
-                    for(var y = 0; y < combat.grid[0].length; y++) {
-                        var tile = combat.grid[x][y];
+                EnemyParser.current.data.animData = "HOUSEKEEPER";
+                let seasons = [0, 0, 0, 0];
+                for(let x = 0; x < combat.grid.length; x++) {
+                    for(let y = 0; y < combat.grid[0].length; y++) {
+                        const tile = combat.grid[x][y];
                         if(tile === null || tile === undefined || tile.x !== undefined || tile.type === "rock") { continue; }
-                        for(var i = 0; i < 4; i++) { seasons[i] += tile.seasons[i]; }
+                        for(let i = 0; i < 4; i++) { seasons[i] += tile.seasons[i]; }
                     }
                 }
-                var weakestSeason = 0;
-                var lowestNum = 1000;
-                for(var s = 0; s < 4; s++) {
+                let weakestSeason = 0;
+                let lowestNum = 1000;
+                for(let s = 0; s < 4; s++) {
                     if(seasons[s] < lowestNum) {
                         weakestSeason = s;
                         lowestNum = seasons[s];
                     }
                 }
-                var seasonStr = "Spring";
+                let seasonStr = "Spring";
                 switch(weakestSeason) {
                     case 1: seasonStr = "Summer"; break;
                     case 2: seasonStr = "Autumn"; break;
@@ -752,24 +738,23 @@ const actions = {
                 EnemyParser.outputData = enemyHelpers.GetAttackData(0, seasonStr);
                 return true;
             } else if(attack === "heal") {
-                var weakestEnemy = combat.enemies[0];
-                var lowestHP = weakestEnemy.health;
-                for(var i = 1; i < combat.enemies.length; i++) {
+                let weakestEnemy = combat.enemies[0];
+                let lowestHP = weakestEnemy.health;
+                for(let i = 1; i < combat.enemies.length; i++) {
                     if(combat.enemies[i].health < lowestHP) {
                         weakestEnemy = combat.enemies[i];
                         lowestHP = weakestEnemy.health;
                     }
                 }
+                EnemyParser.current.data.animData = "HOUSEKEEPER";
                 EnemyParser.current.data.textID = "hkHeal";
-                var base = 30;
-                var rangeSize = 25;
-                var amountToHeal = (base - rangeSize) + Math.floor(Math.random() * rangeSize * 2);
-                var prevHealth = weakestEnemy.health;
+                const amountToHeal = InclusiveRange(5, 55);
+                const prevHealth = weakestEnemy.health;
                 weakestEnemy.health = Math.min(weakestEnemy.maxhealth, (weakestEnemy.health + amountToHeal));
-                var adjustedAmountToHeal = (weakestEnemy.health - prevHealth);
+                const adjustedAmountToHeal = (weakestEnemy.health - prevHealth);
                 EnemyParser.outputData = enemyHelpers.GetAttackData(adjustedAmountToHeal, weakestEnemy.name);
             } else {
-                EnemyParser.current.data.animData = stdAnim;
+                EnemyParser.current.data.animData = "HOUSEKEEPER2";
                 EnemyParser.current.data.textID = "hkCreepy" + Math.floor(Math.random() * 6);
                 EnemyParser.outputData = enemyHelpers.GetAttackData(0);
                 return true;
@@ -777,10 +762,11 @@ const actions = {
         } else {
             if(hasCrops) {
                 EnemyParser.current.data.textID = "hkAtkAttack";
+                EnemyParser.current.data.animData = "HOUSEKEEPER_HARVEST";
                 return actions["LAUNCH_CROPS"](e);
             } else {
                 if(Math.random() > 0.5) {
-                    EnemyParser.current.data.animData = stdAnim;
+                    EnemyParser.current.data.animData = "HOUSEKEEPER";
                     EnemyParser.current.data.textID = "hkAtkPlantOne";
                     if(actions["TRY_PLANT_CROP"](e, "lightbulb")) { return true; }
                     EnemyParser.current.data.textID = "hkAtkCantPlant";
@@ -788,13 +774,14 @@ const actions = {
                     return true;
                 } else {
                     EnemyParser.current.data.textID = "hkAtkAttack";
-                    var damage = combat.damagePlayer(cropData.damage);
-                    EnemyParser.outputData = enemyHelpers.GetAttackData(cropData.damage);
+                    EnemyParser.current.data.animData = "HOUSEKEEPER_WHAPOW";
+                    const damage = combat.damagePlayer(cropData.damage);
+                    EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
                     return true; 
                 }
             }
         }
-    }, // TODO: FULL FLOW
+    },
     "CONVINCEATRON2": function(e) {
         let damage = 0;
         if(e.convinceState === undefined) {
@@ -893,8 +880,6 @@ const actions = {
     },
     "THROW_BABY": function(e) {
         const fieldData = enemyHelpers.GetEnemyFieldData(e, true);
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetText("e." + GetCrop(fieldData.crops[0][0]).baby + "0"));
-        EnemyParser.outputData.throwables = fieldData.crops;
         EnemyParser.current.data.textID = "babyToss";
         const baby = GetCrop(fieldData.crops[0][0]).baby;
         if(baby === "soyChild") {
@@ -919,7 +904,6 @@ const actions = {
                     combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
                 } else {
                     EnemyParser.current.data.textID = "babyTossFail";
-                    return true;
                 }
             }
         } else if(combat.enemies.length < 4) {
@@ -927,6 +911,8 @@ const actions = {
         } else {
             EnemyParser.current.data.textID = "babyTossFail";
         }
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetText("e." + GetCrop(fieldData.crops[0][0]).baby + "0"));
+        EnemyParser.outputData.throwables = fieldData.crops;
         return true;
     },
 
