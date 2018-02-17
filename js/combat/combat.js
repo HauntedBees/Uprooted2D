@@ -130,19 +130,19 @@ var combat = {
     },
     damagePlayer: function(damage) {
         if(player.equipment.gloves !== null) {
-            var g = GetEquipment(player.equipment.gloves);
-            var mult = (g.def === undefined) ? 1 : (1 - g.def);
+            const g = GetEquipment(player.equipment.gloves);
+            const mult = (g.def === undefined) ? 1 : (1 - g.def);
             damage = Math.max(1, Math.floor(damage * mult));
         }
         if(combat.playerInDanger) {
             damage = 0;
-        } else if(damage >= (player.maxhealth / 5) && damage >= player.health && Math.random() < combat.saveChance) {
+        } else if(damage >= (player.maxhealth / 1.5) && damage >= player.health && Math.random() < combat.saveChance) {
             combat.playerInDanger = true;
-            combat.saveChance -= 0.25;
+            combat.saveChance -= 0.33;
             damage = player.health - 1;
             player.health = 1;
         } else {
-            var prevHealth = player.health;
+            const prevHealth = player.health;
             player.health = player.health - damage;
             if(player.health < 0) { player.health = 0; damage = prevHealth; }
         }
