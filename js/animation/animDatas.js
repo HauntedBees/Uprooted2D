@@ -68,7 +68,9 @@ const enemyCombatAnims = {
     "SLURP_KOMBUCH": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4),
     
     "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
+    "BUTTFIX": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3)], true, 2),
     "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2),
+    "HOUSEKEEPER2": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 2),
 }
 const falconAnims = {
     "STAND": JustOne(1, 5),

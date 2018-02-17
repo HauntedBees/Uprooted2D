@@ -477,8 +477,7 @@ const actions = {
         return true;
     },
     "TRY_PLUG": function(e) {
-        var plugged = (--e.plugTimer <= 0);
-        if(plugged) {
+        if(--e.plugTimer <= 0) {
             EnemyParser.current.data.textID = "plugSuccess";
             e.spriteidx = 26;
             e.unplugged = false;
@@ -489,7 +488,7 @@ const actions = {
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
         return true;
-    }, // TODO: FULL FLOW
+    },
     "CARDGAME": function(e) {
         EnemyParser.current.data.textID = "plantAttack";
         if(e.wacg === undefined) { e.wacg = new ChildrensCardGame(e); }
@@ -625,8 +624,8 @@ const actions = {
     "HOUSEKEEPER": function(e) {
         var cropData = enemyHelpers.GetEnemyFieldData(e, false, false);
         var hasCrops = cropData.crops.length > 0;
-        var attackAnim = [[0,2],[0,3],[0,4],[0,5,true]];
-        var stdAnim = [[0,2],[0,3],[0,4],[0,5]];
+        var attackAnim = "HOUSEKEEPER2"//[[0,2],[0,3],[0,4],[0,5,true]];
+        var stdAnim = "HOUSEKEEPER";//[[0,2],[0,3],[0,4],[0,5]];
         EnemyParser.current.data.animData = attackAnim;
         if(conditions["HAS_CLOUD"](e)) {
             if(hasCrops && Math.random() > 0.75) {
