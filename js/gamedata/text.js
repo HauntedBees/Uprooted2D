@@ -7612,6 +7612,31 @@ const fulltext = {
 		"en-dm": "{0} plants 3 crops.", 
 		"type": "combat"
 	},
+	"nEgg": {
+		"en-us": "", 
+		"en-dm": "{0} begins incubating a {2}.", 
+		"type": "combat"
+	},
+	"nFish": {
+		"en-us": "", 
+		"en-dm": "{0} sets up a {2}.", 
+		"type": "combat"
+	},
+	"nSpearYes": {
+		"en-us": "", 
+		"en-dm": "{0} throws a spear and catches a fish!", 
+		"type": "combat"
+	},
+	"nSpearNo": {
+		"en-us": "", 
+		"en-dm": "{0} throws a spear, but catches no fish...", 
+		"type": "combat"
+	},
+	"nBee": {
+		"en-us": "", 
+		"en-dm": "{0} fills a beehive with {2}s.", 
+		"type": "combat"
+	},
 	"modulateAttack": {
 		"en-us": "", 
 		"en-dm": "{0} uses a Season Modulator to change the season to {2}.", 

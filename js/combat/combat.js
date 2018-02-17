@@ -295,11 +295,11 @@ var combat = {
         CombatChievoCheck();
     },
     fuckingDead: function() {
-        var inn = inns[player.lastInn];
+        const inn = inns[player.lastInn];
         if(game.target !== null) {
             if(game.target.nonStandardGameOver !== undefined) {
                 combat.wrapUpCombat();
-                var postCombat = game.target.nonStandardGameOver;
+                const postCombat = game.target.nonStandardGameOver;
                 worldmap.clearTarget();
                 clearInterval(combat.charAnimIdx);
                 game.SetNonstandardGameOverFlag();

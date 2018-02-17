@@ -183,7 +183,7 @@ const enemyHelpers = {
         res[0].animCrops = animCrops;
         return res[0];
     },
-    GetEnemyFieldData: function(e, justBabies, includeInactive) {
+    GetEnemyFieldData: function(e, justBabies, includeInactive, forHealing) {
         let dmg = 0, crops = [];
         for(let x = 0; x < combat.enemyGrid.length; x++) {
             for(let y = 0; y < combat.enemyGrid[0].length; y++) {
@@ -194,6 +194,7 @@ const enemyHelpers = {
                     if(tile.type !== "babby") { continue; }
                 } else {
                     if(tile.type === "babby") { continue; }
+                    if(forHealing && tile.type === "egg") { continue; }
                 }
                 dmg += tile.power * Math.max(0.75, Math.log10(e.atk));
                 crops.push([tile.name, x, y, tile.type, enemyHelpers.GetSideEffect(e, tile)]);
@@ -238,7 +239,7 @@ const enemyHelpers = {
             for(let y = 0; y < combat.enemyGrid[0].length; y++) {
                 const tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
-                if(tile.rotten) { return true; }
+                if(tile.rotten && tile.type !== "water") { return true; }
             }
         }
         return false;
@@ -248,7 +249,7 @@ const enemyHelpers = {
             for(let y = 0; y < combat.enemyGrid[0].length; y++) {
                 const tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
-                if(tile.rotten) { combat.enemyGrid[x][y] = null; }
+                if(tile.rotten && tile.type !== "water") { combat.enemyGrid[x][y] = null; }
             }
         }
         return false;
@@ -936,7 +937,7 @@ const actions = {
         return true;
     },
     "HEAL_FROM_CROPS": function(e) {
-        const fieldData = enemyHelpers.GetEnemyFieldData(e, false);
+        const fieldData = enemyHelpers.GetEnemyFieldData(e, false, true, true);
         const amountToHeal = Math.ceil(fieldData.damage / 3);
         const prevHealth = e.health;
         e.health = Math.min(e.maxhealth, (e.health + amountToHeal));
@@ -1279,12 +1280,33 @@ const actions = {
         const pos = RandomArrayItem(availableSpots);
         const finalCropArr = cropsToGrow[combat.season][pos.type];
         let newCrop = GetCrop(RandomArrayItem(finalCropArr));
-        newCrop.activeTime = newCrop.time;
-        combat.enemyGrid[pos.x][pos.y] = newCrop;
-        if(newCrop.size === 2) {        
-            combat.enemyGrid[pos.x + 1][pos.y] = pos;
-            combat.enemyGrid[pos.x][pos.y + 1] = pos;
-            combat.enemyGrid[pos.x + 1][pos.y + 1] = pos;
+        if(newCrop.name === "spear") {
+            if(Math.random() > 0.33) {
+                newCrop.ready = true;
+                newCrop.activeTime = 0;
+                newCrop.fishNum = combat.GetFish(newCrop, 1);
+                newCrop.power += newCrop.fishNum;
+                newCrop.type = "rod";
+                combat.enemyGrid[pos.x][pos.y] = newCrop;
+                EnemyParser.current.data.textID = "nSpearYes";
+            } else {
+                EnemyParser.current.data.textID = "nSpearNo";
+            }
+        } else {
+            newCrop.activeTime = newCrop.time;
+            combat.enemyGrid[pos.x][pos.y] = newCrop;
+            if(newCrop.size === 2) {        
+                combat.enemyGrid[pos.x + 1][pos.y] = pos;
+                combat.enemyGrid[pos.x][pos.y + 1] = pos;
+                combat.enemyGrid[pos.x + 1][pos.y + 1] = pos;
+            }
+            switch(newCrop.type) {
+                case "egg": EnemyParser.current.data.textID = "nEgg"; break;
+                case "water":
+                case "rod": EnemyParser.current.data.textID = "nFish"; break;
+                case "bee": EnemyParser.current.data.textID = "nBee"; break;
+                default: EnemyParser.current.data.textID = "plantAttack"; break;
+            }
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
         combat.animHelper.DrawCrops();

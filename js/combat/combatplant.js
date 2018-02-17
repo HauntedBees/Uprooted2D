@@ -279,12 +279,12 @@ combat.plant = {
         return true;
     },
     throwSpear: function(x, y) {
-        var success = (Math.random() * player.luck) < combat.GetCatchChance(this.activeCrop);
+        const success = (Math.random() * player.luck) < combat.GetCatchChance(this.activeCrop);
         player.miscdata.typesPlanted["water"] += 1;
         player.shiftTech(-0.01);
         player.decreaseItem(this.activeCrop.name);
         if(!success) { return this.finishTurn("You chuck the spear, but do not catch any fish."); }
-        var crop = GetCrop(this.activeCrop.name);
+        const crop = GetCrop(this.activeCrop.name);
         crop.ready = true;
         crop.activeTime = 0;
         crop.fishNum = combat.GetFish(crop, player.luck);

@@ -134,7 +134,6 @@ const playerCombatAnims = {
 };
 
 const animCallbacks = {
-    "enemy_placeholder": () => console.log("TO BE IMPLEMENTED"),
     "enemy_thanksHulkYouBetKid": function(animProcess, animEntity) {
         const row = combat.dy + animEntity.bonusArgs.punchRow;
         animProcess.AddBaby(new MovingLinearAnim(["hulkFist0"], { x: gfx.tileWidth, y: row }, { x: combat.dx, y: row }, 1, 0, 24, 24, function() {
@@ -223,14 +222,32 @@ const animCallbacks = {
     "enemy_throwCropAtEnemy": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
         const edims = animEntity.dims;
-        if(animEntity.bonusArgs.targets.length === 0) { // attacking player
-            animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, 
-                combat.animHelper.GetPlayerTopPos(), 24, animCallbackHelpers.HurtPlayer));
-        } else { // attacking crop
-            const targx = animEntity.bonusArgs.targets[0].x + combat.dx;
-            const targy = animEntity.bonusArgs.targets[0].y + combat.dy;
-            animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, { x: targx, y: targy }, 
-                1, 0, 24, 24, function() { animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets) } ));
+        if(resetti.crop.type === "egg") {
+            const arr = [resetti.crop.name + "FlyR0", resetti.crop.name + "FlyR1"];
+            const isGrounded = resetti.crop.name === "platypus";
+            const dy = (isGrounded ? 1 : 1.5);
+            const fps = (isGrounded ? 24 : 12);
+            if(animEntity.bonusArgs.targets.length === 0) { // attacking player
+                animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetEnemyBottomPos(0), combat.animHelper.GetPlayerBottomPos(), 
+                                    0.25, dy, 24, fps, animCallbackHelpers.HurtPlayer));
+            } else { // attacking crop
+                const targx = animEntity.bonusArgs.targets[0].x + combat.dx;
+                const targy = animEntity.bonusArgs.targets[0].y + combat.dy;
+                animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetEnemyBottomPos(0), { x: targx, y: targy }, 
+                    0.25, dy, 24, fps, function() { animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets) }));
+            }
+        } else {
+            let cropSprite = resetti.crop.name;
+            if(resetti.crop.fishNum !== undefined) { cropSprite = "fish" + resetti.crop.fishNum; }
+            if(animEntity.bonusArgs.targets.length === 0) { // attacking player
+                animProcess.AddBaby(new ParabolicThrowAnim(cropSprite, { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, 
+                    combat.animHelper.GetPlayerTopPos(), 24, animCallbackHelpers.HurtPlayer));
+            } else { // attacking crop
+                const targx = animEntity.bonusArgs.targets[0].x + combat.dx;
+                const targy = animEntity.bonusArgs.targets[0].y + combat.dy;
+                animProcess.AddBaby(new MovingLinearAnim([ cropSprite ], { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, { x: targx, y: targy }, 
+                    1, 0, 24, 24, function() { animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets) } ));
+            }
         }
     },
     "player_getFish": function(animProcess, animEntity) {
