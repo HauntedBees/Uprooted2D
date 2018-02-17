@@ -482,11 +482,11 @@ let mapentities = {
         GetCommonEntity("CoveredDoorL1", 11, 15, 6, 0, undefined, OneSpeak("barndoorChick"), { sy: 12, noChange: true, solid: true, changeType: 0 }), // 0 = open door
         GetCommonEntity("CoveredDoorL2", 11, 18, 6, 0, undefined, OneSpeak("barndoorPig"), { sy: 12, noChange: true, solid: true, changeType: 0 }),
         GetCommonEntity("CoveredDoorL3", 11, 21, 6, 0, undefined, OneSpeak("barndoorChick"), { sy: 12, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorL4", 11, 24, 6, 0, undefined, OneSpeak("barndoorCrop"), { sy: 12, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorL4", 11, 24, 6, 0, undefined, OneSpeak("barndoorCrop"), { visible: false, inside: true, sy: 12, noChange: true, solid: true, changeType: 0 }),
         GetCommonEntity("CoveredDoorR1", 18, 15, 6, 0, undefined, OneSpeak("barndoorEmpty"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
         GetCommonEntity("CoveredDoorR2", 18, 18, 6, 0, undefined, OneSpeak("barndoorChick"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
         GetCommonEntity("CoveredDoorR3", 18, 21, 6, 0, undefined, OneSpeak("barndoorShop"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
-        GetCommonEntity("CoveredDoorR4", 18, 24, 6, 0, undefined, OneSpeak("barndoorPig"), { sy: 13, noChange: true, solid: true, changeType: 0 }),
+        GetCommonEntity("CoveredDoorR4", 18, 24, 6, 0, undefined, OneSpeak("barndoorPig"), { visible: false, inside: true, sy: 13, noChange: true, solid: true, changeType: 0 }),
         GetCommonEntity("Chicky1", 10, 15, 0, 3, undefined, Cutscene("enemy"), enemyMetadata.chick(1)), // 1 = full left to right
         GetCommonEntity("Chicky2", 19, 18, 0, 1, undefined, Cutscene("enemy"), enemyMetadata.chick(2)), // 2 = half right to left
         GetCommonEntity("Chicky3", 10, 21, 0, 3, undefined, Cutscene("enemy"), enemyMetadata.chick(3)), // 3 = half left to right 

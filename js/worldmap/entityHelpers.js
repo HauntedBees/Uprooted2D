@@ -424,8 +424,8 @@ const enemyMetadata = {
     robo2: { interactname: "research", dialogMax: 5, enemies: ["robo2", "robo", "robo"], min: 1, max: 2, sy: 4 },
     fish: { interactname: "fish", dialogMax: 3, enemies: ["fishFace", "fishFace", "fishFace", "seaMonk"], min: 1, max: 4, sy: 8, sheetlen: 2 },
     seamonk: { interactname: "seamonk", dialogMax: 8, enemies: ["seaMonk"], min: 1, max: 3, sy: 8, sheetlen: 2 },
-    golem: { interactname: "golem", dialogMax: 1, enemies: ["golem"], min: 1, max: 1, sy: 12, noChange: true },
-    piggn: function(ct) { return { interactname: "pig", dialogMax: 1, enemies: ["piggun"], min: 2, max: 4, sy: 10, changeType: ct, sheetlen: 2, noChange: true } },
+    golem: { visible: false, inside: true, interactname: "golem", dialogMax: 1, enemies: ["golem"], min: 1, max: 1, sy: 12, noChange: true },
+    piggn: function(ct) { return { visible: false, inside: true, interactname: "pig", dialogMax: 1, enemies: ["piggun"], min: 2, max: 4, sy: 10, changeType: ct, sheetlen: 2, noChange: true } },
     chick: function(ct) { return { interactname: "chickbot", dialogMax: 3, enemies: ["chickBot"], min: 1, max: 3, sy: 10, changeType: ct } },
     mower: function(ct) { return { sy: 10, noChange: true, changeType: ct, sheetlen: 2, visible: false, inside: true } }
 };
