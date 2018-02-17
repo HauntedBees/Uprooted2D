@@ -1223,7 +1223,7 @@ const actions = {
         return true;
     },
     "NATHAN_PLANT": function(e) {
-        var cropsToGrow = [ // these should only be 4 star or higher crops in the end, with a 2 for the season, if possible
+        const cropsToGrow = [ // these should only be 4 star or higher crops in the end, with a 2 for the season, if possible
             { // spring
                 crops: ["asparagus", "carrot", "garlic", "pineapple", "radish", "food2crystal"],
                 trees: ["apricot", "avocado"],
@@ -1261,11 +1261,11 @@ const actions = {
                 paddy: ["arborio", "blackrice", "shortgrain", "chestnut"]
             }
         ];
-        var availableSpots = [];
-        for(var x = 0; x < 3; x++) {
+        let availableSpots = [];
+        for(let x = 0; x < 3; x++) {
             if(combat.enemyGrid[x][0] === null) { availableSpots.push({ x: x, y: 0, type: "eggie" }); }
             if(combat.enemyGrid[x][1] === null) { availableSpots.push({ x: x, y: 1, type: "fishs" }); }
-            for(var y = 2; y < 6; y++) {
+            for(let y = 2; y < 6; y++) {
                 if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "crops" }); }
                 if(y < 5 && combat.enemyGrid[x + 1][y] === null && combat.enemyGrid[x][y + 1] === null && combat.enemyGrid[x + 1][y + 1] === null) {
                     availableSpots.push({ x: x, y: y, type: "trees" });
@@ -1273,10 +1273,10 @@ const actions = {
             }
             if(combat.enemyGrid[x][6] === null) { availableSpots.push({ x: x, y: 6, type: "paddy" }); }
         }
-        for(var x = 3; x < 5; x++) {
+        for(let x = 3; x < 5; x++) {
             if(combat.enemyGrid[x][0] === null) { availableSpots.push({ x: x, y: 0, type: "mushs" }); }
             if(combat.enemyGrid[x][1] === null) { availableSpots.push({ x: x, y: 1, type: "mushs" }); }
-            for(var y = 2; y < 6; y++) {
+            for(let y = 2; y < 6; y++) {
                 if(y < 5 && x === 4) {
                     if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "abeee" }); }
                 } else {
@@ -1287,11 +1287,9 @@ const actions = {
         }
         if(availableSpots.length === 0) { return false; }
 
-        var pos = availableSpots[Math.floor(Math.random() * availableSpots.length)];
-        var finalCropArr = cropsToGrow[combat.season][pos.type];
-        var crop = finalCropArr[Math.floor(Math.random() * finalCropArr.length)];
-
-        var newCrop = GetCrop(crop);
+        const pos = RandomArrayItem(availableSpots);
+        const finalCropArr = cropsToGrow[combat.season][pos.type];
+        let newCrop = GetCrop(RandomArrayItem(finalCropArr));
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
         if(newCrop.size === 2) {        
@@ -1302,5 +1300,5 @@ const actions = {
         EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
         combat.animHelper.DrawCrops();
         return true;
-    } // TODO: FULL FLOW
+    }
 }
