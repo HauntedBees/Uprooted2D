@@ -1,17 +1,17 @@
 combat.enemyTurn = {
     dy: 9.5, lastIdx: -1,
     setup: function(args) {
-        var enemy = args.enemy;
+        const enemy = args.enemy;
         combat.animHelper.ResetPlayerAnimState();
         combat.animHelper.ResetBirdAnimState();
         gfx.drawFullbox(this.dy);
         if(enemy.stickTurns > 0) {
-            var text = GetText("stuckTurn").replace(/\{0\}/g, enemy.name);
+            const text = GetText("stuckTurn").replace(/\{0\}/g, enemy.name);
             gfx.drawFullText(text, this.dy * 16);
             combat.animHelper.DrawBottom();
             return;
         }
-        var attackData = EnemyParser.Parse(enemy);
+        const attackData = EnemyParser.Parse(enemy);
         if(attackData.attackAgain && this.lastIdx != args.idx) { combat.state--; }
         this.lastIdx = args.idx;
         if(attackData.skip) {
@@ -25,7 +25,6 @@ combat.enemyTurn = {
                 combat.animHelper.SetEnemyAnimArg(args.idx, key, attackData.bonusArgs[key]);
             }
         }
-
         if(attackData.throwables !== undefined && attackData.throwables !== null && attackData.throwables.length > 0) {
             for(let i = 0; i < attackData.throwables.length; i++) {
                 const x = attackData.throwables[i][1], y = attackData.throwables[i][2];
@@ -40,5 +39,5 @@ combat.enemyTurn = {
     clean: () => gfx.clearSome(["menuA", "menutext"]),
     click: function(pos) { combat.endTurn(this); return true; },
     keyPress: function(key) { if(key == player.controls.pause || key == player.controls.confirm) { return this.click(null); }  return true; },
-    mouseMove: (pos) => true
+    mouseMove: pos => true
 };

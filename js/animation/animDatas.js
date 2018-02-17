@@ -145,11 +145,12 @@ const animCallbacks = {
     "enemy_rockToss": function(animProcess, animEntity) {
         const edims = animEntity.dims;
         const crop = animEntity.bonusArgs.type + "0";
+        const keepAfterwards = !crop.endsWith("Diag0");
         const targx = animEntity.bonusArgs.x + combat.dx;
         const targy = animEntity.bonusArgs.y + combat.dy;
         animProcess.AddBaby(new MovingLinearAnim([crop], { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }, { x: targx, y: targy }, 
                 1, 0, 24, 24, function() {
-                    animProcess.AddBaby(new TileAnim(targx, targy, [crop], false, 12, true));
+                    if(keepAfterwards) { animProcess.AddBaby(new TileAnim(targx, targy, [crop], false, 12, true)); }
                     animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets)
                 } ));
     },
@@ -384,11 +385,11 @@ const animCallbackHelpers = {
             const cropPos = targets[i];
             let targ = { x: cropPos.x + combat.dx, y: cropPos.y + combat.dy };
             let crop = combat.grid[cropPos.x][cropPos.y];
+            if(crop === null) { continue; }
             if(crop.x !== undefined) {
                 targ = { x: crop.x + combat.dx, y: crop.y + combat.dy };
                 crop = combat.grid[crop.x][crop.y];
             }
-            if(crop === null) { continue; }
             if(crop.health <= 0) {
                 AddCropDeathAnim(animProcess, targ.x, targ.y, crop);
             } else {
@@ -397,6 +398,14 @@ const animCallbackHelpers = {
                     animProcess.AddBaby(new TileAnim(targ.x + 1, targ.y, ["vein"], true, 12, true));
                     animProcess.AddBaby(new TileAnim(targ.x, targ.y + 1, ["vein"], true, 12, true));
                     animProcess.AddBaby(new TileAnim(targ.x + 1, targ.y + 1, ["vein"], true, 12, true));
+                }
+            }
+            if(cropPos.effect !== undefined) {
+                animProcess.AddBaby(new TileAnim(targ.x, targ.y, cropPos.effect, false, 12, true));
+                if(crop.size === 2) {
+                    animProcess.AddBaby(new TileAnim(targ.x + 1, targ.y, cropPos.effect, false, 12, true));
+                    animProcess.AddBaby(new TileAnim(targ.x, targ.y + 1, cropPos.effect, false, 12, true));
+                    animProcess.AddBaby(new TileAnim(targ.x + 1, targ.y + 1, cropPos.effect, false, 12, true));
                 }
             }
         }
@@ -426,6 +435,8 @@ const animCallbackHelpers = {
 function AddCropDeathAnim(animProcess, x, y, crop) {
     const puffStart = crop.size === 2 ? "bigpuff" : "puff";
     let anim = new TileAnim(x, y, [puffStart + "0", puffStart + "1", puffStart + "2", puffStart + "3", puffStart + "4"], false, 24, false);
-    anim.AddFrameFunc(3, function() { crop.hidden = true; combat.animHelper.DrawCrops(); });
+    if(crop.respawn === 0 || crop.health <= 0) {
+        anim.AddFrameFunc(3, () => { crop.hidden = true; combat.animHelper.DrawCrops(); });
+    }
     animProcess.AddBaby(anim);
 }

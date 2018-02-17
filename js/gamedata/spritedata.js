@@ -138,6 +138,7 @@ var spriteData = {
         "vineAnim1.0": [43, 6], "vineAnim1.1": [44, 6],
         "vineAnim2.0": [43, 7], "vineAnim2.1": [44, 7],
         "vineAnim3.0": [43, 8], "vineAnim3.1": [44, 8],
+        "waterDiag0": [45, 5], "fireDiag0": [46, 5], "saltDiag0": [47, 5],
         "bigpuff0": [21, 0, true],
         "bigpuff1": [22, 0, true],
         "bigpuff2": [23, 0, true],
