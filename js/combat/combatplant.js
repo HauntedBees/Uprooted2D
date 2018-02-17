@@ -136,24 +136,24 @@ combat.plant = {
         if(this.activeCrop === null) {
             pos.y = (pos.y - this.dy);
             if(pos.x >= this.inventoryWidth) { return false; }
-            var idx = pos.y * this.inventoryWidth + pos.x;
+            const idx = pos.y * this.inventoryWidth + pos.x;
             if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
-            var actualIdx = this.actualIndexes[idx];
+            const actualIdx = this.actualIndexes[idx];
             if(player.inventory[actualIdx][1] === 0) { return false; }
             this.activeCrop = GetCrop(player.inventory[actualIdx][0]);
             combat.lastSelectedSeed = { x: this.cursor.x, y: this.cursor.y - this.dy };
             this.cursor = { x: combat.dx, y: combat.dy };
             this.isValid = this.isValidPlantingLocation(0, 0, this.activeCrop.size - 1);
         } else {
-            var diff = this.activeCrop.size - 1;
+            const diff = this.activeCrop.size - 1;
             if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
             if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight - diff)) { return false; }
-            var px = pos.x - combat.dx, py = pos.y - combat.dy;
-            var ppos = {x: px, y: py};
+            const px = pos.x - combat.dx, py = pos.y - combat.dy;
+            const ppos = { x: px, y: py };
             if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
-            var newCrop = GetCrop(this.activeCrop.name);
+            let newCrop = GetCrop(this.activeCrop.name);
             if(combat.grid[px][py] !== null && combat.grid[px][py].name === "salt") { newCrop.power = Math.ceil(newCrop.power / 2); }
-            var cropIsKill = false, killType = 0;
+            let cropIsKill = false, killType = 0;
             if(player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech && !combat.isFalcon) {
                 if(["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && Math.random() <= 0.1) {
                     cropIsKill = true;
@@ -185,8 +185,8 @@ combat.plant = {
             if((diff === 0 && player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") ||
                 (diff === 1 && player.itemGrid[px + 1][py + 1] !== null && player.itemGrid[px + 1][py + 1].corner === "_cow")) {
                 cropIsKill = false;
-                var cowDelta = (diff === 1 ? 0 : 1);
-                var cowIdx = combat.getCowIndex(px - cowDelta, py - cowDelta);
+                const cowDelta = (diff === 1 ? 0 : 1);
+                const cowIdx = combat.getCowIndex(px - cowDelta, py - cowDelta);
                 player.miscdata.typesPlanted["cow"] += 1;
                 if(cowIdx >= 0) { // TODO: adjust how much health different crops/types give?
                     combat.happyCows[cowIdx].feed += newCrop.power;
@@ -196,19 +196,30 @@ combat.plant = {
                 combat.animHelper.DrawBackground();
             } else {
                 newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
-                var effects = combat.effectGrid[px][py];
-                var divider = (player.itemGrid[px][py] !== null && player.itemGrid[px][py] === "_strongsoil") ? 1.25 : 2;
+                const effects = combat.effectGrid[px][py];
                 player.miscdata.typesPlanted[newCrop.type] += 1;
                 if(!cropIsKill) {
                     if(effects !== null) {
+                        const hasStrongSoil = (player.itemGrid[px][py] === "_strongsoil");
                         if(effects.type === "shocked") {
-                            newCrop.power = 1;
+                            newCrop.power = hasStrongSoil ? 2 : 1;
+                            newCrop.health = hasStrongSoil ? Math.ceil(newCrop.health * 0.2) : 1;
                         } else if(effects.type === "splashed") {
-                            if(newCrop.waterResist) { divider /= 1 + newCrop.waterResist; }
-                            newCrop.power = Math.ceil(newCrop.power / divider);
+                            let powMult = hasStrongSoil ? 0.6 : 0.5;
+                            switch(newCrop.waterResist) {
+                                case 2: powMult += 0.4; break;
+                                case 1: powMult += 0.2; break;
+                            }
+                            newCrop.power = Math.ceil(newCrop.power * powMult);
+                            newCrop.health = Math.ceil(newCrop.health * powMult);
                         } else if(effects.type === "burned") {
-                            if(newCrop.fireResist) { divider /= 1 + newCrop.fireResist; }
-                            newCrop.power = Math.ceil(newCrop.power / divider);
+                            let powMult = hasStrongSoil ? 0.5 : 0.3;
+                            switch(newCrop.fireResist) {
+                                case 2: powMult += 0.5; break;
+                                case 1: powMult += 0.25; break;
+                            }
+                            newCrop.power = Math.ceil(newCrop.power * powMult);
+                            newCrop.health = Math.ceil(newCrop.health * powMult);
                         }
                     }
                     combat.grid[px][py] = newCrop;
@@ -234,7 +245,7 @@ combat.plant = {
                 } else {
                     next = function() { game.innerTransition(combat.inbetween, combat.plant); }
                 }
-                var killMsg = GetText("tryPlantStart").replace(/\{0\}/g, newCrop.displayname);
+                let killMsg = GetText("tryPlantStart").replace(/\{0\}/g, newCrop.displayname);
                 switch(killType) {
                     case 1: killMsg += GetText("tryPlantGloves"); break;
                     case 2: killMsg += GetText("tryPlantPesticide"); break;
