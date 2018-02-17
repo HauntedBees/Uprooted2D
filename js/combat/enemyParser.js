@@ -7,7 +7,7 @@ const enemyHelpers = {
         let outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg)
                             .replace(/\{2\}/g, secondArg).replace(/\{3\}/g, thirdArg).replace(/\{4\}/g, fourthArg);
         outputText = HandleArticles(outputText, secondArg);
-        return { text: outputText, animFPS: node.data.animFPS, animData: node.data.animData };
+        return { text: outputText, animData: node.data.animData };
     },
     GetSideEffect: function(e, tile) {
         if(tile.saltChance === undefined && tile.burnChance === undefined) { return ""; }
@@ -265,7 +265,7 @@ const EnemyParser = {
         EnemyParser.targets = [];
         if(enemyHelpers.HasRottenCrops() && Math.random() < enemy.rotClearChance) {
             enemyHelpers.RemoveWeeds();
-            EnemyParser.outputData = { text: GetText("enemyRemoveWeeds").replace(/\{0\}/g, enemy.name), animFPS: 4, animData: "PLANT" };
+            EnemyParser.outputData = { text: GetText("enemyRemoveWeeds").replace(/\{0\}/g, enemy.name), animData: "PLANT" };
         } else {
             EnemyParser.ParseCurrentNode();
         }
@@ -331,12 +331,9 @@ const conditions = {
     }
 };
 const actions = {
-    "INIT": () => true,
-    "END": () => true,
-    "SKIP": () => { EnemyParser.outputData = { skip: true }; return true; },
-    "RANDOM_GT": (e, amt) => Math.random() > parseFloat(amt), // TODO: FULL FLOW (IS THIS NEEDED?)
-    "WRITE_TEXT": e => EnemyParser.outputData = enemyHelpers.GetAttackData(0), // TODO: DO THESE TWO REALLY NEED TO BE DIFFERENT THINGS?
-    "IDLE": e => { EnemyParser.outputData = enemyHelpers.GetAttackData(0); return true; }, // TODO: DO THESE TWO REALLY NEED TO BE DIFFERENT THINGS?
+    "INIT": e => true, "END": e => true,
+    "SKIP": e => { EnemyParser.outputData = { skip: true }; return true; },
+    "IDLE": e => { EnemyParser.outputData = enemyHelpers.GetAttackData(0); return true; },
     
     // ---------------- MULTIPURPOSE
     "TESTSKILL": function(e) { 
@@ -459,17 +456,9 @@ const actions = {
         let damage = 0;
         if(tutorial.state === 23) {
             damage = combat.damagePlayer(1);
-            EnemyParser.current.data = {
-                textID: "tutEnemy" + tutorial.state,
-                animFPS: 12,
-                animData: "ATTACK"
-            };
+            EnemyParser.current.data = { textID: "tutEnemy" + tutorial.state, animData: "ATTACK" };
         } else {
-            EnemyParser.current.data = {
-                textID: "tutEnemy" + tutorial.state,
-                animFPS: 4,
-                animData: "PLANT"
-            }
+            EnemyParser.current.data = { textID: "tutEnemy" + tutorial.state, animData: "PLANT" }
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(damage);
         EnemyParser.current.data = { message: "CONVINCEATRON" };
@@ -786,12 +775,12 @@ const actions = {
         let damage = 0;
         if(e.convinceState === undefined) {
             e.convinceState = 1;
-            EnemyParser.current.data = { textID: "convince2.0", animFPS: 4, animData: "PLANT" };
+            EnemyParser.current.data = { textID: "convince2.0", animData: "PLANT" };
         } else if(e.convinceState === 4) {
-            EnemyParser.current.data = { textID: "convince2.4", animFPS: 24, animData: "ATTACK" };
+            EnemyParser.current.data = { textID: "convince2.4", animData: "ATTACK" };
             e.convinceState = 5;
         } else {
-            EnemyParser.current.data = { textID: "convince2." + e.convinceState, animFPS: 4, animData: "PLANT" };
+            EnemyParser.current.data = { textID: "convince2." + e.convinceState, animData: "PLANT" };
             e.convinceState++;
         }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
