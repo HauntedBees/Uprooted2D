@@ -509,7 +509,7 @@ var scripts = {
 	"food2Lost0": "beckettBack_SETDIR:1&beckettBack_ISMOVING:true&_TEXT:beckettBack0",
 	"food2Lost1": "beckettBack_SETDIR:0&beckettBack_ISMOVING:false&_FIGHT:beckett",
 	"food2Beat0": "beckettBack_ISMOVING:true&beckettBack_SETDIR:2&_TEXT:postBeckett(0-2)",
-	"food2Beat1": "_CLEARTEXT&beckettBack_SETDIR:0&beckettBack_SHIFTY:2&_HISPEED&beckettBack_MOVE:y10",
+	"food2Beat1": "_CLEARTEXT&beckettBack_SETDIR:0&beckettBack_SHIFTY:2&_HISPEED&beckettBack_MOVE:y8",
 	"food2Beat2": "_LOSPEED&_CLEARTARGET&beckettBack_SETTARGET&_CLEARTARGET&_QUIT",
 	// Misc.: The Fucking Bird
 	"falcon0": "_CUSTOM:BIRDSONG.OGG&pl_SETDIR:0&_SLEEP:1000",
