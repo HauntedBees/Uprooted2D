@@ -183,7 +183,6 @@ function AnimProcess(ae, as, babies) {
 }
 
 function CropAttackAnim(targtype, grid, x, y, idx, forcedAnimSet) {
-    this.targtype = targtype; // _ENEMY or _CROP // TODO: might not even be useful
     this.grid = grid; this.x = x; this.y = y;
     this.crop = grid[x][y];
     this.idx = idx || 0;

@@ -60,7 +60,7 @@ const enemyCombatAnims = {
     
     "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_waterRow")], false, 4),
     "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss")], false, 4),
-    "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_placeholder")], false, 4),
+    "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_saltRow")], false, 4),
     "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
     "VINE_SMACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_vineSmack")], false, 4),
     "HULK_PUNCH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_thanksHulkYouBetKid")], false, 4),
@@ -154,68 +154,10 @@ const animCallbacks = {
                     animCallbackHelpers.HurtPlayerCrops(animProcess, animEntity.bonusArgs.targets)
                 } ));
     },
-    "enemy_waterRow": function(animProcess, animEntity) {
-        const y = combat.dy + animEntity.bonusArgs.row;
-        const startPos = { x: combat.dx + player.gridWidth, y: y };
-        const endPos = { x: -1, y: startPos.y };
-        let anim = new MovingLinearAnim(["waterDrop0", "waterDrop1"], startPos, endPos, 0.25, 0, 24, 12, undefined);
-        anim.xFunc = function(x) {
-            const arrx = x - combat.dx;
-            if(x >= combat.dx) {
-                const tileData = animEntity.bonusArgs.tiles[arrx];
-                const arry = y - combat.dy;
-                let crop = combat.grid[arrx][arry];
-                let dispx = arrx, dispy = arry;
-                if(crop !== null && crop.x !== undefined) {
-                    dispx = crop.x + combat.dx;
-                    dispy = crop.y + combat.dy;
-                    crop = combat.grid[crop.x][crop.y];
-                }
-                if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
-                if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, ["splashed"], false, 24, true)); }
-                if(crop === null || crop.size === 1) {
-                    animProcess.AddBaby(new TileAnim(x, y, ["splashed0", "splashed1"], false, 12, true));
-                } else if(crop.size === 2) {
-                    animProcess.AddBaby(new TileAnim(dispx, dispy, ["splashed0", "splashed1"], false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy, ["splashed0", "splashed1"], false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, ["splashed0", "splashed1"], false, 12, true));
-                }
-            }
-        };
-        animProcess.AddBaby(anim);
-    },
-    "enemy_fireRow": function(animProcess, animEntity) {
-        const y = combat.dy + animEntity.bonusArgs.row;
-        const startPos = { x: combat.dx + player.gridWidth, y: y };
-        const endPos = { x: -1, y: startPos.y };
-        let anim = new MovingLinearAnim(["fireBall0", "fireBall1"], startPos, endPos, 0.25, 0, 24, 12, undefined);
-        anim.xFunc = function(x) {
-            const arrx = x - combat.dx;
-            if(x >= combat.dx) {
-                const tileData = animEntity.bonusArgs.tiles[arrx];
-                const arry = y - combat.dy;
-                let crop = combat.grid[arrx][arry];
-                let dispx = arrx, dispy = arry;
-                if(crop !== null && crop.x !== undefined) {
-                    dispx = crop.x + combat.dx;
-                    dispy = crop.y + combat.dy;
-                    crop = combat.grid[crop.x][crop.y];
-                }
-                if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
-                if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, ["burned"], false, 24, true)); }
-                if(crop === null || crop.size === 1) {
-                    animProcess.AddBaby(new TileAnim(x, y, ["fireBurn0", "fireBurn1"], false, 12, true));
-                } else if(crop.size === 2) {
-                    animProcess.AddBaby(new TileAnim(dispx, dispy, ["fireBurn0", "fireBurn1"], false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy, ["fireBurn0", "fireBurn1"], false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx, dispy + 1, ["fireBurn0", "fireBurn1"], false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, ["fireBurn0", "fireBurn1"], false, 12, true));
-                }
-            }
-        };
-        animProcess.AddBaby(anim);
-    },
+
+    "enemy_waterRow": (animProcess, animEntity) => animCallbackHelpers["RowShit"](animProcess, animEntity, ["waterDrop0", "waterDrop1"], "splashed", ["splashed0", "splashed1"]),
+    "enemy_fireRow": (animProcess, animEntity) => animCallbackHelpers["RowShit"](animProcess, animEntity, ["fireBall0", "fireBall1"], "burned", ["fireBurn0", "fireBurn1"]),
+    "enemy_saltRow": (animProcess, animEntity) => animCallbackHelpers["RowShit"](animProcess, animEntity, ["saltShaker0", "saltShaker1"], "salt", ["salt"]),
     "enemy_letItFuckingBurn": function(animProcess, animEntity) {
         animCallbackHelpers.HurtPlayer();
         for(let y = 0; y < player.gridHeight; y++) {
@@ -430,6 +372,37 @@ const animCallbackHelpers = {
                 }
             }
         }
+    },
+    "RowShit": function(animProcess, animEntity, movingArray, effectTile, effectArray) {
+        const y = combat.dy + animEntity.bonusArgs.row;
+        const startPos = { x: combat.dx + player.gridWidth, y: y };
+        const endPos = { x: -1, y: startPos.y };
+        let anim = new MovingLinearAnim(movingArray, startPos, endPos, 0.25, 0, 24, 12, undefined);
+        anim.xFunc = function(x) {
+            const arrx = x - combat.dx;
+            if(x >= combat.dx) {
+                const tileData = animEntity.bonusArgs.tiles[arrx];
+                const arry = y - combat.dy;
+                let crop = combat.grid[arrx][arry];
+                let dispx = arrx, dispy = arry;
+                if(crop !== null && crop.x !== undefined) {
+                    dispx = crop.x + combat.dx;
+                    dispy = crop.y + combat.dy;
+                    crop = combat.grid[crop.x][crop.y];
+                }
+                if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
+                if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, [effectTile], false, 24, true)); }
+                if(crop === null || crop.size === 1) {
+                    animProcess.AddBaby(new TileAnim(x, y, effectArray, false, 12, true));
+                } else if(crop.size === 2) {
+                    animProcess.AddBaby(new TileAnim(dispx, dispy, effectArray, false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy, effectArray, false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx, dispy + 1, effectArray, false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, effectArray, false, 12, true));
+                }
+            }
+        };
+        animProcess.AddBaby(anim);
     }
 }
 function AddCropDeathAnim(animProcess, x, y, crop) {

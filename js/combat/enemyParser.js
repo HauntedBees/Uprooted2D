@@ -366,6 +366,14 @@ const actions = {
                 EnemyParser.current.data.animData = "HEAD_ON_SPLASH_ATTACK";
                 EnemyParser.current.data.textID = "splashRow";
                 return actions["BECKETT_WATER"](e);
+            case "saltRow":
+                EnemyParser.current.data.animData = "SALT_TOSS";
+                EnemyParser.current.data.textID = "splashRow";
+                return actions["BECK_THROW_SALT"](e);
+            case "wetOne":
+                EnemyParser.current.data.animData = "ROCK_TOSS";
+                EnemyParser.current.data.textID = "splashRow";
+                return actions["SPLASH_TILE"](e);
             case "rock":
                 EnemyParser.current.data.animData = "ROCK_TOSS";
                 EnemyParser.current.data.textID = "beckettRock";
@@ -1077,37 +1085,43 @@ const actions = {
     "BECKETT_WATER": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.TrySplashTile, "splashRowKill", "splashRowDamage", "splashRow"),
     "BECK_FIRE_ROW": e => enemyHelpers.DoSomethingToBusiestRow(e, enemyHelpers.BurnTile, "burnKill", "burnDamage", "burnSucc"),
     "SPLASH_TILE": function(e) {
-        const res = enemyHelpers.TrySplashTile(e, Range(0, player.gridWidth), Range(0, player.gridHeight));
+        const x = Range(0, player.gridWidth), y = Range(0, player.gridHeight);
+        const res = enemyHelpers.TrySplashTile(e, x, y);
         if(!res.status) { EnemyParser.current.data.textID = "splashFail"; }
         else if(!res.crop) { EnemyParser.current.data.textID = "splashSucc"; }
         else if(!res.destroyed) { EnemyParser.current.data.textID = "splashDamage"; }
         else { EnemyParser.current.data.textID = "splashKill"; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        if(res.status) { EnemyParser.outputData.bonusArgs = { type: "waterDiag", x: x, y: y }; }
         return true;
-    }, // TODO: FULL FLOW
+    },
     "BECK_THROW_SALT": function(e) { 
         const row = Range(0, player.gridHeight);
         let hasKills = false;
+        let affectedTiles = [];
         for(let x = 0; x < player.gridWidth; x++) {
             const tile = combat.grid[x][row];
             if(tile === null) {
-                if(Math.random() < 0.33) {
+                affectedTiles.push({ killed: false, special: null, groundAffected: false });
+                if(Math.random() < 0.25) {
                     enemyHelpers.TryDisturbTile(x, row, "salt");
                 }
             } else {
-                if(tile.x !== undefined || tile.type === "rock") { continue; }
+                if(tile.x !== undefined || tile.type === "rock") { affectedTiles.push({ killed: false, special: null, groundAffected: false }); continue; }
                 const res = enemyHelpers.DoDamageCrop(e, x, row, -1);
-                if(res && Math.random() < 0.45) {
+                if(res.destroyed && Math.random() < 0.45) {
                     enemyHelpers.TryDisturbTile(x, row, "salt");
                 }
-                hasKills = hasKills || res;
+                affectedTiles.push({ killed: res.destroyed || false, special: res.special || null, groundAffected: res.groundAffected || false });
+                hasKills = hasKills || res.destroyed;
             }
         }
         if(hasKills) { EnemyParser.current.data.textID = "beckettSaltKill"; }
         else { EnemyParser.current.data.textID = "beckettSalt"; }
         EnemyParser.outputData = enemyHelpers.GetAttackData(0);
+        EnemyParser.outputData.bonusArgs = { row: row, tiles: affectedTiles };
         return true;
-    }, // TODO: FULL FLOW
+    },
 
     // ---------------- PLANTING
     "TRY_PLANT_CROP": function(e, crop) {

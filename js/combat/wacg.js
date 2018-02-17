@@ -1,7 +1,4 @@
 function ChildrensCardGame(e) {
-    this.ForceCardIntoLocation = (x, y, card) => combat.enemyGrid[x][y] = GetCrop(card);
-    this.SetAttack = () => this.DEBUG_forcedOption = "attack";
-    this.DEBUG_forcedOption = "";
     this.GetStartingDeck = function() {
         return [ "char0", "char1", "char2", "char3", "char4", "char4", "elem0", "elem1", "elem2", "elem3", "elem0", "elem1", "elem2", "elem3", "elem0", 
                  "elem1", "elem2", "elem3", "elem0", "elem1", "elem2", "elem3", "fx0", "fx0", "fx1", "fx1", "fx2", "fx3", "fx3", "fx4", "fx4" ];
@@ -94,8 +91,7 @@ function ChildrensCardGame(e) {
         if(numElems < 2 && elemsInHand > 0) { options.push("placeElem"); options.push("placeElem"); }
         if(numElems == 2) { options.push("retractElem"); }
         if(numFx < 3 & fxInHand > 0) { options.push("placeFx"); }
-        const chosenOption = this.DEBUG_forcedOption !== "" ? this.DEBUG_forcedOption : RandomArrayItem(options);
-        //let chosenOption = options.splice(Math.floor(Math.random() * options.length), 1)[0];
+        const chosenOption = RandomArrayItem(options);
         if(chosenOption === "attack") {
             const charCard = combat.enemyGrid[1][1];
             const elemOne = combat.enemyGrid[1][0];
