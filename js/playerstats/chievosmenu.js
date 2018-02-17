@@ -11,19 +11,16 @@ pausemenu.chievos = {
     drawAll: function(isFirst) {
         gfx.clearSome(this.layersToClear);
         gfx.drawInfobox(16, 5, 7);
-        
-        var idx = 0;
-        for(var a in achievements) {
-            var x = this.achStartX + this.achDX * (idx % this.numPerRow);
-            var y = this.achStartY + this.achDX * Math.floor(idx / this.numPerRow);
+        for(let idx = 0; idx < achievements.length; idx++) {
+            const a = achievements[idx];
+            const x = this.achStartX + this.achDX * (idx % this.numPerRow);
+            const y = this.achStartY + this.achDX * Math.floor(idx / this.numPerRow);
             gfx.drawTileToGrid("a." + a, x, y, "menuA");
-            var playerHasAchievement = player.achievements.indexOf(a) >= 0;
+            const playerHasAchievement = player.achievements.indexOf(a) >= 0;
             if(!playerHasAchievement) { gfx.drawTileToGrid("a.donthave", x, y, "menuA"); }
             if(isFirst) { this.vals.push([a, playerHasAchievement]); }
-            idx++;
         }
-        this.yMax = Math.floor(idx / this.numPerRow);
-
+        this.yMax = Math.floor(achievements.length / this.numPerRow);
         gfx.drawCursor(this.achStartX + this.cursor.x * this.achDX, this.achStartY + this.cursor.y * this.achDX, 0, 0);
         this.setText();
     },

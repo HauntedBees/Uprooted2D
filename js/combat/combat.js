@@ -153,11 +153,11 @@ var combat = {
         var isFinalKill = false;
         if(this.enemies[enemyidx].health <= 0 && !this.enemies[enemyidx].alreadyDead) {
             this.enemies[enemyidx].alreadyDead = true;
-            var e = this.enemies[enemyidx];
+            const e = this.enemies[enemyidx];
             this.expEarned += e.exp;
             if(e.soleKill && !this.doingFinalKill) { isFinalKill = true; this.doingFinalKill = true; }
-            for(var i = 0; i < e.drops.length; i++) {
-                var dropInfo = e.drops[i];
+            for(let i = 0; i < e.drops.length; i++) {
+                const dropInfo = e.drops[i];
                 if(dropInfo.money) {
                     this.moniesEarned += InclusiveRange(dropInfo.min, dropInfo.max);
                 } else {
@@ -166,7 +166,11 @@ var combat = {
             }
         }
         if(isFinalKill) {
-            for(var i = 0; i < this.enemies.length; i++) {
+            switch(this.enemies[enemyidx].id) {
+                case "outlet": AddAchievementIfMissing("unplugged"); break;
+                case "theMonster": AddAchievementIfMissing("soybeat"); break;
+            }
+            for(let i = 0; i < this.enemies.length; i++) {
                 if(i === enemyidx) { continue; }
                 this.damageEnemy(i, this.enemies[i].health + 1);
             }
@@ -298,6 +302,7 @@ var combat = {
                 var postCombat = game.target.nonStandardGameOver;
                 worldmap.clearTarget();
                 clearInterval(combat.charAnimIdx);
+                game.SetNonstandardGameOverFlag();
                 game.transition(combat.inbetween, worldmap, {
                     init: { x: 8.5, y: 9 },
                     map: "gameover",

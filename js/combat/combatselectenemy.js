@@ -302,28 +302,31 @@ combat.selectTarget = {
         return true;
     },
     GetAttackDetails: function() {
-        var myCrops = [];
-        for(var x = 0; x < player.gridWidth; x++) {
-            for(var y = 0; y < player.gridHeight; y++) {
-                var tile = combat.grid[x][y];
+        let myCrops = [];
+        for(let x = 0; x < player.gridWidth; x++) {
+            for(let y = 0; y < player.gridHeight; y++) {
+                const tile = combat.grid[x][y];
                 if(tile === null || tile.x !== undefined) { continue; }
                 if(tile.name === "app") { if(tile.activeTime > 2) { continue; } }
                 else if(tile.rotten || tile.activeTime > 0) { continue; }
                 myCrops.push({ crop: tile, x: x, y: y });
             }
         }
-        var targetParams = [];
-        for(var i = 0; i < this.targets.length; i++) {
+        let targetParams = [];
+        for(let i = 0; i < this.targets.length; i++) {
             if(this.targets[i].x === undefined) { // enemy
                 targetParams.push(combat.enemies[this.targets[i]].def);
             } else { // crop
-                var x = this.targets[i].x - combat.enemydx;
-                var y = this.targets[i].y - combat.enemydy;
+                const x = this.targets[i].x - combat.enemydx;
+                const y = this.targets[i].y - combat.enemydy;
                 targetParams.push(combat.enemyGrid[x][y]);
             }
         }
         if(myCrops.length === 0) { return dmgCalcs.MeleeAttack(true, combat.season, player.atk, targetParams, -1); }
-        else { return dmgCalcs.CropAttack(true, combat.season, player.atk, myCrops, targetParams, -1); }
+        else {
+            if(myCrops.length >= 20) { AddAchievementIfMissing("biglaunch"); }
+            return dmgCalcs.CropAttack(true, combat.season, player.atk, myCrops, targetParams, -1);
+        }
     },
     GetDamageText: function(criticalHit, hasAnimals, hasRecoil, hasKills, hasDestroys, stunningEnemies, isFalcon, damage, target, multipleTargets, selfHarm) {
         var damagetext = GetText("attackMessageStruct");
@@ -380,7 +383,7 @@ const postHits = {
         return function() {
             e.spriteidx = 25;
             e.unplugged = true;
-            e.plugTimer = InclusiveRange(2, 3);
+            e.plugTimer = 3;
             e.health = 50;
             e.def = 5;
             game.innerTransition(this, combat.inbetween, {

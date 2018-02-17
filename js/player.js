@@ -1,10 +1,11 @@
-var player = {
+let player = {
     health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true,
     c2: 0, c2Rate: 1, beeQueensFaced: 0, nathanSeeds: [["beet", 10], ["carrot", 10], ["ginger", 5]],
     level: 1, exp: 0, nextExp: 4, totalExp: 0, ethicsAxis: 0, techAxis: 0, // 1 = good/tech, -1 = bad/nature
     monies: 1000, playTime: 0, visitedMaps: [], openedChests: [],
-    miscdata: { seasonsPlanted: [0, 0, 0, 0],
-                typesPlanted: { "veg": 0, "tree": 0, "bee": 0, "rice": 0, "rod": 0, "water": 0, "cow": 0, "mush": 0, "egg": 0, "tech": 0 } },
+    miscdata: { seasonsPlanted: [0, 0, 0, 0], cropsPlanted: {}, techFixturesUsed: 0, 
+                typesPlanted: { "veg": 0, "tree": 0, "bee": 0, "rice": 0, "rod": 0, "water": 0, "cow": 0, "mush": 0, "egg": 0, "tech": 0 },
+              },
     clearedEntities: [], achievements: [], failedEntities: [], 
     questsCleared: [], activeQuests: {}, 
     lastInn: "start",
@@ -127,7 +128,7 @@ var player = {
         }
     },
     getLevelUpItemBonuses: function() {
-        var items = [];
+        let items = [];
         if(this.level % 2 === 0) { items.push(["carrot", this.level - 1]); items.push(["beet", this.level - 1]); }
         if(this.level % 3 === 0) { items.push(["ginger", Math.ceil(this.level / 2)]); }
         if(this.level % 4 === 0) { items.push(["corn", Math.ceil(this.level / 3)]); }
@@ -139,12 +140,12 @@ var player = {
         if(this.level % 10 === 0) { items.push(["garlic", this.level]); }
 
         if(this.level < 10) { items.push(["banana"]); items.push(["apple"]); }
-        else if(this.level < 20) { items.push(["grapes", 2]); items.push(["blackberry", 2]); }
-        else if(this.level < 30) { items.push(["avocado"]); items.push(["blackberry", 3]); items.push(["banana", 2]); }
-        else if(this.level < 40) { items.push(["avocado", 2]); items.push(["apricot"]); items.push(["blackberry", 2]); }
+        else if(this.level < 12) { items.push(["grapes", 2]); items.push(["blackberry", 2]); }
+        else if(this.level < 14) { items.push(["avocado"]); items.push(["blackberry", 3]); items.push(["banana", 2]); }
+        else if(this.level < 16) { items.push(["avocado", 2]); items.push(["apricot"]); items.push(["blackberry", 2]); }
         else { items.push(["kiwi", 2]); items.push(["avocado", 2]); items.push(["apricot", 2]); }
         
-        for(var i = 0; i < items.length; i++) { this.increaseItem(items[i][0], items[i][1] || 1); }
+        for(let i = 0; i < items.length; i++) { this.increaseItem(items[i][0], items[i][1] || 1); }
     },
     canAttackAfterPlanting: function() {
         if(this.equipment.gloves === null) { return 0; }
@@ -223,20 +224,36 @@ var player = {
         return false;
     },
     increaseItem: function(name, amount) {
+        if(name === "_beehive" && player.clearedEntities.indexOf("FarmHive") >= 0
+                                && player.clearedEntities.indexOf("BelowHive") >= 0
+                                && player.clearedEntities.indexOf("ForestHive") >= 0
+                                && player.clearedEntities.indexOf("KelpBeehive") >= 0
+                                && player.clearedEntities.indexOf("OfficeHive") >= 0) {
+            AddAchievementIfMissing("beeKing");
+        }
         if(amount === undefined) { amount = 1; }
-        var numOfType = 0;
-        var type = name[0] === "!" ? "!" : (name[0] === "_" ? "_" : "C");
+        let numOfType = 0;
+        const type = name[0] === "!" ? "!" : (name[0] === "_" ? "_" : "C");
         for(var i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0] === name) {
                 player.inventory[i][1] += amount;
                 return true;
             }
-            var front = player.inventory[i][0][0];
+            const front = player.inventory[i][0][0];
             if(front !== "!" && front !== "_" && type === "C") { numOfType++; }
         }
         if(numOfType === 36) { return false; }
         if(amount === 0) { return true; }
         player.inventory.push([name, amount]);
         return true;
+    },
+    PlantCrop: function(crop) {
+        if(player.miscdata.cropsPlanted[crop] === undefined) {
+            player.miscdata.cropsPlanted[crop] = 1;
+        } else {
+            player.miscdata.cropsPlanted[crop]++;
+        }
+        let hasAll = !debug.AllCrops.some(c => player.miscdata.cropsPlanted[c] === undefined);
+        if(hasAll) { AddAchievementIfMissing("allCrop"); }
     }
 };

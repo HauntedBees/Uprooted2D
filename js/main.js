@@ -110,16 +110,40 @@ const game = {
         document.addEventListener("keyup", input.keyUp);
         setInterval(game.incrementTime, 1000);
     },
-    incrementTime: function() { player.playTime++; },
+    incrementTime: () => player.playTime++,
     sheetsLoaded: function() {
         game.initListeners();
         game.currentInputHandler = worldmap.title;
         worldmap.title.setup();
     },
-    obj2str: function(obj) { return LZString.compress(JSON.stringify(obj)); },
-    str2obj: function(str) { return JSON.parse(LZString.decompress(str)); },
-    save: function(savenum) {
+    obj2str: obj  => LZString.compress(JSON.stringify(obj)),
+    str2obj: str => JSON.parse(LZString.decompress(str)),
+    SetNonstandardGameOverFlag: function() {
+        for(let i = 0; i < 5; i++) {
+            if(localStorage.getItem("gameover" + i) === null) {
+                localStorage.setItem("gameover" + i, player.SaveID);
+                return;
+            }
+        }
+    },
+    GetNonstandardGameOverFlag: function(savenum) {
+        for(let i = 0; i < 5; i++) {
+            const goId = localStorage.getItem("gameover" + i);
+            if(goId === player.SaveID) {
+                AddAchievementIfMissing("murderedToDeath");
+                localStorage.removeItem("gameover" + i);
+                game.save(savenum, true);
+                return;
+            }
+        }
+    },
+    save: function(savenum, justPlayer) {
+        if(justPlayer) { 
+            localStorage.setItem("player" + savenum, game.obj2str(player));
+            return;
+        }
         player.setMapPosition();
+        player.SaveID = (Math.random() * Number.MAX_SAFE_INTEGER).toString();
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
         localStorage.setItem("player" + savenum, game.obj2str(player));
         stateBinders.storePositions(worldmap.mapName);
@@ -133,6 +157,7 @@ const game = {
     load: function(savenum) {
         let loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
         player = Object.assign(player, loadedPlayer);
+        game.GetNonstandardGameOverFlag(savenum);
         mapStates = game.str2obj(localStorage.getItem("mapent" + savenum));
         stores["skumpys"].wares[0].price = (player.achievements.indexOf("skumpy") < 0 ? 20 : 0);
         if(mapStates["northcity"].phoneData !== undefined) {

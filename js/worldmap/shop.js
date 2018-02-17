@@ -431,10 +431,9 @@ worldmap.shop = {
             this.DrawDetails(GetText("s.sellseed"));
             return true;
         }
-        var cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
+        const cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
         if(this.isUpgradeShop && this.availableIndexes.length === 0) { return false; }
-        var productInfo = this.details.wares[cursor];
-
+        const productInfo = this.details.wares[cursor];
         if(productInfo.type === "book") {
             this.sellingState = me.sellStates.READING;
             this.bookReading = productInfo.name;
@@ -442,17 +441,15 @@ worldmap.shop = {
             this.DrawDetails(GetText(this.bookReading + this.bookState));
             return true;
         }
-
-        var price = 0;
-
-        var mult = this.details.buyMult || 1;
+        let price = 0;
+        const mult = (this.details.buyMult || 1) * GetPriceMultiplier();
         switch(productInfo.type) {
-            case "seed": price = Math.floor(GetCrop(productInfo.product).price * mult * GetPriceMultiplier()); break;
-            case "farm": price = Math.floor(GetFarmInfo(productInfo.product).price * mult * GetPriceMultiplier()); break;
-            case "equipment": price = Math.floor(GetEquipment(productInfo.product).price * mult * GetPriceMultiplier()); break;
-            default: price = Math.floor(productInfo.price * GetPriceMultiplier()); break;
+            case "seed": price = GetCrop(productInfo.product).price; break;
+            case "farm": price = GetFarmInfo(productInfo.product).price; break;
+            case "equipment": price = GetEquipment(productInfo.product).price; break;
+            default: price = productInfo.price; break;
         }
-        
+        price = Math.floor(price * mult);
         if(price > player.monies) { this.DrawDetails(GetText(this.details.notEnough)); return true; }
         player.monies -= price;
 
@@ -460,13 +457,13 @@ worldmap.shop = {
             player.lastInn = this.details.innId;
             player.health = player.maxhealth + 5;
         } else if(productInfo.type === "upgrade") {
-            var dims = {x: 0, y: 0, new: "n"};
+            let dims = {x: 0, y: 0, new: "n"};
             switch(productInfo.product) {
-                case "farmupgradeI": dims = {x: 4, y: 3, new: "I"}; break;
-                case "farmupgradeO": dims = {x: 4, y: 4, new: "O"}; break;
-                case "farmupgrade_": dims = {x: 6, y: 3, new: "_"}; break;
-                case "farmupgradeOO": dims = {x: 8, y: 6, new: "OO"}; break;
-                case "farmupgrade__": dims = {x: 10, y: 5, new: "__"}; break;
+                case "farmupgradeI": dims = { x: 4, y: 3, new: "I" }; break;
+                case "farmupgradeO": dims = { x: 4, y: 4, new: "O" }; break;
+                case "farmupgrade_": dims = { x: 6, y: 3, new: "_" }; break;
+                case "farmupgradeOO": dims = { x: 8, y: 6, new: "OO" }; AddAchievementIfMissing("fullUpgrade"); break;
+                case "farmupgrade__": dims = { x: 10, y: 5, new: "__" }; AddAchievementIfMissing("fullUpgrade"); break;
             }
             player.expandGrid(dims.x, dims.y, dims.new);
             this.cursorX = 1;

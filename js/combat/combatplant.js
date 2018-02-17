@@ -77,7 +77,7 @@ combat.plant = {
         if(type.corner === "_cow") { return ["food", "veg", "rice", "mush", "tree"].indexOf(this.activeCrop.type) >= 0; }
     },
     getSprinklerMultiplier: function(x, y, size) {
-        var isNearASprinkler = (this.isSprinkler(x - 1, y - 1) || this.isSprinkler(x - 1, y) || this.isSprinkler(x - 1, y + 1)
+        const isNearASprinkler = (this.isSprinkler(x - 1, y - 1) || this.isSprinkler(x - 1, y) || this.isSprinkler(x - 1, y + 1)
                                 || this.isSprinkler(x, y - 1) || this.isSprinkler(x, y + 1)
                                 || this.isSprinkler(x + 1, y - 1) || this.isSprinkler(x + 1, y) || this.isSprinkler(x + 1, y + 1));
         if(isNearASprinkler) { return 0.8; }
@@ -171,10 +171,12 @@ combat.plant = {
             }
             if(player.itemGrid[px][py] === "_shooter") {
                 if(combat.getUsedShooterIndex(px, py) >= 0) { return false; }
+                player.miscdata.techFixturesUsed++;
                 combat.usedShooters.push({x: px, y: py});
                 this.launchSeeds();
                 return true;
             } else if(player.itemGrid[px][py] === "_modulator") {
+                player.miscdata.techFixturesUsed++;
                 this.modulate();
                 return true;
             } else if(this.activeCrop.type === "spear") {
@@ -195,7 +197,9 @@ combat.plant = {
                 }
                 combat.animHelper.DrawBackground();
             } else {
-                newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1));
+                const sprinkMult = this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1);
+                newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * sprinkMult);
+                if(sprinkMult < 1) { player.miscdata.techFixturesUsed++; }
                 const effects = combat.effectGrid[px][py];
                 player.miscdata.typesPlanted[newCrop.type] += 1;
                 if(!cropIsKill) {
@@ -232,6 +236,10 @@ combat.plant = {
             }
             this.cursor = { x: 0, y: this.dy };
             player.decreaseItem(this.activeCrop.name);
+            player.PlantCrop(this.activeCrop.name);
+            if(!combat.isBossBattle && ["goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus", "hbee"].indexOf(this.activeCrop.name) >= 0) {
+                AddAchievementIfMissing("overkill");
+            }
             this.activeCrop = null;
             combat.animHelper.DrawCrops();
             if(cropIsKill) {

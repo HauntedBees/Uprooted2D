@@ -1,55 +1,10 @@
-const achievements = {
-    "boss1": { fromQuest: true }, // this metadata is a bit useless it hink
-    "lakeFairy": { fromQuest: true },
-    "goldshroom": { fromQuest: false },
-    "badrabbit": { fromQuest: true },
-    "limeTime": { fromQuest: true },
-    "RAPBATTLE": { fromQuest: true },
-    "boss2": { fromQuest: true },
-    "dowel": { fromQuest: true },
-    "kelpBuddy": { fromQuest: true },
-    "boss3help": { fromQuest: true },
-    "boss3hurt": { fromQuest: true },
-    "crouton": { fromQuest: true },
-    "unplugged": { fromQuest: true }, // TODO: this should come from beating the boss via unplugging
-    "boss4": { fromQuest: true },
-    "skumpy": { fromQuest: true },
-    "abuelita": { fromQuest: true },
-    "bossMob": { fromQuest: true },
-    "stonehenge": { fromQuest: true },
-    "laila": { fromQuest: false },
-    "bankStop": { fromQuest: true },
-    "boss5": { fromQuest: true },
-    "helpNerd": { fromQuest: true },
-    "abee": { fromQuest: true },
-    "techGood": { fromQuest: true },
-    "techBad": { fromQuest: true },
-    "natureGood": { fromQuest: true },
-    "natureBad": { fromQuest: true },
-    "vegan": { fromQuest: false },
-    "beeKing": { fromQuest: false }, // unimplemented
-    "luddite": { fromQuest: false }, // TODO: handle using tech fixtures, not just tech items
-    "springKing": { fromQuest: false },
-    "summerHummer": { fromQuest: false },
-    "autumnBottom": { fromQuest: false },
-    "winterHinter": { fromQuest: false },
-    "vegbuddy": { fromQuest: false },
-    "treebuddy": { fromQuest: false },
-    "mushbuddy": { fromQuest: false },
-    "eggbuddy": { fromQuest: false },
-    "ricebuddy": { fromQuest: false },
-    "beebuddy": { fromQuest: false },
-    "seabuddy": { fromQuest: false },
-    "cowbuddy": { fromQuest: false },
-    "techbuddy": { fromQuest: false },
-    "biglaunch": { fromQuest: false }, // launch 20(?) crops in one turn
-    "madeForMe": { fromQuest: false }, // TODO: get to fifth level of the endless cave
-    "soybeat": { fromQuest: false }, // beat the soy monster
-    "fullUpgrade": { fromQuest: false }, // get the biggest upgrade to your field
-    "allCrop": { fromQuest: false }, // use every crop at least once
-    "overkill": { fromQuest: false }, // waste a rare item on a non-boss enemy
-    "murderedToDeath": { fromQuest: false } // get killed by Mr. Bruno or The Monster (how get this to save?)
-};
+const achievements = [  // TODO: "madeForMe"
+    "boss1", "lakeFairy", "goldshroom", "badrabbit", "limeTime", "RAPBATTLE", "boss2", "dowel", "kelpBuddy", "boss3help", "boss3hurt",
+    "crouton", "unplugged", "boss4", "skumpy", "abuelita", "bossMob", "stonehenge", "laila", "bankStop", "boss5", "helpNerd", "abee",
+    "techGood", "techBad", "natureGood", "natureBad", "vegan", "beeKing", "luddite", "springKing", "summerHummer", "autumnBottom", "winterHinter", 
+    "vegbuddy", "treebuddy", "mushbuddy", "eggbuddy", "ricebuddy", "beebuddy", "seabuddy", "cowbuddy", "techbuddy", "biglaunch", "soybeat", "fullUpgrade",
+    "allCrop", "overkill", "madeForMe", "murderedToDeath"
+];
 function JustBeatGameChievoCheck() {
     const md = player.miscdata;
     if(player.ethicsAxis >= 0) {
@@ -62,7 +17,7 @@ function JustBeatGameChievoCheck() {
     if((md.typesPlanted["egg"] + md.typesPlanted["bee"] + md.typesPlanted["cow"] + md.typesPlanted["rod"] + md.typesPlanted["water"]) === 0) {
         AddAchievementIfMissing("vegan");
     }
-    if(md.typesPlanted["tech"] === 0) { AddAchievementIfMissing("luddite"); }
+    if(md.typesPlanted["tech"] === 0 && md.techFixturesUsed === 0) { AddAchievementIfMissing("luddite"); }
 };
 function CombatChievoCheck() {
     const md = player.miscdata;
