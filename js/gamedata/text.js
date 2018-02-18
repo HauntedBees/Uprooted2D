@@ -6665,6 +6665,21 @@ const fulltext = {
 		"en-dm": "Smartphone", 
 		"type": "opts"
 	},
+	"ef.shocked": {
+		"en-us": "", 
+		"en-dm": "Unsafe", 
+		"type": "opts"
+	},
+	"ef.splashed": {
+		"en-us": "", 
+		"en-dm": "Wet", 
+		"type": "opts"
+	},
+	"ef.burned": {
+		"en-us": "", 
+		"en-dm": "Burnt", 
+		"type": "opts"
+	},
 	"alignbad": {
 		"en-us": "", 
 		"en-dm": "Evil", 
@@ -6693,6 +6708,11 @@ const fulltext = {
 	"farmModDirt": {
 		"en-us": "", 
 		"en-dm": "Dirt\n Growth Speed: {0}%", 
+		"type": "opts"
+	},
+	"growthSpeed": {
+		"en-us": "", 
+		"en-dm": "Growth Speed: {0}%", 
 		"type": "opts"
 	},
 	"log": {
@@ -7585,6 +7605,21 @@ const fulltext = {
 	"levelUp": {
 		"en-us": "", 
 		"en-dm": "Whoah [gamer voice] nice! You hit level {0}! You got some Bonus Seeds!", 
+		"type": "combat"
+	},
+	"plFishCaught": {
+		"en-us": "", 
+		"en-dm": "You chuck the spear and catch a fish!", 
+		"type": "combat"
+	},
+	"plFishFail": {
+		"en-us": "", 
+		"en-dm": "You chuck the spear, but do not catch any fish.", 
+		"type": "combat"
+	},
+	"plModulate": {
+		"en-us": "", 
+		"en-dm": "You load some seeds into the modulator, changing the season to {0}.", 
 		"type": "combat"
 	},
 	"seedShooterAttack": {

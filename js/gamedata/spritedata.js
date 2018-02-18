@@ -447,6 +447,7 @@ var spriteData = {
         "carrotSel": [3, 21], 
         "inv_power": [31, 11],
         "inv_time": [13, 21],
+        "inv_HP": [47, 4],
         "inv_regrow": [30, 11],
         "hbeeseed": [25, 11],
         "hbee0": [26, 11],

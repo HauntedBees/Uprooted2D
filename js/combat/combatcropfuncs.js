@@ -78,7 +78,7 @@ combat.AgeCrop = function(grid, x, y, catchFunc) {
     } else if(crop.activeTime === 0) {
         if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = combat.plant.GetGrowthTime(crop, x, y, true); }
         else if(crop.type === "veg") { crop.rotten = true; }
-        else if(crop.type === "egg") { crop.power += 1; }
+        else if(crop.type === "egg") { crop.power = Math.min(crop.initpower + 3, crop.power + 0.5); }
         else if(crop.type === "rod" && !crop.ready) { crop.health = 0; this.PurgeCrop(grid, x, y); }
     }
 };

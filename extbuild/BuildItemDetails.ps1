@@ -19,6 +19,7 @@ function CropDetail(name, displayname, price, type, size, time, frames, power, r
     this.time = time;
     this.frames = frames;
     this.power = power;
+    this.initpower = power;
 	this.health = power * 5;
 	this.maxhealth = this.health;
 	this.defense = power * power * 0.4;
