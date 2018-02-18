@@ -14,7 +14,7 @@ function TryGetText(key) {
 		const lang = (game !== undefined) ? game.language : "en-dm";
 		const d = fulltext[key];
 		if(d[lang] !== undefined) { return d[lang]; }
-		return d["en-us"];
+        return d["en-us"];
 	} catch(e) { return false; }
 }
 function GetTextSmall(key, small) {
