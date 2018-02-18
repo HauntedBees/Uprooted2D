@@ -19,10 +19,28 @@ const inns = {
 };
 
 const mapBattleXref = {
-    "underwater": "bgs/underwater"
+    "underwater": "bgs/underwater",
+    "researchfacility": "bgs/researchlab",
+    "fakefarm": "bgs/fakefarm",
+    "southcity": "bgs/scity",
+    "northcity": "bgs/ncity",
+    "hq_1": "bgs/hq",
+    "hq_2": "bgs/hq",
+    "hq_3": "bgs/hq",
+    "hq_4": "bgs/hq",
+    "hq_5": "bgs/hq",
+    "hq_6": "bgs/hq"
 };
 const mapBattleTileXref = {
-    "underwater": "seaGrass"
+    "underwater": "seaGrass",
+    "researchfacility": "techGrass",
+    "northcity": "roadGrass",
+    "hq_1": "hqGrass",
+    "hq_2": "hqGrass",
+    "hq_3": "hqGrass",
+    "hq_4": "hqGrass",
+    "hq_5": "hqGrass",
+    "hq_6": "hqGrass"
 };
 
 const levelStats = {
