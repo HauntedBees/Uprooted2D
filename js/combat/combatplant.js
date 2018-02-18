@@ -76,15 +76,37 @@ combat.plant = {
         }
         if(type.corner === "_cow") { return ["food", "veg", "rice", "mush", "tree"].indexOf(this.activeCrop.type) >= 0; }
     },
+    GetGrowthTime: function(crop, x, y, regrow) {
+        const baseTime = regrow ? crop.respawn : crop.time;
+        if(["spear", "rod", "water", "bee", "egg", "sickle2"].indexOf(crop.type) >= 0) {
+            return baseTime;
+        } else if(crop.type === "tech") {
+            return Math.ceil(baseTime / player.getCropSpeedMultiplier());
+        } else {
+            const sprinkMult = this.getSprinklerMultiplier(x, y, crop.size - 1);
+            if(sprinkMult < 1) { player.miscdata.techFixturesUsed++; }
+            return Math.ceil(baseTime / player.getCropSpeedMultiplier() * sprinkMult);
+        }
+    },
     getSprinklerMultiplier: function(x, y, size) {
-        const isNearASprinkler = (this.isSprinkler(x - 1, y - 1) || this.isSprinkler(x - 1, y) || this.isSprinkler(x - 1, y + 1)
-                                || this.isSprinkler(x, y - 1) || this.isSprinkler(x, y + 1)
-                                || this.isSprinkler(x + 1, y - 1) || this.isSprinkler(x + 1, y) || this.isSprinkler(x + 1, y + 1));
-        if(isNearASprinkler) { return 0.8; }
+        let mult = 1;
+        if(this.isSprinkler(x - 1, y - 1)) { mult -= 0.1; }
+        if(this.isSprinkler(x - 1, y)) { mult -= 0.2; }
+        if(this.isSprinkler(x - 1, y + 1)) { mult -= 0.1; }
+        if(this.isSprinkler(x, y - 1)) { mult -= 0.2; }
+        if(this.isSprinkler(x, y + 1)) { mult -= 0.2; }
+        if(this.isSprinkler(x + 1, y - 1)) { mult -= 0.1; }
+        if(this.isSprinkler(x + 1, y)) { mult -= 0.2; }
+        if(this.isSprinkler(x + 1, y + 1)) { mult -= 0.1; }
+        mult = Math.max(mult, 0.33);
+        if(mult < 1) { return mult; }
         if(size === 1) {
-            if(this.getSprinklerMultiplier(x + 1, y) === 0.8) { return 0.8; }
-            if(this.getSprinklerMultiplier(x + 1, y + 1) === 0.8) { return 0.8; }
-            if(this.getSprinklerMultiplier(x, y + 1) === 0.8) { return 0.8; }
+            let cornerMult = this.getSprinklerMultiplier(x + 1, y);
+            if(cornerMult < 1) { return cornerMult; }
+            cornerMult = this.getSprinklerMultiplier(x + 1, y + 1);
+            if(cornerMult < 1) { return cornerMult; }
+            cornerMult = this.getSprinklerMultiplier(x, y + 1);
+            if(cornerMult < 1) { return cornerMult; }
         }
         return 1;
     },
@@ -197,9 +219,7 @@ combat.plant = {
                 }
                 combat.animHelper.DrawBackground();
             } else {
-                const sprinkMult = this.getSprinklerMultiplier(px, py, this.activeCrop.size - 1);
-                newCrop.activeTime = Math.ceil(newCrop.time / player.getCropSpeedMultiplier() * sprinkMult);
-                if(sprinkMult < 1) { player.miscdata.techFixturesUsed++; }
+                newCrop.activeTime = this.GetGrowthTime(newCrop, px, py, false);
                 const effects = combat.effectGrid[px][py];
                 player.miscdata.typesPlanted[newCrop.type] += 1;
                 if(!cropIsKill) {

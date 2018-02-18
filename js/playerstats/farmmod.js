@@ -1,13 +1,14 @@
 pausemenu.farmmod = {
-    grid: [], cursor: {x: 0, y: 0}, dx: 0, dy: 0, 
+    grid: [], cursor: {x: 0, y: 0}, dx: 0, dy: 0, animHelper: null,
     selectedItem: null, selectedItemPos: null, selectedItemSize: 0, 
     layersToClear: ["background", "characters", "menuA", "menucursorA", "menucursorB", "menutext"],
-    actualIndexes: [], inventoryWidth: 5, 
-    setup: function() {
+    actualIndexes: [], inventoryWidth: 4, 
+    setup: function() { 
+        this.animHelper = new CombatAnimHelper([]);
         this.cursor = {x: 0, y: 0};
         player.initGridDimensions();
-        this.dx = Math.floor((15 - player.gridWidth) / 2);
-        this.dy = 4 + Math.floor((6 - player.gridHeight) / 2);
+        this.dx = ((16 - player.gridWidth) / 2);
+        this.dy = 6 + Math.floor((6 - player.gridHeight) / 2);
         this.grid = combat.getGrid(player.gridWidth, player.gridHeight);
         this.drawEverything();
     },
@@ -15,59 +16,67 @@ pausemenu.farmmod = {
         gfx.clearSome(this.layersToClear);
         this.drawFarm();
         this.displayItems();
-        gfx.drawInfobox(10, 4);
-        var size = (this.selectedItem === null || this.cursor.y < 3) ? 0 : this.selectedItemSize;
+        gfx.drawInfobox(11, 5);
+        const size = (this.selectedItem === null || this.cursor.y < 3) ? 0 : this.selectedItemSize;
+        const delta = this.cursor.y < 3 ? 0.5 : 0; 
         if(this.canPlant()) {
-            gfx.drawCursor(this.cursor.x, this.cursor.y, size, size);
+            gfx.drawCursor(delta + this.cursor.x, delta + this.cursor.y, size, size);
         } else {
-            gfx.drawCursor(this.cursor.x, this.cursor.y, size, size, "bcursor");
+            gfx.drawCursor(delta + this.cursor.x, delta + this.cursor.y, size, size, "bcursor");
         }
         if(this.selectedItem !== null) {
-            gfx.drawCursor(this.selectedItemPos.x, this.selectedItemPos.y, 0, 0, "xcursor");
+            gfx.drawCursor(0.5 + this.selectedItemPos.x, 0.5 + this.selectedItemPos.y, 0, 0, "xcursor");
         }
         this.drawText();
     },
     drawText: function() {
-        var text = "";
+        let text = "";
         if(this.cursor.y >= 3) {
-            var gridX = this.cursor.x - this.dx;
-            var gridY = this.cursor.y - this.dy;
+            const gridX = this.cursor.x - this.dx, gridY = this.cursor.y - this.dy;
+            let speed = 100;
             if(player.itemGrid[gridX][gridY] === null) {
-                var speed = Math.round(player.getCropSpeedMultiplier() * 100);
-                text = "Dirt\n Growth Speed: " + speed + "%\n ";
+                text = GetText("farmModDirt");
+                speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(gridX, gridY, 1)) * 100);
             } else {
-                var item = player.itemGrid[gridX][gridY];
+                let item = player.itemGrid[gridX][gridY];
                 if(item.coord) { item = player.itemGrid[item.x][item.y]; }
-                var itemData = GetFarmInfo(item);
+                const itemData = GetFarmInfo(item);
                 text = itemData.displayname + "\n " + itemData.shortdesc;
+                if(itemData.name !== "_hotspot") {
+                    speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(gridX, gridY, itemData.size)) * 100);
+                } else {
+                    speed = Math.round(player.getCropSpeedMultiplier() * 100);
+                }
             }
+            text = text.replace(/\{0\}/g, speed);
         } else if(this.cursor.x < this.inventoryWidth) {
-            var idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
+            const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             if(idx < this.actualIndexes.length) {
-                var invIdx = this.actualIndexes[idx];
-                var item = GetFarmInfo(player.inventory[invIdx][0]);
-                text += item.displayname + "\n " + item.shortdesc;
+                const invIdx = this.actualIndexes[idx];
+                const item = GetFarmInfo(player.inventory[invIdx][0]);
+                text += item.displayname + "\n " + item.desc;
             }
         }
-        gfx.drawWrappedText(text, 5.5 * 16, 11, 105);
+        gfx.drawWrappedText(text, 5.5 * 16, 11, 155);
     },
     displayItems: function() {
-        var j = 0;
+        let j = 0;
         this.actualIndexes = [];
-        for(var i = 0; i < player.inventory.length; i++) {
+        for(let i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0][0] !== "_") { continue; }
-            gfx.drawInventoryItem(player.inventory[i], j % this.inventoryWidth, Math.floor(j / this.inventoryWidth), "menuA");
+            gfx.drawInventoryItem(player.inventory[i], 0.5 + j % this.inventoryWidth, 0.5 + Math.floor(j / this.inventoryWidth), "menuA");
             this.actualIndexes.push(i);
             j++;
         }
     },
     drawFarm: function() {
-        for(var x = 0; x < player.gridWidth; x++) {
-            for(var y = 0; y < player.gridHeight; y++) {
+        this.animHelper.DrawWrapper(this.dx, this.dy, player.gridWidth, player.gridHeight);
+        for(let x = 0; x < player.gridWidth; x++) {
+            for(let y = 0; y < player.gridHeight; y++) {
                 gfx.drawTileToGrid("dirt", x + this.dx, y + this.dy, "background");
-                var item = player.itemGrid[x][y];
+                const item = player.itemGrid[x][y];
                 if(item !== null && !item.coord) {
-                    var iteminfo = GetFarmInfo(item);
+                    const iteminfo = GetFarmInfo(item);
                     if(iteminfo.displaySprite !== undefined) {
                         gfx.drawTileToGrid(iteminfo.displaySprite, x + this.dx, y + this.dy, "characters");
                     } else if(item === "_lake") {

@@ -6690,6 +6690,191 @@ const fulltext = {
 		"en-dm": " Seed", 
 		"type": "opts"
 	},
+	"farmModDirt": {
+		"en-us": "", 
+		"en-dm": "Dirt\n Growth Speed: {0}%", 
+		"type": "opts"
+	},
+	"log": {
+		"en-us": "", 
+		"en-dm": "Mushroom Log", 
+		"type": "fixname"
+	},
+	"coop": {
+		"en-us": "", 
+		"en-dm": "Incubator", 
+		"type": "fixname"
+	},
+	"modulator": {
+		"en-us": "", 
+		"en-dm": "Season Modulator", 
+		"type": "fixname"
+	},
+	"shooter": {
+		"en-us": "", 
+		"en-dm": "Seed Shooter", 
+		"type": "fixname"
+	},
+	"lake": {
+		"en-us": "", 
+		"en-dm": "Lake", 
+		"type": "fixname"
+	},
+	"paddy": {
+		"en-us": "", 
+		"en-dm": "Rice Paddy", 
+		"type": "fixname"
+	},
+	"cow": {
+		"en-us": "", 
+		"en-dm": "Cow", 
+		"type": "fixname"
+	},
+	"strongsoil": {
+		"en-us": "", 
+		"en-dm": "Strong Soil", 
+		"type": "fixname"
+	},
+	"hotspot": {
+		"en-us": "", 
+		"en-dm": "Hotspot", 
+		"type": "fixname"
+	},
+	"sprinkler": {
+		"en-us": "", 
+		"en-dm": "Sprinkler", 
+		"type": "fixname"
+	},
+	"beehive": {
+		"en-us": "", 
+		"en-dm": "Beehive", 
+		"type": "fixname"
+	},
+	"charger": {
+		"en-us": "", 
+		"en-dm": "Sickle2 Charger", 
+		"type": "fixname"
+	},
+	"log.sdesc": {
+		"en-us": "", 
+		"en-dm": "Allows Mushrooms to be grown. \n Growth Speed: {0}%", 
+		"type": "fixsdesc"
+	},
+	"coop.sdesc": {
+		"en-us": "", 
+		"en-dm": "Allows Eggs to be hatched.", 
+		"type": "fixsdesc"
+	},
+	"modulator.sdesc": {
+		"en-us": "", 
+		"en-dm": "Changes seasons when fed seeds.", 
+		"type": "fixsdesc"
+	},
+	"shooter.sdesc": {
+		"en-us": "", 
+		"en-dm": "Immediately shoots seeds it is fed.", 
+		"type": "fixsdesc"
+	},
+	"lake.sdesc": {
+		"en-us": "", 
+		"en-dm": "Allows fishing tools to be placed.", 
+		"type": "fixsdesc"
+	},
+	"paddy.sdesc": {
+		"en-us": "", 
+		"en-dm": "Allows rice to be grown. \n Growth Speed: {0}%", 
+		"type": "fixsdesc"
+	},
+	"cow.sdesc": {
+		"en-us": "", 
+		"en-dm": "Produces healing Milk when fed.", 
+		"type": "fixsdesc"
+	},
+	"strongsoil.sdesc": {
+		"en-us": "", 
+		"en-dm": "Makes crops more resistant to damage. \n Growth Speed: {0}%", 
+		"type": "fixsdesc"
+	},
+	"hotspot.sdesc": {
+		"en-us": "", 
+		"en-dm": "Allows electronics to be placed. \n Growth Speed: {0}%", 
+		"type": "fixsdesc"
+	},
+	"sprinkler.sdesc": {
+		"en-us": "", 
+		"en-dm": "Makes crops around it grow faster.", 
+		"type": "fixsdesc"
+	},
+	"beehive.sdesc": {
+		"en-us": "", 
+		"en-dm": "Holds bees.", 
+		"type": "fixsdesc"
+	},
+	"charger.sdesc": {
+		"en-us": "", 
+		"en-dm": "Charges Sickle2.", 
+		"type": "fixsdesc"
+	},
+	"log.ldesc": {
+		"en-us": "", 
+		"en-dm": "Allows Mushrooms to be grown. Mushrooms regrow after harvest and do not rot when fully grown.", 
+		"type": "fixdesc"
+	},
+	"coop.ldesc": {
+		"en-us": "", 
+		"en-dm": "Allows Eggs to be hatched. Hatched eggs do not rot and do more damage the longer they are left on the Field.", 
+		"type": "fixdesc"
+	},
+	"modulator.ldesc": {
+		"en-us": "", 
+		"en-dm": "If vegetable seeds are planted in this, it will return the seeds and change the season based on the seed.", 
+		"type": "fixdesc"
+	},
+	"shooter.ldesc": {
+		"en-us": "", 
+		"en-dm": "If seeds are planted in this, it will immediately shoot seeds, damaging all enemies.", 
+		"type": "fixdesc"
+	},
+	"lake.ldesc": {
+		"en-us": "", 
+		"en-dm": "Allows sea creatures to be caught with appropriate equipment.", 
+		"type": "fixdesc"
+	},
+	"paddy.ldesc": {
+		"en-us": "", 
+		"en-dm": "Allows rice and other paddy crops to be grown. Can only be placed on the bottom row of a Field.", 
+		"type": "fixdesc"
+	},
+	"cow.ldesc": {
+		"en-us": "", 
+		"en-dm": "Produces healing Milk when fed fodder or vegetable seeds. Milk can be collected by Composting.", 
+		"type": "fixdesc"
+	},
+	"strongsoil.ldesc": {
+		"en-us": "", 
+		"en-dm": "Vegetables and trees planted on Strong Soil will take less damage from fire and water damage as well as standard attacks. The soil itself is also more resistant to burning and flooding.", 
+		"type": "fixdesc"
+	},
+	"hotspot.ldesc": {
+		"en-us": "", 
+		"en-dm": "Allows electronic devices to be 'planted' on the field, which then behave like any other crop.", 
+		"type": "fixdesc"
+	},
+	"sprinkler.ldesc": {
+		"en-us": "", 
+		"en-dm": "Vegetables and trees planted in the 8 tiles around a sprinkler will grow 25% faster.", 
+		"type": "fixdesc"
+	},
+	"beehive.ldesc": {
+		"en-us": "", 
+		"en-dm": "Allows Bees to be placed. Bees will randomly produce honey, which can recover lots of health when composted or stun enemies when used in an attack.", 
+		"type": "fixdesc"
+	},
+	"charger.ldesc": {
+		"en-us": "", 
+		"en-dm": "This must be present on your Field and regularly filled with Sickle2 Batteries in order to use your Sickle2 effectively.", 
+		"type": "fixdesc"
+	},
 	// Achievements
 	"a.boss1": {
 		"en-us": "", 

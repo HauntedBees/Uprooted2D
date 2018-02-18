@@ -6,6 +6,20 @@ const debug = {
         combat.startBattle(["yourWorstFuckingNightmare"]);//, "robo", "robo"]);
         return true; 
     },
+    AllFixtures: function() {
+        player.increaseItem("_log", 20);
+        player.increaseItem("_coop", 20);
+        player.increaseItem("_modulator", 20);
+        player.increaseItem("_shooter", 20);
+        player.increaseItem("_lake", 20);
+        player.increaseItem("_paddy", 20);
+        player.increaseItem("_cow", 20);
+        player.increaseItem("_strongsoil", 20);
+        player.increaseItem("_hotspot", 20);
+        player.increaseItem("_sprinkler", 20);
+        player.increaseItem("_beehive", 20);
+        player.increaseItem("_charger", 20);
+    },
     AllWeapons: function() {
         player.increaseItem("!babySickle");
         player.increaseItem("!baseSickle");

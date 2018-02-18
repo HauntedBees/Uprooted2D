@@ -76,7 +76,7 @@ combat.AgeCrop = function(grid, x, y, catchFunc) {
         crop.activeTime -= 1;
         if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock" || (crop.type === "rod" && !crop.ready))) { crop.health = 0; this.PurgeCrop(grid, x, y); }
     } else if(crop.activeTime === 0) {
-        if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = crop.respawn; }
+        if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = combat.plant.GetGrowthTime(crop, x, y, true); }
         else if(crop.type === "veg") { crop.rotten = true; }
         else if(crop.type === "egg") { crop.power += 1; }
         else if(crop.type === "rod" && !crop.ready) { crop.health = 0; this.PurgeCrop(grid, x, y); }
@@ -131,7 +131,7 @@ combat.PurgeCrop = function(grid, x, y) {
     const crop = grid[x][y];
     //if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; } // TODO: why was this even here
     if(crop.respawn > 0 && crop.health > 0) {
-        crop.activeTime = crop.respawn;
+        crop.activeTime = combat.plant.GetGrowthTime(crop, x, y, true);
         crop.flagged = false;
     } else {
         grid[x][y] = null;

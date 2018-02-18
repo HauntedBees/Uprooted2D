@@ -181,12 +181,13 @@ if($which.Contains("F")) {
 	$csv = Import-CSV ".\temp\Details_Fixtures.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\fixtures.js";
 	$out.WriteLine(@'
-function FixtureDetail(name, displayname, price, shortdesc, desc, displaySprite) {
+function FixtureDetail(name, price, displaySprite) {
     this.name = name;
-    this.displayname = displayname;
+	const textname = name.substring(1);
+    this.displayname = GetText(textname);
     this.price = price;
-    this.shortdesc = shortdesc;
-    this.desc = desc;
+    this.shortdesc = GetText(textname + ".sdesc");
+    this.desc = GetText(textname + ".ldesc");
     if(displaySprite) {
         this.size = 2;
         this.displaySprite = displaySprite;
@@ -195,7 +196,7 @@ function FixtureDetail(name, displayname, price, shortdesc, desc, displaySprite)
 function GetFarmInfo(name) {
     switch(name) {
 '@);
-	$formatStr = "		case `"{name}`": return new FixtureDetail(name, `"{displayname}`", {price}, `"{shortdesc}`", `"{desc}`"{addtl});";
+	$formatStr = "		case `"{name}`": return new FixtureDetail(name, {price}{addtl});";
 	$count = 0;
 	ForEach($row in $csv) {
 		if($row.Crop -eq "" -or $row.Crop -eq "Crop") { continue; }
@@ -203,7 +204,7 @@ function GetFarmInfo(name) {
 			$out.WriteLine("		/* _ */".replace("_", $row.Name));
 			continue;
 		}
-		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{shortdesc}", $row.ShortDesc).replace("{desc}", $row.Desc);
+		$endStr = $formatStr.replace("{name}", $row.Id).replace("{price}", $row.Price);
 		if($row.DisplaySprite) { 
 			$endStr = $endStr.replace("{addtl}", ", `"" + $row.DisplaySprite + "`"");
 		} else {

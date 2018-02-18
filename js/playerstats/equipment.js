@@ -162,7 +162,7 @@ pausemenu.equipment = {
         return str;
     },
     GetComparison: function(str, newequip, oldequip, column, compareType, isPercent) {
-        const y = 336 + (this.curY * 32); 
+        const y = 336 + (this.curY * (gfx.GetFont() === "OpenDyslexic" ? 35 : 32));
         const newVal = newequip[column];
         const oldVal = oldequip[column];
         if(compareType === "number") {

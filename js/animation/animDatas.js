@@ -442,10 +442,11 @@ const animCallbackHelpers = {
 function AddCropDeathAnim(animProcess, x, y, crop) {
     const puffStart = crop.size === 2 ? "bigpuff" : "puff";
     let anim = new TileAnim(x, y, [puffStart + "0", puffStart + "1", puffStart + "2", puffStart + "3", puffStart + "4"], false, 24, false);
+    console.log("AAA");
     if(crop.health <= 0 || crop.respawn === 0) {
         anim.AddFrameFunc(3, () => { crop.hidden = true; combat.animHelper.DrawCrops(); });
     } else if(crop.respawn > 0) {
-        anim.AddFrameFunc(3, () => { crop.activeTime = crop.respawn; combat.animHelper.DrawCrops(); });
+        anim.AddFrameFunc(3, () => { crop.activeTime = combat.plant.GetGrowthTime(crop, x - combat.dx, y - combat.dy, true); combat.animHelper.DrawCrops(); });
     }
     animProcess.AddBaby(anim);
 }
