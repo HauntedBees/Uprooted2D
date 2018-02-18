@@ -1,6 +1,6 @@
-var worldmap = {
+const worldmap = {
     freeMovement: true, savedImage: "", angryBees: false, smartphone: null, horRor: null,
-    pos: {x: 0, y: 0}, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
+    pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
     animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
     entities: [], importantEntities: {},
@@ -27,7 +27,7 @@ var worldmap = {
         if(!args.noEntityUpdate) {
             if(mapentities[this.mapName] !== undefined) {
                 this.entities = mapentities[this.mapName].slice();
-                for(var i = this.entities.length - 1; i >= 0; i--) {
+                for(let i = this.entities.length - 1; i >= 0; i--) {
                     if(player.clearedEntities.indexOf(this.entities[i].name) >= 0 || (this.entities[i].showIf && player.questsCleared.indexOf(this.entities[i].showIf) < 0)) {
                         this.entities.splice(i, 1);
                     } else if(player.openedChests.indexOf(this.entities[i].name) >= 0) {
@@ -38,9 +38,9 @@ var worldmap = {
                 this.entities = [];
             }
         } else { justStateLoad = false; args.fromLoad = false; }
-        var targetToAutoplay = null;
-        for(var i = 0; i < this.entities.length; i++) {
-            var e = this.entities[i];
+        let targetToAutoplay = null;
+        for(let i = 0; i < this.entities.length; i++) {
+            const e = this.entities[i];
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
             if(e.autoplay && targetToAutoplay === null) { targetToAutoplay = e; } // always autoplay first one
         }
@@ -50,7 +50,7 @@ var worldmap = {
         if(targetToAutoplay !== null) {
             game.target = targetToAutoplay;
             if(game.target !== null && game.target.interact !== undefined) {
-                var keepGoing = true;
+                let keepGoing = true;
                 if(player.failedEntities.indexOf(game.target.name) >= 0 && game.target.failedInteract !== undefined) {
                     keepGoing = game.target.failedInteract[0](0, game.target);
                 } else {
@@ -219,47 +219,48 @@ var worldmap = {
     writeText: function(t, choices, isRefresh, formatting, overBlack) {
         worldmap.currentFormatting = formatting;
         gfx.clearSome(["menuA", "menutext", "menucursorA", "menuOverBlack", "menutextOverBlack"]);
-        var drawY = (worldmap.pos.y <= 3 || worldmap.mapName === "hq_6") ? 7.5 : 0;
-        gfx.drawFullbox(drawY, overBlack);
-        var actualText = GetText(t);
+        const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 11 : 0;
+        gfx.drawTextBox(drawY, overBlack);
+        let actualText = GetText(t);
         if(actualText === "") { return; }
-        var formatArray = false;
+        let formatArray = false;
         if(formatting) {
             if((typeof formatting) === "string") {
                 actualText = actualText.replace("{0}", formatting);
             } else {
                 formatArray = true;
-                for(var i = 0; i < formatting.length; i++) {
+                for(let i = 0; i < formatting.length; i++) {
                     actualText = actualText.replace("{" + i + "}", formatting[i]);
                 }
             }
         } else if(actualText.indexOf("{seeds}") >= 0) {
-            var actualSeedCounts = {};
-            for(var i = 0; i < player.nathanSeeds.length; i++) {
-                var seedInfo = player.nathanSeeds[i];
+            let actualSeedCounts = {};
+            for(let i = 0; i < player.nathanSeeds.length; i++) {
+                const seedInfo = player.nathanSeeds[i];
                 if(actualSeedCounts[seedInfo[0]] === undefined) { actualSeedCounts[seedInfo[0]] = 0; }
                 actualSeedCounts[seedInfo[0]] += seedInfo[1];
             }
-            var seedStrArr = [];
-            for(var crop in actualSeedCounts) {
+            let seedStrArr = [];
+            for(const crop in actualSeedCounts) {
                 seedStrArr.push(HandleGifts(crop, actualSeedCounts[crop]));
             }
             actualText = HandleLists(actualText, "{seeds}", seedStrArr, "falconNoGifts", true);
         }
         gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
         if(choices === undefined) {
-            worldmap.dialogData = { };
+            worldmap.dialogData = {};
             return;
         }
+        const choiceTopY = (drawY === 11) ? (11.5 - choices.length) : 2.5;
         if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
-        for(var i = 0; i < choices.length; i++) {
-            var txt = GetText(choices[i]);
+        for(let i = 0; i < choices.length; i++) {
+            let txt = GetText(choices[i]);
             if(formatArray) {
-                for(var j = 0; j < formatting.length; j++) {
+                for(let j = 0; j < formatting.length; j++) {
                     txt = txt.replace("{" + j + "}", formatting[j]);
                 }
             }
-            gfx.drawChoice(2.5 + i, txt, worldmap.dialogData.idx === i);
+            gfx.drawChoice(choiceTopY + i, txt, worldmap.dialogData.idx === i);
         }
     },
     mouseMove: function(pos) { return true; },

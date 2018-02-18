@@ -53,8 +53,7 @@ pausemenu.savemenu = {
         return true;
     },
     click: function(pos) {
-        if(pos.x > 4) { return false; }
-        if(localStorage.getItem("file" + this.cursorY) === null || this.confirm) {
+        if(localStorage.getItem("player" + this.cursorY) === null || this.confirm) {
             if(this.isSave) {
                 game.save(pos.y);
                 this.setup({ saving: true, sel: this.cursorY });

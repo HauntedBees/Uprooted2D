@@ -135,15 +135,14 @@ const debug = {
         clean: function() { gfx.clearAll(); }
     },
     MapTextTest: function(skip) {
-        var allText = [];
-        var doSkip = (skip !== undefined);
-        for(var i in fulltext) { 
+        let allText = [];
+        const doSkip = (skip !== undefined);
+        let time = 0;
+        for(const i in fulltext) { 
             if(fulltext[i].type !== "map") { continue; }
             if(doSkip) { if(i === skip) { doSkip = false; } else { continue; } }
-            allText.push(function(x) { return function() { console.log(x); worldmap.writeText(x); }; }(i));
+            setTimeout(() => worldmap.writeText(i), 100 * time++);
         }
-        mapentities["farm"].push({ name: "DebugFriend", pos: { x: 0, y: 0 }, solid: false, autoplay: true, interact: allText });
-        game.innerTransition(game.currentInputHandler, worldmap, { init: { x: 1, y: 1 }, map: "farm" });
     },
     DoDamageTest: function() { game.innerTransition(game.currentInputHandler, debug.damageTest); },
     damageTest: {

@@ -201,9 +201,9 @@ const gfx = {
     },
     drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = "#000000"; gfx.ctx["menutext"].fillRect(x, y, w, 5); },
     drawChoice: function(y, t, selected) {
-        var tile = selected ? 9 : 7;
-        for(var x = 0; x < 15; x++) { gfx.drawSprite("sheet", tile, 11, x * 16, y * 16 - 8, "menuA"); }
-        if(selected) { gfx.drawCursor(0, y - 0.5, 14, -0.25); }
+        const tile = selected ? 9 : 7;
+        for(let x = 0; x < 16; x++) { gfx.drawSprite("sheet", tile, 11, x * 16, y * 16 - 8, "menuA"); }
+        if(selected) { gfx.drawCursor(0, y - 0.5, 15, -0.25); }
         gfx.drawText(t, 8, y * 16);
     },
     GetFontSize: function(size, justNum) {
@@ -265,7 +265,8 @@ const gfx = {
         ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
     },
     setAlpha: function(layer, value) { gfx.ctx[layer].globalAlpha = value; }, // TODO: not used anywhere
-    drawFullbox: function(y, overBlack) { gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)); },
+    drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 3, y || 0, (overBlack ? "menuOverBlack" : undefined)),
+    drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)),
     drawMinibox: function(x, y, w, h, layer) {
         layer = layer || "menuA";
         gfx.drawSprite("sheet", 11, 11, x * 16, y * 16, layer);
