@@ -17,7 +17,7 @@ worldmap.title = {
         gfx.drawText(String.fromCharCode(169) + " 2018 Haunted Bees Productions", 2, 222, undefined, 20, "menutextOverBlack");
     },
     HasSaves: function() {
-        for(let i = 0; i < 10; i++) {
+        for(let i = 0; i < game.numSaveSlots; i++) {
             if(localStorage.getItem("file" + i) !== null) { return true; }
         }
         return false;

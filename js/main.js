@@ -4,7 +4,7 @@ function InventoryCopy(arr) {
     return copy;
  }
 const game = {
-    w: 1024, h: 896, tilew: 16, tileh: 14, //w: 960, h: 640,
+    numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14, //w: 960, h: 640,
     currentInputHandler: worldmap, target: null, language: "en-dm",
     sheetsToLoad: ["sheet", "title", "charsheet", "playersheet", "mapchar", "mapplayer","mapcharbig", "charsheetbig", "hipster", "assistant",
                     "maps/producestand","maps/forest", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
@@ -119,7 +119,7 @@ const game = {
     obj2str: obj  => LZString.compress(JSON.stringify(obj)),
     str2obj: str => JSON.parse(LZString.decompress(str)),
     SetNonstandardGameOverFlag: function() {
-        for(let i = 0; i < 5; i++) {
+        for(let i = 0; i < game.numSaveSlots; i++) {
             if(localStorage.getItem("gameover" + i) === null) {
                 localStorage.setItem("gameover" + i, player.SaveID);
                 return;
@@ -127,7 +127,7 @@ const game = {
         }
     },
     GetNonstandardGameOverFlag: function(savenum) {
-        for(let i = 0; i < 5; i++) {
+        for(let i = 0; i < game.numSaveSlots; i++) {
             const goId = localStorage.getItem("gameover" + i);
             if(goId === player.SaveID) {
                 AddAchievementIfMissing("murderedToDeath");

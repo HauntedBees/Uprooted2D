@@ -6875,6 +6875,16 @@ const fulltext = {
 		"en-dm": "This must be present on your Field and regularly filled with Sickle2 Batteries in order to use your Sickle2 effectively.", 
 		"type": "fixdesc"
 	},
+	"eraseSave": {
+		"en-us": "", 
+		"en-dm": "Existing save data will be lost. Are you sure?", 
+		"type": "opts"
+	},
+	"noSave": {
+		"en-us": "", 
+		"en-dm": "No Save Data", 
+		"type": "opts"
+	},
 	// Achievements
 	"a.boss1": {
 		"en-us": "", 
