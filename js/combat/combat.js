@@ -1,7 +1,7 @@
 var combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false,
     doingFinalKill: false, playerInDanger: false, saveChance: 1, seasonTime: 0,
-    lastTarget: 0, lastTargetCrop: false, lastSelectedSeed: { x: 0, y: 0 }, 
+    lastTarget: 0, lastTargetCrop: false, lastSelectedSeed: { x: 0, y: 0 }, lastPlantedPos: { x: 0, y: 0 },
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
@@ -16,6 +16,7 @@ var combat = {
         this.lastTargetCrop = false;
         this.lastTarget = 0;
         this.lastSelectedSeed = { x: 0, y: 0 };
+        this.lastPlantedPos = { x: 0, y: 0 };
         this.playerInDanger = false;
         this.saveChance = 1;
         this.seasonTime = 0;
@@ -28,17 +29,7 @@ var combat = {
         this.doingFinalKill = false;
         combat.enemyTurn.lastIdx = -1;
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
-            var hasCharger = false;
-            for(var x = 0; x < player.gridWidth; x++) {
-                if(hasCharger) { break; }
-                for(var y = 0; y < player.gridHeight; y++) {
-                    var item = combat.grid[x][y]
-                    if(item !== null && item.type === "sickle2") {
-                        hasCharger = true;
-                        break;
-                    }
-                }
-            }
+            const hasCharger = GetFirstWithMatch(0, player.gridWidth, 0, player.gridHeight, (x, y) => combat.grid[x][y] !== null && combat.grid[x][y].type === "sickle2");
             if(!hasCharger) { player.equipment.weapon = "!sickle2_weak"; }
         }
         switch(player.gridWidth) {  // 3, 4, 6, 8, 10
@@ -58,8 +49,8 @@ var combat = {
         this.enemyheight = 0;
         this.isBossBattle = false;
         this.enemies = [];
-        for(var i = 0; i < Math.min(4, enemies.length); i++) {
-            var enemy = GetEnemy(enemies[i]);
+        for(let i = 0; i < Math.min(4, enemies.length); i++) {
+            const enemy = GetEnemy(enemies[i]);
             this.isBossBattle = this.isBossBattle || enemy.boss;
             this.enemywidth += enemy.fieldwidth;
             this.enemyheight = Math.max(this.enemyheight, enemy.fieldheight);
@@ -72,7 +63,7 @@ var combat = {
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
         this.enemydx = 10 + Math.floor((5 - this.enemywidth) / 2);
         this.enemydy = this.dy + Math.floor((player.gridHeight - this.enemyheight) / 2);
-        for(var i = 0; i < this.enemies.length; i++) {
+        for(let i = 0; i < this.enemies.length; i++) {
             if(this.enemies[i].initFunc === undefined) { continue; }
             combatInitFuncs[this.enemies[i].initFunc]();
         }

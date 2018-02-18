@@ -142,7 +142,7 @@ combat.plant = {
             if(player.inventory[actualIdx][1] === 0) { return false; }
             this.activeCrop = GetCrop(player.inventory[actualIdx][0]);
             combat.lastSelectedSeed = { x: this.cursor.x, y: this.cursor.y - this.dy };
-            this.cursor = { x: combat.dx, y: combat.dy };
+            this.cursor = { x: combat.dx + combat.lastPlantedPos.x, y: combat.dy + combat.lastPlantedPos.y };
             this.isValid = this.isValidPlantingLocation(0, 0, this.activeCrop.size - 1);
         } else {
             const diff = this.activeCrop.size - 1;
@@ -234,6 +234,7 @@ combat.plant = {
                     }
                 }
             }
+            combat.lastPlantedPos = { x: px, y: py };
             this.cursor = { x: 0, y: this.dy };
             player.decreaseItem(this.activeCrop.name);
             player.PlantCrop(this.activeCrop.name);
