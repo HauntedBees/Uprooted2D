@@ -31,11 +31,12 @@ var combat = {
             const hasCharger = GetFirstWithMatch(0, player.gridWidth, 0, player.gridHeight, (x, y) => combat.grid[x][y] !== null && combat.grid[x][y].type === "sickle2");
             if(!hasCharger) { player.equipment.weapon = "!sickle2_weak"; }
         }
+        let startX = 5;
         switch(player.gridWidth) {  // 3, 4, 6, 8, 10
-            case 4: this.dx = 2; break;
-            case 6: this.dx = 1; break;
-            case 8: this.dx = 0.5; break;
-            case 10: this.dx = 0; break;
+            case 4: this.dx = 2; startX = 6; break;
+            case 6: this.dx = 1; startX = 7; break;
+            case 8: this.dx = 0.5; startX = 8.5; break;
+            case 10: this.dx = 0.25; startX = 10.25; break;
             default: this.dx = 2; break;
         }
         switch(player.gridHeight) {  // 3, 4, 5, 6
@@ -57,11 +58,18 @@ var combat = {
             this.enemies.push(enemy);
         }
         this.enemywidth = Math.min(this.enemywidth, 5);
+
+        this.enemydx = startX + 1 + (gfx.tileWidth - startX - this.enemywidth) / 2;
+        if((this.enemydx + this.enemywidth) >= gfx.tileWidth) { this.enemydx = gfx.tileWidth - this.enemywidth - 0.25; }
+        this.enemydy = this.dy + (player.gridHeight - this.enemyheight) / 2;
+        while(this.enemydy <= 0) {
+            this.enemydy += 0.25;
+            this.dy += 0.25;
+        }
+
         this.adjustEnemyStatsWeather();
         this.animHelper = new CombatAnimHelper(this.enemies);
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
-        this.enemydx = 10 + Math.floor((5 - this.enemywidth) / 2);
-        this.enemydy = this.dy + Math.floor((player.gridHeight - this.enemyheight) / 2);
         for(let i = 0; i < this.enemies.length; i++) {
             if(this.enemies[i].initFunc === undefined) { continue; }
             combatInitFuncs[this.enemies[i].initFunc]();
