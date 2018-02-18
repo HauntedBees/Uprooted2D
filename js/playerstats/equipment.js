@@ -1,5 +1,5 @@
 pausemenu.equipment = {
-    cursor: { x: 0, y: 0 }, textY: 100, 
+    cursor: { x: 0, y: 0 }, textY: 80, equipTextY: 168, equipFontSize: 16, equipWidth: 55,
     rowData: [], curY: 0,
     layersToClear: ["menuA", "menucursorA", "menucursorB", "menutext"],
     setup: function() {
@@ -9,27 +9,50 @@ pausemenu.equipment = {
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
         this.rowData = [[], [], [], []];
-        gfx.drawInfobox(16, 5, 5);
-        var numItems = 0;
-        for(var i = 0; i < player.inventory.length; i++) {
-            var itemName = player.inventory[i][0];
+        gfx.drawInfobox(18, 4.5, 4.25);
+        for(let i = 0; i < 4; i++) {
+            gfx.drawMinibox(0.3125 + i * 3.875, 8.875, 2.75, 4);
+        }
+        if(player.equipment.weapon !== null) {
+            const eq = GetEquipment(player.equipment.weapon), x = 0.3125;
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+        }
+        if(player.equipment.compost !== null) {
+            const eq = GetEquipment(player.equipment.compost), x = 4.1875;
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+        }
+        if(player.equipment.gloves !== null) {
+            const eq = GetEquipment(player.equipment.gloves), x = 8.0625;
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+        }
+        if(player.equipment.soil !== null) {
+            const eq = GetEquipment(player.equipment.soil), x = 11.9375;
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+        }
+        let numItems = 0;
+        for(let i = 0; i < player.inventory.length; i++) {
+            const itemName = player.inventory[i][0];
             if(itemName[0] !== "!") { continue; }
-            var y = 0;
-            var item = GetEquipment(itemName);
-            var details = { actualIndex: i, name: itemName, equipped: player.isEquipped(itemName) };
+            let y = 0;
+            const item = GetEquipment(itemName);
+            const details = { actualIndex: i, name: itemName, equipped: player.isEquipped(itemName) };
             switch(item.type) {
                 case "weapon": y = 0; break;
                 case "compost": y = 1; break;
                 case "gloves": y = 2; break;
                 case "soil": y = 3; break;
             }
-            this.rowData[y].push(details); //if(details.equipped) { this.rowData[y].unshift(details); } else { this.rowData[y].push(details); }
+            this.rowData[y].push(details);
             numItems++;
         }
-        for(var i = 0; i < this.rowData.length; i++) {
-            var items = this.rowData[i];
-            for(var j = 0; j < items.length; j++) {
-                var item = items[j];
+        for(let i = 0; i < this.rowData.length; i++) {
+            const items = this.rowData[i];
+            for(let j = 0; j < items.length; j++) {
+                const item = items[j];
                 gfx.drawInventoryItem(player.inventory[item.actualIndex], j, i, "menuA");
                 if(item.equipped) {
                     gfx.drawCursor(j, i, 0, 0, "xcursor");
@@ -44,7 +67,7 @@ pausemenu.equipment = {
     cancel: function() { game.innerTransition(this, pausemenu, 1); },
     mouseMove: function(pos) {
         if(pos.x < 0 || pos.y < 0) { return false; }
-        var dy = pos.y - this.cursor.y;
+        const dy = pos.y - this.cursor.y;
         if(pos.y >= this.rowData.length) { return false; }
         if(pos.x >= this.rowData[pos.y].length) {
             pos.x = this.rowData[pos.y].length - 1;
@@ -53,6 +76,7 @@ pausemenu.equipment = {
             pos.y += dy;
             pos.x = Math.min(this.cursor.x, this.rowData[pos.y].length - 1);
         }
+        if(pos.y >= this.rowData.length || this.rowData[pos.y].length === 0) { return false; }
         this.cursor = { x: pos.x, y: pos.y };
         this.drawAll();
         return true;
@@ -61,8 +85,8 @@ pausemenu.equipment = {
         if(pos.x < 0 || pos.y < 0) { return false; }
         if(pos.y >= this.rowData.length) { return false; }
         if(pos.x >= this.rowData[pos.y].length) { return false; }
-        var item = player.inventory[this.rowData[this.cursor.y][this.cursor.x].actualIndex];
-        var equipInfo = GetEquipment(item[0]);
+        const item = player.inventory[this.rowData[this.cursor.y][this.cursor.x].actualIndex];
+        const equipInfo = GetEquipment(item[0]);
         if(player.equipment[equipInfo.type] === item[0]) {
             player.equipment[equipInfo.type] = null;
         } else {
@@ -72,8 +96,8 @@ pausemenu.equipment = {
         return true;
     },
     keyPress: function(key) {
-        var pos = { x: this.cursor.x, y: this.cursor.y };
-        var isEnter = false;
+        let pos = { x: this.cursor.x, y: this.cursor.y };
+        let isEnter = false;
         switch(key) {
             case player.controls.up: pos.y--; break;
             case player.controls.left: pos.x--; break;
@@ -91,20 +115,20 @@ pausemenu.equipment = {
         }
     },
     setText: function() {
-        var actIdx = this.rowData[this.cursor.y][this.cursor.x].actualIndex;
-        var item = player.inventory[actIdx];
-        var equipInfo = GetEquipment(item[0]);
-        var str = this.GetEquipDescComparedToCurrent(equipInfo);
+        const actIdx = this.rowData[this.cursor.y][this.cursor.x].actualIndex;
+        const item = player.inventory[actIdx];
+        const equipInfo = GetEquipment(item[0]);
+        const str = this.GetEquipDescComparedToCurrent(equipInfo);
         gfx.drawWrappedText(str, 4, this.textY, 235);
     },
     GetEquipDescComparedToCurrent: function(equipInfo) {
-        var current = player.equipment[equipInfo.type];
+        let current = player.equipment[equipInfo.type];
         if(current === null) {
             current = { power: 0, amount: 0, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0, noEnemies: true };
         } else {
             current = GetEquipment(current);
         }
-        var str = equipInfo.displayname;
+        let str = equipInfo.displayname;
         this.curY = 0;
         if(equipInfo.type === "weapon") {
             str += this.GetComparison(GetText("eq.power") + " ", equipInfo, current, "power", "number");
@@ -138,9 +162,9 @@ pausemenu.equipment = {
         return str;
     },
     GetComparison: function(str, newequip, oldequip, column, compareType, isPercent) {
-        var y = 416 + (this.curY * 32);
-        var newVal = newequip[column];
-        var oldVal = oldequip[column];
+        const y = 336 + (this.curY * 32); 
+        const newVal = newequip[column];
+        const oldVal = oldequip[column];
         if(compareType === "number") {
             if(newVal === oldVal) { 
                 if(newVal === 0) { return ""; }
@@ -148,8 +172,8 @@ pausemenu.equipment = {
                 return "\n " + str + (isPercent ? (newVal * 100) + "%" : newVal);
             }
             this.curY++;
-            var initW = gfx.getTextWidth(str);
-            var nextW = gfx.getTextWidth(str + (isPercent ? (oldVal * 100) + "%" : oldVal));
+            const initW = gfx.getTextWidth(str);
+            const nextW = gfx.getTextWidth(str + (isPercent ? (oldVal * 100) + "%" : oldVal));
             gfx.drawStrikeThru(12 + initW, y, nextW - initW + 4);
             return "\n " + str + (isPercent ? (oldVal * 100) + "%" : oldVal) + " " + (isPercent ? (newVal * 100) + "%" : newVal);
         } else if(compareType === "bool") {
@@ -197,35 +221,35 @@ pausemenu.equipment = {
             } else {
                 this.curY++;
                 if(newVal === undefined || newVal === 0) { // from some value to one
-                    var str = "";
+                    let newstr = "";
                     if(oldVal === 999) {
-                        str = GetText("eq.attackall");
+                        newstr = GetText("eq.attackall");
                     } else if(oldVal > 0) {
-                        str = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
+                        newstr = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
                     }
-                    gfx.drawStrikeThru(12, y, gfx.getTextWidth(str) - 16);
-                    return "\n " + str;
+                    gfx.drawStrikeThru(12, y, gfx.getTextWidth(newstr) - 16);
+                    return "\n " + newstr;
                 } else if(newVal === 999) { // from some value to ALL
                     if(oldVal > 0) {
-                        var str = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
-                        gfx.drawStrikeThru(12, y, gfx.getTextWidth(str) - 16);
+                        const newstr = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
+                        gfx.drawStrikeThru(12, y, gfx.getTextWidth(newstr) - 16);
                         this.curY += 2;
-                        return "\n " + str + "\n " + GetText("eq.attackall");
+                        return "\n " + newstr + "\n " + GetText("eq.attackall");
                     } else {
                         this.curY++;
                         return "\n +" + GetText("eq.attackall");
                     }
                 } else { // from some value to some other value
                     if(oldVal === 999) {
-                        var str = GetText("eq.attackall");
-                        gfx.drawStrikeThru(12, y, gfx.getTextWidth(str) - 16);
+                        const newstr = GetText("eq.attackall");
+                        gfx.drawStrikeThru(12, y, gfx.getTextWidth(newstr) - 16);
                         this.curY += 2;
-                        return "\n " + str + "\n " + GetText("eq.attacksome").replace(/\{0\}/g, newVal);
+                        return "\n " + newstr + "\n " + GetText("eq.attacksome").replace(/\{0\}/g, newVal);
                     } else if(oldVal > 0) {
-                        var str = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
-                        gfx.drawStrikeThru(12, y, gfx.getTextWidth(str) - 16);
+                        const newstr = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
+                        gfx.drawStrikeThru(12, y, gfx.getTextWidth(newstr) - 16);
                         this.curY += 2;
-                        return "\n " + str + "\n " + GetText("eq.attacksome").replace(/\{0\}/g, newVal);
+                        return "\n " + newstr + "\n " + GetText("eq.attacksome").replace(/\{0\}/g, newVal);
                     } else {
                         this.curY++;
                         return "\n +" + GetText("eq.attacksome").replace(/\{0\}/g, newVal);

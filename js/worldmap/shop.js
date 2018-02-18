@@ -396,7 +396,7 @@ worldmap.shop = {
     },
     clickBook: function(pos) {
         this.bookState++;
-        var newText = TryGetText(this.bookReading + this.bookState);
+        const newText = TryGetText(this.bookReading + this.bookState);
         if(newText === false) {
             this.sellingState = me.sellStates.BUYING;
             this.bookState = -1;

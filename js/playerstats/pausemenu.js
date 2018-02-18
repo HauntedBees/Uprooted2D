@@ -1,4 +1,4 @@
-var pausemenu = {
+const pausemenu = {
     options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
     layersToClear: ["menuA", "menucursorA", "menutext", "tutorial", "menuOverBlack"],
     setup: function(sel) {
@@ -22,7 +22,7 @@ var pausemenu = {
     },
     drawAll: function() {
         gfx.clearSome(pausemenu.layersToClear);
-        var rowYs = [6, 6.75];
+        const rowYs = [10, 10.75];
         pausemenu.options = [];
         pausemenu.drawOption("menu.Items", 0, pausemenu.cursorY == 0);
         pausemenu.drawOption("menu.Equipment", 1, pausemenu.cursorY == 1);
@@ -30,7 +30,8 @@ var pausemenu = {
         pausemenu.drawOption("menu.Options", 3, pausemenu.cursorY == 3);
         pausemenu.drawOption("menu.Achievements", 4, pausemenu.cursorY == 4);
         pausemenu.drawOption("menu.Save", 5, pausemenu.cursorY == 5);
-        //pausemenu.drawOption("menu.Quit", 6, pausemenu.cursorY == 6);
+        pausemenu.drawOption("menu.Quit", 6, pausemenu.cursorY == 6);
+        
         pausemenu.addFormattedText("menu.level", player.level, 1, rowYs[0], "", 0);
         pausemenu.addFormattedText("menu.HP", player.health + "/" + player.maxhealth, 3.5, rowYs[0], ":", 0);
         pausemenu.addFormattedText("menu.ATK", player.atk, 8.5, rowYs[0], ":", 2);
@@ -43,32 +44,25 @@ var pausemenu = {
             gfx.drawCursor(0, (pausemenu.dy + pausemenu.cursorY), pausemenu.options[pausemenu.cursorY], 0);
         } else {
             if(pausemenu.cursorX === 0) {
-                gfx.drawCursor(2, 7.75, 1, 1);
-                var str = GetText("alignment") + ": " + GetText(player.techAxis <= 0 ? "alignnature" : "aligntech") + " " + GetText(player.ethicsAxis >= 0 ? "aligngood" : "alignbad");
-                pausemenu.drawInfoText(str, 0, 6.75);
+                gfx.drawCursor(2, 11.75, 1, 1);
+                const str = GetText("alignment") + ": " + GetText(player.techAxis <= 0 ? "alignnature" : "aligntech") + " " + GetText(player.ethicsAxis >= 0 ? "aligngood" : "alignbad");
+                pausemenu.drawInfoText(str, 0, 10.75);
             } else {
-                var idx = pausemenu.cursorX - 1;
-                var item = pausemenu.questItems[idx];
-                gfx.drawCursor(5 + (idx * 1.5), 7.75, 0, 0);
-                pausemenu.drawInfoText(GetText("qi." + item), 5 + (idx * 1.5), 6.75);
+                const idx = pausemenu.cursorX - 1;
+                const item = pausemenu.questItems[idx];
+                gfx.drawCursor(5 + (idx * 1.5), 11.75, 0, 0);
+                pausemenu.drawInfoText(GetText("qi." + item), 5 + (idx * 1.5), 10.75);
             }
         }
 
-        gfx.drawTileToGrid("alignment", 2, 7.75, "foreground");
-        var centerx = 0.75, centery = 0.75;
+        gfx.drawTileToGrid("alignment", 2, 11.75, "foreground");
+        let centerx = 0.75, centery = 0.75;
         centerx += Math.round(4 * player.ethicsAxis / 5) / 4; centery += Math.round(4 * player.techAxis / 5) / 4;
-        gfx.drawTileToGrid("alignmentcursor", 2 + centerx, 7.75 + centery, "foreground");
+        gfx.drawTileToGrid("alignmentcursor", 2 + centerx, 11.75 + centery, "foreground");
 
-        for(var i = 0; i < pausemenu.questItems.length; i++) {
-            gfx.drawTileToGrid(pausemenu.questItems[i], 5 + (i * 1.5), 7.75, "foreground"); // TODO: limit of 6?
+        for(let i = 0; i < pausemenu.questItems.length; i++) {
+            gfx.drawTileToGrid(pausemenu.questItems[i], 5 + (i * 1.5), 11.75, "foreground"); // TODO: limit of 7 or 8?
         }
-
-        var equipInfo = "";
-        if(player.equipment.weapon !== null) { equipInfo += GetEquipmentDesc(GetEquipment(player.equipment.weapon)); }
-        if(player.equipment.compost !== null) { equipInfo += (equipInfo !== "" ? "\n " : "") + GetEquipmentDesc(GetEquipment(player.equipment.compost)); }
-        if(player.equipment.gloves !== null) { equipInfo += (equipInfo !== "" ? "\n " : "") + GetEquipmentDesc(GetEquipment(player.equipment.gloves)); }
-        if(player.equipment.soil !== null) { equipInfo += (equipInfo !== "" ? "\n " : "") + GetEquipmentDesc(GetEquipment(player.equipment.soil)); }
-        gfx.drawWrappedText(equipInfo, 70, 8, 150, undefined, undefined, 12);
     },
     drawFarm: function() {
         var helper = new CombatAnimHelper([]);
@@ -96,9 +90,9 @@ var pausemenu = {
         // TODO: make player walkin areund it
     },
     drawInfoText: function(text, x, y) {
-        var xi = 1;
-        var width = gfx.getTextWidth(text) + 20;
-        var xiimax = x + Math.ceil(width / 64);
+        let xi = 1;
+        let width = gfx.getTextWidth(text) + 20;
+        let xiimax = x + Math.ceil(width / 64);
         while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
         gfx.drawSprite("sheet", 39, 16, x * 16, 2 + y * 16, "tutorial");
         while(width > 128) {
@@ -108,20 +102,21 @@ var pausemenu = {
         gfx.drawSprite("sheet", 8, 11, x * 16 + 16 * xi, 2 + y * 16, "tutorial");
         gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menuOverBlack");
     },
-    addText: function(t, x, y) { gfx.drawText(t, 2 + x * 16, 10.5 + y * 16); },
+    addText: (t, x, y) => gfx.drawText(t, 2 + x * 16, 10.5 + y * 16),
     addFormattedText: function(key, num, x, y, middle, spaceNum) {
-        var str = GetText(key);
+        let str = GetText(key);
         if(middle) { str += middle; }
         if(spaceNum > 0) {
-            var len = ("" + num).length;
-            var dx = spaceNum - len;
+            const len = ("" + num).length;
+            let dx = spaceNum - len;
             while(dx-- > 0) { str += " "; }  
         }
         str += num;
         pausemenu.addText(str, x, y);
     },
-    clean: function() { gfx.clearAll(); },
+    clean: () => gfx.clearAll(true),
     cancel: function() {
+        pausemenu.clean();
         game.transition(this, worldmap, {
             init: worldmap.pos,
             map: worldmap.mapName,
@@ -171,12 +166,11 @@ var pausemenu = {
         }
     },
     drawOption: function(text, y, selected) {
-        var xi = 1;
-        var tile = 7;
-        if(selected) { tile = 9; }
+        let xi = 1;
+        const tile = selected ? 9 : 7;
         gfx.drawSprite("sheet", tile, 11, 0, 2 + (this.dy + y) * 16, "menuA");
         text = GetText(text);
-        var width = gfx.getTextWidth(text);
+        let width = gfx.getTextWidth(text);
         while(width > 128) {
             width -= 64;
             gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + (this.dy + y) * 16, "menuA");

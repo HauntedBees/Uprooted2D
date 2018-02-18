@@ -26,7 +26,7 @@ const gfx = {
     clearLayer: function(key) { gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasWidth); },
     clearSome: function(keys) { for(var i = 0; i < keys.length; i++) { gfx.clearLayer(keys[i]); } },
     clearAll: function(includingTutorial) {
-        for(var key in gfx.ctx) {
+        for(const key in gfx.ctx) {
             if(key === "tutorial" && !includingTutorial) { continue; } 
             gfx.clearLayer(key);
         }
@@ -185,11 +185,10 @@ const gfx = {
         if(item[0][0] === "_") {
             gfx.drawTileToGrid(item[0], x, y, layer);
         } else if(item[0][0] === "!") {
-            var info = GetEquipment(item[0]);
+            const info = GetEquipment(item[0]);
             gfx.drawTileToGrid(info.sprite, x, y, layer);
         } else {
             gfx.drawTileToGrid(item[0], x, y, layer);
-            //gfx.drawTileToGrid(item[0] + "seed", x, y, layer);
         }
         gfx.drawItemNumber(item[1], x, y, layer);
     },
@@ -267,21 +266,39 @@ const gfx = {
     },
     setAlpha: function(layer, value) { gfx.ctx[layer].globalAlpha = value; }, // TODO: not used anywhere
     drawFullbox: function(y, overBlack) { gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)); },
+    drawMinibox: function(x, y, w, h, layer) {
+        layer = layer || "menuA";
+        gfx.drawSprite("sheet", 11, 11, x * 16, y * 16, layer);
+        gfx.drawSprite("sheet", 13, 11, x * 16, (y + h) * 16, layer);
+        gfx.drawSprite("sheet", 24, 17, (x + w) * 16, y * 16, layer);
+        gfx.drawSprite("sheet", 26, 17, (x + w) * 16, (y + h) * 16, layer);
+        for(let x2 = x + 1; x2 < x + w; x2++) {
+            gfx.drawSprite("sheet", 15, 11, x2 * 16, y * 16, layer);
+            gfx.drawSprite("sheet", 14, 11, x2 * 16, (y + h) * 16, layer);
+        }
+        for(let y2 = y + 1; y2 < y + h; y2++) {
+            gfx.drawSprite("sheet", 12, 11, x * 16, y2 * 16, layer);
+            gfx.drawSprite("sheet", 25, 17, (x + w) * 16, y2 * 16, layer);
+        }
+        const ctx = gfx.ctx[layer];
+        ctx.fillStyle = "#8B8CDE";
+        ctx.fillRect((x + 1) * 16 * gfx.scale, (y + 1) * 16 * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
+    },
     drawInfobox: function(w, h, y, layer) {
         y = (y || 0) * 16;
         layer = layer || "menuA";
-        var startx = gfx.tileWidth - w;
+        const startx = gfx.tileWidth - w;
         h -= 1;
         gfx.drawSprite("sheet", 11, 11, startx * 16, y, layer);
         gfx.drawSprite("sheet", 13, 11, startx * 16, y + h * 16, layer);
-        for(var x = startx + 1; x < gfx.tileWidth; x++) {
+        for(let x = startx + 1; x < gfx.tileWidth; x++) {
             gfx.drawSprite("sheet", 15, 11, x * 16, y, layer);
             gfx.drawSprite("sheet", 14, 11, x * 16, y + h * 16, layer);
         }
-        for(var y2 = 1; y2 < h; y2++) {
+        for(let y2 = 1; y2 < h; y2++) {
             gfx.drawSprite("sheet", 12, 11, startx * 16, y + y2 * 16, layer);
         }
-        var ctx = gfx.ctx[layer];
+        const ctx = gfx.ctx[layer];
         ctx.fillStyle = "#8B8CDE";
         ctx.fillRect((startx + 1) * 16 * gfx.scale, (y + 16) * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
     },

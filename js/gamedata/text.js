@@ -6355,9 +6355,19 @@ const fulltext = {
 		"en-dm": "Can target enemy Crops.", 
 		"type": "opts"
 	},
+	"eq.hitCrops.sm": {
+		"en-us": "", 
+		"en-dm": "Hits Crops", 
+		"type": "opts"
+	},
 	"eq.hitEnemies": {
 		"en-us": "", 
 		"en-dm": "Can target enemies.", 
+		"type": "opts"
+	},
+	"eq.hitEnemies.sm": {
+		"en-us": "", 
+		"en-dm": "Hits Enemies", 
 		"type": "opts"
 	},
 	"eq.sp": {
@@ -6380,9 +6390,34 @@ const fulltext = {
 		"en-dm": "Stronger in Winter.", 
 		"type": "opts"
 	},
+	"eq.sp.sm": {
+		"en-us": "", 
+		"en-dm": "Spring Bonus", 
+		"type": "opts"
+	},
+	"eq.su.sm": {
+		"en-us": "", 
+		"en-dm": "Summer Bonus", 
+		"type": "opts"
+	},
+	"eq.au.sm": {
+		"en-us": "", 
+		"en-dm": "Autumn Bonus", 
+		"type": "opts"
+	},
+	"eq.wi.sm": {
+		"en-us": "", 
+		"en-dm": "Winter Bonus", 
+		"type": "opts"
+	},
 	"eq.sickle2": {
 		"en-us": "", 
 		"en-dm": "Requires Sickle2 Charger on field.", 
+		"type": "opts"
+	},
+	"eq.sickle2.sm": {
+		"en-us": "", 
+		"en-dm": "Req. Charger", 
 		"type": "opts"
 	},
 	"eq.attackall": {
@@ -6395,9 +6430,24 @@ const fulltext = {
 		"en-dm": "Attacks {0} targets.", 
 		"type": "opts"
 	},
+	"eq.attackall.sm": {
+		"en-us": "", 
+		"en-dm": "All Targets", 
+		"type": "opts"
+	},
+	"eq.attacksome.sm": {
+		"en-us": "", 
+		"en-dm": "{0} Targets", 
+		"type": "opts"
+	},
 	"eq.holds": {
 		"en-us": "", 
 		"en-dm": "Holding Amount:", 
+		"type": "opts"
+	},
+	"eq.holds.sm": {
+		"en-us": "", 
+		"en-dm": "AMT:", 
 		"type": "opts"
 	},
 	"eq.compattack": {
@@ -6405,14 +6455,29 @@ const fulltext = {
 		"en-dm": "Can attack enemies with Compost.", 
 		"type": "opts"
 	},
+	"eq.compattack.sm": {
+		"en-us": "", 
+		"en-dm": "Can Attack", 
+		"type": "opts"
+	},
 	"eq.rotten": {
 		"en-us": "", 
 		"en-dm": "Can only compost rotten crops.", 
 		"type": "opts"
 	},
+	"eq.rotten.sm": {
+		"en-us": "", 
+		"en-dm": "Rotten Only", 
+		"type": "opts"
+	},
 	"eq.bonus": {
 		"en-us": "", 
 		"en-dm": "Bonus Effect:", 
+		"type": "opts"
+	},
+	"eq.bonus.sm": {
+		"en-us": "", 
+		"en-dm": "Bonus:", 
 		"type": "opts"
 	},
 	"eq.backfire": {
@@ -6425,14 +6490,29 @@ const fulltext = {
 		"en-dm": "Seeds Per Turn:", 
 		"type": "opts"
 	},
+	"eq.spturn.sm": {
+		"en-us": "", 
+		"en-dm": "Seeds:", 
+		"type": "opts"
+	},
 	"eq.actafter": {
 		"en-us": "", 
 		"en-dm": "Can Attack or Compost after planting.", 
 		"type": "opts"
 	},
+	"eq.actafter.sm": {
+		"en-us": "", 
+		"en-dm": "Bonus Action", 
+		"type": "opts"
+	},
 	"eq.dmgresist": {
 		"en-us": "", 
 		"en-dm": "Damage Resistance:", 
+		"type": "opts"
+	},
+	"eq.dmgresist.sm": {
+		"en-us": "", 
+		"en-dm": "DEF:", 
 		"type": "opts"
 	},
 	"eq.mayshock1": {
@@ -6443,6 +6523,16 @@ const fulltext = {
 	"eq.mayshock2": {
 		"en-us": "", 
 		"en-dm": "Will shock you when touching water.", 
+		"type": "opts"
+	},
+	"eq.mayshock1.sm": {
+		"en-us": "", 
+		"en-dm": "May shock crops.", 
+		"type": "opts"
+	},
+	"eq.mayshock2.sm": {
+		"en-us": "", 
+		"en-dm": "May shock you.", 
 		"type": "opts"
 	},
 	"eq.growth": {
@@ -6460,6 +6550,21 @@ const fulltext = {
 		"en-dm": "Seasonal Multiplier:", 
 		"type": "opts"
 	},
+	"eq.growth.sm": {
+		"en-us": "", 
+		"en-dm": "Spd.:", 
+		"type": "opts"
+	},
+	"eq.sres.sm": {
+		"en-us": "", 
+		"en-dm": "S.Resist:", 
+		"type": "opts"
+	},
+	"eq.sstr.sm": {
+		"en-us": "", 
+		"en-dm": "S.Mult.:", 
+		"type": "opts"
+	},
 	"eq.willkill1": {
 		"en-us": "", 
 		"en-dm": "Will kill crops that are too weak or", 
@@ -6470,9 +6575,24 @@ const fulltext = {
 		"en-dm": "grow too quickly. Bees will fly away.", 
 		"type": "opts"
 	},
+	"eq.willkill1.sm": {
+		"en-us": "", 
+		"en-dm": "Bad for Crops", 
+		"type": "opts"
+	},
+	"eq.willkill2.sm": {
+		"en-us": "", 
+		"en-dm": "and Bees.", 
+		"type": "opts"
+	},
 	"eq.power": {
 		"en-us": "", 
 		"en-dm": "Power:", 
+		"type": "opts"
+	},
+	"eq.power.sm": {
+		"en-us": "", 
+		"en-dm": "ATK:", 
 		"type": "opts"
 	},
 	"inv.swap": {

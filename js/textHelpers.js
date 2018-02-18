@@ -1,7 +1,7 @@
 function GetText(key) {
 	try {
-		var lang = (game !== undefined) ? game.language : "en-dm";
-		var d = fulltext[key];
+		const lang = (game !== undefined) ? game.language : "en-dm";
+		const d = fulltext[key];
 		if(d[lang] !== undefined) { return d[lang]; }
 		return d["en-us"];
 	} catch(e) {
@@ -11,11 +11,16 @@ function GetText(key) {
 }
 function TryGetText(key) {
     try {
-		var lang = (game !== undefined) ? game.language : "en-dm";
-		var d = fulltext[key];
+		const lang = (game !== undefined) ? game.language : "en-dm";
+		const d = fulltext[key];
 		if(d[lang] !== undefined) { return d[lang]; }
 		return d["en-us"];
 	} catch(e) { return false; }
+}
+function GetTextSmall(key, small) {
+    if(!small) { return GetText(key); }
+    let trial = TryGetText(key + ".sm");
+    return trial === false ? GetText(key) : trial;
 }
 function HandleArticles(mainStr, subject) {
     if(lingHelpers.ArticleHandler[game.language] != undefined) { return lingHelpers.ArticleHandler[game.language](mainStr, subject); }

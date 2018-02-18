@@ -1,11 +1,43 @@
-var debug = {
-    testEnemyState: "attack",
+const debug = {
+    testEnemyState: "cropHeal",
     DoFuckBattle:  function() {
         player.hasFalcon = false;
         player.equipment.compost = "!jumboCompost";
         combat.startBattle(["yourWorstFuckingNightmare"]);//, "robo", "robo"]);
-        debug.testEnemyState = "burnRow";
         return true; 
+    },
+    AllWeapons: function() {
+        player.increaseItem("!babySickle");
+        player.increaseItem("!baseSickle");
+        player.increaseItem("!goodSickle");
+        player.increaseItem("!dblSickle");
+        player.increaseItem("!hvySickle");
+        player.increaseItem("!hoe");
+        player.increaseItem("!salthoe");
+        player.increaseItem("!sicklerang");
+        player.increaseItem("!sunSickle");
+        player.increaseItem("!pltSickle");
+        player.increaseItem("!sickle2");
+        player.increaseItem("!weakCompost");
+        player.increaseItem("!baseCompost");
+        player.increaseItem("!strongCompost");
+        player.increaseItem("!sturdyCompost");
+        player.increaseItem("!jumboCompost");
+        player.increaseItem("!vitaminCompost");
+        player.increaseItem("!compost2");
+        player.increaseItem("!weakGloves");
+        player.increaseItem("!pairGloves");
+        player.increaseItem("!gardenGloves");
+        player.increaseItem("!sbGloves");
+        player.increaseItem("!gloves2");
+        player.increaseItem("!weakSoil");
+        player.increaseItem("!speedSoil");
+        player.increaseItem("!sturdSoil");
+        player.increaseItem("!minSoil");
+        player.increaseItem("!waterfall");
+        player.increaseItem("!immunity");
+        player.increaseItem("!seasonal");
+        player.increaseItem("!pesticide2");
     },
     ThrustSomeCropsUntoMineLoins: function(num) {
         var items = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee"];

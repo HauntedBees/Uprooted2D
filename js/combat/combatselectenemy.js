@@ -4,8 +4,14 @@ combat.selectTarget = {
     layersToClear: ["menucursorA", "menucursorB", "menutext"],
     // Setup/Display Logic
     setup: function(args) {
-        this.cursorx = 0;
-        this.sicklePos = {x: -1, y: -1};
+        const lastTarg = combat.lastTarget.length === undefined ? combat.lastTarget : combat.lastTarget[0];
+        if(lastTarg.x === undefined) {
+            this.cursorx = lastTarg >= combat.enemies.length ? combat.enemies.length - 1 : lastTarg;
+            this.sicklePos = { x: -1, y: -1 };
+        } else {
+            this.sicklePos = { x: lastTarg.x, y: lastTarg.y };
+            this.cursorx = 0;
+        }
         if(combat.isFalcon) {
             this.canSickle = true;
             this.canHumans = true;
@@ -201,36 +207,29 @@ combat.selectTarget = {
 
     // Attacking Logic
     Attack: function() {
-        var allAttackInfo = this.GetAttackDetails();
-        var allAttacks = allAttackInfo.attackDatas;
-        var damagetext = "";
-        var additionalTargets = [];
+        const allAttackInfo = this.GetAttackDetails();
+        const allAttacks = allAttackInfo.attackDatas;
+        let additionalTargets = [];
 
-        var hasKills = false, hasDestroys = false;
-        var hasRecoil = allAttackInfo.recoilInfo !== null && allAttackInfo.recoilInfo.some(function(e) { return e !== null; });
-        var hasAnimals = false, hasStuns = false;
-        var avgDamage = 0, lastTargetName = "";
-        var targArr = this.targets.length > 1;
+        let hasKills = false, hasDestroys = false;
+        const hasRecoil = allAttackInfo.recoilInfo !== null && allAttackInfo.recoilInfo.some(function(e) { return e !== null; });
+        let hasAnimals = false, hasStuns = false;
+        let avgDamage = 0, lastTargetName = "";
+        const targArr = this.targets.length > 1;
         if(targArr) { combat.lastTarget = []; }
-        var postHit = null;
-        for(var i = 0; i < this.targets.length; i++) {
-            var targetidx = this.targets[i];
-            var attackData = allAttacks[i];
-            
-            if(targArr) { combat.lastTarget.push(targetidx); } // TODO: is this good?
-            else { combat.lastTarget = 0; }
-
+        let postHit = null;
+        for(let i = 0; i < this.targets.length; i++) {
+            const targetidx = this.targets[i], attackData = allAttacks[i];
+            if(targArr) { combat.lastTarget.push(targetidx); }
+            else { combat.lastTarget = targetidx; }
             if(targetidx.x !== undefined) {
-                var cropPos = {x: targetidx.x - combat.enemydx, y: targetidx.y - combat.enemydy};
-                var crop = combat.enemyGrid[cropPos.x][cropPos.y];
+                let cropPos = {x: targetidx.x - combat.enemydx, y: targetidx.y - combat.enemydy};
+                let crop = combat.enemyGrid[cropPos.x][cropPos.y];
                 if(crop === null) { continue; }
                 if(crop.x !== undefined) { // this is a size 2 crop
                     cropPos = { x: crop.x, y: crop.y };
                     crop = combat.enemyGrid[crop.x][crop.y];
                 }
-
-                combat.lastTargetCrop = false; // TODO: uh?
-                lastTargetName = GetText("cropWithDefArticle").replace(/\{0\}/g, crop.displayname); // TODO: hmm
                 attackData.animals = []; // TODO: ?
 
                 avgDamage += attackData.damage;
@@ -242,11 +241,10 @@ combat.selectTarget = {
                     combat.animHelper.DrawCrops();
                 }
             } else {
-                combat.lastTargetCrop = false;
-                var target = combat.enemies[targetidx];
+                const target = combat.enemies[targetidx];
                 lastTargetName = target.name;
 
-                var finalDamage = attackData.damage;
+                let finalDamage = attackData.damage;
                 if(target.addtlHitCheck !== undefined) { finalDamage = addtlHitChecks[target.addtlHitCheck](attackData.crops, finalDamage); }
                 avgDamage += finalDamage;
                 combat.damageEnemy(targetidx, finalDamage);
@@ -254,7 +252,7 @@ combat.selectTarget = {
 
                 if(attackData.animals.length > 0) { hasAnimals = true; }
                 if(attackData.stunLength > 0) {
-                    var stunResistCheck = (Math.random() < combat.enemies[targetidx].stickRes);
+                    const stunResistCheck = (Math.random() < combat.enemies[targetidx].stickRes);
                     if(!stunResistCheck) {
                         hasStuns = true;
                         combat.enemies[targetidx].stickRes += 0.025;
@@ -265,9 +263,9 @@ combat.selectTarget = {
             }
         }
         if(hasRecoil) {
-            var fullRecoilDamage = allAttackInfo.recoilInfo.reduce(function(a, c) { return a + c; }, 0);
-            for(var j = 0; j < combat.enemies.length; j++) {
-                var dmg = dmgCalcs.GetDefendedPlayerDamage(fullRecoilDamage, allAttackInfo.isCritical, combat.enemies[j].def);
+            const fullRecoilDamage = allAttackInfo.recoilInfo.reduce(function(a, c) { return a + c; }, 0);
+            for(let j = 0; j < combat.enemies.length; j++) {
+                const dmg = dmgCalcs.GetDefendedPlayerDamage(fullRecoilDamage, allAttackInfo.isCritical, combat.enemies[j].def);
                 combat.damageEnemy(j, dmg);
                 if(combat.enemies[j].health <= 0) { hasKills = true; }
             }
@@ -275,28 +273,27 @@ combat.selectTarget = {
         avgDamage = Math.floor(avgDamage / this.targets.length);
         
         if(allAttacks[0].knockback > 0) { player.health = Math.max(player.health - allAttacks[0].knockback, 1); }
-        var damagetext = this.GetDamageText(allAttackInfo.isCritical, hasAnimals, hasRecoil, hasKills, hasDestroys, hasStuns, 
+        const damagetext = this.GetDamageText(allAttackInfo.isCritical, hasAnimals, hasRecoil, hasKills, hasDestroys, hasStuns, 
                                             combat.isFalcon, avgDamage, lastTargetName, this.targets.length > 1, allAttacks[0].knockback);
-        var targType = (this.targets[0].x === undefined) ? "_ENEMY" : "_CROP";
+        const targType = (this.targets[0].x === undefined) ? "_ENEMY" : "_CROP";
         if(combat.isFalcon) {
             combat.animHelper.SetBirdAnimState("ATTACK", true);
             combat.animHelper.SetBirdAnimArg("targets", this.targets);
         } else {
-            var attackType = (allAttacks[0].numCrops === 0) ? "MELEE" : "THROW";
+            const attackType = (allAttacks[0].numCrops === 0) ? "MELEE" : "THROW";
             combat.animHelper.SetPlayerAnimState(attackType + targType, true);
             combat.animHelper.SetPlayerAnimArg("targets", this.targets);
             combat.animHelper.SetPlayerAnimArg("recoils", allAttackInfo.recoilInfo);
             if(attackType === "MELEE") { combat.animHelper.PushPlayerOverlay(player.equipment.weapon + targType); }
             else {
                 combat.FlagFreshCropsAndGetSeedDrops(true, allAttackInfo.isCritical);
-                for(var i = 0; i < allAttackInfo.animData.length; i++) {
-                    var info = allAttackInfo.animData[i];
+                for(let i = 0; i < allAttackInfo.animData.length; i++) {
+                    const info = allAttackInfo.animData[i];
                     combat.animHelper.AddPlayerAttackAnim(new CropAttackAnim(targType, combat.grid, info.x, info.y, i));
                 }
                 combat.animHelper.StartPlayerAnimSequence();
             }
         }
-
         if(postHit === null) { postHit = function() { combat.endTurn(combat.inbetween); }; }
         game.innerTransition(this, combat.inbetween, { next: postHit, text: damagetext });
         return true;
@@ -329,7 +326,7 @@ combat.selectTarget = {
         }
     },
     GetDamageText: function(criticalHit, hasAnimals, hasRecoil, hasKills, hasDestroys, stunningEnemies, isFalcon, damage, target, multipleTargets, selfHarm) {
-        var damagetext = GetText("attackMessageStruct");
+        let damagetext = GetText("attackMessageStruct");
         if(criticalHit) { damagetext = damagetext.replace(/\{crit\}/g, GetText("critPrefix")); }
         else { damagetext = damagetext.replace(/\{crit\}/g, ""); }
 
@@ -340,17 +337,17 @@ combat.selectTarget = {
         if(isFalcon) { damagetext = damagetext.replace(/\{object\}/g, GetText("obj_thirdperson")); }
         else { damagetext = damagetext.replace(/\{object\}/g, GetText("obj_secondperson")); }
 
-        var suffix = (multipleTargets ? "_pl" : "_sing");
+        const suffix = (multipleTargets ? "_pl" : "_sing");
         damagetext = damagetext.replace(/\{objectmult\}/g, GetText("obj" + suffix));
         damagetext = damagetext.replace(/\{amount\}/g, GetText("amount" + suffix));
         
         if(hasRecoil) { damagetext = damagetext.replace(/\{recoil\}/g, GetText("recoil" + suffix)); }
         else { damagetext = damagetext.replace(/\{recoil\}/g, ""); }
         
-        var allEnemiesDead = false;
+        let allEnemiesDead = false;
         if(hasKills) {
             allEnemiesDead = true;
-            for(var i = 0; i < combat.enemies.length; i++) { if(combat.enemies[i].health > 0) { allEnemiesDead = false; break; } }
+            for(let i = 0; i < combat.enemies.length; i++) { if(combat.enemies[i].health > 0) { allEnemiesDead = false; break; } }
         }
 
         if(multipleTargets) {
