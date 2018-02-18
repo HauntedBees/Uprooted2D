@@ -1013,7 +1013,7 @@ let mapentities = {
             GetCommonEntity("chair", 8.5, 7, 1, 0, undefined, undefined, { sheet: "assistant", sy: 5, boring: true, visible: false, storageKey: "chair", forcedY: 13 }),
             GetCommonEntity("BigBadNathan", 8.5, 7, 0, 0, undefined, undefined, { sheet: "assistant", sy: 4, sheetlen: 2, storageKey: "endNath", forcedY: 14 }),
             GetCommonEntity("button", 7.75, 7, 5, 2, undefined, undefined, { sheet: "assistant", sy: 5, boring: true, storageKey: "btn", forcedY: 14 }),
-            GetCommonEntity("desk", 8, 7, 7, 0, undefined, undefined, { big: true, sy: 3, boring: true, storageKey: "table", forcedY: 15 })
+            GetCommonEntity("desk", 8, 7, 7, 0, undefined, undefined, { big: true, sy: 3, boring: true, storageKey: "table", forcedY: 14 })
         ];
         for(let xx = 6; xx < 12; xx++) {
             for(let yy = 8; yy < 10; yy++) {
