@@ -7,7 +7,7 @@ worldmap.optionsMenu = {
         this.localOptions = Object.assign({}, player.options);
         this.options = []; this.cursory = 1; this.inChange = false;
         this.origFont = player.options.font;
-        var y = 0;
+        let y = 0;
         y = this.addHeading(y, "opGameOps");
         y = this.addOption(y, "opDifficulty", player.options.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
         y = this.addOption(y, "opFont", player.options.font, "font", ["fontStandard", "fontDyslexic"], false);
@@ -24,6 +24,8 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opMusic", player.options.music, "music", ["opOff", "opOn"]);
         y = this.addOption(y, "opSound", player.options.sound, "sound", ["opOff", "opOn"]);
         y = this.addHeading(y, "opGraphics");
+        y = this.addOption(y, "opResolution", player.options.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
+        y = this.addOption(y, "opFullScreen", player.options.fullscreen, "fullscreen", ["opNo", "opYes"]);
         /*y = this.addOption(y, "opPlacehold", 1, false, ["opOff", "opOn"]);*/
         y += 5;
         y = this.addFinal(y, "opSaveQuit", this.SaveAndQuit);
@@ -183,6 +185,7 @@ worldmap.optionsMenu = {
         //var f = player.options.font;
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
         UpdateStatsForCurrentDifficulty();
+        nwHelpers.AdjustScreenSettings();
         //player.options.font = f;
         worldmap.optionsMenu.QuitWithoutSaving(true);
     },
@@ -196,7 +199,7 @@ worldmap.optionsMenu = {
         return true;
     },
     SaveNewButton: function(key)  {
-        var newKey = this.options[this.cursory].idx;
+        const newKey = this.options[this.cursory].idx;
         this.localControls[newKey] = key;
         this.options[this.cursory].val = key;
         this.inChange = false;

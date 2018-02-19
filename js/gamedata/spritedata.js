@@ -555,7 +555,6 @@ var spriteData = {
         "_log": [17, 7], 
         "_coop": [18, 7],
         "_cow": [20, 6],
-        "noSeason": [4, 13],
         "dirt": [0, 11],
         "tech": [13, 17],
         "clock0": [13, 18],

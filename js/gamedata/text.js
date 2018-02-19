@@ -446,6 +446,41 @@ const fulltext = {
 		"en-dm": "Seeds are much harder to come by. Enemies are JERKS. The RNG is meaner.", 
 		"type": "opts"
 	},
+	"opResolution": {
+		"en-us": "", 
+		"en-dm": "Resolution", 
+		"type": "opts"
+	},
+	"opRes0": {
+		"en-us": "", 
+		"en-dm": "512x448", 
+		"type": "opts"
+	},
+	"opRes1": {
+		"en-us": "", 
+		"en-dm": "1024x896", 
+		"type": "opts"
+	},
+	"opRes2": {
+		"en-us": "", 
+		"en-dm": "2048x1792", 
+		"type": "opts"
+	},
+	"opFullScreen": {
+		"en-us": "", 
+		"en-dm": "Fullscreen", 
+		"type": "opts"
+	},
+	"opYes": {
+		"en-us": "", 
+		"en-dm": "Yes", 
+		"type": "opts"
+	},
+	"opNo": {
+		"en-us": "", 
+		"en-dm": "No", 
+		"type": "opts"
+	},
 	"ctrlUp": {
 		"en-us": "", 
 		"en-dm": "Up", 

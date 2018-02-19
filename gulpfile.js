@@ -6,6 +6,7 @@ var getPixels = require("get-pixels");
 gulp.task("default", function() {
     cp.execFile("uglify.cmd");
     cp.execFile("uglifymin.cmd");
+    gulp.src("out.js").pipe(gulp.dest("nwjs-sdk-v0.27.5-win-x64/"));
 });
 gulp.task("watch", function() {
     gulp.watch("./js/**/*.*", ["default"]);
