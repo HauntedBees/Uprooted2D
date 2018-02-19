@@ -8,6 +8,6 @@ combat.inbetween = {
     },
     clean: function() { gfx.clearSome(["menuA", "menuB", "menucursorA", "menucursorB", "menutext"]); },
     mouseMove: function(pos) { return true; },
-    click: function(pos) { if(game.transitioning) { return false; } this.next(); return true; },
-    keyPress: function(key) { if(key == player.controls.pause || key == player.controls.confirm) { return this.click(null); } return true; }
+    click: function(pos, isFresh) { if(game.transitioning || !isFresh) { return false; } this.next(); return true; },
+    keyPress: function(key) { if(key == player.controls.pause || key == player.controls.confirm) { return this.click(null, input.IsFreshPauseOrConfirmPress()); } return true; }
 };

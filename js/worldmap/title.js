@@ -72,7 +72,8 @@ worldmap.title = {
         this.DrawMenu();
         return true;
     },
-    click: function(pos) {
+    click: function(pos, isFresh) {
+        if(!isFresh) { return false; }
         switch(this.cursory) {
             case 0:
                 return game.transition(this, worldmap, {
@@ -135,7 +136,7 @@ worldmap.title = {
             //case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.y > 2) { return false; }
-        if(isEnter) { return this.click(pos); }
+        if(isEnter) { return this.click(pos, input.IsFreshPauseOrConfirmPress()); }
         else { return this.mouseMove(pos); }
     }
 };
