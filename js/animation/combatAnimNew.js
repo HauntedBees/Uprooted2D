@@ -177,9 +177,6 @@ function AnimProcess(ae, as, babies) {
         this.animBabies.forEach(function(e) { e.Animate(); });
         return isEnd;
     };
-    this.Finish = function() {
-        // TODO: might be useless.
-    };
 }
 
 function CropAttackAnim(targtype, grid, x, y, idx, forcedAnimSet) {
@@ -195,7 +192,7 @@ function CropAttackAnim(targtype, grid, x, y, idx, forcedAnimSet) {
         this.animset = "THROW_ROBO";
     } else if(this.crop.type === "egg") {
         this.animset = "THROW_BIRD";
-    } else { // TODO: maybe one for rice?
+    } else {
         this.animset = "THROW" + targtype; 
     }
 }
@@ -234,7 +231,6 @@ function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx) {
     this.SetAnim = function(newName) {
         if(currentName === newName) { return; }
         currentName = newName;
-        this.currentAnim.Finish();
         this.throwables = [];
         this.currentAnim = new AnimProcess(this, this.anims[newName]);
         this.bonusArgs = {};

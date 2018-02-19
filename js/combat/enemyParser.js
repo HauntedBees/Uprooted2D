@@ -485,7 +485,7 @@ const actions = {
         const attackAgain = e.wacg.HandleStatusEffectsAndReturnIfCanAttackAgain();
         EnemyParser.current.data.textID = cardData.textID;
         let damage = 0, bonusArgs = {};
-        if(cardData.isAttack) { // TODO: add messages for when crops are damaged/destroyed?
+        if(cardData.isAttack) {
             damage = e.atk;
             const x = Range(0, player.gridWidth), y = Range(0, player.gridHeight);
             if(cardData.action === "attack1" && Math.random() < 0.45) {
