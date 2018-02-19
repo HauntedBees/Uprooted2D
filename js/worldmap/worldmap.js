@@ -359,7 +359,7 @@ const worldmap = {
             }
             if(!hasCollisions) { this.pos = pos; }
         }
-        if(isEnter) {
+        if(isEnter && input.IsFreshPauseOrConfirmPress()) {
             switch(this.playerDir) {
                 case directions.UP: newPos.y--; break;
                 case directions.LEFT: newPos.x--; break;
