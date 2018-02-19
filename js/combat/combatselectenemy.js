@@ -211,7 +211,7 @@ combat.selectTarget = {
         const allAttacks = allAttackInfo.attackDatas;
         let additionalTargets = [];
 
-        let hasKills = false, hasDestroys = false;
+        let kills = [], hasDestroys = false;
         const hasRecoil = allAttackInfo.recoilInfo !== null && allAttackInfo.recoilInfo.some(function(e) { return e !== null; });
         let hasAnimals = false, hasStuns = false;
         let avgDamage = 0, lastTargetName = "";
@@ -222,11 +222,11 @@ combat.selectTarget = {
             const targetidx = this.targets[i], attackData = allAttacks[i];
             if(targArr) { combat.lastTarget.push(targetidx); }
             else { combat.lastTarget = targetidx; }
-            if(targetidx.x !== undefined) {
+            if(targetidx.x !== undefined) { // crop
                 let cropPos = {x: targetidx.x - combat.enemydx, y: targetidx.y - combat.enemydy};
                 let crop = combat.enemyGrid[cropPos.x][cropPos.y];
                 if(crop === null) { continue; }
-                if(crop.x !== undefined) { // this is a size 2 crop
+                if(crop.x !== undefined) {
                     cropPos = { x: crop.x, y: crop.y };
                     crop = combat.enemyGrid[crop.x][crop.y];
                 }
@@ -240,7 +240,7 @@ combat.selectTarget = {
                     crop.flagged = true;
                     combat.animHelper.DrawCrops();
                 }
-            } else {
+            } else { // enemy
                 const target = combat.enemies[targetidx];
                 lastTargetName = target.name;
 
@@ -248,7 +248,7 @@ combat.selectTarget = {
                 if(target.addtlHitCheck !== undefined) { finalDamage = addtlHitChecks[target.addtlHitCheck](attackData.crops, finalDamage); }
                 avgDamage += finalDamage;
                 combat.damageEnemy(targetidx, finalDamage);
-                if(target.health <= 0) { hasKills = true; }
+                if(target.health <= 0) { kills.push(targetidx); }
 
                 if(attackData.animals.length > 0) { hasAnimals = true; }
                 if(attackData.stunLength > 0) {
@@ -267,13 +267,13 @@ combat.selectTarget = {
             for(let j = 0; j < combat.enemies.length; j++) {
                 const dmg = dmgCalcs.GetDefendedPlayerDamage(fullRecoilDamage, allAttackInfo.isCritical, combat.enemies[j].def);
                 combat.damageEnemy(j, dmg);
-                if(combat.enemies[j].health <= 0) { hasKills = true; }
+                if(combat.enemies[j].health <= 0) { kills.push(j); }
             }
         }
         avgDamage = Math.floor(avgDamage / this.targets.length);
         
         if(allAttacks[0].knockback > 0) { player.health = Math.max(player.health - allAttacks[0].knockback, 1); }
-        const damagetext = this.GetDamageText(allAttackInfo.isCritical, hasAnimals, hasRecoil, hasKills, hasDestroys, hasStuns, 
+        const damagetext = this.GetDamageText(allAttackInfo.isCritical, hasAnimals, hasRecoil, kills, hasDestroys, hasStuns, 
                                             combat.isFalcon, avgDamage, lastTargetName, this.targets.length > 1, allAttacks[0].knockback);
         const targType = (this.targets[0].x === undefined) ? "_ENEMY" : "_CROP";
         if(combat.isFalcon) {
@@ -325,7 +325,7 @@ combat.selectTarget = {
             return dmgCalcs.CropAttack(true, combat.season, player.atk, myCrops, targetParams, -1);
         }
     },
-    GetDamageText: function(criticalHit, hasAnimals, hasRecoil, hasKills, hasDestroys, stunningEnemies, isFalcon, damage, target, multipleTargets, selfHarm) {
+    GetDamageText: function(criticalHit, hasAnimals, hasRecoil, kills, hasDestroys, stunningEnemies, isFalcon, damage, target, multipleTargets, selfHarm) {
         let damagetext = GetText("attackMessageStruct");
         if(criticalHit) { damagetext = damagetext.replace(/\{crit\}/g, GetText("critPrefix")); }
         else { damagetext = damagetext.replace(/\{crit\}/g, ""); }
@@ -345,20 +345,23 @@ combat.selectTarget = {
         else { damagetext = damagetext.replace(/\{recoil\}/g, ""); }
         
         let allEnemiesDead = false;
-        if(hasKills) {
+        if(kills.length > 0) {
             allEnemiesDead = true;
             for(let i = 0; i < combat.enemies.length; i++) { if(combat.enemies[i].health > 0) { allEnemiesDead = false; break; } }
         }
 
         if(multipleTargets) {
             if(allEnemiesDead) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_all_pl")); }
-            else if(hasKills || hasDestroys) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_some_pl")); }
+            else if(kills.length > 0 || hasDestroys) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_some_pl")); }
             else { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_none_pl")); }
 
             if(stunningEnemies && !allEnemiesDead) { damagetext = damagetext.replace(/\{sticky\}/g, GetText("sticky_some")); }
             else { damagetext = damagetext.replace(/\{sticky\}/g, GetText("sticky_none")); }
         } else {
-            if(hasKills) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_defeatthey_sing")); } // TODO: account for unique defeats
+            if(kills.length > 0) {
+                const killKey = combat.enemies[kills[0]].killKey || "kill_defeatthey_sing";
+                damagetext = damagetext.replace(/\{casualties\}/g, GetText(killKey));
+            }
             else if(hasDestroys) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_crop_sing")); }
             else { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_none_sing")); }
 
