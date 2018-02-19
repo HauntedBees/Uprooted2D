@@ -76,7 +76,8 @@ combat.AgeCrop = function(grid, x, y, catchFunc) {
         crop.activeTime -= 1;
         if(crop.activeTime === 0 && (crop.type === "sickle2" || crop.type === "rock" || (crop.type === "rod" && !crop.ready))) { crop.health = 0; this.PurgeCrop(grid, x, y); }
     } else if(crop.activeTime === 0) {
-        if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = combat.plant.GetGrowthTime(crop, x, y, true); }
+        if(crop.rotResistActive) { crop.rotResistActive = false; }
+        else if(crop.respawn > 0 && (crop.type === "veg" || crop.type === "tree")) { crop.activeTime = combat.plant.GetGrowthTime(crop, x, y, true); }
         else if(crop.type === "veg") { crop.rotten = true; }
         else if(crop.type === "egg") { crop.power = Math.min(crop.initpower + 3, crop.power + 0.5); }
         else if(crop.type === "rod" && !crop.ready) { crop.health = 0; this.PurgeCrop(grid, x, y); }

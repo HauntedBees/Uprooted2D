@@ -246,8 +246,11 @@ const stores = {
     "church": {
         img: "shops/dwarf2",
         wares: [
-            { product: "carrot", type: "seed" },
-            { product: "carrot", type: "seed" }
+            { product: "alms", name: "alms", price: 1000, type: "alms" },
+            { product: "book2", name: "bookWater", price: 0, type: "book" },
+            { product: "holywater", type: "seed" },
+            { product: "holyjug", type: "seed" },
+            { product: "book3", name: "bookHits", price: 0, type: "book" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"

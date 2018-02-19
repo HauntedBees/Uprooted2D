@@ -83,6 +83,9 @@ function GetCrop(name) {
 		case "frogbot": return new CropDetail(name, "Fwoggybot", 135, "tech", 2, 8, 4, 9, 0, 2, 2, 2, 2);
 		case "coffee": return new CropDetail(name, "Coffee Machine", 165, "tech", 2, 10, 5, 10, 0, 2, 2, 2, 2);
 		case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 100, "sickle2", 1, 5, 4, 0, 0, 2, 2, 2, 2);
+		/* Water */
+		case "holywater": return new CropDetail(name, "Holy Water", 1000, "moist", 1, 0, 1, 2, 0, 2, 2, 2, 2);
+		case "holyjug": return new CropDetail(name, "Holy Pitcher", 6000, "moist", 2, 0, 1, 3, 0, 2, 2, 2, 2);
 		/* Rare */
 		case "goldegg": return new CropDetail(name, "Golden Egg", 500, "egg", 1, 4, 4, 11, 0, 1, 1, 1, 1);
 		case "coconut": return new CropDetail(name, "Coconut", 500, "tree", 2, 10, 5, 11, 3, 1, 2, 0, 0, { treeSprite: "tropictree" });
@@ -164,4 +167,4 @@ function GetCrop(name) {
 		case "soybaby": return new CropDetail(name, "Soy Baby", 0, "babby", 1, 5, 5, 0, 0, 1, 1, 1, 1, { baby: "soyChild" });
 	}
 }
-debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus", "hbee"];
+debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "holywater", "holyjug", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus", "hbee"];

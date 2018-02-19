@@ -33,7 +33,15 @@ combat.plant = {
         return true;
     },
     isValidPlantingLocation: function(px, py, diff) {
-        if(diff == 1) {
+        if(this.activeCrop.type === "moist") {
+            if(diff === 1) {
+                return this.isValidLocationForCrop(px, py) || this.isValidLocationForCrop(px + 1, py)
+                        || this.isValidLocationForCrop(px, py + 1) || this.isValidLocationForCrop(px + 1, py + 1);
+            } else {
+                return this.isValidLocationForCrop(px, py);
+            }
+        }
+        if(diff === 1) {
             if(player.itemGrid[px][py] === "_cow") { return this.isValidLocationForCrop(px + 1, py + 1); }
             if(combat.grid[px][py] !== null) { return false; }
             if(combat.grid[px + 1][py] !== null) { return false; }
@@ -47,6 +55,12 @@ combat.plant = {
         }
     },
     isValidLocationForCrop: function(x, y) {
+        if(this.activeCrop.type === "moist") {
+            let crop = combat.grid[x][y];
+            if(crop === null) { return false; }
+            if(crop.x !== undefined) { crop = combat.grid[crop.x][crop.y]; }
+            return ["veg", "tree", "rice"].indexOf(crop.type) >= 0;
+        }
         const type = player.itemGrid[x][y];
         if(type === null) { return this.activeCrop.type === "veg" || this.activeCrop.type === "tree"; }
         const parent = (type.x !== undefined ? player.itemGrid[type.x][type.y] : type);
@@ -161,8 +175,13 @@ combat.plant = {
             if(player.inventory[actualIdx][1] === 0) { return false; }
             this.activeCrop = GetCrop(player.inventory[actualIdx][0]);
             combat.lastSelectedSeed = { x: this.cursor.x, y: this.cursor.y - this.dy };
-            this.cursor = { x: combat.dx + combat.lastPlantedPos.x, y: combat.dy + combat.lastPlantedPos.y };
-            this.isValid = this.isValidPlantingLocation(0, 0, this.activeCrop.size - 1);
+            let newx = combat.lastPlantedPos.x, newy = combat.lastPlantedPos.y;
+            if(this.activeCrop.size === 2) {
+                if((newx + 1) >= player.gridWidth) { newx -= 1; }
+                if((newy + 1) >= player.gridHeight) { newy -= 1; }
+            }
+            this.cursor = { x: combat.dx + newx, y: combat.dy + newy };
+            this.isValid = this.isValidPlantingLocation(newx, newy, this.activeCrop.size - 1);
         } else {
             const diff = this.activeCrop.size - 1;
             if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
@@ -188,18 +207,29 @@ combat.plant = {
                     killType = 3;
                 }
             }
-            if(player.itemGrid[px][py] === "_shooter") {
+            if(newCrop.type === "moist") {
+                const watered = [];
+                watered.push(this.WaterCrop(px, py, newCrop.power));
+                if(newCrop.size === 2) {
+                    watered.push(this.WaterCrop(px + 1, py, newCrop.power, watered));
+                    watered.push(this.WaterCrop(px, py + 1, newCrop.power, watered));
+                    this.WaterCrop(px + 1, py + 1, newCrop.power, watered);
+                    this.finishTurn(GetText("plFishFail"));
+                }
+                this.finishTurn(GetText("waterCrops"));
+                return true;
+            } if(player.itemGrid[px][py] === "_shooter") {
                 if(combat.getUsedShooterIndex(px, py) >= 0) { return false; }
                 player.miscdata.techFixturesUsed++;
                 combat.usedShooters.push({x: px, y: py});
-                this.launchSeeds();
+                this.LaunchSeeds();
                 return true;
             } else if(player.itemGrid[px][py] === "_modulator") {
                 player.miscdata.techFixturesUsed++;
-                this.modulate();
+                this.Modulate();
                 return true;
             } else if(this.activeCrop.type === "spear") {
-                this.throwSpear(px, py);
+                this.ThrowSpear(px, py);
                 return true;
             }
             player.shiftTech(newCrop.type === "tech" ? 0.04 : -0.01);
@@ -294,7 +324,35 @@ combat.plant = {
         this.DrawAll();
         return true;
     },
-    throwSpear: function(x, y) {
+    WaterCrop: function(x, y, power, alreadyWateredCrops) {
+        let crop = combat.grid[x][y];
+        if(crop === null) { return { ignore: true }; } // this shouldn't even happen anyway
+        if(crop.x !== undefined) {
+            x = crop.x; y = crop.y;
+            crop = combat.grid[crop.x][crop.y];
+        }
+        if(alreadyWateredCrops !== undefined) {
+            for(let i = 0; i < alreadyWateredCrops.length; i++) {
+                const wet = alreadyWateredCrops[i];
+                if(!wet.ignore && wet.x === x & wet.y === y) { return { ignore: true }; }
+            }
+        }
+        crop.activeTime -= power;
+        if(crop.activeTime <= 0) {
+            crop.activeTime = 0;
+            crop.health = crop.maxhealth;
+            if(crop.type === "veg") { crop.rotResistActive = true; }
+        }
+        if(combat.isFalcon) {
+            combat.animHelper.SetBirdAnimState("WON", true);
+            combat.animHelper.ResetBirdAnimPos();
+        } else {
+            combat.animHelper.SetPlayerAnimState("WON", true);
+            combat.animHelper.ResetPlayerAnimPos();
+        }
+        return { x: x, y: y, ignore: false };
+    },
+    ThrowSpear: function(x, y) {
         const success = (Math.random() * player.luck) < combat.GetCatchChance(this.activeCrop);
         player.miscdata.typesPlanted["water"] += 1;
         player.shiftTech(-0.01);
@@ -309,7 +367,7 @@ combat.plant = {
         combat.grid[x][y] = crop;
         this.finishTurn(GetText("plFishFail"));
     },
-    launchSeeds: function() {
+    LaunchSeeds: function() {
         const newCrop = GetCrop(this.activeCrop.name);
         player.shiftTech(0.03);
         const damage = Math.ceil(newCrop.power / 2);
@@ -318,7 +376,7 @@ combat.plant = {
         combat.enemies.forEach((e, i) => combat.damageEnemy(i, damage));
         this.finishTurn(GetText("seedShooterAttack").replace(/\{dmg\}/g, damage).replace(/\{amt\}/g, GetText(numEnemies > 1 ? "cmpatk_pl" : "cmpatk_sing")));
     },
-    modulate: function() {
+    Modulate: function() {
         const newCrop = GetCrop(this.activeCrop.name);
         player.shiftTech(0.015);
         let seasons = [], seasons2 = [];

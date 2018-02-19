@@ -325,6 +325,16 @@ const fulltext = {
 		"en-dm": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. That shit's fuckin' creepy, man.", 
 		"type": "item"
 	},
+	"holywater": {
+		"en-us": "", 
+		"en-dm": "You may not be in the business of blessing, but you ARE in the business of applying water to dirt so the things in that dirt grow faster... so water you waiting for?", 
+		"type": "item"
+	},
+	"holyjug": {
+		"en-us": "", 
+		"en-dm": "This big container of holy water can baptize one human child OR water a large amount of soil. Hey, corn needs protection from evil, too!", 
+		"type": "item"
+	},
 	// Options
 	"saveSlotDisp": {
 		"en-us": "", 
@@ -5571,6 +5581,21 @@ const fulltext = {
 		"en-dm": "You already own one of these! You don't need another!", 
 		"type": "shop"
 	},
+	"s.alms": {
+		"en-us": "", 
+		"en-dm": "Give Alms ({0} coins) \n If you believe in luck or karma or the whole \"you reap which you sow\" mentality (not in the literal sense, you farmer), it probably couldn't hurt to spare a few coins.", 
+		"type": "shop"
+	},
+	"s.almsBuy": {
+		"en-us": "", 
+		"en-dm": "Father Iglesias thanks you for your kindness, and you feel just a wee bit luckier.", 
+		"type": "shop"
+	},
+	"s.almsNope": {
+		"en-us": "", 
+		"en-dm": "I don't have enough money right now... I'd feel guilty about just giving spare change.", 
+		"type": "shop"
+	},
 	// Books
 	"bookVeg": {
 		"en-us": "", 
@@ -6145,6 +6170,71 @@ const fulltext = {
 	"bookElem5": {
 		"en-us": "", 
 		"en-dm": "Crops with Salt Resistance or Salt Absorption are marked with these symbols:", 
+		"type": "book"
+	},
+	"bookWater": {
+		"en-us": "", 
+		"en-dm": "\"Water and You\" by Walter Atwater \n Information on directly watering crops.", 
+		"type": "bname"
+	},
+	"bookWater0": {
+		"en-us": "", 
+		"en-dm": "You already water your crops every turn, so no matter what, your crops will grow and become ripe. With various watering cans and fixtures like Sprinklers, you can even make them grow faster! But what if you want one crop to grow really fast, right now?", 
+		"type": "book"
+	},
+	"bookWater1": {
+		"en-us": "", 
+		"en-dm": "By using something like Holy Water or a Holy Pitcher, you can advance a crop's growth by several turns in just one move! You can select water from the \"Plant\" menu in combat, and apply it to any currently growing veggies, fruits, or paddy crops.", 
+		"type": "book"
+	},
+	"bookWater2": {
+		"en-us": "", 
+		"en-dm": "In addition to advancing the crop's stage of growth, it will also mend any damage the crop has received, and give vegetables a brief period of Rot Resistance.", 
+		"type": "book"
+	},
+	"bookWater3": {
+		"en-us": "", 
+		"en-dm": "Usually, if a ripe vegetable remains on your field and then ages again, it will become rotten and unusable. Rot Resistance will let that crop stay ripe for one additional turn before rotting. You can tell when a crop has Rot Resistance when it is sparkling.", 
+		"type": "book"
+	},
+	"bookHits": {
+		"en-us": "", 
+		"en-dm": "\"Father Iglecias' Greatest Hits\" by Father Iglecias \n A collection of Father Iglesias' favorite Bible verses, along with other \"hip\" excerpts from his sermons.", 
+		"type": "bname"
+	},
+	"bookHits0": {
+		"en-us": "", 
+		"en-dm": "\"Labour not to be rich: cease from thine own wisdom. Wilt thou set thine eyes upon that which is not? for riches certainly make themselves wings; they fly away as an eagle toward heaven.\" - Proverbs 23:4-5 (KJV)", 
+		"type": "book"
+	},
+	"bookHits1": {
+		"en-us": "", 
+		"en-dm": "\"Go to now, ye rich men, weep and howl for your miseries that shall come upon you.\" - James 5:1 (KJV)", 
+		"type": "book"
+	},
+	"bookHits2": {
+		"en-us": "", 
+		"en-dm": "\"A good name is rather to be chosen than great riches, and loving favour rather than silver and gold.\" - Proverbs 22:1 (KJV)", 
+		"type": "book"
+	},
+	"bookHits3": {
+		"en-us": "", 
+		"en-dm": "\"But this I say, He which soweth sparingly shall reap also sparingly; and he which soweth bountifully shall reap also bountifully.\" - 2 Corinthians 9:6 (KJV)", 
+		"type": "book"
+	},
+	"bookHits4": {
+		"en-us": "", 
+		"en-dm": "\"Open thy mouth, judge righteously, and plead the cause of the poor and needy.\" - Proverbs 31:9 (KJV)", 
+		"type": "book"
+	},
+	"bookHits5": {
+		"en-us": "", 
+		"en-dm": "\"And again I say unto you, It is easier for a camel to go through the eye of a needle, than for a rich man to enter into the kingdom of God. \" - Matthew 19:24 (KJV)", 
+		"type": "book"
+	},
+	"bookHits6": {
+		"en-us": "", 
+		"en-dm": "...Taped to the last page of this book is a demo tape titled \"Hip Bible Raps by Father Iggy.\" The track listing includes \"My Homeboy Jesus\", \"It's Cool to Take the Eucharist\", \"Mary is my Bae\", and \"The Deuteronomy Rap.\"", 
 		"type": "book"
 	},
 	// Bees
@@ -7625,6 +7715,11 @@ const fulltext = {
 	"seedShooterAttack": {
 		"en-us": "", 
 		"en-dm": "You load up the seed shooter and it fires rapidly, dealing {dmg} damage{amt}", 
+		"type": "combat"
+	},
+	"waterCrops": {
+		"en-us": "", 
+		"en-dm": "You water your field. Crop Boost!", 
 		"type": "combat"
 	},
 	// Combat - Player Attack String

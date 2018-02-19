@@ -131,6 +131,7 @@ var spriteData = {
         }
     },
     names: {
+        "holywater": [42, 9], "holyjug": [42, 8], "alms": [42, 7],  "rotSparkle": [42, 6],
         "hulkFist0": [18, 2, true], "hulkFist1": [19, 2, true],
         "vineBottom0": [45, 4], "vineBottom1": [46, 4],
         "vineAnimT.0": [43, 4], "vineAnimT.1": [44, 4],

@@ -1,4 +1,4 @@
-var combat = {
+const combat = {
     enemies: [], state: 0, season: 0, numPlantTurns: 0, isFalcon: false,
     doingFinalKill: false, playerInDanger: false, saveChance: 1, seasonTime: 0,
     lastTarget: 0, lastSelectedSeed: { x: 0, y: 0 }, lastPlantedPos: { x: 0, y: 0 },

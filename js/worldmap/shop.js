@@ -137,11 +137,11 @@ worldmap.shop = {
         }
         this.availableIndexes = []; var j = 0;
         this.isUpgradeShop = false;
-        var widecursor = false;
-        for(var i = 0; i < this.details.wares.length; i++) {
+        let widecursor = false;
+        for(let i = 0; i < this.details.wares.length; i++) {
             if(this.details.wares[i].type === "upgrade") {
                 this.isUpgradeShop = true;
-                var res = spriteData.names[this.details.wares[i].product + "-" + player.gridLevel];
+                const res = spriteData.names[this.details.wares[i].product + "-" + player.gridLevel];
                 if(res === undefined) { continue; }
                 this.availableIndexes.push(i);
                 gfx.drawTileToGrid(this.details.wares[i].product + "-" + player.gridLevel, this.initx + j * this.dx, this.yPos, "characters");
@@ -249,6 +249,7 @@ worldmap.shop = {
         else if(productInfo.type === "upgrade") { this.DrawUpgradeText(productInfo); }
         else if(productInfo.type === "inn") { this.WriteWrappedText(GetText("s.sleepsy").replace(/\{0\}/g, productInfo.price)); }
         else if(productInfo.type === "book") { this.WriteWrappedText(GetText(productInfo.name)); }
+        else if(productInfo.type === "alms") { this.WriteWrappedText(GetText("s.alms").replace(/\{0\}/g, productInfo.price)); }
     },
     DrawUpgradeText: function(productInfo) {
         var size = "???";
@@ -450,10 +451,18 @@ worldmap.shop = {
             default: price = productInfo.price; break;
         }
         price = Math.floor(price * mult);
-        if(price > player.monies) { this.DrawDetails(GetText(this.details.notEnough)); return true; }
+        if(price > player.monies) {
+            if(productInfo.type === "alms") { this.DrawDetails(GetText("s.almsNope")); }
+            else { this.DrawDetails(GetText(this.details.notEnough)); }
+            return true;
+        }
         player.monies -= price;
 
-        if(productInfo.type === "inn") {
+        if(productInfo.type === "alms") {
+            player.luck += 0.002;
+            this.DrawDetails(GetText("s.almsBuy"));
+            return true;
+        } else if(productInfo.type === "inn") {
             player.lastInn = this.details.innId;
             player.health = player.maxhealth + 5;
         } else if(productInfo.type === "upgrade") {

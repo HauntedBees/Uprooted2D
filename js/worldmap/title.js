@@ -18,7 +18,7 @@ worldmap.title = {
     },
     HasSaves: function() {
         for(let i = 0; i < game.numSaveSlots; i++) {
-            if(localStorage.getItem("file" + i) !== null) { return true; }
+            if(localStorage.getItem("player" + i) !== null) { return true; }
         }
         return false;
     },
