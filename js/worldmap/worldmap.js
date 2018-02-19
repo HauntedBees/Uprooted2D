@@ -15,7 +15,7 @@ const worldmap = {
         this.waitForAnimation = false;
         this.dialogState = 0;
         this.mapName = args.map;
-        var justStateLoad = false;
+        let justStateLoad = false;
         if(player.visitedMaps.indexOf(args.map) < 0) { player.visitedMaps.push(args.map); } else { justStateLoad = !args.fromLoad; }
         this.pos = args.init;
         this.playerDir = (args.playerDir === undefined ? (this.playerDir === undefined ? 2 : this.playerDir) : args.playerDir);
@@ -85,15 +85,15 @@ const worldmap = {
     moveEntities: function() {
         if(worldmap.horRor !== null) { worldmap.horRor.Pursue(); }
         if(worldmap.smartphone !== null) { worldmap.smartphone.Update(); }
-        for(var i = 0; i < worldmap.entities.length; i++) {
-            var e = worldmap.entities[i];
+        for(let i = 0; i < worldmap.entities.length; i++) {
+            const e = worldmap.entities[i];
             if(e.fov) { worldmap.fovCheck(e); }
             if(e.movement === undefined) { continue; }
             e.moving = true;
-            var em = e.movement;
-            var pointinfo = em.points[em.state];
-            var speed = ((typeof em.speed) === "function" ? em.speed(e) : em.speed);
-            var newPos = {
+            const em = e.movement;
+            const pointinfo = em.points[em.state];
+            const speed = ((typeof em.speed) === "function" ? em.speed(e) : em.speed);
+            const newPos = {
                 x: e.pos.x + pointinfo.dx * speed,
                 y: e.pos.y + pointinfo.dy * speed
             }
@@ -106,7 +106,7 @@ const worldmap = {
             } else if(pointinfo.dx > 0) {
                 worldmap.entities[i].dir = directions.RIGHT;
             }
-            var isBlocked = false;
+            let isBlocked = false;
             if(worldmap.isTheirCollision(newPos, e.big) && e.interact !== undefined) {
                 isBlocked = true;
                 if(!e.onlyActiveInteracts) {
@@ -129,24 +129,24 @@ const worldmap = {
     },
     refreshMap: function() {
         gfx.clearSome(["background", "background2", "characters", "foreground"]); // TODO: actually put things on the foreground
-        var offset = gfx.drawMap(this.mapName, this.pos.x, this.pos.y);
-        var layers = [];
-        var fov = [];
-        var ymax = collisions[this.mapName].length;
-        for(var y = 0; y < ymax; y++) { layers.push([]); }
+        const offset = gfx.drawMap(this.mapName, this.pos.x, this.pos.y);
+        const layers = [];
+        const fov = [];
+        const ymax = collisions[this.mapName].length;
+        for(let y = 0; y < ymax; y++) { layers.push([]); }
 
-        var animDir = this.playerDir, moving = true;
-        if(input.mainKey !== undefined) { animDir = input.mainKey; }
-        else if(input.keys[player.controls.up] !== undefined) { animDir = directions.UP; }
-        else if(input.keys[player.controls.left] !== undefined) { animDir = directions.LEFT; }
-        else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
-        else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
-        else { moving = this.forceMove; }
-
-        var playery = this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY;
-
-        for(var i = 0; i < this.entities.length; i++) {
-            var e = this.entities[i];
+        let animDir = this.playerDir, moving = true;
+        if(!worldmap.inDialogue) {
+            if(input.mainKey !== undefined) { animDir = input.mainKey; }
+            else if(input.keys[player.controls.up] !== undefined) { animDir = directions.UP; }
+            else if(input.keys[player.controls.left] !== undefined) { animDir = directions.LEFT; }
+            else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
+            else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
+            else { moving = this.forceMove; }
+        } else { moving = false; }
+        const playery = this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY;
+        for(let i = 0; i < this.entities.length; i++) {
+            const e = this.entities[i];
             if(!e.visible || e.pos.y < 0 || (!e.chungus && e.pos.y >= ymax)) { continue; }
             if(e.jumbo) {
                 gfx.drawJumbo(e.filename, (offset.x - e.pos.x), (offset.y - e.pos.y), e.w, e.h, e.offset.x, e.offset.y);
@@ -157,26 +157,26 @@ const worldmap = {
                 continue;
             }
             if(e.isForeground) {
-                var fgy = playery + 1;
+                const fgy = playery + 1;
                 if(fgy >= ymax) { continue; }
                 layers[fgy].push({ foreground: true, img: e.img, dy: e.yoff, w: e.width });
                 continue;
             }
             if(e.fov) { fov.push({ x: e.pos.x - offset.x, y: e.pos.y - offset.y, dir: e.dir }); }
-            var roundedY = e.forcedY ? e.forcedY : Math.round(e.pos.y);
+            let roundedY = e.forcedY ? e.forcedY : Math.round(e.pos.y);
             if(roundedY < 0 || roundedY >= ymax) { continue; }
             if(e.big) { roundedY++; }
-            if(layers[roundedY] !== undefined) { // TODO: address new screen size
+            if(layers[roundedY] !== undefined) { // TODO: address new screen size (TODO: I don't know what I meant by this...?)
                 layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
             }
         }
         if(this.mapName !== "gameover") {
             layers[playery].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
         }
-        for(var y = 0; y < ymax; y++) {
-            var funcs = layers[y];
-            for(var i = 0; i < funcs.length; i++) {
-                var e = funcs[i];
+        for(let y = 0; y < ymax; y++) {
+            const funcs = layers[y];
+            for(let i = 0; i < funcs.length; i++) {
+                const e = funcs[i];
                 if(e.foreground) {
                     gfx.drawFGCover(e.img, y, e.dy, e.w, offset);
                 } else {
@@ -184,7 +184,7 @@ const worldmap = {
                 }
             }
         }
-        for(var i = 0; i < fov.length; i++) { gfx.drawFOV(fov[i].x, fov[i].y, fov[i].dir, fov[i].ox, fov[i].oy); }
+        for(let i = 0; i < fov.length; i++) { gfx.drawFOV(fov[i].x, fov[i].y, fov[i].dir, fov[i].ox, fov[i].oy); }
         if(worldmap.smartphone !== null) { worldmap.smartphone.Draw(); }
         if(worldmap.horRor !== null) { worldmap.horRor.Draw(); }
     },
@@ -199,15 +199,15 @@ const worldmap = {
     clearTarget: function() {
         if(game.target) {
             player.clearedEntities.push(game.target.name);
-            var idx = this.entities.indexOf(game.target);
+            const idx = this.entities.indexOf(game.target);
             if(idx >= 0) { this.entities.splice(idx, 1); }
         }
         game.target = null;
     },
     fovCheck: function(e) {
         if(worldmap.inDialogue) { return false; }
-        var dpos = { x: e.pos.x - worldmap.pos.x, y: e.pos.y - worldmap.pos.y };
-        var spotted = false;
+        const dpos = { x: e.pos.x - worldmap.pos.x, y: e.pos.y - worldmap.pos.y };
+        let spotted = false;
         switch(e.dir) {
             case 0: spotted = Math.abs(dpos.x) <= 1 && dpos.y >= 0 && dpos.y <= 4; break;
             case 1: spotted = Math.abs(dpos.y) <= 1 && dpos.x >= 0 && dpos.x <= 4; break;
@@ -263,7 +263,7 @@ const worldmap = {
             gfx.drawChoice(choiceTopY + i, txt, worldmap.dialogData.idx === i);
         }
     },
-    mouseMove: function(pos) { return true; },
+    mouseMove: pos => true,
     finishAnimation: function() {
         clearInterval(this.animIdx);
         this.waitForAnimation = false;
@@ -288,7 +288,7 @@ const worldmap = {
         worldmap.toggleMovement(true);
     },
     handleMenuChoices: function(key) {
-        var dy = 0;
+        let dy = 0;
         switch(key) {
             case player.controls.up: dy--; break;
             case player.controls.down: dy++; break;
@@ -296,7 +296,7 @@ const worldmap = {
             case player.controls.pause: return this.click(null, input.IsFreshPauseOrConfirmPress());
         }
         if(worldmap.dialogData.choices === undefined || worldmap.dialogData.choices.length === 0) { return; }
-        var newchoice = worldmap.dialogData.idx + dy;
+        let newchoice = worldmap.dialogData.idx + dy;
         if(newchoice < 0) { newchoice = 0; }
         if(newchoice >= worldmap.dialogData.choices.length) { newchoice = worldmap.dialogData.choices.length - 1; }
         worldmap.dialogData.idx = newchoice;
@@ -313,9 +313,9 @@ const worldmap = {
             return this.handleMenuChoices(key);
         }
         this.freeMovement = true;
-        var pos = { x: this.pos.x, y: this.pos.y };
-        var isEnter = false;
-        var moveSpeed = me.PLAYERMOVESPEED;
+        const pos = { x: this.pos.x, y: this.pos.y };
+        let isEnter = false;
+        const moveSpeed = me.PLAYERMOVESPEED;
         switch(key) {
             case player.controls.up: 
                 pos.y -= moveSpeed;
@@ -342,15 +342,15 @@ const worldmap = {
                 game.transition(this, pausemenu);
                 return;
         }
-        var newPos = { x: Math.round(pos.x), y: Math.round(pos.y) }
+        const newPos = { x: Math.round(pos.x), y: Math.round(pos.y) }
         if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
         if(worldmap.noClip) {
             this.pos = pos;
         } else {
-            var hasCollisions = collisions[this.mapName][newPos.y][newPos.x];
+            let hasCollisions = collisions[this.mapName][newPos.y][newPos.x];
             if(!hasCollisions) {
-                for(var i = 0; i < this.entities.length; i++) {
-                    var e = this.entities[i];
+                for(let i = 0; i < this.entities.length; i++) {
+                    const e = this.entities[i];
                     if(worldmap.isCollision(e, newPos)) {
                         hasCollisions = true;
                         break;
@@ -366,9 +366,9 @@ const worldmap = {
                 case directions.DOWN: newPos.y++; break;
                 case directions.RIGHT: newPos.x++; break;
             }
-            var didInteract = false;
-            for(var i = 0; i < this.entities.length; i++) {
-                var e = this.entities[i];
+            let didInteract = false;
+            for(let i = 0; i < this.entities.length; i++) {
+                const e = this.entities[i];
                 if(worldmap.isCollision(e, newPos) && e.interact !== undefined) {
                     didInteract = true;
                     if(!e.noChange) { e.dir = this.InvertDir(this.playerDir); }
@@ -387,8 +387,8 @@ const worldmap = {
             }
             if(!didInteract && worldmap.smartphone !== null) { return worldmap.smartphone.Read(); }
         } else {
-            for(var i = 0; i < this.entities.length; i++) {
-                var e = this.entities[i];
+            for(let i = 0; i < this.entities.length; i++) {
+                const e = this.entities[i];
                 if(!e.solid && (e.pos.x == newPos.x || e.isRow) && (e.pos.y == newPos.y || e.isColumn) && e.interact !== undefined) {
                     if(e.seamlessMap) {
                         e.interact[0](0, e);
@@ -428,8 +428,8 @@ const worldmap = {
         }
     },
     isTheirCollision: function(newPos, big) {
-        var wpx = Math.round(worldmap.pos.x), wpy = Math.round(worldmap.pos.y);
-        var npx = Math.round(newPos.x), npy = Math.round(newPos.y);
+        const wpx = Math.round(worldmap.pos.x), wpy = Math.round(worldmap.pos.y);
+        const npx = Math.round(newPos.x), npy = Math.round(newPos.y);
         if(big) {
             return (npx === wpx && (npy + 1) === wpy) || ((npx + 1) === wpx && (npy + 1) === wpy);
         } else {
