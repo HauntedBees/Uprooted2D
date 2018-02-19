@@ -174,6 +174,7 @@ function CombatAnimHelper(enemies) {
                     gfx.drawTileToGrid((crop.rotten && drawWeed) ? "weed" : (crop.name + newFrame), xdx, ydy, "foreground");
                     gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, "foreground", true);
                 }
+                if(crop.rotResistActive) { gfx.drawTileToGrid("rotSparkle", xdx, ydy, "foreground"); }
             }
         }
     };

@@ -2,7 +2,26 @@ function InventoryCopy(arr) {
     let copy = [];
     for (let i = 0; i < arr.length; i++) { copy[i] = (typeof arr[i] === "object") ? InventoryCopy(arr[i]) : arr[i]; }
     return copy;
- }
+}
+const nwHelpers = {
+    AdjustScreenSettings: function() {
+        let multiplier = 1;
+        switch(player.options.resolution) {
+            case 0: multiplier = 0.5; break;
+            case 2: multiplier = 2; break;
+        }
+        if(typeof require === "undefined") { return; }
+        const win = require("nw.gui").Window.get();
+        if(player.options.fullscreen === 1) {
+            win.enterFullscreen();
+        } else if(player.options.fullscreen === 0) {
+            win.leaveFullscreen();
+        }
+        win.zoomLevel = Math.log(multiplier) / Math.log(1.2);
+        win.width = game.w * multiplier;
+        win.height = game.h * multiplier;
+    }
+};
 const game = {
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14, //w: 960, h: 640,
     currentInputHandler: worldmap, target: null, language: "en-dm",

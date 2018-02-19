@@ -6,6 +6,7 @@ worldmap.title = {
     setup: function(cursy) {
         this.cursory = cursy || 0;
         this.showContinue = this.HasSaves();
+        if(this.cursory === 2 && ! this.showContinue) { this.cursory = 1; }
         this.animPos = 0; this.animCrops = [];
         this.clouds = [ { x: 0, y: 5 }, { x: 4, y: 0 }, { x: 12, y: 7 } ];
         for(let i = 0; i < 7; i++) { this.AddAnimCrop(true); }

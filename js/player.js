@@ -13,7 +13,9 @@ let player = {
         difficulty: 1, 
         music: 1, 
         sound: 1,
-        font: 0
+        font: 0,
+        resolution: 1,
+        fullscreen: 0
     },
     controls: {
         up: "w",
