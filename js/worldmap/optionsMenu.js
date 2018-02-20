@@ -138,10 +138,11 @@ worldmap.optionsMenu = {
     mouseMove: function(pos) {
         if(this.options[this.cursory].type === "option") {
             if(pos.x !== 0) {
-                var newOp = this.options[this.cursory].val + pos.x;
-                this.options[this.cursory].val = Math.min(Math.max(newOp, 0), this.options[this.cursory].choices.length - 1);
+                const newOp = this.options[this.cursory].val + pos.x;
+                const newVal = Math.min(Math.max(newOp, 0), this.options[this.cursory].choices.length - 1)
+                this.options[this.cursory].val = newVal;
                 if(this.options[this.cursory].idx) {
-                    this.localOptions[this.options[this.cursory].idx] = newOp;
+                    this.localOptions[this.options[this.cursory].idx] = newVal;
                     //if(this.options[this.cursory].idx === "font") { player.options.font = newOp; }
                 }
                 this.drawEverything();

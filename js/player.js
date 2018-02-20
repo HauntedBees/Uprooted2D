@@ -147,7 +147,8 @@ let player = {
         else if(this.level < 16) { items.push(["avocado", 2]); items.push(["apricot"]); items.push(["blackberry", 2]); }
         else { items.push(["kiwi", 2]); items.push(["avocado", 2]); items.push(["apricot", 2]); }
         
-        for(let i = 0; i < items.length; i++) { this.increaseItem(items[i][0], items[i][1] || 1); }
+        const isHard = (player.options.difficulty === 2);
+        items.forEach(e => player.increaseItem(e[0], isHard ? 1 : e[1]));
     },
     canAttackAfterPlanting: function() {
         if(this.equipment.gloves === null) { return 0; }
