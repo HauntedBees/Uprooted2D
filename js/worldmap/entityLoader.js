@@ -73,7 +73,7 @@ const commonEnemyGenInfo = {
     // Below Village & Research Lab
     "BVRobo": EnemyMetadataFunc("robo2", ["robo"], 1, 2),
     // Underwater
-    "Fish": EnemyMetadataFunc("fishFace", ["fishFace", "fishFace", "seaMonk"], 1, 2),
+    "Fishy": EnemyMetadataFunc("fishFace", ["fishFace", "fishFace", "seaMonk"], 1, 2),
     "SeaMonk": EnemyMetadataFunc("seaMonk", ["seaMonk"], 1, 3),
     // Fake Farm
     "Chicky": EnemyMetadataFunc("chickBot", ["chickBot"], 1, 2),

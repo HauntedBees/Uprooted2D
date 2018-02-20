@@ -188,9 +188,9 @@ const dmgCalcs = {
             totalDamage *= 1 + Math.floor(myCrops.length / 6) / 10; // boost by number of crops (launch 10 crops to get 1.1x boost, 20 for 1.3x, 30 for 1.5x)
         }
         if(isPlayer) { totalDamage += myAtk + 1; }
-        var attacksArr = [];
-        for(var i = 0; i < theirDef.length; i++) {
-            var finalDamage = totalDamage;
+        const attacksArr = [];
+        for(let i = 0; i < theirDef.length; i++) {
+            let finalDamage = totalDamage;
             if(isPlayer) {
                 finalDamage = this.GetDefendedPlayerDamage(finalDamage, isCritical, theirDef[i]);
             } else {

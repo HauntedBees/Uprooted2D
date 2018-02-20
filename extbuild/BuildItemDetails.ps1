@@ -228,8 +228,8 @@ if($which.Contains("X")) {
 function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fieldheight, fieldwidth, boss, seasonDistribution, atkType, args, drops, addtl) {
     this.id = id;
 	this.name = name;
-    this.health = health;
-	this.maxhealth = health;
+    this.health = GetEnemyHealthMult(health);
+	this.maxhealth = this.health;
     this.atk = atk;
 	this.baseatk = atk;
     this.def = def;

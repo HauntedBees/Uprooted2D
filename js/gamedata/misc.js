@@ -81,7 +81,14 @@ function GetFirstWithMatch(xmin, xmax, ymin, ymax, func) {
     return null;
 }
 
-
+function GetEnemyHealthMult(hp) {
+    switch(player.options.difficulty) {
+        case 0: return Math.ceil(hp * 0.66);
+        case 1: return hp;
+        case 2: return Math.ceil(hp * 1.25);
+    }
+    return hp;
+}
 function GetPriceMultiplier() {
     switch(player.options.difficulty) {
         case 0: return 0.5;

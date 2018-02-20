@@ -95,7 +95,8 @@ combat.FlagFreshCropsAndGetSeedDrops = function(isPlayer, isCritical) {
             if(!isPlayer) { continue; }
             const seedChance = (Math.random() * (1 - player.luck)) * (isCritical ? 0.5 : 1);
             if(crop.name.indexOf("special") === 0) { seedChance = 1; }
-            if(seedChance <= 0.05) {
+            const seedReq = (player.options.difficulty === 2 ? 0.025 : 0.05);
+            if(seedChance <= seedReq) {
                 player.increaseItem(crop.name);
                 crop.seedDrop = true;
             }

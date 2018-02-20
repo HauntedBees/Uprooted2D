@@ -144,6 +144,10 @@ const combat = {
             player.health = player.health - damage;
             if(player.health < 0) { player.health = 0; damage = prevHealth; }
         }
+        if(player.health === 0 && player.options.difficulty === 0) {
+            player.health = 1;
+            damage -= 1;
+        }
         return damage;
     },
     damageEnemy: function(enemyidx, damage) {
