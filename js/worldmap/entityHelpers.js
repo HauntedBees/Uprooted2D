@@ -1,6 +1,6 @@
 const specialtyHelpers = {
     getLimeItems: function() {
-        var items = [];
+        const items = [];
         if(player.hasItem("lemon")) { items.push("lime.lemon"); }
         if(player.hasItem("banana")) { items.push("lime.banana"); }
         if(player.hasItem("corn")) { items.push("lime.corn"); }
@@ -9,7 +9,7 @@ const specialtyHelpers = {
         return items;
     },
     getRapItems: function() {
-        var items = [];
+        const items = [];
         if(player.hasItem("garlic")) { items.push("rap.garlic"); }
         if(player.hasItem("rice")) { items.push("rap.rice"); }
         if(player.hasItem("coconut")) { items.push("rap.coconut"); }
@@ -17,7 +17,7 @@ const specialtyHelpers = {
         return items;
     },
     getDowelItems: function() {
-        var items = [];
+        const items = [];
         if(player.hasItem("gmocorn")) { items.push("pirateMonkC5"); }
         if(player.hasItem("rice")) { items.push("rap.rice"); }
         if(player.hasItem("chestnut")) { items.push("pirateMonkC4"); }
@@ -28,7 +28,7 @@ const specialtyHelpers = {
         return items;
     },
     getCroutonItems: function() {
-        var items = [];
+        const items = [];
         if(player.hasItem("spear")) { items.push("arf.spear"); }
         if(player.hasItem("net")) { items.push("arf.net"); }
         if(player.hasItem("bignet")) { items.push("arf.bignet"); }
@@ -38,7 +38,7 @@ const specialtyHelpers = {
         return items;
     },
     getAbuelaItems: function() {
-        var items = [];
+        const items = [];
         if(player.hasItem("fodder")) { items.push("lady.fodder"); }
         if(player.hasItem("corn")) { items.push("lady.corn"); }
         if(player.hasItem("rice")) { items.push("lady.rice"); }
@@ -47,7 +47,7 @@ const specialtyHelpers = {
         return items;
     },
     getMushItems: function() {
-        var items = [];
+        const items = [];
         if(player.hasItem("milkcap")) { items.push("mushChoice0"); }
         if(player.hasItem("portobello")) { items.push("mushChoice1"); }
         if(player.hasItem("greenshroom")) { items.push("mushChoice2"); }
@@ -57,9 +57,9 @@ const specialtyHelpers = {
         return items;
     },
     getTruckOptions: function() {
-        var options = [];
+        const options = [];
         if(worldmap.mapName !== "producestand") { options.push("truck.home"); }
-        for(var i = 0; i < player.questsCleared.length; i++) {
+        for(let i = 0; i < player.questsCleared.length; i++) {
             switch(player.questsCleared[i]) {
                 case "researchLab": if(worldmap.mapName !== "bridge") { options.push("truck.bridge"); } break;
                 case "gotTire": if(worldmap.mapName !== "fakefarm") { options.push("truck.fake"); } break;
@@ -70,7 +70,7 @@ const specialtyHelpers = {
         return options;
     },
     getHQElevatorOptions: function() {
-        var options = [];
+        const options = [];
         if(player.visitedMaps.indexOf("hq_1") >= 0 && worldmap.mapName !== "hq_1") { options.push("elevator1"); }
         if(player.visitedMaps.indexOf("hq_2") >= 0 && worldmap.mapName !== "hq_2") { options.push("elevator2"); }
         if(player.visitedMaps.indexOf("hq_4") >= 0 && worldmap.mapName !== "hq_4") { options.push("elevator4"); }
@@ -79,28 +79,55 @@ const specialtyHelpers = {
         return options;
     }
 };
-function GetSleep(time) {
-    return function() {
-        worldmap.waitForAnimation = true;
-        worldmap.animIdx = setTimeout(FinishAnim, time);
+
+// Standard Entities
+function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
+    const big = (additional !== undefined && additional.big);
+    const sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
+    const len = (additional !== undefined && additional.sheetlen !== undefined) ? additional.sheetlen : 4;
+    const res = {
+        name: name, visible: true, 
+        pos: {x: x, y: y}, startingpos: {x: x, y: y}, solid: true, 
+        anim: new MapAnim(sheet, firstx, (additional === undefined ? 0 : (additional.sy || 0)), (big ? 32 : 16), (big ? 40 : 20), dir, len, additional !== undefined ? additional.dontDoThat : false),
+        moving: false,
+        sx: firstx * (big ? 32 : 16), dir: dir,
+        movement: movement, interact: interact
     };
+    if(big) { res.anim.big = true; }
+    return Object.assign(res, additional);
 }
-function GetBasicPlayerFrame(sx, sy, time) {
-    return function() {
-        worldmap.waitForAnimation = true;
-        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, sx, sy);
-        worldmap.refreshMap();
-        worldmap.animIdx = setTimeout(FinishAnim, time);
-    };
+function GetBeehive(hiveId, x, y, inside) {
+    return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true, inside: inside, visible: !inside });
+};
+function GetMafiaMember(num, x, y, dir, movement) {
+    return GetCommonEntity("Mafia" + num, x, y, 12, dir, movement, Cutscene("enemy"), requiredEnemyMetadata.mafia);
 }
-function FinishAnim() {
-    if(worldmap.mapName !== "hq_6") { worldmap.forceMove = false; worldmap.forcedPlayerInfo = false; }
-    worldmap.refreshMap();
-    worldmap.finishAnimation();
+function GetMafiaMember2(num, x, y, dir) {
+    return GetCommonEntity("Mafia" + num, x, y, 12, dir, undefined, Cutscene("enemy"), requiredEnemyMetadata.mafia2);
 }
-function SwitchMap(name, x, y, row, column, newx, newy, map) {
+
+// Invisible Entities
+function AutoplayCutscene(cutsceneName) {
+    this.boring = true;
+    this.name = `cutscene_${cutsceneName}`;
+    this.pos = { x: -1, y: -1 };
+    this.startingpos = { x: -1, y: -1 };
+    this.solid = false;
+    this.interact = Cutscene(cutsceneName);
+    this.autoplay = true;
+}
+function CutsceneTrigger(cutsceneName, storageKey) {
+    this.boring = true;
+    this.name = `trigger_${cutsceneName}`;
+    this.pos = { x: -1, y: -1 };
+    this.startingpos = { x: -1, y: -1 };
+    this.solid = false;
+    this.interact = Cutscene(cutsceneName);
+    this.storageKey = storageKey;
+}
+function SwitchMap(name, x, y, row, column, newx, newy, map, showIf) {
     return {
-        name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row, isMapSwitch: true, destination: map,
+        name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row, isMapSwitch: true, destination: map, showIf: showIf, 
         interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map }); } ]
     }
 };
@@ -109,7 +136,7 @@ function SwitchMapSeamless(name, x, y, requiredDir, newx, newy) {
         name: name, solid: false, pos: {x: x, y: y}, seamlessMap: true, 
         interact: [ function() {
             if(worldmap.playerDir !== requiredDir) { return true; }
-            var dx = worldmap.pos.x - x, dy = worldmap.pos.y - y;
+            let dx = worldmap.pos.x - x, dy = worldmap.pos.y - y;
             switch(requiredDir) {
                 case 0: dy += 4; break;
                 case 2: dy -= 0.25; break;
@@ -140,13 +167,42 @@ function GetInvisibleEntity(name, interact, additional) {
     return Object.assign(res, additional);
 };
 function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: OneSpeak(text) }; };
-function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, OneSpeak(textKey), {visible: false, boring: true}); };
-function GetBeehive(hiveId, x, y, inside) { return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true, inside: inside, visible: !inside }); };
+function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, OneSpeak(textKey), { visible: false, boring: true }); };
+function GetProduceStandBlock(x) {
+    const obj = GetCommonInvisibleSpeakingEntity("noPass" + x, x, 23, "farmFirst");
+    obj.solid = false;
+    obj.showIf = () => !CommonConditions["beatBigBot"]();
+    return obj;
+}
+
+// Helpers
+function FinishAnim() {
+    if(worldmap.mapName !== "hq_6") { worldmap.forceMove = false; worldmap.forcedPlayerInfo = false; }
+    worldmap.refreshMap();
+    worldmap.finishAnimation();
+}
+function Cutscene(s) { return [ () => iHandler.Start(s) ]; }
+function OneSpeak(t) { return [ (i, e) => { iHandler.isFirst = true; worldmap.writeText(t); } ]; }
+function GetItemDisplayName(name, plural) { // TODO: move this fucker to the language parsing shit
+    const pluralSuf = plural ? "s" : "";
+    switch(name[0]) {
+        case "_": return GetFarmInfo(name).displayname + pluralSuf; break;
+        case "!": return GetEquipment(name).displayname + pluralSuf; break;
+        default: 
+            const cropInfo = GetCrop(name);
+            let nam = cropInfo.displayname;
+            if(["veg", "tree", "mush"].indexOf(cropInfo.type) >= 0) { nam += " Seed"; }
+            return nam + pluralSuf;
+            break;
+    }
+}
+
+// RF Doors
 function ToggleRFDoors(type) {
     mapStates[worldmap.mapName].rf[type] = !mapStates[worldmap.mapName].rf[type];
-    for(var i = 0; i < worldmap.entities.length; i++) {
+    for(let i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
-            var newActive = !worldmap.entities[i].active;
+            const newActive = !worldmap.entities[i].active;
             worldmap.entities[i].active = newActive;
             worldmap.entities[i].anim.shiftY(newActive ? 3 : 2);
             worldmap.entities[i].solid = !newActive;
@@ -164,23 +220,25 @@ function GetRFDoorButton(name, x, y, type, isDown) {
 function GetRFDoor(name, x, y, type, isDown) {
     return GetCommonEntity(name, x, y, 15 + type, 0, undefined, undefined, { sy: (isDown ? 3 : 2), active: isDown, initActive: isDown, type: type, solid: !isDown, rfd: true });
 }
+
+// Treasure Chests
 function ForceChestOpen(e) { e.open = true; e.anim.shiftY(5); }
 function GetTreasureChest(name, x, y, contents) {
     return GetCommonEntity(name, x, y, 13, 0, undefined, [function() {
         if(game.target.open) {
             worldmap.writeText("openchest");
         } else {
-            var conts = game.target.contents;
-            var clen = conts.length - 1;
-            var contentString = "";
-            var hasRoom = true;
+            const conts = game.target.contents;
+            const clen = conts.length - 1;
+            let contentString = "";
+            let hasRoom = true;
             if(clen === 0) {
                 contentString = conts[0][1] + " " + GetItemDisplayName(conts[0][0], conts[0][1] > 1);
                 hasRoom = player.increaseItem(conts[0][0], 0);
                 
             } else {
-                for(var i = clen; i >= 0; i--) {
-                    var itdata = conts[i]; // format = [itemname, amount]
+                for(let i = clen; i >= 0; i--) {
+                    const itdata = conts[i]; // format = [itemname, amount]
                     if(i === 0) {
                         contentString += " and ";
                     } else if(i !== clen) {
@@ -197,8 +255,8 @@ function GetTreasureChest(name, x, y, contents) {
                 if(clen === 0) {
                     player.increaseItem(conts[0][0], conts[0][1]);
                 } else {
-                    for(var i = clen; i >= 0; i--) {
-                        var itdata = conts[i];
+                    for(let i = clen; i >= 0; i--) {
+                        const itdata = conts[i];
                         player.increaseItem(itdata[0], itdata[1]);
                     }
                 }
@@ -211,30 +269,43 @@ function GetTreasureChest(name, x, y, contents) {
     }], { sy: 4, open: false, contents: contents, noChange: true, isChest: true });
 }
 function GetIndoorTreasureChest(name, x, y, contents) {
-    var x = GetTreasureChest(name, x, y, contents);
-    x.inside = true;
-    x.visible = false;
-    return x;
+    const chest = GetTreasureChest(name, x, y, contents);
+    chest.inside = true;
+    chest.visible = false;
+    return chest;
 }
-function GetItemDisplayName(name, plural) { // TODO: move this fucker to the language parsing shit
-    var pluralSuf = plural ? "s" : "";
-    switch(name[0]) {
-        case "_": return GetFarmInfo(name).displayname + pluralSuf; break;
-        case "!": return GetEquipment(name).displayname + pluralSuf; break;
-        default: 
-            var cropInfo = GetCrop(name);
-            var nam = cropInfo.displayname;
-            if(["veg", "tree", "mush"].indexOf(cropInfo.type) >= 0) { nam += " Seed"; }
-            return nam + pluralSuf;
-            break;
+
+// HQ3 Ceilings
+function GetChungusDoor(num, x, y, chungi, visState) {
+    const chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi, boring: true };
+    if(visState !== undefined) {
+        chungy.noChange = true;
+        chungy.anim = new MapAnim("mapchar", 15, 9, 16, 20, visState, 4);
+        chungy.visible = true;
+    } else {
+        chungy.visible = false;
     }
+    return chungy;
 }
+function GetChungus(id, num, x, y, w, h) { return { name: "chungus" + id + "_" + num, chungus: true, chungusId: id, pos: { x: x, y: y }, width: w, height: h, visible: true, boring: true }; }
+function ToggleChungus(arg, target) {
+    const acceptableChungi = target.chungi;
+    for(let i = worldmap.entities.length - 1; i >= 0; i--) {
+        if(!worldmap.entities[i].chungus) { continue; }
+        worldmap.entities[i].visible = (acceptableChungi.indexOf(worldmap.entities[i].chungusId) < 0);
+    }
+    if(acceptableChungi.length === 1) { worldmap.horRor.playerRoom = acceptableChungi[0]; }
+    worldmap.refreshMap();
+    worldmap.finishDialog();
+}
+
+// Waterfalls
 function AdvanceWaterfall() {
-    var lastDir = game.target.dir;
-    var newDir = -1;
-    for(var i = 0; i < worldmap.entities.length; i++) {
-        var e = worldmap.entities[i];
-        if(!e.solid && e.pos.x == Math.round(worldmap.pos.x) && e.pos.y == Math.round(worldmap.pos.y)) {
+    const lastDir = game.target.dir;
+    let newDir = -1;
+    for(let i = 0; i < worldmap.entities.length; i++) {
+        const e = worldmap.entities[i];
+        if(!e.solid && e.pos.x === Math.round(worldmap.pos.x) && e.pos.y === Math.round(worldmap.pos.y)) {
             game.target = e;
             if(game.target.isEnd) {
                 ExitWaterfall();
@@ -248,7 +319,7 @@ function AdvanceWaterfall() {
             }
         }
     }
-    var x = 0, y = 0;
+    let x = 0, y = 0;
     switch(newDir) {
         case 0: y--; break;
         case 1: x--; break;
@@ -269,28 +340,6 @@ function ExitWaterfall() {
     worldmap.finishDialog();
     worldmap.inWaterfall = false;
 }
-function GetChungusDoor(num, x, y, chungi, visState) {
-    var chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi, boring: true };
-    if(visState !== undefined) {
-        chungy.noChange = true;
-        chungy.anim = new MapAnim("mapchar", 15, 9, 16, 20, visState, 4);
-        chungy.visible = true;
-    } else {
-        chungy.visible = false;
-    }
-    return chungy;
-}
-function GetChungus(id, num, x, y, w, h) { return { name: "chungus" + id + "_" + num, chungus: true, chungusId: id, pos: { x: x, y: y }, width: w, height: h, visible: true, boring: true }; }
-function ToggleChungus(arg, target) {
-    var acceptableChungi = target.chungi;
-    for(var i = worldmap.entities.length - 1; i >= 0; i--) {
-        if(!worldmap.entities[i].chungus) { continue; }
-        worldmap.entities[i].visible = (acceptableChungi.indexOf(worldmap.entities[i].chungusId) < 0);
-    }
-    if(acceptableChungi.length === 1) { worldmap.horRor.playerRoom = acceptableChungi[0]; }
-    worldmap.refreshMap();
-    worldmap.finishDialog();
-}
 function PushRock() {
     if(game.target.donePushing) {
         worldmap.finishDialog();
@@ -301,7 +350,7 @@ function PushRock() {
         return;
     }
     worldmap.animIdx = setInterval(function() {
-        var success = false;
+        let success = false;
         switch(game.target.pushDir) {
             case 0: game.target.pos.y -= 0.025; success = game.target.pos.y <= (game.target.inity - 1); break;
             case 1: game.target.pos.x -= 0.025; success = game.target.pos.x <= (game.target.initx - 1); break;
@@ -311,7 +360,7 @@ function PushRock() {
         worldmap.refreshMap();
         if(success) {
             game.target.donePushing = true;
-            for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+            for(let i = worldmap.entities.length - 1; i >= 0; i--) {
                 if(worldmap.entities[i].wfid === game.target.killid) {
                     player.clearedEntities.push(worldmap.entities[i].name);
                     worldmap.entities.splice(i, 1);
@@ -328,7 +377,7 @@ function PushTechRock() {
     if(game.target.donePushing) { worldmap.finishDialog(); return; }
     game.target.donePushing = true;
     game.target.dir += 1;
-    for(var i = worldmap.entities.length - 1; i >= 0; i--) {
+    for(let i = worldmap.entities.length - 1; i >= 0; i--) {
         if(worldmap.entities[i].wfid === game.target.killid) {
             player.clearedEntities.push(worldmap.entities[i].name);
             worldmap.entities.splice(i, 1);
@@ -352,36 +401,11 @@ function GetWaterfall(name, x, y, dir, wfid, tech) {
 function GetWaterfallEnd(name, x, y, dir, wfid, tech) {
     return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: (tech ? 9 : 4), sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
 }
-function GetMafiaMember(num, x, y, dir, movement) {
-    return GetCommonEntity("Mafia" + num, x, y, 12, dir, movement, Cutscene("enemy"), enemyMetadata.mafia);
-}
-function GetMafiaMember2(num, x, y, dir) {
-    return GetCommonEntity("Mafia" + num, x, y, 12, dir, undefined, Cutscene("enemy"), enemyMetadata.mafia2);
-}
-function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
-    var big = (additional !== undefined && additional.big);
-    var sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
-    var len = (additional !== undefined && additional.sheetlen !== undefined) ? additional.sheetlen : 4;
-    var res = {
-        name: name, visible: true, 
-        pos: {x: x, y: y}, startingpos: {x: x, y: y}, solid: true, 
-        anim: new MapAnim(sheet, firstx, (additional === undefined ? 0 : (additional.sy || 0)), (big ? 32 : 16), (big ? 40 : 20), dir, len, additional !== undefined ? additional.dontDoThat : false),
-        moving: false,
-        sx: firstx * (big ? 32 : 16), dir: dir,
-        movement: movement, interact: interact
-    };
-    if(big) { res.anim.big = true; }
-    return Object.assign(res, additional);
-}
-function GetFight(arr) { return function() { combat.startBattle(arr); } }
 
-function Cutscene(s) { return [ () => iHandler.Start(s) ]; }
-function OneSpeak(t) { return [ (i, e) => { iHandler.isFirst = true; worldmap.writeText(t); } ]; }
-
+// Foreground & Jumbo Covers
 function GetForeground(mapname, yoffset, width) {
     return { name: "fg" + mapname, img: "foregrounds/" + mapname, visible: true, yoff: yoffset, width: width, isForeground: true, pos: { x: 0, y: 0 } };
 }
-
 function GetJumbo(id, img, x, y, w, h, ox, oy) {
     return { name: id, storageKey: id, jumbo: true, filename: "covers/" + img, visible: true, w: w, h: h, offset: { x: ox, y: oy }, pos: { x: x, y: y }, boring: true };
 }
@@ -400,34 +424,29 @@ function JumboToggle(inside) {
     worldmap.finishDialog();
 }
 
-const enemyMetadata = {
-    prophet: function(type) { return { interactname: "prophet", dialogMax: 4, enemies: ["bot" + type], min: 1, max: 1, sy: 18, noChange: true, noRunKill: true } },
-    buffNerd: { interactname: "buffNerd", dialogMax: 3, enemies: ["buffNerd"], min: 1, max: 2, sy: 1, sheetlen: 2, moving: true },
-    tinyNerd: { interactname: "tinyNerd", dialogMax: 5, enemies: ["tinyNerd"], min: 1, max: 2, sy: 14 },
-    hipNerd: { interactname: "trendyNerd", dialogMax: 5, enemies: ["trendyNerd"], min: 1, max: 2, sy: 12, sheetlen: 2, moving: true },
-    hipNerdUp: { interactname: "trendyNerd", dialogMax: 5, enemies: ["trendyNerd"], min: 1, max: 2, sy: 14, sheetlen: 2, moving: true },
-    roboGuard: { interactname: "wowNewRobot", dialogMax: 10, enemies: ["robo4a", "robo4b", "robo4c"], min: 1, max: 4, sy: 15 },
-    hoverdweeb: { interactname: "hoverdweeb", dialogMax: 3, enemies: ["hoverdweeb"], min: 1, max: 1, sy: 17, sheetlen: 1 },
-    vendo: { interactname: "vendo", dialogMax: 2, enemies: ["vendo"], min: 1, max: 1, sy: 15, sheetlen: 2 },
-    vendo2: { interactname: "vendo", dialogMax: 2, enemies: ["vendo"], min: 1, max: 1, sy: 15, sheetlen: 2, inside: true, visible: false },
-    delivery: { interactname: "delivTruck", dialogMax: 3, enemies: ["delivTruck"], min: 1, max: 2, sy: 17, sheetlen: 2 },
-    car1: { interactname: "carBr", dialogMax: 3, enemies: ["brownCar"], min: 1, max: 2, sy: 4, sheetlen: 2, big: true },
-    car2: { interactname: "carBl", dialogMax: 3, enemies: ["blueCar"], min: 1, max: 2, sy: 6, sheetlen: 2, big: true },
-    car3: { interactname: "carRe", dialogMax: 3, enemies: ["redCar"], min: 1, max: 2, sy: 4, sheetlen: 2, big: true },
-    car4: { interactname: "foodTruck", dialogMax: 4, enemies: ["foodTruck"], min: 1, max: 3, sy: 6, sheetlen: 2, big: true },
-    mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, inside: true, fov: true, visible: false },
-    mafia: { mafia: true, interactname: "wildmobsty", dialogMax: 7, enemies: ["mobsty1", "mobsty1", "mobsty1", "mobsty2"], min: 2, max: 4, sy: 10, fov: true },
-    robo: { interactname: "robo", dialogMax: 5, enemies: ["robo"], min: 1, max: 2, isRobo: true },
-    mouse: { interactname: "mouse", dialogMax: 3, enemies: ["mouse"], min: 1, max: 2, sy: 5, sheetlen: 2 },
-    sqorl: { interactname: "sqorl", dialogMax: 4, enemies: ["sqorl", "sqorl", "sqorl", "mouse"], min: 1, max: 2, sy: 5, sheetlen: 2 },
-    turky: { interactname: "turky", dialogMax: 3, enemies: ["turky"], min: 1, max: 1, sy: 7 },
-    robo2: { interactname: "research", dialogMax: 5, enemies: ["robo2", "robo", "robo"], min: 1, max: 2, sy: 4 },
-    fish: { interactname: "fish", dialogMax: 3, enemies: ["fishFace", "fishFace", "fishFace", "seaMonk"], min: 1, max: 4, sy: 8, sheetlen: 2 },
-    seamonk: { interactname: "seamonk", dialogMax: 8, enemies: ["seaMonk"], min: 1, max: 3, sy: 8, sheetlen: 2 },
-    golem: { visible: false, inside: true, interactname: "golem", dialogMax: 1, enemies: ["golem"], min: 1, max: 1, sy: 12, noChange: true },
-    piggn: function(ct) { return { visible: false, inside: true, interactname: "pig", dialogMax: 1, enemies: ["piggun"], min: 2, max: 4, sy: 10, changeType: ct, sheetlen: 2, noChange: true } },
-    chick: function(ct) { return { interactname: "chickbot", dialogMax: 3, enemies: ["chickBot"], min: 1, max: 3, sy: 10, changeType: ct } },
-    mower: function(ct) { return { sy: 10, noChange: true, changeType: ct, sheetlen: 2, visible: false, inside: true } }
+// Enemy and Movement Data
+const requiredEnemyMetadata = {
+    // Farm
+    robo: { interactname: "robo", dialogMax: 5, setEnemies: ["robo"], isRobo: true },
+    roboDouble: { interactname: "robo", dialogMax: 5, setEnemies: ["robo", "robo"], isRobo: true },
+    // Forest
+    turky: { interactname: "turky", dialogMax: 3, setEnemies: ["turky"], sy: 7 },
+    // Below Village & Research Lab
+    robo2: { interactname: "research", dialogMax: 5, setEnemies: ["robo2"], sy: 4 },
+    // Underwater
+    seamonk: { interactname: "seamonk", dialogMax: 8, setEnemies: ["seaMonk"], sy: 8, sheetlen: 2 },
+    // Fake Farm
+    mower: ct => ({ sy: 10, noChange: true, changeType: ct, sheetlen: 2, visible: false, inside: true }),
+    // South City
+    mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, setEnemies: ["mobsty2", "mobsty2", "mobsty2"], sy: 10, inside: true, fov: true, visible: false },
+    mafia: { mafia: true, interactname: "wildmobsty", dialogMax: 7, setEnemies: ["mobsty1", "mobsty1"], sy: 10, fov: true },
+    // HQ 1
+    roboGuard: { interactname: "wowNewRobot", dialogMax: 10, setEnemies: ["robo4a", "robo4b", "robo4c"], sy: 15 },
+    tinyNerd: { interactname: "tinyNerd", dialogMax: 5, setEnemies: ["tinyNerd"], sy: 14 },
+    // HQ 2
+    buffNerd: { interactname: "buffNerd", dialogMax: 3, setEnemies: ["buffNerd", "buffNerd", "buffNerd"], sy: 1, sheetlen: 2, moving: true },    
+    // HQ 4
+    prophet: type => ({ interactname: "prophet", dialogMax: 4, setEnemies: ["bot" + type], sy: 18, noChange: true, noRunKill: true })
 };
 const commonMovementDatas = {
     fuckinBottle: function(x, y, w, h, initState) { return { 
@@ -443,7 +462,7 @@ const commonMovementDatas = {
                 }
             }
         } },
-    robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 },  { x: x, y: 8, dx: 0, dy: -1 } ] } },
+    robo: function(x, initState) { return { state: (initState || 0), speed: 0.025, loop: true, points: [ { x: x, y: 16, dx: 0, dy: 1 }, { x: x, y: 8, dx: 0, dy: -1 } ] } },
     line: function(x, y, w, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
         points: [ { x: x + w, y: y, dx: 1, dy: 0 }, { x: x, y: y, dx: -1, dy: 0 } ] } },
     vertline: function(x, y, h, initState) { return { state: (initState || 0), speed: 0.025, loop: true, 
@@ -455,10 +474,10 @@ const commonMovementDatas = {
     fastdownrect: function(x, y, w, h, initState) { var r = commonMovementDatas.downrectangle(x, y, w, h, initState); r.speed *= 3; return r; }
 };
 function GetStdMovement(points) {
-    var newPoints = [];
-    for(var i = 0; i < points.length; i++) {
-        var dir = points[i][2];
-        var dx = 0; var dy = 0;
+    const newPoints = [];
+    for(let i = 0; i < points.length; i++) {
+        const dir = points[i][2];
+        let dx = 0, dy = 0;
         switch(dir) {
             case 0: dy = -1; break;
             case 1: dx = -1; break;

@@ -15,8 +15,11 @@ const worldmap = {
         this.waitForAnimation = false;
         this.dialogState = 0;
         this.mapName = args.map;
+
         let justStateLoad = false;
-        if(player.visitedMaps.indexOf(args.map) < 0) { player.visitedMaps.push(args.map); } else { justStateLoad = !args.fromLoad; }
+        if(player.visitedMaps.indexOf(args.map) < 0) { player.visitedMaps.push(args.map); }
+        else { justStateLoad = !args.fromLoad; }
+
         this.pos = args.init;
         this.playerDir = (args.playerDir === undefined ? (this.playerDir === undefined ? 2 : this.playerDir) : args.playerDir);
         this.dialogData = null;
@@ -24,27 +27,19 @@ const worldmap = {
         this.inWaterfall = false;
         this.importantEntities = {};
         this.allowLateStart = true;
-        if(!args.noEntityUpdate) {
-            if(mapentities[this.mapName] !== undefined) {
-                this.entities = mapentities[this.mapName].slice();
-                for(let i = this.entities.length - 1; i >= 0; i--) {
-                    if(player.clearedEntities.indexOf(this.entities[i].name) >= 0 || (this.entities[i].showIf && player.questsCleared.indexOf(this.entities[i].showIf) < 0)) {
-                        this.entities.splice(i, 1);
-                    } else if(player.openedChests.indexOf(this.entities[i].name) >= 0) {
-                        ForceChestOpen(this.entities[i]);
-                    }
-                }
-            } else {
-                this.entities = [];
-            }
-        } else { justStateLoad = false; args.fromLoad = false; }
+
+        if(!args.noEntityUpdate) { this.entities = GetEntities(this.mapName, args.fromLoad); }
+        else { justStateLoad = false; args.fromLoad = false; }
+
+        if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, args.fromLoad, justStateLoad); }
+        else if(args.isInn) { JumboToggle(false); }
+
         let targetToAutoplay = null;
         for(let i = 0; i < this.entities.length; i++) {
             const e = this.entities[i];
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
             if(e.autoplay && targetToAutoplay === null) { targetToAutoplay = e; } // always autoplay first one
         }
-        if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, justStateLoad); } else if(args.isInn) { JumboToggle(false); }
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {
@@ -198,7 +193,7 @@ const worldmap = {
     },
     clearTarget: function() {
         if(game.target) {
-            player.clearedEntities.push(game.target.name);
+            if(game.target.name[0] !== "~") { player.clearedEntities.push(game.target.name); }
             const idx = this.entities.indexOf(game.target);
             if(idx >= 0) { this.entities.splice(idx, 1); }
         }
@@ -267,7 +262,7 @@ const worldmap = {
     finishAnimation: function() {
         clearInterval(this.animIdx);
         this.waitForAnimation = false;
-        this.click(null);
+        this.click(null, true);
     },
     click: function(pos, isFresh) {
         if(!this.inDialogue) { if(worldmap.smartphone !== null) { return worldmap.smartphone.Read(); } return false; }

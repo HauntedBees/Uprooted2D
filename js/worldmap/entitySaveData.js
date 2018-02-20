@@ -15,15 +15,29 @@ let stateBinders = {
         for(let i = 0; i < worldmap.entities.length; i++) {
             const e = worldmap.entities[i];
             if(e.movement === undefined) { continue; }
-            mapStates[mapName].ents[e.name] = { pos: e.pos, movement: e.movement, dir: e.dir };
+            if(e.name[0] === "~") {
+                mapStates[mapName].ents[e.name] = {
+                    pos: e.pos, movement: e.movement, dir: e.dir,
+                    key: e.key, fx: e.fx, metadataid: e.metadataid, param: e.param
+                };
+            } else {
+                mapStates[mapName].ents[e.name] = { pos: e.pos, movement: e.movement, dir: e.dir };
+            }
         }
     },
     "hq_3": () => { if(worldmap.horRor !== null) { mapStates["hq_3"].room = worldmap.horRor.playerRoom; } }
 };
 let mapRefreshes = {
-    "resetData": function(mapname, justStateLoad) {
+    "resetData": function(mapname, fromSave, justStateLoad) {
         const ents = mapStates[mapname].ents;
         const addtlFunc = mapRefreshes[mapname];
+        if(fromSave) {
+            for(const name in ents) {
+                if(name[0] !== "~") { continue; }
+                const e = ents[name];
+                worldmap.entities.push(GetREnemy(e.key, e.pos.x, e.pos.y, e.fx, e.dir, e.movement, e.metadataid, e.param));
+            }
+        }
         for(let i = 0; i < worldmap.entities.length; i++) {
             const e = worldmap.entities[i];
             if(addtlFunc !== undefined) { addtlFunc(e); }

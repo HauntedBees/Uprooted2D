@@ -34,13 +34,14 @@ uglifyjs ^
     js/combat/wacg.js ^
     js/worldmap/cutsceneParser.js ^
     js/worldmap/worldmap.js ^
+    js/worldmap/entityHelpers.js ^
     js/worldmap/entitySaveData.js ^
     js/worldmap/credits.js ^
     js/worldmap/title.js ^
     js/worldmap/optionsMenu.js ^
     js/worldmap/shop.js ^
     js/worldmap/collisions.js ^
-    js/worldmap/entityHelpers.js ^
+    js/worldmap/entityLoader.js ^
     js/worldmap/entities.js ^
     js/worldmap/smartphone.js ^
     js/worldmap/horRor.js ^

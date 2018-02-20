@@ -283,7 +283,7 @@ const SpecialFunctions = {
         worldmap.writeText("eggBoy." + eggType);
     },
     "BEATROBBERS": function() {
-        ClearEntitiesUnderCondition(function(e) { return e.robbery === true; }, false);
+        ClearEntitiesUnderCondition(e => e.robbery === true, false);
         worldmap.pos = { x: 6, y: 6 };
         var caughtRobbers = GetCommonEntity("Strobbers", 7, 6, 16, 0, undefined, undefined, { sy: 8, robbery: true });
         worldmap.entities.push(caughtRobbers);
@@ -485,11 +485,11 @@ const SpecialFunctions = {
         worldmap.entities.push(monster);
         worldmap.importantEntities["monster"] = worldmap;
     },
-    "BEATMONSTER": function() { ClearEntitiesUnderCondition(function(e) { return e.isTheMonster === true; }, true); },
-    "BYEFALCON": function() { player.hasFalcon = false; },
+    "BEATMONSTER": function() { ClearEntitiesUnderCondition(e => e.isTheMonster === true, true); },
+    "BYEFALCON": () => player.hasFalcon = false,
     "GETFALCONTEXT": function() {
-        var keyStart = "falconMsg0.";
-        var rangeMax = 6;
+        let keyStart = "falconMsg0.";
+        let rangeMax = 6;
         switch(worldmap.mapName) {
             case "bridge": keyStart = "falconMsg1."; rangeMax = 5; break;
             case "fakefarm": keyStart = "falconMsg2."; rangeMax = 5; break;
@@ -502,12 +502,12 @@ const SpecialFunctions = {
             case "northcity": keyStart = "falconMsg4."; rangeMax = 4; break;
             case "hq_1": keyStart = "falconMsg5."; rangeMax = 7; break;
         }
-        for(var i = 1; i <= rangeMax; i++) { iHandler.state.texts.push(keyStart + i); }
+        for(let i = 1; i <= rangeMax; i++) { iHandler.state.texts.push(keyStart + i); }
         worldmap.writeText(keyStart + "0");
     },
     "FALCONSELECT": function() {
         game.currentInputHandler = worldmap.falconSelect;
-        for(var i = 0; i < player.nathanSeeds.length; i++) {
+        for(let i = 0; i < player.nathanSeeds.length; i++) {
             player.increaseItem(player.nathanSeeds[i][0], player.nathanSeeds[i][1]);
         }
         worldmap.falconSelect.setup();
@@ -530,7 +530,7 @@ const SpecialFunctions = {
         worldmap.refreshMap();
     },
     "ENTERTHEBIRD": function() {
-        var bird = GetCommonEntity("Eagle", worldmap.pos.x - 8, worldmap.pos.y - 3.5, 6, 0, undefined, undefined, { sheet: "assistant", sy: 1, sheetlen: 2, moving: true });
+        const bird = GetCommonEntity("Eagle", worldmap.pos.x - 8, worldmap.pos.y - 3.5, 6, 0, undefined, undefined, { sheet: "assistant", sy: 1, sheetlen: 2, moving: true });
         worldmap.entities.push(bird);
         worldmap.importantEntities["bird"] = bird;
 
@@ -539,7 +539,7 @@ const SpecialFunctions = {
             worldmap.importantEntities["bird"].pos.x += 0.05;
             worldmap.importantEntities["bird"].pos.y += 0.025;
             if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x - 1);
+            const finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x - 1);
             if(finished) {
                 worldmap.importantEntities["bird"].anim.shiftX(4);
                 worldmap.importantEntities["bird"].moving = false;
@@ -565,7 +565,7 @@ const SpecialFunctions = {
         iHandler.state.animHandler = function(spedUp) {
             worldmap.importantEntities["bird"].pos.y -= 0.01;
             if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["bird"].pos.y <= (worldmap.pos.y - 1.5);
+            const finished = worldmap.importantEntities["bird"].pos.y <= (worldmap.pos.y - 1.5);
             if(finished) {
                 if(spedUp) { worldmap.refreshMap(); }
                 iHandler.Finish();
@@ -580,7 +580,7 @@ const SpecialFunctions = {
             worldmap.importantEntities["bird"].pos.x += 0.05;
             worldmap.importantEntities["bird"].pos.y -= 0.0125;
             if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x + 8);
+            const finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x + 8);
             if(finished) {
                 if(spedUp) { worldmap.refreshMap(); }
                 game.target = worldmap.importantEntities["bird"];
@@ -607,10 +607,10 @@ const SpecialFunctions = {
     },
     "C2BUY": function() { player.monies -= 1000; player.c2 = RoundNear(player.c2 + 1000 / player.c2Rate, 100); },
     "C2SELL": function() { player.monies += Math.round(player.c2Rate); player.c2 = RoundNear(player.c2 - 1, 100); },
-    "MOBFLEE": function() { ClearEntitiesUnderCondition(function(e) { return e.mafia === true; }, true); },
+    "MOBFLEE": function() { ClearEntitiesUnderCondition(e => e.mafia === true, true); },
     "ENTERSKUMPY": function() {
         worldmap.importantEntities["skumpyCover"].visible = false;
-        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = true; } }
+        worldmap.entities.forEach(e => { if(e.inside) { e.visible = true; } });
         worldmap.importantEntities["skumpy"].visible = true;
         worldmap.importantEntities["skumpy"].pos = { x: 40, y: 39 };
         worldmap.importantEntities["skumpy"].anim.shiftX(10);
@@ -623,7 +623,7 @@ const SpecialFunctions = {
         worldmap.importantEntities["skumpy"].anim.shiftX(9);
     },
     "SKUMPYCLEAN": function() {
-        var temp = game.target;
+        const temp = game.target;
         game.target = worldmap.importantEntities["bruno"];
         worldmap.clearTarget();
         game.target = temp;
@@ -635,7 +635,7 @@ const SpecialFunctions = {
     "SKUMPYEXIT": function() {
         worldmap.clearTarget();
         worldmap.importantEntities["skumpyCover"].visible = true;
-        for(var i = 0; i < worldmap.entities.length; i++) { if(worldmap.entities[i].inside) { worldmap.entities[i].visible = false; } }
+        worldmap.entities.forEach(e => { if(e.inside) { e.visible = false; } });
         game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
     },
     "BRUNOBEAT": function() {
@@ -697,8 +697,9 @@ const SpecialFunctions = {
             player.activeQuests["fakeFarm"] = 0;
             player.lastInn = "fakefarm";
         }
-        for(var i = 0; i < worldmap.entities.length; i++) {
+        for(let i = 0; i < worldmap.entities.length; i++) {
             if(worldmap.entities[i].changeType === undefined) { continue; }
+            const p = worldmap.entities[i].startingpos;
             switch(worldmap.entities[i].changeType) {
                 case 0:
                     worldmap.entities[i].interact = undefined;
@@ -706,27 +707,21 @@ const SpecialFunctions = {
                     worldmap.entities[i].visible = false;
                     break;
                 case 1:
-                    var p = worldmap.entities[i].startingpos;
                     worldmap.entities[i].movement = commonMovementDatas.line(p.x, p.y, 9);
                     break;
                 case 2:
-                    var p = worldmap.entities[i].startingpos;
                     worldmap.entities[i].movement = commonMovementDatas.line(p.x - 4, p.y, 4, 1);
                     break;
                 case 3:
-                    var p = worldmap.entities[i].startingpos;
                     worldmap.entities[i].movement = commonMovementDatas.line(p.x, p.y, 4);
                     break;
                 case 4:
-                    var p = worldmap.entities[i].startingpos;
                     worldmap.entities[i].movement = commonMovementDatas.line(p.x - 7, p.y, 7, 1);
                     break;
                 case 5:
-                    var p = worldmap.entities[i].startingpos;
                     worldmap.entities[i].movement = commonMovementDatas.line(p.x, p.y, 11);
                     break;
                 case 6:
-                    var p = worldmap.entities[i].startingpos;
                     worldmap.entities[i].movement = commonMovementDatas.line(p.x - 11, p.y, 11, 1);
                     break;
                 case 7:
@@ -757,11 +752,11 @@ const SpecialFunctions = {
         worldmap.writeText("smD5");
     },
     "SEAHELP1": function() {
-        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("H_") === 0; }, true);
+        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0, true);
         worldmap.writeText("smD6");
     },
     "DEADFISH": function() {
-        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("SeaCreature") === 0; }, true);
+        ClearEntitiesUnderCondition(e => e.name.indexOf("SeaCreature") === 0, true);
         if(player.hasQuest("getHeart")) {
             player.activeQuests["getHeart"] = "heart";
         } else {
@@ -771,7 +766,7 @@ const SpecialFunctions = {
         worldmap.writeText("bworkerA1");
     },
     "CONSTWORKWIN": function() {
-        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0; }, true);
+        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0, true);
         quests.completeQuest("helpSeaMonster");
         quests.completeQuest("getHeart");
         worldmap.writeText("bworkerB5");
@@ -779,19 +774,18 @@ const SpecialFunctions = {
     "CONSTWORKFIGHT": function() {
         worldmap.writeText("bworkerMad6");
         player.activeQuests["helpSeaMonster"] = "gotEgg";
-        ClearEntitiesUnderCondition(function(e) { return e.name.indexOf("Worker") >= 0; }, false);
+        ClearEntitiesUnderCondition(e => e.name.indexOf("Worker") >= 0, false);
     },
     "SEEDSHOT": () => { player.health -= 2; game.target.hasShot = 5; },
     "SEEDSHOTKILL": function() {
         player.health = player.maxhealth;
-        for(var i = 0; i < worldmap.entities.length; i++) {
+        for(let i = 0; i < worldmap.entities.length; i++) {
+            const newActive = worldmap.entities[i].initActive;
             if(worldmap.entities[i].rfd) {
-                var newActive = worldmap.entities[i].initActive;
                 worldmap.entities[i].active = newActive;
                 worldmap.entities[i].anim.shiftY(newActive ? 3 : 2);
                 worldmap.entities[i].solid = !newActive;
             } else if(worldmap.entities[i].rf) {
-                var newActive = worldmap.entities[i].initActive;
                 worldmap.entities[i].active = newActive;
                 worldmap.entities[i].anim.shiftY(newActive ? 1 : 0);
             }
@@ -799,7 +793,7 @@ const SpecialFunctions = {
         game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
     },
     "ELEVATORSTART": function() {
-        var items = specialtyHelpers.getHQElevatorOptions();
+        const items = specialtyHelpers.getHQElevatorOptions();
         if(items === null) { worldmap.writeText("elevatorNope"); iHandler.state.done = true; }
         else { worldmap.writeText("elevatorNormal", items); }
     },
@@ -813,7 +807,7 @@ const SpecialFunctions = {
         worldmap.finishDialog();
     },
     "TRUCKSTART": function() {
-        var items = specialtyHelpers.getTruckOptions();
+        const items = specialtyHelpers.getTruckOptions();
         if(items.length === 1) { worldmap.writeText("truck.none"); iHandler.state.done = true; }
         else { worldmap.writeText("truck.where", items); }
     },
@@ -834,7 +828,7 @@ const SpecialFunctions = {
         worldmap.finishDialog();
     },
     "MUSHSTART": function() {
-        var items = specialtyHelpers.getMushItems();
+        const items = specialtyHelpers.getMushItems();
         if(items.length === 0) { worldmap.writeText("mushMan3"); iHandler.state.done = true; }
         else { worldmap.writeText("mushMan2", items); }
     },
@@ -849,7 +843,7 @@ const SpecialFunctions = {
         }
     },
     "ABUELASTART": function() {
-        var items = specialtyHelpers.getAbuelaItems();
+        const items = specialtyHelpers.getAbuelaItems();
         if(items.length === 0) { worldmap.writeText("kindLadyX"); iHandler.state.done = true; }
         else { worldmap.writeText("kindLadyQ", items); }
     },
@@ -863,7 +857,7 @@ const SpecialFunctions = {
         }
     },
     "CROUTONSTART": function() {
-        var items = specialtyHelpers.getCroutonItems();
+        const items = specialtyHelpers.getCroutonItems();
         if(items.length === 0) { worldmap.writeText("arf3"); iHandler.state.done = true; }
         else { worldmap.writeText("arf4", items); }
     },
@@ -878,7 +872,7 @@ const SpecialFunctions = {
         }
     },
     "PIRATESTART": function() {
-        var items = specialtyHelpers.getDowelItems();
+        const items = specialtyHelpers.getDowelItems();
         if(items.length === 0) { worldmap.writeText("pirateMonkW"); iHandler.state.done = true; }
         else { worldmap.writeText("pirateMonkH", items); }
     },
@@ -901,7 +895,7 @@ const SpecialFunctions = {
         worldmap.writeText("chestUnlock3");
     },
     "RAPSTART": function() {
-        var items = specialtyHelpers.getRapItems();
+        const items = specialtyHelpers.getRapItems();
         if(items.length === 0) { worldmap.writeText("rap4"); iHandler.state.done = true; }
         else { worldmap.writeText("rap5", items); }
     },
@@ -914,7 +908,7 @@ const SpecialFunctions = {
         }
     },
     "LIMESTART": function() {
-        var items = specialtyHelpers.getLimeItems();
+        const items = specialtyHelpers.getLimeItems();
         if(items.length === 0) { worldmap.writeText("lime3"); iHandler.state.done = true; }
         else { worldmap.writeText("lime4", items); }
     },
@@ -959,7 +953,7 @@ const SpecialFunctions = {
         };
         worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
     },
-    "TUTORIAL": function() { tutorial.startBattle(); },
+    "TUTORIAL": () => tutorial.startBattle(),
     "LEAVETUTORIAL": function() {
         player.inventory = InventoryCopy(player.tempInventory);
         player.equipment = player.tempEquipment;
@@ -975,16 +969,17 @@ const SpecialFunctions = {
         }
     },
     "FINISHTUTORIALSTANDALONE": () => worldmap.writeText(tutorial.completed ? "finTut" : "quitTut"),
-    "ENEMY0": function() { worldmap.writeText(game.target.interactname + Math.floor(Math.random() * game.target.dialogMax)); },
+    "ENEMY0": () => worldmap.writeText(game.target.interactname + Range(0, game.target.dialogMax)),
     "ENEMY1": function() {
-        var numEnemies = game.target.min + Math.round(Math.random() * (game.target.max - game.target.min));
-        var actualEnemies = [game.target.enemies[0]];
-        while(--numEnemies > 0) { actualEnemies.push(game.target.enemies[Math.floor(Math.random() * game.target.enemies.length)]); }
-        combat.startBattle(actualEnemies);
+        if(game.target.setEnemies === undefined) {
+            combat.startBattle(commonEnemyGenInfo[game.target.key]());
+        } else {
+            combat.startBattle(game.target.setEnemies);
+        }
     },
     "BEEGUARDIANAPPEAR": function() {
         game.target.visible = true;
-        var xshift = 0;
+        let xshift = 0;
         switch(worldmap.playerDir) {
             case 0: xshift = 12; break;
             case 1: xshift = 12; break;

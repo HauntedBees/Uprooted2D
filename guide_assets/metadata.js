@@ -112,8 +112,8 @@ function GetEnemyHTML(enemyKey) {
     $template.removeClass("template").removeAttr("id");
     $template.find(".txt_name").html("<a href='#" + enemyKey + "'>" + GetEnemyName(enemyKey) + "</a>");
     if(enemyKey === "research") { enemyKey = "robo2"; }
-    if(enemyMetadata[enemyKey] !== undefined) {
-        const enemyData = enemyMetadata[enemyKey];
+    if(requiredEnemyMetadata[enemyKey] !== undefined) {
+        const enemyData = requiredEnemyMetadata[enemyKey];
         const amt = enemyData.min + (enemyData.max === enemyData.min ? "" : "-" + enemyData.max);
         $template.find(".txt_amount").text(amt);
         let typ = [];
