@@ -1,0 +1,16 @@
+{
+    "webexe_settings": {
+        "blacklist": "*",
+        "custom_script": "",
+        "download_dir": "",
+        "export_dir": "E:\\GitHub\\CropRPGout",
+        "force_download": false,
+        "nw_compression_level": 0,
+        "nw_version": "0.28.2",
+        "output_pattern": "",
+        "sdk_build": true,
+        "uncompressed_folder": false,
+        "whitelist": "*.json\nimg*\nout.js\nstyles*\nindexapp.html\nff.png",
+        "windows-x64": true
+    }
+}

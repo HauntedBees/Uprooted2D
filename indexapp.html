@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <style>
+            @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
+            @font-face { font-family: "OpenDyslexic"; src: url("styles/OpenDyslexic3-Regular.ttf") }
+            body {
+				font-family: "PressStart2P";
+				text-align: center;
+				width: 100%;
+				border: 0 !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				/*background-image: url("img/fullscreen.png");*/
+			}
+            canvas {
+                image-rendering: crisp-edges;
+				padding: 0;
+				margin: auto;
+				display: block;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+            }
+            #savegen { display: none }
+        </style>
+    </head>
+    <body>
+        <div id="canvasContainer"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
+            <canvas id="background" width="1024" height="896"></canvas>
+            <canvas id="background2" width="1024" height="896"></canvas>
+            <canvas id="characters" width="1024" height="896"></canvas>
+            <canvas id="foreground" width="1024" height="896"></canvas>
+            <canvas id="smartphone" width="1024" height="896"></canvas>
+            <canvas id="smartphoneText" width="1024" height="896"></canvas>
+            <canvas id="menuA" width="1024" height="896"></canvas>
+            <canvas id="menuB" width="1024" height="896"></canvas>
+            <canvas id="menucursorA" width="1024" height="896"></canvas>
+            <canvas id="menucursorB" width="1024" height="896"></canvas>
+            <canvas id="menucursorC" width="1024" height="896"></canvas>
+            <canvas id="menutext" width="1024" height="896"></canvas>
+            <canvas id="tutorial" width="1024" height="896"></canvas>
+            <canvas id="menuOverBlack" width="1024" height="896"></canvas>
+            <canvas id="menutextOverBlack" width="1024" height="896"></canvas>
+            <canvas id="savegen" width="192" height="128"></canvas>
+        </div>
+        <script src="out.js"></script>
+        <script type="text/javascript">document.addEventListener("DOMContentLoaded", game.fullInit);</script>
+    </body>
+</html>

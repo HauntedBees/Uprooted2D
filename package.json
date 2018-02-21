@@ -1,0 +1,33 @@
+{
+    "app_name": "Farming Fantasy",
+    "main": "indexapp.html",
+    "name": "FarmingFantasy",
+    "nodejs": true,
+    "version": "0.1",
+    "webexe_settings": {
+        "blacklist": "",
+        "custom_script": "",
+        "download_dir": "",
+        "export_dir": "E:\\GitHub\\CropRPGout",
+        "force_download": false,
+        "nw_compression_level": 0,
+        "nw_version": "0.28.2",
+        "output_pattern": "",
+        "sdk_build": true,
+        "uncompressed_folder": false,
+        "whitelist": "",
+        "windows-x64": true
+    },
+    "webkit": {},
+    "window": {
+        "exe_icon": "ff.png",
+        "height": 896,
+        "icon": "ff.png",
+        "id": "FarmingFantasy",
+        "position": "center",
+        "show": true,
+        "title": "Farming Fantasy",
+        "visible": true,
+        "width": 1024
+    }
+}
