@@ -138,7 +138,7 @@ const worldmap = {
             else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
             else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
             else { moving = this.forceMove; }
-        } else { moving = false; }
+        } else { moving = this.forceMove; }
         const playery = this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY;
         for(let i = 0; i < this.entities.length; i++) {
             const e = this.entities[i];
