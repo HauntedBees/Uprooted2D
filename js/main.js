@@ -68,7 +68,11 @@ const game = {
         if(game.transitioning) { return false; }
         game.transitioning = true;
         if(from.earlyclean !== undefined) { from.earlyclean(); }
-        game.startTransitionAnim(1, from, to, arg);
+        if(arg !== undefined && arg.quickTransition === true) {
+            game.startQuickTransitionAnim(1, from, to, arg);
+        } else {
+            game.startTransitionAnim(1, from, to, arg);
+        }
         return true;
     },
     innerTransition: function(from, to, arg) {
@@ -119,6 +123,42 @@ const game = {
                 game.finishTransition();
             } else {
                 game.transitionInfo.size -= 0.1;
+            }
+        }
+    },
+
+    startQuickTransitionAnim: function(dir, from, to, arg) {
+        clearInterval(game.transitionInfo.animIdx);
+        game.transitionInfo = {
+            dir: dir, count: 0, from: from, to: to, arg: arg, 
+            animIdx: setInterval(game.drawQuickTransitionAnim, 10)
+        };
+    },
+    midQuickTransitionPoint: function() {
+        clearInterval(game.transitionInfo.animIdx);
+        worldmap.pos = { x: game.transitionInfo.arg.newx, y: game.transitionInfo.arg.newy };
+        game.startQuickTransitionAnim(-1);
+    },
+    drawQuickTransitionAnim: function() {
+        gfx.clearLayer("tutorial");
+        const i = Math.floor(game.transitionInfo.count / 3);
+        const key = "forestTransition" + i;
+        for(let x = 0; x < game.tilew; x++) {
+            for(let y = 0; y < game.tileh; y++) {
+                gfx.drawTileToGrid(key, x, y, "tutorial");
+            }
+        }
+        if(game.transitionInfo.dir === 1) {
+            if(game.transitionInfo.count >= 14) {
+                game.midQuickTransitionPoint();
+            } else {
+                game.transitionInfo.count++;
+            }
+        } else {
+            if(game.transitionInfo.count <= 0) {
+                game.finishTransition();
+            } else {
+                game.transitionInfo.count--;
             }
         }
     },

@@ -141,7 +141,7 @@ function SwitchMapSeamless(name, x, y, requiredDir, newx, newy) {
                 case 0: dy += 4; break;
                 case 2: dy -= 0.25; break;
             }
-            worldmap.pos = { x: newx + dx, y: newy + dy };
+            game.transition(game.currentInputHandler, worldmap, { quickTransition: true, newx: newx + dx, newy: newy + dy });
         } ]
     }
 };

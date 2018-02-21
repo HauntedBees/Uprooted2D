@@ -131,6 +131,8 @@ var spriteData = {
         }
     },
     names: {
+        "forestTransition0": [11, 17], "forestTransition1": [11, 18], "forestTransition2": [11, 19],
+        "forestTransition3": [11, 20], "forestTransition4": [11, 21],
         "holywater": [42, 9], "holyjug": [42, 8], "alms": [42, 7],  "rotSparkle": [42, 6],
         "hulkFist0": [18, 2, true], "hulkFist1": [19, 2, true],
         "vineBottom0": [45, 4], "vineBottom1": [46, 4],
