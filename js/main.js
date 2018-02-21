@@ -4,6 +4,18 @@ function InventoryCopy(arr) {
     return copy;
 }
 const nwHelpers = {
+    InitScreenSizeAdjustment: function() {
+        if(typeof require === "undefined") { return; }
+        const win = require("nw.gui").Window.get();
+        if(win.width < 1024) {
+            player.options.resolution = 0;
+        } else if(win.width < 2048) {
+            player.options.resolution = 1;
+        } else {
+            player.options.resolution = 2;
+        }
+        nwHelpers.AdjustScreenSettings();
+    },
     AdjustScreenSettings: function() {
         let multiplier = 1;
         switch(player.options.resolution) {
@@ -36,6 +48,7 @@ const game = {
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
+        nwHelpers.InitScreenSizeAdjustment();
         let canvasObj = {};
         for(let i = 0; i < game.canvasLayers.length; i++) {
             const name = game.canvasLayers[i];
