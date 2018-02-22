@@ -83,22 +83,23 @@ const dmgCalcs = {
         return dmgCalcs.MeleeInner(isPlayer, season, myAtk, formattedDefs);
     },
     MeleeInner: function(isPlayer, season, myAtk, theirDef) {
-        var isCritical = (Math.random() < (player.luck - 0.69));
-        var atkVal = myAtk;
-        var hasWeapon = isPlayer && player.equipment.weapon !== null;
+        const isCritical = (Math.random() < (player.luck - 0.69));
+        let atkVal = myAtk;
+        const hasWeapon = isPlayer && player.equipment.weapon !== null;
         if(hasWeapon) {
-            var weapon = GetEquipment(player.equipment.weapon);
-            var bonus = weapon.power;
+            const weapon = GetEquipment(player.equipment.weapon);
+            let bonus = weapon.power;
             if(season === 0 && weapon.sp) { bonus += weapon.sp; }
             else if(season === 1 && weapon.su) { bonus += weapon.su; }
             else if(season === 2 && weapon.au) { bonus += weapon.au; }
             else if(season === 3 && weapon.wi) { bonus += weapon.wi; }
             atkVal += bonus / 1.1;
         }
-        var attacksArr = [];
-        for(var i = 0; i < theirDef.length; i++) {
-            var finalDamage = atkVal - (isCritical ? 0 : (theirDef[i] / 2.2));
+        const attacksArr = [];
+        for(let i = 0; i < theirDef.length; i++) {
+            let finalDamage = atkVal - (isCritical ? 0 : (theirDef[i] / 2.2));
             if(hasWeapon) { finalDamage -= (isCritical ? 0 : (theirDef[i] / 4)); }
+            finalDamage *= 2;
             attacksArr.push(new AttackData(finalDamage, isCritical));
         }
         console.log(attacksArr);
