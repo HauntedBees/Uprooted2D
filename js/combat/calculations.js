@@ -99,7 +99,7 @@ const dmgCalcs = {
         for(let i = 0; i < theirDef.length; i++) {
             let finalDamage = atkVal - (isCritical ? 0 : (theirDef[i] / 2.2));
             if(hasWeapon) { finalDamage -= (isCritical ? 0 : (theirDef[i] / 4)); }
-            finalDamage *= 2;
+            finalDamage /= 2;
             attacksArr.push(new AttackData(finalDamage, isCritical));
         }
         console.log(attacksArr);
