@@ -23,27 +23,27 @@
             .sidebar .nav-item + .nav-item { margin-left: 0 }
             .sidebar .nav-link { border-radius: 0 }
             .sprite {
-                background: url("img_half/sheet.png");
+                background: url("guide_assets/sheet_50.png");
                 display: inline-block;
                 height: 32px;
                 width: 32px;
             }
             .spriteDouble { height: 64px !important; width: 64px !important }
             .spriteTiny {
-                background: url("img_quarter/sheet.png");
+                background: url("guide_assets/sheet_25.png");
                 display: inline-block;
                 height: 16px;
                 width: 16px;
             }
             .spriteTinyDouble { height: 32px !important; width: 32px !important }
             .enemySprite {
-                background: url("img_half/enemies.png");
+                background: url("guide_assets/enemies_50.png");
                 display: inline-block;
                 height: 60px;
                 width: 48px;
             }
             .enemySpriteBig {
-                background: url("img_half/enemies_big.png");
+                background: url("guide_assets/enemies_big_50.png");
                 display: inline-block;
                 height: 80px;
                 width: 64px;
@@ -229,25 +229,6 @@
         <script src="guide_assets/metadata.js"></script>
         <script type="text/javascript">
             var patternText = {};
-            function SameSprites(a, b) { var aa = spriteData.names[a]; var bb = spriteData.names[b]; return (aa[0] === bb[0] && aa[1] === bb[1]); }
-            function GetDocumentationAttackPatterns(name) {
-                if(patternText[name] !== undefined) { return patternText[name]; }
-                var pattern = enemyPatterns[name].nodes;
-                var results = [];
-                for(var i = 0; i < pattern.length; i++) {
-                    if(pattern[i].data === undefined || pattern[i].data.message === undefined) { continue; }
-                    switch(pattern[i].data.message) {
-                        case "CONVINCEATRON": results.push("Mining for Cryptocurrencies"); break;
-                        case "WEAK_ATTACK": results.push("Standard Attack"); break;
-                        case "LAUNCH_CROPS": results.push("Grow Crops"); break;
-                        case "THROW_BABY": results.push("Summon Allies"); break;
-                        case "HEAL_RANGE": results.push("Recover Health"); break;
-                        case "MODULATE": results.push("Season Modulator"); break;
-                    }
-                }
-                patternText[name] = results.join(", ");
-                return patternText[name];
-            }
             document.addEventListener("DOMContentLoaded", function() {
                 var generatedCSSSprites = [];
                 spriteData.populate();
@@ -264,9 +245,9 @@
                 var $style = $("style");
                 for(var i = 0; i < generatedCSSSprites.length; i++) { $style.append(generatedCSSSprites[i]); }
 
-                DoCropGen();
-                DoCropTierGen();
-                DoEnemyGen();
+                //DoCropGen();
+                //DoCropTierGen();
+                //DoEnemyGen();
                 DoLevelGen();
 
                 var generatedSections = [];

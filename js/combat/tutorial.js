@@ -31,9 +31,9 @@ var tutorial = {
             return;
         }
         if(this.state === 999) {
-            gfx.drawInfobox(16, 3, -0.5, "tutorial");
+            gfx.drawInfobox(17, 3, -0.5, "tutorial");
         } else {
-            gfx.drawInfobox(16, this.stateDetails[this.state].height, -0.5, "tutorial");
+            gfx.drawInfobox(17, this.stateDetails[this.state].height, -0.5, "tutorial");
         }
         gfx.drawWrappedText(GetText("tut" + this.state), 2, 8, 235, "#000000", "tutorial");
     },

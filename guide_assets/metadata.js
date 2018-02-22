@@ -1,7 +1,7 @@
 const debugAllMaps = ["farm", "producestand", "firstvillage", "belowvillage", "researchfacility", "bridge", "underwater", "fakefarm", "southcity", "northcity", 
                     "hq_1", "hq_2", "hq_3", "hq_4", "hq_5"]; // TODO: forest is too big
 const smallMaps = ["farm"];
-const namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4"];
+const namesToIgnore = ["Sign", "Chair", "SeedShotArea2", "SeedShotArea3", "SeedShotArea4", "IiiOnTheFarm"];
 const mapNames = {
     "farm": "Your Farm", "producestand": "Produce Stand", "forest": "Agrios Forest", "firstvillage": "San Ambrosio", "belowvillage": "South of Town",
     "researchfacility": "Mysterious Research Lab", "bridge": "Bridge Crossing", "underwater": "Underwater", "fakefarm": "Jeff's Farm",
@@ -17,6 +17,31 @@ const shopNames = {
     "cityExpansions": "Farm Expansions", "vendo_veg": "Veggie Vendo", "vendo_tree": "Fruity Vendo", "vendo_mush": "Fungy Vendo", "vendo_paddy": "Paddy Vendo",
     "vendo_coop": "Eggy Vendo", "vendo_water": "Fishy Vendo", "vendo_tech": "Vendy Vendo"
 };
+
+
+function SameSprites(a, b) {
+    var aa = spriteData.names[a];
+    var bb = spriteData.names[b];
+    return (aa[0] === bb[0] && aa[1] === bb[1]);
+}
+function GetDocumentationAttackPatterns(name) {
+    if(patternText[name] !== undefined) { return patternText[name]; }
+    var pattern = enemyPatterns[name].nodes;
+    var results = [];
+    for(var i = 0; i < pattern.length; i++) {
+        if(pattern[i].data === undefined || pattern[i].data.message === undefined) { continue; }
+        switch(pattern[i].data.message) {
+            case "CONVINCEATRON": results.push("Mining for Cryptocurrencies"); break;
+            case "WEAK_ATTACK": results.push("Standard Attack"); break;
+            case "LAUNCH_CROPS": results.push("Grow Crops"); break;
+            case "THROW_BABY": results.push("Summon Allies"); break;
+            case "HEAL_RANGE": results.push("Recover Health"); break;
+            case "MODULATE": results.push("Season Modulator"); break;
+        }
+    }
+    patternText[name] = results.join(", ");
+    return patternText[name];
+}
 
 function DoEnemyGen() {
     var $enemies = $("#enemies > .content");
@@ -56,7 +81,7 @@ function DoEnemyGen() {
                         drops.push(drop.min + "-" + drop.max + "G");
                     }
                 } else {
-                    var name = GetCrop(drop.seed).displayame;
+                    var name = GetCrop(drop.seed).displayname;
                     if(drop.min === drop.max) {
                         drops.push(drop.min + " " + name);
                     } else {
@@ -74,6 +99,7 @@ function DoEnemyGen() {
         
         $enemies.append($template);
     }
+    $(".stnoSeason").remove();
 }
 function GetBossRecommendedLevel(enemyKey) {
     switch(enemyKey) {
@@ -114,10 +140,10 @@ function GetEnemyHTML(enemyKey) {
     if(enemyKey === "research") { enemyKey = "robo2"; }
     if(requiredEnemyMetadata[enemyKey] !== undefined) {
         const enemyData = requiredEnemyMetadata[enemyKey];
-        const amt = enemyData.min + (enemyData.max === enemyData.min ? "" : "-" + enemyData.max);
+        const amt = enemyData.setEnemies.length;
         $template.find(".txt_amount").text(amt);
         let typ = [];
-        for(let i = 0; i < enemyData.enemies.length; i++) {
+        for(let i = 0; i < enemyData.setEnemies.length; i++) {
             const myName = GetEnemyName(enemyData.enemies[i]);
             if(typ.indexOf(myName) < 0) { typ.push(myName); }
         }
@@ -154,7 +180,7 @@ function DoCropGen() {
         $template.find(".txt_size").attr("title", crop.size === 1 ? "1x1 tiles" : "2x2 tiles");
         $template.find(".sp_type").addClass("st" + typeClass);
         
-        if(SameSprites(crop.name, crop.name + "seed")) {
+        if(spriteData.names[crop.name + "seed"] === undefined || SameSprites(crop.name, crop.name + "seed")) {
             $template.find(".sp_seed").remove();
         } else {
             $template.find(".sp_seed").addClass("s" + crop.name + "seed");
@@ -327,6 +353,8 @@ function DoLevelGen() {
             lastObj = obj;
             if(obj.name.indexOf("H_") === 0) { continue; }
             if(namesToIgnore.indexOf(obj.name) >= 0) { continue; }
+            if(obj.name.indexOf("NathanOnTheFarm") === 0) { continue; }
+            if(obj.isForeground === true) { continue; }
             if(obj.pos.x < 0 || obj.pos.y < 0) { continue; }
             if(obj.boring === true || obj.jumbo === true) { continue; }
             if(obj.name.indexOf("waterfall") === 0 && obj.name[obj.name.length - 1] !== "0") { continue; }
@@ -530,7 +558,7 @@ function GetMapObjData(e, $details, counts) {
         return { order: 4, sortCount: 9999, type: "Boss", badgeclass: "badge-danger", dispCount: "X", text: GetEnemyName(e.name) };
     } else if(e.isBeehive) {
         return { order: 0, type: "Beehive", badgeclass: "badge-warning", dispCount: "B", text: "Beehive" };
-    } else if(e.enemies !== undefined) {
+    } else if(e.setEnemies !== undefined) {
         // TODO
         return { order: 4, type: "Enemy", subtype: e.interactname, badgeclass: "badge-danger", text: GetEnemyName(e.interactname) };
     } else if(e.isMapSwitch) {
