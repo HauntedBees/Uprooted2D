@@ -1,6 +1,6 @@
 combat.menu = {
     options: [], cursorY: 0, dy: 9.5,
-    layersToClean: ["menuA", "menucursorA", "menucursorB", "menutext"],
+    layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function(sel) {
         gfx.clearSome(this.layersToClean);
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
@@ -23,7 +23,7 @@ combat.menu = {
         this.drawOption("Attack", 1, this.cursorY === 1);
         this.drawOption("Compost", 2, this.cursorY === 2);
         this.drawOption("Run", 3, this.cursorY === 3);
-        gfx.drawCursor(0, this.dy + this.cursorY, this.options[this.cursorY], 0);
+        combat.cursors.RedimCursor("main", 0, this.dy + this.cursorY, this.options[this.cursorY], 0);
         let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
         switch(this.cursorY) {
             case 0:
@@ -151,7 +151,7 @@ combat.menu = {
                 else if(tile.rotten || tile.activeTime > 0) { continue; }
                 count++;
                 const size = tile.size - 1;
-                gfx.drawCursor(x + combat.dx, y + combat.dy, size, size, "xcursor");
+                gfx.DrawXCursor(x + combat.dx, y + combat.dy, size, size);
             }
         }
         return count;

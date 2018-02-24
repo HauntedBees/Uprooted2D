@@ -1,23 +1,30 @@
 pausemenu.savemenu = {
     options: [], cursorY: 0, confirm: false, isSave: false, 
-    layersToClear: ["menuA", "menucursorA", "menutext"],
+    layersToClear: ["menuA", "menutext"],
     setup: function(args) {
         gfx.clearSome(this.layersToClear);
         if(args === undefined) { args = {}; }
         this.isSave = args.saving;
         this.options = [];
         this.cursorY = args.sel || 0;
+        this.confirm = args.confirm;
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: 0, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
+        ]);
+        this.DrawAll();
+        this.cursors.Start();
+    },
+    DrawAll: function() {
+        gfx.clearSome(this.layersToClear);
         const slotStr = GetText("saveSlotDisp") + " ";
         for(let i = 0; i < game.numSaveSlots; i++) {
             this.drawOption(slotStr + (i + 1), i, this.cursorY === i);
         }
         gfx.drawInfobox(12, 2.5);
-        gfx.drawCursor(0, this.cursorY, this.options[this.cursorY], 0);
-        if(args.confirm) {
-            this.confirm = true;
+        this.cursors.RedimCursor("main", 0, this.cursorY, this.options[this.cursorY], 0);
+        if(this.confirm) {
             gfx.drawWrappedText(GetText("eraseSave"), 4.5 * 16, 11, 155);
         } else {
-            this.confirm = false;
             this.displaySaveDataInfo(this.cursorY);
         }
     },
@@ -31,8 +38,7 @@ pausemenu.savemenu = {
         if(image !== null) { gfx.drawSaveFileImage(image); }
         return this.drawSaveDataText(text);
     },
-    drawSaveDataText: t =>  { gfx.drawWrappedText(t, 4.5 * 16, 11, 155); return true; },
-    clean: () => gfx.clearAll(),
+    drawSaveDataText: t => { gfx.drawWrappedText(t, 4.5 * 16, 11, 155); return true; },
     drawOption: function(text, y, selected) {
         let xi = 1;
         const tile = selected ? 9 : 7;
@@ -49,18 +55,24 @@ pausemenu.savemenu = {
     mouseMove: function(pos) {
         if(this.confirm) { return false; }
         if(pos.y >= this.options.length) { return false; }
-        this.setup({ saving: this.isSave, sel: pos.y });
+        this.cursorY = pos.y;
+        this.DrawAll();
+        //this.setup({ saving: this.isSave, sel: pos.y });
         return true;
     },
     click: function(pos) {
         if(localStorage.getItem("player" + this.cursorY) === null || this.confirm) {
             if(this.isSave) {
                 game.save(pos.y);
-                this.setup({ saving: true, sel: this.cursorY });
+                this.saving = true;
+                this.confirm = false;
+                this.DrawAll();
             }
         } else {
             if(this.isSave) {
-                this.setup({ saving: true, sel: this.cursorY, confirm: true });
+                this.saving = true;
+                this.confirm = true;
+                this.DrawAll();
             } else {
                 game.load(this.cursorY);
             }
@@ -69,7 +81,9 @@ pausemenu.savemenu = {
     },
     cancel: function() {
         if(this.confirm) {
-            this.setup({ saving: true, sel: this.cursorY });
+            this.saving = true;
+            this.confirm = false;
+            this.DrawAll();
         } else if(this.isSave) {
             game.innerTransition(this, pausemenu, 5);
         } else {

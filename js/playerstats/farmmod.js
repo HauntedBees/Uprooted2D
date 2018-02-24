@@ -1,16 +1,21 @@
 pausemenu.farmmod = {
     grid: [], cursor: {x: 0, y: 0}, dx: 0, dy: 0, animHelper: null,
     selectedItem: null, selectedItemPos: null, selectedItemSize: 0, 
-    layersToClear: ["background", "characters", "menuA", "menucursorA", "menucursorB", "menutext"],
+    layersToClear: ["background", "characters", "menuA", "menutext"],
     actualIndexes: [], inventoryWidth: 4, 
     setup: function() { 
         this.animHelper = new CombatAnimHelper([]);
-        this.cursor = {x: 0, y: 0};
+        this.cursor = { x: 0, y: 0 };
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" },
+            { key: "alt", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" }
+        ]);
         player.initGridDimensions();
         this.dx = ((16 - player.gridWidth) / 2);
         this.dy = 6 + Math.floor((6 - player.gridHeight) / 2);
         this.grid = combat.getGrid(player.gridWidth, player.gridHeight);
         this.drawEverything();
+        this.cursors.Start();
     },
     drawEverything: function() {
         gfx.clearSome(this.layersToClear);
@@ -18,14 +23,13 @@ pausemenu.farmmod = {
         this.displayItems();
         gfx.drawInfobox(11, 5);
         const size = (this.selectedItem === null || this.cursor.y < 3) ? 0 : this.selectedItemSize;
-        const delta = this.cursor.y < 3 ? 0.5 : 0; 
-        if(this.canPlant()) {
-            gfx.drawCursor(delta + this.cursor.x, delta + this.cursor.y, size, size);
-        } else {
-            gfx.drawCursor(delta + this.cursor.x, delta + this.cursor.y, size, size, "bcursor");
-        }
+        const delta = this.cursor.y < 3 ? 0.5 : 0;
+        this.cursors.RedimCursor("main", delta + this.cursor.x, delta + this.cursor.y, size, size);
+        this.cursors.ReTypeCursor("main", this.canPlant() ? "cursor" : "bcursor");
         if(this.selectedItem !== null) {
-            gfx.drawCursor(0.5 + this.selectedItemPos.x, 0.5 + this.selectedItemPos.y, 0, 0, "xcursor");
+            this.cursors.MoveCursor("alt", 0.5 + this.selectedItemPos.x, 0.5 + this.selectedItemPos.y);
+        } else {
+            this.cursors.MoveCursor("alt", -1, -1);
         }
         this.drawText();
     },
@@ -117,7 +121,6 @@ pausemenu.farmmod = {
             default: return "_lake";
         }
     },
-    clean: function() { gfx.clearAll(); },
     cancel: function() { game.innerTransition(this, pausemenu, 2); },
     removeFromField: function(x, y) {
         var item = player.itemGrid[x][y];

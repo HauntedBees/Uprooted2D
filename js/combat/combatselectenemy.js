@@ -70,22 +70,24 @@ combat.selectTarget = {
             var idx = this.targets[i];
             if(idx.x === undefined) {
                 var cursorInfo = combat.animHelper.GetCursorInfo(idx);
-                gfx.drawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h, "xcursor");
+                gfx.DrawXCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
             } else {
-                gfx.drawCursor(idx.x, idx.y, 0, 0, "xcursor");
+                gfx.DrawXCursor(idx.x, idx.y, 0, 0);
             }
         }
+        combat.cursors.ReTypeCursor("main", "cursor");
         if(this.sicklePos.x >= 0) {
             var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
-                gfx.drawCursor(this.sicklePos.x, this.sicklePos.y, 0, 0, "bcursor");
+                combat.cursors.ReTypeCursor("main", "bcursor");
+                combat.cursors.RedimCursor("main", this.sicklePos.x, this.sicklePos.y, 0, 0);
             } else {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
-                gfx.drawCursor(this.sicklePos.x, this.sicklePos.y, crop.size - 1, crop.size - 1);
+                combat.cursors.RedimCursor("main", this.sicklePos.x, this.sicklePos.y, crop.size - 1, crop.size - 1);
             }
         } else {
             var cursorInfo = combat.animHelper.GetCursorInfo(this.cursorx);
-            gfx.drawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
+            combat.cursors.RedimCursor("main", cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
         }
         combat.menu.highlightReadyCropsAndReturnCount();
         gfx.drawInfobox(10, 1.5, this.dy);

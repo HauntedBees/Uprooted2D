@@ -456,7 +456,7 @@ combat.plant = {
         } else {
             this.SetFieldText();
             size = this.activeCrop.size - 1;
-            if(combat.isFalcon) {
+            if(combat.isFalcon) { // TODO: all this whatsit
                 combat.animHelper.ResetPlayerAnimState();
                 combat.animHelper.SetBirdAnimState("PLANT");
                 combat.animHelper.SetBirdAnimLayer("menucursorC");
@@ -479,11 +479,14 @@ combat.plant = {
         gfx.drawInfobox(17, 5, this.dy + 0.5);
         gfx.drawInfobox(7, 5, this.dy + 0.5);
         if(this.activeCrop === null) {
-            gfx.drawCursor(cursorX, cursorY + 0.5, size, size);
+            combat.cursors.RedimCursor("main", cursorX, cursorY + 0.5, size, size);
+            combat.cursors.ReTypeCursor("main", "cursor");
         } else if(this.isValid) {
-            gfx.drawCursor(cursorX, cursorY, size, size);
+            combat.cursors.RedimCursor("main", cursorX, cursorY, size, size);
+            combat.cursors.ReTypeCursor("main", "cursor");
         } else {
-            gfx.drawCursor(cursorX, cursorY, size, size, "bcursor");
+            combat.cursors.RedimCursor("main", cursorX, cursorY, size, size);
+            combat.cursors.ReTypeCursor("main", "bcursor");
         }
         combat.animHelper.DrawBottom();
         for(let i = 0; i < this.actualIndexes.length; i++) {

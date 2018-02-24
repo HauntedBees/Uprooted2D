@@ -15,6 +15,7 @@ const worldmap = {
         this.waitForAnimation = false;
         this.dialogState = 0;
         this.mapName = args.map;
+        this.cursors = new CursorAnimSet([ { key: "main", x: -1, y: -1, w: 15, h: -0.25, type: "cursor", layer: "menucursorA" } ], true);
 
         let justStateLoad = false;
         if(player.visitedMaps.indexOf(args.map) < 0) { player.visitedMaps.push(args.map); }
@@ -188,6 +189,7 @@ const worldmap = {
         clearInterval(worldmap.animIdx);
     },
     clean: function() {
+        this.cursors.Perish();
         worldmap.earlyclean();
         gfx.clearAll();
     },
@@ -212,8 +214,9 @@ const worldmap = {
         if(spotted) { e.moving = false; e.movement = undefined; game.target = e; e.interact[0](); }
     },
     writeText: function(t, choices, isRefresh, formatting, overBlack) {
+        this.cursors.MoveCursor("main", -1, -1);
         worldmap.currentFormatting = formatting;
-        gfx.clearSome(["menuA", "menutext", "menucursorA", "menuOverBlack", "menutextOverBlack"]);
+        gfx.clearSome(["menuA", "menutext", "menuOverBlack", "menutextOverBlack"]);
         const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 11 : 0;
         gfx.drawTextBox(drawY, overBlack);
         let actualText = GetText(t);
@@ -255,7 +258,9 @@ const worldmap = {
                     txt = txt.replace("{" + j + "}", formatting[j]);
                 }
             }
-            gfx.drawChoice(choiceTopY + i, txt, worldmap.dialogData.idx === i);
+            const selected = worldmap.dialogData.idx === i;
+            gfx.drawChoice(choiceTopY + i, txt, selected);
+            if(selected) { this.cursors.MoveCursor("main", 0, choiceTopY + i - 0.5); }
         }
     },
     mouseMove: pos => true,
@@ -277,6 +282,7 @@ const worldmap = {
     },
     finishDialog: function() {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
+        this.cursors.MoveCursor("main", -1, -1);
         this.forceEndDialog = false;
         this.inDialogue = false;
         this.freeMovement = true;

@@ -1,9 +1,12 @@
 worldmap.falconSelect = {
     cursor: { x: 0, y: 0 }, cropsToSend: [], 
-    layersToClean: ["menuA", "menuB", "menucursorA", "menucursorB", "menutext"],
+    layersToClean: ["menuA", "menuB", "menutext"],
     actualIndexes: [], inventoryWidth: 9, dy: 9.5,
     setup: function() {
         this.cursor = { x: 0, y: 0 };
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
+        ]);
         this.cropsToSend = [];
         this.actualIndexes = [];
         const validTypes = ["veg", "tree", "mush", "rice"];
@@ -13,6 +16,8 @@ worldmap.falconSelect = {
             this.actualIndexes.push(i);
         }
         this.drawAll();
+        worldmap.cursors.Stop();
+        this.cursors.Start();
     },
 
     drawAll: function() {
@@ -36,9 +41,9 @@ worldmap.falconSelect = {
 
         const xi = this.drawOption(GetText("falconConfirm"), 3.25);
         if(this.cursor.y < 0) {
-            gfx.drawCursor(0, 3.25, xi, 0);
+            this.cursors.RedimCursor("main", 0, 3.25, xi, 0);
         } else {
-            gfx.drawCursor(cursorX, cursorY, 0, 0);
+            this.cursors.RedimCursor("main", cursorX, cursorY, 0, 0);
         }
     },
     drawOption: function(text, y, selected) {
@@ -126,6 +131,8 @@ worldmap.falconSelect = {
         }
         game.currentInputHandler = worldmap;
         gfx.clearSome(this.layersToClean);
+        this.cursors.Perish();
+        worldmap.cursors.Start();
         iHandler.Advance();
         return true;
     },

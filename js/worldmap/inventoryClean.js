@@ -1,17 +1,21 @@
 worldmap.invClean = {
     cursor: { x: 0, y: 0 }, inventoryWidth: 4, 
     topCrops: [], topPrice: 0, didConfirm: false,
-    layersToClear: ["menuA", "menucursorA", "menucursorB", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
+    layersToClear: ["menuA", "menucursorB", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
     actualIndexes: [], selectedCrop: -1, trashInfo: [], trashIdx: 0,
     setup: function(newItems) {
         this.cursor = { x: 0, y: 0 };
         this.selectedCrop = -1;
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
+        ]);
         this.trashInfo = [];
         this.topCrops = newItems;
         this.topPrice = 0;
         this.didConfirm = false;
         this.trashIdx = setInterval(this.HandleTrashCan, 50);
         this.DrawAll();
+        this.cursors.Start();
     },
     DrawAll: function() {
         gfx.clearSome(this.layersToClear);
@@ -21,21 +25,21 @@ worldmap.invClean = {
             if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
             gfx.drawInventoryItem(player.inventory[i], j % this.inventoryWidth, Math.floor(j / this.inventoryWidth), "menuA");
             this.actualIndexes.push(i);
-            if(i === this.selectedCrop) { gfx.drawCursor(j % this.inventoryWidth, Math.floor(j / this.inventoryWidth), 0, 0, "xcursor"); }
+            if(i === this.selectedCrop) { gfx.DrawXCursor(j % this.inventoryWidth, Math.floor(j / this.inventoryWidth), 0, 0); }
             j++;
         }
         this.topPrice = 0;
         for(let i = 0; i < this.topCrops.length; i++) {
             gfx.drawInventoryItem(this.topCrops[i], i % this.inventoryWidth, 12 + Math.floor(i / this.inventoryWidth), "menuA");
-            if(i === (this.selectedCrop - 100)) { gfx.drawCursor(i % this.inventoryWidth, 12 + Math.floor(i / this.inventoryWidth), 0, 0, "xcursor"); }
+            if(i === (this.selectedCrop - 100)) { gfx.DrawXCursor(i % this.inventoryWidth, 12 + Math.floor(i / this.inventoryWidth), 0, 0); }
             this.topPrice += GetCrop(this.topCrops[i][0]).price * this.topCrops[i][1];
         }
-        if(this.cursor.x < this.inventoryWidth) { gfx.drawCursor(this.cursor.x, this.cursor.y, 0, 0); }
+        if(this.cursor.x < this.inventoryWidth) { this.cursors.RedimCursor("main", this.cursor.x, this.cursor.y, 0, 0); }
         if(this.selectedCrop >= 0) { this.DrawSelectInfo(); }
         this.HandleTrashCan(true);
         this.SetCrops();
     },
-    clean: function() { clearInterval(this.trashIdx); gfx.clearSome(this.layersToClear); },
+    clean: function() { this.cursors.Perish(); clearInterval(this.trashIdx); gfx.clearAll(); },
     cancel: function() {
         if(this.selectedCrop < 0) { this.cursor.x = this.inventoryWidth; }
         else { this.selectedCrop = -1; }
@@ -197,14 +201,14 @@ worldmap.invClean = {
         let xiimax = x + Math.ceil(width / 64);
         const isSelected = this.cursor.x === this.inventoryWidth;
         while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
-        gfx.drawSprite("sheet", isSelected ? 41 : 39, isSelected ? 15 : 16, x * 16, 2 + y * 16, "menuOverBlack");
+        gfx.drawSprite("sheet", isSelected ? 41 : 39, isSelected ? 15 : 16, x * 16, 2 + y * 16, "menuA");
         while(width > 128) {
             width -= 64;
-            gfx.drawSprite("sheet", isSelected ? 42 : 7, isSelected ? 15 : 11, x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
+            gfx.drawSprite("sheet", isSelected ? 42 : 7, isSelected ? 15 : 11, x * 16 + 16 * xi++, 2 + y * 16, "menuA");
         }
-        if(isSelected) { gfx.drawCursor(x, y, xi, 0); }
-        gfx.drawSprite("sheet", isSelected ? 43 : 8, isSelected ? 15 : 11, x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
-        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
+        if(isSelected) { this.cursors.RedimCursor("main", x, y, xi, 0); }
+        gfx.drawSprite("sheet", isSelected ? 43 : 8, isSelected ? 15 : 11, x * 16 + 16 * xi, 2 + y * 16, "menuA");
+        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutext");
     },
     SetCrops: function() {
         const rowYs = [0.25, 1.5, 2.75, 6.25, 7.5, 8.75];

@@ -85,7 +85,7 @@ const debug = {
             gfx.drawInfobox(9, 1.5, combat.selectTarget.dy);
             gfx.drawWrappedText(this.enemy.name, me.INFOBOXWIDTH * 16, 11 + (combat.selectTarget.dy * 16), 85);
             var cursorInfo = this.animHelp.GetCursorInfo(0);
-            gfx.drawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
+            gfx.DrawXCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
             var modeName = "undefined";
             switch(this.mode) {
                 case 0: modeName = "Shift DX"; break;

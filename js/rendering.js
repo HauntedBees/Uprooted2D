@@ -153,13 +153,19 @@ const gfx = {
         if(other !== undefined && other.layer) { layer = other.layer; }
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16 - dx, (pos.y - offset.y) * 16 - dy, w, h);
     },
-    drawCursor: function(x, y, w, h, cursorName) {
+    DrawCursor: function(x, y, w, h, cursorName, frame, layer) {
         cursorName = cursorName || "cursor";
-        const layer = cursorName == "xcursor" ? "menucursorB" : "menucursorA";
-        gfx.drawTileToGrid(cursorName + "0", x, y, layer);
-        gfx.drawTileToGrid(cursorName + "1", x + w, y, layer);
-        gfx.drawTileToGrid(cursorName + "2", x, y + h, layer);
-        gfx.drawTileToGrid(cursorName + "3", x + w, y + h, layer);
+        gfx.drawTileToGrid(cursorName + frame + "." + "0", x, y, layer);
+        gfx.drawTileToGrid(cursorName + frame + "." + "1", x + w, y, layer);
+        gfx.drawTileToGrid(cursorName + frame + "." + "2", x, y + h, layer);
+        gfx.drawTileToGrid(cursorName + frame + "." + "3", x + w, y + h, layer);
+    },
+    DrawXCursor: function(x, y, w, h) {
+        const layer = "menucursorB";
+        gfx.drawTileToGrid("xcursor0.0", x, y, layer);
+        gfx.drawTileToGrid("xcursor0.1", x + w, y, layer);
+        gfx.drawTileToGrid("xcursor0.2", x, y + h, layer);
+        gfx.drawTileToGrid("xcursor0.3", x + w, y + h, layer);
     },
     drawInventoryItem: function(item, x, y, layer) {
         if(item[0][0] === "_") {
@@ -183,7 +189,6 @@ const gfx = {
     drawChoice: function(y, t, selected) {
         const tile = selected ? 9 : 7;
         for(let x = 0; x < 16; x++) { gfx.drawSprite("sheet", tile, 11, x * 16, y * 16 - 8, "menuA"); }
-        if(selected) { gfx.drawCursor(0, y - 0.5, 15, -0.25); }
         gfx.drawText(t, 8, y * 16);
     },
     GetFontSize: function(size, justNum) {

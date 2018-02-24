@@ -4,9 +4,11 @@ var spriteData = {
             spriteData.names["ginger" + i] = [10 + i, 4];
             spriteData.names["pineapple" + i] = [7 + i, 6];
             spriteData.names["asparagus" + i] = [1 + i, 7];
-            spriteData.names["cursor" + i] = [1 + i, 11];
-            spriteData.names["bcursor" + i] = [5 + i, 12];
-            spriteData.names["xcursor" + i] = [9 + i, 12];
+            spriteData.names["cursor0." + i] = [1 + i, 11];
+            spriteData.names["cursor1." + i] = [1 + i, 12];
+            spriteData.names["bcursor0." + i] = [5 + i, 12];
+            spriteData.names["bcursor1." + i] = [4 + i, 13];
+            spriteData.names["xcursor0." + i] = [9 + i, 12];
             spriteData.names["puff" + i] = [i, 15];
             spriteData.names["quail" + i] = [22 + i, 6];
             spriteData.names["goose" + i] = [26 + i, 6];
@@ -586,7 +588,7 @@ var spriteData = {
         "rhubarb3": [0, 7],
         "exit": [13, 12],
         "sell": [20, 15],
-        "seeds": [3, 12],
+        "seeds": [0, 12],
         "tools": [21, 15], 
         "fixtures": [17, 7],
         "arrowR": [15, 13],

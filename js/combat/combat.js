@@ -13,6 +13,9 @@ const combat = {
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
         this.effectGrid = this.getGrid(player.gridWidth, player.gridHeight);
         game.currentInputHandler = this.menu;
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: this.cursorX, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
+        ], true);
         this.lastTarget = 0;
         this.lastSelectedSeed = { x: 0, y: 0 };
         this.lastPlantedPos = { x: 0, y: 0 };
@@ -293,6 +296,7 @@ const combat = {
     wrapUpCombat: function() {
         if(player.equipment.weapon === "!sickle2_weak") { player.equipment.weapon = "!sickle2"; }
         player.health = player.maxhealth;
+        this.cursors.Perish();
         gfx.clearLayer("menucursorC");
         CombatChievoCheck();
     },

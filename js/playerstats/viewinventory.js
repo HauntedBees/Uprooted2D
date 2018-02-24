@@ -1,35 +1,47 @@
 pausemenu.inventory = {
     cursor: { x: 0, y: 0 }, inventoryWidth: 3,
-    layersToClear: ["menuA", "menucursorA", "menucursorB", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
+    layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
     actualIndexes: [], selectedCrop: -1, trashInfo: [], trashIdx: 0,
     setup: function() {
-        this.cursor = {x: 0, y: 0};
+        this.cursor = { x: 0, y: 0 };
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" },
+            { key: "alt", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" }
+        ]);
         this.selectedCrop = -1;
         this.trashInfo = [];
         this.trashIdx = setInterval(this.HandleTrashCan, 50);
         this.DrawAll();
+        this.cursors.Start();
     },
     DrawAll: function() {
         gfx.clearSome(this.layersToClear);
         this.actualIndexes = [];
         let j = 0;
+        if(this.selectedCrop < 0) { this.cursors.MoveCursor("alt", -1, -1); }
         for(let i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
             gfx.drawInventoryItem(player.inventory[i], j % this.inventoryWidth + 0.25, Math.floor(j / this.inventoryWidth) + 0.5, "menuA");
             this.actualIndexes.push(i);
-            if(i === this.selectedCrop) { gfx.drawCursor(j % this.inventoryWidth + 0.25, Math.floor(j / this.inventoryWidth) + 0.5, 0, 0, "xcursor"); }
+            if(i === this.selectedCrop) {
+                this.cursors.MoveCursor("alt", j % this.inventoryWidth + 0.25, Math.floor(j / this.inventoryWidth) + 0.5);
+            }
             j++;
         }
         if(this.cursor.x < this.inventoryWidth) {
-            gfx.drawCursor(this.cursor.x + 0.25, this.cursor.y + 0.5, 0, 0);
+            this.cursors.MoveCursor("main", this.cursor.x + 0.25, this.cursor.y + 0.5);
         } else {
-            gfx.drawCursor(this.cursor.x + 0.5, this.cursor.y + 0.5, 0, 0);
+            this.cursors.MoveCursor("main", this.cursor.x + 0.5, this.cursor.y + 0.5);
         }
         if(this.selectedCrop >= 0) { this.DrawSelectInfo(); }
         this.HandleTrashCan(true);
         this.setCrop();
     },
-    clean: function() { clearInterval(this.trashIdx); gfx.clearSome(this.layersToClear); },
+    clean: function() {
+        clearInterval(this.trashIdx);
+        this.cursors.Perish();
+        gfx.clearAll(true);
+    },
     cancel: function() {
         if(this.selectedCrop < 0) { game.innerTransition(this, pausemenu); }
         else { this.selectedCrop = -1; if(this.cursor.x >= this.inventoryWidth) { this.cursor.x = this.inventoryWidth - 1; } this.DrawAll(); }

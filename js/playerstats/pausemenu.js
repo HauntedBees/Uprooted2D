@@ -1,11 +1,15 @@
 const pausemenu = {
     options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
-    layersToClear: ["menuA", "menucursorA", "menutext", "tutorial", "menuOverBlack"],
+    layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack"],
     setup: function(sel) {
         this.cursorY = sel || 0;
         this.cursorX = 0;
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: this.cursorX, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
+        ]);
         this.GetQuestItems();
         this.drawAll();
+        this.cursors.Start();
         //this.drawFarm();
     },
     GetQuestItems: function() {
@@ -41,16 +45,16 @@ const pausemenu = {
         pausemenu.addFormattedText("menu.nextLevel", (player.level === 50 ? "-/-" : (player.exp + "/" + player.nextExp)), 6.75, rowYs[1], ":", 0);
 
         if(pausemenu.cursorY < pausemenu.options.length) {
-            gfx.drawCursor(0, (pausemenu.dy + pausemenu.cursorY), pausemenu.options[pausemenu.cursorY], 0);
+            this.cursors.RedimCursor("main", 0, pausemenu.dy + pausemenu.cursorY, pausemenu.options[pausemenu.cursorY], 0);
         } else {
             if(pausemenu.cursorX === 0) {
-                gfx.drawCursor(2, 11.75, 1, 1);
+                this.cursors.RedimCursor("main", 2, 11.75, 1, 1);
                 const str = GetText("alignment") + ": " + GetText(player.techAxis <= 0 ? "alignnature" : "aligntech") + " " + GetText(player.ethicsAxis >= 0 ? "aligngood" : "alignbad");
                 pausemenu.drawInfoText(str, 0, 10.75);
             } else {
                 const idx = pausemenu.cursorX - 1;
                 const item = pausemenu.questItems[idx];
-                gfx.drawCursor(5 + (idx * 1.5), 11.75, 0, 0);
+                this.cursors.RedimCursor("main", 5 + (idx * 1.5), 11.75, 0, 0);
                 pausemenu.drawInfoText(GetText("qi." + item), 5 + (idx * 1.5), 10.75);
             }
         }
@@ -114,9 +118,7 @@ const pausemenu = {
         str += num;
         pausemenu.addText(str, x, y);
     },
-    clean: () => gfx.clearAll(true),
     cancel: function() {
-        pausemenu.clean();
         game.transition(this, worldmap, {
             init: worldmap.pos,
             map: worldmap.mapName,

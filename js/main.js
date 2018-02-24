@@ -14,9 +14,9 @@ const nwHelpers = {
         } else {
             player.options.resolution = 2;
         }
-        nwHelpers.AdjustScreenSettings();
+        nwHelpers.AdjustScreenSettings(true);
     },
-    AdjustScreenSettings: function() {
+    AdjustScreenSettings: function(skipWinAdjustments) {
         let multiplier = 1;
         switch(player.options.resolution) {
             case 0: multiplier = 0.5; break;
@@ -30,8 +30,10 @@ const nwHelpers = {
             win.leaveFullscreen();
         }
         win.zoomLevel = Math.log(multiplier) / Math.log(1.2);
-        win.width = game.w * multiplier;
-        win.height = game.h * multiplier;
+        if(!skipWinAdjustments) {
+            win.width = game.w * multiplier;
+            win.height = game.h * multiplier;
+        }
     }
 };
 const game = {
@@ -77,6 +79,14 @@ const game = {
         gfx.loadSpriteSheets(this.sheetsToLoad, this.sheetsLoaded);
     },
     transitioning: false,
+    CleanHandler: function(from) {
+        if(from.clean === undefined) {
+            if(from.cursors !== undefined) { from.cursors.Perish(); }
+            gfx.clearAll(true);
+        } else {
+            from.clean();
+        }
+    },
     transition: function(from, to, arg) {
         if(game.transitioning) { return false; }
         game.transitioning = true;
@@ -91,7 +101,7 @@ const game = {
     innerTransition: function(from, to, arg) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
         game.currentInputHandler = to;
-        from.clean();
+        this.CleanHandler(from);
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
         to.setup(arg);
     },

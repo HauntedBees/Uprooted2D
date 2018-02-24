@@ -1,10 +1,18 @@
 pausemenu.equipment = {
     cursor: { x: 0, y: 0 }, textY: 80, equipTextY: 168, equipFontSize: 16, equipWidth: 55,
     rowData: [], curY: 0,
-    layersToClear: ["menuA", "menucursorA", "menucursorB", "menutext"],
+    layersToClear: ["menuA", "menutext"],
     setup: function() {
-        this.cursor = {x: 0, y: 0};
+        this.cursor = { x: 0, y: 0 };
+        this.cursors = new CursorAnimSet([
+            { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" },
+            { key: "weapon", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" },
+            { key: "compost", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" },
+            { key: "gloves", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" },
+            { key: "soil", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" }
+        ]);
         this.drawAll();
+        this.cursors.Start();
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
@@ -15,31 +23,31 @@ pausemenu.equipment = {
         }
         if(player.equipment.weapon !== null) {
             const eq = GetEquipment(player.equipment.weapon), x = 0.3125;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
-        }
+        } else { this.cursors.MoveCursor("weapon", -1, -1); }
         if(player.equipment.compost !== null) {
             const eq = GetEquipment(player.equipment.compost), x = 4.1875;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
-        }
+        } else { this.cursors.MoveCursor("compost", -1, -1); }
         if(player.equipment.gloves !== null) {
             const eq = GetEquipment(player.equipment.gloves), x = 8.0625;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
-        }
+        } else { this.cursors.MoveCursor("gloves", -1, -1); }
         if(player.equipment.soil !== null) {
             const eq = GetEquipment(player.equipment.soil), x = 11.9375;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menucursorA");
+            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
-        }
+        } else { this.cursors.MoveCursor("soil", -1, -1); }
         let numItems = 0;
         for(let i = 0; i < player.inventory.length; i++) {
             const itemName = player.inventory[i][0];
             if(itemName[0] !== "!") { continue; }
             let y = 0;
             const item = GetEquipment(itemName);
-            const details = { actualIndex: i, name: itemName, equipped: player.isEquipped(itemName) };
+            const details = { actualIndex: i, name: itemName, type: item.type, equipped: player.isEquipped(itemName) };
             switch(item.type) {
                 case "weapon": y = 0; break;
                 case "compost": y = 1; break;
@@ -55,15 +63,14 @@ pausemenu.equipment = {
                 const item = items[j];
                 gfx.drawInventoryItem(player.inventory[item.actualIndex], j, i, "menuA");
                 if(item.equipped) {
-                    gfx.drawCursor(j, i, 0, 0, "xcursor");
+                    this.cursors.MoveCursor(item.type, j, i);
                 }
             }
         }
         if(numItems === 0) { return; } // TODO: something nicer than this!
-        gfx.drawCursor(this.cursor.x, this.cursor.y, 0, 0);
+        this.cursors.MoveCursor("main", this.cursor.x, this.cursor.y);
         this.setText();
     },
-    clean: function() { gfx.clearSome(this.layersToClear); },
     cancel: function() { game.innerTransition(this, pausemenu, 1); },
     mouseMove: function(pos) {
         if(pos.x < 0 || pos.y < 0) { return false; }
