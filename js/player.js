@@ -117,7 +117,7 @@ let player = {
         this.atk = levelStats.atk[this.level - 1];
         this.def = levelStats.def[this.level - 1];
         this.luck = 0.7 + (this.level / 100);
-        this.nextExp = Math.floor(this.level * this.level * 3 * Math.pow(1.005, this.level - 2));
+        this.nextExp = Math.floor(this.level * this.level * 3.25 * Math.pow(1.02, this.level - 2));
         this.getLevelUpItemBonuses();
     },
     canMelee: function(numEnemyCrops) {
@@ -212,17 +212,13 @@ let player = {
         return true;
     },
     clearItemIfEmpty: function(name) {
-        var idx = -1;
-        for(var i = 0; i < player.inventory.length; i++) {
-            if(player.inventory[i][0] === name) {
-                idx = i;
-                break;
+        for(let i = player.inventory.length - 1; i >= 0; i--) {
+            if(player.inventory[i][0] !== name) { continue; }
+            if(player.inventory[i][1] <= 0) {
+                player.inventory.splice(i, 1);
+                return true;
             }
-        }
-        if(idx < 0) { return false; }
-        if(player.inventory[idx][1] <= 0) {
-            player.inventory.splice(idx, 1);
-            return true;
+            return false;
         }
         return false;
     },

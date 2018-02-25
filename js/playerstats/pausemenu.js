@@ -1,6 +1,6 @@
 const pausemenu = {
     options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
-    layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack"],
+    layersToClear: ["menuA", "menutext", "menutextOverBlack", "menuOverBlack"],
     setup: function(sel) {
         this.cursorY = sel || 0;
         this.cursorX = 0;
@@ -98,13 +98,13 @@ const pausemenu = {
         let width = gfx.getTextWidth(text) + 20;
         let xiimax = x + Math.ceil(width / 64);
         while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
-        gfx.drawSprite("sheet", 39, 16, x * 16, 2 + y * 16, "tutorial");
+        gfx.drawSprite("sheet", 39, 16, x * 16, 2 + y * 16, "menuOverBlack");
         while(width > 128) {
             width -= 64;
-            gfx.drawSprite("sheet", 7, 11, x * 16 + 16 * xi++, 2 + y * 16, "tutorial");
+            gfx.drawSprite("sheet", 7, 11, x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
         }
-        gfx.drawSprite("sheet", 8, 11, x * 16 + 16 * xi, 2 + y * 16, "tutorial");
-        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menuOverBlack");
+        gfx.drawSprite("sheet", 8, 11, x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
+        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     addText: (t, x, y) => gfx.drawText(t, 2 + x * 16, 10.5 + y * 16),
     addFormattedText: function(key, num, x, y, middle, spaceNum) {

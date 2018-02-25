@@ -12,6 +12,7 @@ worldmap.shop = {
     bookReading: null, bookState: -1,
     layersToClear: ["characters", "menutext"],
     availableIndexes: [], hasTalk: "",
+    sleepsyData: null, 
     setup: function(shopName) {
         this.details = stores[shopName];
         this.sellingState = me.sellStates.BUYING;
@@ -21,6 +22,7 @@ worldmap.shop = {
         this.numArrows = 0;
         this.bookReading = null;
         this.bookState = -1;
+        this.sleepsyData = null;
         if(this.details.wares.length > 6 || (this.details.doesSell && this.details.wares.length > 5)) {
             this.dx = 1;
             this.initx = (this.hasTalk || this.details.doesSell) ? 3 : 2;
@@ -345,6 +347,7 @@ worldmap.shop = {
         this.WriteWrappedText(GetText(crop.name), 198);
     },
     click: function(pos) {
+        if(this.sleepsyData !== null) { return this.clickSleepsy(); }
         if(this.sellingState === me.sellStates.READING) { return this.clickBook(pos); }
         if(this.cursorX == 0) {
             if(this.sellingState === me.sellStates.SELLING && this.sellOffset > 0) {
@@ -470,6 +473,7 @@ worldmap.shop = {
         } else if(productInfo.type === "inn") {
             player.lastInn = this.details.innId;
             player.health = player.maxhealth + 5;
+            this.sleepsyData = { state: 0, size: 0.5, waitTimer: 80, animIdx: setInterval(worldmap.shop.Sleepsy, 10) };
         } else if(productInfo.type === "upgrade") {
             let dims = {x: 0, y: 0, new: "n"};
             switch(productInfo.product) {
@@ -548,5 +552,47 @@ worldmap.shop = {
         if(moveDir !== 0 && this.sellingState === me.sellStates.READING) { this.sellingState = me.sellStates.BUYING; }
         if(isEnter) { return this.click(pos); }
         else { return this.mouseMove(pos); }
+    },
+    Sleepsy: function() {
+        const sleepInfo = worldmap.shop.sleepsyData;
+        if(sleepInfo.state === 0) {
+            gfx.clearLayer("tutorial");
+            for(let y = 2; y < game.tileh + 4; y += 4) {
+                for(let x = 2; x < game.tilew + 4; x += 4) {
+                    gfx.DrawTransitionImage([0, 4], x - (y % 4 ? 1 : 0), y + 0.5, sleepInfo.size);
+                }
+            }
+            if(sleepInfo.size < 35) { sleepInfo.size += sleepInfo.size / 90; }
+            else if(sleepInfo.waitTimer > 0) { sleepInfo.waitTimer--; }
+            else { sleepInfo.state = 1; }
+        } else if(sleepInfo.state === 1) {
+            const dreamChance = Math.random() > 0.75;
+            const textKey = dreamChance ? `innDream${Range(0, 9)}` : "innSleep";
+            gfx.drawFullText(GetText(textKey), 0, "#FFFFFF", true);
+            sleepInfo.state = 2;
+        } else if(sleepInfo.state === 3) {
+            gfx.clearLayer("tutorial");
+            for(let y = 2; y < game.tileh + 4; y += 4) {
+                for(let x = 2; x < game.tilew + 4; x += 4) {
+                    gfx.DrawTransitionImage([0, 4], x - (y % 4 ? 1 : 0), y + 0.5, sleepInfo.size);
+                }
+            }
+            if(sleepInfo.size > 0.15) { sleepInfo.size -= sleepInfo.size / 90; }
+            else { worldmap.shop.FinishSleepsy(); }
+        }
+    },
+    clickSleepsy: function() {
+        const sleepInfo = worldmap.shop.sleepsyData;
+        switch(sleepInfo.state) {
+            case 0: sleepInfo.size = 35; sleepInfo.waitTimer = 0; break;
+            case 2: sleepInfo.size = 35; gfx.clearLayer("menutextOverBlack"); sleepInfo.state = 3; break;
+            case 3: worldmap.shop.FinishSleepsy(); break;
+        }
+        return true;
+    },
+    FinishSleepsy: function() {
+        gfx.clearLayer("tutorial");
+        clearInterval(worldmap.shop.sleepsyData.animIdx);
+        worldmap.shop.sleepsyData = null;
     }
 };

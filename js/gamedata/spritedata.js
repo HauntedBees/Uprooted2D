@@ -1,6 +1,6 @@
-var spriteData = {
+const spriteData = {
     populate: function() {
-        for(var i = 0; i < 4; i++) {
+        for(let i = 0; i < 4; i++) {
             spriteData.names["ginger" + i] = [10 + i, 4];
             spriteData.names["pineapple" + i] = [7 + i, 6];
             spriteData.names["asparagus" + i] = [1 + i, 7];
@@ -60,27 +60,27 @@ var spriteData = {
                 spriteData.names["gmocorn" + i] = [7 + i, 20];
             }
         }
-        var mush = ["shiitake", "milkcap", "portobello"];
-        for(var i = 0; i < mush.length; i++) {
+        let mush = ["shiitake", "milkcap", "portobello"];
+        for(let i = 0; i < mush.length; i++) {
             spriteData.names[mush[i]] = [16 + i, 12];
             spriteData.names[mush[i] + "seed"] = [16 + i, 11];
         }
         mush = ["greenshroom", "blackshroom", "poisnshroom"];
-        for(var i = 0; i < mush.length; i++) {
+        for(let i = 0; i < mush.length; i++) {
             spriteData.names[mush[i]] = [22 + i, 12];
             spriteData.names[mush[i] + "seed"] = [22 + i, 11];
         }
         
-        var bees = ["beeB", "beeR", "beeG"];
-        for(var i = 0; i < bees.length; i++) {
+        const bees = ["beeB", "beeR", "beeG"];
+        for(let i = 0; i < bees.length; i++) {
             spriteData.names[bees[i] + "seed"] = [11 + i, 13];
             spriteData.names[bees[i] + "0"] = [14, 14];
             spriteData.names[bees[i] + "1"] = [11 + i, 14];
             spriteData.names[bees[i]] = [11 + i, 15];
         }
-        var rices = ["arborio", "blackrice", "rice", "shortgrain", "chestnut"];
-        for(var i = 0; i < rices.length; i++) {
-            var rice = rices[i];
+        const rices = ["arborio", "blackrice", "rice", "shortgrain", "chestnut"];
+        for(let i = 0; i < rices.length; i++) {
+            const rice = rices[i];
             spriteData.names[rice + "0"] = [15, 20];
             spriteData.names[rice + "1"] = [16, 20];
             spriteData.names[rice + "2"] = [17, 20];
@@ -88,23 +88,23 @@ var spriteData = {
             spriteData.names[rice] = [(15 + i), 18];
             spriteData.names[rice + "seed"] = [(15 + i), 17];
         }
-        var veg = ["apple", "banana", "ginger", "grapes", "spinach", "tomato", "garlic", "carrot", "bellpepper", "corn", "avocado", 
+        const veg = ["apple", "banana", "ginger", "grapes", "spinach", "tomato", "garlic", "carrot", "bellpepper", "corn", "avocado", 
                    "mango", "lemon", "blackberry", "pineapple", "apricot", "radish", "kiwi", "rhubarb", "asparagus", "beet", "leek"];
-        for(var i = 0; i < veg.length; i++) {
+        for(let i = 0; i < veg.length; i++) {
             spriteData.names[veg[i]] = [(10 + i) % 16, 7 + Math.floor((10 + i) / 16)];
             spriteData.names[veg[i] + "seed"] = [i % 16, 9 + Math.floor(i / 16)];
         }
-        var items = ["hoe", "can", "sickle", "fertilizer", "glove", "compost", "spring", "summer", "autumn", "winter"];
-        for(var i = 0; i < items.length; i++) {
+        const items = ["hoe", "can", "sickle", "fertilizer", "glove", "compost", "spring", "summer", "autumn", "winter"];
+        for(let i = 0; i < items.length; i++) {
             spriteData.names[items[i]] = [6 + i, 10];
         }
 
-        var food2s = ["orig", "kelp", "coffee", "salsa", "gamer", "cookie", "black", "purple", "crystal"];
-        for(var i = 0; i < food2s.length; i++) {
-            var myfood = food2s[i];
+        let food2s = ["orig", "kelp", "coffee", "salsa", "gamer", "cookie", "black", "purple", "crystal"];
+        for(let i = 0; i < food2s.length; i++) {
+            const myfood = food2s[i];
             spriteData.names["food2" + myfood + "0"] = [30, 18];
             if(i === 0) { spriteData.names["food2classic0"] = [30, 18]; }
-            for(var j = 1; j <= 4; j++) {
+            for(let j = 1; j <= 4; j++) {
                 spriteData.names["food2" + myfood + j] = [28 + i, 18 + j];
                 if(i === 0) { spriteData.names["food2classic" + j] = [28, 18 + j]; }
             }
@@ -112,22 +112,21 @@ var spriteData = {
             if(i === 0) { spriteData.names["food2classic"] = [28, 22]; }
         }
 
-        for(var i = 0; i < 13; i++) {
+        for(let i = 0; i < 13; i++) {
             spriteData.names["sickle_" + i] = [i, 16];
             if(i < 9) { spriteData.names["compost_" + i] = [i, 17]; }
             if(i < 5) { spriteData.names["glove_" + i] = [i, 18]; }
             if(i < 11) { spriteData.names["can_" + i] = [i, 19]; }
         }
-        for(var i = 0; i < 3; i++) {
+        for(let i = 0; i < 3; i++) {
             spriteData.names["titleSel" + i] = [4 + i, 21];
             spriteData.names["titleSelActive" + i] = [7 + i, 21];
         }
-        for(var i = 0; i < 20; i++) { spriteData.names["trns" + i] = [i, 22]; }
-        for(var i = 0; i < 6; i++) {
+        for(let i = 0; i < 6; i++) {
             if(i < 4) { spriteData.names["animCoin" + i] = [40 + i, 13]; }
             spriteData.names["animBin" + i] = [40 + i, 14];
         }
-        for(var i = 0; i < 7; i++) {
+        for(let i = 0; i < 7; i++) {
             spriteData.names["hp" + (14 - i)] = [41 + i , 10];
             spriteData.names["hp" + (7 - i)] = [41 + i , 11];
         }

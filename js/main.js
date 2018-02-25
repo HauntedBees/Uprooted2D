@@ -46,7 +46,7 @@ const game = {
                     "covers/northcity1", "covers/northcity2", "covers/northcity2_post", "covers/northcity3", "maps/hq_1", "maps/hq_2", "maps/hq_3",
                     "maps/hq_4", "maps/hq_5", "maps/hq_6", "horRorTop", "horRorBottom", "ayudame", "mapplayer_help", "shops/vendo",
                     "foregrounds/farm", "combat_player", "combat_equipment", "bgs/outside", "bgs/underwater", "titleGround", "titleTop", 
-                    "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq"],
+                    "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "paddedsheet"],
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
@@ -82,7 +82,7 @@ const game = {
     CleanHandler: function(from) {
         if(from.clean === undefined) {
             if(from.cursors !== undefined) { from.cursors.Perish(); }
-            gfx.clearAll(true);
+            gfx.clearAll();
         } else {
             from.clean();
         }
@@ -105,12 +105,13 @@ const game = {
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
         to.setup(arg);
     },
-    transitionInfo: { crop: "trns0", size: 0.5, time: 0 },
+    transitionInfo: { crop: [0, 0], size: 0.5, time: 0 },
     startTransitionAnim: function(dir, from, to, arg) {
         clearInterval(game.transitionInfo.animIdx);
         game.transitionInfo = {
-            crop: "trns" + Math.floor(Math.random() * 20), size: (dir > 0 ? 0.5 : 5), dir: dir,
-            from: from, to: to, arg: arg, 
+            crop: [Range(0, 5), Range(0, 4)],
+            size: (dir > 0 ? 0.5 : 5),
+            from: from, to: to, arg: arg, dir: dir,
             animIdx: setInterval(game.drawTransitionAnim, 10)
         };
     },
@@ -131,7 +132,7 @@ const game = {
         if(game.transitionInfo.size > 0) {
             for(let y = 0; y < game.tileh + 2; y += 2) {
                 for(let x = 0; x < game.tilew + 2; x += 2) {
-                    gfx.drawTransitionImage(game.transitionInfo.crop, x - (y % 4 ? 1 : 0), y + 0.5, game.transitionInfo.size);
+                    gfx.DrawTransitionImage(game.transitionInfo.crop, x - (y % 4 ? 1 : 0), y + 0.5, game.transitionInfo.size);
                 }
             }
         }

@@ -21,7 +21,7 @@ const gfx = {
     GetFont: () => player.options.font === 1 ? "OpenDyslexic" : "PressStart2P",
 
     clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasWidth),
-    clearSome: function(keys) { for(let i = 0; i < keys.length; i++) { gfx.clearLayer(keys[i]); } },
+    clearSome: keys => keys.forEach(e => gfx.clearLayer(e)),
     clearAll: function(includingTutorial) {
         for(const key in gfx.ctx) {
             if(key === "tutorial" && !includingTutorial) { continue; } 
@@ -78,12 +78,13 @@ const gfx = {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
     },
     drawHelp: () => gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 200, 130, 34, 24),
-    drawTransitionImage: function(spritename, x, y, mult) {
-        const data = spriteData.names[spritename];
-        const sheet = gfx.spritesheets["sheet"];
+    DrawTransitionImage: function(spritecoords, x, y, mult) {
+        const sheet = gfx.spritesheets["paddedsheet"];
         const size = 16;
+        const startX = spritecoords[0] * 18 - spritecoords[0] + 1;
+        const startY = spritecoords[1] * 18 - spritecoords[1] + 1;
         const delta = size * mult * 0.5;
-        gfx.drawImage(gfx.ctx["tutorial"], sheet, data[0] * size, data[1] * size, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
+        gfx.drawImage(gfx.ctx["tutorial"], sheet, startX, startY, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
     },
     drawYMaskedSprite: function(spritename, x, y, layer, bottomY, verbose) {
         const data = spriteData.names[spritename];
@@ -206,7 +207,7 @@ const gfx = {
         gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
-    drawFullText: function(t, y, color, overBlack) { gfx.drawWrappedText(t, 4, 11 + (y || 0), 235, color, (overBlack ? "menutextOverBlack" : undefined)); },
+    drawFullText: function(t, y, color, overBlack) { gfx.drawWrappedText(t, 4, 11 + (y || 0), 250, color, (overBlack ? "menutextOverBlack" : undefined)); },
     getWrappedTextInfo: function(t, maxWidth) {
         maxWidth *= gfx.scale;
         const ts = t.split(" ");

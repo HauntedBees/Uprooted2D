@@ -9035,6 +9035,57 @@ const fulltext = {
 		"en-dm": "Iii has joined my party! Now I can attack one more time per turn!", 
 		"type": "text"
 	},
+	// Sleeping at an Inn
+	"innSleep": {
+		"en-us": "", 
+		"en-dm": "A good night's sleep is exactly what I needed...", 
+		"type": "sleep"
+	},
+	"innDream0": {
+		"en-us": "", 
+		"en-dm": "An eight-legged goose flies up and lands in front of me. \"Christmas is coming,\" he says. \"Did you get your sister a gift?\" I shake my head, I had completely forgotten. \"You're the reason Santa died,\" growls the goose, before it blows away like a piece of paper.", 
+		"type": "sleep"
+	},
+	"innDream1": {
+		"en-us": "", 
+		"en-dm": "I'm floating in a bright pink void. There is nothing around me for miles. All I can feel is the distinct taste of olive oil on my tongue. Suddenly I begin to feel myself falling. A voice in the distance screams my name. Right before I hit the ground, I wake up.", 
+		"type": "sleep"
+	},
+	"innDream2": {
+		"en-us": "", 
+		"en-dm": "Several religious figures and dieties tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd let her reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she masturbated once,\" replies the diety next to them. \"Oh, she did? nm fuck that to hell with her.\"", 
+		"type": "sleep"
+	},
+	"innDream3": {
+		"en-us": "", 
+		"en-dm": "A cat is standing on top of me, staring me in the eyes. \"Feed me,\" it says. \"Okay,\" I reply, \"but I can't get up until you get off of me.\" The cat does not acknowledge my response. It continues, \"I want some lasagna.\" I try to get up, but its weight keeps me pinned down. We both starve.", 
+		"type": "sleep"
+	},
+	"innDream4": {
+		"en-us": "", 
+		"en-dm": "I try to pull a carrot out of the ground, but it's stuck. I keep pulling and it still won't budge. I put all of my strength into it and finally pull the vegetable out of the ground, but attached to the stalk is not a carrot, but my father. \"Are you getting enough Vitamin B?\" he asks.", 
+		"type": "sleep"
+	},
+	"innDream5": {
+		"en-us": "", 
+		"en-dm": "Two cats are fighting outside my window. Their meows sound like whip cracks and their hisses sound like the opening theme to a sitcom I used to watch as a child. I open my window and shout at them to leave and they immediately sink into the ground and vanish.", 
+		"type": "sleep"
+	},
+	"innDream6": {
+		"en-us": "", 
+		"en-dm": "I open my chicken coop to collect eggs. As I pick one up, it begins to vibrate and crack. A tiny opossum head pops out of it. \"I ate the egg, then I became the egg,\" it says, \"and now you are my mother.\" I put it back down and leave the coop, but I can still hear it calling for its mama.", 
+		"type": "sleep"
+	},
+	"innDream7": {
+		"en-us": "", 
+		"en-dm": "I lower my body into the hot spring. After a long day of farming, this is exactly what I needed. The sound of crickets chirping in the distance is the perfect background noise. Suddenly the water turns black. A voice says \"sorry.\" I turn to see an octopus next to me. \"I farted.\"", 
+		"type": "sleep"
+	},
+	"innDream8": {
+		"en-us": "", 
+		"en-dm": "It is Sunday, and my mom wakes me up to go to church. \"I don't wanna,\" I grumble as I roll over in my bed. \"Now now, if we don't go to church, the neighbors will kill us!\" my mom says. I turn around to face her. \"Wait, what?\" The neighbors have a gun to her head. \"Please honey, let's go to church.\"", 
+		"type": "sleep"
+	},
 	// Ya Boy at the Farm
 	"iiiTalk0": {
 		"en-us": "", 
