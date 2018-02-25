@@ -5631,6 +5631,11 @@ const fulltext = {
 		"en-dm": "I don't have enough money right now... I'd feel guilty about just giving spare change.", 
 		"type": "shop"
 	},
+	"s.howMany": {
+		"en-us": "", 
+		"en-dm": "How many?", 
+		"type": "shop"
+	},
 	// Books
 	"bookVeg": {
 		"en-us": "", 

@@ -12,7 +12,7 @@ worldmap.shop = {
     bookReading: null, bookState: -1,
     layersToClear: ["characters", "menutext"],
     availableIndexes: [], hasTalk: "",
-    sleepsyData: null, 
+    sleepsyData: null, howManyData: null, 
     setup: function(shopName) {
         this.details = stores[shopName];
         this.sellingState = me.sellStates.BUYING;
@@ -23,6 +23,7 @@ worldmap.shop = {
         this.bookReading = null;
         this.bookState = -1;
         this.sleepsyData = null;
+        this.howManyData = null;
         if(this.details.wares.length > 6 || (this.details.doesSell && this.details.wares.length > 5)) {
             this.dx = 1;
             this.initx = (this.hasTalk || this.details.doesSell) ? 3 : 2;
@@ -171,7 +172,6 @@ worldmap.shop = {
         if(!widecursor) { this.cursors.RedimCursor("main", 1 + this.cursorX * this.dx, this.yPos, 0, 0); }
     },
     mouseMove: function(pos) {
-        if(pos.y < this.yPos || pos.y > this.yPos) { return false; }
         switch(this.sellingState) {
             case me.sellStates.SELLING: return this.mouseMoveSelling(pos);
             case me.sellStates.SELLSELECT: return this.mouseMoveSellSelect(pos);
@@ -238,6 +238,16 @@ worldmap.shop = {
     mouseMoveBuying: function(pos) {
         this.bookState = -1;
         const newCursorX = Math.floor((pos.x - 1) / this.dx);
+        if(this.howManyData !== null) {
+            if(pos.y < this.yPos) { // up
+                const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
+                if(newPrice <= player.monies) { this.howManyData.amount += 1; }
+            } else if(pos.y > this.yPos) { // down
+                this.howManyData.amount = Math.max(1, this.howManyData.amount - 1);
+            }
+            this.DrawDetails();
+            return true;
+        }
         if(newCursorX < 0 || newCursorX >= (this.details.wares.length + this.cursorInitx)) { return false; }
         if(newCursorX > ((this.hasTalk || this.details.doesSell ? 1 : 0) + this.availableIndexes.length)) { return false; }
         this.cursorX = newCursorX;
@@ -250,7 +260,8 @@ worldmap.shop = {
         else if(this.details.doesSell && this.cursorX == 1) { return this.WriteWrappedText(GetText(this.details.selling)); }
         const cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
         const productInfo = this.details.wares[cursor];
-        if(productInfo.type === "seed") { this.DrawSeedText(productInfo); }
+        if(this.howManyData !== null) { this.DrawHowManyText(); }
+        else if(productInfo.type === "seed") { this.DrawSeedText(productInfo); }
         else if(productInfo.type === "farm") { this.DrawFarmText(productInfo); }
         else if(productInfo.type === "equipment") { this.DrawEquipText(productInfo); }
         else if(productInfo.type === "upgrade") { this.DrawUpgradeText(productInfo); }
@@ -287,7 +298,7 @@ worldmap.shop = {
         const price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
         let lineOne = farmInfo.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(farmInfo.name);
-        if(amt > 0) { lineOne += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // TOOD: right align this?
+        if(amt > 0) { lineOne += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // TODO: right align this?
         this.WriteWrappedText(lineOne + "\n " + farmInfo.desc);
     },
     DrawSeedText: function(productInfo, crop, price) {
@@ -295,7 +306,7 @@ worldmap.shop = {
         price = price || Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
         let str = crop.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(crop.name);
-        if(amt > 0) { str += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // TOOD: right align this?
+        if(amt > 0) { str += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // TODO: right align this?
         this.WriteWrappedText(str);
         pausemenu.inventory.DrawCropPower(crop, 0.5, 10, "menutext");
 
@@ -345,6 +356,26 @@ worldmap.shop = {
             gfx.drawTileToGrid(bonusesToPush[i], nextx + i, 11, "menutext");
         }
         this.WriteWrappedText(GetText(crop.name), 198);
+    },
+    DrawHowManyText: function() {
+        const productInfo = this.howManyData.product;
+        const amount = this.howManyData.amount;
+        let topText = "", price = 0;
+        if(productInfo.type === "seed") {
+            const crop = GetCrop(productInfo.product);
+            price = Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
+            topText = crop.displayname + " (" + price + "G)";
+            const amt = player.getItemAmount(crop.name);
+            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // TODO: right align this?
+        } else if(productInfo.type === "farm") {
+            const farmInfo = GetFarmInfo(productInfo.product);
+            price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
+            topText = farmInfo.displayname + " (" + price + "G)";
+            const amt = player.getItemAmount(farmInfo.name);
+            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // TODO: right align this?
+        }
+        topText += " \n \n " + GetText("s.howMany") + "       " + amount + " (" + (price * amount) + "G)";
+        this.WriteWrappedText(topText);
     },
     click: function(pos) {
         if(this.sleepsyData !== null) { return this.clickSleepsy(); }
@@ -458,7 +489,8 @@ worldmap.shop = {
             case "equipment": price = GetEquipment(productInfo.product).price; break;
             default: price = productInfo.price; break;
         }
-        price = Math.floor(price * mult);
+        const amt = (this.howManyData === null ? 1 : this.howManyData.amount);
+        price = amt * Math.floor(price * mult);
         if(price > player.monies) {
             if(productInfo.type === "alms") { this.DrawDetails(GetText("s.almsNope")); }
             else { this.DrawDetails(GetText(this.details.notEnough)); }
@@ -489,10 +521,20 @@ worldmap.shop = {
             player.monies += price;
             this.DrawDetails(GetText("s.alreadyown"));
             return true;
-        } else if(!player.increaseItem(productInfo.product, 1)) {
+        } else if(!player.increaseItem(productInfo.product, amt)) {
             player.monies += price;
             this.DrawDetails(GetText("s.invfull"));
             return true;
+        } else if(productInfo.type === "seed" || productInfo.type === "farm") {
+            if(this.howManyData === null) {
+                this.howManyData = { product: productInfo, amount: 1, price: price };
+                player.monies += price; // we already charged!
+                player.decreaseItem(productInfo.product, amt); // we already added one!
+                this.DrawDetails();
+                return true;
+            } else {
+                this.howManyData = null;
+            }
         }
         this.DrawDetails(GetText(this.details.purchased));
         return true;
@@ -515,12 +557,17 @@ worldmap.shop = {
                 this.cursorX = 1;
                 this.DrawDetails(GetText(this.details.selling));
                 break;
-            case me.sellStates.BUYING: 
-                game.transition(this, worldmap, {
-                    init: worldmap.pos,
-                    map: worldmap.mapName,
-                    noEntityUpdate: true
-                });
+            case me.sellStates.BUYING:
+                if(this.howManyData === null) {
+                    game.transition(this, worldmap, {
+                        init: worldmap.pos,
+                        map: worldmap.mapName,
+                        noEntityUpdate: true
+                    });
+                } else {
+                    this.howManyData = null; 
+                    this.DrawDetails();
+                }
                 break;
         }
     },
@@ -535,10 +582,12 @@ worldmap.shop = {
             pos.x = this.cursorX + 1;
             actDx = 1;
         }
-        let moveDir = 0;
+        let moveDir = 0, vertMove = false;
         switch(key) {
             case player.controls.left: pos.x -= actDx; moveDir = -1; break;
             case player.controls.right: pos.x += actDx; moveDir = 1; break;
+            case player.controls.up: pos.y -= 1; vertMove = true; break;
+            case player.controls.down: pos.y += 1; vertMove = true; break;
             case player.controls.confirm:
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
@@ -548,7 +597,7 @@ worldmap.shop = {
                 isEnter = true;
             }
         }
-        if(moveDir === 0 && !isEnter) { return false; }
+        if(!vertMove && moveDir === 0 && !isEnter) { return false; }
         if(moveDir !== 0 && this.sellingState === me.sellStates.READING) { this.sellingState = me.sellStates.BUYING; }
         if(isEnter) { return this.click(pos); }
         else { return this.mouseMove(pos); }
