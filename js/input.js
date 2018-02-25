@@ -1,4 +1,8 @@
-var input = {
+let gpVals = {
+    triggerMin: 0.5,
+    deadZones: [0.25, 0.25, 0.25, 0.25]
+};
+let input = {
     click: function(e) {
         if(game.currentInputHandler.click(p)) { return; }
         const p = input.getMousePos(e);
@@ -66,5 +70,69 @@ var input = {
             x: Math.floor(x / 16 / gfx.scale), 
             y: Math.floor(y / 16 / gfx.scale)
         };
+    },
+    gamepads: {}, gamepadQueryIdx: -1,
+    gamepadButtons: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // buttons 0 - 15
+        0, 0, 0, 0, // negative axes Lx Ly Rx Ry
+        0, 0, 0, 0], // positive axes Lx Ly Rx Ry
+    gamepadConnected: function(e) {
+        input.gamepads[e.gamepad.index] = e.gamepad;
+        console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.", e.gamepad.index, e.gamepad.id, e.gamepad.buttons.length, e.gamepad.axes.length);
+        input.gamepadQueryIdx = setInterval(input.QueryGamepads, 10);
+    },
+    gamepadDisconnected: function(e) {
+        delete input.gamepads[e.gamepad.index];
+        let hasKeys = false;
+        for(const key in input.gamepads) { hasKeys = true; }
+        if(!hasKeys) {
+            clearInterval(input.gamepadQueryIdx);
+            input.gamepadQueryIdx = -1;
+        }
+    },
+    QueryGamepads: function() {
+        const gamepads = navigator.getGamepads();
+        if(gamepads === undefined || gamepads === null) { return; }
+        const buttonsDown = [];
+        for(const gp in gamepads) {
+            if(gamepads[gp] === null || gamepads[gp].id === undefined) { continue; }
+            gamepads[gp].buttons.forEach((e, i) => {
+                if(e.pressed && e.value >= gpVals.triggerMin && i < 16) { buttonsDown.push(i); }
+            });
+            gamepads[gp].axes.forEach((e, i) => {
+                if(e <= -gpVals.deadZones[i]) {
+                    buttonsDown.push(16 + i);
+                } else if(e >= gpVals.deadZones[i]) {
+                    buttonsDown.push(20 + i);
+                }
+            });
+        }
+        for(let i = 0; i < input.gamepadButtons.length; i++) {
+            const prevState = input.gamepadButtons[i];
+            const btn = (i < 16) ? ("Gamepad" + i) : ("GamepadA" + (i - 16));
+            if(buttonsDown.indexOf(i) < 0 && buttonsDown.indexOf(-i) < 0) { // not pressed
+                if(prevState > 0) { // just released
+                    input.gamepadButtons[i] = -1;
+                    input.justPressed[btn] = -1;
+                    if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(btn) >= 0 && game.currentInputHandler.freeMovement) {
+                        clearInterval(input.keys[btn]);
+                        input.keys[btn] = undefined;
+                        input.setMainKey();
+                    }
+                } else { input.gamepadButtons[i] = 0; } // not pressed
+            } else { // pressed
+                input.gamepadButtons[i]++;
+                const btnVal = input.gamepadButtons[i];
+                if(btnVal === 1 || (btnVal >= 45 && btnVal % 15 === 0)) {
+                    input.justPressed[btn] = input.justPressed[btn] === undefined ? 0 : input.justPressed[btn] + 1;
+                    if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(btn) >= 0 && game.currentInputHandler.freeMovement) {
+                        input.setMainKey(btn);
+                        if(input.keys[btn] !== undefined) { return; }
+                        input.keys[btn] = setInterval(function() {
+                            game.currentInputHandler.keyPress(btn);
+                        }, 50);
+                    } else { game.currentInputHandler.keyPress(btn); }
+                }
+            }
+        }
     }
 };

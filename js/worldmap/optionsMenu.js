@@ -1,31 +1,35 @@
 worldmap.optionsMenu = {
     cursory: 1, options: [], localControls: {}, localOptions: {}, fromPause: false,
-    headingSize: 36, optionSize: 22, optionInfoSize: 12, inChange: false, origFont: 0,
+    headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 12, inChange: false, origFont: 0,
     setup: function(fromPause) {
         this.fromPause = fromPause;
         this.localControls = Object.assign({}, player.controls);
         this.localOptions = Object.assign({}, player.options);
         this.options = []; this.cursory = 1; this.inChange = false;
         this.origFont = player.options.font;
+        this.RedimOptions();
+    },
+    RedimOptions: function() {
+        this.options = [];
         let y = 0;
         y = this.addHeading(y, "opGameOps");
-        y = this.addOption(y, "opDifficulty", player.options.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
-        y = this.addOption(y, "opFont", player.options.font, "font", ["fontStandard", "fontDyslexic"], false);
+        y = this.addOption(y, "opDifficulty", this.localOptions.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
+        y = this.addOption(y, "opFont", this.localOptions.font, "font", ["fontStandard", "fontDyslexic"], false);
         y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
         y = this.addHeading(y, "opControls");
-        y = this.addButton(y, "ctrlUp", player.controls.up, "up");
-        y = this.addButton(y, "ctrlLeft", player.controls.left, "left");
-        y = this.addButton(y, "ctrlDown", player.controls.down, "down");
-        y = this.addButton(y, "ctrlRight", player.controls.right, "right");
-        y = this.addButton(y, "ctrlConfirm", player.controls.confirm, "confirm");
-        y = this.addButton(y, "ctrlCancel", player.controls.cancel, "cancel");
-        y = this.addButton(y, "ctrlPause", player.controls.pause, "pause");
+        y = this.addButton(y, "ctrlUp", this.localControls.up, "up");
+        y = this.addButton(y, "ctrlLeft", this.localControls.left, "left");
+        y = this.addButton(y, "ctrlDown", this.localControls.down, "down");
+        y = this.addButton(y, "ctrlRight", this.localControls.right, "right");
+        y = this.addButton(y, "ctrlConfirm", this.localControls.confirm, "confirm");
+        y = this.addButton(y, "ctrlCancel", this.localControls.cancel, "cancel");
+        y = this.addButton(y, "ctrlPause", this.localControls.pause, "pause");
         y = this.addHeading(y, "opAudio");
-        y = this.addOption(y, "opMusic", player.options.music, "music", ["opOff", "opOn"]);
-        y = this.addOption(y, "opSound", player.options.sound, "sound", ["opOff", "opOn"]);
+        y = this.addOption(y, "opMusic", this.localOptions.music, "music", ["opOff", "opOn"]);
+        y = this.addOption(y, "opSound", this.localOptions.sound, "sound", ["opOff", "opOn"]);
         y = this.addHeading(y, "opGraphics");
-        y = this.addOption(y, "opResolution", player.options.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
-        y = this.addOption(y, "opFullScreen", player.options.fullscreen, "fullscreen", ["opNo", "opYes"]);
+        y = this.addOption(y, "opResolution", this.localOptions.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
+        y = this.addOption(y, "opFullScreen", this.localOptions.fullscreen, "fullscreen", ["opNo", "opYes"]);
         /*y = this.addOption(y, "opPlacehold", 1, false, ["opOff", "opOn"]);*/
         y += 5;
         y = this.addFinal(y, "opSaveQuit", this.SaveAndQuit);
@@ -34,42 +38,53 @@ worldmap.optionsMenu = {
     },
     drawEverything: function() {
         gfx.clearAll();
-        var y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
-        var yoffset = 0, tileyoffset = 0;
-        if(y > 7.5) {
-            tileyoffset = y - 7.5;
+        const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
+        let yoffset = 0, tileyoffset = 0;
+        if(y > 12.5) {
+            tileyoffset = y - 12.5;
             yoffset = 16 * tileyoffset;
         }
-        for(var i = 0; i < this.options.length; i++) {
-            var op = this.options[i];
+        for(let i = 0; i < this.options.length; i++) {
+            const op = this.options[i];
             switch(op.type) {
                 case "heading":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.headingSize);
                     break;
                 case "option":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.optionSize);
-                    var optext = GetText(op.choices[op.val]);
+                    const optext = GetText(op.choices[op.val]);
                     gfx.drawText(optext, op.optx, op.y - yoffset, "#000000", this.optionSize);
                     if(this.cursory === i) {
                         gfx.drawTileToGrid("carrotSel", op.x / 24, y - tileyoffset, "menutext");
                         gfx.drawTileToGrid((op.val === 0 ? "nopL" : "opL"), (op.optx / 16) - 1, y - tileyoffset, "menutext");
-                        var len = gfx.getTextWidth(optext, this.optionSize);
+                        const len = gfx.getTextWidth(optext, this.optionSize);
                         gfx.drawTileToGrid((op.val === (op.choices.length - 1) ? "nopR" : "opR"), (op.optx + len / 4) / 16, y - tileyoffset, "menutext");
                     }
                     if(op.hasInfo) {
-                        var infotext = GetText(op.choices[op.val] + ".i");
-                        var infox = gfx.getTextFractionX(infotext, this.optionInfoSize);
+                        const infotext = GetText(op.choices[op.val] + ".i");
+                        const infox = gfx.getTextFractionX(infotext, this.optionInfoSize);
                         gfx.drawText(infotext, infox, op.y2 - yoffset, "#000000", this.optionInfoSize);
                     }
                     break;
                 case "button":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.optionSize);
-                    var val = this.formatKeyName(op.val);
+                    let val = this.formatKeyName(op.val);
                     if(this.cursory === i) { 
                         gfx.drawTileToGrid("carrotSel", op.x / 24, y - tileyoffset, "menutext");
                         if(this.inChange) { val = "?"; }
                     }
-                    gfx.drawText(val, op.optx, op.y - yoffset, "#000000", this.optionSize);
+                    if(val.indexOf("Gamepad") === 0) {
+                        if(val.indexOf("GamepadA") === 0) {
+                            const spritePos = spriteData.names[val];
+                            gfx.drawSprite("sheet", spritePos[0], spritePos[1], op.optx - 4, op.y - yoffset - 8, "menutext");
+                        } else {
+                            const padId = parseInt(val.replace("Gamepad", ""));
+                            const spritePos = spriteData.names["firstButton"];
+                            gfx.drawSprite("sheet", padId, spritePos[1], op.optx - 4, op.y - yoffset - 8, "menutext");
+                        }
+                    } else {
+                        gfx.drawText(val, op.optx, op.y - yoffset, "#000000", this.optionSize);
+                    }
                     break;
                 case "final":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.optionSize);
@@ -123,7 +138,7 @@ worldmap.optionsMenu = {
     },
     addButton: function(y, text, initVal, idx) {
         text = GetText(text);
-        this.options.push({ 
+        this.options.push({
             type: "button",
             x: gfx.getTextRightAlignedX(text, this.optionSize, gfx.canvasWidth / 2) / 4 - 5,
             optx: gfx.canvasWidth / 8 + 5,
@@ -132,9 +147,8 @@ worldmap.optionsMenu = {
             val: initVal,
             idx: idx
         });
-        return y + (this.optionSize / 3.3333);
+        return y + (initVal.indexOf("Gamepad") === 0 ? this.tileSize : (this.optionSize / 3.3333));
     },
-    clean: function() { gfx.clearAll(); },
     mouseMove: function(pos) {
         if(this.options[this.cursory].type === "option") {
             if(pos.x !== 0) {
@@ -143,9 +157,9 @@ worldmap.optionsMenu = {
                 this.options[this.cursory].val = newVal;
                 if(this.options[this.cursory].idx) {
                     this.localOptions[this.options[this.cursory].idx] = newVal;
-                    //if(this.options[this.cursory].idx === "font") { player.options.font = newOp; }
+                    if(this.options[this.cursory].idx === "font") { player.options.font = newOp; }
                 }
-                this.drawEverything();
+                this.RedimOptions();
                 return true;
             } else if(pos.y !== this.cursory) {
                 return this.moveToNext(pos.y);
@@ -158,7 +172,7 @@ worldmap.optionsMenu = {
         return false;
     },
     moveToNext: function(newY) {
-        var dir = newY - this.cursory;
+        const dir = newY - this.cursory;
         while(newY >= 0 && newY < this.options.length && this.options[newY].type === "heading") {
             newY += dir;
         }
@@ -191,7 +205,7 @@ worldmap.optionsMenu = {
         worldmap.optionsMenu.QuitWithoutSaving(true);
     },
     QuitWithoutSaving: function(dontFont) {
-        //if(!dontFont) { player.options.font = this.origFont; }
+        if(!dontFont) { player.options.font = this.origFont; }
         if(worldmap.optionsMenu.fromPause) {
             game.innerTransition(worldmap.optionsMenu, pausemenu, 3);
         } else {
@@ -206,7 +220,7 @@ worldmap.optionsMenu = {
             this.options[this.cursory].val = key;
         }
         this.inChange = false;
-        this.drawEverything();
+        this.RedimOptions();
     },
     cancel: function() { return this.QuitWithoutSaving(); },
     keyPress: function(key) {
@@ -226,10 +240,7 @@ worldmap.optionsMenu = {
             case this.localControls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.y >= this.options.length) { return false; }
-        if(isEnter) {
-            return this.click(pos);
-        } else {
-            return this.mouseMove(pos);
-        }
+        if(isEnter) { return this.click(pos); }
+        else { return this.mouseMove(pos); }
     }
 };

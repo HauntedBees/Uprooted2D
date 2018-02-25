@@ -132,6 +132,9 @@ const spriteData = {
         }
     },
     names: {
+        "firstButton": [0, 22],
+        "GamepadA0": [0, 13], "GamepadA1": [1, 13], "GamepadA2": [2, 13], "GamepadA3": [3, 13],
+        "GamepadA4": [0, 14], "GamepadA5": [1, 14], "GamepadA6": [2, 14], "GamepadA7": [3, 14],
         "forestTransition0": [11, 17], "forestTransition1": [11, 18], "forestTransition2": [11, 19],
         "forestTransition3": [11, 20], "forestTransition4": [11, 21],
         "holywater": [42, 9], "holyjug": [42, 8], "alms": [42, 7],  "rotSparkle": [42, 6],

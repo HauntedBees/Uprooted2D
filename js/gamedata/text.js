@@ -9053,7 +9053,7 @@ const fulltext = {
 	},
 	"innDream2": {
 		"en-us": "", 
-		"en-dm": "Several religious figures and dieties tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd let her reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she masturbated once,\" replies the diety next to them. \"Oh, she did? nm fuck that to hell with her.\"", 
+		"en-dm": "Several religious figures and deities tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she masturbated once,\" replies the deity next to them. \"Oh, she did? nm fuck that to hell with her.\"", 
 		"type": "sleep"
 	},
 	"innDream3": {
