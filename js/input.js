@@ -1,10 +1,10 @@
 var input = {
     click: function(e) {
-        var p = input.getMousePos(e);
         if(game.currentInputHandler.click(p)) { return; }
+        const p = input.getMousePos(e);
     },
     moveMouse: function(e) {
-        var p = input.getMousePos(e);
+        const p = input.getMousePos(e);
         if(game.currentInputHandler.mouseMove(p)) { return; }
     },
     justPressed: {}, keys: {}, mainKey: undefined,
@@ -22,10 +22,16 @@ var input = {
     },
     clearAllKeys: function() {
         input.mainKey = undefined;
-        for(var key in input.keys) {
+        for(const key in input.keys) {
             clearInterval(input.keys[key]);
             input.keys[key] = undefined;
         }
+    },
+    IsIgnoredByKeyPress(key) {
+        if(key.indexOf("Arrow") === 0) { return true; }
+        if(key[0] === "F" && key.length > 1) { return true; }
+        return ["Alt", "Shift", "Control", "CapsLock", "Tab", "Escape", "Backspace", "NumLock",
+                "Delete", "End", "PageDown", "PageUp", "Home", "Insert", "ScrollLock", "Pause"].indexOf(key) >= 0;
     },
     keyDown: function(e) {
         input.justPressed[e.key] = input.justPressed[e.key] === undefined ? 0 : input.justPressed[e.key] + 1;
@@ -35,7 +41,7 @@ var input = {
             input.keys[e.key] = setInterval(function() {
                 game.currentInputHandler.keyPress(e.key);
             }, 50);
-        }
+        } else if(input.IsIgnoredByKeyPress(e.key)) { game.currentInputHandler.keyPress(e.key); }
     },
     keyUp: function(e) {
         input.justPressed[e.key] = -1;
@@ -53,9 +59,9 @@ var input = {
         input.justPressed[e.key]++;
     },
     getMousePos: function(e) {
-        var rect = gfx.canvas["menutext"].getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
+        const rect = gfx.canvas["menutext"].getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
         return {
             x: Math.floor(x / 16 / gfx.scale), 
             y: Math.floor(y / 16 / gfx.scale)

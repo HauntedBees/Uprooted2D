@@ -200,20 +200,22 @@ worldmap.optionsMenu = {
         return true;
     },
     SaveNewButton: function(key)  {
-        const newKey = this.options[this.cursory].idx;
-        this.localControls[newKey] = key;
-        this.options[this.cursory].val = key;
+        if(key !== "Escape") {
+            const newKey = this.options[this.cursory].idx;
+            this.localControls[newKey] = key;
+            this.options[this.cursory].val = key;
+        }
         this.inChange = false;
         this.drawEverything();
     },
     cancel: function() { return this.QuitWithoutSaving(); },
     keyPress: function(key) {
-        var pos = { x: 0, y: this.cursory };
+        const pos = { x: 0, y: this.cursory };
         if(this.inChange) {
             this.SaveNewButton(key);
             return true;
         }
-        var isEnter = false;
+        let isEnter = false;
         switch(key) {
             case this.localControls.up: pos.y--; break;
             case this.localControls.left: pos.x--; break;
