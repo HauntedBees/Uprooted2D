@@ -265,12 +265,13 @@ const animCallbacks = {
     },
     "player_throwFishAtEnemy": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
+        const isLast = animEntity.animQueue.length === 1;
         const fish = (resetti.crop.fishNum === 4 ? "bigFish" : "bignet1");
         animProcess.ClearBabies();
         let pos = combat.animHelper.GetPlayerTopPos();
         pos.y -= 2;
         animProcess.AddBaby(new ParabolicThrowAnim(fish, pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
-                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets) }));
+                            function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast) }));
     },
     "player_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
@@ -283,23 +284,24 @@ const animCallbacks = {
     "player_throwCompostAtEnemy": function(animProcess, animEntity) {
         for(let i = 0; i < combat.enemies.length; i++) {
             animProcess.AddBaby(new ParabolicThrowAnim("compostpile", combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(i), 24, 
-                function() { animCallbackHelpers.HurtTargets(animProcess, [i]) }));
+                function() { animCallbackHelpers.HurtTargets(animProcess, [i], true) }));
         }
     },
     "player_launchBird": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
+        const isLast = animEntity.animQueue.length === 1;
         const arr = [resetti.crop.name + "Fly0", resetti.crop.name + "Fly1"];
         const isGrounded = ["platypus", "frogbot"].indexOf(resetti.crop.name) >= 0;
         const dy = (isGrounded ? 1 : 1.5);
         const fps = (isGrounded ? 24 : 12);
         let callback = undefined;
         if(animEntity.bonusArgs.recoils[resetti.idx] === null) {
-            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
         } else {
             callback = function() {
                 const allTargs = combat.enemies.map((e, i) => i);
-                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
-                animCallbackHelpers.HurtTargets(animProcess, allTargs);
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
+                animCallbackHelpers.HurtTargets(animProcess, allTargs, isLast);
             };
         }
         let targetPos = null;
@@ -313,43 +315,45 @@ const animCallbacks = {
     },
     "player_throwCropAtEnemy": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
+        const isLast = animEntity.animQueue.length === 1;
         let callback = undefined;
         if(animEntity.bonusArgs.recoils[resetti.idx] === null) {
-            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
         } else {
             callback = function() {
                 for(let i = 0; i < combat.enemies.length; i++) {
-                    let f = () => animCallbackHelpers.HurtTargets(animProcess, [i]);
+                    let f = () => animCallbackHelpers.HurtTargets(animProcess, [i], isLast);
                     animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]),
                                                                 combat.animHelper.GetEnemyTopPos(i), 24, f, true));
                 }
-                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
             };
         }
         animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, callback));
     },
     "player_throwCropAtCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
+        const isLast = animEntity.animQueue.length === 1;
         const recoil = animEntity.bonusArgs.recoils[resetti.idx];
         let callback = undefined;
         if(recoil === null || recoil === undefined) {
-            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
         } else {
             callback = function() {
                 for(let i = 0; i < combat.enemies.length; i++) {
-                    const f = function(idx) { return function() { animCallbackHelpers.HurtTargets(animProcess, [idx]) }; }(i);
+                    const f = function(idx) { return function() { animCallbackHelpers.HurtTargets(animProcess, [idx], isLast) }; }(i);
                     animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], animEntity.bonusArgs.targets[0], combat.animHelper.GetEnemyTopPos(i), 1, 0, 24, 24, f));
                 }
-                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
             };
         }
         animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], combat.animHelper.GetPlayerTopPos(), animEntity.bonusArgs.targets[0], 1, 0, 24, 24, callback));
     },
-    "player_damageFoes": (animProcess, animEntity) => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets),
+    "player_damageFoes": (animProcess, animEntity) => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, true),
     "player_damageFoesWithAnim": function(animProcess, animEntity) {
         animProcess.SetNewFPS(4);
         animProcess.SetShake(true);
-        animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets);
+        animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, true);
     },
     "player_damageFoes2": function(animProcess) { animProcess.SetNewFPS(10); animProcess.SetShake(false); }
 };
@@ -386,11 +390,11 @@ const animCallbackHelpers = {
             }
         }
     },
-    "HurtTargets": function(animProcess, targets) {
+    "HurtTargets": function(animProcess, targets, isLast) {
         for(let i = 0; i < targets.length; i++) {
             const targ = targets[i];
             if(targ.x === undefined) { // enemy
-                if(combat.enemies[targ].health <= 0) {
+                if(combat.enemies[targ].health <= 0 && isLast) {
                     combat.animHelper.MakeEnemyACorpse(targ);
                 } else {
                     combat.animHelper.SetEnemyAnimState(targ, "HURT");
