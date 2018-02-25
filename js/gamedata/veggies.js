@@ -23,7 +23,7 @@ function GetCrop(name) {
 		case "bellpepper": return new CropDetail(name, "Bell Pepper", 120, "veg", 1, 2, 3, 6, 0, 0, 1, 2, 0, { fireResist: 2, burnChance: 0.25 });
 		case "carrot": return new CropDetail(name, "Carrot", 15, "veg", 1, 2, 2, 2, 0, 2, 1, 2, 1, { saltResist: 1, animal: "Rabbit", animalChance: 0.03, animalDamageMult: 4 });
 		case "corn": return new CropDetail(name, "Corn", 45, "veg", 1, 5, 3, 5, 0, 0, 2, 1, 0, { saltResist: 2, saltClean: true, saltChance: 0.25 });
-		case "garlic": return new CropDetail(name, "Garlic", 180, "veg", 1, 6, 3, 9, 0, 2, 1, 1, 0, { saltResist: 2, saltClean: true, saltChance: 0.1 });
+		case "garlic": return new CropDetail(name, "Garlic", 60, "veg", 1, 6, 3, 6, 0, 2, 1, 1, 0, { saltResist: 2, saltClean: true, saltChance: 0.1 });
 		case "ginger": return new CropDetail(name, "Ginger", 30, "veg", 1, 5, 4, 4, 0, 1, 1, 2, 0, { fireResist: 2, burnChance: 0.5 });
 		case "leek": return new CropDetail(name, "Leek", 90, "veg", 1, 3, 3, 6, 0, 0, 0, 0, 2, { fireResist: 2 });
 		case "pineapple": return new CropDetail(name, "Pineapple", 75, "veg", 1, 12, 4, 8, 0, 1, 2, 0, 0, { waterResist: 2, fireResist: 1, burnChance: 0.1 });
