@@ -78,12 +78,18 @@ const gfx = {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
     },
     drawHelp: () => gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 200, 130, 34, 24),
-    DrawTransitionImage: function(spritecoords, x, y, mult) {
+    DrawTransitionImage: function(spritecoords, x, y, mult, blackEverythingElse) {
         const sheet = gfx.spritesheets["paddedsheet"];
         const size = 16;
         const startX = spritecoords[0] * 18 - spritecoords[0] + 1;
         const startY = spritecoords[1] * 18 - spritecoords[1] + 1;
         const delta = size * mult * 0.5;
+        if(blackEverythingElse) {
+            const ctx = gfx.ctx["tutorial"];
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(0, 0, gfx.canvasWidth, gfx.canvasWidth);
+            ctx.clearRect((x * size - delta) * gfx.scale + 4, (y * size - delta) * gfx.scale + 4, size * mult * gfx.scale - 4, size * mult * gfx.scale - 4);
+        }
         gfx.drawImage(gfx.ctx["tutorial"], sheet, startX, startY, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
     },
     drawYMaskedSprite: function(spritename, x, y, layer, bottomY, verbose) {
