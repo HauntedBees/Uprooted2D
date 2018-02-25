@@ -291,7 +291,7 @@ worldmap.shop = {
     DrawEquipText: function(productInfo) {
         const equipInfo = GetEquipment(productInfo.product);
         const price = Math.floor(equipInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
-        this.WriteWrappedText(equipInfo.displayname + " (" + price + " coins)" + GetEquipmentDesc(equipInfo));
+        this.WriteWrappedText(equipInfo.displayname + " (" + price + " coins) \n " + GetEquipmentDesc(equipInfo));
     },
     DrawFarmText: function(productInfo) {
         const farmInfo = GetFarmInfo(productInfo.product);
