@@ -207,7 +207,7 @@ combat.compost = {
         combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
-    cancel: function() { game.innerTransition(this, combat.menu); return true; },
+    cancel: function() { game.innerTransition(this, combat.menu, { sel: 2, notFirst: true }); return true; },
     toggleCrop: function(gridpos) {
         for(let i = 0; i < this.selectedCrops.length; i++) {
             const old = this.selectedCrops[i];
@@ -228,19 +228,46 @@ combat.compost = {
     mouseMove: function(pos) {
         this.attackButtonSelected = false;
         this.healButtonSelected = false;
-        if(pos.y == this.dy && pos.x < 3) { // heal button
+        if(pos.y === this.dy && pos.x < 3) { // heal button
             this.cursor = pos;
             this.healButtonSelected = true;
-        } else if(pos.y == (this.dy + 1) && pos.x < 3 && this.canAttack) { // attack button
+        } else if(pos.y === (this.dy + 1) && pos.x < 3 && this.canAttack) { // attack button
             this.cursor = pos;
             this.attackButtonSelected = true;
         } else { // compost selection
             if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }
             if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight)) { return false; }
-            this.cursor = pos;
+            if(pos.fromHeal) {
+                this.cursor = pos;
+            } else {
+                const dx = pos.x - this.cursor.x, dy = pos.y - this.cursor.y;
+                const ax = this.cursor.x - combat.dx, ay = this.cursor.y - combat.dy;
+                const bx = pos.x - combat.dx, by = pos.y - combat.dy;
+                const currentTile = combat.grid[ax][ay];
+                const nextTile = combat.grid[bx][by];
+                if(this.IsSameTile(ax, ay, currentTile, bx, by, nextTile)) {
+                    const dPos = { x: pos.x + dx, y: pos.y + dy };
+                    if(dPos.y >= (combat.dy + player.gridHeight)) {
+                        this.cursor = { x: 0, y: this.dy };
+                        this.healButtonSelected = true;
+                    } else if(dPos.x < combat.dx || dPos.x >= (combat.dx + player.gridWidth) || dPos.y < combat.dy) {
+                        this.cursor = pos;
+                    } else { this.cursor = dPos; }
+                } else { this.cursor = pos; }
+            }
         }
         this.drawAll();
         return true;
+    },
+    IsSameTile: function(ax, ay, a, bx, by, b) {
+        if(a === null || b === null) { return false; }
+        if(a.x !== undefined) {
+            if(b.x !== undefined) { return (a.x === b.x && a.y === b.y); }
+            else { return (a.x === bx && a.y === by); }
+        } else {
+            if(b.x !== undefined) { return (b.x === ax && b.y === ay); }
+            else { return false; }
+        }
     },
     compostFailureCheck: function() {
         if(player.equipment.compost === null) { return false; }
@@ -380,6 +407,7 @@ combat.compost = {
         } else if(pos.y === (this.dy - 1) && this.cursor.y === this.dy) { // going from Heal button to grid
             pos.y = combat.dy + player.gridHeight - 1;
             pos.x = combat.dx;
+            pos.fromHeal = true;
         }
         if(pos.y < 0 || pos.x < 0) { return false; }
         if(isEnter) { return this.click(pos); }

@@ -18,12 +18,12 @@ combat.plant = {
         if(this.activeCrop === null) {
             if(combat.numPlantTurns != player.getPlantingTurns()) {
                 if(player.canAttackAfterPlanting()) {
-                    game.innerTransition(this, combat.menu);
+                    game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
                 } else {
                     combat.endTurn(this);
                 }
             } else {
-                game.innerTransition(this, combat.menu);
+                game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
             }
         } else {
             this.activeCrop = null;
@@ -294,7 +294,7 @@ combat.plant = {
                 let next = () => game.innerTransition(combat.inbetween, combat.plant);
                 if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting()) {
-                        next = () => game.innerTransition(combat.inbetween, combat.menu);
+                        next = () => game.innerTransition(combat.inbetween, combat.menu, { sel: 0, notFirst: true });
                     } else {
                         next = () => combat.endTurn(combat.inbetween);
                     }
@@ -311,7 +311,7 @@ combat.plant = {
             } else {
                 if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting() && !combat.isFalcon) {
-                        game.innerTransition(this, combat.menu);
+                        game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
                     } else {
                         combat.endTurn(this);
                     }
@@ -403,7 +403,7 @@ combat.plant = {
             next: function() {
                 if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting()) {
-                        game.innerTransition(this, combat.menu);
+                        game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
                     } else {
                         combat.endTurn(this);
                     }

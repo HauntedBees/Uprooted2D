@@ -1,8 +1,9 @@
 combat.menu = {
     options: [], cursorY: 0, dy: 9.5,
     layersToClean: ["menuA", "menucursorB", "menutext"],
-    setup: function(sel, notFirst) {
-        if(!notFirst) {
+    setup: function(args) {
+        args = args || {};
+        if(!args.notFirst) {
             if(combat.isFalcon) {
                 combat.animHelper.AddAnim(new SheetAnim(2, 7, 700, "pointer", 6, true));
             } else {
@@ -25,7 +26,7 @@ combat.menu = {
             player.equipment.weapon = hasCharger ? "!sickle2" : "!sickle2_weak";
         }
         this.options = [];
-        this.cursorY = sel || 0;
+        this.cursorY = args.sel || 0;
         this.drawOption("Plant", 0, this.cursorY === 0);
         this.drawOption("Attack", 1, this.cursorY === 1);
         this.drawOption("Compost", 2, this.cursorY === 2);
@@ -180,7 +181,7 @@ combat.menu = {
     mouseMove: function(pos) {
         if(pos.y >= (this.dy + this.options.length) || pos.y < this.dy) { return false; }
         if(pos.x > 4) { return false; }
-        this.setup(pos.y - this.dy, true);
+        this.setup({ sel: pos.y - this.dy, notFirst: true});
         return true;
     },
     click: function(pos, isFresh) {

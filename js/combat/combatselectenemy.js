@@ -106,7 +106,7 @@ combat.selectTarget = {
         combat.animHelper.DrawBottom();
     },
     clean: () => gfx.clearSome(combat.selectTarget.layersToClear),
-    cancel: function() { game.innerTransition(this, combat.menu); return true; },
+    cancel: function() { game.innerTransition(this, combat.menu, { sel: 1, notFirst: true }); return true; },
     
     // Selecting Logic
     keyPress: function(key) {
