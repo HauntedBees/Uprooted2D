@@ -29,9 +29,9 @@ function ShakeAnim(x, y, time, sprite, variance, numShakes) {
 ShakeAnim.prototype = Object.create(CombatAnim.prototype);
 ShakeAnim.prototype.constructor = ShakeAnim;
 ShakeAnim.prototype.getFrame = function(dt) {
-    var shakeNum = Math.floor((this.current / this.time) * this.numShakes);
+    const shakeNum = Math.floor((this.current / this.time) * this.numShakes);
     if(shakeNum > this.lastShake) {
-        var a = Math.floor(16 * Math.random());
+        const a = Math.floor(16 * Math.random());
         this.dx = this.delta * ((a & 4) == 0 ? 1 : -1);
         this.dy = this.delta * ((a & 8) == 0 ? 1 : -1);
         this.lastShake = shakeNum;
@@ -48,21 +48,22 @@ function MoveAnim(x1, y1, x2, y2, time, sprite) {
 MoveAnim.prototype = Object.create(CombatAnim.prototype);
 MoveAnim.prototype.constructor = MoveAnim;
 MoveAnim.prototype.getFrame = function(dt) {
-    var completion = this.current / this.time;
-    var newx = this.x + (this.x2 - this.x) * completion;
-    var newy = this.y + (this.y2 - this.y) * completion;
+    const completion = this.current / this.time;
+    const newx = this.x + (this.x2 - this.x) * completion;
+    const newy = this.y + (this.y2 - this.y) * completion;
     gfx.drawTileToGrid(this.sprite, newx, newy, "menucursorC");
     this.current += dt;
 };
 
-function SheetAnim(x, y, time, sprite, frames) {
+function SheetAnim(x, y, time, sprite, frames, looping) {
     CombatAnim.call(this, x, y, time, sprite);
     this.frames = frames;
+    this.loop = looping || false;
 }
 SheetAnim.prototype = Object.create(CombatAnim.prototype);
 SheetAnim.prototype.constructor = SheetAnim;
 SheetAnim.prototype.getFrame = function(dt) {
-    var idx = Math.floor(this.frames * this.current / this.time);
+    const idx = Math.floor(this.frames * this.current / this.time);
     gfx.drawTileToGrid(this.sprite + idx, this.x, this.y, "menucursorC");
     this.current += dt;
 };
@@ -99,9 +100,9 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen, dontDoThat) {
         };
     }
     this.getFrame = function(pos, dir, moving) {
-        var curTime = +new Date();
-        var update = (curTime - this.lastRan) >= this.frameRate;
-        var frame = 0;
+        const curTime = +new Date();
+        const update = (curTime - this.lastRan) >= this.frameRate;
+        let frame = 0;
         if(dir === undefined) { dir = this.lastDir; }
         if(dir !== this.lastDir) {
             this.state = 0;
@@ -128,5 +129,5 @@ function MapAnim(sheet, sx, sy, w, h, dir, sheetlen, dontDoThat) {
     };
 }
 function GetFrameRate(fps) { return 1000 / fps; }
-var anim = { fps: 6 };
+const anim = { fps: 6 };
 anim.timePerFrame = GetFrameRate(anim.fps);

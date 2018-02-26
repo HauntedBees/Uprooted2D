@@ -10,7 +10,7 @@ function CombatAnimHelper(enemies) {
         for(let i = 0; i < enemies.length; i++) {
             const e = enemies[i];
             if(e.size === "xl") { currentx -= 1; } // TODO: this shit
-            enemyAnimInfos.push(GetEnemyCombatAnim(currentx, playerPos.y, e.spriteidx, e.size));
+            enemyAnimInfos.push(GetEnemyCombatAnim(currentx, playerPos.y, e.spriteidx, e.size, e.cursorinfo));
             switch(e.size) {
                 case "sm": currentx += 1; break;
                 case "md": currentx += 1.5; break;
@@ -76,16 +76,19 @@ function CombatAnimHelper(enemies) {
         this.ResetBirdAnimPos();
     };
 
-    this.GetEnemyTopPos = idx => { const edims = enemyAnimInfos[idx].dims; return { x: edims.x + (edims.w / 16) / 2, y: edims.y - (edims.h / 16) }; };
+    this.GetEnemyTopPos = function(idx) { 
+        const edims = enemyAnimInfos[idx].dims, cdims = enemyAnimInfos[idx].cursorinfo;
+        return { x: edims.x + (edims.w / 16) / 2 - 0.5, y: edims.y - RoundNear(1 + cdims.h, 8) };
+    };
     this.GetEnemyPos = idx => ({ x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y });
     this.GetEnemyBottomPos = idx => ({ x: enemyAnimInfos[idx].dims.x, y: enemyAnimInfos[idx].dims.y });
     this.AddEnemyAttackAnim = (idx, caa) => enemyAnimInfos[idx].animQueue.push(caa);
     this.StartEnemyAnimSequence = idx => enemyAnimInfos[idx].StartAnimQueue();
     this.SetEnemyAnimArg = (idx, key, val) => enemyAnimInfos[idx].PushArg(key, val);
     this.SetEnemyAnimState = (idx, name) => enemyAnimInfos[idx].SetAnim(name);
-    this.MakeEnemyACorpse = (idx) => { const e = enemyAnimInfos[idx]; e.dead = true; e.deadFrame = 0; };
+    this.MakeEnemyACorpse = idx => { const e = enemyAnimInfos[idx]; if(!e.dead) { e.dead = true; e.deadFrame = 0; } };
     this.RemoveEnemy = idx => enemyAnimInfos.splice(idx, 1);
-    this.DEBUG_DrawEnemy = (idx) => enemyAnimInfos[idx].Animate(idx);
+    this.DEBUG_DrawEnemy = idx => enemyAnimInfos[idx].Animate(idx);
 
     this.Animate = function() {
         gfx.clearSome(["characters", "menucursorC"]);
@@ -118,8 +121,13 @@ function CombatAnimHelper(enemies) {
         for(let i = anims.length - 1; i >= 0; i--) {
             const t = anims[i];
             if(t.current >= t.time) {
-                t.finish();
-                anims.splice(i, 1);
+                if(t.loop) {
+                    t.current = 0;
+                    t.getFrame(timers.CHARANIM);
+                } else {
+                    t.finish();
+                    anims.splice(i, 1);
+                }
             } else { t.getFrame(timers.CHARANIM); }
         }
     };

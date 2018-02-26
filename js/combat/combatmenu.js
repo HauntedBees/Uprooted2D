@@ -1,7 +1,14 @@
 combat.menu = {
     options: [], cursorY: 0, dy: 9.5,
     layersToClean: ["menuA", "menucursorB", "menutext"],
-    setup: function(sel) {
+    setup: function(sel, notFirst) {
+        if(!notFirst) {
+            if(combat.isFalcon) {
+                combat.animHelper.AddAnim(new SheetAnim(2, 7, 700, "pointer", 6, true));
+            } else {
+                combat.animHelper.AddAnim(new SheetAnim(3.4375, 7, 700, "pointer", 6, true));
+            }
+        }
         gfx.clearSome(this.layersToClean);
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
             let hasCharger = false;
@@ -173,7 +180,7 @@ combat.menu = {
     mouseMove: function(pos) {
         if(pos.y >= (this.dy + this.options.length) || pos.y < this.dy) { return false; }
         if(pos.x > 4) { return false; }
-        this.setup(pos.y - this.dy);
+        this.setup(pos.y - this.dy, true);
         return true;
     },
     click: function(pos, isFresh) {
