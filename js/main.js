@@ -4,12 +4,13 @@ function InventoryCopy(arr) {
     return copy;
 }
 const nwHelpers = {
+    win: null,
     InitScreenSizeAdjustment: function() {
         if(typeof require === "undefined") { return; }
-        const win = require("nw.gui").Window.get();
-        if(win.width < 1024) {
+        if(this.win === null) { this.win = require("nw.gui").Window.get(); }
+        if(this.win.width < 1024) {
             player.options.resolution = 0;
-        } else if(win.width < 2048) {
+        } else if(this.win.width < 2048) {
             player.options.resolution = 1;
         } else {
             player.options.resolution = 2;
@@ -17,22 +18,23 @@ const nwHelpers = {
         nwHelpers.AdjustScreenSettings(true);
     },
     AdjustScreenSettings: function(skipWinAdjustments) {
+        if(typeof require === "undefined") { return; }
+        if(this.win === null) { this.win = require("nw.gui").Window.get(); }
         let multiplier = 1;
         switch(player.options.resolution) {
             case 0: multiplier = 0.5; break;
             case 2: multiplier = 2; break;
         }
-        if(typeof require === "undefined") { return; }
         const win = require("nw.gui").Window.get();
         if(player.options.fullscreen === 1) {
-            win.enterFullscreen();
+            this.win.enterFullscreen();
         } else if(player.options.fullscreen === 0) {
-            win.leaveFullscreen();
+            this.win.leaveFullscreen();
         }
-        win.zoomLevel = Math.log(multiplier) / Math.log(1.2);
+        this.win.zoomLevel = Math.log(multiplier) / Math.log(1.2);
         if(!skipWinAdjustments) {
-            win.width = game.w * multiplier;
-            win.height = game.h * multiplier;
+            this.win.width = game.w * multiplier;
+            this.win.height = game.h * multiplier;
         }
     }
 };
@@ -50,6 +52,12 @@ const game = {
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
+        const lastSave = localStorage.getItem("lastSaved");
+        if(lastSave !== null) {
+            const loadedPlayer = game.str2obj(localStorage.getItem("player" + lastSave));
+            player.options = Object.assign(player.options, loadedPlayer.options);
+            player.controls = Object.assign(player.controls, loadedPlayer.controls);
+        }
         nwHelpers.InitScreenSizeAdjustment();
         let canvasObj = {};
         for(let i = 0; i < game.canvasLayers.length; i++) {
@@ -192,6 +200,8 @@ const game = {
         document.addEventListener("keypress", input.keyPress);
         document.addEventListener("keydown", input.keyDown);
         document.addEventListener("keyup", input.keyUp);
+        window.addEventListener("gamepadconnected", input.gamepadConnected);
+        window.addEventListener("gamepaddisconnected", input.gamepadDisconnected);
         setInterval(game.incrementTime, 1000);
     },
     incrementTime: () => player.playTime++,
@@ -200,7 +210,7 @@ const game = {
         game.currentInputHandler = worldmap.title;
         worldmap.title.setup();
     },
-    obj2str: obj  => LZString.compress(JSON.stringify(obj)),
+    obj2str: obj => LZString.compress(JSON.stringify(obj)),
     str2obj: str => JSON.parse(LZString.decompress(str)),
     SetNonstandardGameOverFlag: function() {
         for(let i = 0; i < game.numSaveSlots; i++) {
@@ -230,6 +240,7 @@ const game = {
         player.SaveID = (Math.random() * Number.MAX_SAFE_INTEGER).toString();
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
         localStorage.setItem("player" + savenum, game.obj2str(player));
+        localStorage.setItem("lastSaved", savenum);
         stateBinders.storePositions(worldmap.mapName);
         for(let i = 0; i < player.visitedMaps.length; i++) {
             const map = player.visitedMaps[i];
