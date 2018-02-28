@@ -455,7 +455,9 @@ const actions = {
     },
     "CONVINCEATRON": function(e) {
         let damage = 0;
-        if(tutorial.state === 23) {
+        if(tutorial.state >= 36) {
+            EnemyParser.current.data = { textID: "tutEnemy36", animData: "PLANT" }
+        } else if(tutorial.state === 23) {
             damage = combat.damagePlayer(1);
             EnemyParser.current.data = { textID: "tutEnemy" + tutorial.state, animData: "ATTACK" };
         } else {
