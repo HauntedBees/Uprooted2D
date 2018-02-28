@@ -37,8 +37,10 @@ let input = {
         return ["Alt", "Shift", "Control", "CapsLock", "Tab", "Escape", "Backspace", "NumLock",
                 "Delete", "End", "PageDown", "PageUp", "Home", "Insert", "ScrollLock", "Pause"].indexOf(key) >= 0;
     },
+    GetKey: e => e.key.length === 1 ? e.key.toLowerCase() : e.key,
     keyDown: function(e) {
-        input.justPressed[e.key] = input.justPressed[e.key] === undefined ? 0 : input.justPressed[e.key] + 1;
+        const key = input.GetKey(e);
+        input.justPressed[key] = input.justPressed[key] === undefined ? 0 : input.justPressed[key] + 1;
         if(player.options.controltype === 1) { input.SwitchControlType(0); }
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             input.setMainKey(e.key);
@@ -46,13 +48,14 @@ let input = {
             input.keys[e.key] = setInterval(function() {
                 game.currentInputHandler.keyPress(e.key);
             }, 50);
-        } else if(input.IsIgnoredByKeyPress(e.key)) { game.currentInputHandler.keyPress(e.key); }
+        } else if(input.IsIgnoredByKeyPress(key)) { game.currentInputHandler.keyPress(key); }
     },
     keyUp: function(e) {
-        input.justPressed[e.key] = -1;
-        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
-            clearInterval(input.keys[e.key]);
-            input.keys[e.key] = undefined;
+        const key = input.GetKey(e);
+        input.justPressed[key] = -1;
+        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
+            clearInterval(input.keys[key]);
+            input.keys[key] = undefined;
             input.setMainKey();
         }
     },
@@ -60,8 +63,8 @@ let input = {
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             return;
         }
-        game.currentInputHandler.keyPress(e.key);
-        input.justPressed[e.key]++;
+        game.currentInputHandler.keyPress(key);
+        input.justPressed[key]++;
     },
     getMousePos: function(e) {
         const rect = gfx.canvas["menutext"].getBoundingClientRect();
