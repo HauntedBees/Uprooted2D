@@ -42,11 +42,11 @@ let input = {
         const key = input.GetKey(e);
         input.justPressed[key] = input.justPressed[key] === undefined ? 0 : input.justPressed[key] + 1;
         if(player.options.controltype === 1) { input.SwitchControlType(0); }
-        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
-            input.setMainKey(e.key);
-            if(input.keys[e.key] !== undefined) { return; }
-            input.keys[e.key] = setInterval(function() {
-                game.currentInputHandler.keyPress(e.key);
+        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
+            input.setMainKey(key);
+            if(input.keys[key] !== undefined) { return; }
+            input.keys[key] = setInterval(function() {
+                game.currentInputHandler.keyPress(key);
             }, 50);
         } else if(input.IsIgnoredByKeyPress(key)) { game.currentInputHandler.keyPress(key); }
     },
@@ -60,7 +60,8 @@ let input = {
         }
     },
     keyPress: function(e) {
-        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
+        const key = input.GetKey(e);
+        if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
             return;
         }
         game.currentInputHandler.keyPress(key);
