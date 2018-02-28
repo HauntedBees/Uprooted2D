@@ -40,7 +40,7 @@ let mapRefreshes = {
         }
         for(let i = 0; i < worldmap.entities.length; i++) {
             const e = worldmap.entities[i];
-            if(addtlFunc !== undefined) { addtlFunc(e); }
+            if(addtlFunc !== undefined) { addtlFunc(e, fromSave); }
             if(!justStateLoad) { mapRefreshes.extractPosition(e, ents); }
         }
     },
@@ -56,7 +56,8 @@ let mapRefreshes = {
         if(e.inside) { e.visible = inside; }
         else if(e.jumbo) { e.visible = !inside; }
     },
-    "switchCheck": function(e, mapName) {
+    "switchCheck": function(e, mapName, fromSave) {
+        if(!fromSave) { return; }
         const rfinfo = mapStates[mapName].rf;
         if(e.rfd) {
             if(!rfinfo[e.type]) { return; }
@@ -72,7 +73,7 @@ let mapRefreshes = {
         }
     },
     "producestand": function(e) { if(e.name === "ConvinceATron") { e.visible = true; } },
-    "researchfacility": e => mapRefreshes.switchCheck(e, "researchfacility"),
+    "researchfacility": (e, fromSave) => mapRefreshes.switchCheck(e, "researchfacility", fromSave),
     "fakefarm": function(e) {
         const paq = (player.activeQuests["fakeFarm"] === undefined ? -1 : player.activeQuests["fakeFarm"]);
         if(paq >= 0) {
@@ -107,7 +108,7 @@ let mapRefreshes = {
         if(e.name === "Mailman" && player.hasOrHasHadQuest("keycard")) { SpecialFunctions["DESTROYBUILDING"](); }
         mapRefreshes.insideCheck(e, "northcity");
     },
-    "hq_1": e => mapRefreshes.insideCheck(e, "hq_1"),
+    "hq_1": (e, fromSave) => { mapRefreshes.insideCheck(e, "hq_1"); mapRefreshes.switchCheck(e, "hq_1", fromSave); },
     "hq_3": function(e) {
         if(e.name !== "TheMonster") { return; }
         const startingRoom = mapStates["hq_3"].room;
