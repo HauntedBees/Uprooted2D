@@ -1,13 +1,34 @@
 worldmap.optionsMenu = {
-    cursory: 1, options: [], localControls: {}, localOptions: {}, fromPause: false,
+    cursory: 1, options: [], localOptions: {}, fromPause: false, invalidControls: [],
     headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 12, inChange: false, origFont: 0,
     setup: function(fromPause) {
         this.fromPause = fromPause;
-        this.localControls = Object.assign({}, player.controls);
+        this.localKeyboardControls = Object.assign({}, player.keyboardcontrols);
+        this.localGamepadControls = Object.assign({}, player.gamepadcontrols);
         this.localOptions = Object.assign({}, player.options);
         this.options = []; this.cursory = 1; this.inChange = false;
         this.origFont = player.options.font;
+        this.invalidControls = [];
         this.RedimOptions();
+    },
+    GetBadControls: function(controls) {
+        const inputsAlreadyUsed = [];
+        const letsReverseItIGuess = {};
+        for(const key in controls) {
+            const val = controls[key];
+            if(inputsAlreadyUsed.indexOf(val) >= 0) {
+                letsReverseItIGuess[val].push(key);
+            } else {
+                inputsAlreadyUsed.push(val);
+                letsReverseItIGuess[val] = [key];
+            }
+        }
+        this.invalidControls = [];
+        for(const key in letsReverseItIGuess) {
+            if(letsReverseItIGuess[key].length > 1) {
+                this.invalidControls.push(...letsReverseItIGuess[key]);
+            }
+        }
     },
     RedimOptions: function() {
         this.options = [];
@@ -16,14 +37,17 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opDifficulty", this.localOptions.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
         y = this.addOption(y, "opFont", this.localOptions.font, "font", ["fontStandard", "fontDyslexic"], false);
         y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
+        y = this.addOption(y, "opControlScheme", this.localOptions.controltype, "controltype", ["opKeyboard", "opGamepad"], true);
         y = this.addHeading(y, "opControls");
-        y = this.addButton(y, "ctrlUp", this.localControls.up, "up");
-        y = this.addButton(y, "ctrlLeft", this.localControls.left, "left");
-        y = this.addButton(y, "ctrlDown", this.localControls.down, "down");
-        y = this.addButton(y, "ctrlRight", this.localControls.right, "right");
-        y = this.addButton(y, "ctrlConfirm", this.localControls.confirm, "confirm");
-        y = this.addButton(y, "ctrlCancel", this.localControls.cancel, "cancel");
-        y = this.addButton(y, "ctrlPause", this.localControls.pause, "pause");
+        const keysToUse = this.localOptions.controltype === 1 ? this.localGamepadControls : this.localKeyboardControls;
+        this.GetBadControls(keysToUse);
+        y = this.addButton(y, "ctrlUp", keysToUse.up, "up");
+        y = this.addButton(y, "ctrlLeft", keysToUse.left, "left");
+        y = this.addButton(y, "ctrlDown", keysToUse.down, "down");
+        y = this.addButton(y, "ctrlRight", keysToUse.right, "right");
+        y = this.addButton(y, "ctrlConfirm", keysToUse.confirm, "confirm");
+        y = this.addButton(y, "ctrlCancel", keysToUse.cancel, "cancel");
+        y = this.addButton(y, "ctrlPause", keysToUse.pause, "pause");
         y = this.addHeading(y, "opAudio");
         y = this.addOption(y, "opMusic", this.localOptions.music, "music", ["opOff", "opOn"]);
         y = this.addOption(y, "opSound", this.localOptions.sound, "sound", ["opOff", "opOn"]);
@@ -32,7 +56,7 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opFullScreen", this.localOptions.fullscreen, "fullscreen", ["opNo", "opYes"]);
         /*y = this.addOption(y, "opPlacehold", 1, false, ["opOff", "opOn"]);*/
         y += 5;
-        y = this.addFinal(y, "opSaveQuit", this.SaveAndQuit);
+        y = this.addFinal(y, (this.invalidControls.length > 0 ? "opFixControls" : "opSaveQuit"), this.SaveAndQuit);
         y = this.addFinal(y, "opQuit", this.QuitWithoutSaving);
         this.drawEverything();
     },
@@ -61,7 +85,7 @@ worldmap.optionsMenu = {
                         gfx.drawTileToGrid((op.val === (op.choices.length - 1) ? "nopR" : "opR"), (op.optx + len / 4) / 16, y - tileyoffset, "menutext");
                     }
                     if(op.hasInfo) {
-                        const infotext = GetText(op.choices[op.val] + ".i");
+                        const infotext = op.textId === "opControlScheme" ? GetText("opControlNote") : GetText(op.choices[op.val] + ".i");
                         const infox = gfx.getTextFractionX(infotext, this.optionInfoSize);
                         gfx.drawText(infotext, infox, op.y2 - yoffset, "#000000", this.optionInfoSize);
                     }
@@ -82,8 +106,13 @@ worldmap.optionsMenu = {
                             const spritePos = spriteData.names["firstButton"];
                             gfx.drawSprite("sheet", padId, spritePos[1], op.optx - 4, op.y - yoffset - 8, "menutext");
                         }
+                        if(this.invalidControls.indexOf(op.idx) >= 0) {
+                            const spritePos = spriteData.names["x"];
+                            gfx.drawSprite("sheet", spritePos[0], spritePos[1], op.optx - 4, op.y - yoffset - 8, "menutext");
+                        }
                     } else {
-                        gfx.drawText(val, op.optx, op.y - yoffset, "#000000", this.optionSize);
+                        const color = this.invalidControls.indexOf(op.idx) >= 0 ? "#FF0000" : "#000000";
+                        gfx.drawText(val, op.optx, op.y - yoffset, color, this.optionSize);
                     }
                     break;
                 case "final":
@@ -121,17 +150,18 @@ worldmap.optionsMenu = {
         return y + (this.optionSize / 3.3333);
     },
     addOption: function(y, text, initVal, idx, options, hasInfo) {
-        text = GetText(text);
+        const acttext = GetText(text);
         this.options.push({ 
             type: "option",
-            x: gfx.getTextRightAlignedX(text, this.optionSize, gfx.canvasWidth / 2) / 4 - 5,
+            x: gfx.getTextRightAlignedX(acttext, this.optionSize, gfx.canvasWidth / 2) / 4 - 5,
             optx: gfx.canvasWidth / 8 + 5,
             y: y,
             y2: y + (this.optionSize / 3.3333) - 2,
-            text: text, 
+            text: acttext, 
             val: initVal,
             choices: options,
             hasInfo: hasInfo,
+            textId: text,
             idx: idx
         });
         return y + (this.optionSize / 3.3333) * (hasInfo ? 2 : 1);
@@ -153,6 +183,7 @@ worldmap.optionsMenu = {
         if(this.options[this.cursory].type === "option") {
             if(pos.x !== 0) {
                 const newOp = this.options[this.cursory].val + pos.x;
+                if(this.options[this.cursory].textId === "opControlScheme" && this.invalidControls.length > 0) { return false; }
                 const newVal = Math.min(Math.max(newOp, 0), this.options[this.cursory].choices.length - 1)
                 this.options[this.cursory].val = newVal;
                 if(this.options[this.cursory].idx) {
@@ -196,12 +227,13 @@ worldmap.optionsMenu = {
         return true;
     },
     SaveAndQuit: function() {
-        player.controls = Object.assign(player.controls, worldmap.optionsMenu.localControls);
-        //var f = player.options.font;
+        if(worldmap.optionsMenu.invalidControls.length > 0) { return false; }
+        player.keyboardcontrols = Object.assign(player.keyboardcontrols, worldmap.optionsMenu.localKeyboardControls);
+        player.gamepadcontrols = Object.assign(player.gamepadcontrols, worldmap.optionsMenu.localGamepadControls);
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
+        input.SwitchControlType(player.options.controltype);
         UpdateStatsForCurrentDifficulty();
         nwHelpers.AdjustScreenSettings();
-        //player.options.font = f;
         worldmap.optionsMenu.QuitWithoutSaving(true);
     },
     QuitWithoutSaving: function(dontFont) {
@@ -216,8 +248,15 @@ worldmap.optionsMenu = {
     SaveNewButton: function(key)  {
         if(key !== "Escape") {
             const newKey = this.options[this.cursory].idx;
-            this.localControls[newKey] = key;
-            this.options[this.cursory].val = key;
+            if(this.localOptions.controltype === 0) {
+                if(key.indexOf("Gamepad") === 0) { return false; }
+                this.localKeyboardControls[newKey] = key;
+                this.options[this.cursory].val = key;
+            } else {
+                if(key.indexOf("Gamepad") < 0) { return false; }
+                this.localGamepadControls[newKey] = key;
+                this.options[this.cursory].val = key;
+            }
         }
         this.inChange = false;
         this.RedimOptions();
@@ -231,13 +270,13 @@ worldmap.optionsMenu = {
         }
         let isEnter = false;
         switch(key) {
-            case this.localControls.up: pos.y--; break;
-            case this.localControls.left: pos.x--; break;
-            case this.localControls.down: pos.y++; break;
-            case this.localControls.right: pos.x++; break;
-            case this.localControls.confirm:
-            case this.localControls.pause: isEnter = true; break;
-            case this.localControls.cancel: return this.cancel();
+            case player.controls.up: pos.y--; break;
+            case player.controls.left: pos.x--; break;
+            case player.controls.down: pos.y++; break;
+            case player.controls.right: pos.x++; break;
+            case player.controls.confirm:
+            case player.controls.pause: isEnter = true; break;
+            case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.y >= this.options.length) { return false; }
         if(isEnter) { return this.click(pos); }

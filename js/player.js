@@ -11,22 +11,14 @@ let player = {
     lastInn: "start",
     options: {
         difficulty: 1, 
-        music: 1, 
-        sound: 1,
-        font: 0,
-        resolution: 1,
-        fullscreen: 0
+        music: 1, sound: 1,
+        controltype: 0,
+        font: 0, resolution: 1, fullscreen: 0
     },
-    controls: {
-        up: "w",
-        left: "a",
-        down: "s",
-        right: "d",
-        confirm: " ",
-        cancel: "q", 
-        pause: "Enter"
-    },
-    equipment: { weapon: "!goodSickle", compost: "!weakCompost", gloves: null, soil: null },
+    controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" },
+    keyboardcontrols: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" },
+    gamepadcontrols: { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1",  pause: "Gamepad9" },
+    equipment: { weapon: "!babySickle", compost: "!weakCompost", gloves: null, soil: null },
     setMapPosition: function() {
         player.mapName = worldmap.mapName;
         player.mapPos = worldmap.pos;

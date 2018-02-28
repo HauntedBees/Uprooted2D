@@ -18,7 +18,7 @@ function CursorAnimSet(cursorArray, autoStart) {
     this.ReTypeCursor = (key, type) => cursors[key].SetType(type);
     this.MoveCursor = (key, x, y) => cursors[key].Move(x, y);
     this.ResizeCursor = (key, w, h) => cursors[key].Resize(x, y);
-    this.RedimCursor = (key, x, y, w, h) => { cursors[key].Move(x, y); cursors[key].Resize(w, h); };
+    this.RedimCursor = (key, x, y, w, h) => { if(cursors[key] !== undefined) { cursors[key].Move(x, y); cursors[key].Resize(w, h); } };
     let timeElapsed = 0;
     const Animate = function() {
         gfx.clearSome(layers);

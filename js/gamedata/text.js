@@ -536,6 +536,31 @@ const fulltext = {
 		"en-dm": "Return without Saving", 
 		"type": "opts"
 	},
+	"opControlScheme": {
+		"en-us": "", 
+		"en-dm": "Control Type", 
+		"type": "opts"
+	},
+	"opKeyboard": {
+		"en-us": "", 
+		"en-dm": "Keyboard", 
+		"type": "opts"
+	},
+	"opGamepad": {
+		"en-us": "", 
+		"en-dm": "Gamepad", 
+		"type": "opts"
+	},
+	"opControlNote": {
+		"en-us": "", 
+		"en-dm": "You can switch between these in-game by pressing a key or button on either device.", 
+		"type": "opts"
+	},
+	"opFixControls": {
+		"en-us": "", 
+		"en-dm": "Fix Your Controls Before Saving", 
+		"type": "opts"
+	},
 	// Area 0: Opening Cutscene
 	"intro1": {
 		"en-us": "", 

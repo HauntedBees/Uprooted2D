@@ -39,6 +39,7 @@ let input = {
     },
     keyDown: function(e) {
         input.justPressed[e.key] = input.justPressed[e.key] === undefined ? 0 : input.justPressed[e.key] + 1;
+        if(player.options.controltype === 1) { input.SwitchControlType(0); }
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(e.key) >= 0 && game.currentInputHandler.freeMovement) {
             input.setMainKey(e.key);
             if(input.keys[e.key] !== undefined) { return; }
@@ -71,6 +72,13 @@ let input = {
             y: Math.floor(y / 16 / gfx.scale)
         };
     },
+    SwitchControlType: function(newType) {
+        player.options.controltype = newType;
+        switch(newType) {
+            case 1: player.controls = player.gamepadcontrols; break;
+            case 0: player.controls = player.keyboardcontrols; break;
+        }
+    },
     gamepads: {}, gamepadQueryIdx: -1,
     gamepadButtons: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // buttons 0 - 15
         0, 0, 0, 0, // negative axes Lx Ly Rx Ry
@@ -78,15 +86,18 @@ let input = {
     gamepadConnected: function(e) {
         input.gamepads[e.gamepad.index] = e.gamepad;
         console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.", e.gamepad.index, e.gamepad.id, e.gamepad.buttons.length, e.gamepad.axes.length);
+        input.SwitchControlType(1);
         input.gamepadQueryIdx = setInterval(input.QueryGamepads, 10);
     },
     gamepadDisconnected: function(e) {
         delete input.gamepads[e.gamepad.index];
         let hasKeys = false;
-        for(const key in input.gamepads) { hasKeys = true; }
+        for(const key in input.gamepads) { hasKeys = true; break; }
         if(!hasKeys) {
+            console.log("no controllers left!");
             clearInterval(input.gamepadQueryIdx);
             input.gamepadQueryIdx = -1;
+            input.SwitchControlType(0);
         }
     },
     QueryGamepads: function() {
@@ -106,6 +117,7 @@ let input = {
                 }
             });
         }
+        if(buttonsDown.length > 0 && player.options.controltype === 0) { input.SwitchControlType(1); }
         for(let i = 0; i < input.gamepadButtons.length; i++) {
             const prevState = input.gamepadButtons[i];
             const btn = (i < 16) ? ("Gamepad" + i) : ("GamepadA" + (i - 16));

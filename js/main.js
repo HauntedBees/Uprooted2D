@@ -56,7 +56,9 @@ const game = {
         if(lastSave !== null) {
             const loadedPlayer = game.str2obj(localStorage.getItem("player" + lastSave));
             player.options = Object.assign(player.options, loadedPlayer.options);
-            player.controls = Object.assign(player.controls, loadedPlayer.controls);
+            player.keyboardcontrols = Object.assign(player.keyboardcontrols, loadedPlayer.keyboardcontrols);
+            player.gamepadcontrols = Object.assign(player.gamepadcontrols, loadedPlayer.gamepadcontrols);
+            game.PatchSaveFile();
         }
         nwHelpers.InitScreenSizeAdjustment();
         let canvasObj = {};
@@ -259,11 +261,19 @@ const game = {
             worldmap.smartphone = new Smartphone();
             worldmap.smartphone.SetPhoneData(mapStates["northcity"].phoneData);
         }
+        localStorage.setItem("lastSaved", savenum);
+        game.PatchSaveFile();
         game.transition(game.currentInputHandler, worldmap, { 
             init: player.mapPos,
             map: player.mapName,
             playerDir: player.mapDir,
             fromLoad: true
         });
+    },
+    PatchSaveFile: function() {
+        // prior to v0.3
+        if(player.keyboardcontrols === undefined) { console.log("kbc"); player.keyboardcontrols = { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" }; }
+        if(player.gamepadcontrols === undefined) { console.log("gpc"); player.gamepadcontrols = { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1",  pause: "Gamepad9" }; }
+        if(player.options.controltype === undefined) { console.log("oct"); player.options.controltype = 0; }
     }
 };
