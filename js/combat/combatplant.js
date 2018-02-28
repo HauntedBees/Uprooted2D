@@ -18,12 +18,12 @@ combat.plant = {
         if(this.activeCrop === null) {
             if(combat.numPlantTurns != player.getPlantingTurns()) {
                 if(player.canAttackAfterPlanting()) {
-                    game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
+                    game.innerTransition(this, combat.menu, { sel: 0, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
                 } else {
-                    combat.endTurn(this);
+                    game.innerTransition(this, combat.menu, { sel: 0, notFirst: true, canOnlyPlant: true });
                 }
             } else {
-                game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
+                game.innerTransition(this, combat.menu, { sel: 0, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
             }
         } else {
             this.activeCrop = null;

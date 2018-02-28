@@ -1,8 +1,9 @@
 combat.menu = {
-    options: [], cursorY: 0, dy: 9.5,
+    options: [], cursorY: 0, dy: 9.5, plantedAlreadyAndCantAttack: false,
     layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function(args) {
         args = args || {};
+        this.plantedAlreadyAndCantAttack = args.canOnlyPlant || false;
         if(!args.notFirst) {
             if(combat.isFalcon) {
                 combat.animHelper.AddAnim(new SheetAnim(2, 7, 700, "pointer", 6, true));
@@ -27,10 +28,10 @@ combat.menu = {
         }
         this.options = [];
         this.cursorY = args.sel || 0;
-        this.drawOption("Plant", 0, this.cursorY === 0);
-        this.drawOption("Attack", 1, this.cursorY === 1);
-        this.drawOption("Compost", 2, this.cursorY === 2);
-        this.drawOption("Run", 3, this.cursorY === 3);
+        this.drawOption(GetText("combatPlant"), 0, this.cursorY === 0);
+        this.drawOption(GetText("combatAttack"), 1, this.cursorY === 1);
+        this.drawOption(GetText("combatCompost"), 2, this.cursorY === 2);
+        this.drawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), 3, this.cursorY === 3);
         combat.cursors.RedimCursor("main", 0, this.dy + this.cursorY, this.options[this.cursorY], 0);
         let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
         switch(this.cursorY) {
@@ -56,6 +57,9 @@ combat.menu = {
                     text = GetText("attack_falcon");
                     charAnim = "LOOKBACK";
                     birdAnim = "WANTATTACK";
+                } else if(this.plantedAlreadyAndCantAttack) {
+                    text = GetText("attack_planted");
+                    charAnim = "CANTDO";
                 } else if(count === 0) {
                     if(player.canMelee(this.getEnemyCropCount())) {
                         text = GetText("attack_melee");
@@ -84,7 +88,13 @@ combat.menu = {
                         charAnim = "LOOKBACK";
                         birdAnim = "WANTCOMPOST";
                     } else {
-                        charAnim = "WANTCOMPOST";
+                        if(this.plantedAlreadyAndCantAttack) {
+                            text = GetText("compost_planted");
+                            charAnim = "CANTDO";
+                        } else {
+                            charAnim = "WANTCOMPOST";
+                        }
+                        
                     }
                 }
                 break;
@@ -93,6 +103,9 @@ combat.menu = {
                     text = GetText("run_falcon");
                     charAnim = "LOOKBACK";
                     birdAnim = "CANTDO";
+                } else if(this.plantedAlreadyAndCantAttack) {
+                    text = GetText("combatSkipDesc");
+                    charAnim = "CANTDO";
                 } else if(combat.isBossBattle) {
                     text = GetText("run_cant");
                     charAnim = "CANTDO";
@@ -181,7 +194,7 @@ combat.menu = {
     mouseMove: function(pos) {
         if(pos.y >= (this.dy + this.options.length) || pos.y < this.dy) { return false; }
         if(pos.x > 4) { return false; }
-        this.setup({ sel: pos.y - this.dy, notFirst: true});
+        this.setup({ sel: pos.y - this.dy, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
         return true;
     },
     click: function(pos, isFresh) {
@@ -190,6 +203,7 @@ combat.menu = {
         switch(pos.y - this.dy) {
             case 0: if(combat.numPlantTurns > 0) { game.innerTransition(this, combat.plant); } break;
             case 1:
+                if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { return; }
                 const count = this.highlightReadyCropsAndReturnCount();
                 const theircount = this.getEnemyCropCount();
                 if(count === 0 && !player.canMelee(theircount)) { return; }
@@ -197,8 +211,19 @@ combat.menu = {
                 if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
                 game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
                 break;
-            case 2: if(player.equipment.compost !== null && this.HasCompostableCrops()) { game.innerTransition(this, combat.compost); } break;
-            case 3: if(!combat.isBossBattle && !combat.isFalcon) { this.tryFlee(); } break;
+            case 2:
+                if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { return; }
+                if(player.equipment.compost !== null && this.HasCompostableCrops()) { game.innerTransition(this, combat.compost); }
+                break;
+            case 3:
+                if(!combat.isBossBattle && !combat.isFalcon) {
+                    if(this.plantedAlreadyAndCantAttack) {
+                        combat.endTurn(this);
+                    } else {
+                        this.tryFlee();
+                    }
+                }
+                break;
             default: return false;
         }
         return true;

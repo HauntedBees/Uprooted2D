@@ -7622,6 +7622,46 @@ const fulltext = {
 		"en-dm": "Perform a Pecking attack.", 
 		"type": "combat"
 	},
+	"attack_planted": {
+		"en-us": "", 
+		"en-dm": "You can't attack after planting seeds.", 
+		"type": "combat"
+	},
+	"compost_planted": {
+		"en-us": "", 
+		"en-dm": "You can't compost after planting seeds.", 
+		"type": "combat"
+	},
+	"combatPlant": {
+		"en-us": "", 
+		"en-dm": "Plant", 
+		"type": "combat"
+	},
+	"combatAttack": {
+		"en-us": "", 
+		"en-dm": "Attack", 
+		"type": "combat"
+	},
+	"combatCompost": {
+		"en-us": "", 
+		"en-dm": "Compost", 
+		"type": "combat"
+	},
+	"combatRun": {
+		"en-us": "", 
+		"en-dm": "Run", 
+		"type": "combat"
+	},
+	"combatSkip": {
+		"en-us": "", 
+		"en-dm": "Pass", 
+		"type": "combat"
+	},
+	"combatSkipDesc": {
+		"en-us": "", 
+		"en-dm": "End your turn without planting any more seeds.", 
+		"type": "combat"
+	},
 	"compost_cant": {
 		"en-us": "", 
 		"en-dm": "You need a Compost Bin equipped to perform this action.", 

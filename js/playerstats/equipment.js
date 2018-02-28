@@ -131,7 +131,7 @@ pausemenu.equipment = {
     GetEquipDescComparedToCurrent: function(equipInfo) {
         let current = player.equipment[equipInfo.type];
         if(current === null) {
-            current = { power: 0, amount: 0, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0, noEnemies: true };
+            current = { power: 0, amount: equipInfo.type === "gloves" ? 1 : 0, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0, noEnemies: true };
         } else {
             current = GetEquipment(current);
         }
