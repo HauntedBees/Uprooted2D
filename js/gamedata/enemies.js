@@ -36,7 +36,7 @@ function GetEnemy(name) {
 		/* Intro */
 		case "Discussly": return new EnemyDetail(name, GetDisplayName(name, 1), "sm", 0, { dx: 0.3, dy: -1.25, w: -0.1, h: 0.25 }, 10, 1, 1, 3, 2, false, [0, 0, 1, 0], "tutorial", "", [], { rotClearChance: 0, stickRes: 1 });
 		/* Farm */
-		case "robo": return new EnemyDetail(name, GetDisplayName(name, 1), "sm", 1, { dx: 0.25, dy: -1.25, w: 0, h: 0.25 }, 40, 2, 1, 3, 1, false, [0, 0, 1, 0], "basic", "battery", [ { money: true, min: 5, max: 10 }, { seed: "spinach", min: 0, max: 2 }, { seed: "beet", min: 0, max: 2 } ], { rotClearChance: 0, stickRes: 0, killKey: "kill_robot_sing" });
+		case "robo": return new EnemyDetail(name, GetDisplayName(name, 1), "sm", 1, { dx: 0.25, dy: -1.25, w: 0, h: 0.25 }, 25, 2, 1, 3, 1, false, [0, 0, 1, 0], "basic", "battery", [ { money: true, min: 5, max: 10 }, { seed: "spinach", min: 0, max: 2 }, { seed: "beet", min: 0, max: 2 } ], { rotClearChance: 0, stickRes: 0, killKey: "kill_robot_sing" });
 		case "bigBot": return new EnemyDetail(name, GetDisplayName(name, 1), "lg", 0, { dx: 0, dy: -2.5, w: 1, h: 1.5 }, 150, 6, 3, 3, 3, true, [0, 0, 1, 0], "boss1", "0,1,2", [ { money: true, min: 30, max: 30 }, { seed: "radish", min: 5, max: 5 }, { seed: "apple", min: 4, max: 4 }, { seed: "grapes", min: 3, max: 3 } ], { rotClearChance: 0, stickRes: 0, killKey: "kill_robot_sing" });
 		/* Research Lab */
 		case "robo2": return new EnemyDetail(name, GetDisplayName(name, 1), "sm", 6, { dx: 0.25, dy: -1.25, w: 0, h: 0.25 }, 60, 4, 3, 3, 2, false, [0, 1, 1, 0], "basic", "battery", [ { money: true, min: 5, max: 10 }, { seed: "carrot", min: 0, max: 1 }, { seed: "tomato", min: 0, max: 4 } ], { rotClearChance: 0, stickRes: 0 });
