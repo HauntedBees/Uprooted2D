@@ -28,7 +28,16 @@ combat.menu = {
         }
         this.options = [];
         this.cursorY = args.sel || 0;
-        this.drawOption(GetText("combatPlant"), 0, this.cursorY === 0);
+        let plantState = "combatPlant";
+        if(!combat.isFalcon && !player.hasSeeds() && !player.canMelee(this.getEnemyCropCount())) { // has no seeds
+            if(combat.grid.some(r => r.some(e => e !== null && !e.rotten))) { // at least one crop is growing
+                plantState = "combatSkip";
+            } else { // no crops are growing
+                plantState = "combatSurrender";
+            }
+        }
+        this.plantState = plantState;
+        this.drawOption(GetText(plantState), 0, this.cursorY === 0);
         this.drawOption(GetText("combatAttack"), 1, this.cursorY === 1);
         this.drawOption(GetText("combatCompost"), 2, this.cursorY === 2);
         this.drawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), 3, this.cursorY === 3);
@@ -40,6 +49,14 @@ combat.menu = {
                     text = GetText("seeds_one");
                     charAnim = "LOOKBACK";
                     birdAnim = "WANTPLANT";
+                } else if(plantState !== "combatPlant") {
+                    if(plantState === "combatSkip") {
+                        text = GetText("combatSkipNoSeed");
+                        charAnim = "CANTDO";
+                    } else {
+                        text = GetText("combatSurrenderDesc");
+                        charAnim = "CANTDO";
+                    }
                 } else if(combat.numPlantTurns == 0) {
                     text = GetText("seeds_none");
                     charAnim = "CANTDO";
@@ -201,12 +218,27 @@ combat.menu = {
         if(!isFresh) { return false; }
         if(pos.x > 4) { return false; }
         switch(pos.y - this.dy) {
-            case 0: if(combat.numPlantTurns > 0) { game.innerTransition(this, combat.plant); } break;
+            case 0:
+                if(this.plantState !== "combatPlant") {
+                    if(this.plantState === "combatSkip") {
+                        combat.endTurn(this);
+                    } else {
+                        combat.animHelper.SetPlayerAnimState("FATALBLOW");
+                        player.health = 0;
+                        game.innerTransition(this, combat.inbetween, {
+                            next: function() { combat.endTurn(combat.inbetween) },
+                            text: GetText("combatSurrenderDo")
+                        });
+                    }
+                } else if(combat.numPlantTurns > 0) {
+                    game.innerTransition(this, combat.plant);
+                }
+                break;
             case 1:
                 if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { return; }
                 const count = this.highlightReadyCropsAndReturnCount();
                 const theircount = this.getEnemyCropCount();
-                if(count === 0 && !player.canMelee(theircount)) { return; }
+                if(!combat.isFalcon && count === 0 && !player.canMelee(theircount)) { return; }
                 let attackCount = 1;
                 if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
                 game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});

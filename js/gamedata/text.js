@@ -7657,6 +7657,26 @@ const fulltext = {
 		"en-dm": "Pass", 
 		"type": "combat"
 	},
+	"combatSurrender": {
+		"en-us": "", 
+		"en-dm": "Surrender", 
+		"type": "combat"
+	},
+	"combatSurrenderDesc": {
+		"en-us": "", 
+		"en-dm": "You have no seeds, no crops, and no attacks. I'm sorry.", 
+		"type": "combat"
+	},
+	"combatSurrenderDo": {
+		"en-us": "", 
+		"en-dm": "No crops, no seeds, no weapons, no options!! I have failed my farm...", 
+		"type": "combat"
+	},
+	"combatSkipNoSeed": {
+		"en-us": "", 
+		"en-dm": "End your turn and wait for your crops to grow.", 
+		"type": "combat"
+	},
 	"combatSkipDesc": {
 		"en-us": "", 
 		"en-dm": "End your turn without planting any more seeds.", 
