@@ -304,7 +304,7 @@ const worldmap = {
         worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
     },
     keyPress: function(key) {
-        if(this.inWaterfall)  { return false; }
+        if(this.inWaterfall || this.fullAnimIdx <= 0)  { return false; }
         if(this.inDialogue) {
             this.freeMovement = false;
             input.clearAllKeys();
