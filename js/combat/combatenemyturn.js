@@ -7,7 +7,7 @@ combat.enemyTurn = {
         combat.animHelper.ResetBirdAnimState();
         gfx.drawFullbox(this.dy);
         const epos = combat.animHelper.GetEnemyTopPos(args.idx);
-        combat.animHelper.AddAnim(new SheetAnim(epos.x, epos.y - 1, 700, "pointer", 6, true));
+        combat.animHelper.AddAnim(new SheetAnim(epos.x, epos.y, 700, "pointer", 6, true));
         if(enemy.stickTurns > 0) {
             const text = GetText("stuckTurn").replace(/\{0\}/g, enemy.name);
             gfx.drawFullText(text, this.dy * 16);

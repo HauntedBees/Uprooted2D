@@ -76,9 +76,9 @@ function CombatAnimHelper(enemies) {
         this.ResetBirdAnimPos();
     };
 
-    this.GetEnemyTopPos = function(idx) { 
+    this.GetEnemyTopPos = function(idx) {
         const edims = enemyAnimInfos[idx].dims, cdims = enemyAnimInfos[idx].cursorinfo;
-        return { x: edims.x + (edims.w / 16) / 2 - 0.5, y: edims.y - RoundNear(1 + cdims.h, 8) };
+        return { x: edims.x + (edims.w / 16) / 2 - 0.5, y: edims.y - RoundNear(1 + cdims.h, 8) - 1 };
     };
     this.GetEnemyPos = idx => ({ x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y });
     this.GetEnemyBottomPos = idx => ({ x: enemyAnimInfos[idx].dims.x, y: enemyAnimInfos[idx].dims.y });
