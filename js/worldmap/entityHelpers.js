@@ -170,6 +170,7 @@ function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: 
 function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, OneSpeak(textKey), { visible: false, boring: true }); };
 function GetProduceStandBlock(x) {
     const obj = GetCommonInvisibleSpeakingEntity("noPass" + x, x, 23, "farmFirst");
+    obj.interact = OneSpeak("farmFirst", () => worldmap.pos.y -= 0.25);
     obj.solid = false;
     obj.showIf = () => !CommonConditions["beatBigBot"]();
     return obj;
@@ -182,7 +183,7 @@ function FinishAnim() {
     worldmap.finishAnimation();
 }
 function Cutscene(s) { return [ () => iHandler.Start(s) ]; }
-function OneSpeak(t) { return [ (i, e) => { iHandler.isFirst = true; worldmap.writeText(t); } ]; }
+function OneSpeak(t, extra) { return [ (i, e) => { iHandler.isFirst = true; worldmap.writeText(t); if(extra !== undefined) { extra(); } } ]; }
 function GetItemDisplayName(name, plural) { // TODO: move this fucker to the language parsing shit
     const pluralSuf = plural ? "s" : "";
     switch(name[0]) {
