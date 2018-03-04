@@ -238,6 +238,36 @@ let player = {
         player.inventory.push([name, amount]);
         return true;
     },
+    hasSeeds: function() { 
+        const hasAnySeeds = player.inventory.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0);
+        if(!hasAnySeeds) { return false; }
+        const availableTypes = [];
+        if(player.itemGrid === null || player.itemGrid === undefined) {
+            availableTypes.push("veg");
+            availableTypes.push("tree");
+        } else {
+            for(let x = 0; x < player.itemGrid.length; x++) {
+                for(let y = 0; y < player.itemGrid[0].length; y++) {
+                    const item = player.itemGrid[x][y];
+                    switch(item) {
+                        case "_log": availableTypes.push("mush"); break;
+                        case "_coop": availableTypes.push("egg"); break;
+                        case "_modulator": availableTypes.push("veg"); break;
+                        case "_shooter": availableTypes.push("veg", "mush", "rice"); break;
+                        case "_lake": availableTypes.push("water", "rod", "spear"); break;
+                        case "_paddy": availableTypes.push("rice"); break;
+                        case "_cow": availableTypes.push("food", "veg", "rice", "mush", "tree"); break;
+                        case "_strongsoil": availableTypes.push("veg", "tree"); break;
+                        case "_hotspot": availableTypes.push("tech"); break;
+                        case "_beehive": availableTypes.push("bee"); break;
+                        case "_charger": availableTypes.push("sickle2"); break;
+                        default: if(item === null) { availableTypes.push("veg", "tree"); } break;
+                    }
+                }
+            }
+        }
+        return player.inventory.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0 && availableTypes.indexOf(GetCrop(e[0]).type) >= 0);
+    },
     PlantCrop: function(crop) {
         if(player.miscdata.cropsPlanted[crop] === undefined) {
             player.miscdata.cropsPlanted[crop] = 1;
