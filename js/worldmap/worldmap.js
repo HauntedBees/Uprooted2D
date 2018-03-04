@@ -244,12 +244,13 @@ const worldmap = {
             }
             actualText = HandleLists(actualText, "{seeds}", seedStrArr, "falconNoGifts", true);
         }
+        actualText = actualText.replace(/\{g\}/g, player.monies);
         gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
         if(choices === undefined) {
             worldmap.dialogData = {};
             return;
         }
-        const choiceTopY = (drawY === 11) ? (11.5 - choices.length) : 2.5;
+        const choiceTopY = (drawY === 11) ? (11.5 - choices.length) : 3.5;
         if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
         for(let i = 0; i < choices.length; i++) {
             let txt = GetText(choices[i]);

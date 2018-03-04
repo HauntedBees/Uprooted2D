@@ -1339,12 +1339,12 @@ const fulltext = {
 	},
 	"rabbit1": {
 		"en-us": "", 
-		"en-dm": "Rabbit: Oh oh, a farmer are yae? Well I have some nice FERTILIZER here if you want sumfink special! What do you say?", 
+		"en-dm": "Rabbit: Oh oh, a farmer are yae? Well I have some nice FERTILIZER here if you want sumfink special! What do you say? \n (You have {g}G)", 
 		"type": "map"
 	},
 	"buyfertilizer": {
 		"en-us": "", 
-		"en-dm": "Yes (500 coins)", 
+		"en-dm": "Yes (500G)", 
 		"type": "choice"
 	},
 	"rabbit2": {
@@ -3739,7 +3739,7 @@ const fulltext = {
 	},
 	"troutMan0": {
 		"en-us": "", 
-		"en-dm": "Jeromy: Hey hey. I'm trying to sell fishing supplies to save money for college. See anything you like?", 
+		"en-dm": "Jeromy: Hey hey. I'm trying to sell fishing supplies to save money for college. See anything you like? \n (You have {g}G)", 
 		"type": "map"
 	},
 	"troutChoice0": {
@@ -4074,7 +4074,7 @@ const fulltext = {
 	},
 	"eggBoy0": {
 		"en-us": "", 
-		"en-dm": "Egg Dealer: Can I offer you a nice egg in this trying time? 250G for two. What kind of eggs? You won't know until you buy 'em!", 
+		"en-dm": "Egg Dealer: Can I offer you a nice egg in this trying time? 250G for two. What kind of eggs? You won't know until you buy 'em! \n (You have {g}G)", 
 		"type": "map"
 	},
 	"eggBoyY": {
