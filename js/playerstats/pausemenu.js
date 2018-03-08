@@ -98,12 +98,12 @@ const pausemenu = {
         let width = gfx.getTextWidth(text) + 20;
         let xiimax = x + Math.ceil(width / 64);
         while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
-        gfx.drawSprite("sheet", 39, 16, x * 16, 2 + y * 16, "menuOverBlack");
+        gfx.drawTile("selL", x * 16, 2 + y * 16, "menuOverBlack");
         while(width > 128) {
             width -= 64;
-            gfx.drawSprite("sheet", 7, 11, x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
+            gfx.drawTile("selM", x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
         }
-        gfx.drawSprite("sheet", 8, 11, x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
+        gfx.drawTile("selR", x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
         gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     addText: (t, x, y) => gfx.drawText(t, 2 + x * 16, 10.5 + y * 16),
@@ -167,18 +167,5 @@ const pausemenu = {
             return this.mouseMove(pos);
         }
     },
-    drawOption: function(text, y, selected) {
-        let xi = 1;
-        const tile = selected ? 9 : 7;
-        gfx.drawSprite("sheet", tile, 11, 0, 2 + (this.dy + y) * 16, "menuA");
-        text = GetText(text);
-        let width = gfx.getTextWidth(text);
-        while(width > 128) {
-            width -= 64;
-            gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + (this.dy + y) * 16, "menuA");
-        }
-        gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, 2 + (this.dy + y) * 16, "menuA");
-        gfx.drawText(text, 2, 10.5 + (this.dy + y) * 16);
-        this.options.push(xi);
-    }
+    drawOption: function (text, y, selected) { this.options.push(gfx.drawOption(GetText(text), this.dy + y, selected)); }
 };

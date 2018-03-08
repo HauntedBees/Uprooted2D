@@ -52,7 +52,6 @@
                         for(var i = 0; i < game.canvasLayers.length; i++) { if(gfx.ctx[game.canvasLayers[i]] === undefined) { return false; } }
                         return true;
                     });
-                    Test("spriteData.populate", function() { return spriteData.names["milkcap2"] !== undefined; });
                     Test("game.save/load", function() {
                         player.borfo = "barp";
                         game.save(99);

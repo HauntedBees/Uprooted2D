@@ -99,16 +99,13 @@ worldmap.optionsMenu = {
                     }
                     if(val.indexOf("Gamepad") === 0) {
                         if(val.indexOf("GamepadA") === 0) {
-                            const spritePos = spriteData.names[val];
-                            gfx.drawSprite("sheet", spritePos[0], spritePos[1], op.optx - 4, op.y - yoffset - 8, "menutext");
+                            gfx.drawTile(val, op.optx - 4, op.y - yoffset - 8, "menutext");
                         } else {
                             const padId = parseInt(val.replace("Gamepad", ""));
-                            const spritePos = spriteData.names["firstButton"];
-                            gfx.drawSprite("sheet", padId, spritePos[1], op.optx - 4, op.y - yoffset - 8, "menutext");
+                            gfx.drawTile("GP" + padId, op.optx - 4, op.y - yoffset - 8, "menutext");
                         }
                         if(this.invalidControls.indexOf(op.idx) >= 0) {
-                            const spritePos = spriteData.names["x"];
-                            gfx.drawSprite("sheet", spritePos[0], spritePos[1], op.optx - 4, op.y - yoffset - 8, "menutext");
+                            gfx.drawTile("x", op.optx - 4, op.y - yoffset - 8, "menutext");
                         }
                     } else {
                         const color = this.invalidControls.indexOf(op.idx) >= 0 ? "#FF0000" : "#000000";

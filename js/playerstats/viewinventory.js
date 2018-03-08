@@ -108,12 +108,12 @@ pausemenu.inventory = {
         let width = gfx.getTextWidth(text) + 20;
         let xiimax = x + Math.ceil(width / 64);
         while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
-        gfx.drawSprite("sheet", 41, 15, x * 16, 2 + y * 16, "menuOverBlack");
+        gfx.drawTile("recSelL", x * 16, 2 + y * 16, "menuOverBlack");
         while(width > 128) {
             width -= 64;
-            gfx.drawSprite("sheet", 42, 15, x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
+            gfx.drawTile("recSelM", x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
         }
-        gfx.drawSprite("sheet", 43, 15, x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
+        gfx.drawTile("recSelR", x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
         gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     click: function(pos) {

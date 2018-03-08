@@ -46,18 +46,7 @@ worldmap.falconSelect = {
             this.cursors.RedimCursor("main", cursorX, cursorY, 0, 0);
         }
     },
-    drawOption: function(text, y, selected) {
-        let xi = 1, width = gfx.getTextWidth(text);
-        const tile = (selected ? 9 : 7);
-        gfx.drawSprite("sheet", tile, 11, 0, 2 + y * 16, "menuA");
-        while(width > 128) {
-            width -= 64;
-            gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + y * 16, "menuA");
-        }
-        gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, 2 + y * 16, "menuA");
-        gfx.drawText(text, 2, 10.5 + y * 16);
-        return xi;
-    },
+    drawOption: function(text, y, selected) { return gfx.drawOption(text, y, selected); },
     setText: function() {
         if(this.cursor.y < 0) {
             const sendText = HandlePlurals(GetText("falconConfirmX"), this.cropsToSend.length).replace("{0}", this.cropsToSend.length);

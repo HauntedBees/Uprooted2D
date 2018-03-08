@@ -79,16 +79,10 @@ function Smartphone() {
     this.Draw = function() {
         if(worldmap.mapName !== "northcity") { return; }
         gfx.clearSome(["smartphone", "smartphoneText"]);
-        gfx.drawSprite("smartphone", 1, 0, 0, 192, "smartphone", true);
+        gfx.drawTile("phoneico", 0, 192, "smartphone");
         if(notifications > 0) {
-            let sx = 2, sy = 2;
-            switch(notifications) {
-                case 1: sx = 2; sy = 2; break;
-                case 2: sx = 3; sy = 2; break;
-                case 3: sx = 2; sy = 3; break;
-                default: sx = 3; sy = 3; break;
-            }
-            gfx.drawSprite("smartphone", sx, sy, 14, 194, "smartphone");
+            const phoneNum = (notifications > 3) ? 4 : notifications;
+            gfx.drawTile("phone" + phoneNum, 14, 194, "smartphone");
         }
         let yOffset = 0;
         for(let i = texts.length - 1; i >= 0; i--) {
@@ -104,32 +98,33 @@ function Smartphone() {
         const textInfo = gfx.getWrappedTextInfo(text, 124);
         let rows = textInfo.rows;
         if(rows === 1) {
+            console.log("1row");
             gfx.drawWrappedText(text, 2, 10.5 + y * 16, 124, undefined, "smartphoneText");
-            gfx.drawSprite("sheet", 7, 11, 0, 2 + y * 16, "smartphone");
+            gfx.drawTile("selM", 0, 2 + y * 16, "smartphone");
             while(width > 128) {
                 width -= 64;
-                gfx.drawSprite("sheet", 7, 11, 16 * xi++, 2 + y * 16, "smartphone");
+                gfx.drawTile("selM", 16 * xi++, 2 + y * 16, "smartphone");
             }
-            gfx.drawSprite("sheet", 8, 11, 16 * xi, 2 + y * 16, "smartphone");
+            gfx.drawTile("selR", 16 * xi, 2 + y * 16, "smartphone");
             return 0.75;
         } else {
             if(rows === 2) { rows = 3; }
             if(rows >= 5) { rows = Math.ceil(textInfo.height / 9); }
             const topy = (y - rows + 1.5);
             gfx.drawWrappedText(text, 2, 12 + topy * 16, 124, undefined, "smartphoneText");
-            gfx.drawSprite("sheet", 15, 11, 0, 2 + topy * 16, "smartphone");
-            gfx.drawSprite("sheet", 14, 11, 0, 2 + (rows - 2 + topy) * 16, "smartphone");
+            gfx.drawTile("infoU", 0, 2 + topy * 16, "smartphone");
+            gfx.drawTile("infoD", 0, 2 + (rows - 2 + topy) * 16, "smartphone");
             while(width > 128) {
                 width -= 64;
-                gfx.drawSprite("sheet", 15, 11, 16 * xi, 2 + topy * 16, "smartphone");
-                gfx.drawSprite("sheet", 14, 11, 16 * xi++, 2 + (rows - 2 + topy) * 16, "smartphone");
+                gfx.drawTile("infoU", 16 * xi, 2 + topy * 16, "smartphone");
+                gfx.drawTile("infoD", 16 * xi++, 2 + (rows - 2 + topy) * 16, "smartphone");
             }
-            gfx.drawSprite("sheet", 24, 17, 16 * xi, 2 + topy * 16, "smartphone");
-            gfx.drawSprite("sheet", 26, 17, 16 * xi, 2 + (rows - 2 + topy) * 16, "smartphone");
+            gfx.drawTile("infoUR", 16 * xi, 2 + topy * 16, "smartphone");
+            gfx.drawTile("infoDR", 16 * xi, 2 + (rows - 2 + topy) * 16, "smartphone");
             if(rows >= 4) {
                 const drawRows = rows - 3;
                 for(let i = 0; i < drawRows; i++) {
-                    gfx.drawSprite("sheet", 25, 17, 16 * xi, 2 + (topy + i + 1) * 16, "smartphone");
+                    gfx.drawTile("infoR", 16 * xi, 2 + (topy + i + 1) * 16, "smartphone");
                 }
                 let ctx = gfx.ctx["smartphone"];
                 ctx.fillStyle = "#8B8CDE";

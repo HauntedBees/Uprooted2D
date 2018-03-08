@@ -195,19 +195,7 @@ combat.menu = {
         return count;
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
-    drawOption: function(text, y, selected) {
-        let xi = 1, tile = 7;
-        if(selected) { tile = 9; }
-        gfx.drawSprite("sheet", tile, 11, 0, 2 + (this.dy + y) * 16, "menuA");
-        let width = gfx.getTextWidth(text);
-        while(width > 128) {
-            width -= 64;
-            gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + (this.dy + y) * 16, "menuA");
-        }
-        gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, 2 + (this.dy + y) * 16, "menuA");
-        gfx.drawText(text, 2, 10.5 + (this.dy + y) * 16);
-        this.options.push(xi);
-    },
+    drawOption: function(text, y, selected) { this.options.push(gfx.drawOption(text, this.dy + y, selected)) },
     mouseMove: function(pos) {
         if(pos.y >= (this.dy + this.options.length) || pos.y < this.dy) { return false; }
         if(pos.x > 4) { return false; }

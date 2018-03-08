@@ -148,7 +148,7 @@ worldmap.shop = {
         for(let i = 0; i < this.details.wares.length; i++) {
             if(this.details.wares[i].type === "upgrade") {
                 this.isUpgradeShop = true;
-                const res = spriteData.names[this.details.wares[i].product + "-" + player.gridLevel];
+                const res = sprites[this.details.wares[i].product + "-" + player.gridLevel];
                 if(res === undefined) { continue; }
                 this.availableIndexes.push(i);
                 gfx.drawTileToGrid(this.details.wares[i].product + "-" + player.gridLevel, this.initx + j * this.dx, this.yPos, "characters");

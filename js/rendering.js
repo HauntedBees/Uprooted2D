@@ -92,19 +92,34 @@ const gfx = {
         }
         gfx.drawImage(gfx.ctx["tutorial"], sheet, startX, startY, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
     },
-    drawYMaskedSprite: function(spritename, x, y, layer, bottomY, verbose) {
-        const data = spriteData.names[spritename];
-        const sx = data[0], sy = data[1];
+    drawYMaskedSprite: function(spritename, x, y, layer, bottomY) {
+        const data = sprites[spritename];
+        const sx = data[0] * 16 + data[0] * 2 + 1;
+        const sy = data[1] * 16 + data[1] * 2 + 1;
         const dy = bottomY - y;
         if(dy <= -1) { return; }
-        const sheet = gfx.spritesheets["sheet"];
         const size = (y <= bottomY ? 16 : 16 - 16 * (y - bottomY));
-        gfx.drawImage(gfx.ctx[layer], sheet, sx * 16, sy * 16, 16, size, x * 16, y * 16, 16, size);
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["sheet"], sx, sy, 16, size, x * 16, y * 16, 16, size);
     },
-    drawTileToGrid: function(spritename, x, y, layer, isHalfTile) {
-        const data = spriteData.names[spritename];
+    drawOption: function(text, y, selected) {
+        let xi = 1;
+        const tile = selected ? "Ssel" : "sel";
+        gfx.drawTile(tile + "M", 0, 2 + y * 16, "menuA");
+        let width = gfx.getTextWidth(text);
+        while(width > 128) {
+            width -= 64;
+            gfx.drawTile(tile + "M", 16 * xi++, 2 + y * 16, "menuA");
+        }
+        gfx.drawTile(tile + "R", 16 * xi, 2 + y * 16, "menuA");
+        gfx.drawText(text, 2, 10.5 + y * 16);
+        return xi;
+    },
+    drawTileToGrid: (spritename, x, y, layer, isHalfTile) => gfx.drawTile(spritename, x * 16, y * 16, layer, isHalfTile),
+    drawTile: function(spritename, x, y, layer, isHalfTile) {
+        const data = sprites[spritename];
         try {
-            gfx.drawSprite("sheet", data[0], data[1], x * 16, y * 16, layer, data.length == 3, isHalfTile);
+            const isBig = data.length == 3;
+            gfx.drawSprite(isBig ? "sheetBig" : "sheet", data[0], data[1], x, y, layer, isBig, isHalfTile);
         } catch(e) {
             console.log("couldn't find " + spritename);
         }
@@ -112,8 +127,10 @@ const gfx = {
     drawSprite: function(sheetpath, sx, sy, x, y, layer, big, isHalfTile) {
         const sheet = gfx.spritesheets[sheetpath];
         const size = big ? 32 : 16;
+        const startX = sx * size + sx * 2 + 1;
+        const startY = sy * size + sy * 2 + 1;
         const xmult = (isHalfTile === true ? 0.5 : 1);
-        gfx.drawImage(gfx.ctx[layer], sheet, sx * size, sy * size, size * xmult, size, x, y, size * xmult, size);
+        gfx.drawImage(gfx.ctx[layer], sheet, startX, startY, size * xmult, size, x, y, size * xmult, size);
     },
     DrawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
         layer = layer || "characters"; dx = dx || 0; dy = dy || 0;
@@ -175,14 +192,7 @@ const gfx = {
         gfx.drawTileToGrid("xcursor0.3", x + w, y + h, layer);
     },
     drawInventoryItem: function(item, x, y, layer) {
-        if(item[0][0] === "_") {
-            gfx.drawTileToGrid(item[0], x, y, layer);
-        } else if(item[0][0] === "!") {
-            const info = GetEquipment(item[0]);
-            gfx.drawTileToGrid(info.sprite, x, y, layer);
-        } else {
-            gfx.drawTileToGrid(item[0], x, y, layer);
-        }
+        gfx.drawTileToGrid(item[0], x, y, layer);
         gfx.drawItemNumber(item[1], x, y, layer);
     },
     getTextRightAlignedX: (text, size, x) => x - gfx.getTextWidth(text, size),
@@ -194,8 +204,8 @@ const gfx = {
     },
     drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = "#000000"; gfx.ctx["menutext"].fillRect(x, y, w, 5); },
     drawChoice: function(y, t, selected) {
-        const tile = selected ? 9 : 7;
-        for(let x = 0; x < 16; x++) { gfx.drawSprite("sheet", tile, 11, x * 16, y * 16 - 8, "menuA"); }
+        const tile = selected ? "SselM" : "selM";
+        for(let x = 0; x < 16; x++) { gfx.drawTile(tile, x * 16, y * 16 - 8, "menuA"); }
         gfx.drawText(t, 8, y * 16);
     },
     GetFontSize: function(size, justNum) {
@@ -255,17 +265,17 @@ const gfx = {
     drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)),
     drawMinibox: function(x, y, w, h, layer) {
         layer = layer || "menuA";
-        gfx.drawSprite("sheet", 11, 11, x * 16, y * 16, layer);
-        gfx.drawSprite("sheet", 13, 11, x * 16, (y + h) * 16, layer);
-        gfx.drawSprite("sheet", 24, 17, (x + w) * 16, y * 16, layer);
-        gfx.drawSprite("sheet", 26, 17, (x + w) * 16, (y + h) * 16, layer);
+        gfx.drawTile("infoUL", x * 16, y * 16, layer);
+        gfx.drawTile("infoDL", x * 16, (y + h) * 16, layer);
+        gfx.drawTile("infoUR", (x + w) * 16, y * 16, layer);
+        gfx.drawTile("infoDR", (x + w) * 16, (y + h) * 16, layer);
         for(let x2 = x + 1; x2 < x + w; x2++) {
-            gfx.drawSprite("sheet", 15, 11, x2 * 16, y * 16, layer);
-            gfx.drawSprite("sheet", 14, 11, x2 * 16, (y + h) * 16, layer);
+            gfx.drawTile("infoU", x2 * 16, y * 16, layer);
+            gfx.drawTile("infoD", x2 * 16, (y + h) * 16, layer);
         }
         for(let y2 = y + 1; y2 < y + h; y2++) {
-            gfx.drawSprite("sheet", 12, 11, x * 16, y2 * 16, layer);
-            gfx.drawSprite("sheet", 25, 17, (x + w) * 16, y2 * 16, layer);
+            gfx.drawTile("infoL", x * 16, y2 * 16, layer);
+            gfx.drawTile("infoR", (x + w) * 16, y2 * 16, layer);
         }
         const ctx = gfx.ctx[layer];
         ctx.fillStyle = "#8B8CDE";
@@ -276,14 +286,14 @@ const gfx = {
         layer = layer || "menuA";
         const startx = gfx.tileWidth - w;
         h -= 1;
-        gfx.drawSprite("sheet", 11, 11, startx * 16, y, layer);
-        gfx.drawSprite("sheet", 13, 11, startx * 16, y + h * 16, layer);
+        gfx.drawTile("infoUL", startx * 16, y, layer);
+        gfx.drawTile("infoDL", startx * 16, y + h * 16, layer);
         for(let x = startx + 1; x < gfx.tileWidth; x++) {
-            gfx.drawSprite("sheet", 15, 11, x * 16, y, layer);
-            gfx.drawSprite("sheet", 14, 11, x * 16, y + h * 16, layer);
+            gfx.drawTile("infoU", x * 16, y, layer);
+            gfx.drawTile("infoD", x * 16, y + h * 16, layer);
         }
         for(let y2 = 1; y2 < h; y2++) {
-            gfx.drawSprite("sheet", 12, 11, startx * 16, y + y2 * 16, layer);
+            gfx.drawTile("infoL", startx * 16, y + y2 * 16, layer);
         }
         const ctx = gfx.ctx[layer];
         ctx.fillStyle = "#8B8CDE";
@@ -292,7 +302,6 @@ const gfx = {
     drawBigNumber: function(number, x, y, layer, white) {
         if(number > 100 || number < 0) { return; }
         const digits = ("" + number).split("");
-        const sheet = gfx.spritesheets["sheet"];
         const ctx = gfx.ctx[layer];
         for(let i = 0; i < digits.length; i++) {
             gfx.drawTileToGrid((white === true ? "bigNumW" : "bigNum") + digits[i], x + 0.5 * i, y, layer, true);
@@ -301,20 +310,23 @@ const gfx = {
     drawItemNumber: function(number, x, y, layer, top) {
         const digits = ("" + number).split("");
         const sheet = gfx.spritesheets["sheet"];
+        const startCoords = sprites["numStart"];
+        const startX = startCoords[0] * 16 + startCoords[0] * 2 + 1;
+        const startY = startCoords[1] * 16 + startCoords[1] * 2 + 1;
         const ctx = gfx.ctx[layer];
         const ix = x * 16 + 7 - (digits.length - 1) * 4;
         const ay = y * 16 + (top ? 0 : 9);
         if(number === "x") {
-            gfx.drawImage(ctx, sheet, 5 * 16, 11 * 16, 5, 7, ix + 4, ay - 2, 5, 7);
+            gfx.drawImage(ctx, sheet, startX, startY, 5, 7, ix + 4, ay - 2, 5, 7);
             return;
         } else if(number === 0) {
-            gfx.drawImage(ctx, sheet, 5 * 16, 11 * 16 + 7, 5, 7, ix + 4, ay, 5, 7);
+            gfx.drawImage(ctx, sheet, startX, startY + 9, 5, 7, ix + 4, ay - 2, 5, 7);
             return;
         }
-        if(!top) { gfx.drawImage(ctx, sheet, 5 * 16, 11 * 16, 5, 7, ix, ay, 5, 7); }
+        if(!top) { gfx.drawImage(ctx, sheet, startX, startY, 5, 7, ix, ay, 5, 7); }
         for(let i = 0; i < digits.length; i++) {
             const d = gfx.numberDeltas[digits[i]];
-            gfx.drawImage(ctx, sheet, 5 * 16 + d[0] * 5, 11 * 16 + d[1] * 7, 5, 7, ix + (i + 1) * 4, ay, 5, 7);
+            gfx.drawImage(ctx, sheet, startX + d[0] * 6, startY + d[1] * 9, 5, 7, ix + (i + 1) * 4, ay, 5, 7);
         }
     },
     drawMap: function(map, centerx, centery) {

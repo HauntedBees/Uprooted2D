@@ -1,6 +1,5 @@
 param ([string]$which="TS")
 
-
 $rootpath = Resolve-Path ..;
 if($which.Contains("T")) {
 	Write-Host "Converting Details_Text.ods to text.js";

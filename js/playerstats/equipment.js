@@ -23,22 +23,22 @@ pausemenu.equipment = {
         }
         if(player.equipment.weapon !== null) {
             const eq = GetEquipment(player.equipment.weapon), x = 0.3125;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
+            gfx.drawTileToGrid(player.equipment.weapon, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("weapon", -1, -1); }
         if(player.equipment.compost !== null) {
             const eq = GetEquipment(player.equipment.compost), x = 4.1875;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
+            gfx.drawTileToGrid(player.equipment.compost, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("compost", -1, -1); }
         if(player.equipment.gloves !== null) {
             const eq = GetEquipment(player.equipment.gloves), x = 8.0625;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
+            gfx.drawTileToGrid(player.equipment.gloves, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("gloves", -1, -1); }
         if(player.equipment.soil !== null) {
             const eq = GetEquipment(player.equipment.soil), x = 11.9375;
-            gfx.drawTileToGrid(eq.sprite, x, 9.125, "menuA");
+            gfx.drawTileToGrid(player.equipment.soil, x, 9.125, "menuA");
             gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("soil", -1, -1); }
         let numItems = 0;

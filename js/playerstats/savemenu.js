@@ -39,25 +39,12 @@ pausemenu.savemenu = {
         return this.drawSaveDataText(text);
     },
     drawSaveDataText: t => { gfx.drawWrappedText(t, 4.5 * 16, 11, 155); return true; },
-    drawOption: function(text, y, selected) {
-        let xi = 1;
-        const tile = selected ? 9 : 7;
-        gfx.drawSprite("sheet", tile, 11, 0, 2 + y * 16, "menuA");
-        let width = gfx.getTextWidth(text);
-        while(width > 128) {
-            width -= 64;
-            gfx.drawSprite("sheet", tile, 11, 16 * xi++, 2 + y * 16, "menuA");
-        }
-        gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, 2 + y * 16, "menuA");
-        gfx.drawText(text, 2, 10.5 + y * 16);
-        this.options.push(xi);
-    },
+    drawOption: function (text, y, selected) { this.options.push(gfx.drawOption(text, y, selected)); },
     mouseMove: function(pos) {
         if(this.confirm) { return false; }
         if(pos.y >= this.options.length) { return false; }
         this.cursorY = pos.y;
         this.DrawAll();
-        //this.setup({ saving: this.isSave, sel: pos.y });
         return true;
     },
     click: function(pos) {

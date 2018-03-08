@@ -35,16 +35,16 @@ combat.compost = {
                 gfx.DrawXCursor(pos.x + combat.dx, pos.y + combat.dy, size, size);
             }
         }
-        let xi = 1, tile = 7, text = GetText("cmp_healsel");
-        if(this.healButtonSelected) { tile = 9; }
+        let xi = 1, text = GetText("cmp_healsel");
+        const healTile = this.healButtonSelected ? "Ssel" : "sel";
         
-        gfx.drawSprite("sheet", tile, 11, 0, this.healY, "menuA");
+        gfx.drawTile(healTile + "M", 0, this.healY, "menuA");
         let width = gfx.getTextWidth(text);
         while(width > 128) {
             width -= 64;
-            gfx.drawSprite("sheet", tile, 11, 16 * xi++, this.healY, "menuA");
+            gfx.drawTile(healTile + "M", 16 * xi++, this.healY, "menuA");
         }
-        gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, this.healY, "menuA");
+        gfx.drawTile(healTile + "R", 16 * xi, this.healY, "menuA");
         this.healButtonWidth = xi;
         gfx.drawText(text, 2, this.healY + 8.5);
         gfx.drawText(GetText("cmp_healpow"), 88, 155);
@@ -65,15 +65,16 @@ combat.compost = {
         }
 
         if(this.canAttack) {
-            xi = 1; tile = 7; text = GetText("cmp_atksel");
+            xi = 1; text = GetText("cmp_atksel");
+            const atkTile = this.healButtonSelected ? "Ssel" : "sel";
             if(this.attackButtonSelected) { tile = 9; }
-            gfx.drawSprite("sheet", tile, 11, 0, this.atkY, "menuA");
+            gfx.drawTile(atkTile + "M", 0, this.atkY, "menuA");
             width = gfx.getTextWidth(text);
             while(width > 128) {
                 width -= 64;
-                gfx.drawSprite("sheet", tile, 11, 16 * xi++, this.atkY, "menuA");
+                gfx.drawTile(atkTile + "M", 16 * xi++, this.atkY, "menuA");
             }
-            gfx.drawSprite("sheet", tile + 1, 11, 16 * xi, this.atkY, "menuA");
+            gfx.drawTile(atkTile + "R", 16 * xi, this.atkY, "menuA");
             this.attackButtonWidth = xi;
             gfx.drawText(text, 2, this.atkY + 8.5);
         }
