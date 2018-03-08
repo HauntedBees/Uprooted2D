@@ -608,7 +608,7 @@ worldmap.shop = {
             gfx.clearLayer("tutorial");
             for(let y = 2; y < game.tileh + 4; y += 4) {
                 for(let x = 2; x < game.tilew + 4; x += 4) {
-                    gfx.DrawTransitionImage([0, 4], x - (y % 4 ? 1 : 0), y + 0.5, sleepInfo.size);
+                    gfx.DrawTransitionImage("transZzz", x - (y % 4 ? 1 : 0), y + 0.5, sleepInfo.size);
                 }
             }
             if(sleepInfo.size < 35) { sleepInfo.size += sleepInfo.size / 90; }
@@ -621,7 +621,7 @@ worldmap.shop = {
             sleepInfo.state = 2;
         } else if(sleepInfo.state === 3) {
             gfx.clearLayer("tutorial");
-            gfx.DrawTransitionImage([1, 4], game.tilew / 2, game.tileh / 2, sleepInfo.size, true);
+            gfx.DrawTransitionImage("transWake", game.tilew / 2, game.tileh / 2, sleepInfo.size, true);
             if(sleepInfo.size < 50) { sleepInfo.size += sleepInfo.size / 50; }
             else { worldmap.shop.FinishSleepsy(); }
         }

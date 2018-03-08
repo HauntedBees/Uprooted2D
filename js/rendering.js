@@ -78,11 +78,12 @@ const gfx = {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
     },
     drawHelp: () => gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 200, 130, 34, 24),
-    DrawTransitionImage: function(spritecoords, x, y, mult, blackEverythingElse) {
-        const sheet = gfx.spritesheets["paddedsheet"];
+    DrawTransitionImage: function(spritename, x, y, mult, blackEverythingElse) {
+        const sheet = gfx.spritesheets["sheet"];
         const size = 16;
-        const startX = spritecoords[0] * 18 - spritecoords[0] + 1;
-        const startY = spritecoords[1] * 18 - spritecoords[1] + 1;
+        const data = sprites[spritename];
+        const startX = data[0] * 16 + data[0] * 2 + 1;
+        const startY = data[1] * 16 + data[1] * 2 + 1;
         const delta = size * mult * 0.5;
         if(blackEverythingElse) {
             const ctx = gfx.ctx["tutorial"];

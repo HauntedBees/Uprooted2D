@@ -48,7 +48,7 @@ const game = {
                     "covers/northcity1", "covers/northcity2", "covers/northcity2_post", "covers/northcity3", "maps/hq_1", "maps/hq_2", "maps/hq_3",
                     "maps/hq_4", "maps/hq_5", "maps/hq_6", "horRorTop", "horRorBottom", "ayudame", "mapplayer_help", "shops/vendo",
                     "foregrounds/farm", "combat_player", "combat_equipment", "bgs/outside", "bgs/underwater", "titleGround", "titleTop", 
-                    "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "paddedsheet", "sheet", "sheetBig"],
+                    "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "sheet", "sheetBig"],
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
@@ -114,11 +114,11 @@ const game = {
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
         to.setup(arg);
     },
-    transitionInfo: { crop: [0, 0], size: 0.5, time: 0 },
+    transitionInfo: { crop: "trans0", size: 0.5, time: 0 },
     startTransitionAnim: function(dir, from, to, arg) {
         clearInterval(game.transitionInfo.animIdx);
         game.transitionInfo = {
-            crop: [Range(0, 5), Range(0, 4)],
+            crop: "trans" + Range(0, 20),
             size: (dir > 0 ? 0.5 : 5),
             from: from, to: to, arg: arg, dir: dir,
             animIdx: setInterval(game.drawTransitionAnim, 10)
