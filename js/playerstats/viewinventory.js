@@ -179,7 +179,7 @@ pausemenu.inventory = {
         const crop = GetCrop(item[0]);
 
         // Row 0
-        gfx.drawText(crop.displayname, leftMostTextX, rowTextYs[0], undefined, 32);
+        gfx.drawText(crop.displayname, leftMostTextX + 4, rowTextYs[0], undefined, 32);
         gfx.drawTileToGrid(crop.showSeed ? crop.name + "seed" : crop.name, leftMostX, rowYs[0], "menutext");
 
         let cropSprite = "dirt";
