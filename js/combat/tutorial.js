@@ -1,5 +1,5 @@
-function AnyPress() { return true; };
-var tutorial = {
+const AnyPress = () => true;
+const tutorial = {
     isTutorial: true, attemptingLeave: false, completed: false, 
     state: 0, currentInputHandler: combat.menu,
     startBattle: function() {
@@ -22,7 +22,7 @@ var tutorial = {
         from.clean();
         to.setup(arg);
     },
-    clean: function() { gfx.clearLayer("tutorial"); },
+    clean: () => gfx.clearLayer("tutorial"),
     drawTutorial: function() {
         gfx.clearLayer("tutorial");
         if(this.state === 39) {
@@ -42,10 +42,10 @@ var tutorial = {
     keyPress: function(key) {
         if(this.state === 39) { return this.currentInputHandler.keyPress(key); }
         if(key === player.controls.cancel) { return false; }
-        var isEnter = (key === player.controls.pause || key === player.controls.confirm);
+        const isEnter = (key === player.controls.pause || key === player.controls.confirm);
         if(isEnter) {
-            var runCheck = (this.state === 0 && combat.menu.cursorY === 3);
-            var success = this.stateDetails[this.state].advance();
+            const runCheck = (this.state === 0 && combat.menu.cursorY === 3);
+            let success = this.stateDetails[this.state].advance();
             if(!success && !runCheck) { return false; }
             if(!runCheck) {
                 success = tutorial.currentInputHandler.keyPress(key);
@@ -59,7 +59,7 @@ var tutorial = {
                     this.state = 100;
                     game.currentInputHandler = tutorial.currentInputHandler;
                     combat.wrapUpCombat();
-                    var postCombat = game.target.postBattle;
+                    const postCombat = game.target.postBattle;
                     clearInterval(combat.charAnimIdx);
                     game.transition(combat.menu, worldmap, {
                         init: worldmap.pos,
@@ -87,46 +87,46 @@ var tutorial = {
     },
     matchCoords: function(pos, x, y) { return pos.x === x && pos.y === y; },
     stateDetails: [
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 0) } },
-        { height: 1.8, advance: function() { return tutorial.matchCoords(combat.plant.cursor, 2, 8.5); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
+        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5) },
         { height: 1.8, advance: AnyPress },
         { height: 3.5, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 1); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 1 },
         { height: 2.5, advance: AnyPress },
         { height: 2.5, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 0) } },
-        { height: 1.8, advance: function() { return tutorial.matchCoords(combat.plant.cursor, 0, 8.5); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
+        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
         { height: 1.8, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 1); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 1 },
         { height: 2.5, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 0) } },
-        { height: 2.5, advance: function() { return tutorial.matchCoords(combat.plant.cursor, 0, 8.5); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
+        { height: 2.5, advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
         { height: 1.8, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 0) } },
-        { height: 1.8, advance: function() { return tutorial.matchCoords(combat.plant.cursor, 1, 8.5); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
+        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
         { height: 1.8, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 1); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 1 },
         { height: 1.8, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 0) } },
-        { height: 1.8, advance: function() { return tutorial.matchCoords(combat.plant.cursor, 1, 8.5); } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
+        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
         { height: 1.8, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 0) } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
         { height: 1.8, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: function() { return (combat.menu.cursorY === 2) } },
+        { height: 1.8, advance: () => combat.menu.cursorY === 2 },
         { height: 1.8, advance: function() {
-                var gridpos = { x: combat.compost.cursor.x - combat.dx, y: combat.compost.cursor.y - combat.dy };
-                var tile = combat.grid[gridpos.x][gridpos.y];
+                const gridpos = { x: combat.compost.cursor.x - combat.dx, y: combat.compost.cursor.y - combat.dy };
+                const tile = combat.grid[gridpos.x][gridpos.y];
                 return tile.name === "beet" && tile.rotten;
             } },
-        { height: 1.8, advance: function() { return combat.compost.cursor.y == combat.compost.dy } },
+        { height: 1.8, advance: () => combat.compost.cursor.y === combat.compost.dy },
         { height: 3.5, advance: AnyPress },
         { height: 2.5, advance: AnyPress },
         { height: 1.8, advance: AnyPress }

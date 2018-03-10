@@ -1,4 +1,5 @@
 const beeQueen = { interact: Cutscene("angryBee") };
+const fixTutEntity = { interact: Cutscene("fixCut") };
 const mapentities = {
     "farm_init": [
         // Opening Cutscene

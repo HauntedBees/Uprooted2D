@@ -97,7 +97,7 @@ pausemenu.farmmod = {
         return (this.cursor.y - this.dy) === (player.gridHeight - 1);
     },
     getWaterFrame: function(x, y) {
-        var res = 0;
+        let res = 0;
         if(y > 0 && player.itemGrid[x][y - 1] == "_lake") { res += 1; } // W
         if(x > 0 && player.itemGrid[x - 1][y] == "_lake") { res += 2; } // A
         if(y < (player.gridHeight - 1) && player.itemGrid[x][y + 1] == "_lake") { res += 4; } // S
@@ -123,15 +123,15 @@ pausemenu.farmmod = {
     },
     cancel: function() { game.innerTransition(this, pausemenu, 2); },
     removeFromField: function(x, y) {
-        var item = player.itemGrid[x][y];
+        let item = player.itemGrid[x][y];
         if(item === null) { return null; }
         if(item.coord) {
             x = item.x; y = item.y;
             item = player.itemGrid[item.x][item.y];
         }
-        var size = (GetFarmInfo(item).size) || 1;
-        for(var xi = 0; xi < size; xi++) {
-            for(var yi = 0; yi < size; yi++) {
+        const size = (GetFarmInfo(item).size) || 1;
+        for(let xi = 0; xi < size; xi++) {
+            for(let yi = 0; yi < size; yi++) {
                 player.itemGrid[x + xi][y + yi] = null;
             }
         }
@@ -141,7 +141,7 @@ pausemenu.farmmod = {
         if(pos.y < 0 || pos.x < 0) { return false; }
         if(pos.y < 4) { // item selection
             if(pos.x >= this.inventoryWidth) { return false; }
-            var idx = pos.y * this.inventoryWidth + pos.x;
+            const idx = pos.y * this.inventoryWidth + pos.x;
             if(idx >= this.actualIndexes.length) { return false; }
         } else {
             if(pos.y < this.dy || pos.x < this.dx || pos.y >= (this.dy + player.gridHeight - this.selectedItemSize) || pos.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
@@ -153,24 +153,24 @@ pausemenu.farmmod = {
     click: function(pos) {
         if(pos.y < 4) { // item selection
             if(pos.x >= this.inventoryWidth) { return false; }
-            var idx = pos.y * this.inventoryWidth + pos.x;
+            const idx = pos.y * this.inventoryWidth + pos.x;
             if(idx >= this.actualIndexes.length) { return false; }
-            var invIdx = this.actualIndexes[idx];
-            var item = player.inventory[invIdx][0];
+            const invIdx = this.actualIndexes[idx];
+            const item = player.inventory[invIdx][0];
             this.selectedItem = (this.selectedItem === item ? null : item);
             this.selectedItemPos = pos;
             this.selectedItemSize = (GetFarmInfo(item).size - 1) || 0;
         } else {
             if(pos.y < this.dy || pos.x < this.dx || pos.y >= (this.dy + player.gridHeight - this.selectedItemSize) || pos.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
-            var gridX = this.cursor.x - this.dx;
-            var gridY = this.cursor.y - this.dy;
+            const gridX = this.cursor.x - this.dx;
+            const gridY = this.cursor.y - this.dy;
             if(!this.canPlant()) { return false; }
-            var selItem = player.itemGrid[gridX][gridY];
-            var isSameItem = this.selectedItem == selItem;
+            const selItem = player.itemGrid[gridX][gridY];
+            const isSameItem = this.selectedItem == selItem;
             if(!isSameItem && this.selectedItemSize > 0 && this.selectedItem !== null) {
-                for(var x = 0; x <= this.selectedItemSize; x++) {
-                    for(var y = 0; y <= this.selectedItemSize; y++) {
-                        var item = this.removeFromField(gridX + x, gridY + y);
+                for(let x = 0; x <= this.selectedItemSize; x++) {
+                    for(let y = 0; y <= this.selectedItemSize; y++) {
+                        const item = this.removeFromField(gridX + x, gridY + y);
                         if(item !== null) { player.increaseItem(item, 1); }
                         player.itemGrid[gridX + x][gridY + y] = { coord: true, x: gridX, y: gridY };
                     }
@@ -178,7 +178,7 @@ pausemenu.farmmod = {
                 player.itemGrid[gridX][gridY] = this.selectedItem;
                 player.itemGrid[gridX + this.selectedItemSize][gridY + this.selectedItemSize].corner = this.selectedItem;
             } else {
-                var item = this.removeFromField(gridX, gridY);
+                const item = this.removeFromField(gridX, gridY);
                 if(item !== null) { player.increaseItem(item, 1); }
                 if(this.selectedItem === null || isSameItem) {
                     this.drawEverything();
@@ -186,15 +186,15 @@ pausemenu.farmmod = {
                 }
                 player.itemGrid[gridX][gridY] = this.selectedItem;
             }
-            var stillHasAny = player.decreaseItem(this.selectedItem);
+            const stillHasAny = player.decreaseItem(this.selectedItem);
             if(!stillHasAny) { this.selectedItem = null; this.selectedItemSize = 0; }
         }
         this.drawEverything();
         return true;
     },
     keyPress: function(key) {
-        var pos = { x: this.cursor.x, y: this.cursor.y };
-        var isEnter = false;
+        const pos = { x: this.cursor.x, y: this.cursor.y };
+        let isEnter = false;
         switch(key) {
             case player.controls.up: pos.y--; break;
             case player.controls.left: pos.x--; break;
@@ -208,7 +208,7 @@ pausemenu.farmmod = {
         
         if(this.cursor.y < 4 && pos.y > this.cursor.y) {
             if(pos.x < this.inventoryWidth) {
-                var idx = pos.y * this.inventoryWidth + pos.x;
+                const idx = pos.y * this.inventoryWidth + pos.x;
                 if(idx >= this.actualIndexes.length) {
                     pos.x = this.dx;
                     pos.y = this.dy;
@@ -219,10 +219,7 @@ pausemenu.farmmod = {
             pos.x = this.actualIndexes.length - (this.inventoryWidth * pos.y) - 1;
         }
 
-        if(isEnter) {
-            return this.click(pos);
-        } else {
-            return this.mouseMove(pos);
-        }
+        if(isEnter) { return this.click(pos); }
+        else { return this.mouseMove(pos); }
     }
 };

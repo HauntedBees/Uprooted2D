@@ -58,6 +58,11 @@ const worldmap = {
                     return;
                 }
             }
+        } else if(player.fixtureTutorialState === 1) {
+            this.dialogState = 0;
+            this.inDialogue = true;
+            game.target = fixTutEntity;
+            fixTutEntity.interact[0](0, fixTutEntity);
         }
         
         if(worldmap.angryBees) {

@@ -7,7 +7,7 @@ let player = {
                 typesPlanted: { "veg": 0, "tree": 0, "bee": 0, "rice": 0, "rod": 0, "water": 0, "cow": 0, "mush": 0, "egg": 0, "tech": 0 },
               },
     clearedEntities: [], achievements: [], failedEntities: [], 
-    questsCleared: [], activeQuests: {}, 
+    questsCleared: [], activeQuests: {}, fixtureTutorialState: 0, 
     lastInn: "start",
     options: {
         difficulty: 1, 

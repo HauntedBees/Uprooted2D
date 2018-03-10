@@ -561,6 +561,42 @@ const fulltext = {
 		"en-dm": "Fix Your Controls Before Saving", 
 		"type": "opts"
 	},
+	// Fixture Tutorial
+	"fixTut0": {
+		"en-us": "", 
+		"en-dm": "Looks like you just bought your first fixture! You can place it on your field by selecting \"Fixtures\" from the Pause Menu. Would you like a quick rundown of how do?", 
+		"type": "map"
+	},
+	"fixTutNo": {
+		"en-us": "", 
+		"en-dm": "No problem! Remember: just select the \"Fixtures\" option in the Pause Menu to place fixtures on your field. You can't use special crops or abilities in combat unless you place the fixture first!", 
+		"type": "map"
+	},
+	"fixTut1": {
+		"en-us": "", 
+		"en-dm": "Radical. Pause the game to bring up the Pause Menu!", 
+		"type": "map"
+	},
+	"fixTut2": {
+		"en-us": "", 
+		"en-dm": "You did it! You paused the game! I'm so proud of you! Now move to the \"Fixtures\" option and select it!", 
+		"type": "map"
+	},
+	"fixTut3": {
+		"en-us": "", 
+		"en-dm": "Chilladillino! Now move to the fixture you want and select it. Next to your fixtures is a description with information about the currently selected fixture and how it's used in combat.", 
+		"type": "map"
+	},
+	"fixTut4": {
+		"en-us": "", 
+		"en-dm": "Philadelphia! You can now move to your field below and select a tile you want to place your fixture on! Be careful with your placement; if you put it in a bad spot, you may not be able to plant larger crops!", 
+		"type": "map"
+	},
+	"fixTut5": {
+		"en-us": "", 
+		"en-dm": "Brontubisto! Now in battle, that fixture will be present, ready for use! Try to collect and arrange fixtures on your field to fit your playstyle and maximize your bullshit! Good luck!", 
+		"type": "map"
+	},
 	// Area 0: Opening Cutscene
 	"intro1": {
 		"en-us": "", 

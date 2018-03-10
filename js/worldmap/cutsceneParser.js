@@ -227,6 +227,8 @@ function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
 }
 
 const SpecialFunctions = {
+    "STARTFIXTUT": () => fixTut.start(),
+    "NOFIXTUT": () => player.fixtureTutorialState = 2,
     "WAIT": function() { },
     "GOTOTITLE": () => game.transition(game.currentInputHandler, worldmap.title),
     "SETNERDBED": () => player.lastInn = "nerdBed",

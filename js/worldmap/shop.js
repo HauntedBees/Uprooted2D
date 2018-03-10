@@ -530,6 +530,7 @@ worldmap.shop = {
                 this.howManyData = { product: productInfo, amount: 1, price: price };
                 player.monies += price; // we already charged!
                 player.decreaseItem(productInfo.product, amt); // we already added one!
+                if(productInfo.type === "farm" && player.fixtureTutorialState === 0) { player.fixtureTutorialState = 1; }
                 this.DrawDetails();
                 return true;
             } else {

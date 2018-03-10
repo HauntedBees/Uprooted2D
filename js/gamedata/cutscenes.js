@@ -52,10 +52,6 @@ const scripts = {
 	"tutBuddy3": "_CUSTOM:TUTORIAL",
 	// Produce Stand: Completion of Standalone Tutorial
 	"finStTut0": "_CUSTOM:LEAVETUTORIAL&_CUSTOM:FINISHTUTORIALSTANDALONE",
-	// Produce Stand: Trying to head to Town before going to Farm
-	"farmFirst0": "?[{\"q\":\"player.completedQuest('bigBot')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
-	"farmFirst1": "_GO2:[\"firstvillage\",21,1]&_END",
-	"farmFirst2": "_TEXT:farmFirst",
 	// Produce Stand: Egg Fairy
 	"eggfairy0": "?[{\"q\":\"player.completedQuest('badEgg')\",\"v\":1},{\"q\":\"player.completedQuest('goodEgg')\",\"v\":2},{\"q\":\"player.hasItem('egg')\",\"v\":4},{\"q\":\"true\",\"v\":3}]",
 	"eggfairy1": "_TEXT:badEggTry&_END",
@@ -729,4 +725,9 @@ const scripts = {
 	"theEnd10": "_BLACKTEXT:industrialBad0",
 	"theEnd11": "_TEXT:industrialBad(1-6)",
 	"theEnd12": "_CUSTOM:CREDITS&_END",
+	// Misc.: Fixture Tutorial
+	"fixCut0": "_TEXT:fixTut0,sYes,sNo",
+	"fixCut1": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":2}]",
+	"fixCut2": "_TEXT:fixTutNo&_CUSTOM:NOFIXTUT&_END",
+	"fixCut3": "_TEXT:fixTut1&_CUSTOM:STARTFIXTUT",
 };
