@@ -197,7 +197,7 @@ const gfx = {
         let spriteName = itemInfo[0];
         if(item[0] !== "_" && item[0] !== "!") {
             const crop = GetCrop(item);
-            if(crop.type === "bee") { spriteName += "seed"; }
+            if(crop.showSeed) { spriteName += "seed"; }
         }
         gfx.drawTileToGrid(spriteName, x, y, layer);
         gfx.drawItemNumber(itemInfo[1], x, y, layer);

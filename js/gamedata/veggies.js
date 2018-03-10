@@ -43,9 +43,9 @@ function GetCrop(name) {
 		case "lemon": return new CropDetail(name, "Lemon", 105, "tree", 2, 5, 5, 4, 2, 1, 2, 1, 0, { waterResist: 2, saltResist: 2, saltChance: 0.25 });
 		case "mango": return new CropDetail(name, "Mango", 15, "tree", 2, 3, 5, 1, 2, 0, 2, 1, 0, { waterResist: 1, fireResist: 1, burnChance: 0.25 });
 		/* Bees */
-		case "beeR": return new CropDetail(name, "Killer Bee", 420, "bee", 1, 999, 2, 7, 999, 1, 1, 2, 0, { stickChance: 1 });
-		case "beeG": return new CropDetail(name, "Stingless Bee", 45, "bee", 1, 999, 2, 3, 999, 1, 2, 1, 0, { stickChance: 2 });
-		case "beeB": return new CropDetail(name, "Honey Bee", 180, "bee", 1, 999, 2, 5, 999, 2, 1, 1, 0, { stickChance: 3 });
+		case "beeR": return new CropDetail(name, "Killer Bee", 420, "bee", 1, 999, 2, 7, 999, 1, 1, 2, 0, { stickChance: 1, showSeed: true });
+		case "beeG": return new CropDetail(name, "Stingless Bee", 45, "bee", 1, 999, 2, 3, 999, 1, 2, 1, 0, { stickChance: 2, showSeed: true });
+		case "beeB": return new CropDetail(name, "Honey Bee", 180, "bee", 1, 999, 2, 5, 999, 2, 1, 1, 0, { stickChance: 3, showSeed: true });
 		/* Rice */
 		case "rice": return new CropDetail(name, "Rice", 90, "rice", 1, 9, 4, 8, 0, 1, 1, 0, 1, { saltChance: 0.15 });
 		case "arborio": return new CropDetail(name, "Arborio Rice", 105, "rice", 1, 11, 4, 9, 0, 1, 1, 0, 1);
@@ -77,11 +77,11 @@ function GetCrop(name) {
 		/* Technology */
 		case "battery": return new CropDetail(name, "Battery", 45, "tech", 1, 5, 5, 5, 0, 2, 2, 2, 2);
 		case "headphones": return new CropDetail(name, "Earbuds", 15, "tech", 1, 3, 3, 2, 0, 2, 2, 2, 2);
-		case "printer": return new CropDetail(name, "3D Printer", 60, "tech", 1, 6, 6, 4, 4, 2, 2, 2, 2);
+		case "printer": return new CropDetail(name, "3D Printer", 60, "tech", 1, 6, 6, 4, 4, 2, 2, 2, 2, { showSeed: true });
 		case "app": return new CropDetail(name, "App", 15, "tech", 1, 3, 4, 3, 0, 2, 2, 2, 2);
 		case "drone": return new CropDetail(name, "Drone", 105, "tech", 1, 5, 3, 7, 0, 2, 2, 2, 2);
 		case "frogbot": return new CropDetail(name, "Fwoggybot", 135, "tech", 2, 8, 4, 9, 0, 2, 2, 2, 2);
-		case "coffee": return new CropDetail(name, "Coffee Machine", 165, "tech", 2, 10, 5, 10, 0, 2, 2, 2, 2);
+		case "coffee": return new CropDetail(name, "Coffee Machine", 165, "tech", 2, 10, 5, 10, 0, 2, 2, 2, 2, { showSeed: true });
 		case "sicklebattery": return new CropDetail(name, "Sickle2 Battery", 100, "sickle2", 1, 5, 4, 0, 0, 2, 2, 2, 2);
 		/* Water */
 		case "holywater": return new CropDetail(name, "Holy Water", 1000, "moist", 1, 0, 1, 2, 0, 2, 2, 2, 2);

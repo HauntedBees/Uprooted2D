@@ -52,6 +52,7 @@ function GetCrop(name) {
 		if($row.SaltR) { $addtl += "saltResist: _".replace("_", $row.SaltR); }
 		if($row.SaltClean) { $addtl += "saltClean: true"; }
 		if($row.Stick) { $addtl += "stickChance: _".replace("_", $row.Stick); }
+		if($row.ShowSeed) { $addtl += "showSeed: true"; }
 		if($row.Animal) {
 			$anInfo = $row.Animal.split("/");
 			$addtl += "animal: `"_`"".replace("_", $anInfo[0]);

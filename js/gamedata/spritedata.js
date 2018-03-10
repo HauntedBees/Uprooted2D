@@ -300,6 +300,7 @@ const sprites = {
     "drone2": [2, 7],
     "drone": [3, 7],
     "printer0": [4, 7],
+    "printerseed": [4, 7],
     "printer1": [5, 7],
     "printer2": [6, 7],
     "printer3": [7, 7],
