@@ -3624,7 +3624,7 @@ const fulltext = {
 	},
 	"mushManPoison2": {
 		"en-us": "", 
-		"en-dm": "Congrats on the attempted murder!", 
+		"en-dm": "Hooray for attempted murder!", 
 		"type": "map"
 	},
 	"mushManCorpse": {
@@ -4240,22 +4240,22 @@ const fulltext = {
 	// Area 8: North City Text Messages
 	"beckettText0": {
 		"en-us": "", 
-		"en-dm": "XxXbeckXxX (to you): ur very dumb 4 coming here", 
+		"en-dm": "XBeck360 (to you): ur very dumb 4 coming here", 
 		"type": "text"
 	},
 	"beckettText1": {
 		"en-us": "", 
-		"en-dm": "XxXbeckXxX (to you): u wont make it out of this city alive.", 
+		"en-dm": "XBeck360 (to you): u wont make it out of this city alive.", 
 		"type": "text"
 	},
 	"beckettText2": {
 		"en-us": "", 
-		"en-dm": "XxXbeckXxX (to you): NO 1 mocks me like u have & gets away w/ it!!!", 
+		"en-dm": "XBeck360 (to you): NO 1 mocks me like u have & gets away w/ it!!!", 
 		"type": "text"
 	},
 	"beckettText3": {
 		"en-us": "", 
-		"en-dm": "XxXbeckXxX (to you): btw u can dismiss texts w/ the pause button", 
+		"en-dm": "XBeck360 (to you): btw u can dismiss texts w/ the pause button", 
 		"type": "text"
 	},
 	"sext0": {
@@ -4325,7 +4325,7 @@ const fulltext = {
 	},
 	"misctext5": {
 		"en-us": "", 
-		"en-dm": "XxXbeckXxX (public): if ne1 sees a farmer woman plz call cops on her she tried 2 kill me ty", 
+		"en-dm": "XBeck360 (public): if ne1 sees a farmer woman plz call cops on her she tried 2 kill me ty", 
 		"type": "text"
 	},
 	"misctext6": {
@@ -4946,7 +4946,7 @@ const fulltext = {
 	},
 	"lostToMonstA1": {
 		"en-us": "", 
-		"en-dm": "\"How will I die?\" is not a question I asked myself often, but it did cross my mind from time to time.", 
+		"en-dm": "\"How will I die?\" is not a question I ask myself often, but it has crossed my mind from time to time.", 
 		"type": "text"
 	},
 	"lostToMonstA2": {
@@ -5096,7 +5096,7 @@ const fulltext = {
 	},
 	"confront4": {
 		"en-us": "", 
-		"en-dm": "Beckett, I guess: DON'T GIVE ME THAT SHIT!", 
+		"en-dm": "BECKETT, I guess: DON'T GIVE ME THAT SHIT!", 
 		"type": "text"
 	},
 	"confront5": {
@@ -5136,7 +5136,7 @@ const fulltext = {
 	},
 	"confront12": {
 		"en-us": "", 
-		"en-dm": "Beckett: IN THIS METAPHOR YOU ARE THE BUG AND IT IS TIME TO BE CRUSHED!!!", 
+		"en-dm": "Beckett: IN THIS METAPHOR I AM THE INFANT AND I WILL CRUSH YOU!!!", 
 		"type": "text"
 	},
 	"beckettBack0": {
