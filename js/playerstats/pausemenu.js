@@ -65,7 +65,7 @@ const pausemenu = {
         gfx.drawTileToGrid("alignmentcursor", 2 + centerx, 11.75 + centery, "foreground");
 
         for(let i = 0; i < pausemenu.questItems.length; i++) {
-            gfx.drawTileToGrid(pausemenu.questItems[i], 5 + (i * 1.5), 11.75, "foreground"); // TODO: limit of 7 or 8?
+            gfx.drawTileToGrid(pausemenu.questItems[i], 5 + (i * 1.5), 11.75, "foreground");
         }
     },
     drawFarm: function() {

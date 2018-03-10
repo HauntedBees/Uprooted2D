@@ -1,5 +1,6 @@
+const cutsceneMoveSpeeds = [0.0375, 0.075, 0.1125];
 const iHandler = {
-    moveSpeed: 0.025, isFirst: true,
+    moveSpeed: cutsceneMoveSpeeds[0], isFirst: true,
     state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] },
     Start: function(startkey) {
         worldmap.dialogData = {};
@@ -120,9 +121,9 @@ const CommandParser = {
                 case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
                 case "CLEARINTERACT": target.interact = undefined; break;
                 case "SETTARGETTONOTHING": game.target = null; break;
-                case "HIHISPEED": iHandler.moveSpeed = 0.1; break;
-                case "HISPEED": iHandler.moveSpeed = 0.05; break;
-                case "LOSPEED": iHandler.moveSpeed = 0.025; break;
+                case "HIHISPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[2]; break;
+                case "HISPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[1]; break;
+                case "LOSPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[0]; break;
                 case "C2TEXT": CommandParser.Parse_Cash2Text(actSuffix.split(",")); break;
                 case "SETPOSX": target.pos.x = parseFloat(actSuffix); break;
             }

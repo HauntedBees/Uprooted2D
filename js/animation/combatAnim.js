@@ -191,7 +191,7 @@ function CombatAnimHelper(enemies) {
         DrawCropGrid(combat.grid, combat.dx, combat.dy, true);
         DrawCropGrid(combat.enemyGrid, combat.enemydx, combat.enemydy);
     };
-    this.DrawWrapper = function(x, y, w, h, name) { // TODO: make private if not used elsewhere
+    this.DrawWrapper = function(x, y, w, h, name) {
         name = name || "edge";
         gfx.drawTileToGrid(name + "WA", x - 1, y - 1, "background");
         gfx.drawTileToGrid(name + "WD", x + w, y - 1, "background");
