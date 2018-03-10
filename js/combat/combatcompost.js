@@ -261,6 +261,18 @@ combat.compost = {
         return true;
     },
     IsSameTile: function(ax, ay, a, bx, by, b) {
+        const itemA = player.itemGrid[ax][ay], itemB = player.itemGrid[bx][by];
+        if(itemA !== null && itemB !== null) {
+            if(itemA.coord === true) {
+                if(itemB.coord === true) { // both are coordinates
+                    if(itemA.x === itemB.x && itemA.y === itemB.y) { return true; }
+                } else { // A is coord, B isn't
+                    if(itemB === "_cow" && itemA.x === bx && itemA.y === by) { return true; }
+                }
+            } else if(itemB.coord === true) { // B is coord, A isn't
+                if(itemA === "_cow" && itemB.x === ax && itemB.y === ay) { return true; }
+            }
+        }
         if(a === null || b === null) { return false; }
         if(a.x !== undefined) {
             if(b.x !== undefined) { return (a.x === b.x && a.y === b.y); }
