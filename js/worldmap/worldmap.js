@@ -121,7 +121,8 @@ const worldmap = {
                 worldmap.entities[i].movement.state = (em.state + 1) % em.points.length;
             }
         }
-        worldmap.refreshMap();
+        if(worldmap.justDidA > 0) { worldmap.justDidA--; }
+        else { worldmap.refreshMap(); }
     },
     refreshMap: function() {
         gfx.clearSome(["background", "background2", "characters", "foreground"]); // TODO: actually put things on the foreground
@@ -318,21 +319,22 @@ const worldmap = {
         const pos = { x: this.pos.x, y: this.pos.y };
         let isEnter = false;
         const moveSpeed = me.PLAYERMOVESPEED;
+        const dp = { x: 0, y: 0 };
         switch(key) {
             case player.controls.up: 
-                pos.y -= moveSpeed;
+                dp.y -= moveSpeed;
                 this.playerDir = directions.UP;
                 break;
             case player.controls.left:
-                pos.x -= moveSpeed;
+                dp.x -= moveSpeed;
                 this.playerDir = directions.LEFT;
                 break;
             case player.controls.down:
-                pos.y += moveSpeed;
+                dp.y += moveSpeed;
                 this.playerDir = directions.DOWN;
                 break;
             case player.controls.right:
-                pos.x += moveSpeed;
+                dp.x += moveSpeed;
                 this.playerDir = directions.RIGHT;
                 break;
             case player.controls.confirm:
@@ -344,6 +346,9 @@ const worldmap = {
                 game.transition(this, pausemenu);
                 return;
         }
+        if(dp.x !== 0 && dp.y !== 0) { dp.x *= Math.SQRT2; dp.y *= Math.SQRT2; }
+        pos.x += dp.x; pos.y += dp.y;
+
         const newPos = { x: Math.round(pos.x), y: Math.round(pos.y) }
         if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
         if(worldmap.noClip) {
@@ -410,6 +415,7 @@ const worldmap = {
                 }
             }
         }
+        worldmap.justDidA = 5;
         this.refreshMap();
         return true;
     },

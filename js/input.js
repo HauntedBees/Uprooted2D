@@ -58,6 +58,14 @@ let input = {
             input.keys[key] = undefined;
             input.setMainKey();
         }
+        if(game.currentInputHandler.freeMovement) {
+            if(input.keys[player.controls.up] === undefined 
+                && input.keys[player.controls.left] === undefined 
+                && input.keys[player.controls.right] === undefined 
+                && input.keys[player.controls.down] === undefined) {
+                    worldmap.refreshMap();
+                }
+        }
     },
     keyPress: function(e) {
         const key = input.GetKey(e);
