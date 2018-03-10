@@ -192,9 +192,15 @@ const gfx = {
         gfx.drawTileToGrid("xcursor0.2", x, y + h, layer);
         gfx.drawTileToGrid("xcursor0.3", x + w, y + h, layer);
     },
-    drawInventoryItem: function(item, x, y, layer) {
-        gfx.drawTileToGrid(item[0], x, y, layer);
-        gfx.drawItemNumber(item[1], x, y, layer);
+    drawInventoryItem: function(itemInfo, x, y, layer) {
+        const item = itemInfo[0];
+        let spriteName = itemInfo[0];
+        if(item[0] !== "_" && item[0] !== "!") {
+            const crop = GetCrop(item);
+            if(crop.type === "bee") { spriteName += "seed"; }
+        }
+        gfx.drawTileToGrid(spriteName, x, y, layer);
+        gfx.drawItemNumber(itemInfo[1], x, y, layer);
     },
     getTextRightAlignedX: (text, size, x) => x - gfx.getTextWidth(text, size),
     getTextFractionX: (text, size, fraction) => gfx.getFractionX(gfx.getTextWidth(text, size), (fraction || 0.5)),
