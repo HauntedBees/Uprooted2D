@@ -102,6 +102,23 @@ const gfx = {
         const size = (y <= bottomY ? 16 : 16 - 16 * (y - bottomY));
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["sheet"], sx, sy, 16, size, x * 16, y * 16, 16, size);
     },
+    drawInfoText: function(text, x, y, selected, imgLayer, textLayer) {
+        imgLayer = imgLayer || "menuOverBlack";
+        textLayer = textLayer || "menutextOverBlack";
+        let xi = 1;
+        let width = gfx.getTextWidth(text) + 20;
+        let xiimax = x + Math.ceil(width / 64);
+        const prefix = selected ? "recSel" : "sel";
+        while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
+        gfx.drawTile(prefix + "L", x * 16, 2 + y * 16, imgLayer);
+        while(width > 128) {
+            width -= 64;
+            gfx.drawTile(prefix + "M", x * 16 + 16 * xi++, 2 + y * 16, imgLayer);
+        }
+        gfx.drawTile(prefix + "R", x * 16 + 16 * xi, 2 + y * 16, imgLayer);
+        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, textLayer);
+        return xi;
+    },
     drawOption: function(text, y, selected) {
         let xi = 1;
         const tile = selected ? "Ssel" : "sel";
@@ -219,6 +236,13 @@ const gfx = {
         size = size || 22;
         if(gfx.GetFont() === "OpenDyslexic") { size += 2; }
         return justNum === true ? size : size + "px ";
+    },
+    TileBackground: function(sprite) {
+        for(let x = 0; x < gfx.tileWidth; x++) {
+            for(let y = 0; y < gfx.tileHeight; y++) {
+                gfx.drawTileToGrid(sprite, x, y, "background");
+            }
+        }
     },
     drawText: function(t, x, y, color, size, layer) {
         layer = layer || "menutext";

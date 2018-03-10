@@ -150,7 +150,7 @@ worldmap.optionsMenu = {
         const acttext = GetText(text);
         this.options.push({ 
             type: "option",
-            x: gfx.getTextRightAlignedX(acttext, this.optionSize, gfx.canvasWidth / 2) / 4 - 5,
+            x: gfx.getTextRightAlignedX(acttext, this.optionSize, gfx.canvasWidth / 2) / gfx.scale - 5,
             optx: gfx.canvasWidth / 8 + 5,
             y: y,
             y2: y + (this.optionSize / 3.3333) - 2,
@@ -167,7 +167,7 @@ worldmap.optionsMenu = {
         text = GetText(text);
         this.options.push({
             type: "button",
-            x: gfx.getTextRightAlignedX(text, this.optionSize, gfx.canvasWidth / 2) / 4 - 5,
+            x: gfx.getTextRightAlignedX(text, this.optionSize, gfx.canvasWidth / 2) / gfx.scale - 5,
             optx: gfx.canvasWidth / 8 + 5,
             y: y,
             text: text, 

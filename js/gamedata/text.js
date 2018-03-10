@@ -6471,41 +6471,7 @@ const fulltext = {
 		"type": "choice"
 	},
 	// Menus
-	"menu.Items": {
-		"en-us": "", 
-		"en-dm": "Items", 
-		"type": "opts"
-	},
-	"menu.Equipment": {
-		"en-us": "", 
-		"en-dm": "Equipment", 
-		"type": "opts"
-	},
-	"menu.Farm": {
-		"en-us": "", 
-		"en-dm": "Fixtures", 
-		"type": "opts"
-	},
-	"menu.Achievements": {
-		"en-us": "", 
-		"en-dm": "Achievements", 
-		"type": "opts"
-	},
-	"menu.Options": {
-		"en-us": "", 
-		"en-dm": "Options", 
-		"type": "opts"
-	},
-	"menu.Save": {
-		"en-us": "", 
-		"en-dm": "Save", 
-		"type": "opts"
-	},
-	"menu.Quit": {
-		"en-us": "", 
-		"en-dm": "Quit", 
-		"type": "opts"
-	},
+	// - Main Menu
 	"menu.level": {
 		"en-us": "", 
 		"en-dm": "Lv.", 
@@ -6544,6 +6510,188 @@ const fulltext = {
 	"menu.coins": {
 		"en-us": "", 
 		"en-dm": "Monies", 
+		"type": "opts"
+	},
+	"alignment": {
+		"en-us": "", 
+		"en-dm": "Alignment", 
+		"type": "opts"
+	},
+	"aligngood": {
+		"en-us": "", 
+		"en-dm": "Good", 
+		"type": "opts"
+	},
+	"alignbad": {
+		"en-us": "", 
+		"en-dm": "Evil", 
+		"type": "opts"
+	},
+	"aligntech": {
+		"en-us": "", 
+		"en-dm": "Industrial", 
+		"type": "opts"
+	},
+	"alignnature": {
+		"en-us": "", 
+		"en-dm": "Natural", 
+		"type": "opts"
+	},
+	"qi.goldmushroom": {
+		"en-us": "", 
+		"en-dm": "Golden Mushroom", 
+		"type": "opts"
+	},
+	"qi.milk": {
+		"en-us": "", 
+		"en-dm": "Milk", 
+		"type": "opts"
+	},
+	"qi.seamonkkey": {
+		"en-us": "", 
+		"en-dm": "Sea Monk Key", 
+		"type": "opts"
+	},
+	"qi.monsterheart": {
+		"en-us": "", 
+		"en-dm": "Sea Monster Heart", 
+		"type": "opts"
+	},
+	"qi.monsteregg": {
+		"en-us": "", 
+		"en-dm": "Sea Monster Egg", 
+		"type": "opts"
+	},
+	"qi.tire": {
+		"en-us": "", 
+		"en-dm": "Spare Tire", 
+		"type": "opts"
+	},
+	"qi.bpermit1": {
+		"en-us": "", 
+		"en-dm": "Mail for Catalina", 
+		"type": "opts"
+	},
+	"qi.food2keycard": {
+		"en-us": "", 
+		"en-dm": "Employee Keycard", 
+		"type": "opts"
+	},
+	"qi.smartphone": {
+		"en-us": "", 
+		"en-dm": "Smartphone", 
+		"type": "opts"
+	},
+	"ef.shocked": {
+		"en-us": "", 
+		"en-dm": "Unsafe", 
+		"type": "opts"
+	},
+	"ef.splashed": {
+		"en-us": "", 
+		"en-dm": "Wet", 
+		"type": "opts"
+	},
+	"ef.burned": {
+		"en-us": "", 
+		"en-dm": "Burnt", 
+		"type": "opts"
+	},
+	"menu.Achievements": {
+		"en-us": "", 
+		"en-dm": "Achievements", 
+		"type": "opts"
+	},
+	"menu.Options": {
+		"en-us": "", 
+		"en-dm": "Options", 
+		"type": "opts"
+	},
+	"menu.Quit": {
+		"en-us": "", 
+		"en-dm": "Quit", 
+		"type": "opts"
+	},
+	"menu.Back": {
+		"en-us": "", 
+		"en-dm": "Back", 
+		"type": "opts"
+	},
+	// - Inventory Menu
+	"menu.Items": {
+		"en-us": "", 
+		"en-dm": "Items", 
+		"type": "opts"
+	},
+	"inv.Heading": {
+		"en-us": "", 
+		"en-dm": "Your Crops", 
+		"type": "opts"
+	},
+	"inv.BackInfo": {
+		"en-us": "", 
+		"en-dm": "Return to the main Pause Menu.", 
+		"type": "opts"
+	},
+	"inv.SortInfo": {
+		"en-us": "", 
+		"en-dm": "Sort your Crop Inventory by various criteria. You can also manually reorder crops by selecting them, then selecting another crop you want to swap places with. You can also recycle crops for some quick money this way.", 
+		"type": "opts"
+	},
+	"inv.Sort": {
+		"en-us": "", 
+		"en-dm": "Sort", 
+		"type": "opts"
+	},
+	"inv.sCount": {
+		"en-us": "", 
+		"en-dm": "By Amount", 
+		"type": "opts"
+	},
+	"inv.sPower": {
+		"en-us": "", 
+		"en-dm": "By Power", 
+		"type": "opts"
+	},
+	"inv.sTime": {
+		"en-us": "", 
+		"en-dm": "By Growth Time", 
+		"type": "opts"
+	},
+	"inv.sType": {
+		"en-us": "", 
+		"en-dm": "By Type", 
+		"type": "opts"
+	},
+	"inv.swap": {
+		"en-us": "", 
+		"en-dm": "Swap Positions", 
+		"type": "opts"
+	},
+	"inv.drop": {
+		"en-us": "", 
+		"en-dm": "Recycle for {0}G", 
+		"type": "opts"
+	},
+	"inv.unselect": {
+		"en-us": "", 
+		"en-dm": "Unselect Crop", 
+		"type": "opts"
+	},
+	"gift.itemname": {
+		"en-us": "", 
+		"en-dm": "{count} {item}{seed}{s}", 
+		"type": "opts"
+	},
+	"gift.itemseed": {
+		"en-us": "", 
+		"en-dm": " Seed", 
+		"type": "opts"
+	},
+	// - Equipment Menu
+	"menu.Equipment": {
+		"en-us": "", 
+		"en-dm": "Equipment", 
 		"type": "opts"
 	},
 	"eq.hitCrops": {
@@ -6791,114 +6939,10 @@ const fulltext = {
 		"en-dm": "ATK:", 
 		"type": "opts"
 	},
-	"inv.swap": {
+	// - Fixture Menu
+	"menu.Farm": {
 		"en-us": "", 
-		"en-dm": "Swap Positions", 
-		"type": "opts"
-	},
-	"inv.drop": {
-		"en-us": "", 
-		"en-dm": "Recycle for {0}G", 
-		"type": "opts"
-	},
-	"inv.unselect": {
-		"en-us": "", 
-		"en-dm": "Unselect Crop", 
-		"type": "opts"
-	},
-	"alignment": {
-		"en-us": "", 
-		"en-dm": "Alignment", 
-		"type": "opts"
-	},
-	"aligngood": {
-		"en-us": "", 
-		"en-dm": "Good", 
-		"type": "opts"
-	},
-	"qi.goldmushroom": {
-		"en-us": "", 
-		"en-dm": "Golden Mushroom", 
-		"type": "opts"
-	},
-	"qi.milk": {
-		"en-us": "", 
-		"en-dm": "Milk", 
-		"type": "opts"
-	},
-	"qi.seamonkkey": {
-		"en-us": "", 
-		"en-dm": "Sea Monk Key", 
-		"type": "opts"
-	},
-	"qi.monsterheart": {
-		"en-us": "", 
-		"en-dm": "Sea Monster Heart", 
-		"type": "opts"
-	},
-	"qi.monsteregg": {
-		"en-us": "", 
-		"en-dm": "Sea Monster Egg", 
-		"type": "opts"
-	},
-	"qi.tire": {
-		"en-us": "", 
-		"en-dm": "Spare Tire", 
-		"type": "opts"
-	},
-	"qi.bpermit1": {
-		"en-us": "", 
-		"en-dm": "Mail for Catalina", 
-		"type": "opts"
-	},
-	"qi.food2keycard": {
-		"en-us": "", 
-		"en-dm": "Employee Keycard", 
-		"type": "opts"
-	},
-	"qi.smartphone": {
-		"en-us": "", 
-		"en-dm": "Smartphone", 
-		"type": "opts"
-	},
-	"ef.shocked": {
-		"en-us": "", 
-		"en-dm": "Unsafe", 
-		"type": "opts"
-	},
-	"ef.splashed": {
-		"en-us": "", 
-		"en-dm": "Wet", 
-		"type": "opts"
-	},
-	"ef.burned": {
-		"en-us": "", 
-		"en-dm": "Burnt", 
-		"type": "opts"
-	},
-	"alignbad": {
-		"en-us": "", 
-		"en-dm": "Evil", 
-		"type": "opts"
-	},
-	"aligntech": {
-		"en-us": "", 
-		"en-dm": "Industrial", 
-		"type": "opts"
-	},
-	"alignnature": {
-		"en-us": "", 
-		"en-dm": "Natural", 
-		"type": "opts"
-	},
-	"gift.itemname": {
-		"en-us": "", 
-		"en-dm": "{count} {item}{seed}{s}", 
-		"type": "opts"
-	},
-	"gift.itemseed": {
-		"en-us": "", 
-		"en-dm": " Seed", 
+		"en-dm": "Fixtures", 
 		"type": "opts"
 	},
 	"farmModDirt": {
@@ -7090,6 +7134,12 @@ const fulltext = {
 		"en-us": "", 
 		"en-dm": "This must be present on your Field and regularly filled with Sickle2 Batteries in order to use your Sickle2 effectively.", 
 		"type": "fixdesc"
+	},
+	// - Save Menu
+	"menu.Save": {
+		"en-us": "", 
+		"en-dm": "Save", 
+		"type": "opts"
 	},
 	"eraseSave": {
 		"en-us": "", 

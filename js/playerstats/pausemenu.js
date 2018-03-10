@@ -50,12 +50,12 @@ const pausemenu = {
             if(pausemenu.cursorX === 0) {
                 this.cursors.RedimCursor("main", 2, 11.75, 1, 1);
                 const str = GetText("alignment") + ": " + GetText(player.techAxis <= 0 ? "alignnature" : "aligntech") + " " + GetText(player.ethicsAxis >= 0 ? "aligngood" : "alignbad");
-                pausemenu.drawInfoText(str, 0, 10.75);
+                gfx.drawInfoText(str, 0, 10.75);
             } else {
                 const idx = pausemenu.cursorX - 1;
                 const item = pausemenu.questItems[idx];
                 this.cursors.RedimCursor("main", 5 + (idx * 1.5), 11.75, 0, 0);
-                pausemenu.drawInfoText(GetText("qi." + item), 5 + (idx * 1.5), 10.75);
+                gfx.drawInfoText(GetText("qi." + item), 5 + (idx * 1.5), 10.75);
             }
         }
 
@@ -92,19 +92,6 @@ const pausemenu = {
             }
         }
         // TODO: make player walkin areund it
-    },
-    drawInfoText: function(text, x, y) {
-        let xi = 1;
-        let width = gfx.getTextWidth(text) + 20;
-        let xiimax = x + Math.ceil(width / 64);
-        while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
-        gfx.drawTile("selL", x * 16, 2 + y * 16, "menuOverBlack");
-        while(width > 128) {
-            width -= 64;
-            gfx.drawTile("selM", x * 16 + 16 * xi++, 2 + y * 16, "menuOverBlack");
-        }
-        gfx.drawTile("selR", x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
-        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     addText: (t, x, y) => gfx.drawText(t, 2 + x * 16, 10.5 + y * 16),
     addFormattedText: function(key, num, x, y, middle, spaceNum) {
