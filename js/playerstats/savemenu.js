@@ -5,6 +5,7 @@ pausemenu.savemenu = {
         gfx.clearSome(this.layersToClear);
         if(args === undefined) { args = {}; }
         this.isSave = args.saving;
+        this.hasAuto = !this.isSave && localStorage.getItem("fileImgauto") !== null;
         this.options = [];
         this.cursorY = args.sel || 0;
         this.confirm = args.confirm;
@@ -17,15 +18,18 @@ pausemenu.savemenu = {
     DrawAll: function() {
         gfx.clearSome(this.layersToClear);
         const slotStr = GetText("saveSlotDisp") + " ";
+        const dy = this.hasAuto ? 1 : 0;
+        if(this.hasAuto) { this.drawOption(GetText("autosave"), 0, this.cursorY === 0); }
         for(let i = 0; i < game.numSaveSlots; i++) {
-            this.drawOption(slotStr + (i + 1), i, this.cursorY === i);
+            this.drawOption(slotStr + (i + 1), dy + i, this.cursorY === (dy + i));
         }
         gfx.drawInfobox(12, 2.5);
         this.cursors.RedimCursor("main", 0, this.cursorY, this.options[this.cursorY], 0);
         if(this.confirm) {
             gfx.drawWrappedText(GetText("eraseSave"), 4.5 * 16, 11, 155);
         } else {
-            this.displaySaveDataInfo(this.cursorY);
+            const saveNum = (this.hasAuto && this.cursorY === 0 ? "auto" : (this.cursorY - dy));
+            this.displaySaveDataInfo(saveNum);
         }
     },
     displaySaveDataInfo: function(savenum) {
@@ -61,7 +65,9 @@ pausemenu.savemenu = {
                 this.confirm = true;
                 this.DrawAll();
             } else {
-                game.load(this.cursorY);
+                const dy = this.hasAuto ? 1 : 0;
+                const saveNum = (this.hasAuto && this.cursorY === 0 ? "auto" : (this.cursorY - dy));
+                game.load(saveNum);
             }
         }
         return true;

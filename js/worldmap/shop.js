@@ -505,6 +505,7 @@ worldmap.shop = {
         } else if(productInfo.type === "inn") {
             player.lastInn = this.details.innId;
             player.health = player.maxhealth + 5;
+            game.save("auto", false);
             this.sleepsyData = { state: 0, size: 0.5, waitTimer: 80, animIdx: setInterval(worldmap.shop.Sleepsy, 10) };
         } else if(productInfo.type === "upgrade") {
             let dims = {x: 0, y: 0, new: "n"};

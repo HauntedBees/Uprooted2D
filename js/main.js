@@ -271,6 +271,7 @@ const game = {
     },
     PatchSaveFile: function() {
         // prior to v0.3
+        if(player.fixtureTutorialState === undefined) { console.log("fts"); player.fixtureTutorialState = 0; }
         if(player.keyboardcontrols === undefined) { console.log("kbc"); player.keyboardcontrols = { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" }; }
         if(player.gamepadcontrols === undefined) { console.log("gpc"); player.gamepadcontrols = { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1",  pause: "Gamepad9" }; }
         if(player.options.controltype === undefined) { console.log("oct"); player.options.controltype = 0; }

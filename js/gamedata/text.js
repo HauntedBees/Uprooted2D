@@ -341,6 +341,11 @@ const fulltext = {
 		"en-dm": "Slot", 
 		"type": "opts"
 	},
+	"autosave": {
+		"en-us": "", 
+		"en-dm": "Autosave", 
+		"type": "opts"
+	},
 	"title.new": {
 		"en-us": "", 
 		"en-dm": "New Game", 
