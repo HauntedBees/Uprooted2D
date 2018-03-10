@@ -460,19 +460,19 @@ combat.plant = {
                 combat.animHelper.ResetPlayerAnimState();
                 combat.animHelper.SetBirdAnimState("PLANT");
                 combat.animHelper.SetBirdAnimLayer("menucursorC");
-                if(size == 1) {
-                    combat.animHelper.SetBirdAnimPos(cursorX + 0.5, cursorY + 1.25);
+                if(size === 1) {
+                    combat.animHelper.SetBirdAnimPos(cursorX, cursorY + 1.75);
                 } else {
-                    combat.animHelper.SetBirdAnimPos(cursorX - 0.25, cursorY + 1.125);
+                    combat.animHelper.SetBirdAnimPos(cursorX - 0.5, cursorY + 1.375);
                 }
             } else {
                 combat.animHelper.ResetBirdAnimState();
                 combat.animHelper.SetPlayerAnimState("PLANT");
                 combat.animHelper.SetPlayerAnimLayer("menucursorC");
-                if(size == 1) {
-                    combat.animHelper.SetPlayerAnimPos(cursorX + 0.5, cursorY + 0.25);
+                if(size === 1) {
+                    combat.animHelper.SetPlayerAnimPos(cursorX, cursorY + 1.25);
                 } else {
-                    combat.animHelper.SetPlayerAnimPos(cursorX - 0.25, cursorY + 0.125);
+                    combat.animHelper.SetPlayerAnimPos(cursorX - 0.5, cursorY + 0.75);
                 }
             }
         }

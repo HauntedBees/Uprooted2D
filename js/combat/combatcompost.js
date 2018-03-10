@@ -10,7 +10,7 @@ combat.compost = {
         this.selectedCrops = [];
         this.healY = 2 + (this.dy + 0.5) * 16;
         this.atkY = 2 + (this.dy + 1.5) * 16;
-        this.binSprite = GetEquipment(player.equipment.compost).sprite;
+        this.binSprite = player.equipment.compost;
         this.cursor = {x: combat.dx, y: combat.dy};
         this.healButtonSelected = false;
         this.attackButtonSelected = false;
@@ -132,11 +132,11 @@ combat.compost = {
                     if(combat.isFalcon) {
                         combat.animHelper.ResetPlayerAnimState();
                         combat.animHelper.SetBirdAnimState("PLANT");
-                        combat.animHelper.SetBirdAnimPos(tile.x + combat.dx + 0.5, tile.y + combat.dy + 1.25);
+                        combat.animHelper.SetBirdAnimPos(tile.x + combat.dx, tile.y + combat.dy + 1.75);
                     } else {
                         combat.animHelper.ResetBirdAnimState();
                         combat.animHelper.SetPlayerAnimState("PLANT");
-                        combat.animHelper.SetPlayerAnimPos(tile.x + combat.dx + 0.5, tile.y + combat.dy + 0.25);
+                        combat.animHelper.SetPlayerAnimPos(tile.x + combat.dx, tile.y + combat.dy + 1.25);
                     }
                 } else {
                     this.WriteAboutCrop(tile);
@@ -150,17 +150,17 @@ combat.compost = {
                         combat.animHelper.ResetPlayerAnimState();
                         combat.animHelper.SetBirdAnimState("PLANT");
                         if(tile.size === 2) {
-                            combat.animHelper.SetBirdAnimPos(this.cursor.x + 0.5, this.cursor.y + 1.25);
+                            combat.animHelper.SetBirdAnimPos(this.cursor.x, this.cursor.y + 1.75);
                         } else {
-                            combat.animHelper.SetBirdAnimPos(this.cursor.x - 0.25, this.cursor.y + 1.125);
+                            combat.animHelper.SetBirdAnimPos(this.cursor.x - 0.5, this.cursor.y + 1.375);
                         }
                     } else {
                         combat.animHelper.ResetBirdAnimState();
                         combat.animHelper.SetPlayerAnimState("PLANT");
                         if(tile.size === 2) {
-                            combat.animHelper.SetPlayerAnimPos(this.cursor.x + 0.5, this.cursor.y + 0.25);
+                            combat.animHelper.SetPlayerAnimPos(this.cursor.x, this.cursor.y + 1.25);
                         } else {
-                            combat.animHelper.SetPlayerAnimPos(this.cursor.x - 0.25, this.cursor.y + 0.125);
+                            combat.animHelper.SetPlayerAnimPos(this.cursor.x - 0.5, this.cursor.y + 0.75);
                         }
                     }
                 }
@@ -179,11 +179,11 @@ combat.compost = {
                     if(combat.isFalcon) {
                         combat.animHelper.ResetPlayerAnimState();
                         combat.animHelper.SetBirdAnimState("PLANT");
-                        combat.animHelper.SetBirdAnimPos(this.cursor.x - 0.25, this.cursor.y + 1.125);
+                        combat.animHelper.SetBirdAnimPos(this.cursor.x - 0.5, this.cursor.y + 1.375);
                     } else {
                         combat.animHelper.ResetBirdAnimState();
                         combat.animHelper.SetPlayerAnimState("PLANT");
-                        combat.animHelper.SetPlayerAnimPos(this.cursor.x - 0.25, this.cursor.y + 0.125);
+                        combat.animHelper.SetPlayerAnimPos(this.cursor.x - 0.5, this.cursor.y + 0.75);
                     }
                 } else {
                     combat.cursors.RedimCursor("main", cowPos.x, cowPos.y, 1, 1);
@@ -195,11 +195,11 @@ combat.compost = {
                     if(combat.isFalcon) { 
                         combat.animHelper.ResetPlayerAnimState();
                         combat.animHelper.SetBirdAnimState("PLANT");
-                        combat.animHelper.SetBirdAnimPos(cowPos.x + 0.5, cowPos.y + 1.25);
+                        combat.animHelper.SetBirdAnimPos(cowPos.x + 0.5, cowPos.y + 2.25);
                     } else {
                         combat.animHelper.ResetBirdAnimState();
                         combat.animHelper.SetPlayerAnimState("PLANT");
-                        combat.animHelper.SetPlayerAnimPos(cowPos.x + 0.5, cowPos.y + 0.25);
+                        combat.animHelper.SetPlayerAnimPos(cowPos.x + 0.5, cowPos.y + 2);
                     }
                 }
             }
