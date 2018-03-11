@@ -1,7 +1,9 @@
 pausemenu.inventory = {
+    mouseReady: true, 
     cursor: { x: 0, y: 0 }, inventoryWidth: 3, cropDY: 1.5, cropDX: 0.5, animHelper: null, 
     layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
     actualIndexes: [], selectedCrop: -1, trashInfo: [], trashIdx: 0, inSort: false, justSorted: -1, 
+    backStartX: 0, backButtonW: 0, sortStartX: 0, sortButtonW: 0,  
     setup: function() {
         this.cursor = { x: 0, y: 0 };
         this.cursors = new CursorAnimSet([
@@ -44,23 +46,24 @@ pausemenu.inventory = {
         }
         this.animHelper.DrawWrapper(this.cropDX, this.cropDY, this.inventoryWidth, 36 / this.inventoryWidth);
 
-        const backStartX = 0.125;
-        const backButtonW = gfx.drawInfoText(GetText("menu.Back"), backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
-        const sortStartX = 1.25 + backButtonW;
-        const sortButtonW = gfx.drawInfoText(GetText("inv.Sort"), sortStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 1, "menuA", "menutext");
+        this.backStartX = 0.125;
+        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+        this.sortStartX = 1.25 + this.backButtonW;
+        this.sortButtonW = gfx.drawInfoText(GetText("inv.Sort"), this.sortStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 1, "menuA", "menutext");
         if(this.inSort) {
             const vals = [];
-            vals.push(gfx.drawInfoText(GetText("inv.sCount"), sortStartX, 1, this.cursor.y === 0));
-            vals.push(gfx.drawInfoText(GetText("inv.sPower"), sortStartX, 2, this.cursor.y === 1));
-            vals.push(gfx.drawInfoText(GetText("inv.sTime"), sortStartX, 3, this.cursor.y === 2));
-            vals.push(gfx.drawInfoText(GetText("inv.sType"), sortStartX, 4, this.cursor.y === 3));
-            this.cursors.RedimCursor("main", -2, -2, 0, 0);
+            vals.push(gfx.drawInfoText(GetText("inv.sCount"), this.sortStartX, 1, this.cursor.y === 0));
+            vals.push(gfx.drawInfoText(GetText("inv.sPower"), this.sortStartX, 2, this.cursor.y === 1));
+            vals.push(gfx.drawInfoText(GetText("inv.sTime"), this.sortStartX, 3, this.cursor.y === 2));
+            vals.push(gfx.drawInfoText(GetText("inv.sType"), this.sortStartX, 4, this.cursor.y === 3));
+            if(this.cursor.y === -1) { this.cursors.RedimCursor("main", this.sortStartX, 0, this.sortButtonW, -0.25); }
+            else { this.cursors.RedimCursor("main", -2, -2, 0, 0); }
         }
 
         if(!this.inSort) {
             if(this.cursor.y === -1) {
-                const thisX = this.cursor.x === 0 ? backStartX : sortStartX;
-                const thisW = this.cursor.x === 0 ? backButtonW : sortButtonW;
+                const thisX = this.cursor.x === 0 ? this.backStartX : this.sortStartX;
+                const thisW = this.cursor.x === 0 ? this.backButtonW : this.sortButtonW;
                 this.cursors.RedimCursor("main", thisX, 0, thisW, -0.25);
             } else if(this.cursor.x < this.inventoryWidth) {
                 this.cursors.RedimCursor("main", this.cursor.x + this.cropDX, this.cursor.y + this.cropDY, 0, 0);
@@ -100,9 +103,59 @@ pausemenu.inventory = {
         } else if(this.selectedCrop < 0) { game.innerTransition(this, pausemenu); }
         else { this.selectedCrop = -1; if(this.cursor.x >= this.inventoryWidth) { this.cursor.x = this.inventoryWidth - 1; } this.DrawAll(); }
     },
-    mouseMove: function(pos) {
+    keyPress: function(key) {
+        const pos = { x: this.cursor.x, y: this.cursor.y };
+        let isEnter = false;
+        switch(key) {
+            case player.controls.up: pos.y--; break;
+            case player.controls.left: pos.x--; break;
+            case player.controls.down: pos.y++; break;
+            case player.controls.right: pos.x++; break;
+            case player.controls.confirm:
+            case player.controls.pause: isEnter = true; break;
+            case player.controls.cancel: return this.cancel();
+        }
         if(this.inSort) {
             if(pos.y < 0 || pos.y > 3 || pos.x != 1) { return false; }
+        } else {
+            if((this.cursor.y === 0 && pos.y === -1) || (this.cursor.y === -1 && pos.y === 0)) {
+                pos.x = 0;
+            }
+            if(pos.y < -1 || pos.x < 0) { return false; }
+            if(pos.y === -1 && (pos.x > 1 || this.selectedCrop >= 0)) { return false; }
+        }
+        if(isEnter) {
+            return this.click(pos);
+        } else {
+            return this.CursorMove(pos);
+        }
+    },
+    mouseMove: function(pos) {
+        const dpos = { x: pos.x - this.cropDX, y: pos.y - this.cropDY };
+        if(this.inSort) {
+            dpos.y += this.cropDY;
+            input.FloorPoint(dpos);
+            if(dpos.y > 4) { return false; }
+            dpos.x = 1;
+            dpos.y -= 1;
+        } else if(dpos.y < 0) {
+            dpos.x += this.cropDX;
+            dpos.y = -1;
+            if(dpos.x >= this.backStartX && dpos.x < this.sortStartX) {
+                dpos.x = 0;
+            } else if(dpos.x >= this.sortStartX && dpos.x <= (this.sortStartX + this.sortButtonW + 1)) {
+                dpos.x = 1;
+            } else { return false; }
+        } else {
+            input.FloorPoint(dpos);
+            if(dpos.y < 0) { return false; }
+            if(dpos.x > this.inventoryWidth) { return false; }
+        }
+        this.CursorMove(dpos);
+    },
+    CursorMove: function(pos) {
+        if(this.inSort) {
+            if(pos.y < -1 || pos.y > 3 || pos.x != 1) { return false; }
         } else {
             if(pos.x < 0 || pos.y < -1) { return false; }
             if(this.selectedCrop < 0) {
@@ -110,7 +163,7 @@ pausemenu.inventory = {
                 const idx = pos.y * this.inventoryWidth + pos.x;
                 if(idx >= this.actualIndexes.length) { return false; }
             } else {
-                if(pos.x > this.inventoryWidth) { return false; }
+                if(pos.x > this.inventoryWidth || pos.y >= (36 / this.inventoryWidth)) { return false; }
             }
         }
         this.cursor = { x: pos.x, y: pos.y };
@@ -174,12 +227,13 @@ pausemenu.inventory = {
         gfx.drawTile("recSelR", x * 16 + 16 * xi, y * 16 - 5, "menuOverBlack");
         gfx.drawText(text, 7 + x * 16, 3.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
-    click: function(pos) {
+    click: function() {
         if(this.inSort) {
-            if(pos.y < 0 || pos.y > 3 || pos.x != 1) { return false; }
+            if(this.cursor.y < -1 || this.cursor.y > 3 || this.cursor.x != 1) { return false; }
+            if(this.cursor.y === -1) { this.cancel(); this.DrawAll(); return true; }
             const nonCrops = player.inventory.filter(e => e[0][0] === "_" || e[0][0] === "!");
             const crops = player.inventory.filter(e => e[0][0] !== "_" && e[0][0] !== "!");
-            switch(pos.y) {
+            switch(this.cursor.y) {
                 case 0: // amount
                     if(this.justSorted === 0) {
                         crops.sort((a, b) => a[1] - b[1]);
@@ -228,7 +282,7 @@ pausemenu.inventory = {
                     break;
             }
             player.inventory = [...crops, ...nonCrops];
-            this.justSorted = (this.justSorted === pos.y) ? -1 : pos.y;
+            this.justSorted = (this.justSorted === this.cursor.y) ? -1 : this.cursor.y;
             this.cancel();
         } else if(this.cursor.y === -1) {
             if(this.cursor.x === 0) {
@@ -251,8 +305,15 @@ pausemenu.inventory = {
         } else {
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             const actIdx = this.actualIndexes[idx];
-            if(actIdx === undefined) { return false; }
-            if(this.selectedCrop < 0) {
+            if(actIdx === undefined) {
+                const temp = player.inventory[this.selectedCrop];
+                player.inventory.splice(this.selectedCrop, 1);
+                player.inventory.push(temp);
+                this.selectedCrop = -1;
+                const numItems = this.actualIndexes.length - 1;
+                this.cursor.x = numItems % this.inventoryWidth;
+                this.cursor.y = Math.floor(numItems / this.inventoryWidth);
+            } else if(this.selectedCrop < 0) {
                 this.selectedCrop = actIdx;
             } else if(this.selectedCrop === this.actIdx) {
                 this.selectedCrop = -1;
@@ -267,33 +328,6 @@ pausemenu.inventory = {
         }
         this.DrawAll();
         return true;
-    },
-    keyPress: function(key) {
-        const pos = { x: this.cursor.x, y: this.cursor.y };
-        let isEnter = false;
-        switch(key) {
-            case player.controls.up: pos.y--; break;
-            case player.controls.left: pos.x--; break;
-            case player.controls.down: pos.y++; break;
-            case player.controls.right: pos.x++; break;
-            case player.controls.confirm:
-            case player.controls.pause: isEnter = true; break;
-            case player.controls.cancel: return this.cancel();
-        }
-        if(this.inSort) {
-            if(pos.y < 0 || pos.y > 3 || pos.x != 1) { return false; }
-        } else {
-            if((this.cursor.y === 0 && pos.y === -1) || (this.cursor.y === -1 && pos.y === 0)) {
-                pos.x = 0;
-            }
-            if(pos.y < -1 || pos.x < 0) { return false; }
-            if(pos.y === -1 && (pos.x > 1 || this.selectedCrop >= 0)) { return false; }
-        }
-        if(isEnter) {
-            return this.click(pos);
-        } else {
-            return this.mouseMove(pos);
-        }
     },
     SetCrop: function() {
         const rowYs = [0.25, 1.5, 2.75];

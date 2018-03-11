@@ -3,14 +3,24 @@ let gpVals = {
     deadZones: [0.25, 0.25, 0.25, 0.25]
 };
 let input = {
+    FloorPoint: p => { p.x = Math.floor(p.x); p.y = Math.floor(p.y); },
     click: function(e) {
-        if(game.currentInputHandler.click(p)) { return; }
-        const p = input.getMousePos(e);
+        const p = input.getMousePos(e); console.log(p);
+        if(!game.currentInputHandler.mouseReady) { return; }
+        if(game.currentInputHandler.click(p, true)) { return; }
     },
     moveMouse: function(e) {
         const p = input.getMousePos(e);
+        if(!game.currentInputHandler.mouseReady) { return; }
         if(game.currentInputHandler.mouseMove(p)) { return; }
     },
+    getMousePos: function(e) {
+        const rect = gfx.canvas["menutext"].getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        return { x: Math.floor(x / 16) / gfx.scale, y: Math.floor(y / 16) / gfx.scale };
+    },
+
     justPressed: {}, keys: {}, mainKey: undefined,
     IsFreshPauseOrConfirmPress: () => (input.justPressed[player.controls.pause] === 0) || (input.justPressed[player.controls.confirm] === 0),
     setMainKey: function(key) {
@@ -74,15 +84,6 @@ let input = {
         }
         game.currentInputHandler.keyPress(key);
         input.justPressed[key]++;
-    },
-    getMousePos: function(e) {
-        const rect = gfx.canvas["menutext"].getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        return {
-            x: Math.floor(x / 16 / gfx.scale), 
-            y: Math.floor(y / 16 / gfx.scale)
-        };
     },
     SwitchControlType: function(newType) {
         player.options.controltype = newType;
