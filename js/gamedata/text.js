@@ -6950,6 +6950,11 @@ const fulltext = {
 		"en-dm": "Fixtures", 
 		"type": "opts"
 	},
+	"fx.Heading": {
+		"en-us": "", 
+		"en-dm": "Your Fixtures", 
+		"type": "opts"
+	},
 	"farmModDirt": {
 		"en-us": "", 
 		"en-dm": "Dirt\n Growth Speed: {0}%", 

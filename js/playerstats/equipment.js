@@ -109,7 +109,7 @@ pausemenu.equipment = {
     },
     click: function() {
         if(this.cursor.y === -1) {
-            game.innerTransition(this, pausemenu);
+            this.cancel();
             return true;
         }
         if(this.cursor.x < 0 || this.cursor.y < 0) { return false; }

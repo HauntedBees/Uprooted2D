@@ -1,11 +1,16 @@
 pausemenu.farmmod = {
-    grid: [], cursor: {x: 0, y: 0}, dx: 0, dy: 0, animHelper: null,
+    mouseReady: true, 
+    grid: [], cursor: { x: 0, y: 0 }, animHelper: null,
+    dx: 0, dy: 0, cropdx: 0.5, cropdy: 1.125,
     selectedItem: null, selectedItemPos: null, selectedItemSize: 0, 
     layersToClear: ["background", "characters", "menuA", "menutext"],
-    actualIndexes: [], inventoryWidth: 4, 
+    actualIndexes: [], inventoryWidth: 4, backStartX: 0, backButtonW: 0, 
     setup: function() { 
         this.animHelper = new CombatAnimHelper([]);
         this.cursor = { x: 0, y: 0 };
+        this.selectedItem = null;
+        this.selectedItemPos = null;
+        this.selectedItemSize = 0;
         this.cursors = new CursorAnimSet([
             { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" },
             { key: "alt", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" }
@@ -19,19 +24,33 @@ pausemenu.farmmod = {
     },
     drawEverything: function() {
         gfx.clearSome(this.layersToClear);
+        gfx.TileBackground("invTile");
+        pausemenu.DrawInnerHeading("fx.Heading");
+
         this.drawFarm();
         this.displayItems();
-        gfx.drawInfobox(11, 5);
+        gfx.drawInfobox(11, 5, this.cropdy);
+
+        if(this.actualIndexes.length === 0) { this.cursor = { x: 0, y: -1 }; }
+        this.backStartX = 0.125;
+        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+
         const size = (this.selectedItem === null || this.cursor.y < 3) ? 0 : this.selectedItemSize;
-        const delta = this.cursor.y < 3 ? 0.5 : 0;
-        this.cursors.RedimCursor("main", delta + this.cursor.x, delta + this.cursor.y, size, size);
-        this.cursors.ReTypeCursor("main", this.canPlant() ? "cursor" : "bcursor");
-        if(this.selectedItem !== null) {
-            this.cursors.MoveCursor("alt", 0.5 + this.selectedItemPos.x, 0.5 + this.selectedItemPos.y);
+        const dx = this.cursor.y < 3 ? this.cropdx : 0;
+        const dy = this.cursor.y < 3 ? this.cropdy : 0;
+        if(this.cursor.y === -1) {
+            this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+            gfx.drawWrappedText(GetText("inv.BackInfo"), 5.5 * 16, 30, 155);
         } else {
-            this.cursors.MoveCursor("alt", -1, -1);
+            this.cursors.RedimCursor("main", dx + this.cursor.x, dy + this.cursor.y, size, size);
+            this.cursors.ReTypeCursor("main", this.canPlant() ? "cursor" : "bcursor");
+            if(this.selectedItem !== null) {
+                this.cursors.MoveCursor("alt", this.cropdx + this.selectedItemPos.x, this.cropdy + this.selectedItemPos.y);
+            } else {
+                this.cursors.MoveCursor("alt", -1, -1);
+            }
+            this.drawText();
         }
-        this.drawText();
     },
     drawText: function() {
         let text = "";
@@ -61,16 +80,24 @@ pausemenu.farmmod = {
                 text += item.displayname + "\n " + item.desc;
             }
         }
-        gfx.drawWrappedText(text, 5.5 * 16, 11, 155);
+        gfx.drawWrappedText(text, 5.5 * 16, 30, 155);
     },
     displayItems: function() {
         let j = 0;
         this.actualIndexes = [];
         for(let i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0][0] !== "_") { continue; }
-            gfx.drawInventoryItem(player.inventory[i], 0.5 + j % this.inventoryWidth, 0.5 + Math.floor(j / this.inventoryWidth), "menuA");
+            const thisX = this.cropdx + j % this.inventoryWidth;
+            const thisY = this.cropdy + Math.floor(j / this.inventoryWidth);
+            gfx.drawTileToGrid("invBox", thisX, thisY, "menuA");
+            gfx.drawInventoryItem(player.inventory[i], thisX, thisY, "menuA");
             this.actualIndexes.push(i);
             j++;
+        }
+        for(let i = j; i < 12; i++) {
+            const thisX = this.cropdx + i % this.inventoryWidth;
+            const thisY = this.cropdy + Math.floor(i / this.inventoryWidth);
+            gfx.drawTileToGrid("invBox", thisX, thisY, "menuA");
         }
     },
     drawFarm: function() {
@@ -138,30 +165,38 @@ pausemenu.farmmod = {
         return item;
     },
     mouseMove: function(pos) {
-        if(pos.y < 0 || pos.x < 0) { return false; }
-        if(pos.y < 4) { // item selection
-            if(pos.x >= this.inventoryWidth) { return false; }
-            const idx = pos.y * this.inventoryWidth + pos.x;
-            if(idx >= this.actualIndexes.length) { return false; }
+        const dpos = { x: pos.x, y: pos.y };
+        if(dpos.y < 1) {
+            dpos.y = -1;
+            if(dpos.x >= this.backStartX && dpos.x < (this.backButtonW + 1)) {
+                dpos.x = 0;
+            } else { return false; }
+        } else if(dpos.y > 4) {
+            dpos.x = Math.floor(dpos.x - this.dx) + this.dx;
+            dpos.y = Math.floor(dpos.y);
         } else {
-            if(pos.y < this.dy || pos.x < this.dx || pos.y >= (this.dy + player.gridHeight - this.selectedItemSize) || pos.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
+            dpos.x -= this.cropdx;
+            dpos.y -= this.cropdy;
+            input.FloorPoint(dpos);
         }
-        this.cursor = pos;
-        this.drawEverything();
-        return true;
+        this.CursorMove(dpos);
     },
-    click: function(pos) {
-        if(pos.y < 4) { // item selection
-            if(pos.x >= this.inventoryWidth) { return false; }
-            const idx = pos.y * this.inventoryWidth + pos.x;
+    click: function() {
+        if(this.cursor.y === -1) {
+            this.cancel();
+            return true;
+        }
+        if(this.cursor.y < 4) { // item selection
+            if(this.cursor.x >= this.inventoryWidth) { return false; }
+            const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             if(idx >= this.actualIndexes.length) { return false; }
             const invIdx = this.actualIndexes[idx];
             const item = player.inventory[invIdx][0];
             this.selectedItem = (this.selectedItem === item ? null : item);
-            this.selectedItemPos = pos;
+            this.selectedItemPos = this.cursor;
             this.selectedItemSize = (GetFarmInfo(item).size - 1) || 0;
         } else {
-            if(pos.y < this.dy || pos.x < this.dx || pos.y >= (this.dy + player.gridHeight - this.selectedItemSize) || pos.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
+            if(this.cursor.y < this.dy || this.cursor.x < this.dx || this.cursor.y >= (this.dy + player.gridHeight - this.selectedItemSize) || this.cursor.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
             const gridX = this.cursor.x - this.dx;
             const gridY = this.cursor.y - this.dy;
             if(!this.canPlant()) { return false; }
@@ -204,9 +239,11 @@ pausemenu.farmmod = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(pos.y < 0 || pos.x < 0) { return false; }
+        if(pos.y < -1 || pos.x < 0) { return false; }
         
-        if(this.cursor.y < 4 && pos.y > this.cursor.y) {
+        if(pos.y === -1) {
+            pos.x = 0;
+        } else if(this.cursor.y < 4 && pos.y > this.cursor.y) {
             if(pos.x < this.inventoryWidth) {
                 const idx = pos.y * this.inventoryWidth + pos.x;
                 if(idx >= this.actualIndexes.length) {
@@ -219,7 +256,22 @@ pausemenu.farmmod = {
             pos.x = this.actualIndexes.length - (this.inventoryWidth * pos.y) - 1;
         }
 
-        if(isEnter) { return this.click(pos); }
-        else { return this.mouseMove(pos); }
+        if(isEnter) { return this.click(); }
+        else { return this.CursorMove(pos); }
+    },
+    CursorMove: function(pos) {
+        if(pos.y < -1 || pos.x < 0) { return false; }
+        if(pos.y === -1) {
+            pos.x = 0;
+        } if(pos.y < 4) { // item selection
+            if(pos.x >= this.inventoryWidth) { return false; }
+            const idx = pos.y * this.inventoryWidth + pos.x;
+            if(idx >= this.actualIndexes.length) { return false; }
+        } else {
+            if(pos.y < this.dy || pos.x < this.dx || pos.y >= (this.dy + player.gridHeight - this.selectedItemSize) || pos.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
+        }
+        this.cursor = pos;
+        this.drawEverything();
+        return true;
     }
 };
