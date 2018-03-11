@@ -287,7 +287,7 @@ pausemenu.inventory = {
                 pos.x = 0;
             }
             if(pos.y < -1 || pos.x < 0) { return false; }
-            if(pos.y === -1 && pos.x > 1) { return false; }
+            if(pos.y === -1 && (pos.x > 1 || this.selectedCrop >= 0)) { return false; }
         }
         if(isEnter) {
             return this.click(pos);
