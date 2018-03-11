@@ -29,25 +29,21 @@ const gfx = {
         }
     },
     getSaveFileImage: function() {
-        const mapImg = gfx.spritesheets["maps/" + worldmap.mapName];
-        const offset = {
-            x: Math.min(collisions[worldmap.mapName][0].length - gfx.tileWidth, Math.max(worldmap.pos.x - (gfx.tileWidth / 2), 0)),
-            y: Math.min(collisions[worldmap.mapName].length - gfx.tileHeight, Math.max(worldmap.pos.x - (gfx.tileHeight / 2), 0))
-        };
-        offset.x = worldmap.pos.x - offset.x + 13;
-        offset.y = worldmap.pos.y - offset.y + 10;
-        const ctx = gfx.ctx["savegen"],  w = ctx.canvas.width, h = ctx.canvas.height;
+        const ctx = gfx.ctx["savegen"], w = ctx.canvas.width, h = ctx.canvas.height;
         ctx.clearRect(0, 0, w, h);
         const layersToDraw = ["background", "characters", "foreground"];
         for(let i = 0; i < layersToDraw.length; i++) {
-            ctx.drawImage(gfx.canvas[layersToDraw[i]], offset.x * 16, offset.y * 16, w * 2, h * 2, 0, 0, w, h);
+            ctx.drawImage(gfx.canvas[layersToDraw[i]], 0, 0, w * gfx.scale, h * gfx.scale, 0, 0, w * gfx.scale, h * gfx.scale);
         }
         try { return ctx.canvas.toDataURL("image/png"); } catch(e) { return null; } // toDataURL fails when running locally
     },
     drawSaveFileImage: function(encodedImg) {
         const img = new Image();
         img.src = encodedImg;
-        img.onload = function() { gfx.ctx["menutext"].drawImage(this, 700, 14, 192, 128); };
+        const w = (gfx.tileWidth - 5) * 16 * gfx.scale;
+        const h = (gfx.tileHeight - 6) * 16 * gfx.scale;
+        img.onload = function() { gfx.ctx["menutext"].drawImage(this, 48, 48, w, h, 256, 288, w, h); };
+        //img.onload = function() { gfx.ctx["menutext"].drawImage(this, 256, 288, 1024, 896); };
     },
     drawHorRor: function(intensity) { // TODO: recalibrate with new screen resolution
         if(intensity < 0) { intensity = 0; }

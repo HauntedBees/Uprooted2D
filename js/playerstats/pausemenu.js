@@ -12,17 +12,18 @@ const pausemenu = {
         this.cursors.Start();
         //this.drawFarm();
     },
-    GetQuestItems: function() {
+    GetQuestItems: function(p) {
+        p = p || player;
         this.questItems = [];
-        if(player.hasQuestState("quest1", 4) || player.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
-        if(player.hasQuestState("kelpBoy", "gotMilk")) { this.questItems.push("milk"); }
-        if(player.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }
-        if(player.hasQuestState("getHeart", "weirdheart") || player.hasQuestState("getHeart", "heart")) { this.questItems.push("monsterheart"); }
-        else if(player.hasQuestState("helpSeaMonster", "gotEgg")) { this.questItems.push("monsteregg"); }
-        if(player.hasQuest("truckRepair")) { this.questItems.push("tire"); }
-        if(worldmap.smartphone !== null) { this.questItems.push("smartphone"); }
-        if(player.hasQuestState("catmail", 1)) { this.questItems.push("bpermit1"); }
-        if(player.completedQuest("keycard")) { this.questItems.push("food2keycard"); }
+        if(p.hasQuestState("    ", 4) || p.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
+        if(p.hasQuestState("kelpBoy", "gotMilk")) { this.questItems.push("milk"); }
+        if(p.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }
+        if(p.hasQuestState("getHeart", "weirdheart") || p.hasQuestState("getHeart", "heart")) { this.questItems.push("monsterheart"); }
+        else if(p.hasQuestState("helpSeaMonster", "gotEgg")) { this.questItems.push("monsteregg"); }
+        if(p.hasQuest("truckRepair")) { this.questItems.push("tire"); }
+        if(p.completedQuest("gotPhone")) { this.questItems.push("smartphone"); }
+        if(p.hasQuestState("catmail", 1)) { this.questItems.push("bpermit1"); }
+        if(p.completedQuest("keycard")) { this.questItems.push("food2keycard"); }
     },
     drawAll: function() {
         gfx.clearSome(pausemenu.layersToClear);

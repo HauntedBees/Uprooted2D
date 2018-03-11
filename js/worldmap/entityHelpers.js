@@ -150,6 +150,7 @@ function EnterShop(name, x, y, shop, shopDir) {
     return { 
         name: name, solid: false, pos: { x: x, y: y }, isShop: true, shopName: shop, shopDir: shopDir,
         interact: [ (i, e) => {
+            worldmap.savedImage = gfx.getSaveFileImage();
             switch(e.shopDir) {
                 case directions.UP: worldmap.pos.y -= 0.5; break;
                 case directions.LEFT: worldmap.pos.x -= 0.5; break;

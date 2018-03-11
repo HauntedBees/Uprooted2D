@@ -542,6 +542,7 @@ worldmap.shop = {
         return true;
     },
     cancel: function() {
+        if(this.sleepsyData !== null) { return; }
         this.sellOffset = 0; this.numArrows = 0;
         switch(this.sellingState) {
             case me.sellStates.SELLING: 

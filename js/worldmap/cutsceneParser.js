@@ -480,7 +480,7 @@ const SpecialFunctions = {
         worldmap.importantEntities["trentSafe"].visible = true;
         worldmap.importantEntities["trentSafe"].solid = true;
     },
-    "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); },
+    "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); player.questsCleared.push("gotPhone"); },
     "PHONEPRESS": function() { worldmap.smartphone.Read(); },
     "THEMONSTER": function() {
         var monster = GetCommonEntity("Monster", worldmap.pos.x - 0.5, worldmap.pos.y - 2.25, 6, 0, undefined, undefined, { big: true, sy: 2, isTheMonster: true });

@@ -7146,6 +7146,21 @@ const fulltext = {
 		"type": "fixdesc"
 	},
 	// - Save Menu
+	"saveHeading": {
+		"en-us": "", 
+		"en-dm": "Save Game", 
+		"type": "opts"
+	},
+	"loadHeading": {
+		"en-us": "", 
+		"en-dm": "Load Game", 
+		"type": "opts"
+	},
+	"saveInfoStr": {
+		"en-us": "", 
+		"en-dm": "Lv.{level}  {monies}G  Time: {time} \n Location: {location}", 
+		"type": "opts"
+	},
 	"menu.Save": {
 		"en-us": "", 
 		"en-dm": "Save", 
@@ -7159,6 +7174,86 @@ const fulltext = {
 	"noSave": {
 		"en-us": "", 
 		"en-dm": "No Save Data", 
+		"type": "opts"
+	},
+	"map.farm": {
+		"en-us": "", 
+		"en-dm": "Your Farm", 
+		"type": "opts"
+	},
+	"map.producestand": {
+		"en-us": "", 
+		"en-dm": "Produce Stand", 
+		"type": "opts"
+	},
+	"map.forest": {
+		"en-us": "", 
+		"en-dm": "Agrios Forest", 
+		"type": "opts"
+	},
+	"map.firstvillage": {
+		"en-us": "", 
+		"en-dm": "San Ambrosio", 
+		"type": "opts"
+	},
+	"map.belowvillage": {
+		"en-us": "", 
+		"en-dm": "South of Town", 
+		"type": "opts"
+	},
+	"map.researchfacility": {
+		"en-us": "", 
+		"en-dm": "Research Lab", 
+		"type": "opts"
+	},
+	"map.bridge": {
+		"en-us": "", 
+		"en-dm": "Bridge Crossing", 
+		"type": "opts"
+	},
+	"map.underwater": {
+		"en-us": "", 
+		"en-dm": "Underwater", 
+		"type": "opts"
+	},
+	"map.fakefarm": {
+		"en-us": "", 
+		"en-dm": "Jeff's Farm", 
+		"type": "opts"
+	},
+	"map.southcity": {
+		"en-us": "", 
+		"en-dm": "South Las Abejas", 
+		"type": "opts"
+	},
+	"map.northcity": {
+		"en-us": "", 
+		"en-dm": "Central Las Abejas", 
+		"type": "opts"
+	},
+	"map.hq_1": {
+		"en-us": "", 
+		"en-dm": "Food2 HQ 1F", 
+		"type": "opts"
+	},
+	"map.hq_2": {
+		"en-us": "", 
+		"en-dm": "Food2 HQ 2F", 
+		"type": "opts"
+	},
+	"map.hq_3": {
+		"en-us": "", 
+		"en-dm": "Food2 HQ 3F", 
+		"type": "opts"
+	},
+	"map.hq_4": {
+		"en-us": "", 
+		"en-dm": "Food2 HQ 4F", 
+		"type": "opts"
+	},
+	"map.hq_5": {
+		"en-us": "", 
+		"en-dm": "Food2 HQ 5F", 
 		"type": "opts"
 	},
 	// Achievements
