@@ -1821,12 +1821,12 @@ const fulltext = {
 	},
 	"seasmod": {
 		"en-us": "", 
-		"en-dm": "The label on this says it is a \"Season Modulator.\" It doesn't appear to do anything.", 
+		"en-dm": "This is a Season Modulator like the one that big robot on your farm had inside of it.", 
 		"type": "map"
 	},
 	"seedshooter": {
 		"en-us": "", 
-		"en-dm": "A seed shooter, like the one you hijacked from that giant robot back at your farm.", 
+		"en-dm": "This device has a label on it that reads \"Seed Shooter - for eco-friendly warfare.\"", 
 		"type": "map"
 	},
 	"seedshot": {
