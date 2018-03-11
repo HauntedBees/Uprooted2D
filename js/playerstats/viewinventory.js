@@ -70,6 +70,11 @@ pausemenu.inventory = {
         }
         if(this.selectedCrop >= 0) { this.DrawSelectInfo(); }
         this.HandleTrashCan(true);
+
+        const headingText = GetText("inv.Heading");
+        const headingX = gfx.getTextRightAlignedX(headingText, 22, gfx.canvasWidth) / gfx.scale - 5;
+        gfx.drawText(headingText, headingX, 9);
+
         if(this.cursor.y >= 0 && !this.inSort) {
             this.SetCrop();
         } else {
@@ -299,10 +304,6 @@ pausemenu.inventory = {
         rowYs.forEach((e, i) => rowYs[i] = e + pausemenu.inventory.cropDY - 0.25);
         rowTextYs.forEach((e, i) => rowTextYs[i] = e + pausemenu.inventory.cropDY * 16 - 4);
         gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 11.5);
-
-        const headingText = GetText("inv.Heading");
-        const headingX = gfx.getTextRightAlignedX(headingText, 22, gfx.canvasWidth) / gfx.scale - 5;
-        gfx.drawText(headingText, headingX, 9);
 
         const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
         const actIdx = this.actualIndexes[idx];
