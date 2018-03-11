@@ -6694,6 +6694,11 @@ const fulltext = {
 		"en-dm": "Equipment", 
 		"type": "opts"
 	},
+	"eq.Heading": {
+		"en-us": "", 
+		"en-dm": "Your Equipment", 
+		"type": "opts"
+	},
 	"eq.hitCrops": {
 		"en-us": "", 
 		"en-dm": "Can target enemy Crops.", 
@@ -6871,12 +6876,12 @@ const fulltext = {
 	},
 	"eq.mayshock1.sm": {
 		"en-us": "", 
-		"en-dm": "May shock crops.", 
+		"en-dm": "May shock crops", 
 		"type": "opts"
 	},
 	"eq.mayshock2.sm": {
 		"en-us": "", 
-		"en-dm": "May shock you.", 
+		"en-dm": "or you.", 
 		"type": "opts"
 	},
 	"eq.growth": {

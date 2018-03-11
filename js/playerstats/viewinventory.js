@@ -22,7 +22,7 @@ pausemenu.inventory = {
     },
     DrawAll: function() {
         gfx.clearSome(this.layersToClear);
-        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawTileToGrid("infoD", x, 0, "menuA"); }
+        pausemenu.DrawInnerHeading("inv.Heading");
 
         this.actualIndexes = [];
         let j = 0;
@@ -46,6 +46,8 @@ pausemenu.inventory = {
         }
         this.animHelper.DrawWrapper(this.cropDX, this.cropDY, this.inventoryWidth, 36 / this.inventoryWidth);
 
+        if(this.actualIndexes.length === 0) { this.cursor = { x: 0, y: -1 }; }
+        
         this.backStartX = 0.125;
         this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
         this.sortStartX = 1.25 + this.backButtonW;
@@ -73,10 +75,6 @@ pausemenu.inventory = {
         }
         if(this.selectedCrop >= 0) { this.DrawSelectInfo(); }
         this.HandleTrashCan(true);
-
-        const headingText = GetText("inv.Heading");
-        const headingX = gfx.getTextRightAlignedX(headingText, 22, gfx.canvasWidth) / gfx.scale - 5;
-        gfx.drawText(headingText, headingX, 9);
 
         if(this.cursor.y >= 0 && !this.inSort) {
             this.SetCrop();
@@ -124,11 +122,8 @@ pausemenu.inventory = {
             if(pos.y < -1 || pos.x < 0) { return false; }
             if(pos.y === -1 && (pos.x > 1 || this.selectedCrop >= 0)) { return false; }
         }
-        if(isEnter) {
-            return this.click(pos);
-        } else {
-            return this.CursorMove(pos);
-        }
+        if(isEnter) { return this.click(); }
+        else { return this.CursorMove(pos); }
     },
     mouseMove: function(pos) {
         const dpos = { x: pos.x - this.cropDX, y: pos.y - this.cropDY };

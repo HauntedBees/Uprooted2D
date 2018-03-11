@@ -961,6 +961,7 @@ const sprites = {
     "lotusseed": [14, 27],
     "invBox": [15, 27],
     "invTile": [16, 27],
+    "toolRack": [17, 27],
     "vineAnim2.0": [25, 27],
     "vineAnim2.1": [26, 27],
     "wedgeSA": [27, 27],

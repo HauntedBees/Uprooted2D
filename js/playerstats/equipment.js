@@ -1,6 +1,7 @@
 pausemenu.equipment = {
+    mouseReady: true, 
     cursor: { x: 0, y: 0 }, textY: 80, equipTextY: 168, equipFontSize: 16, equipWidth: 55,
-    rowData: [], curY: 0,
+    rowData: [], curY: 0, dy: 1.5, dx: 2.5, animHelper: null, backStartX: 0, backButtonW: 0, 
     layersToClear: ["menuA", "menutext"],
     setup: function() {
         this.cursor = { x: 0, y: 0 };
@@ -11,35 +12,41 @@ pausemenu.equipment = {
             { key: "gloves", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" },
             { key: "soil", x: -1, y: -1, w: 0, h: 0, type: "xcursor", layer: "menucursorB" }
         ]);
+        this.animHelper = new CombatAnimHelper([]);
+        gfx.TileBackground("invTile");
         this.drawAll();
         this.cursors.Start();
     },
     drawAll: function() {
         gfx.clearSome(this.layersToClear);
+        pausemenu.DrawInnerHeading("eq.Heading");
+
         this.rowData = [[], [], [], []];
-        gfx.drawInfobox(18, 4.5, 4.25);
+        gfx.drawInfobox(18, 4.5, this.dy + 4.25);
         for(let i = 0; i < 4; i++) {
-            gfx.drawMinibox(0.3125 + i * 3.875, 8.875, 2.75, 4);
+            gfx.drawMinibox(0.3125 + i * 3.875, this.dy + 8.875, 2.75, 2.5);
         }
+        const equipTopY = this.dy + 9.125;
+        const equipTextTopY = this.dy * 16 + this.equipTextY;
         if(player.equipment.weapon !== null) {
             const eq = GetEquipment(player.equipment.weapon), x = 0.3125;
-            gfx.drawTileToGrid(player.equipment.weapon, x, 9.125, "menuA");
-            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+            gfx.drawTileToGrid(player.equipment.weapon, x + 0.25, equipTopY, "menuA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, equipTextTopY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("weapon", -1, -1); }
         if(player.equipment.compost !== null) {
             const eq = GetEquipment(player.equipment.compost), x = 4.1875;
-            gfx.drawTileToGrid(player.equipment.compost, x, 9.125, "menuA");
-            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+            gfx.drawTileToGrid(player.equipment.compost, x + 0.25, equipTopY, "menuA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, equipTextTopY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("compost", -1, -1); }
         if(player.equipment.gloves !== null) {
             const eq = GetEquipment(player.equipment.gloves), x = 8.0625;
-            gfx.drawTileToGrid(player.equipment.gloves, x, 9.125, "menuA");
-            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+            gfx.drawTileToGrid(player.equipment.gloves, x + 0.25, equipTopY, "menuA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, equipTextTopY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("gloves", -1, -1); }
         if(player.equipment.soil !== null) {
             const eq = GetEquipment(player.equipment.soil), x = 11.9375;
-            gfx.drawTileToGrid(player.equipment.soil, x, 9.125, "menuA");
-            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, this.equipTextY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
+            gfx.drawTileToGrid(player.equipment.soil, x + 0.25, equipTopY, "menuA");
+            gfx.drawWrappedText(GetEquipmentDesc(eq, true), x * 16 + 5, equipTextTopY, this.equipWidth, "#000000", "menutext", this.equipFontSize);
         } else { this.cursors.MoveCursor("soil", -1, -1); }
         let numItems = 0;
         for(let i = 0; i < player.inventory.length; i++) {
@@ -61,37 +68,53 @@ pausemenu.equipment = {
             const items = this.rowData[i];
             for(let j = 0; j < items.length; j++) {
                 const item = items[j];
-                gfx.drawInventoryItem(player.inventory[item.actualIndex], j, i, "menuA");
+                gfx.drawTileToGrid("toolRack", this.dx + j, this.dy + i, "menuA");
+                gfx.drawInventoryItem(player.inventory[item.actualIndex], this.dx + j, this.dy + i, "menuA");
                 if(item.equipped) {
-                    this.cursors.MoveCursor(item.type, j, i);
+                    this.cursors.MoveCursor(item.type, this.dx + j, this.dy + i);
                 }
             }
+            for(let j = items.length; j < 11; j++) {
+                gfx.drawTileToGrid("toolRack", this.dx + j, this.dy + i, "menuA");
+            }
         }
-        if(numItems === 0) { return; } // TODO: something nicer than this!
-        this.cursors.MoveCursor("main", this.cursor.x, this.cursor.y);
-        this.setText();
+        this.animHelper.DrawWrapper(this.dx, this.dy, 11, 4);
+
+        if(numItems === 0) { this.cursor = { x: 0, y: -1 }; }
+        this.backStartX = 0.125;
+        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+
+        if(this.cursor.y === -1) {
+            this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+            gfx.drawWrappedText(GetText("inv.BackInfo"), 4, this.dy * 16 + this.textY, 235);
+        } else {
+            this.cursors.RedimCursor("main", this.dx + this.cursor.x, this.dy + this.cursor.y, 0, 0);
+            this.setText();
+        }
     },
     cancel: function() { game.innerTransition(this, pausemenu, 1); },
     mouseMove: function(pos) {
-        if(pos.x < 0 || pos.y < 0) { return false; }
-        const dy = pos.y - this.cursor.y;
-        if(pos.y >= this.rowData.length) { return false; }
-        if(pos.x >= this.rowData[pos.y].length) {
-            pos.x = this.rowData[pos.y].length - 1;
-        } 
-        while(pos.x < 0 && pos.y < (this.rowData.length - 1)) {
-            pos.y += dy;
-            pos.x = Math.min(this.cursor.x, this.rowData[pos.y].length - 1);
+        const dpos = { x: pos.x - this.dx, y: pos.y - this.dy };
+        if(dpos.y < 0) {
+            dpos.x += this.dx;
+            dpos.y = -1;
+            if(dpos.x >= this.backStartX && dpos.x < (this.backButtonW + 1)) {
+                dpos.x = 0;
+            } else { return false; }
+        } else {
+            input.FloorPoint(dpos);
+            if(dpos.y < 0 || dpos.x < 0 || dpos.y > 3   ) { return false; }
         }
-        if(pos.y >= this.rowData.length || this.rowData[pos.y].length === 0) { return false; }
-        this.cursor = { x: pos.x, y: pos.y };
-        this.drawAll();
-        return true;
+        this.CursorMove(dpos);
     },
-    click: function(pos) {
-        if(pos.x < 0 || pos.y < 0) { return false; }
-        if(pos.y >= this.rowData.length) { return false; }
-        if(pos.x >= this.rowData[pos.y].length) { return false; }
+    click: function() {
+        if(this.cursor.y === -1) {
+            game.innerTransition(this, pausemenu);
+            return true;
+        }
+        if(this.cursor.x < 0 || this.cursor.y < 0) { return false; }
+        if(this.cursor.y >= this.rowData.length) { return false; }
+        if(this.cursor.x >= this.rowData[this.cursor.y].length) { return false; }
         const item = player.inventory[this.rowData[this.cursor.y][this.cursor.x].actualIndex];
         const equipInfo = GetEquipment(item[0]);
         if(player.equipment[equipInfo.type] === item[0]) {
@@ -114,19 +137,37 @@ pausemenu.equipment = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(pos.y < 0 || pos.x < 0) { return false; }
-        if(isEnter) {
-            return this.click(pos);
+        if(pos.y < -1 || pos.x < 0) { return false; }
+        if(isEnter) { return this.click(); }
+        else { return this.CursorMove(pos); }
+    },
+    CursorMove: function(pos) {
+        if(pos.x < 0 || pos.y < -1) { return false; }
+        if(pos.y === -1) {
+            pos.x = 0;
         } else {
-            return this.mouseMove(pos);
+            const dy = pos.y - this.cursor.y;
+            if(pos.y >= this.rowData.length) { return false; }
+            if(pos.x >= this.rowData[pos.y].length) {
+                pos.x = this.rowData[pos.y].length - 1;
+            } 
+            if(this.rowData[pos.y] === null || this.rowData[pos.y] === undefined || this.rowData[pos.y].length === 0) { return false; }
+            while(pos.x < 0 && pos.y < (this.rowData.length - 1)) {
+                pos.y += dy;
+                pos.x = Math.min(this.cursor.x, this.rowData[pos.y].length - 1);
+            }
+            if(pos.y >= this.rowData.length || this.rowData[pos.y].length === 0) { return false; }
         }
+        this.cursor = { x: pos.x, y: pos.y };
+        this.drawAll();
+        return true;
     },
     setText: function() {
         const actIdx = this.rowData[this.cursor.y][this.cursor.x].actualIndex;
         const item = player.inventory[actIdx];
         const equipInfo = GetEquipment(item[0]);
         const str = this.GetEquipDescComparedToCurrent(equipInfo);
-        gfx.drawWrappedText(str, 4, this.textY, 235);
+        gfx.drawWrappedText(str, 4, this.dy * 16 + this.textY, 235);
     },
     GetEquipDescComparedToCurrent: function(equipInfo) {
         let current = player.equipment[equipInfo.type];
@@ -169,7 +210,7 @@ pausemenu.equipment = {
         return str;
     },
     GetComparison: function(str, newequip, oldequip, column, compareType, isPercent) {
-        const y = 336 + (this.curY * (gfx.GetFont() === "OpenDyslexic" ? 35 : 32));
+        const y = 436 + (this.curY * (gfx.GetFont() === "OpenDyslexic" ? 35 : 32));
         const newVal = newequip[column];
         const oldVal = oldequip[column];
         if(compareType === "number") {

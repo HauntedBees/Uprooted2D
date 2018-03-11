@@ -68,6 +68,12 @@ const pausemenu = {
             gfx.drawTileToGrid(pausemenu.questItems[i], 5 + (i * 1.5), 11.75, "foreground");
         }
     },
+    DrawInnerHeading: function(textKey) {
+        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawTileToGrid("infoD", x, 0, "menuA"); }
+        const headingText = GetText(textKey);
+        const headingX = gfx.getTextRightAlignedX(headingText, 22, gfx.canvasWidth) / gfx.scale - 5;
+        gfx.drawText(headingText, headingX, 9);
+    },
     drawFarm: function() {
         var helper = new CombatAnimHelper([]);
         var max_x = 10, min_x = max_x - player.gridWidth; // TODO: center align
