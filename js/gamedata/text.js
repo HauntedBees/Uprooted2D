@@ -7162,6 +7162,11 @@ const fulltext = {
 		"type": "opts"
 	},
 	// Achievements
+	"a.Heading": {
+		"en-us": "", 
+		"en-dm": "Your Achievements", 
+		"type": "opts"
+	},
 	"a.boss1": {
 		"en-us": "", 
 		"en-dm": "Tech Trasher", 

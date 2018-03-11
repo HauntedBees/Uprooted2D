@@ -14,6 +14,8 @@ pausemenu.equipment = {
         ]);
         this.animHelper = new CombatAnimHelper([]);
         gfx.TileBackground("invTile");
+        this.backStartX = 0.125;
+        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
         this.drawAll();
         this.cursors.Start();
     },
@@ -81,8 +83,7 @@ pausemenu.equipment = {
         this.animHelper.DrawWrapper(this.dx, this.dy, 11, 4);
 
         if(numItems === 0) { this.cursor = { x: 0, y: -1 }; }
-        this.backStartX = 0.125;
-        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
 
         if(this.cursor.y === -1) {
             this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
@@ -103,7 +104,7 @@ pausemenu.equipment = {
             } else { return false; }
         } else {
             input.FloorPoint(dpos);
-            if(dpos.y < 0 || dpos.x < 0 || dpos.y > 3   ) { return false; }
+            if(dpos.y < 0 || dpos.x < 0 || dpos.y > 3) { return false; }
         }
         this.CursorMove(dpos);
     },

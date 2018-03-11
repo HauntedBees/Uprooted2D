@@ -17,6 +17,10 @@ pausemenu.inventory = {
         this.justSorted = -1;
         this.trashIdx = setInterval(this.HandleTrashCan, 50);
         gfx.TileBackground("invTile");
+        this.backStartX = 0.125;
+        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
+        this.sortStartX = 1.25 + this.backButtonW;
+        this.sortButtonW = gfx.drawInfoText(GetText("inv.Sort"), this.sortStartX, -0.0625, false, "menuA", "menutext");
         this.DrawAll();
         this.cursors.Start();
     },
@@ -48,10 +52,8 @@ pausemenu.inventory = {
 
         if(this.actualIndexes.length === 0) { this.cursor = { x: 0, y: -1 }; }
         
-        this.backStartX = 0.125;
-        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
-        this.sortStartX = 1.25 + this.backButtonW;
-        this.sortButtonW = gfx.drawInfoText(GetText("inv.Sort"), this.sortStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 1, "menuA", "menutext");
+        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+        gfx.drawInfoText(GetText("inv.Sort"), this.sortStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 1, "menuA", "menutext");
         if(this.inSort) {
             const vals = [];
             vals.push(gfx.drawInfoText(GetText("inv.sCount"), this.sortStartX, 1, this.cursor.y === 0));

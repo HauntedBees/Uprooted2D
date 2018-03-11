@@ -19,6 +19,8 @@ pausemenu.farmmod = {
         this.dx = ((16 - player.gridWidth) / 2);
         this.dy = 6 + Math.floor((6 - player.gridHeight) / 2);
         this.grid = combat.getGrid(player.gridWidth, player.gridHeight);
+        this.backStartX = 0.125;
+        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
         this.drawEverything();
         this.cursors.Start();
     },
@@ -32,8 +34,7 @@ pausemenu.farmmod = {
         gfx.drawInfobox(11, 5, this.cropdy);
 
         if(this.actualIndexes.length === 0) { this.cursor = { x: 0, y: -1 }; }
-        this.backStartX = 0.125;
-        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
 
         const size = (this.selectedItem === null || this.cursor.y < 3) ? 0 : this.selectedItemSize;
         const dx = this.cursor.y < 3 ? this.cropdx : 0;

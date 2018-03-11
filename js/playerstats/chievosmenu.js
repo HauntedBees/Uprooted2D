@@ -1,7 +1,9 @@
 pausemenu.chievos = {
+    mouseReady: true, 
     cursor: { x: 0, y: 0 },
-    achStartX: 1.375, achStartY: 0.5, achDX: 1.25, 
-    numPerRow: 10, textStartY: 123, vals: [], yMax: 0, 
+    achStartX: 1.375, achStartY: 2, achDX: 1.25, 
+    backStartX: 0, backButtonW: 0, 
+    numPerRow: 10, textStartY: 155, vals: [], yMax: 0, 
     layersToClear: ["menuA", "menutext"],
     setup: function() {
         this.cursor = { x: 0, y: 0 };
@@ -9,12 +11,16 @@ pausemenu.chievos = {
             { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
         ]);
         this.vals = [];
+        gfx.TileBackground("invTile");
+        this.backStartX = 0.125;
+        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
         this.drawAll(true);
         this.cursors.Start();
     },
     drawAll: function(isFirst) {
         gfx.clearSome(this.layersToClear);
-        gfx.drawInfobox(16, 5, 7);
+        pausemenu.DrawInnerHeading("a.Heading");
+        gfx.drawInfobox(16, 5, 9);
         for(let idx = 0; idx < achievements.length; idx++) {
             const a = achievements[idx];
             const x = this.achStartX + this.achDX * (idx % this.numPerRow);
@@ -25,17 +31,34 @@ pausemenu.chievos = {
             if(isFirst) { this.vals.push([a, playerHasAchievement]); }
         }
         this.yMax = Math.floor(achievements.length / this.numPerRow);
-        this.cursors.MoveCursor("main", this.achStartX + this.cursor.x * this.achDX, this.achStartY + this.cursor.y * this.achDX);
-        this.setText();
+        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+        if(this.cursor.y === -1) {
+            this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+            gfx.drawWrappedText(GetText("inv.BackInfo"), 4, this.textStartY, 235);
+        } else {
+            this.cursors.RedimCursor("main", this.achStartX + this.cursor.x * this.achDX, this.achStartY + this.cursor.y * this.achDX, 0, 0);
+            this.setText();
+        }
     },
     cancel: function() { game.innerTransition(this, pausemenu, 4); },
     mouseMove: function(pos) {
-        if(pos.x < 0 || pos.y < 0 || pos.y >= this.yMax || pos.x >= this.numPerRow) { return false; }
-        this.cursor = { x: pos.x, y: pos.y };
-        this.drawAll();
+        const dpos = { x: (pos.x - this.achStartX) / this.achDX, y: (pos.y - this.achStartY) / this.achDX };
+        if(dpos.y < -0.8) {
+            dpos.x += this.achStartX;
+            dpos.y = -1;
+            if(dpos.x >= this.backStartX && dpos.x < (this.backButtonW + 1)) {
+                dpos.x = 0;
+            } else { return false; }
+        } else {
+            input.FloorPoint(dpos);
+            if(dpos.y < 0 || dpos.x < 0) { return false; }
+        }
+        this.CursorMove(dpos);
+    },
+    click: function() {
+        if(this.cursor.y === -1) { this.cancel(); }
         return true;
     },
-    click: pos => true,
     keyPress: function(key) {
         const pos = { x: this.cursor.x, y: this.cursor.y };
         let isEnter = false;
@@ -48,9 +71,16 @@ pausemenu.chievos = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(pos.y < 0 || pos.x < 0) { return false; }
-        if(isEnter) { return this.click(pos); }
-        else { return this.mouseMove(pos); }
+        if(pos.y < -1 || pos.x < 0) { return false; }
+        if(isEnter) { return this.click(); }
+        else { return this.CursorMove(pos); }
+    },
+    CursorMove: function(pos) {
+        if(pos.x < 0 || pos.y < -1 || pos.y >= this.yMax || pos.x >= this.numPerRow) { return false; }
+        if(pos.y === -1) { pos.x = 0; }
+        this.cursor = { x: pos.x, y: pos.y };
+        this.drawAll();
+        return true;
     },
     setText: function() {
         const chievoInfo = this.vals[this.cursor.y * this.numPerRow + this.cursor.x];
