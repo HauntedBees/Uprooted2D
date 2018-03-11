@@ -1,7 +1,7 @@
 pausemenu.chievos = {
     mouseReady: true, 
     cursor: { x: 0, y: 0 },
-    achStartX: 1.375, achStartY: 2, achDX: 1.25, 
+    achStartX: 1.875, achStartY: 2, achDX: 1.25, 
     backStartX: 0, backButtonW: 0, 
     numPerRow: 10, textStartY: 155, vals: [], yMax: 0, 
     layersToClear: ["menuA", "menutext"],
