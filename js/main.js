@@ -91,6 +91,7 @@ const game = {
     CleanHandler: function(from) {
         if(from.clean === undefined) {
             if(from.cursors !== undefined) { from.cursors.Perish(); }
+            if(from.animHelper !== undefined) { from.animHelper = null; }
             gfx.clearAll();
         } else {
             from.clean();

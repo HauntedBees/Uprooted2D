@@ -232,7 +232,6 @@ combat.selectTarget = {
                     cropPos = { x: crop.x, y: crop.y };
                     crop = combat.enemyGrid[crop.x][crop.y];
                 }
-                attackData.animals = []; // TODO: ?
 
                 avgDamage += attackData.damage;
                 crop.health -= attackData.damage;
@@ -252,7 +251,6 @@ combat.selectTarget = {
                 combat.damageEnemy(targetidx, finalDamage);
                 if(target.health <= 0) { kills.push(targetidx); }
 
-                if(attackData.animals.length > 0) { hasAnimals = true; }
                 if(attackData.stunLength > 0) {
                     const stunResistCheck = (Math.random() < combat.enemies[targetidx].stickRes);
                     if(!stunResistCheck) {
@@ -275,7 +273,7 @@ combat.selectTarget = {
         avgDamage = Math.floor(avgDamage / this.targets.length);
         
         if(allAttacks[0].knockback > 0) { player.health = Math.max(player.health - allAttacks[0].knockback, 1); }
-        const damagetext = this.GetDamageText(allAttackInfo.isCritical, hasAnimals, hasRecoil, kills, hasDestroys, hasStuns, 
+        const damagetext = this.GetDamageText(allAttackInfo.isCritical, allAttackInfo.hasAnimals, hasRecoil, kills, hasDestroys, hasStuns, 
                                             combat.isFalcon, avgDamage, lastTargetName, this.targets.length > 1, allAttacks[0].knockback);
         const targType = (this.targets[0].x === undefined) ? "_ENEMY" : "_CROP";
         if(combat.isFalcon) {
@@ -291,7 +289,7 @@ combat.selectTarget = {
                 combat.FlagFreshCropsAndGetSeedDrops(true, allAttackInfo.isCritical);
                 for(let i = 0; i < allAttackInfo.animData.length; i++) {
                     const info = allAttackInfo.animData[i];
-                    combat.animHelper.AddPlayerAttackAnim(new CropAttackAnim(targType, combat.grid, info.x, info.y, i));
+                    combat.animHelper.AddPlayerAttackAnim(new CropAttackAnim(targType, combat.grid, info.x, info.y, i, undefined, info.animal));
                 }
                 combat.animHelper.StartPlayerAnimSequence();
             }

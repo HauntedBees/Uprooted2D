@@ -1,10 +1,9 @@
-function AttackData(approximateDamage, isCritical, stunLength, animals, crops, knockback) {
+function AttackData(approximateDamage, isCritical, stunLength, crops, knockback) {
     this.damage = Math.ceil(approximateDamage);
     if(this.damage < 1) { this.damage = 1; }
     this.crit = isCritical;
     this.cropPowerLower = Math.ceil(this.damage / 4);
     this.stunLength = stunLength || 0;
-    this.animals = animals || [];
     this.crops = crops || [];
     this.numCrops = this.crops.length;
     this.knockback = Math.ceil(knockback || 0);
@@ -124,7 +123,7 @@ const dmgCalcs = {
         const isCritical = isPlayer && (Math.random() < (player.luck - 0.69));
         const hasShockGloves = isPlayer && player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech;
         const nerfs = dmgCalcs.GetNerfs(), modAtk = Math.log10(5 + myAtk * myAtk);
-        let totalDamage = 0, stunLength = 0, damageToAttacker = 0, animals = [];
+        let totalDamage = 0, stunLength = 0, damageToAttacker = 0, hasAnimals = false;
         let recoilInfos = [], animInfos = [];
 
         for(let i = 0; i < myCrops.length; i++) {
@@ -164,23 +163,29 @@ const dmgCalcs = {
             if(crop.type === "rice") { dmg *= 1.5; }
             else if(crop.type === "tech") { dmg *= 2; }
             if(crop.name === "app") { dmg *= 2 / (crop.activeTime + 1); }
-            if(crop.animal !== undefined && ((1 - player.luck) * Math.random()) < (crop.animalChance / 8)) {
-                animals.push({ crop: crop.name, animal: crop.animal });
-                dmg *= crop.animalDamageMult;
+            let isAnimalling = false, animal = undefined;
+            if(crop.animal !== undefined) {
+                const animalDaters = animalInfo[crop.animal];
+                const catchNum = (1 - player.luck) * Math.random();
+                if(catchNum <= (animalDaters.appearChance / 8)) {
+                    animal = crop.animal; hasAnimals = true;
+                    dmg *= animalDaters.damageMult;
+                    isAnimalling = true;
+                }
             }
             let recoilInfo = null;
             if(isPlayer && ["rice", "veg", "tree", "mush", "bee", "egg", "tech"].indexOf(crop.type) >= 0) {
-                if(crop.type === "rice" || (myCrops.length > 3 && combat.enemies.length > 1)) {
-                    var power = crop.type === "rice" ? 1 : 0;
-                    var numCrops = myCrops.length;
-                    while((Math.random() * player.luck * numCrops--) > 0.9) {
+                if(isAnimalling || crop.type === "rice" || (myCrops.length > 3 && combat.enemies.length > 1)) {
+                    let power = isAnimalling ? 2 : (crop.type === "rice" ? 1 : 0);
+                    let numCrops = myCrops.length;
+                    while(!isAnimalling && (Math.random() * player.luck * numCrops--) > 0.9) {
                         power++;
                     }
                     if(power > 0) { recoilInfo = power * Math.max(3, dmg / 6 / combat.enemies.length); }
                 }
             }
             totalDamage += dmg;
-            animInfos.push({ x: myCrops[i].x, y: myCrops[i].y, recoil: recoilInfo });
+            animInfos.push({ x: myCrops[i].x, y: myCrops[i].y, recoil: recoilInfo, animal: animal });
             recoilInfos.push(recoilInfo);
         }
         if(isPlayer) {
@@ -197,9 +202,9 @@ const dmgCalcs = {
             } else {
                 finalDamage -= theirDef[i] / 1.5;
             }
-            attacksArr.push(new AttackData(finalDamage, isCritical, stunLength, animals, myCrops, damageToAttacker));
+            attacksArr.push(new AttackData(finalDamage, isCritical, stunLength, myCrops, damageToAttacker));
         }
-        if(isPlayer) { return { isCritical: isCritical, attackDatas: attacksArr, animData: animInfos, recoilInfo: recoilInfos }; }
+        if(isPlayer) { return { isCritical: isCritical, attackDatas: attacksArr, animData: animInfos, recoilInfo: recoilInfos, hasAnimals: hasAnimals }; }
         else { return attacksArr; }
     },
     GetDefendedPlayerDamage: function(initDamage, isCritical, theirDefense) {

@@ -351,7 +351,7 @@ worldmap.shop = {
         if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); }
         if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
         if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
-        if(crop.animal) { bonusesToPush.push("animal" + crop.animal); }
+        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); }
         for(let i = 0; i < bonusesToPush.length; i++) {
             gfx.drawTileToGrid(bonusesToPush[i], nextx + i, 11, "menutext");
         }

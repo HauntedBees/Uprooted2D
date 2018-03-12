@@ -2,6 +2,7 @@ uglifyjs ^
     js/debug/enemyCursorTest.js ^
     js/gamedata/achievements.js ^
     js/gamedata/consts.js ^
+    js/gamedata/animals.js ^
     js/gamedata/veggies.js ^
     js/gamedata/equipment.js ^
     js/gamedata/fixtures.js ^

@@ -5,7 +5,7 @@ if($which.Contains("S")) {
     Write-Host "Converting Details_BigSprites.ods and Details_SmallSprites to spritedata.js";
     Write-Host "Starting Details_BigSprites.ods Conversion";
     & "C:\Program Files (x86)\LibreOffice 5\program\scalc.exe" --headless --convert-to csv:"Text - txt - csv (StarCalc)":"44,34,0,,,,true" --outdir ".\temp" "Details_BigSprites.ods" | Out-Null;
-	$csv = Import-CSV ".\temp\Details_BigSprites.csv" -Header 0, 1, 2, 3, 4, 5, 6, 7;
+	$csv = Import-CSV ".\temp\Details_BigSprites.csv" -Header 0, 1, 2, 3, 4, 5, 6, 7, 8;
     $out = [System.IO.StreamWriter] "$rootpath\js\gamedata\spritedata.js";
     $aliases = @{};
     $row = 10;
@@ -21,7 +21,7 @@ if($which.Contains("S")) {
     }
     $out.WriteLine("const sprites = {");
     for($y = 0; $y -lt 8; $y++) {
-        for($x = 0; $x -lt 8; $x++) {
+        for($x = 0; $x -lt 9; $x++) {
             $val = $csv[$y].$x;
             $out.WriteLine("    `"$val`": [$x, $y, true],");
             if($aliases[$val] -ne $null) {

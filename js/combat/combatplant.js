@@ -590,7 +590,7 @@ combat.plant = {
         if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); }
         if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
         if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
-        if(crop.animal) { bonusesToPush.push("animal" + crop.animal); }
+        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); }
         leftMostX += 0.5;
         for(let i = 0; i < Math.min(bonusesToPush.length, maxBonuses); i++) {
             gfx.drawTileToGrid(bonusesToPush[i], leftMostX + i, row2y, "menutext");

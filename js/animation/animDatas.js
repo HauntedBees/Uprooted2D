@@ -255,6 +255,7 @@ const animCallbacks = {
         const fish = resetti.crop.fishNum || 0;
         animProcess.AddOverlay(weaponAnims["FISH" + fish]);
         animCallbacks["player_pullCrop"](animProcess, animEntity);
+        animCallbackHelpers["ThrowSomeAnimalsAtIt"](animProcess, resetti.animal);
     },
     "player_getBigFish": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
@@ -272,6 +273,7 @@ const animCallbacks = {
         pos.y -= 2;
         animProcess.AddBaby(new ParabolicThrowAnim(fish, pos, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, 
                             function() { animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast) }));
+        animCallbackHelpers["ThrowSomeAnimalsAtIt"](animProcess, resetti.animal);
     },
     "player_pullCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
@@ -312,6 +314,7 @@ const animCallbacks = {
             targetPos = { x: origPos.x, y: origPos.y + 1 };
         }
         animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetPlayerBottomPos(), targetPos, 0.25, dy, 24, fps, callback));
+        animCallbackHelpers["ThrowSomeAnimalsAtIt"](animProcess, resetti.animal);
     },
     "player_throwCropAtEnemy": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
@@ -330,6 +333,7 @@ const animCallbacks = {
             };
         }
         animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, callback));
+        animCallbackHelpers["ThrowSomeAnimalsAtIt"](animProcess, resetti.animal);
     },
     "player_throwCropAtCrop": function(animProcess, animEntity) {
         const resetti = animEntity.animQueue[0];
@@ -348,6 +352,7 @@ const animCallbacks = {
             };
         }
         animProcess.AddBaby(new MovingLinearAnim([ resetti.crop.name ], combat.animHelper.GetPlayerTopPos(), animEntity.bonusArgs.targets[0], 1, 0, 24, 24, callback));
+        animCallbackHelpers["ThrowSomeAnimalsAtIt"](animProcess, resetti.animal);
     },
     "player_damageFoes": (animProcess, animEntity) => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, true),
     "player_damageFoesWithAnim": function(animProcess, animEntity) {
@@ -358,6 +363,13 @@ const animCallbacks = {
     "player_damageFoes2": function(animProcess) { animProcess.SetNewFPS(10); animProcess.SetShake(false); }
 };
 const animCallbackHelpers = {
+    "ThrowSomeAnimalsAtIt": function(animProcess, animal) {
+        if(animal === undefined) { return; }
+        const info = animalInfo[animal];
+        if(info === undefined) { return; }
+        let numAnimals = InclusiveRange(info.min, info.max);
+        while(numAnimals-- > 0) { animProcess.AddBaby(new info.anim(animal, info, animProcess)); }
+    },
     "HurtPlayer": () => combat.animHelper.GivePlayerAHit(),
     "HurtPlayerCrops": function(animProcess, targets) {
         combat.animHelper.GivePlayerAHit(true);

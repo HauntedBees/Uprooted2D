@@ -1,3 +1,48 @@
+function WalkAnim(animal, info, animProcess) {
+    const baseY = RoundNear(FloatRange(info.minY, info.maxY), 8);
+    this.requiredY = Math.floor(baseY * 8);
+    const startX = RoundNear(FloatRange((info.closeStart ? -8 : -20), (info.closeStart ? -1 : -3)), 8), endX = RoundNear(gfx.tileWidth + FloatRange(0.5, 2), 8);
+    let lastAnimRan = +new Date(), animState = InclusiveRange(0, 1), animLength = Range(80, 140);
+    let frame = 0, lastCleanX = startX, speed = RoundNear(FloatRange(info.minSpeed, info.maxSpeed), 8);
+    this.Animate = function() {
+        const now = +new Date();
+        if((now - lastAnimRan) >= 100) {
+            animState = (animState === 1 ? 0 : 1);
+            lastAnimRan = now;
+        }
+        if(!info.isWorm || animState === 0) { frame += speed; }
+        const x = startX + frame;
+        if(x > endX) { frame = 0; }
+        gfx.drawTileToGrid("animal" + animal + animState, x, baseY, "menucursorC");
+        if(info.trail !== undefined && x >= 0 && Math.floor(x) > lastCleanX) {
+            lastCleanX = Math.floor(x);
+            animProcess.AddBaby(new TileAnim(lastCleanX, baseY, [info.trail], false, 12, true), `${lastCleanX}, ${baseY}`);
+        }
+    }
+}
+function HoppingAnim(animal) {
+    const hopMult = FloatRange(0.01, 1.5), hopHeight = FloatRange(3, 6);
+    const baseY = RoundNear(FloatRange(8.125, 8.5), 8);
+    this.requiredY = Math.floor(baseY * 8);
+    const startX = RoundNear(FloatRange(-20, -3), 8), endX = RoundNear(gfx.tileWidth + FloatRange(0.5, 2), 8);
+    const radian = Math.PI / 180, period = 2 * Math.PI / hopMult;
+    let frame = 0, pauseTime = 0;
+    const GetY = x => baseY - FloorNear(Math.abs(hopHeight * Math.sin(x * hopMult)), 4);
+    this.Animate = function() {
+        if(pauseTime > 0) {
+            pauseTime--;
+            const x = startX + frame, y = GetY(x);
+            gfx.drawTileToGrid("animal" + animal + "1", RoundNear(x, 8), y, "menucursorC");
+            return;
+        }
+        frame += period * radian;
+        const x = startX + frame, y = GetY(x);
+        if(x > endX) { frame = 0; }
+        if(y === baseY) { pauseTime = 12; }
+        gfx.drawTileToGrid("animal" + animal + "0", RoundNear(x, 8), y, "menucursorC");
+    }
+}
+
 function TileAnim(x, y, tileArray, shake, fps, loop) {
     const pos = { x: x, y: y };
     const tiles = tileArray, doShake = shake, doLoop = loop;
@@ -146,7 +191,13 @@ function AnimProcess(ae, as, babies) {
     let overlays = [];
     this.SetNewFPS = function(fps) { timePerFrame = 1000 / fps; };
     this.SetShake = function(val) { doShake = val; };
-    this.AddBaby = function(baby) { this.animBabies.push(baby); };
+    this.AddBaby = function(baby, id) {
+        if(id !== undefined) {
+            if(this.animBabies.some(e => e.id === id)) { return; }
+            baby.id = id;
+        }
+        this.animBabies.push(baby);
+    };
     this.ClearBabies = function() { this.animBabies = []; }
     this.AddOverlay = function(overlay) { overlays.push(overlay); }
     this.Animate = function() {
@@ -174,12 +225,19 @@ function AnimProcess(ae, as, babies) {
                 gfx.DrawCombatWhatsit(e.sheet, f.x, f.y, animentity.dims, animentity.layer, dx + f.dx / 16, dy + f.dy / 16);
             }
         });
-        this.animBabies.forEach(function(e) { e.Animate(); });
+        const layerMatters = [];
+        this.animBabies.forEach(e => {
+            if(e.requiredY) {
+                if(layerMatters[e.requiredY] === undefined) { layerMatters[e.requiredY] = [e]; }
+                else { layerMatters[e.requiredY].push(e); }
+            } else { e.Animate(); }
+        });
+        layerMatters.forEach(arr => arr.forEach(e => e.Animate()));
         return isEnd;
     };
 }
 
-function CropAttackAnim(targtype, grid, x, y, idx, forcedAnimSet) {
+function CropAttackAnim(targtype, grid, x, y, idx, forcedAnimSet, animal) {
     this.grid = grid; this.x = x; this.y = y;
     this.crop = grid[x][y];
     this.idx = idx || 0;
@@ -195,6 +253,7 @@ function CropAttackAnim(targtype, grid, x, y, idx, forcedAnimSet) {
     } else {
         this.animset = "THROW" + targtype; 
     }
+    if(animal !== undefined) { this.animal = animal; }
 }
 
 function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx) {

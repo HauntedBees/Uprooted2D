@@ -53,12 +53,7 @@ function GetCrop(name) {
 		if($row.SaltClean) { $addtl += "saltClean: true"; }
 		if($row.Stick) { $addtl += "stickChance: _".replace("_", $row.Stick); }
 		if($row.ShowSeed) { $addtl += "showSeed: true"; }
-		if($row.Animal) {
-			$anInfo = $row.Animal.split("/");
-			$addtl += "animal: `"_`"".replace("_", $anInfo[0]);
-			$addtl += "animalChance: _".replace("_", $anInfo[1]);
-			$addtl += "animalDamageMult: _".replace("_", $anInfo[2]);
-		}
+		if($row.Animal) { $addtl += "animal: `"_`"".replace("_", $row.Animal); }
 		if($row.Rot) { $addtl += "rotten: true"; } # TODO: why are these
 		if($row.NoRot) { $addtl += "noRot: true"; } # TODO: why are these
 		if($row.Baby) { $addtl += "baby: `"_`"".replace("_", $row.Baby); }
