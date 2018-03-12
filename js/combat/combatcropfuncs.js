@@ -15,7 +15,7 @@ combat.GetEnemyCatchChance = function(crop) {
 };
 combat.GetCatchChance = function(crop) { // rods, nets, bees, spears
     if(crop.type === "water") { return 0.2; }
-    if(crop.type === "spear") { return 0.65; }
+    if(crop.type === "spear") { return 0.45; }
     let val = 0.3;
     if(crop.power < 2) { val = 0.15; }
     else if(crop.power < 6) { val = 0.175; }

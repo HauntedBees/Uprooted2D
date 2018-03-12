@@ -187,6 +187,7 @@ combat.plant = {
             if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
             if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight - diff)) { return false; }
             const px = pos.x - combat.dx, py = pos.y - combat.dy;
+            combat.lastPlantedPos = { x: px, y: py };
             const ppos = { x: px, y: py };
             if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
             let newCrop = GetCrop(this.activeCrop.name);
@@ -281,7 +282,6 @@ combat.plant = {
                     }
                 }
             }
-            combat.lastPlantedPos = { x: px, y: py };
             this.cursor = { x: 0, y: this.dy };
             player.decreaseItem(this.activeCrop.name);
             player.PlantCrop(this.activeCrop.name);
@@ -353,11 +353,11 @@ combat.plant = {
         return { x: x, y: y, ignore: false };
     },
     ThrowSpear: function(x, y) {
-        const success = (Math.random() * player.luck) < combat.GetCatchChance(this.activeCrop);
+        const success = (Math.random() * player.luck) > combat.GetCatchChance(this.activeCrop);
         player.miscdata.typesPlanted["water"] += 1;
         player.shiftTech(-0.01);
         player.decreaseItem(this.activeCrop.name);
-        if(!success) { return this.finishTurn(GetText("plFishCaught")); }
+        if(!success) { return this.finishTurn(GetText("plFishFail")); }
         const crop = GetCrop(this.activeCrop.name);
         crop.ready = true;
         crop.activeTime = 0;
@@ -365,7 +365,7 @@ combat.plant = {
         crop.power += crop.fishNum;
         crop.type = "rod";
         combat.grid[x][y] = crop;
-        this.finishTurn(GetText("plFishFail"));
+        this.finishTurn(GetText("plFishCaught"));
     },
     LaunchSeeds: function() {
         const newCrop = GetCrop(this.activeCrop.name);
