@@ -8,6 +8,12 @@ const nwHelpers = {
     InitScreenSizeAdjustment: function() {
         if(typeof require === "undefined") { return; }
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }
+        let forceReset = true;
+        if(window.screen.availWidth > this.win.width || window.screen.availHeight > this.win.height) {
+            this.win.width = window.screen.availWidth;
+            this.win.height = window.screen.availHeight;
+            forceReset = false;
+        }
         if(this.win.width < 1024) {
             player.options.resolution = 0;
         } else if(this.win.width < 2048) {
@@ -15,7 +21,7 @@ const nwHelpers = {
         } else {
             player.options.resolution = 2;
         }
-        nwHelpers.AdjustScreenSettings(true);
+        nwHelpers.AdjustScreenSettings(forceReset);
     },
     AdjustScreenSettings: function(skipWinAdjustments) {
         if(typeof require === "undefined") { return; }
