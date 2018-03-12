@@ -104,6 +104,7 @@ function VineAnim(column, bottomy, delay, callback) {
     }
 }
 function MovingLinearAnim(sprites, start, end, dt, dy, fps, animfps, doneFunc) {
+    if(sprites[0] === "printer") { sprites[0] = "printerB" + Range(0, 7); }
     const dir = (start.x < end.x) ? 1 : -1;
     const startPos = dir === 1 ? start : end, endPos = dir === 1 ? end : start, DoneFunction = doneFunc;
     const diffX = endPos.x - startPos.x;
@@ -141,6 +142,7 @@ function MovingLinearAnim(sprites, start, end, dt, dy, fps, animfps, doneFunc) {
     }
 }
 function ParabolicThrowAnim(crop, start, end, fps, doneFunc, tiny) {
+    if(crop === "printer") { crop = "printerB" + Range(0, 7); }
     const dir = (start.x < end.x) ? 1 : -1;
     const startPos = dir === 1 ? start : end, endPos = dir === 1 ? end : start, DoneFunction = doneFunc;
     const midPoint = { x: (endPos.x + startPos.x) / 2, y: startPos.y - (tiny === true ? 1 : 3) };
