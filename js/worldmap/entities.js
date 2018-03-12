@@ -15,7 +15,7 @@ const mapentities = {
         GetCommonEntity("H_HipsterBike", 6, 4, 0, 0, undefined, undefined, { sy: 2, sheet: "hipster", storageKey: "bike", visible: false, solid: false }),
         GetCommonEntity("H_Hipster", 0, 4, 0, 0, undefined, undefined, { sheet: "hipster", moving: true, sheetlen: 2, storageKey: "hipster", postBattle: "PostInitialBattle" }),
         // Map Switching
-        SwitchMap("ExitAreaWest", 0, 20, false, true, 22, 12, "farm"),
+        SwitchMapSubPartialColumn("ExitAreaWest", 0, 20, 22, 12, "farm", 17.25, 22.25),
         SwitchMap("ExitAreaSouth", 16, 23, true, false, 21, 1, "firstvillage", CommonConditions["beatBigBot"]),
         GetCommonEntity("AFuckingTruckL", 16, 5, 4, 0, undefined, Cutscene("truck"), { big: true, noChange: true }),
         GetCommonEntity("AFuckingTruckR", 18, 5, 5, 0, undefined, Cutscene("truck"), { big: true, noChange: true }),
@@ -40,7 +40,7 @@ const mapentities = {
             GetCommonEntity("NathanOnTheFarm3", 12, 2, 6, 0, undefined, OneSpeak("yaBoiD"), { sheet: "assistant", storageKey: "n3", noChange: true }),
             GetCommonEntity("IiiOnTheFarm", 16, 9, 4, 0, undefined, Cutscene("iiiTalk"), { sheet: "assistant", storageKey: "n4", noChange: true }),
             // Map Switching
-            SwitchMap("ExitAreaWest", 23, 12, false, true, 1, 20, "producestand"),
+            SwitchMapSubPartialColumn("ExitAreaEast", 23, 12, 1, 20, "producestand", 10.5, 13.25),
             // Shops & Hives
             GetBeehive("FarmHive", 3, 1),
             EnterShop("ChickenCoop", 18, 3, "coop"),
@@ -73,9 +73,9 @@ const mapentities = {
     }(),
     "firstvillage": [
         // Map Switching
-        SwitchMap("ExitAreaNorth", 21, 0, true, false, 16, 22, "producestand"),
-        SwitchMap("ExitAreaWest", 0, 22, false, true, 44, 49, "forest"),
-        SwitchMap("ExitAreaSouth", 21, 30, true, false, 21.5, 1, "belowvillage"),
+        SwitchMapSubPartialRow("ExitAreaNorth", 21, 0, 16, 22, "producestand", 20.5, 22.25),
+        SwitchMapSubPartialColumn("ExitAreaWest", 0, 22, 44, 49, "forest", 21.5, 23.25),
+        SwitchMapSubPartialRow("ExitAreaSouth", 21, 30, 21.5, 1, "belowvillage", 18.75, 26.25),
         // Shops & Hives
         EnterShop("EquipmentShop", 17, 12, "equip1"),
         GetSign(18, 13, "SignWeapon0"),

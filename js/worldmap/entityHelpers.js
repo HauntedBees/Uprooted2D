@@ -131,6 +131,16 @@ function SwitchMap(name, x, y, row, column, newx, newy, map, showIf) {
         interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map }); } ]
     }
 };
+function SwitchMapSubPartialColumn(name, x, y, newx, newy, map, topy, bottomy) {
+    let colswitch = SwitchMap(name, x, y, false, true, newx, newy, map);
+    colswitch.topy = topy; colswitch.bottomy = bottomy;
+    return colswitch;
+}
+function SwitchMapSubPartialRow(name, x, y, newx, newy, map, leftx, rightx) {
+    let rowswitch = SwitchMap(name, x, y, true, false, newx, newy, map);
+    rowswitch.leftx = leftx; rowswitch.rightx = rightx;
+    return rowswitch;
+}
 function SwitchMapSeamless(name, x, y, requiredDir, newx, newy) {
     return {
         name: name, solid: false, pos: {x: x, y: y}, seamlessMap: true, 

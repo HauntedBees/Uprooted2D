@@ -402,6 +402,11 @@ const worldmap = {
             for(let i = 0; i < this.entities.length; i++) {
                 const e = this.entities[i];
                 if(!e.solid && (e.pos.x == newPos.x || e.isRow) && (e.pos.y == newPos.y || e.isColumn) && e.interact !== undefined) {
+                    if(e.isColumn && e.topy != undefined) {
+                        if(newPos.y < e.topy || newPos.y > e.bottomy) { continue; }
+                    } else if(e.isRow && e.leftx != undefined) {
+                        if(newPos.x < e.leftx || newPos.x > e.rightx) { continue; }
+                    }
                     if(e.seamlessMap) {
                         e.interact[0](0, e);
                     } else if(e.interact !== undefined) {
