@@ -16,8 +16,8 @@ function GetWeaponAnims() {
     let w = {};
     let weaps = ["!hoe", "!babySickle", "!baseSickle", "!goodSickle", "!dblSickle", "!hvySickle", "!salthoe", "!sicklerang", "!sunSickle"];
     for(let i = 0; i < weaps.length; i++) {
-        w[weaps[i] + "_ENEMY"] = new OverlaySet("combat_equipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 3), new OverlayFrame(i, 3) ]);
-        w[weaps[i] + "_CROP"] = new OverlaySet("combat_equipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 4), new OverlayFrame(i, 4) ]);
+        w[weaps[i] + "_ENEMY"] = new OverlaySet("combatEquipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 3), new OverlayFrame(i, 3) ]);
+        w[weaps[i] + "_CROP"] = new OverlaySet("combatEquipment", [ new OverlayFrame(i, 0), new OverlayFrame(i, 1), new OverlayFrame(i, 2), new OverlayFrame(i, 4), new OverlayFrame(i, 4) ]);
     }
     weaps = ["!pltSickle", "!sickle2"];
     for(let i = 0; i < weaps.length; i++) {
@@ -32,18 +32,18 @@ function GetWeaponAnims() {
             crop.push(new OverlayFrame(4, 5));
             crop.push(new OverlayFrame(4, 5));
         }
-        w[weaps[i] + "_ENEMY"] = new OverlaySet("combat_equipment", enemy);
-        w[weaps[i] + "_CROP"] = new OverlaySet("combat_equipment", crop);
+        w[weaps[i] + "_ENEMY"] = new OverlaySet("combatEquipment", enemy);
+        w[weaps[i] + "_CROP"] = new OverlaySet("combatEquipment", crop);
     }
-    w["MILK"] = new OverlaySet("combat_equipment", [new OverlayFrame(5, 7), new OverlayFrame(5, 7)]);
-    w["HONEY"] = new OverlaySet("combat_equipment", [new OverlayFrame(6, 7), new OverlayFrame(6, 7)]);
-    w["COFFEE"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 7), new OverlayFrame(7, 7)]);
-    w["COMPOST"] = new OverlaySet("combat_equipment", [new OverlayFrame(8, 7), new OverlayFrame(8, 7)]);
+    w["MILK"] = new OverlaySet("combatEquipment", [new OverlayFrame(5, 7), new OverlayFrame(5, 7)]);
+    w["HONEY"] = new OverlaySet("combatEquipment", [new OverlayFrame(6, 7), new OverlayFrame(6, 7)]);
+    w["COFFEE"] = new OverlaySet("combatEquipment", [new OverlayFrame(7, 7), new OverlayFrame(7, 7)]);
+    w["COMPOST"] = new OverlaySet("combatEquipment", [new OverlayFrame(8, 7), new OverlayFrame(8, 7)]);
 
-    w["FISH0"] = new OverlaySet("combat_equipment", [new OverlayFrame(5, 5, 0, -2), new OverlayFrame(6, 5), new OverlayFrame(6, 5)]);
-    w["FISH1"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 5, 0, -6), new OverlayFrame(8, 5), new OverlayFrame(8, 5)]);
-    w["FISH2"] = new OverlaySet("combat_equipment", [new OverlayFrame(7, 6), new OverlayFrame(8, 6, -5), new OverlayFrame(8, 6, -5)]);
-    w["FISH3"] = new OverlaySet("combat_equipment", [new OverlayFrame(0, 7, -4), new OverlayFrame(1, 7), new OverlayFrame(1, 7)]);
+    w["FISH0"] = new OverlaySet("combatEquipment", [new OverlayFrame(5, 5, 0, -2), new OverlayFrame(6, 5), new OverlayFrame(6, 5)]);
+    w["FISH1"] = new OverlaySet("combatEquipment", [new OverlayFrame(7, 5, 0, -6), new OverlayFrame(8, 5), new OverlayFrame(8, 5)]);
+    w["FISH2"] = new OverlaySet("combatEquipment", [new OverlayFrame(7, 6), new OverlayFrame(8, 6, -5), new OverlayFrame(8, 6, -5)]);
+    w["FISH3"] = new OverlaySet("combatEquipment", [new OverlayFrame(0, 7, -4), new OverlayFrame(1, 7), new OverlayFrame(1, 7)]);
     return w;
 }
 const weaponAnims = GetWeaponAnims();
@@ -57,6 +57,7 @@ const enemyCombatAnims = {
     "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
     "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
     "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
+    "TURKEY_EGG": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 1),
     
     "LAWNMOWER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
     "LAWNMOWER_ROCK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
@@ -75,11 +76,11 @@ const enemyCombatAnims = {
     "FISH_FAIL": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "REV_ENGINE": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4), // TODO: maybe some poof-in for the baby?
-    "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], false, 4, { doShake: true }), // TODO: do something to make it support looping
+    "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], true, 60, { doShake: true }),
     "MAIM": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7), new AnimFrame(0, 8), new AnimFrame(0, 9), new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 4),
     "REPAIR": new AnimSet([new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 2),
     "THROW_CROP_HUGE": new AnimSet([new AnimFrame(1, 0, "enemy_pullCrop"), new AnimFrame(1, 1, "enemy_throwCropAtEnemy")], false, 4),
-    "VINE_SMACK": new AnimSet([new AnimFrame(1, 2), new AnimFrame(1, 3, "enemy_vineSmack")], false, 4),
+    "VINE_SMACK": new AnimSet([new AnimFrame(1, 2), new AnimFrame(1, 3, "enemy_vineSmack")], true, 4),
     
     "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
     "BUTTFIX": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3)], true, 2),
