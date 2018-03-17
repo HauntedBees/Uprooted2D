@@ -220,7 +220,7 @@ function AnimProcess(ae, as, babies) {
             dx = Math.random() < 0.33 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
             dy = Math.random() < 0.33 ? -0.125 : (Math.random() > 0.5 ? -0.125 : 0);
         }
-        gfx.DrawCombatWhatsit(animentity.sheet, animInfo.x + animentity.dx, animInfo.y, animentity.dims, animentity.layer, dx, dy);
+        gfx.DrawCombatWhatsit(animentity.sheet, animInfo.x + animentity.dx, animInfo.y+ animentity.dy, animentity.dims, animentity.layer, dx, dy);
         overlays.forEach(function(e) {
             if(frame <= e.length) {
                 const f = e.frames[frame];
@@ -258,12 +258,13 @@ function CropAttackAnim(targtype, grid, x, y, idx, forcedAnimSet, animal) {
     if(animal !== undefined) { this.animal = animal; }
 }
 
-function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx) {
+function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx, dy) {
     let currentName = initAnim, runningFromQueue = false;
     this.sheet = sheet;
     this.dims = { x: x, y: y, w: w, h: h };
     this.anims = anims;
     this.dx = dx || 0;
+    this.dy = dy || 0;
     this.currentAnim = new AnimProcess(this, this.anims[initAnim]);
     this.bonusArgs = {};
     this.layer = "characters";
@@ -298,31 +299,29 @@ function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx) {
     };
 }
 
-function CombatAnimPlayer(x, y) { CombatAnimEntity.call(this, "combat_player", 32, 30, x, y, playerCombatAnims, "STAND"); }
+function CombatAnimPlayer(x, y) { CombatAnimEntity.call(this, "combatPlayer", 32, 30, x, y, playerCombatAnims, "STAND"); }
 CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 
-function CombatAnimFalcon(x, y) { CombatAnimEntity.call(this, "combat_player", 32, 30, x, y, falconAnims, "STAND"); }
+function CombatAnimFalcon(x, y) { CombatAnimEntity.call(this, "combatPlayer", 32, 30, x, y, falconAnims, "STAND"); }
 CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 
-function CombatAnimEnemy(sheet, w, h, x, y, dx) { CombatAnimEntity.call(this, sheet, w, h, x, y, enemyCombatAnims, "STAND", dx); }
+function CombatAnimEnemy(sheet, w, h, x, y, dx, dy) { CombatAnimEntity.call(this, sheet, w, h, x, y, enemyCombatAnims, "STAND", dx, dy); }
 CombatAnimEnemy.prototype = Object.create(CombatAnimEntity.prototype);
 CombatAnimEnemy.prototype.CorpseItUp = function(d, size) { gfx.DrawDitheredWhatsit(this.sheet, this.dx, 1, this.dims, this.layer, d, size); };
 
-function GetEnemyCombatAnim(x, y, dx, size, cursorinfo) {
+function GetEnemyCombatAnim(x, y, spriteidx, size, cursorinfo) {
     const dims = GetEnemyCombatDims(size);
-    const eca = new CombatAnimEnemy(dims.sheet, dims.w, dims.h, x, y, dx);
+    const eca = new CombatAnimEnemy(dims.sheet, dims.w, dims.h, x, y, spriteidx[0], spriteidx[1]);
     eca.cursorinfo = cursorinfo;
-    if(dims.dw > 0) { eca.dims.dw = dims.dw; }
     return eca;
 }
 function GetEnemyCombatDims(size) {
-    let w = 24, h = 30, dw = 0, sheet = "charsheet";
+    let w = 32, h = 37, sheet = "combatSheet";
     switch(size) {
-        case "md": w = 24; h = 30; break;
-        case "lg": w = 32; h = 40; sheet = "charsheetbig"; break;
-        case "xl": w = 96; h = 80; dw = 32; sheet = "charsheetbig"; break;
+        case "lg": w = 44; h = 50; sheet = "combatSheetBig"; break;
+        case "xl": w = 102; h = 86; sheet = "combatSheetHuge"; break;
     }
-    return { w: w, h: h, dw: dw, sheet: sheet };
+    return { w: w, h: h, sheet: sheet };
 }
 
 function GetHPFrame(enemy) {

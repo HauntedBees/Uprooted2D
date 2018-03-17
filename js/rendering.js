@@ -147,10 +147,11 @@ const gfx = {
         gfx.drawImage(gfx.ctx[layer], sheet, startX, startY, size * xmult, size, x, y, size * xmult, size);
     },
     DrawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
+        const pad = sheet === "combatPlayer" ? 0 : 1;
+        const pad2 = pad * 2;
         layer = layer || "characters"; dx = dx || 0; dy = dy || 0;
-        const sw = dims.dw || dims.w;
         const adjustedy = (dims.y + dy) * 16 - dims.h;
-        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * sw, sy * dims.h, dims.w, dims.h, (dims.x + dx) * 16, adjustedy, dims.w, dims.h);
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx * dims.w + pad, sy * dims.h + pad, dims.w - pad2, dims.h - pad2, (dims.x + dx) * 16 + pad, adjustedy + pad, dims.w - pad2, dims.h - pad2);
     },
     DrawDitheredWhatsit: function(sheet, sx, sy, dims, layer, d, size, gelf) {
         layer = layer || "characters";

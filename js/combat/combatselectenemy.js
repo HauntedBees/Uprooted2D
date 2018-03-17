@@ -381,7 +381,7 @@ const postHits = {
         if(e.unplugged) { return null; } 
         if(e.health > 170 || e.health <= 0) { return null; }
         return function() {
-            e.spriteidx = 25;
+            e.spriteidx = [11, 8];
             e.unplugged = true;
             e.plugTimer = 3;
             e.health = 50;

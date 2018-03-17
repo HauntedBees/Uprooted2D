@@ -2,41 +2,43 @@ function CombatAnimHelper(enemies) {
     let playerPos = { x: 3, y: 9.25 };
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
-    let enemyAnimInfos = [];
-    let currentx = 11 - enemies.length, anims = [];
+    let enemyAnimInfos = [], anims = [];
+    const GetDeltaCurrentX = function(e) {
+        switch(e.size) {
+            case "sm": return 1.5;
+            case "md": return 1.75;
+            case "lg": return (e.id === "soyStack" ? 1.5 : 2.25);
+            case "xl": return 4.5;
+        }
+        return 1.5;
+    };
     this.ResetEnemyAnimHelper = function(enemies) {
         enemyAnimInfos = [];
         let currentx = 11 - enemies.length;
         for(let i = 0; i < enemies.length; i++) {
             const e = enemies[i];
-            if(e.size === "xl") { currentx -= 1; } // TODO: this shit
+            if(e.size === "xl") { currentx -= 1; }
             enemyAnimInfos.push(GetEnemyCombatAnim(currentx, playerPos.y, e.spriteidx, e.size, e.cursorinfo));
-            switch(e.size) {
-                case "sm": currentx += 1; break;
-                case "md": currentx += 1.5; break;
-                case "lg": currentx += 2; break;
-                case "xl": currentx += 4; break;
-            }
+            currentx += GetDeltaCurrentX(e);
         }
     }
     this.ResetEnemyAnimHelper(enemies);
     this.GetCursorInfo = function(x) {
         let currentx = 11 - combat.enemies.length;
         for(let i = 0; i < combat.enemies.length; i++) {
+            const e = combat.enemies[i];
+            if(e.size === "xl") { currentx -= 1; }
             if(x === i) {
-                const info = combat.enemies[i].cursorinfo;
-                const size = combat.enemies[i].size;
+                const info = e.cursorinfo;
+                const size = e.size;
                 const y = playerPos.y;
-                const rawy = y - GetEnemyCombatDims(combat.enemies[i].size).h;
-                if(combat.enemies[i].size === "xl") { currentx -= 1; }
-                return { x: currentx + info.dx, rawX: currentx, y: y + info.dy, rawY: rawy, w: info.w, h: info.h };
+                const rawy = y - GetEnemyCombatDims(e.size).h;
+                let dx = 0.25;
+                if(e.size === "lg") { dx = 0.375; }
+                else if(e.size === "xl") { dx = 0.125; }
+                return { x: currentx + info.dx + dx, rawX: currentx, y: y + info.dy - 0.0625, rawY: rawy, w: info.w, h: info.h };
             }
-            switch(combat.enemies[i].size) {
-                case "sm": currentx += 1; break;
-                case "md": currentx += 1.5; break;
-                case "lg": currentx += 2; break;
-                case "xl": currentx += 4; break;
-            }
+            currentx += GetDeltaCurrentX(e);
         }
     };
 

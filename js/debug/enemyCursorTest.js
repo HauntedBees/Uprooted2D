@@ -54,8 +54,8 @@ const debug = {
         player.increaseItem("!pesticide2");
     },
     ThrustSomeCropsUntoMineLoins: function(num) {
-        var items = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee"];
-        var numItems = num || 40;
+        const items = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee"];
+        let numItems = num || 40;
         while(numItems-- > 0) {
             player.increaseItem(items[Math.floor(Math.random() * items.length)]);
         }
@@ -78,15 +78,14 @@ const debug = {
         },
         drawShit: function() {
             gfx.clearAll();
-            var y = 9.25;
-            var x = 10;
+            let y = 9.25, x = 10;
             if(this.enemy.size === "xl") { x = 8; y = 3; }
             this.animHelp.DEBUG_DrawEnemy(0);
             gfx.drawInfobox(9, 1.5, combat.selectTarget.dy);
             gfx.drawWrappedText(this.enemy.name, me.INFOBOXWIDTH * 16, 11 + (combat.selectTarget.dy * 16), 85);
-            var cursorInfo = this.animHelp.GetCursorInfo(0);
-            gfx.DrawXCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
-            var modeName = "undefined";
+            const cursorInfo = this.animHelp.GetCursorInfo(0);
+            gfx.DrawCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h, "cursor", 0, "menucursorB");
+            let modeName = "undefined";
             switch(this.mode) {
                 case 0: modeName = "Shift DX"; break;
                 case 1: modeName = "Shift DY"; break;
@@ -96,8 +95,8 @@ const debug = {
             gfx.drawWrappedText("Mode: " + modeName, 10, 10, 200);
         },
         keyPress: function(key) {
-            var pos = { x: this.enemyIdx, y: 0 };
-            var isEnter = false;
+            const pos = { x: this.enemyIdx, y: 0 };
+            let isEnter = false;
             switch(key) {
                 case player.controls.up: pos.y -= 0.05; break;
                 case player.controls.down: pos.y += 0.05; break;
@@ -151,14 +150,14 @@ const debug = {
         setup: function() { this.draw(); },
         draw: function() {
             gfx.clearAll();
-            var weapon = this.weaponidx === 0 ? { displayname: "None", power: 0 } : GetEquipment(this.weapons[this.weaponidx]);
+            const weapon = this.weaponidx === 0 ? { displayname: "None", power: 0 } : GetEquipment(this.weapons[this.weaponidx]);
             gfx.drawText("Attack Power: " + this.atk, 5, 10);
             gfx.drawText("Weapon: " + weapon.displayname + " (" + weapon.power + ")", 5, 20);
             gfx.drawText("Season: " + this.season, 100, 10);
             gfx.drawText("Def/Damage: ", 5, 30);
-            for(var def = 0; def < 100; def++) {
+            for(let def = 0; def < 100; def++) {
                 player.equipment.weapon = this.weapons[this.weaponidx];
-                var str = (def + 1) + "/" + dmgCalcs.MeleeAttack(true, this.season, this.atk, def + 1, -1);
+                const str = (def + 1) + "/" + dmgCalcs.MeleeAttack(true, this.season, this.atk, def + 1, -1);
                 gfx.drawText(str, 5 + Math.floor(def / 21) * 60, 35 + (def % 21) * 6);
             }
         },
@@ -185,7 +184,7 @@ const debug = {
         if(i >= 3) { player.questsCleared.push("gotTire"); }
     },
     GiveAllCrops: function() {
-        for(var i = 0; i < debug.AllCrops.length; i++) {
+        for(let i = 0; i < debug.AllCrops.length; i++) {
             player.increaseItem(debug.AllCrops[i]);
         }
     }

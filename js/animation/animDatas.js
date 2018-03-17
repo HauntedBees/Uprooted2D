@@ -58,6 +58,10 @@ const enemyCombatAnims = {
     "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
     "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
     
+    "LAWNMOWER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
+    "LAWNMOWER_ROCK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
+    "LAWNMOWER_CROP": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damageCrop"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
+    
     "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_waterRow")], false, 4),
     "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss")], false, 4),
     "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_saltRow")], false, 4),
@@ -65,16 +69,17 @@ const enemyCombatAnims = {
     "HULK_PUNCH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_thanksHulkYouBetKid")], false, 4),
     "FUCKING_MAIM": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_letItFuckingBurn")], false, 4),
     "SLURP_KOMBUCH": new AnimSet([new AnimFrame(0, 8, "enemy_pullCrop"), new AnimFrame(0, 9)], false, 4),
+    "SLURP_KOMBUCH_TRUCK": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7)], false, 4),
 
-    "FUCKING_GUN": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
+    "FUCKING_GUN": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7)], false, 12),
     "FISH_FAIL": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "REV_ENGINE": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4), // TODO: maybe some poof-in for the baby?
-    "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], false, 4),
-    "MAIM": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7), new AnimFrame(0, 8, "enemy_damagePlayer"), new AnimFrame(0, 9)], true, 4),
+    "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], false, 4, { doShake: true }), // TODO: do something to make it support looping
+    "MAIM": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7), new AnimFrame(0, 8), new AnimFrame(0, 9), new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 4),
     "REPAIR": new AnimSet([new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 2),
-    "THROW_CROP_HUGE": new AnimSet([new AnimFrame(1, 4, "enemy_pullCrop"), new AnimFrame(1, 5, "enemy_throwCropAtEnemy")], false, 4),
-    "VINE_SMACK": new AnimSet([new AnimFrame(2, 4), new AnimFrame(2, 5, "enemy_vineSmack")], false, 4),
+    "THROW_CROP_HUGE": new AnimSet([new AnimFrame(1, 0, "enemy_pullCrop"), new AnimFrame(1, 1, "enemy_throwCropAtEnemy")], false, 4),
+    "VINE_SMACK": new AnimSet([new AnimFrame(1, 2), new AnimFrame(1, 3, "enemy_vineSmack")], false, 4),
     
     "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
     "BUTTFIX": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3)], true, 2),

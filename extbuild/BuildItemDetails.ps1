@@ -235,12 +235,6 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     this.fieldwidth = fieldwidth;
     this.size = size;
     this.spriteidx = spriteidx;
-    switch(this.size) {
-        case "sm": 
-        case "md": this.sheet = "charsheet"; break;
-		case "xl":
-        case "lg": this.sheet = "charsheetbig"; break;
-    }
     this.stickTurns = 0;
     this.seasonDistribution = seasonDistribution;
     this.attackType = atkType;
@@ -268,7 +262,7 @@ function GetEnemy(name) {
 			continue;
 		}
 		$allEnemies += "`"$id`"";
-		$endStr = $formatStr.replace("{name}", $id).replace("{dsl}", $row.Names).replace("{size}", $row.Size).replace("{spriteidx}", $row.sI).replace("{dx}", $row.cdx).replace("{dy}", $row.cdy).replace("{w}", $row.cw).replace("{h}", $row.ch).replace("{health}", $row.HP).replace("{atk}", $row.Atk).replace("{def}", $row.Def).replace("{fheight}", $row.FH).replace("{fwidth}", $row.FW).replace("{sp}", (?? $row.Sp 0)).replace("{su}", (?? $row.Su 0)).replace("{au}", (?? $row.Au 0)).replace("{wi}", (?? $row.Wi 0)).replace("{atkid}", $row.atkId).replace("{args}", $row.args);
+		$endStr = $formatStr.replace("{name}", $id).replace("{dsl}", $row.Names).replace("{size}", $row.Size).replace("{spriteidx}", "[" + $row.sI + "]").replace("{dx}", $row.cdx).replace("{dy}", $row.cdy).replace("{w}", $row.cw).replace("{h}", $row.ch).replace("{health}", $row.HP).replace("{atk}", $row.Atk).replace("{def}", $row.Def).replace("{fheight}", $row.FH).replace("{fwidth}", $row.FW).replace("{sp}", (?? $row.Sp 0)).replace("{su}", (?? $row.Su 0)).replace("{au}", (?? $row.Au 0)).replace("{wi}", (?? $row.Wi 0)).replace("{atkid}", $row.atkId).replace("{args}", $row.args);
 		if($row.Boss -eq "Y") {
 			$endStr = $endStr.replace("{boss}", "true");
 		} else {

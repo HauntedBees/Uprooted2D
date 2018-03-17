@@ -470,7 +470,7 @@ const actions = {
     "TRY_PLUG": function(e) {
         if(--e.plugTimer <= 0) {
             EnemyParser.current.data.textID = "plugSuccess";
-            e.spriteidx = 26;
+            e.spriteidx = [12, 8];
             e.unplugged = false;
             e.health = e.maxhealth;
             e.def = 50;
