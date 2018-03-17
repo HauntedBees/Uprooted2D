@@ -234,7 +234,7 @@ const animCallbacks = {
             const dy = (isGrounded ? 1 : 1.5);
             const fps = (isGrounded ? 24 : 12);
             if(animEntity.bonusArgs.targets.length === 0) { // attacking player
-                animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetEnemyBottomPos(0), combat.animHelper.GetPlayerBottomPos(), 
+                animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetEnemyBottomPos(0), combat.animHelper.GetPlayerTopPos(), 
                                     0.25, dy, 24, fps, animCallbackHelpers.HurtPlayer));
             } else { // attacking crop
                 const targx = animEntity.bonusArgs.targets[0].x + combat.dx;
