@@ -68,7 +68,6 @@ const enemyCombatAnims = {
     "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_saltRow")], false, 4),
     "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
     "HULK_PUNCH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_thanksHulkYouBetKid")], false, 4),
-    "FUCKING_MAIM": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_letItFuckingBurn")], false, 4),
     "SLURP_KOMBUCH": new AnimSet([new AnimFrame(0, 8, "enemy_pullCrop"), new AnimFrame(0, 9)], false, 4),
     "SLURP_KOMBUCH_TRUCK": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7)], false, 4),
 
@@ -77,7 +76,8 @@ const enemyCombatAnims = {
     "REV_ENGINE": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4), // TODO: maybe some poof-in for the baby?
     "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], true, 60, { doShake: true }),
-    "MAIM": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7), new AnimFrame(0, 8), new AnimFrame(0, 9), new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 4),
+    "MAIM": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7, "enemy_letItFuckingBurn"), new AnimFrame(0, 8), 
+                            new AnimFrame(0, 9), new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 20),
     "REPAIR": new AnimSet([new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 2),
     "THROW_CROP_HUGE": new AnimSet([new AnimFrame(1, 0, "enemy_pullCrop"), new AnimFrame(1, 1, "enemy_throwCropAtEnemy")], false, 4),
     "VINE_SMACK": new AnimSet([new AnimFrame(1, 2), new AnimFrame(1, 3, "enemy_vineSmack")], true, 4),
@@ -200,7 +200,7 @@ const animCallbacks = {
                         }
                         if(crop.health <= 0) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
                     }
-                    if(player.itemGrid[x][y] === "_beehive") {
+                    if(player.itemGrid != null && player.itemGrid[x] != null && player.itemGrid[x][y] === "_beehive") {
                         // don't hurt bees!
                     } else if(crop === null || crop.size === 1) {
                         animProcess.AddBaby(new TileAnim(dispx + combat.dx, dispy + combat.dy, ["fireBurn0", "fireBurn1"], false, 12, true));

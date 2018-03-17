@@ -392,7 +392,7 @@ const actions = {
                 EnemyParser.current.data.textID = "plantAttack";
                 return actions["MODULATE"](e, "0,1,2,3");
             case "fuckyou":
-                EnemyParser.current.data.animData = "FUCKING_MAIM";
+                EnemyParser.current.data.animData = "MAIM";
                 EnemyParser.current.data.textID = "standardAttack";
                 return actions["FUCKING_MAIM"](e);
             case "crophit":
