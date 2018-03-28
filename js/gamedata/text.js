@@ -1706,7 +1706,7 @@ const fulltext = {
 	},
 	"rap.garlic3": {
 		"en-us": "", 
-		"en-dm": "RAPBATTLE: It seems parts of it have insecticide properties, and some of its juices an be used for adhesive purposes.", 
+		"en-dm": "RAPBATTLE: It seems parts of it have insecticide properties, and some of its juices can be used for adhesive purposes.", 
 		"type": "map"
 	},
 	"rap.garlic4": {
@@ -2027,6 +2027,11 @@ const fulltext = {
 	"Pb2.13": {
 		"en-us": "", 
 		"en-dm": "Looks like it's time to get in my truck and head to the city. These Food2 goons need to be taught a lesson.", 
+		"type": "map"
+	},
+	"UnconsciousJeff": {
+		"en-us": "", 
+		"en-dm": "All the diplomas and accreditations in the world can't protect you from a vegetable-induced concussion, asshole.", 
 		"type": "map"
 	},
 	// Area 5: Bridge / Underwater
@@ -2540,7 +2545,7 @@ const fulltext = {
 		"en-dm": "Mermaid Inn", 
 		"type": "map"
 	},
-	"constr1.foe": {
+	"constr1.foe1": {
 		"en-us": "", 
 		"en-dm": "gonna fuck you up", 
 		"type": "map"

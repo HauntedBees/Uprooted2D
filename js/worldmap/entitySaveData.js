@@ -14,14 +14,17 @@ let stateBinders = {
         mapStates[mapName].ents = {};
         for(let i = 0; i < worldmap.entities.length; i++) {
             const e = worldmap.entities[i];
-            if(e.movement === undefined) { continue; }
             if(e.name[0] === "~") {
                 mapStates[mapName].ents[e.name] = {
-                    pos: e.pos, movement: e.movement, dir: e.dir,
-                    key: e.key, fx: e.fx, metadataid: e.metadataid, param: e.param
+                    pos: e.pos, movement: e.movement, dir: e.dir, lastAnim: e.lastAnim,
+                    key: e.key, fx: e.fx, metadataid: e.metadataid, param: e.param,
+                    visible: e.visible, solid: e.solid
                 };
             } else {
-                mapStates[mapName].ents[e.name] = { pos: e.pos, movement: e.movement, dir: e.dir };
+                mapStates[mapName].ents[e.name] = {
+                    pos: e.pos, movement: e.movement, dir: e.dir, lastAnim: e.lastAnim,
+                    visible: e.visible, solid: e.solid
+                };
             }
         }
     },
@@ -35,7 +38,10 @@ let mapRefreshes = {
             for(const name in ents) {
                 if(name[0] !== "~") { continue; }
                 const e = ents[name];
-                worldmap.entities.push(GetREnemy(e.key, e.pos.x, e.pos.y, e.fx, e.dir, e.movement, e.metadataid, e.param));
+                const newEnemy = GetREnemy(e.key, e.pos.x, e.pos.y, e.fx, e.dir, e.movement, e.metadataid, e.param);
+                newEnemy.solid = e.solid; newEnemy.visible = e.visible;
+                SetUpFellow(newEnemy, e.lastAnim);
+                worldmap.entities.push(newEnemy);
             }
         }
         for(let i = 0; i < worldmap.entities.length; i++) {
@@ -45,10 +51,14 @@ let mapRefreshes = {
         }
     },
     "extractPosition": function(e, ents) {
-        if(ents !== undefined && ents[e.name] !== undefined) { 
-            e.pos = ents[e.name].pos;
-            e.movement = ents[e.name].movement;
-            e.dir = ents[e.name].dir;
+        const saveValue = ents[e.name];
+        if(ents !== undefined && saveValue !== undefined) { 
+            e.pos = saveValue.pos;
+            e.movement = saveValue.movement;
+            e.dir = saveValue.dir;
+            e.visible = saveValue.visible;
+            e.solid = saveValue.solid;
+            SetUpFellow(e, saveValue.lastAnim);
         }
     },
     "insideCheck": function(e, mapName) {
@@ -63,13 +73,13 @@ let mapRefreshes = {
             if(!rfinfo[e.type]) { return; }
             const newActive = !e.active;
             e.active = newActive;
-            e.anim.shiftY(newActive ? 3 : 2);
+            SetUpFellow(e, "Door" + e.type + (newActive ? "d" : ""));
             e.solid = !newActive;
         } else if(e.rf) {
             if(!rfinfo[e.type]) { return; }
             const newActive = !e.active;
             e.active = newActive;
-            e.anim.shiftY(newActive ? 1 : 0);
+            SetUpFellow(e, "Switch" + e.type + (newActive ? "d" : ""));
         }
     },
     "producestand": function(e) { if(e.name === "ConvinceATron") { e.visible = true; } },
@@ -78,18 +88,20 @@ let mapRefreshes = {
         const paq = (player.activeQuests["fakeFarm"] === undefined ? -1 : player.activeQuests["fakeFarm"]);
         if(paq >= 0) {
             SpecialFunctions["FARMTVEND"](true);
-            worldmap.importantEntities["fuckOffFarmerJeff"].pos = { x: -1, y: -1 };
+            if(worldmap.importantEntities["fuckOffFarmerJeff"] !== undefined) {
+                worldmap.importantEntities["fuckOffFarmerJeff"].pos = { x: -1, y: -1 };
+            }
         }
         if(player.completedQuest("unpluggedOutlet")) {
             SpecialFunctions["UNPLUGOUTLET"](true);
-            worldmap.importantEntities["outlet"].anim.shiftY(13);
+            SetUpFellow(worldmap.importantEntities["outlet"], "Outlet2");
         }
         if(worldmap.importantEntities["FarmerJeff"] !== undefined) {
             worldmap.importantEntities["FarmerJeff"].interact = undefined;
             worldmap.importantEntities["FarmerJeff"].visible = false;
         }
         if(player.hasOrHasHadQuest("gotTire")) {
-            worldmap.importantEntities["tire"].anim.shiftY(9);
+            SetUpFellow(worldmap.importantEntities["tire"], "Tire2");
             if(player.hasQuestState("gotTire", 1)) {
                 worldmap.importantEntities["FarmerJeff"].dir = 0;
                 worldmap.importantEntities["FarmerJeff"].pos = { x: 14.5, y: 31.5 };
@@ -98,7 +110,7 @@ let mapRefreshes = {
             }
         }
         if(player.completedQuest("truckRepair")) {
-            worldmap.importantEntities["ltruck"].anim.shiftY(0);
+            SetUpFellow(worldmap.importantEntities["ltruck"], "TruckL");
             worldmap.importantEntities["ltruck"].interact = Cutscene("truck");
         }
         mapRefreshes.insideCheck(e, "fakefarm");
@@ -118,5 +130,6 @@ let mapRefreshes = {
             SpecialFunctions["NERDUP"]();
         }
     },
-    "hq_4": function(e) { if(e.name === "EndOfTheRoad" && player.completedQuest("theBeeQuest")) { e.visible = true; } }
+    "hq_4": function(e) { if(e.name === "SavedWorker" && player.completedQuest("helpNerd")) { e.interact = OneSpeak("sleepingSavedNerd"); } },
+    "hq_6": function(e) { if(e.autoplay === true && player.failedEntities.indexOf("cutscene_final") >= 0) { e.interact = Cutscene("finalReturn"); } }
 };

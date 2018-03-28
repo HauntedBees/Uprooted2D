@@ -1,7 +1,7 @@
 const worldmap = {
     freeMovement: true, savedImage: "", angryBees: false, smartphone: null, horRor: null,
-    pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, forcedPlayerInfo: false,
-    animData: new MapAnim("mapplayer", 0, 0, 16, 20, 2),
+    pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, 
+    animData: plAnims.walk,
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
@@ -9,7 +9,6 @@ const worldmap = {
     setup: function(args) {
         this.forceMove = false;
         this.forcedY = -1;
-        this.forcedPlayerInfo = false;
         this.savedImage = "";
         this.inDialogue = false;
         this.waitForAnimation = false;
@@ -33,15 +32,16 @@ const worldmap = {
         if(!args.noEntityUpdate) { this.entities = GetEntities(this.mapName, args.fromLoad); }
         else { justStateLoad = false; args.fromLoad = false; }
 
-        if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, args.fromLoad, justStateLoad); }
-        else if(args.isInn) { JumboToggle(false); }
-
         let targetToAutoplay = null;
         for(let i = 0; i < this.entities.length; i++) {
             const e = this.entities[i];
             if(e.storageKey !== undefined) { this.importantEntities[e.storageKey] = e; }
             if(e.autoplay && targetToAutoplay === null) { targetToAutoplay = e; } // always autoplay first one
+            if(e.anim === null || e.anim === undefined || typeof e.anim === "string") { InitFellow(e); }
         }
+        if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, args.fromLoad, justStateLoad); }
+        else if(args.isInn) { JumboToggle(false); }
+
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {
@@ -73,7 +73,7 @@ const worldmap = {
             beeQueen.interact[0](0, beeQueen);
         }
         if(args.isInn) {
-            JumboToggle(false);
+            JumboToggle(true);
             if(worldmap.entities[0].innCheck) { worldmap.entities[0].action(); }
         }
     },
@@ -156,7 +156,7 @@ const worldmap = {
                 continue;
             }
             if(e.chungus) {
-                gfx.drawChungus(e.pos.x, e.pos.y, e.width, e.height, offset);
+                gfx.DrawChungus(e.pos.x, e.pos.y, e.width, e.height, offset);
                 continue;
             }
             if(e.isForeground) {
@@ -170,11 +170,12 @@ const worldmap = {
             if(roundedY < 0 || roundedY >= ymax) { continue; }
             if(e.big) { roundedY++; }
             if(layers[roundedY] !== undefined) { // TODO: address new screen size (TODO: I don't know what I meant by this...?)
+                if(e === undefined || e.anim === undefined || e.anim.getFrame === undefined) { console.log("error with this entity:"); console.log(e); }
                 layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
             }
         }
         if(this.mapName !== "gameover") {
-            layers[playery].push(this.forcedPlayerInfo === false ? this.animData.getFrame(this.pos, animDir, moving) : this.forcedPlayerInfo);
+            layers[playery].push(this.animData.getFrame(this.pos, animDir, moving));
         }
         for(let y = 0; y < ymax; y++) {
             const funcs = layers[y];
@@ -183,7 +184,7 @@ const worldmap = {
                 if(e.foreground) {
                     gfx.drawFGCover(e.img, y, e.dy, e.w, offset);
                 } else {
-                    gfx.drawAnimCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big, e.other);
+                    gfx.DrawMapCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big, e.layer, e.other);
                 }
             }
         }

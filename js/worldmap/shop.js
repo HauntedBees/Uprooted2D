@@ -157,7 +157,7 @@ worldmap.shop = {
                 if(this.details.wares[i].locked !== undefined && player.questsCleared.indexOf(this.details.wares[i].locked) < 0) { continue; }
                 this.availableIndexes.push(i);
                 if(this.details.wares[i].type === "equipment") {
-                    gfx.drawTileToGrid(GetEquipment(this.details.wares[i].product).sprite, this.initx + j * this.dx, this.yPos, "characters");
+                    gfx.drawTileToGrid(this.details.wares[i].product, this.initx + j * this.dx, this.yPos, "characters");
                 } else if(this.bookState >= 0 && (this.cursorX - 1) === i) {
                     gfx.drawTileToGrid("bookOpenL", this.initx + j * this.dx - 0.5, this.yPos, "characters");
                     gfx.drawTileToGrid("bookOpenR", this.initx + j * this.dx + 0.5, this.yPos, "characters");

@@ -47,15 +47,26 @@ const nwHelpers = {
 const game = {
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14, //w: 960, h: 640,
     currentInputHandler: worldmap, target: null, language: "en-dm",
-    sheetsToLoad: ["title", "playersheet", "mapchar", "mapplayer","mapcharbig", "hipster", "assistant",
-                    "maps/producestand","maps/forest", "maps/farm_init", "maps/farm", "maps/firstvillage", "maps/belowvillage", "maps/researchfacility",
-                    "maps/bridge", "maps/underwater", "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home",
-                    "maps/fakefarm", "covers/barn", "maps/southcity", "covers/mob", "covers/skumpy", "maps/gameover", "fov", "maps/northcity",
-                    "covers/northcity1", "covers/northcity2", "covers/northcity2_post", "covers/northcity3", "maps/hq_1", "maps/hq_2", "maps/hq_3",
-                    "maps/hq_4", "maps/hq_5", "maps/hq_6", "horRorTop", "horRorBottom", "ayudame", "mapplayer_help", "shops/vendo",
-                    "foregrounds/farm", "combatPlayer", "combat_equipment", "bgs/outside", "bgs/underwater", "titleGround", "titleTop", 
-                    "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "sheet", "sheetBig",
-                    "combatSheet", "combatSheetBig", "combatSheetHuge"],
+    sheetsToLoad: [
+                    "title", "titleGround", "titleTop", // Title Screen
+                    "mapChar", "mapCharBig", "mapPlayer", "mapPlayerHelp", // Map Stuff
+                    "fov", "horRorTop", "horRorBottom", "ayudame", // Specific Map Stuff
+                    "sheet", "sheetBig", "combatSheet", "combatSheetBig", "combatSheetHuge", "combatPlayer", "combatEquipment", // Combat Stuff
+                    //* Maps *//
+                    "maps/farm_init", "maps/producestand", "maps/farm", "maps/firstvillage", "maps/forest",
+                    "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
+                    "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
+                    "maps/hq_6", "maps/gameover",
+                    //* Map Covers *//
+                    "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
+                    "covers/northcity2_post", "covers/northcity3",
+                    //* Map Foregrounds *//
+                    "foregrounds/farm", 
+                    //* Shops *//
+                    "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home", "shops/vendo",
+                    //* Combat Backgrounds *//
+                    "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq"
+                ],
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
@@ -269,7 +280,7 @@ const game = {
             worldmap.smartphone.SetPhoneData(mapStates["northcity"].phoneData);
         }
         localStorage.setItem("lastSaved", savenum);
-        game.PatchSaveFile();
+        if(!game.PatchSaveFile()) { return; }
         game.transition(game.currentInputHandler, worldmap, { 
             init: player.mapPos,
             map: player.mapName,
@@ -278,10 +289,15 @@ const game = {
         });
     },
     PatchSaveFile: function() {
+        // v0.3- save files are incompatible with v0.4+
+        if(player.saveVersion === undefined) {
+            return false;
+        }
         // prior to v0.3
         if(player.fixtureTutorialState === undefined) { console.log("fts"); player.fixtureTutorialState = 0; }
         if(player.keyboardcontrols === undefined) { console.log("kbc"); player.keyboardcontrols = { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" }; }
         if(player.gamepadcontrols === undefined) { console.log("gpc"); player.gamepadcontrols = { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1",  pause: "Gamepad9" }; }
         if(player.options.controltype === undefined) { console.log("oct"); player.options.controltype = 0; }
+        return true;
     }
 };

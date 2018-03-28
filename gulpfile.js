@@ -4,6 +4,8 @@ var cp = require("child_process");
 var foreach = require("gulp-foreach");
 var getPixels = require("get-pixels");
 gulp.task("default", function() {
+    var version = Math.floor(1000 * Math.random());
+    fs.writeFile("logging.js", "console.log('Code Version: " + version + "');");
     cp.execFile("uglify.cmd");
     cp.execFile("uglifymin.cmd");
 });

@@ -97,7 +97,7 @@ function VineAnim(column, bottomy, delay, callback) {
             lastRan = now;
         }
         for(let y = 0; y < by; y++) {
-            gfx.drawYMaskedSprite("vineAnim" + (y % 4) + "." + animState, x, by + y + 1 - height, "menucursorC", by);
+            gfx.DrawYMaskedSprite("vineAnim" + (y % 4) + "." + animState, x, by + y + 1 - height, "menucursorC", by);
         }
         gfx.drawTileToGrid("vineAnimT." + animState, x, by - height, "menucursorC");
         gfx.drawTileToGrid("vineBottom" + animState, x, by, "menucursorC");
@@ -307,7 +307,7 @@ CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 
 function CombatAnimEnemy(sheet, w, h, x, y, dx, dy) { CombatAnimEntity.call(this, sheet, w, h, x, y, enemyCombatAnims, "STAND", dx, dy); }
 CombatAnimEnemy.prototype = Object.create(CombatAnimEntity.prototype);
-CombatAnimEnemy.prototype.CorpseItUp = function(d, size) { gfx.DrawDitheredWhatsit(this.sheet, this.dx, 1, this.dims, this.layer, d, size); };
+CombatAnimEnemy.prototype.CorpseItUp = function(d, size) { gfx.DrawDitheredWhatsit(this.sheet, this.dx, this.dy + 1, this.dims, this.layer, d, size); };
 
 function GetEnemyCombatAnim(x, y, spriteidx, size, cursorinfo) {
     const dims = GetEnemyCombatDims(size);

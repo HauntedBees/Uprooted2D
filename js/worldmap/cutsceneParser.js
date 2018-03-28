@@ -15,7 +15,6 @@ const iHandler = {
     Finish: function() {
         if(worldmap.mapName !== "hq_6") {
             worldmap.forceMove = false;
-            worldmap.forcedPlayerInfo = false;
         }
         worldmap.waitForAnimation = false;
         worldmap.refreshMap();
@@ -31,12 +30,17 @@ const iHandler = {
             return;
         }
         const curKey = iHandler.state.key + (iHandler.state.idx++);
+        console.log(curKey);
         const action = scripts[curKey];
         if(action === undefined) { iHandler.state.done = true; }
         if(iHandler.state.done) {
             if(iHandler.state.postItems.length > 0) {
                 game.transition(game.currentInputHandler, worldmap.invClean, iHandler.state.postItems);
                 iHandler.state.postItems = [];
+            }
+            if(game.target !== null) {
+                if(game.target.moveToTalk) { game.target.moving = false; }
+                else if(game.target.standAnim) { SetUpFellow(game.target, game.target.standAnim); }
             }
             return worldmap.finishDialog();
         }
@@ -46,14 +50,18 @@ const iHandler = {
         iHandler.state.activeAnim.target.pos.x += iHandler.state.activeAnim.dx * iHandler.moveSpeed;
         iHandler.state.activeAnim.target.pos.y += iHandler.state.activeAnim.dy * iHandler.moveSpeed;
         if(!spedUp) { worldmap.refreshMap(); }
-        var finished = false;
-        switch(iHandler.state.activeAnim.dx * 2 + iHandler.state.activeAnim.dy) {
+        let finished = false, idx = iHandler.state.activeAnim.dx * 2 + iHandler.state.activeAnim.dy;
+        switch(idx) {
             case 1: finished = (iHandler.state.activeAnim.target.pos.y >= iHandler.state.activeAnim.dest); break;
             case -1: finished = (iHandler.state.activeAnim.target.pos.y <= iHandler.state.activeAnim.dest); break;
             case 2: finished = (iHandler.state.activeAnim.target.pos.x >= iHandler.state.activeAnim.dest); break;
             case -2: finished = (iHandler.state.activeAnim.target.pos.x <= iHandler.state.activeAnim.dest); break;
         }
         if(finished) {
+            switch(Math.abs(idx)) {
+                case 1: iHandler.state.activeAnim.target.pos.y = iHandler.state.activeAnim.dest; break;
+                case 2: iHandler.state.activeAnim.target.pos.x = iHandler.state.activeAnim.dest; break;
+            }
             if(spedUp) { worldmap.refreshMap(); }
             iHandler.Finish();
         }
@@ -87,45 +95,50 @@ const CommandParser = {
             const actDeets = action.split(":");
             const actSuffix = actDeets[1];
             switch(actDeets[0]) {
+                // Player State Handlers
                 case "CHIEVO": player.achievements.push(actSuffix); break;
                 case "ALIGNTECH": player.shiftTech(parseFloat(actSuffix)); break;
                 case "ALIGNGOOD": player.shiftEthics(parseFloat(actSuffix)); break;
-                case "MOVE": CommandParser.Parse_Movement(target, isPlayer, actSuffix); break;
-                case "CUSTOM": CommandParser.Parse_Special(actSuffix); break;
-                case "SLEEP": worldmap.waitForAnimation = true; iHandler.state.animHandler = iHandler.SleepSkip; worldmap.animIdx = setTimeout(iHandler.Finish, parseInt(actSuffix)); break;
-                case "PLANIM": CommandParser.Parse_BasicPlayerFrame(actSuffix.split(",")); break;
-                case "SETDIR": if(isPlayer) { target.playerDir = parseInt(actSuffix); } else { target.dir = parseInt(actSuffix); } break;
-                case "TEXT": CommandParser.Parse_Text(actSuffix.split(",")); break;
-                case "BLACKTEXT": CommandParser.Parse_BlackText(actSuffix); break;
-                case "ANIMSTATE": CommandParser.Parse_ShiftsAndFPS(target, JSON.parse(actSuffix)); break;
-                case "ISMOVING": target.moving = (actSuffix === "true"); break;
-                case "CLEARTEXT": gfx.clearSome(["menuA", "menutext"]); break;
-                case "GO2": CommandParser.Parse_Transition(JSON.parse(actSuffix)); break;
-                case "VISIBLE": target.visible = (actSuffix === "true"); break;
-                case "SOLID": target.solid = (actSuffix === "true"); break;
-                case "CLEARTARGET": worldmap.clearTarget(); break;
-                case "PUSHCLEAREDTARGET": player.clearedEntities.push(actSuffix); break;
-                case "SETTARGET": game.target = target; break;
-                case "END": iHandler.state.done = true; break;
-                case "GIVE": CommandParser.Parse_TryGive(actSuffix.split(",")); break;
-                case "TAKE": var a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
-                case "SHIFTY": target.anim.shiftY(parseInt(actSuffix)); break;
                 case "COMPLETEQUEST": quests.completeQuest(actSuffix); break;
                 case "STARTQUEST": player.activeQuests[actSuffix] = 1; break;
                 case "SETQUEST": var args = actSuffix.split(","); player.activeQuests[args[0]] = args[1]; break;
-                case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
-                case "SETSTATE": iHandler.state.idx = parseInt(actSuffix); break;
+                case "GIVE": CommandParser.Parse_TryGive(actSuffix.split(",")); break;
+                case "TAKE": var a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
                 case "MONEY": player.monies += parseInt(actSuffix); break;
                 case "LEVELUP": player.addExp(player.nextExp); player.levelUp(); break;
-                case "QUIT": iHandler.state.done = true; worldmap.finishDialog(); break;
-                case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
-                case "CLEARINTERACT": target.interact = undefined; break;
-                case "SETTARGETTONOTHING": game.target = null; break;
+                // Animation Handling
+                case "TALK": SetUpFellow(target, target.talkAnim); break;
+                case "ANIM": SetUpFellow(target, actSuffix, isPlayer); break;
+                case "MOVE": CommandParser.Parse_Movement(target, isPlayer, actSuffix); break;
+                case "SETDIR": if(isPlayer) { target.playerDir = parseInt(actSuffix); } else { target.dir = parseInt(actSuffix); } break;
+                case "SLEEP": worldmap.waitForAnimation = true; iHandler.state.animHandler = iHandler.SleepSkip; worldmap.animIdx = setTimeout(iHandler.Finish, parseInt(actSuffix)); break;
                 case "HIHISPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[2]; break;
                 case "HISPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[1]; break;
                 case "LOSPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[0]; break;
+                case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
+                // Text
+                case "TEXT": CommandParser.Parse_Text(actSuffix.split(",")); break;
+                case "BLACKTEXT": CommandParser.Parse_BlackText(actSuffix); break;
+                case "CLEARTEXT": gfx.clearSome(["menuA", "menutext"]); break;
                 case "C2TEXT": CommandParser.Parse_Cash2Text(actSuffix.split(",")); break;
+                // Target Manipulation
+                case "ISMOVING": target.moving = (actSuffix === "true"); break;
+                case "VISIBLE": target.visible = (actSuffix === "true"); break;
+                case "SOLID": target.solid = (actSuffix === "true"); break;
+                case "CLEARINTERACT": target.interact = undefined; break;
                 case "SETPOSX": target.pos.x = parseFloat(actSuffix); break;
+                case "SETTARGET": game.target = target; break;
+                case "SETTARGETTONOTHING": game.target = null; break;
+                case "PUSHCLEAREDTARGET": player.clearedEntities.push(actSuffix); break;
+                case "CLEARTARGET": worldmap.clearTarget(); break;
+                // Cutscene Logic
+                case "SETSTATE": iHandler.state.idx = parseInt(actSuffix); break;
+                case "QUIT": iHandler.state.done = true; worldmap.finishDialog(); break;
+                case "END": iHandler.state.done = true; break;
+                // Other
+                case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
+                case "GO2": CommandParser.Parse_Transition(JSON.parse(actSuffix)); break;
+                case "CUSTOM": CommandParser.Parse_Special(actSuffix); break;
             }
         }
     },
@@ -134,10 +147,6 @@ const CommandParser = {
         const itemAmt = parseInt(itemArr[1]) || 1;
         if(player.increaseItem(itemName, itemAmt)){ return; }
         iHandler.state.postItems.push([itemName, itemAmt]);
-    },
-    Parse_ShiftsAndFPS: function(target, args) { // [shifty, shiftx, sheetlen, fps, moving]
-        target.anim.shiftY(args[0]).shiftX(args[1], args[2]).setFPS(args[3]);
-        if(args[4] !== undefined) { target.moving = args[4]; }
     },
     Parse_Transition: function(args) {
         if(args[3] === undefined) {
@@ -180,15 +189,6 @@ const CommandParser = {
         ];
         worldmap.writeText(text, args, false, formatting);
     },
-    Parse_BasicPlayerFrame: function(args) { // sx, sy, time
-        worldmap.waitForAnimation = true;
-        const sx = parseInt(args[0]);
-        const sy = parseInt(args[1]);
-        const time = parseInt(args[2]);
-        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, sx, sy);
-        worldmap.refreshMap();
-        worldmap.animIdx = setTimeout(iHandler.Finish, time);
-    },
     Parse_Movement: function(target, isPlayer, moveData) {
         let dx = 0, dy = 0;
         if(moveData[0] === "y") {
@@ -227,16 +227,7 @@ function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
 }
 
 const SpecialFunctions = {
-    "STARTFIXTUT": () => fixTut.start(),
-    "NOFIXTUT": () => player.fixtureTutorialState = 2,
-    "WAIT": function() { },
-    "GOTOTITLE": () => game.transition(game.currentInputHandler, worldmap.title),
-    "SETNERDBED": () => player.lastInn = "nerdBed",
-    "CATMAIL": () => player.activeQuests["catmail"] = 1,
-    "CREDITS": function() {
-        JustBeatGameChievoCheck();
-        return game.transition(game.currentInputHandler, worldmap.credits);
-    },
+    // Farm
     "WIPEFARMBOTS": function() {
         for(var i = (worldmap.entities.length - 1); i >= 0; i--) {
             var e = worldmap.entities[i];
@@ -274,380 +265,148 @@ const SpecialFunctions = {
         worldmap.refreshMap();
         return true;
     },
-    "THEGIFTOFEGG": function() {
-        player.monies -= 250;
-        var eggType = "egg";
-        if(player.completedQuest("goodEgg") && Math.random() < 0.08) {
-            eggType = "goldegg";
-        } else {
-            eggType = ["egg", "quail", "turkey", "goose", "platypus"][Math.floor(Math.random() * 5)];
-        }
-        player.increaseItem(eggType, 2);
-        worldmap.writeText("eggBoy." + eggType);
-    },
-    "BEATROBBERS": function() {
-        ClearEntitiesUnderCondition(e => e.robbery === true, false);
-        worldmap.pos = { x: 6, y: 6 };
-        var caughtRobbers = GetCommonEntity("Strobbers", 7, 6, 16, 0, undefined, undefined, { sy: 8, robbery: true });
-        worldmap.entities.push(caughtRobbers);
-        worldmap.importantEntities["caughtRobbers"] = caughtRobbers;
-        for(var i = 0; i < 4; i++) {
-            var x = 6 + (i % 2);
-            var y = 12 + (i < 2 ? 0 : 2);
-            var newCopper = GetCommonEntity("NewCop" + i, x, y, 8, 0, undefined, undefined, { moving: true, sy: 15, robbery: true });
-            worldmap.entities.push(newCopper);
-            worldmap.importantEntities["NewCop" + i] = newCopper;
-        }
-        worldmap.refreshMap();
 
-        worldmap.waitForAnimation = true;
-        iHandler.state.animHandler = function(spedUp) {
-            for(var i = 0; i < 4; i++) {
-                worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
-            }
-            if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["NewCop0"].pos.y <= 8;
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    // Forest
+    "LIMESTART": function() {
+        const items = specialtyHelpers.getLimeItems();
+        if(items.length === 0) { worldmap.writeText("lime3"); iHandler.state.done = true; }
+        else { worldmap.writeText("lime4", items); }
     },
-    "COPANIM1": function() {
-        worldmap.waitForAnimation = true;
-        worldmap.importantEntities["NewCop0"].dir = 1;
-        worldmap.importantEntities["NewCop1"].dir = 3;
-        iHandler.state.animHandler = function(spedUp) {
-            for(var i = 0; i < 4; i++) {
-                if(i === 0) {
-                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.05;
-                } else if(i === 1) {
-                    worldmap.importantEntities["NewCop" + i].pos.x += 0.05;
-                } else {
-                    worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
-                }
-            }
-            if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["NewCop2"].pos.y <= 8;
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "COPANIM2": function() {
-        worldmap.waitForAnimation = true;
-        worldmap.importantEntities["NewCop0"].dir = 0;
-        worldmap.importantEntities["NewCop1"].dir = 0;
-        worldmap.importantEntities["NewCop2"].dir = 1;
-        worldmap.importantEntities["NewCop3"].dir = 3;
-        iHandler.state.animHandler = function(spedUp) {
-            for(var i = 0; i < 4; i++) {
-                if(i === 2) {
-                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.05;
-                } else if(i === 3) {
-                    worldmap.importantEntities["NewCop" + i].pos.x += 0.05;
-                } else {
-                    worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
-                }
-            }
-            if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["NewCop0"].pos.y <= 6;
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "COPANIM3": function() {
-        worldmap.waitForAnimation = true;
-        worldmap.importantEntities["NewCop2"].dir = 0;
-        worldmap.importantEntities["NewCop3"].dir = 0;
-        iHandler.state.animHandler = function(spedUp) {
-            for(var i = 0; i < 4; i++) {
-                worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
-            }
-            if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["NewCop2"].pos.y <= 7;
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                for(var i = 0; i < 4; i++) {
-                    worldmap.importantEntities["NewCop" + i].moving = false;
-                    worldmap.importantEntities["NewCop" + i].dir = (i % 2 === 0 ? 3 : 1);
-                }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "COPANIM4": function() {
-        worldmap.waitForAnimation = true;
-        worldmap.importantEntities["NewCop1"].moving = true;
-        worldmap.importantEntities["NewCop2"].moving = true;
-        worldmap.importantEntities["NewCop3"].moving = true;
-        iHandler.state.animHandler = function(spedUp) {
-            for(var i = 1; i < 4; i++) {
-                if(i === 2) {
-                    worldmap.importantEntities["NewCop" + i].pos.x += 0.025;
-                } else {
-                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.025;
-                }
-            }
-            if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["NewCop1"].pos.x <= 7;
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "COPANIM5": function() {
-        worldmap.waitForAnimation = true;
-        worldmap.importantEntities["NewCop1"].dir = 2;
-        worldmap.importantEntities["NewCop2"].dir = 2;
-        worldmap.importantEntities["NewCop3"].dir = 2;
-        iHandler.state.animHandler = function(spedUp) {
-            for(var i = 1; i < 4; i++) {
-                worldmap.importantEntities["NewCop" + i].pos.y += 0.025;
-            }
-            worldmap.importantEntities["caughtRobbers"].pos.y += 0.025;
-            if(!spedUp) { worldmap.refreshMap(); }
-            var finished = worldmap.importantEntities["NewCop1"].pos.y >= 12;
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "FINISHCOPS": () => ClearEntitiesUnderCondition(e => e.robbery === true, false),
-    "SWITCHTOFALCON": () => iHandler.Start("falcon"),
-    "SCREENSHAKE": function() {
-        // TODO
-    },
-    "BIRDSONG.OGG": function() {
-        // TODO
-    },
-    "BEEQUEENMAD": function() {
-        game.target = null;
-        player.beeQueensFaced++;
-        worldmap.angryBees = false;
-        var enemy = player.beeQueensFaced < 2 ? "beeQueenA" : (player.beeQueensFaced < 5 ? "beeQueenB" : "beeQueenC");
-        combat.startBattle([enemy]);
-    },
-    "FLIPSHIT": function() {
-        worldmap.waitForAnimation = true;
-        iHandler.state.animHandler = function(spedUp) {
-            var newY = (worldmap.entities[0].anim.getFrame().sy / 20) + 1;
-            for(var i = 0; i < worldmap.entities.length; i++) {
-                if(worldmap.entities[i].isFlippy !== true) { continue; }
-                worldmap.entities[i].anim.shiftY(newY);
-            }
-            if(!spedUp) { worldmap.refreshMap(); }
-            var finished = (newY === 14);
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 250);
-    },
-    "NERDUP": function() {
-        player.hasNerd = true;
-        worldmap.clearTarget();
-        worldmap.animData = new MapAnim("mapplayer_help", 0, 0, 20, 25, 2);
-        worldmap.entities.push(GetCommonEntity("BarricadeL", 23, 2, 6, 0, undefined, OneSpeak("blockedOff3F"), { big: true, noChange: true }));
-        worldmap.entities.push(GetCommonEntity("BarricadeR", 25, 2, 6, 0, undefined, OneSpeak("blockedOff3F"), { big: true, sy: true, noChange: true }));
-        me.PLAYERMOVESPEED = me.BASEMOVESPEED / 2;
-    },
-    "NERDDOWN": function() {
-        player.hasNerd = false;
-        worldmap.clearTarget();
-        worldmap.animData = new MapAnim("mapplayer", 0, 0, 16, 20, 2);
-        me.PLAYERMOVESPEED = me.BASEMOVESPEED;
-        worldmap.importantEntities["trentSafe"].interact = OneSpeak("sleepingSavedNerd");
-        worldmap.importantEntities["trentSafe"].visible = true;
-        worldmap.importantEntities["trentSafe"].solid = true;
-    },
-    "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); player.questsCleared.push("gotPhone"); },
-    "PHONEPRESS": function() { worldmap.smartphone.Read(); },
-    "THEMONSTER": function() {
-        var monster = GetCommonEntity("Monster", worldmap.pos.x - 0.5, worldmap.pos.y - 2.25, 6, 0, undefined, undefined, { big: true, sy: 2, isTheMonster: true });
-        monster.anim.other.layer = "foreground";
-        worldmap.entities.push(monster);
-        worldmap.importantEntities["monster"] = worldmap;
-    },
-    "BEATMONSTER": function() { ClearEntitiesUnderCondition(e => e.isTheMonster === true, true); },
-    "BYEFALCON": () => player.hasFalcon = false,
-    "GETFALCONTEXT": function() {
-        let keyStart = "falconMsg0.";
-        let rangeMax = 6;
-        switch(worldmap.mapName) {
-            case "bridge": keyStart = "falconMsg1."; rangeMax = 5; break;
-            case "fakefarm": keyStart = "falconMsg2."; rangeMax = 5; break;
-            case "southcity":
-                player.increaseItem("goose", 10);
-                player.increaseItem("egg", 20);
-                keyStart = "falconMsg3.";
-                rangeMax = 5;
-                break;
-            case "northcity": keyStart = "falconMsg4."; rangeMax = 4; break;
-            case "hq_1": keyStart = "falconMsg5."; rangeMax = 7; break;
+    "LIMENEXT": function(idx) {
+        switch(specialtyHelpers.getLimeItems()[idx]) {
+            case "lime.lemon": worldmap.writeText("lime.lemon1"); iHandler.state.idx = 6; break;
+            case "lime.banana": worldmap.writeText("lime.banana1"); iHandler.state.idx = 8; break;
+            case "lime.corn": worldmap.writeText("lime.corn1"); iHandler.state.idx = 10; break;
+            case "lime.goldegg": worldmap.writeText("lime.egg1"); iHandler.state.idx = 12; break;
+            case "lime.nope": worldmap.writeText("lime.denied"); iHandler.state.done = true; break;
         }
-        for(let i = 1; i <= rangeMax; i++) { iHandler.state.texts.push(keyStart + i); }
-        worldmap.writeText(keyStart + "0");
     },
-    "FALCONSELECT": function() {
-        game.currentInputHandler = worldmap.falconSelect;
-        for(let i = 0; i < player.nathanSeeds.length; i++) {
-            player.increaseItem(player.nathanSeeds[i][0], player.nathanSeeds[i][1]);
-        }
-        worldmap.falconSelect.setup();
-    },
-    "PLAYERREAD": function() {
-        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame(worldmap.pos, 6, 0);
-        worldmap.refreshMap();
-    },
-    "PLAYERSTOP": function() {
-        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame({ x: 8.5, y: 10 }, 0, 0);
-        worldmap.forcedY = 10;
-        worldmap.refreshMap();
-    },
-    "PLAYERSHOCK1": function() {
-        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame({ x: 8.5, y: 10 }, 7, 0);
-        worldmap.refreshMap();
-    },
-    "PLAYERSHOCK2": function() {
-        worldmap.forcedPlayerInfo = worldmap.animData.forceFrame({ x: 8.5, y: 10 }, 7, 1);
-        worldmap.refreshMap();
-    },
-    "ENTERTHEBIRD": function() {
-        const bird = GetCommonEntity("Eagle", worldmap.pos.x - 8, worldmap.pos.y - 3.5, 6, 0, undefined, undefined, { sheet: "assistant", sy: 1, sheetlen: 2, moving: true });
-        worldmap.entities.push(bird);
-        worldmap.importantEntities["bird"] = bird;
 
-        worldmap.waitForAnimation = true;
-        iHandler.state.animHandler = function(spedUp) {
-            worldmap.importantEntities["bird"].pos.x += 0.05;
-            worldmap.importantEntities["bird"].pos.y += 0.025;
-            if(!spedUp) { worldmap.refreshMap(); }
-            const finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x - 1);
-            if(finished) {
-                worldmap.importantEntities["bird"].anim.shiftX(4);
-                worldmap.importantEntities["bird"].moving = false;
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "EXITTHEBIRDFINAL": function() {
-        worldmap.forcedPlayerInfo = false;
-        worldmap.writeText("falconMsg5.8");
-        iHandler.state.texts.push("falconMsg5.9");
-        player.hasFalcon = true;
-    },
-    "EXITTHEBIRD1": function() {
-        gfx.clearSome(["menuA", "menutext"]);
-        worldmap.importantEntities["bird"].anim.shiftX(6);
-        worldmap.importantEntities["bird"].moving = true;
-        worldmap.waitForAnimation = true;
-        worldmap.forcedPlayerInfo = false;
-        iHandler.state.animHandler = function(spedUp) {
-            worldmap.importantEntities["bird"].pos.y -= 0.01;
-            if(!spedUp) { worldmap.refreshMap(); }
-            const finished = worldmap.importantEntities["bird"].pos.y <= (worldmap.pos.y - 1.5);
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "EXITTHEBIRD2": function() {
-        worldmap.waitForAnimation = true;
-        iHandler.state.animHandler = function(spedUp) {
-            worldmap.importantEntities["bird"].pos.x += 0.05;
-            worldmap.importantEntities["bird"].pos.y -= 0.0125;
-            if(!spedUp) { worldmap.refreshMap(); }
-            const finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x + 8);
-            if(finished) {
-                if(spedUp) { worldmap.refreshMap(); }
-                game.target = worldmap.importantEntities["bird"];
-                worldmap.clearTarget();
-                worldmap.importantEntities["bird"] = undefined;
-                iHandler.Finish();
-            }
-            return finished;
-        };
-        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
-    },
-    "DESTROYBUILDING": function() {
-        worldmap.importantEntities["13thStBuildings"].filename = "covers/northcity2_post";
+    // Research Lab
+    "SEEDSHOT": () => { player.health -= 2; game.target.hasShot = 5; },
+    "SEEDSHOTKILL": function() {
+        player.health = player.maxhealth;
         for(let i = 0; i < worldmap.entities.length; i++) {
-            if(worldmap.entities[i].destroyable) {
-                player.clearedEntities.push(worldmap.entities[i].name);
-                worldmap.entities[i].solid = false;
-                worldmap.entities[i].visible = false;
-                worldmap.entities[i].inside = false;
-            } else if(worldmap.entities[i].name.indexOf("XNerndHaus") >= 0) {
-                worldmap.entities[i].pos.y += 27;
+            const newActive = worldmap.entities[i].initActive;
+            if(worldmap.entities[i].rfd) {
+                worldmap.entities[i].active = newActive;
+                SetUpFellow(worldmap.entities[i], "Door" + worldmap.entities[i].type + (newActive ? "d" : ""));
+                worldmap.entities[i].solid = !newActive;
+            } else if(worldmap.entities[i].rf) {
+                worldmap.entities[i].active = newActive;
+                SetUpFellow(worldmap.entities[i], "Switch" + worldmap.entities[i].type + (newActive ? "d" : ""));
             }
         }
+        game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
     },
-    "C2BUY": function() { player.monies -= 1000; player.c2 = RoundNear(player.c2 + 1000 / player.c2Rate, 100); },
-    "C2SELL": function() { player.monies += Math.round(player.c2Rate); player.c2 = RoundNear(player.c2 - 1, 100); },
-    "MOBFLEE": function() { ClearEntitiesUnderCondition(e => e.mafia === true, true); },
-    "ENTERSKUMPY": function() {
-        worldmap.importantEntities["skumpyCover"].visible = false;
-        worldmap.entities.forEach(e => { if(e.inside) { e.visible = true; } });
-        worldmap.importantEntities["skumpy"].visible = true;
-        worldmap.importantEntities["skumpy"].pos = { x: 40, y: 39 };
-        worldmap.importantEntities["skumpy"].anim.shiftX(10);
+    "DRJEFFDROP": function() {
+        worldmap.writeText("Pb2.12");
+        SetUpFellow(worldmap.importantEntities["bonkedJeff"], "DrJeff4");
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            if(worldmap.importantEntities["bonkedJeff"].done) {
+                if(spedUp) { worldmap.refreshMap(); iHandler.Finish(); }
+                return true;
+            }
+            const finished = worldmap.importantEntities["bonkedJeff"].pos.y >= 2;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); iHandler.Finish(); }
+                worldmap.importantEntities["bonkedJeff"].done = true;
+            } else {
+                worldmap.importantEntities["bonkedJeff"].pos.y += 0.25;
+                worldmap.pos.y += 0.25;
+                if(!spedUp) { worldmap.refreshMap(); }
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "RAPSTART": function() {
+        const items = specialtyHelpers.getRapItems();
+        if(items.length === 0) { worldmap.writeText("rap4"); iHandler.state.done = true; }
+        else { worldmap.writeText("rap5", items); }
+    },
+    "RAPNEXT": function(idx) {
+        switch(specialtyHelpers.getRapItems()[idx]) {
+            case "rap.garlic": worldmap.writeText("rap.garlic1"); iHandler.state.idx = 6; break;
+            case "rap.rice": worldmap.writeText("rap.rice1"); iHandler.state.idx = 8; break;
+            case "rap.coconut": worldmap.writeText("rap.coconut1"); iHandler.state.idx = 10; break;
+            case "lime.nope": worldmap.writeText("rap4"); iHandler.state.done = true; break;
+        }
+    },
+
+    // Bridge & Underwater
+    "KELPDEAD": function() {
+        player.clearedEntities.push("KelpBoy");
+        player.activeQuests["kelpBoy"] = "deadass";
+        if(worldmap.importantEntities["KelpBoy"] !== undefined) {
+            worldmap.importantEntities["KelpBoy"].solid = false;
+            worldmap.importantEntities["KelpBoy"].visible = false;
+            worldmap.importantEntities["KelpBoy"].interact = undefined;
+        }
         worldmap.refreshMap();
+        worldmap.writeText("vaseWon0");
     },
-    "SKUMPYTURN": function() {
-        worldmap.pos.y = 39.25;
-        stores["skumpys"].wares[0].price = 0;
-        worldmap.importantEntities["bruno"].dir = 3;
-        worldmap.importantEntities["skumpy"].anim.shiftX(9);
+    "SEAHELP0": function() {
+        console.log("WAG");
+        worldmap.playerDir = 0;
+        worldmap.importantEntities["slt"].visible = true;
+        worldmap.importantEntities["smt"].visible = true;
+        worldmap.importantEntities["smt"].pos.y = 3;
+        worldmap.importantEntities["srt"].visible = true;
+        worldmap.refreshMap();
+        worldmap.writeText("smD5");
     },
-    "SKUMPYCLEAN": function() {
-        const temp = game.target;
-        game.target = worldmap.importantEntities["bruno"];
-        worldmap.clearTarget();
-        game.target = temp;
+    "SEAHELP1": function() {
+        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0, true);
+        worldmap.writeText("smD6");
     },
-    "SKUMPYPOP": function() {
-        worldmap.pos.y = 39.25;
-        worldmap.playerDir = 1;
+    "DEADFISH": function() {
+        ClearEntitiesUnderCondition(e => e.name.indexOf("SeaCreature") === 0, true);
+        if(player.hasQuest("getHeart")) {
+            player.activeQuests["getHeart"] = "heart";
+        } else {
+            player.activeQuests["getHeart"] = "weirdheart";
+        }
+        player.shiftEthics(-10);
+        worldmap.writeText("bworkerA1");
     },
-    "SKUMPYEXIT": function() {
-        worldmap.clearTarget();
-        worldmap.importantEntities["skumpyCover"].visible = true;
-        worldmap.entities.forEach(e => { if(e.inside) { e.visible = false; } });
-        game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
+    "CONSTWORKWIN": function() {
+        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0, true);
+        quests.completeQuest("helpSeaMonster");
+        quests.completeQuest("getHeart");
+        worldmap.writeText("bworkerB5");
     },
-    "BRUNOBEAT": function() {
-        worldmap.importantEntities["bruno"].anim.shiftX(16);
-        worldmap.importantEntities["bruno"].anim.shiftY(4);
-        worldmap.importantEntities["bruno"].dir = 0;
+    "CONSTWORKFIGHT": function() {
+        worldmap.writeText("bworkerMad6");
+        player.activeQuests["helpSeaMonster"] = "gotEgg";
+        ClearEntitiesUnderCondition(e => e.name.indexOf("Worker") >= 0, false);
     },
-    "FORCEYZERO": () => worldmap.forcedY = 0,
-    "UNFORCEYZERO": () => worldmap.forcedY = -1,
+    "PIRATESTART": function() {
+        const items = specialtyHelpers.getDowelItems();
+        if(items.length === 0) { worldmap.writeText("pirateMonkW"); iHandler.state.done = true; }
+        else { worldmap.writeText("pirateMonkH", items); }
+    },
+    "PIRATENEXT": function(idx) {
+        switch(specialtyHelpers.getDowelItems()[idx]) {
+            case "pirateMonkC5": worldmap.writeText("pirateMonkG1"); iHandler.state.idx = 10; break; // gmocorn
+            case "rap.rice": player.decreaseItem("rice"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC4": player.decreaseItem("chestnut"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC3": player.decreaseItem("shortgrain"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC2": player.decreaseItem("blackrice"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "pirateMonkC1": player.decreaseItem("arborio"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
+            case "lime.nope": worldmap.writeText("pirateMonkNo"); iHandler.state.done = true; break;
+        }
+    },
+    "PIRATETREASURE": function() {
+        game.target.open = true;
+        SetUpFellow(game.target, "Chest1");
+        player.increaseItem("ultrarod", 4);
+        quests.completeQuest("seamonkey");
+        worldmap.writeText("chestUnlock3");
+    },
+
+    // Fake Farm
     "SETUPJEFF": function() {
         worldmap.playerDir = 0;
         worldmap.waitForAnimation = true;
@@ -662,7 +421,7 @@ const SpecialFunctions = {
     "FIXTIRE": function() {
         worldmap.writeText("bustedTruck1");
         quests.completeQuest("truckRepair");
-        game.target.anim.shiftY(0);
+        SetUpFellow(game.target, "TruckL");
         game.target.interact = Cutscene("truck");
     },
     "MOWER0": function() {
@@ -680,7 +439,7 @@ const SpecialFunctions = {
     "UNPLUGOUTLET": function(fromLoad) {
         if(!fromLoad) {
             worldmap.writeText("farmTVunplug2");
-            game.target.anim.shiftY(13);
+            SetUpFellow(game.target, "Outlet2");
             player.activeQuests["fakeFarm"] = 1;
             player.questsCleared.push("unpluggedOutlet");
             if(worldmap.importantEntities["MrShocky"] !== undefined) {
@@ -689,8 +448,10 @@ const SpecialFunctions = {
                 player.clearedEntities.push("MrShocky");
             }
         }
-        worldmap.importantEntities["FarmTV"].moving = false;
-        worldmap.importantEntities["FarmTV"].anim.shiftY(3);
+        if(worldmap.importantEntities["FarmTV"] !== undefined) {
+            worldmap.importantEntities["FarmTV"].moving = false;
+            SetUpFellow(worldmap.importantEntities["FarmTV"], "FTVOff");
+        }
         worldmap.refreshMap();
     },
     "FARMTVEND": function(fromLoad) {
@@ -734,101 +495,257 @@ const SpecialFunctions = {
             }
         }
     },
-    "KELPDEAD": function() {
-        player.clearedEntities.push("KelpBoy");
-        player.activeQuests["kelpBoy"] = "deadass";
-        if(worldmap.importantEntities["KelpBoy"] !== undefined) {
-            worldmap.importantEntities["KelpBoy"].solid = false;
-            worldmap.importantEntities["KelpBoy"].visible = false;
-            worldmap.importantEntities["KelpBoy"].interact = undefined;
+    "CROUTONSTART": function() {
+        const items = specialtyHelpers.getCroutonItems();
+        if(items.length === 0) { worldmap.writeText("arf3"); iHandler.state.idx = 10; }
+        else { worldmap.writeText("arf4", items); }
+    },
+    "CROUTONNEXT": function(idx) {
+        switch(specialtyHelpers.getCroutonItems()[idx]) {
+            case "arf.spear": worldmap.writeText("arf.spear0"); iHandler.state.idx = 6; break;
+            case "arf.net": player.decreaseItem("net"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
+            case "arf.bignet": player.decreaseItem("bignet"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
+            case "arf.metalrod": player.decreaseItem("metalrod"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
+            case "arf.ultrarod": player.decreaseItem("ultrarod"); worldmap.writeText("arf.ultra0"); iHandler.state.idx = 9; break;
+            case "lime.nope": worldmap.writeText("arf.none"); iHandler.state.done = true; break;
         }
+    },
+
+    // South City
+    "ENTERSKUMPY": function() {
+        worldmap.importantEntities["skumpyCover"].visible = false;
+        worldmap.entities.forEach(e => { if(e.inside) { e.visible = true; } });
+        worldmap.importantEntities["skumpy"].visible = true;
+        worldmap.importantEntities["skumpy"].pos = { x: 40, y: 39 };
+        SetUpFellow(worldmap.importantEntities["skumpy"], "Skumpy3");
+        worldmap.importantEntities["skumpy"].moving = false;
         worldmap.refreshMap();
-        worldmap.writeText("vaseWon0");
     },
-    "SEAHELP0": function() {
-        worldmap.playerDir = 0;
-        worldmap.importantEntities["slt"].visible = true;
-        worldmap.importantEntities["smt"].visible = true;
-        worldmap.importantEntities["smt"].pos.y = 3;
-        worldmap.importantEntities["srt"].visible = true;
-        worldmap.refreshMap();
-        worldmap.writeText("smD5");
+    "SKUMPYTURN": function() {
+        worldmap.pos.y = 39.25;
+        stores["skumpys"].wares[0].price = 0;
+        worldmap.importantEntities["bruno"].dir = 3;
+        SetUpFellow(worldmap.importantEntities["skumpy"], "Skumpy4");
     },
-    "SEAHELP1": function() {
-        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0, true);
-        worldmap.writeText("smD6");
+    "SKUMPYCLEAN": function() {
+        const temp = game.target;
+        game.target = worldmap.importantEntities["bruno"];
+        worldmap.clearTarget();
+        game.target = temp;
     },
-    "DEADFISH": function() {
-        ClearEntitiesUnderCondition(e => e.name.indexOf("SeaCreature") === 0, true);
-        if(player.hasQuest("getHeart")) {
-            player.activeQuests["getHeart"] = "heart";
+    "SKUMPYPOP": function() {
+        worldmap.pos.y = 39.25;
+        worldmap.playerDir = 1;
+    },
+    "SKUMPYEXIT": function() {
+        worldmap.clearTarget();
+        worldmap.importantEntities["skumpyCover"].visible = true;
+        worldmap.entities.forEach(e => { if(e.inside) { e.visible = false; } });
+        game.transition(game.currentInputHandler, worldmap, { init: { x: 41, y: 43 }, map: "southcity" });
+    },
+    "BRUNOBEAT": function() {
+        worldmap.playerDir = directions.LEFT;
+        SetUpFellow(worldmap.importantEntities["bruno"], "MobstyOut");
+        SetUpFellow(worldmap.importantEntities["skumpy"], "Skumpy4");
+    },
+    "FORCEYZERO": () => worldmap.forcedY = 0,
+    "UNFORCEYZERO": () => worldmap.forcedY = -1,
+    "MOBFLEE": function() { ClearEntitiesUnderCondition(e => e.mafia === true, true); },
+    "ABUELASTART": function() {
+        const items = specialtyHelpers.getAbuelaItems();
+        if(items.length === 0) { worldmap.writeText("kindLadyX"); iHandler.state.done = true; }
+        else { worldmap.writeText("kindLadyQ", items); }
+    },
+    "ABUELANEXT": function(idx) {
+        switch(specialtyHelpers.getAbuelaItems()[idx]) {
+            case "lady.fodder": player.decreaseItem("fodder"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
+            case "lady.corn": player.decreaseItem("corn"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
+            case "lady.rice": player.decreaseItem("rice"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
+            case "lady.goodfood": player.decreaseItem("goodfood"); worldmap.writeText("kindLadyGood0"); iHandler.state.idx = 8; break;
+            case "lime.nope": worldmap.writeText("kindLadyX"); iHandler.state.done = true; break;
+        }
+    },
+
+    // North City
+    "THEGIFTOFEGG": function() {
+        player.monies -= 250;
+        let eggType = "egg";
+        if(player.completedQuest("goodEgg") && Math.random() < 0.08) {
+            eggType = "goldegg";
         } else {
-            player.activeQuests["getHeart"] = "weirdheart";
+            eggType = ["egg", "quail", "turkey", "goose", "platypus"][Math.floor(Math.random() * 5)];
         }
-        player.shiftEthics(-10);
-        worldmap.writeText("bworkerA1");
+        player.increaseItem(eggType, 2);
+        worldmap.writeText("eggBoy." + eggType);
     },
-    "CONSTWORKWIN": function() {
-        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0, true);
-        quests.completeQuest("helpSeaMonster");
-        quests.completeQuest("getHeart");
-        worldmap.writeText("bworkerB5");
-    },
-    "CONSTWORKFIGHT": function() {
-        worldmap.writeText("bworkerMad6");
-        player.activeQuests["helpSeaMonster"] = "gotEgg";
-        ClearEntitiesUnderCondition(e => e.name.indexOf("Worker") >= 0, false);
-    },
-    "SEEDSHOT": () => { player.health -= 2; game.target.hasShot = 5; },
-    "SEEDSHOTKILL": function() {
-        player.health = player.maxhealth;
-        for(let i = 0; i < worldmap.entities.length; i++) {
-            const newActive = worldmap.entities[i].initActive;
-            if(worldmap.entities[i].rfd) {
-                worldmap.entities[i].active = newActive;
-                worldmap.entities[i].anim.shiftY(newActive ? 3 : 2);
-                worldmap.entities[i].solid = !newActive;
-            } else if(worldmap.entities[i].rf) {
-                worldmap.entities[i].active = newActive;
-                worldmap.entities[i].anim.shiftY(newActive ? 1 : 0);
+    "BEATROBBERS": function() {
+        ClearEntitiesUnderCondition(e => e.robbery === true, false);
+        worldmap.pos = { x: 6, y: 6 };
+        const caughtRobbers = GetNoIMFellow("Strobbers", 7, 6, "CaughtRobber", { robbery: true });
+        InitFellow(caughtRobbers);
+        worldmap.entities.push(caughtRobbers);
+        worldmap.importantEntities["caughtRobbers"] = caughtRobbers;
+        for(let i = 0; i < 4; i++) {
+            const x = 6 + (i % 2), y = 12 + (i < 2 ? 0 : 2);
+            const newCopper = GetNoIMFellow("NewCop" + i, x, y, "Cop", { moving: true, robbery: true });
+            InitFellow(newCopper);
+            worldmap.entities.push(newCopper);
+            worldmap.importantEntities["NewCop" + i] = newCopper;
+        }
+        worldmap.refreshMap();
+
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            for(let i = 0; i < 4; i++) {
+                worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
             }
-        }
-        game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["NewCop0"].pos.y <= 8;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
     },
-    "ELEVATORSTART": function() {
-        const items = specialtyHelpers.getHQElevatorOptions();
-        if(items === null) { worldmap.writeText("elevatorNope"); iHandler.state.done = true; }
-        else { worldmap.writeText("elevatorNormal", items); }
-    },
-    "ELEVATORNEXT": function(idx) {
-        switch(specialtyHelpers.getHQElevatorOptions()[idx]) {
-            case "elevator1": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_1", playerDir: 2 }); break;
-            case "elevator2": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_2", playerDir: 2 }); break;
-            case "elevator4": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_4", playerDir: 2 }); break;
-        }
-        iHandler.state.done = true;
-        worldmap.finishDialog();
-    },
-    "TRUCKSTART": function() {
-        const items = specialtyHelpers.getTruckOptions();
-        if(items.length === 1) { worldmap.writeText("truck.none"); iHandler.state.done = true; }
-        else { worldmap.writeText("truck.where", items); }
-    },
-    "TRUCKNEXT": function(idx) {
-        switch(specialtyHelpers.getTruckOptions()[idx]) {
-            case "truck.fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm", playerDir: 2 }); break;
-            case "truck.home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 7 }, map: "producestand", playerDir: 2 }); break;
-            case "truck.bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge", playerDir: 2 }); break;
-            case "truck.city":
-                if(player.completedQuest("gotTire")) {
-                    game.transition(game.currentInputHandler, worldmap, { init: { x: 52,  y: 50 }, map: "southcity", playerDir: 2 });
+    "COPANIM1": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop0"].dir = 1;
+        worldmap.importantEntities["NewCop1"].dir = 3;
+        iHandler.state.animHandler = function(spedUp) {
+            for(let i = 0; i < 4; i++) {
+                if(i === 0) {
+                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.05;
+                } else if(i === 1) {
+                    worldmap.importantEntities["NewCop" + i].pos.x += 0.05;
                 } else {
-                    game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, playerDir: 0, map: "fakefarm", stayBlack: true });
+                    worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
                 }
-                break;
-        }
-        iHandler.state.done = true;
-        worldmap.finishDialog();
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["NewCop2"].pos.y <= 8;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM2": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop0"].dir = 0;
+        worldmap.importantEntities["NewCop1"].dir = 0;
+        worldmap.importantEntities["NewCop2"].dir = 1;
+        worldmap.importantEntities["NewCop3"].dir = 3;
+        iHandler.state.animHandler = function(spedUp) {
+            for(let i = 0; i < 4; i++) {
+                if(i === 2) {
+                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.05;
+                } else if(i === 3) {
+                    worldmap.importantEntities["NewCop" + i].pos.x += 0.05;
+                } else {
+                    worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
+                }
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["NewCop0"].pos.y <= 6;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM3": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop2"].dir = 0;
+        worldmap.importantEntities["NewCop3"].dir = 0;
+        iHandler.state.animHandler = function(spedUp) {
+            for(let i = 0; i < 4; i++) {
+                worldmap.importantEntities["NewCop" + i].pos.y -= 0.05;
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["NewCop2"].pos.y <= 7;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                for(let i = 0; i < 4; i++) {
+                    worldmap.importantEntities["NewCop" + i].moving = false;
+                    worldmap.importantEntities["NewCop" + i].dir = (i % 2 === 0 ? 3 : 1);
+                }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM4": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop1"].moving = true;
+        worldmap.importantEntities["NewCop2"].moving = true;
+        worldmap.importantEntities["NewCop3"].moving = true;
+        iHandler.state.animHandler = function(spedUp) {
+            for(let i = 1; i < 4; i++) {
+                if(i === 2) {
+                    worldmap.importantEntities["NewCop" + i].pos.x += 0.025;
+                } else {
+                    worldmap.importantEntities["NewCop" + i].pos.x -= 0.025;
+                }
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["NewCop1"].pos.x <= 7;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "COPANIM5": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["NewCop1"].dir = 2;
+        worldmap.importantEntities["NewCop2"].dir = 2;
+        worldmap.importantEntities["NewCop3"].dir = 2;
+        iHandler.state.animHandler = function(spedUp) {
+            for(let i = 1; i < 4; i++) {
+                worldmap.importantEntities["NewCop" + i].pos.y += 0.025;
+            }
+            worldmap.importantEntities["caughtRobbers"].pos.y += 0.025;
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["NewCop1"].pos.y >= 16;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "FINISHCOPS": () => ClearEntitiesUnderCondition(e => e.robbery === true, false),
+    "CATMAIL": () => player.activeQuests["catmail"] = 1,
+    "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); player.questsCleared.push("gotPhone"); },
+    "PHONEPRESS": function() { worldmap.smartphone.Read(); },
+    "NERDUP": function() {
+        player.hasNerd = true;
+        worldmap.clearTarget();
+        SetUpFellow(worldmap, "carrywalk", true);
+        const HazardL = GetFellow("BarricadeL", 23, 2, 0, "HazardL", OneSpeak("blockedOff3F"), undefined, { big: true });
+        const HazardR = GetFellow("BarricadeR", 25, 2, 0, "HazardL", OneSpeak("blockedOff3F"), undefined, { big: true });
+        InitFellow(HazardL); InitFellow(HazardR);
+        worldmap.entities.push(HazardL); worldmap.entities.push(HazardR);
+        me.PLAYERMOVESPEED = me.BASEMOVESPEED / 2;
+    },
+    "NERDDOWN": function() {
+        player.hasNerd = false;
+        worldmap.clearTarget();
+        SetUpFellow(worldmap, "walk", true);
+        me.PLAYERMOVESPEED = me.BASEMOVESPEED;
+        worldmap.importantEntities["trentSafe"].interact = OneSpeak("sleepingSavedNerd");
+        worldmap.importantEntities["trentSafe"].visible = true;
+        worldmap.importantEntities["trentSafe"].solid = true;
     },
     "MUSHSTART": function() {
         const items = specialtyHelpers.getMushItems();
@@ -845,87 +762,205 @@ const SpecialFunctions = {
             case "lime.nope": worldmap.writeText("mushManNope"); iHandler.state.done = true; break;
         }
     },
-    "ABUELASTART": function() {
-        const items = specialtyHelpers.getAbuelaItems();
-        if(items.length === 0) { worldmap.writeText("kindLadyX"); iHandler.state.done = true; }
-        else { worldmap.writeText("kindLadyQ", items); }
-    },
-    "ABUELANEXT": function(idx) {
-        switch(specialtyHelpers.getAbuelaItems()[idx]) {
-            case "lady.fodder": player.decreaseItem("fodder"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
-            case "lady.corn": player.decreaseItem("corn"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
-            case "lady.rice": player.decreaseItem("rice"); worldmap.writeText("kindLadyNorm0"); iHandler.state.idx = 6; break;
-            case "lady.goodfood": player.decreaseItem("goodfood"); worldmap.writeText("kindLadyGood0"); iHandler.state.idx = 8; break;
-            case "lime.nope": worldmap.writeText("kindLadyX"); iHandler.state.done = true; break;
+    "C2BUY": function() { player.monies -= 1000; player.c2 = RoundNear(player.c2 + 1000 / player.c2Rate, 100); },
+    "C2SELL": function() { player.monies += Math.round(player.c2Rate); player.c2 = RoundNear(player.c2 - 1, 100); },
+    "DESTROYBUILDING": function() {
+        worldmap.importantEntities["13thStBuildings"].filename = "covers/northcity2_post";
+        for(let i = 0; i < worldmap.entities.length; i++) {
+            if(worldmap.entities[i].destroyable) {
+                player.clearedEntities.push(worldmap.entities[i].name);
+                worldmap.entities[i].solid = false;
+                worldmap.entities[i].visible = false;
+                worldmap.entities[i].inside = false;
+            } else if(worldmap.entities[i].name.indexOf("XNerndHaus") >= 0) {
+                worldmap.entities[i].pos.y += 27;
+            }
         }
     },
-    "CROUTONSTART": function() {
-        const items = specialtyHelpers.getCroutonItems();
-        if(items.length === 0) { worldmap.writeText("arf3"); iHandler.state.done = true; }
-        else { worldmap.writeText("arf4", items); }
+
+    // Food2 HQ
+    "SETNERDBED": () => player.lastInn = "nerdBed",
+    "ELEVATORSTART": function() {
+        const items = specialtyHelpers.getHQElevatorOptions();
+        if(items === null) { worldmap.writeText("elevatorNope"); iHandler.state.done = true; }
+        else { worldmap.writeText("elevatorNormal", items); }
     },
-    "CROUTONNEXT": function(idx) {
-        switch(specialtyHelpers.getCroutonItems()[idx]) {
-            case "arf.spear": worldmap.writeText("arf.spear0"); iHandler.state.idx = 6; break;
-            case "arf.net": player.decreaseItem("net"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
-            case "arf.bignet": player.decreaseItem("bignet"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
-            case "arf.metalrod": player.decreaseItem("metalrod"); worldmap.writeText("arf.good0"); iHandler.state.idx = 7; break;
-            case "arf.ultrarod": player.decreaseItem("ultrarod"); worldmap.writeText("arf.ultra0"); iHandler.state.idx = 9; break;
-            case "lime.nope": worldmap.writeText("arf.none"); iHandler.state.done = true; break;
+    "ELEVATORNEXT": function(idx) {
+        switch(specialtyHelpers.getHQElevatorOptions()[idx]) {
+            case "elevator1": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_1", playerDir: 2 }); break;
+            case "elevator2": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_2", playerDir: 2 }); break;
+            case "elevator4": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_4", playerDir: 2 }); break;
+        }
+        iHandler.state.done = true;
+        worldmap.finishDialog();
+    },
+    "THEMONSTER": function() {
+        const monster = GetNoIMFellow("Monster", worldmap.pos.x - 0.5, worldmap.pos.y - 2.25, "TheMonster", { big: true, isTheMonster: true });
+        InitFellow(monster);
+        worldmap.entities.push(monster);
+        worldmap.importantEntities["monster"] = worldmap;
+    },
+    "BEATMONSTER": function() { ClearEntitiesUnderCondition(e => e.isTheMonster === true, true); },
+    
+    // Final Cutscene
+    "PLAYERSTOP": function() {
+        worldmap.importantEntities["pl2"].anim = plAnims.walk;
+        worldmap.importantEntities["pl2"].visible = true;
+        SetUpFellow(worldmap, "hidden", true);
+        worldmap.forcedY = 10;
+        worldmap.refreshMap();
+    },
+    "PLAYERSHOCK1": function() {
+        worldmap.importantEntities["pl2"].anim = plAnims.shock1;
+        worldmap.refreshMap();
+    },
+    "PLAYERSHOCK2": function() {
+        worldmap.importantEntities["pl2"].anim = plAnims.shock2;
+        worldmap.refreshMap();
+    },
+    "GARFIELDMYPEBBLES": function() {
+        worldmap.importantEntities["pl2"].visible = false;
+        SetUpFellow(worldmap, "walk", true);
+        worldmap.entities.filter(e => e.autoplay === true)[0].interact = Cutscene("finalReturn");
+    },
+    "FLIPSHIT": function() {
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            let newY = 0;
+            for(let i = 0; i < worldmap.entities.length; i++) {
+                if(worldmap.entities[i].isFlippy !== true) { continue; }
+                newY = worldmap.entities[i].animState;
+                SetUpFellow(worldmap.entities[i], "FloorFlip" + newY);
+                worldmap.entities[i].animState += 1;
+            }
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = (newY === 14);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 150);
+    },
+
+    // Falcon
+    "BYEFALCON": () => player.hasFalcon = false,
+    "SWITCHTOFALCON": () => iHandler.Start("falcon"),
+    "BIRDSONG.OGG": function() {
+        // TODO
+    },
+    "GETFALCONTEXT": function() {
+        let keyStart = "falconMsg0.";
+        let rangeMax = 6;
+        switch(worldmap.mapName) {
+            case "bridge": keyStart = "falconMsg1."; rangeMax = 5; break;
+            case "fakefarm": keyStart = "falconMsg2."; rangeMax = 5; break;
+            case "southcity":
+                player.increaseItem("goose", 10);
+                player.increaseItem("egg", 20);
+                keyStart = "falconMsg3.";
+                rangeMax = 5;
+                break;
+            case "northcity": keyStart = "falconMsg4."; rangeMax = 4; break;
+            case "hq_1": keyStart = "falconMsg5."; rangeMax = 7; break;
+        }
+        for(let i = 1; i <= rangeMax; i++) { iHandler.state.texts.push(keyStart + i); }
+        worldmap.writeText(keyStart + "0");
+    },
+    "FALCONSELECT": function() {
+        game.currentInputHandler = worldmap.falconSelect;
+        for(let i = 0; i < player.nathanSeeds.length; i++) {
+            player.increaseItem(player.nathanSeeds[i][0], player.nathanSeeds[i][1]);
+        }
+        worldmap.falconSelect.setup();
+    },
+    "PLAYERREAD": function() {
+        SetUpFellow(worldmap, "read", true);
+        worldmap.refreshMap();
+    },
+    "ENTERTHEBIRD": function() {
+        const bird = GetFellow("Eagle", worldmap.pos.x - 8, worldmap.pos.y - 3.5, 0, "Iii4", undefined, undefined, { moving: true });
+        InitFellow(bird);
+        worldmap.entities.push(bird);
+        worldmap.importantEntities["bird"] = bird;
+
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["bird"].pos.x += 0.05;
+            worldmap.importantEntities["bird"].pos.y += 0.025;
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x - 1);
+            if(finished) {
+                SetUpFellow(worldmap.importantEntities["bird"], "Iii2");
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "EXITTHEBIRDFINAL": function() {
+        SetUpFellow(worldmap, "walk", true);
+        worldmap.writeText("falconMsg5.8");
+        iHandler.state.texts.push("falconMsg5.9");
+        player.hasFalcon = true;
+    },
+    "EXITTHEBIRD1": function() {
+        gfx.clearSome(["menuA", "menutext"]);
+        SetUpFellow(worldmap.importantEntities["bird"], "Iii4");
+        worldmap.waitForAnimation = true;
+        SetUpFellow(worldmap, "walk", true);
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["bird"].pos.y -= 0.01;
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["bird"].pos.y <= (worldmap.pos.y - 1.5);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "EXITTHEBIRD2": function() {
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["bird"].pos.x += 0.05;
+            worldmap.importantEntities["bird"].pos.y -= 0.0125;
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["bird"].pos.x >= (worldmap.pos.x + 8);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                game.target = worldmap.importantEntities["bird"];
+                worldmap.clearTarget();
+                worldmap.importantEntities["bird"] = undefined;
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+
+    // Tutorials and Opening Cutscene
+    "TUTORIAL": () => tutorial.startBattle(),
+    "LEAVETUTORIAL": function() {
+        player.inventory = InventoryCopy(player.tempInventory);
+        player.equipment = player.tempEquipment;
+        player.hasFalcon = player.hadFalcon;
+        player.tempInventory = undefined;
+        game.target = worldmap.importantEntities["hipster"];
+        worldmap.clearTarget();
+    },
+    "FINISHTUTORIALATSTART": function() {
+        if(tutorial.completed) {
+            game.target = worldmap.importantEntities["convince"];
+            worldmap.clearTarget();
         }
     },
-    "PIRATESTART": function() {
-        const items = specialtyHelpers.getDowelItems();
-        if(items.length === 0) { worldmap.writeText("pirateMonkW"); iHandler.state.done = true; }
-        else { worldmap.writeText("pirateMonkH", items); }
-    },
-    "PIRATENEXT": function(idx) {
-        switch(specialtyHelpers.getDowelItems()[idx]) {
-            case "pirateMonkC5": worldmap.writeText("pirateMonkG1"); iHandler.state.idx = 10; break; // gmocorn
-            case "rap.rice": player.decreaseItem("rice"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
-            case "pirateMonkC4": player.decreaseItem("chestnut"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
-            case "pirateMonkC3": player.decreaseItem("shortgrain"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
-            case "pirateMonkC2": player.decreaseItem("blackrice"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
-            case "pirateMonkC1": player.decreaseItem("arborio"); worldmap.writeText("pirateMonkR1"); iHandler.state.idx = 8; break;
-            case "lime.nope": worldmap.writeText("pirateMonkNo"); iHandler.state.done = true; break;
-        }
-    },
-    "PIRATETREASURE": function() {
-        game.target.open = true;
-        game.target.anim.shiftY(5);
-        player.increaseItem("ultrarod", 4);
-        quests.completeQuest("seamonkey");
-        worldmap.writeText("chestUnlock3");
-    },
-    "RAPSTART": function() {
-        const items = specialtyHelpers.getRapItems();
-        if(items.length === 0) { worldmap.writeText("rap4"); iHandler.state.done = true; }
-        else { worldmap.writeText("rap5", items); }
-    },
-    "RAPNEXT": function(idx) {
-        switch(specialtyHelpers.getRapItems()[idx]) {
-            case "rap.garlic": worldmap.writeText("rap.garlic1"); iHandler.state.idx = 6; break;
-            case "rap.rice": worldmap.writeText("rap.rice1"); iHandler.state.idx = 8; break;
-            case "rap.coconut": worldmap.writeText("rap.coconut1"); iHandler.state.idx = 10; break;
-            case "lime.nope": worldmap.writeText("rap4"); iHandler.state.done = true; break;
-        }
-    },
-    "LIMESTART": function() {
-        const items = specialtyHelpers.getLimeItems();
-        if(items.length === 0) { worldmap.writeText("lime3"); iHandler.state.done = true; }
-        else { worldmap.writeText("lime4", items); }
-    },
-    "LIMENEXT": function(idx) {
-        switch(specialtyHelpers.getLimeItems()[idx]) {
-            case "lime.lemon": worldmap.writeText("lime.lemon1"); iHandler.state.idx = 6; break;
-            case "lime.banana": worldmap.writeText("lime.banana1"); iHandler.state.idx = 8; break;
-            case "lime.corn": worldmap.writeText("lime.corn1"); iHandler.state.idx = 10; break;
-            case "lime.goldegg": worldmap.writeText("lime.egg1"); iHandler.state.idx = 12; break;
-            case "lime.nope": worldmap.writeText("lime.denied"); iHandler.state.done = true; break;
-        }
-    },
-    "PWIDE": () => { worldmap.animData.width = 32; worldmap.animData.other.forceWide = true; iHandler.Finish(); },
-    "PUNWIDE": () => { worldmap.animData.width = 16; worldmap.animData.other.forceWide = false; iHandler.Finish(); },
+    "FINISHTUTORIALSTANDALONE": () => worldmap.writeText(tutorial.completed ? "finTut" : "quitTut"),
+    "STARTFIXTUT": () => fixTut.start(),
+    "NOFIXTUT": () => player.fixtureTutorialState = 2,
     "HIPMOV": function() {
         worldmap.waitForAnimation = true;
         iHandler.state.animHandler = function(spedUp) {
@@ -956,39 +991,64 @@ const SpecialFunctions = {
         };
         worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
     },
-    "TUTORIAL": () => tutorial.startBattle(),
-    "LEAVETUTORIAL": function() {
-        player.inventory = InventoryCopy(player.tempInventory);
-        player.equipment = player.tempEquipment;
-        player.hasFalcon = player.hadFalcon;
-        player.tempInventory = undefined;
-        game.target = worldmap.importantEntities["hipster"];
-        worldmap.clearTarget();
+
+    // Bee Guardian
+    "BEEGUARDIANAPPEAR": function() {
+        game.target.moving = true;
+        game.target.dir = worldmap.InvertDir(worldmap.playerDir);
+        SetUpFellow(game.target, "BeeQueen");
+        game.target.visible = true;
     },
-    "FINISHTUTORIALATSTART": function() {
-        if(tutorial.completed) {
-            game.target = worldmap.importantEntities["convince"];
-            worldmap.clearTarget();
+    "BEEQUEENMAD": function() {
+        game.target = null;
+        player.beeQueensFaced++;
+        worldmap.angryBees = false;
+        const enemy = player.beeQueensFaced < 2 ? "beeQueenA" : (player.beeQueensFaced < 5 ? "beeQueenB" : "beeQueenC");
+        combat.startBattle([enemy]);
+    },
+
+    // Misc.
+    "WAIT": function() { },
+    "GOTOTITLE": () => game.transition(game.currentInputHandler, worldmap.title),
+    "CREDITS": function() {
+        JustBeatGameChievoCheck();
+        return game.transition(game.currentInputHandler, worldmap.credits);
+    },
+    "SCREENSHAKE": function() {
+        // TODO
+    },
+    "TRUCKSTART": function() {
+        const items = specialtyHelpers.getTruckOptions();
+        if(items.length === 1) { worldmap.writeText("truck.none"); iHandler.state.done = true; }
+        else { worldmap.writeText("truck.where", items); }
+    },
+    "TRUCKNEXT": function(idx) {
+        switch(specialtyHelpers.getTruckOptions()[idx]) {
+            case "truck.fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm", playerDir: 2 }); break;
+            case "truck.home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 7 }, map: "producestand", playerDir: 2 }); break;
+            case "truck.bridge": game.transition(game.currentInputHandler, worldmap, { init: { x: 27,  y: 5 }, map: "bridge", playerDir: 2 }); break;
+            case "truck.city":
+                if(player.completedQuest("gotTire")) {
+                    game.transition(game.currentInputHandler, worldmap, { init: { x: 52,  y: 50 }, map: "southcity", playerDir: 2 });
+                } else {
+                    game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, playerDir: 0, map: "fakefarm", stayBlack: true });
+                }
+                break;
         }
+        iHandler.state.done = true;
+        worldmap.finishDialog();
     },
-    "FINISHTUTORIALSTANDALONE": () => worldmap.writeText(tutorial.completed ? "finTut" : "quitTut"),
-    "ENEMY0": () => worldmap.writeText(game.target.interactname + Range(0, game.target.dialogMax)),
+    "ENEMY0": function() {
+        worldmap.writeText(game.target.interactname + Range(0, game.target.dialogMax));
+        if(game.target.moveTalk) { game.target.moving = true; }
+        if(game.target.isBuffNerd && game.target.dir === 2) { game.target.dir = 1; } // bad form, I know, I know, but it's 1AM
+    },
     "ENEMY1": function() {
         if(game.target.setEnemies === undefined) {
             combat.startBattle(commonEnemyGenInfo[game.target.key]());
         } else {
             combat.startBattle(game.target.setEnemies);
         }
-    },
-    "BEEGUARDIANAPPEAR": function() {
-        game.target.visible = true;
-        let xshift = 0;
-        switch(worldmap.playerDir) {
-            case 0: xshift = 12; break;
-            case 1: xshift = 12; break;
-            case 2: xshift = 13; break;
-            case 3: xshift = 12; break;
-        }
-        game.target.anim.shiftX(xshift, 0).shiftY(0);
+        if(game.target.moveTalk) { game.target.moving = false; }
     }
 };

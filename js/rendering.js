@@ -45,11 +45,6 @@ const gfx = {
         img.onload = function() { gfx.ctx["menutext"].drawImage(this, 48, 48, w, h, 256, 288, w, h); };
         //img.onload = function() { gfx.ctx["menutext"].drawImage(this, 256, 288, 1024, 896); };
     },
-    drawHorRor: function(intensity) { // TODO: recalibrate with new screen resolution
-        if(intensity < 0) { intensity = 0; }
-        gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorTop"], 0, 0, 960, 252, 0, 0 - intensity, 960, 252);
-        gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorBottom"], 0, 0, 960, 252, 0, 97 + intensity, 960, 252);
-    },
     drawFOV: function(x, y, dir) {
         let topx, topy, width, height, startx, starty;
         switch(dir) {
@@ -60,11 +55,6 @@ const gfx = {
         }
         gfx.drawImage(gfx.ctx["characters"], gfx.spritesheets["fov"], topx, topy, width, height, startx * 16, starty * 16, width, height);
     },
-    drawChungus: function(x, y, w, h, offset) {
-        const ctx = gfx.ctx["foreground"];
-        ctx.fillStyle = "#64A5FF";
-        ctx.fillRect((x - offset.x * 16) * gfx.scale, (y - offset.y * 16) * gfx.scale, w * gfx.scale, h * gfx.scale);
-    },
     drawFGCover: function(file, y, yoffset, w, offset) {
         const imgy = y - yoffset;
         if(imgy < 0) { return; }
@@ -73,7 +63,6 @@ const gfx = {
     drawJumbo: function(file, x, y, w, h, ox, oy) {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
     },
-    drawHelp: () => gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 200, 130, 34, 24),
     DrawTransitionImage: function(spritename, x, y, mult, blackEverythingElse) {
         const sheet = gfx.spritesheets["sheet"];
         const size = 16;
@@ -89,7 +78,7 @@ const gfx = {
         }
         gfx.drawImage(gfx.ctx["tutorial"], sheet, startX, startY, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
     },
-    drawYMaskedSprite: function(spritename, x, y, layer, bottomY) {
+    DrawYMaskedSprite: function(spritename, x, y, layer, bottomY) {
         const data = sprites[spritename];
         const sx = data[0] * 16 + data[0] * 2 + 1;
         const sy = data[1] * 16 + data[1] * 2 + 1;
@@ -133,12 +122,12 @@ const gfx = {
         const data = sprites[spritename];
         try {
             const isBig = data.length == 3;
-            gfx.drawSprite(isBig ? "sheetBig" : "sheet", data[0], data[1], x, y, layer, isBig, isHalfTile);
+            gfx.DrawSprite(isBig ? "sheetBig" : "sheet", data[0], data[1], x, y, layer, isBig, isHalfTile);
         } catch(e) {
             console.log("couldn't find " + spritename);
         }
     },
-    drawSprite: function(sheetpath, sx, sy, x, y, layer, big, isHalfTile) {
+    DrawSprite: function(sheetpath, sx, sy, x, y, layer, big, isHalfTile) {
         const sheet = gfx.spritesheets[sheetpath];
         const size = big ? 32 : 16;
         const startX = sx * size + sx * 2 + 1;
@@ -182,15 +171,18 @@ const gfx = {
             gfx.drawImage(ctx, img, sx * sw + i, sy * dims.h, 1, dims.h, dims.x * 16 + i, adjustedy, 1, dims.h);
         }
     },
-    drawAnimCharacter: function(sx, sy, pos, offset, sheet, big, other) {
-        sheet = sheet || "mapchar";
-        let w = (big ? 32 : 16), h = (big ? 40 : 20);
-        let dx = 0, dy = (big ? 8 : 4);
-        if(sheet === "mapplayer_help") { w = 20; h = 25; dx = 2; dy = 9; }
-        if(other !== undefined && other.forceWide) { w = 32; }
-        let layer = "characters";
-        if(other !== undefined && other.layer) { layer = other.layer; }
-        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], sx, sy, w, h, (pos.x - offset.x) * 16 - dx, (pos.y - offset.y) * 16 - dy, w, h);
+    DrawMapCharacter: function(sx, sy, pos, offset, sheet, big, layer, other) {
+        layer = layer || "characters";
+        let w = (big ? 34 : 18), h = (big ? 42 : 22), dy = (big ? 8 : 4);
+        if(other !== undefined && other.bigBoy === true) { w = 22; h = 27; dy = 8; }
+        const leftx = sx * w, topy = sy * h;
+        if(other !== undefined) {
+            if(other.slightlyWider) {
+                gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], leftx + 1, topy + 1, w + 10, h - 2, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - dy, w + 10, h - 2);
+                return;
+            }
+        }
+        gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], leftx + 1, topy + 1, w - 2, h - 2, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - dy, w - 2, h - 2);
     },
     DrawCursor: function(x, y, w, h, cursorName, frame, layer) {
         cursorName = cursorName || "cursor";
@@ -241,6 +233,8 @@ const gfx = {
             }
         }
     },
+
+    // Text
     drawText: function(t, x, y, color, size, layer) {
         layer = layer || "menutext";
         gfx.ctx[layer].font = gfx.GetFontSize(size) + gfx.GetFont();
@@ -357,6 +351,20 @@ const gfx = {
             gfx.drawImage(ctx, sheet, startX + d[0] * 6, startY + d[1] * 9, 5, 7, ix + (i + 1) * 4, ay, 5, 7);
         }
     },
+    
+    // HQ3 - The Monster
+    DrawChungus: function(x, y, w, h, offset) {
+        const ctx = gfx.ctx["foreground"];
+        ctx.fillStyle = "#64A5FF";
+        ctx.fillRect((x - offset.x * 16) * gfx.scale, (y - offset.y * 16) * gfx.scale, w * gfx.scale, h * gfx.scale);
+    },
+    DrawHelp: () => gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 220, 195, 34, 24),
+    DrawHorRor: function(intensity) {
+        if(intensity < 0) { intensity = 0; }
+        gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorTop"], 0, 0, 1024, 252, 0, 0 - intensity, 1024, 252);
+        gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorBottom"], 0, 0, 1024, 252, 0, 160 + intensity, 1024, 252);
+    },
+    // Full Drawsies
     drawMap: function(map, centerx, centery) {
         const mapImg = gfx.spritesheets["maps/" + map];
         const w = collisions[map][0].length;

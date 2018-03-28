@@ -68,66 +68,6 @@ SheetAnim.prototype.getFrame = function(dt) {
     this.current += dt;
 };
 
-function MapAnim(sheet, sx, sy, w, h, dir, sheetlen, dontDoThat) {
-    this.sheet = sheet;
-    this.topx = sx * w;
-    this.topy = sy * h;
-    this.width = w;
-    this.height = h;
-    this.state = 0;
-    this.big = false;
-    this.lastDir = dir || 2;
-    this.lastRan = +new Date();
-    this.sheetlen = sheetlen || 4;
-    this.frameRate = anim.timePerFrame;
-    this.other = {};
-    this.dontDoThat = dontDoThat || false;
-    this.setFPS = function(fps) { this.frameRate = ((fps === undefined || fps < 0) ? anim.timePerFrame : GetFrameRate(fps)); return this; };
-    this.shiftX = function(newX, newLen) {
-        this.topx = newX * this.width;
-        this.sheetlen = newLen || this.sheetlen;
-        return this;
-    };
-    this.shiftY = function(newY) { this.topy = newY * this.height; return this; };
-    this.forceFrame = function(pos, sx, sy) {
-        return {
-            sheet: this.sheet,
-            sx: this.topx + (this.width * sx),
-            sy: this.topy + (this.height * sy),
-            pos: pos, dir: dir, big: this.big,
-            w: this.width, h: this.height,
-            other: this.other
-        };
-    }
-    this.getFrame = function(pos, dir, moving) {
-        const curTime = +new Date();
-        const update = (curTime - this.lastRan) >= this.frameRate;
-        let frame = 0;
-        if(dir === undefined) { dir = this.lastDir; }
-        if(dir !== this.lastDir) {
-            this.state = 0;
-            this.lastDir = dir;
-        } else if(moving) {
-            if(update) {
-                this.state = (this.state + 1) % this.sheetlen;
-                this.lastRan = curTime;
-            }
-            if(this.sheetlen == 4 && !this.dontDoThat) {
-                frame = 1 + ((this.state === 3) ? 1 : this.state);
-            } else {
-                frame = this.state;
-            }
-        }
-        return {
-            sheet: this.sheet,
-            sx: this.topx + (this.width * this.lastDir),
-            sy: this.topy + (this.height * frame),
-            pos: pos, dir: dir, big: this.big,
-            w: this.width, h: this.height,
-            other: this.other
-        };
-    };
-}
 function GetFrameRate(fps) { return 1000 / fps; }
 const anim = { fps: 6 };
 anim.timePerFrame = GetFrameRate(anim.fps);

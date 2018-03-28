@@ -15,7 +15,7 @@ worldmap.title = {
         gfx.drawFullImage("titleTop", "characters");
         this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options"] : ["title.new", "title.options"]);
         this.DrawMenu();
-        gfx.drawText(String.fromCharCode(169) + " 2018 Haunted Bees Productions", 2, 222, undefined, 20, "menutextOverBlack");
+        gfx.drawText(String.fromCharCode(169) + " 2018 Haunted Bees Productions (v" + player.saveVersion + ")", 2, 222, undefined, 20, "menutextOverBlack");
     },
     HasSaves: function() {
         for(let i = 0; i < game.numSaveSlots; i++) {

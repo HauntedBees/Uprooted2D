@@ -14,9 +14,9 @@ function HorRor(playerStartingRoom) {
     this.playerRoom = playerStartingRoom;
     this.Draw = function() {
         if(worldmap.mapName !== "hq_3") { return; }
-        gfx.drawHorRor(intensity);
+        gfx.DrawHorRor(intensity);
         if(this.playerRoom === 10 || player.completedQuest("helpNerd") || player.hasQuest("helpNerd")) { return; }
-        if(showHelp) { gfx.drawHelp(); }
+        if(showHelp) { gfx.DrawHelp(); }
         if(--helpCounter > 0) { return; }
         showHelp = !showHelp;
         helpCounter = 160;

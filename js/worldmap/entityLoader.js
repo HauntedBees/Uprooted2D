@@ -1,8 +1,19 @@
+const mapCache = [];
 function GetEntities(mapName, fromSave) {
     if(mapentities[mapName] === undefined) { return []; }
-    const entities = [...mapentities[mapName]];
+    let entities = null;
+    for(let i = 0; i < mapCache.length; i++) {
+        if(mapCache[i].name !== mapName) { continue; }
+        entities = [...mapCache[i].entities]; break;
+    }
+    if(entities === null) { 
+        entities = mapentities[mapName]();
+        mapCache.push( {name: mapName, entities: [...entities]} );
+        if(mapCache.length > 3) { mapCache.shift(); }
+    } //const entities = [...mapentities[mapName]];
     for(let i = entities.length - 1; i >= 0; i--) {
         const e = entities[i];
+        //if(typeof e.anim === "string") { console.log("JEEPS ARE TRUCKS"); SetUpFellow(e, e.anim); }
         if(player.clearedEntities.indexOf(e.name) >= 0) {
             entities.splice(i, 1);
         } else if(e.showIf && !e.showIf()) {
@@ -38,33 +49,33 @@ const randomEnemyRange = {
 };
 const commonEnemyInfo = {
     // Forest
-    mouse: { interactname: "mouse", dialogMax: 3, sy: 5, sheetlen: 2 },
-    sqorl: { interactname: "sqorl", dialogMax: 4, sy: 5, sheetlen: 2 },
+    mouse: { interactname: "mouse", dialogMax: 3, anim: "Mowz" },
+    sqorl: { interactname: "sqorl", dialogMax: 4, anim: "Sqorl" },
     // Below Village & Research Lab
-    robo2: { interactname: "research", dialogMax: 5, sy: 4 },
+    robo2: { interactname: "research", dialogMax: 5, anim: "Robo2" },
     // Underwater
-    fish: { interactname: "fish", dialogMax: 3, sy: 8, sheetlen: 2 },
-    seamonk: { interactname: "seamonk", dialogMax: 8, sy: 8, sheetlen: 2 },
+    fish: { interactname: "fish", dialogMax: 3, anim: "Fishy" },
+    seamonk: { interactname: "seamonk", dialogMax: 8, anim: "Monky" },
     // Fake Farm
-    golem: { visible: false, inside: true, interactname: "golem", dialogMax: 1, sy: 12, noChange: true },
-    piggn: ct => ({ visible: false, inside: true, interactname: "pig", dialogMax: 1, sy: 10, changeType: ct, sheetlen: 2, noChange: true }),
-    chick: ct => ({ interactname: "chickbot", dialogMax: 3, sy: 10, changeType: ct }),
+    golem: { visible: false, inside: true, interactname: "golem", dialogMax: 1, anim: "Golem" },
+    piggn: ct => ({ visible: false, inside: true, interactname: "pig", dialogMax: 1,changeType: ct, noChange: true, anim: "Pig" }),
+    chick: ct => ({ interactname: "chickbot", dialogMax: 3, changeType: ct, anim: "Chicky" }),
     // North City
-    hoverdweeb: { interactname: "hoverdweeb", dialogMax: 3, enemies: ["hoverdweeb"], min: 1, max: 1, sy: 17, sheetlen: 1 },
-    vendo: { interactname: "vendo", dialogMax: 2, sy: 15, sheetlen: 2 },
-    vendo2: { interactname: "vendo", dialogMax: 2, sy: 15, sheetlen: 2, inside: true, visible: false },
-    delivery: { interactname: "delivTruck", dialogMax: 3, sy: 17, sheetlen: 2 },
-    car1: { interactname: "carBr", dialogMax: 3, sy: 4, sheetlen: 2, big: true },
-    car2: { interactname: "carBl", dialogMax: 3, sy: 6, sheetlen: 2, big: true },
-    car3: { interactname: "carRe", dialogMax: 3, sy: 4, sheetlen: 2, big: true },
-    car4: { interactname: "foodTruck", dialogMax: 4, sy: 6, sheetlen: 2, big: true },
+    hoverdweeb: { interactname: "hoverdweeb", dialogMax: 3, enemies: ["hoverdweeb"], min: 1, max: 1, anim: "HoverNernd", moveToTalk: true, moving: false },
+    vendo: { interactname: "vendo", dialogMax: 2, anim: "Vendo" },
+    vendo2: { interactname: "vendo", dialogMax: 2, anim: "Vendo", inside: true, visible: false },
+    delivery: { interactname: "delivTruck", dialogMax: 3, anim: "DelivTruck" },
+    car1: { interactname: "carBr", dialogMax: 3, anim: "Car2", big: true },
+    car2: { interactname: "carBl", dialogMax: 3, anim: "Car3", big: true },
+    car3: { interactname: "carRe", dialogMax: 3, anim: "Car1", big: true },
+    car4: { interactname: "foodTruck", dialogMax: 4, anim: "Car4", big: true },
     // HQ 1
-    tinyNerd: { interactname: "tinyNerd", dialogMax: 5, sy: 14 },
-    hipNerd: { interactname: "trendyNerd", dialogMax: 5, sy: 12, sheetlen: 2, moving: true },
-    hipNerdUp: { interactname: "trendyNerd", dialogMax: 5, sy: 14, sheetlen: 2, moving: true },
-    roboGuard: { interactname: "wowNewRobot", dialogMax: 10, sy: 15 },
+    tinyNerd: { interactname: "tinyNerd", dialogMax: 5, anim: "Nernd1" },
+    hipNerd: { interactname: "trendyNerd", dialogMax: 5, anim: "Trendy1", moving: true },
+    hipNerdUp: { interactname: "trendyNerd", dialogMax: 5, anim: "Trendy2", moving: true },
+    roboGuard: { interactname: "wowNewRobot", dialogMax: 10, anim: "Newbot" },
     // HQ 2
-    buffNerd: { interactname: "buffNerd", dialogMax: 3, sy: 1, sheetlen: 2, moving: true }
+    buffNerd: { interactname: "buffNerd", dialogMax: 3, anim: "BuffNerd", moving: true, isBuffNerd: true }
 };
 const commonEnemyGenInfo = {
     // Forest
@@ -201,7 +212,7 @@ const randEnemies = {
 function GetREnemy(key, x, y, firstx, dir, movement, metaDataId, param) {
     let metadata = commonEnemyInfo[metaDataId];
     if(param !== undefined) { metadata = metadata(param); }
-    const enemy = GetCommonEntity("~" + key + Range(0, 1000), x, y, firstx, dir, movement, Cutscene("enemy"), metadata);
+    const enemy = GetFellow("~" + key + Range(0, 1000), x, y, dir, metadata.anim, Cutscene("enemy"), movement, metadata);
     enemy.key = key; enemy.metadataid = metaDataId;
     enemy.fx = firstx; enemy.param = param;
     return enemy;

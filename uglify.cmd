@@ -34,6 +34,7 @@ uglifyjs ^
     js/combat/combatinbetween.js ^
     js/combat/tutorial.js ^
     js/combat/wacg.js ^
+    js/animation/mapAnims.js ^
     js/worldmap/cutsceneParser.js ^
     js/worldmap/worldmap.js ^
     js/worldmap/entityHelpers.js ^

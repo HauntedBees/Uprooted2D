@@ -81,32 +81,36 @@ const specialtyHelpers = {
 };
 
 // Standard Entities
-function GetCommonEntity(name, x, y, firstx, dir, movement, interact, additional) {
-    const big = (additional !== undefined && additional.big);
-    const sheet = (additional !== undefined && additional.sheet !== undefined) ? additional.sheet : (big ? "mapcharbig" : "mapchar");
-    const len = (additional !== undefined && additional.sheetlen !== undefined) ? additional.sheetlen : 4;
+const InitFellow = fellow => SetUpFellow(fellow, fellow.animid, false);
+function SetUpFellow(fellow, animId, isPlayer) {
+    if(animId === "" || animId === null || animId === undefined) {
+        fellow.anim = null;
+        return;
+    }
+    if(isPlayer) { worldmap.animData = plAnims[animId]; }
+    else {
+        fellow.anim = mafs[animId].Get();
+        fellow.lastAnim = animId;
+    }
+};
+function GetFellow(name, x, y, dir, animid, interact, movement, additional) {
     const res = {
-        name: name, visible: true, 
-        pos: {x: x, y: y}, startingpos: {x: x, y: y}, solid: true, 
-        anim: new MapAnim(sheet, firstx, (additional === undefined ? 0 : (additional.sy || 0)), (big ? 32 : 16), (big ? 40 : 20), dir, len, additional !== undefined ? additional.dontDoThat : false),
-        moving: false,
-        sx: firstx * (big ? 32 : 16), dir: dir,
+        name: name, dir: dir, animid: animid, 
+        visible: true, moving: false, solid: true,
+        pos: { x: x, y: y }, startingpos: { x: x, y: y },
         movement: movement, interact: interact
     };
-    if(big) { res.anim.big = true; }
     return Object.assign(res, additional);
 }
-function GetBeehive(hiveId, x, y, inside) {
-    return GetCommonEntity(hiveId, x, y, 2, 0, undefined, Cutscene(hiveId), { sy: 4, storageKey: hiveId, noChange: true, isBeehive: true, inside: inside, visible: !inside });
-};
-function GetMafiaMember(num, x, y, dir, movement) {
-    return GetCommonEntity("Mafia" + num, x, y, 12, dir, movement, Cutscene("enemy"), requiredEnemyMetadata.mafia);
-}
-function GetMafiaMember2(num, x, y, dir) {
-    return GetCommonEntity("Mafia" + num, x, y, 12, dir, undefined, Cutscene("enemy"), requiredEnemyMetadata.mafia2);
-}
+const GetNoIMFellow = (name, x, y, animid, additional) => GetFellow(name, x, y, 0, animid, undefined, undefined, additional);
+const BoringAssFellow = (name, x, y, anim, big) => GetFellow(name, x, y, 0, anim, undefined, undefined, { big: big, boring: true });
+const AutoPlayFellow = (name, interact) => ({ name: name, pos: {x: -1, y: -1}, solid: false, interact: interact, autoplay: true });
+const BoringInvisFellow = (name, x, y) => GetFellow(name, x, y, 0, "", undefined, undefined, { visible: false, boring: true });
+const InvisFellow = (name, x, y, textKey) => GetFellow(name, x, y, 0, "", OneSpeak(textKey), undefined, { visible: false, boring: true });
+const GetSign = (x, y, textKey) => InvisFellow("Sign", x, y, textKey);
+const GetTalkie = (name, x, y, anim, intidx, key) => GetFellow(name, x, y, 0, anim, Cutscene(intidx), undefined, { standAnim: anim, talkAnim: anim + "Talk", moving: true, storageKey: key });
 
-// Invisible Entities
+// Cutscene Entities
 function AutoplayCutscene(cutsceneName) {
     this.boring = true;
     this.name = `cutscene_${cutsceneName}`;
@@ -125,10 +129,19 @@ function CutsceneTrigger(cutsceneName, storageKey) {
     this.interact = Cutscene(cutsceneName);
     this.storageKey = storageKey;
 }
-function SwitchMap(name, x, y, row, column, newx, newy, map, showIf) {
+function GetCSFellow(name, x, y, dir, animid, storageKey, additional) {
+    if(additional === undefined) { additional = { storageKey: storageKey }; }
+    else { additional.storageKey = storageKey; }
+    return GetFellow(name, x, y, dir, animid, undefined, undefined, additional);
+} 
+const BeeFellow = (hiveId, x, y, inside) => GetCSFellow(hiveId, x, y, 0, "Beehive", hiveId, { interact: Cutscene(hiveId), isBeehive: true, inside: inside, visible: !inside });
+
+// Map Switch Entities
+const GetStaircase = (name, x, y, newx, newy, map) => SwitchMap(name, x, y, false, false, newx, newy, map, undefined, 2);
+function SwitchMap(name, x, y, row, column, newx, newy, map, showIf, newDir) {
     return {
         name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row, isMapSwitch: true, destination: map, showIf: showIf, 
-        interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map }); } ]
+        interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map, playerDir: newDir }); } ]
     }
 };
 function SwitchMapSubPartialColumn(name, x, y, newx, newy, map, topy, bottomy) {
@@ -173,70 +186,46 @@ function EnterShop(name, x, y, shop, shopDir) {
         }]
     };
 };
-function GetInvisibleEntity(name, interact, additional) {
-    var res = { name: name, pos: {x: -1, y: -1}, solid: false, interact: interact };
-    return Object.assign(res, additional);
-};
-function GetSign(x, y, text) { return { name: "Sign", pos: {x: x, y: y}, solid: true, visible: false, interact: OneSpeak(text) }; };
-function GetCommonInvisibleSpeakingEntity(name, x, y, textKey) { return GetCommonEntity(name, x, y, 0, 0, undefined, OneSpeak(textKey), { visible: false, boring: true }); };
+
+// Specific Entities
 function GetProduceStandBlock(x) {
-    const obj = GetCommonInvisibleSpeakingEntity("noPass" + x, x, 23, "farmFirst");
+    const obj = InvisFellow("noPass" + x, x, 23, "farmFirst");
     obj.interact = OneSpeak("farmFirst", () => worldmap.pos.y -= 0.25);
     obj.solid = false;
     obj.showIf = () => !CommonConditions["beatBigBot"]();
     return obj;
 }
-
-// Helpers
-function FinishAnim() {
-    if(worldmap.mapName !== "hq_6") { worldmap.forceMove = false; worldmap.forcedPlayerInfo = false; }
-    worldmap.refreshMap();
-    worldmap.finishAnimation();
-}
-function Cutscene(s) { return [ () => iHandler.Start(s) ]; }
-function OneSpeak(t, extra) { return [ (i, e) => { iHandler.isFirst = true; worldmap.writeText(t); if(extra !== undefined) { extra(); } } ]; }
-function GetItemDisplayName(name, plural) { // TODO: move this fucker to the language parsing shit
-    const pluralSuf = plural ? "s" : "";
-    switch(name[0]) {
-        case "_": return GetFarmInfo(name).displayname + pluralSuf; break;
-        case "!": return GetEquipment(name).displayname + pluralSuf; break;
-        default: 
-            const cropInfo = GetCrop(name);
-            let nam = cropInfo.displayname;
-            if(["veg", "tree", "mush"].indexOf(cropInfo.type) >= 0) { nam += " Seed"; }
-            return nam + pluralSuf;
-            break;
-    }
-}
-
+const GetTruckL = (x, y) => GetFellow("AFuckingTruckL", x, y, 0, "TruckL", Cutscene("truck"), undefined, { big: true });
+const GetTruckR = (x, y) => GetFellow("AFuckingTruckR", x, y, 0, "TruckR", Cutscene("truck"), undefined, { big: true });
+const GetElevator = (side, x, y) => GetFellow("Elevator" + side, x, y, 0, "", Cutscene("elevator"), undefined, { visible: false, isElevator: true });
+const GetSeedShoot = (name, x, y) => GetFellow(name, x, y, 0, "", Cutscene("seedShot"), undefined, { visible: false, hasShot: 0, solid: false });
 // RF Doors
+function GetRFDoor(name, x, y, type, isDown) {
+    return GetFellow(name, x, y, 0, "Door" + type + (isDown ? "d" : ""), undefined, undefined, { active: isDown, initActive: isDown, type: type, solid: !isDown, rfd: true });
+}
+function GetRFDoorButton(name, x, y, type, isDown) {
+    return GetFellow(name, x, y, 0, "Switch" + type + (isDown ? "d" : ""), [ function() { 
+        game.target.active = !game.target.active;
+        SetUpFellow(game.target, "Switch" + game.target.type + (game.target.active ? "d" : ""));
+        ToggleRFDoors(game.target.type);
+        worldmap.finishDialog();
+    } ], undefined, { sy: (isDown ? 1 : 0), active: isDown, initActive: isDown, type: type, noChange: true, rf: true });
+}
 function ToggleRFDoors(type) {
     mapStates[worldmap.mapName].rf[type] = !mapStates[worldmap.mapName].rf[type];
     for(let i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
             const newActive = !worldmap.entities[i].active;
             worldmap.entities[i].active = newActive;
-            worldmap.entities[i].anim.shiftY(newActive ? 3 : 2);
+            SetUpFellow(worldmap.entities[i], "Door" + type + (newActive ? "d" : ""));
             worldmap.entities[i].solid = !newActive;
         }
     }
 }
-function GetRFDoorButton(name, x, y, type, isDown) {
-    return GetCommonEntity(name, x, y, 15 + type, 0, undefined, [ function() { 
-        game.target.active = !game.target.active;
-        game.target.anim.shiftY(game.target.active ? 1 : 0);
-        ToggleRFDoors(game.target.type);
-        worldmap.finishDialog();
-    } ], { sy: (isDown ? 1 : 0), active: isDown, initActive: isDown, type: type, noChange: true, rf: true });
-}
-function GetRFDoor(name, x, y, type, isDown) {
-    return GetCommonEntity(name, x, y, 15 + type, 0, undefined, undefined, { sy: (isDown ? 3 : 2), active: isDown, initActive: isDown, type: type, solid: !isDown, rfd: true });
-}
-
 // Treasure Chests
-function ForceChestOpen(e) { e.open = true; e.anim.shiftY(5); }
+function ForceChestOpen(e) { e.open = true; SetUpFellow(e, "Chest1"); }
 function GetTreasureChest(name, x, y, contents) {
-    return GetCommonEntity(name, x, y, 13, 0, undefined, [function() {
+    return GetFellow(name, x, y, 0, "Chest0", [ function() {
         if(game.target.open) {
             worldmap.writeText("openchest");
         } else {
@@ -263,7 +252,7 @@ function GetTreasureChest(name, x, y, contents) {
             }
             if(hasRoom) {
                 game.target.open = true;
-                game.target.anim.shiftY(5);
+                SetUpFellow(game.target, "Chest1");
                 if(clen === 0) {
                     player.increaseItem(conts[0][0], conts[0][1]);
                 } else {
@@ -278,40 +267,33 @@ function GetTreasureChest(name, x, y, contents) {
             }
             worldmap.writeText("closedchest", undefined, false, contentString);
         }
-    }], { sy: 4, open: false, contents: contents, noChange: true, isChest: true });
+    }], undefined, { open: false, contents: contents, isChest: true });
 }
 function GetIndoorTreasureChest(name, x, y, contents) {
     const chest = GetTreasureChest(name, x, y, contents);
-    chest.inside = true;
-    chest.visible = false;
+    chest.inside = true; chest.visible = false;
     return chest;
 }
 
-// HQ3 Ceilings
-function GetChungusDoor(num, x, y, chungi, visState) {
-    const chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi, boring: true };
-    if(visState !== undefined) {
-        chungy.noChange = true;
-        chungy.anim = new MapAnim("mapchar", 15, 9, 16, 20, visState, 4);
-        chungy.visible = true;
-    } else {
-        chungy.visible = false;
-    }
-    return chungy;
-}
-function GetChungus(id, num, x, y, w, h) { return { name: "chungus" + id + "_" + num, chungus: true, chungusId: id, pos: { x: x, y: y }, width: w, height: h, visible: true, boring: true }; }
-function ToggleChungus(arg, target) {
-    const acceptableChungi = target.chungi;
-    for(let i = worldmap.entities.length - 1; i >= 0; i--) {
-        if(!worldmap.entities[i].chungus) { continue; }
-        worldmap.entities[i].visible = (acceptableChungi.indexOf(worldmap.entities[i].chungusId) < 0);
-    }
-    if(acceptableChungi.length === 1) { worldmap.horRor.playerRoom = acceptableChungi[0]; }
-    worldmap.refreshMap();
-    worldmap.finishDialog();
-}
-
 // Waterfalls
+function GetWaterfall(name, x, y, dir, wfid, tech) {
+    const isMoving = (!tech || wfid[1] !== "X");
+    const isBoring = (name.replace("waterfall" + wfid, "") !== "0");
+    const anim = (tech ? (isMoving ? "RollerBob" : "RollerStart") : "Waterfall");
+    return GetFellow(name, x, y, dir, anim, [ EnterWaterfall ], undefined, { moving: isMoving, dontDoThat: true, solid: false, wfid: wfid, isWaterfall: true, boring: isBoring });
+}
+function GetWaterfallEnd(name, x, y, dir, wfid, tech) {
+    return GetFellow(name, x, y, dir, (tech ? "RollerEnd" : "WaterfallEnd"), undefined, undefined, { moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
+}
+function EnterWaterfall() {
+    if(worldmap.playerDir === directions.RIGHT) {
+        worldmap.pos.x += 0.5;
+    } else if(worldmap.playerDir === directions.LEFT) {
+        worldmap.pos.x -= 0.5;
+    }
+    worldmap.inWaterfall = true;
+    worldmap.waterfallIdx = setInterval(AdvanceWaterfall, timers.FULLANIM * 4);
+}
 function AdvanceWaterfall() {
     const lastDir = game.target.dir;
     let newDir = -1;
@@ -343,14 +325,13 @@ function AdvanceWaterfall() {
     worldmap.playerDir = (worldmap.playerDir + 1) % 3;
     worldmap.refreshMap();
 }
-function EnterWaterfall() {
-    worldmap.inWaterfall = true;
-    worldmap.waterfallIdx = setInterval(AdvanceWaterfall, timers.FULLANIM * 4);
-}
 function ExitWaterfall() {
     clearInterval(worldmap.waterfallIdx);
     worldmap.finishDialog();
     worldmap.inWaterfall = false;
+}
+function GetRock(name, x, y, dir, wfid) {
+    return GetFellow(name, x, y, 0, "Rock", [PushRock], undefined, { pushDir: dir, killid: wfid, initx: x, inity: y, isRock: true });
 }
 function PushRock() {
     if(game.target.donePushing) {
@@ -385,10 +366,18 @@ function PushRock() {
         }
     }, 10);
 }
+function FinishAnim() {
+    worldmap.forceMove = false;
+    worldmap.refreshMap();
+    worldmap.finishAnimation();
+}
+function GetTechRock(name, x, y, dir, wfid) {
+    return GetFellow(name, x, y, dir, "TechRock", [PushTechRock], undefined, { killid: wfid, isRock: true, noChange: true });
+}
 function PushTechRock() {
     if(game.target.donePushing) { worldmap.finishDialog(); return; }
     game.target.donePushing = true;
-    game.target.dir += 1;
+    SetUpFellow(game.target, "TechRockPressed");
     for(let i = worldmap.entities.length - 1; i >= 0; i--) {
         if(worldmap.entities[i].wfid === game.target.killid) {
             player.clearedEntities.push(worldmap.entities[i].name);
@@ -401,17 +390,44 @@ function PushTechRock() {
     worldmap.refreshMap();
     worldmap.finishDialog();
 }
-function GetRock(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 12, 0, undefined, [PushRock], { noChange: true, pushDir: dir, sy: 7, killid: wfid, initx: x, inity: y, isRock: true });
+
+// Mobsters
+function GetMafiaMember(num, x, y, dir, movement) {
+    return GetFellow("Mafia" + num, x, y, dir, "Mobsty1", Cutscene("enemy"), movement, requiredEnemyMetadata.mafia);
 }
-function GetTechRock(name, x, y, dir, wfid) {
-    return new GetCommonEntity(name, x, y, 22, 0, undefined, [PushTechRock], { noChange: true, sy: (dir == 0 ? 10 : 9), killid: wfid, isRock: true });
+function GetMafiaMember2(num, x, y, dir) {
+    return GetFellow("Mafia" + num, x, y, dir, "Mobsty2", Cutscene("enemy"), undefined, requiredEnemyMetadata.mafia2);
 }
-function GetWaterfall(name, x, y, dir, wfid, tech) {
-    return new GetCommonEntity(name, x, y, 18, dir, undefined, [EnterWaterfall], { sy: (tech ? (wfid[1] === "X" ? 6: 7) : 0), sheetlen: (tech ? 2 : 4), moving: (!tech || wfid[1] !== "X"), dontDoThat: true, solid: false, wfid: wfid, isWaterfall: true, boring: (name.replace("waterfall" + wfid, "") !== "0") });
+
+// HQ3 Ceilings
+function GetChungusDoor(num, x, y, chungi, visState) {
+    const chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi, boring: true };
+    if(visState !== undefined) {
+        chungy.noChange = true;
+        chungy.animid = "Chungus" + visState;
+        InitFellow(chungy);
+        chungy.visible = true;
+    } else {
+        chungy.visible = false;
+    }
+    return chungy;
 }
-function GetWaterfallEnd(name, x, y, dir, wfid, tech) {
-    return new GetCommonEntity(name, x, y, 18, dir, undefined, undefined, { sy: (tech ? 9 : 4), sheetlen: 2, moving: true, dontDoThat: true, solid: false, isEnd: true, wfid: wfid, boring: true });
+function GetChungus(id, num, x, y, w, h) {
+    return {
+        name: "chungus" + id + "_" + num, chungus: true, chungusId: id, 
+        pos: { x: x, y: y }, width: w, height: h,
+        visible: true, boring: true
+    };
+}
+function ToggleChungus(arg, target) {
+    const acceptableChungi = target.chungi;
+    for(let i = worldmap.entities.length - 1; i >= 0; i--) {
+        if(!worldmap.entities[i].chungus) { continue; }
+        worldmap.entities[i].visible = (acceptableChungi.indexOf(worldmap.entities[i].chungusId) < 0);
+    }
+    if(acceptableChungi.length === 1 && acceptableChungi[0] !== undefined) { worldmap.horRor.playerRoom = acceptableChungi[0]; }
+    worldmap.refreshMap();
+    worldmap.finishDialog();
 }
 
 // Foreground & Jumbo Covers
@@ -422,7 +438,7 @@ function GetJumbo(id, img, x, y, w, h, ox, oy) {
     return { name: id, storageKey: id, jumbo: true, filename: "covers/" + img, visible: true, w: w, h: h, offset: { x: ox, y: oy }, pos: { x: x, y: y }, boring: true };
 }
 function GetJumboToggle(id, x, y, enter) {
-    return GetCommonEntity((enter ? "Enter" : "Exit") + id, x, y, 0, 0, undefined, [enter ? JumboEntrance : JumboExit], { visible: false, solid: false, boring: true });
+    return GetFellow((enter ? "Enter" : "Exit") + id, x, y, 0, "", [enter ? JumboEntrance : JumboExit], undefined, { visible: false, solid: false, boring: true });
 }
 function JumboEntrance() { JumboToggle(true); }
 function JumboExit() { JumboToggle(false); }
@@ -436,29 +452,40 @@ function JumboToggle(inside) {
     worldmap.finishDialog();
 }
 
+// Helpers
+const Cutscene = s => [ () => iHandler.Start(s) ];
+function OneSpeak(t, extra) {
+    return [ (i, e) => {
+        iHandler.isFirst = true;
+        if(e.moveToTalk) { e.moving = true; }
+        worldmap.writeText(t);
+        if(extra !== undefined) { extra(); }
+    } ];
+}
+
 // Enemy and Movement Data
 const requiredEnemyMetadata = {
     // Farm
     robo: { interactname: "robo", dialogMax: 5, setEnemies: ["robo"], isRobo: true },
     roboDouble: { interactname: "robo", dialogMax: 5, setEnemies: ["robo", "robo"], isRobo: true },
     // Forest
-    turky: { interactname: "turky", dialogMax: 3, setEnemies: ["turky"], sy: 7 },
+    turky: { interactname: "turky", dialogMax: 3, setEnemies: ["turky"], moveTalk: true },
     // Below Village & Research Lab
-    robo2: { interactname: "research", dialogMax: 5, setEnemies: ["robo2"], sy: 4 },
+    robo2: { interactname: "research", dialogMax: 5, setEnemies: ["robo2"] },
     // Underwater
-    seamonk: { interactname: "seamonk", dialogMax: 8, setEnemies: ["seaMonk"], sy: 8, sheetlen: 2 },
+    seamonk: { interactname: "seamonk", dialogMax: 8, setEnemies: ["seaMonk"] },
     // Fake Farm
-    mower: ct => ({ sy: 10, noChange: true, changeType: ct, sheetlen: 2, visible: false, inside: true }),
+    mower: ct => ({ noChange: true, changeType: ct, visible: false, inside: true }),
     // South City
-    mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, setEnemies: ["mobsty2", "mobsty2", "mobsty2"], sy: 10, inside: true, fov: true, visible: false },
-    mafia: { mafia: true, interactname: "wildmobsty", dialogMax: 7, setEnemies: ["mobsty1", "mobsty1"], sy: 10, fov: true },
+    mafia2: { mafia: true, interactname: "wildmobsty", dialogMax: 7, setEnemies: ["mobsty2", "mobsty2", "mobsty2"], inside: true, fov: true, visible: false },
+    mafia: { mafia: true, interactname: "wildmobsty", dialogMax: 7, setEnemies: ["mobsty1", "mobsty1"], fov: true },
     // HQ 1
-    roboGuard: { interactname: "wowNewRobot", dialogMax: 10, setEnemies: ["robo4a", "robo4b", "robo4c"], sy: 15 },
-    tinyNerd: { interactname: "tinyNerd", dialogMax: 5, setEnemies: ["tinyNerd"], sy: 14 },
+    roboGuard: { interactname: "wowNewRobot", dialogMax: 10, setEnemies: ["robo4a", "robo4b", "robo4c"] },
+    tinyNerd: { interactname: "tinyNerd", dialogMax: 5, setEnemies: ["tinyNerd"] },
     // HQ 2
-    buffNerd: { interactname: "buffNerd", dialogMax: 3, setEnemies: ["buffNerd", "buffNerd", "buffNerd"], sy: 1, sheetlen: 2, moving: true },    
+    buffNerd: { interactname: "buffNerd", dialogMax: 3, setEnemies: ["buffNerd", "buffNerd", "buffNerd"], moving: true, isBuffNerd: true },    
     // HQ 4
-    prophet: type => ({ interactname: "prophet", dialogMax: 4, setEnemies: ["bot" + type], sy: 18, noChange: true, noRunKill: true })
+    prophet: type => ({ interactname: "prophet", dialogMax: 4, setEnemies: ["bot" + type], noRunKill: true })
 };
 const commonMovementDatas = {
     fuckinBottle: function(x, y, w, h, initState) { return { 
@@ -499,4 +526,18 @@ function GetStdMovement(points) {
         newPoints.push({ x: points[i][0], y: points[i][1], dx: dx, dy: dy });
     }
     return { state: 0, speed: 0.025, loop: true, points: newPoints };
+}
+
+function GetItemDisplayName(name, plural) { // TODO: move this fucker to the language parsing shit
+    const pluralSuf = plural ? "s" : "";
+    switch(name[0]) {
+        case "_": return GetFarmInfo(name).displayname + pluralSuf; break;
+        case "!": return GetEquipment(name).displayname + pluralSuf; break;
+        default: 
+            const cropInfo = GetCrop(name);
+            let nam = cropInfo.displayname;
+            if(["veg", "tree", "mush"].indexOf(cropInfo.type) >= 0) { nam += " Seed"; }
+            return nam + pluralSuf;
+            break;
+    }
 }

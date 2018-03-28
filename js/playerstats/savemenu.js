@@ -51,6 +51,9 @@ pausemenu.savemenu = {
         const slotData = localStorage.getItem("player" + savenum);
         if(slotData === null) { return this.drawSaveDataText(GetText("noSave")); }
         const loadedPlayer = game.str2obj(slotData);
+        if(loadedPlayer.saveVersion === undefined) {
+            return this.drawSaveDataText("This Save is incompatible with this version of the game.");
+        }
         const text = GetText("saveInfoStr")
                             .replace(/\{level\}/g, loadedPlayer.level)
                             .replace(/\{monies\}/g, loadedPlayer.monies)
@@ -92,9 +95,11 @@ pausemenu.savemenu = {
         this.CursorMove(dpos);
     },
     click: function() {
+        const dy = this.hasAuto ? 1 : 0;
+        const saveNum = (this.hasAuto && this.cursorY === 0 ? "auto" : (this.cursorY - dy));
         if(this.cursorY === -1) {
             this.cancel();
-        } else if(localStorage.getItem("player" + this.cursorY) === null || (this.confirm && this.confirmCursorY === 0)) {
+        } else if(localStorage.getItem("player" + saveNum) === null || (this.confirm && this.confirmCursorY === 0)) {
             if(this.isSave) {
                 game.save(this.cursorY);
                 this.saving = true;
@@ -110,8 +115,6 @@ pausemenu.savemenu = {
                 this.confirmCursorY = 0;
                 this.DrawAll();
             } else {
-                const dy = this.hasAuto ? 1 : 0;
-                const saveNum = (this.hasAuto && this.cursorY === 0 ? "auto" : (this.cursorY - dy));
                 game.load(saveNum);
             }
         }
