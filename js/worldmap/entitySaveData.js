@@ -115,7 +115,12 @@ let mapRefreshes = {
         }
         mapRefreshes.insideCheck(e, "fakefarm");
     },
-    "southcity": e => mapRefreshes.insideCheck(e, "southcity"),
+    "southcity": function(e) {
+        mapRefreshes.insideCheck(e, "southcity");
+        if(e.name === "Abuela" && player.completedQuest("abuelitaBonita")) {
+            SpecialFunctions["ABUELADONE"]();
+        }
+    },
     "northcity": function(e) {
         if(e.name === "Mailman" && player.hasOrHasHadQuest("keycard")) { SpecialFunctions["DESTROYBUILDING"](); }
         mapRefreshes.insideCheck(e, "northcity");

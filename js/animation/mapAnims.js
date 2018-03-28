@@ -263,7 +263,7 @@ const mafs = {
     "Skumpy3": new MapAnimFactory("la", [14, 16, 2]), "Skumpy4": new MapAnimFactory("la", [12, 16, 2]),
     "BarL": Ft(18, 15), "BarM": Ft(19, 15), "MobstyOut": Ft(17, 15), "MobstyHurt": new MapAnimFactory("la", [26, 3, 2]),
     "Pigeon1": new MapAnimFactory("la", [17, 13, 2]), "Pigeon2": new MapAnimFactory("la", [18, 13, 2]), 
-    "Abuelita": new MapAnimFactory("la", [19, 13, 2]),
+    "Abuelita": new MapAnimFactory("la", [19, 13, 2]), "AbuelitaThrow": new MapAnimFactory("la", [26, 15, 2, false, 1]),
     // North City
     "Car1": new MapAnimFactory("dw", [0, 4, 2, true]), "Car2": new MapAnimFactory("dw", [4, 4, 2, true]),
     "Car3": new MapAnimFactory("dw", [0, 6, 2, true]), "Car4": new MapAnimFactory("dw", [4, 6, 2, true]),

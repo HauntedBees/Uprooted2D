@@ -565,6 +565,12 @@ const SpecialFunctions = {
             case "lime.nope": worldmap.writeText("kindLadyX"); iHandler.state.done = true; break;
         }
     },
+    "ABUELADONE": function() {
+        const abuela = worldmap.importantEntities["abuela"];
+        abuela.moveToTalk = false;
+        abuela.moving = true;
+        SetUpFellow(abuela, "AbuelitaThrow");
+    },
 
     // North City
     "THEGIFTOFEGG": function() {

@@ -418,9 +418,9 @@ const scripts = {
 	"abuela4": "targ_ISMOVING:true&_CUSTOM:ABUELASTART",
 	"abuela5": "??ABUELANEXT",
 	"abuela6": "_TEXT:kindLadyNorm(1-2)",
-	"abuela7": "targ_ISMOVING:false&_CHIEVO:abuelita&_GIVE:asparagus,20&_MONEY:10000&_TEXT:kindLadyNorm3&_COMPLETEQUEST:abuelitaBonita&_END",
+	"abuela7": "targ_ISMOVING:false&_CHIEVO:abuelita&_GIVE:asparagus,20&_MONEY:10000&_TEXT:kindLadyNorm3&_COMPLETEQUEST:abuelitaBonita&_CUSTOM:ABUELADONE&_END",
 	"abuela8": "_TEXT:kindLadyGood(1-2)",
-	"abuela9": "targ_ISMOVING:false&_CHIEVO:abuelita&_GIVE:notdrugs,6&_MONEY:20000&_TEXT:kindLadyGood3&_COMPLETEQUEST:abuelitaBonita",
+	"abuela9": "targ_ISMOVING:false&_CHIEVO:abuelita&_GIVE:notdrugs,6&_MONEY:20000&_TEXT:kindLadyGood3&_CUSTOM:ABUELADONE&_COMPLETEQUEST:abuelitaBonita",
 	// South City: Fifth Boss (DON VAGANTE)
 	"mobBoss0": "targ_ISMOVING:true&_TEXT:mobBoss(0-15)",
 	"mobBoss1": "_FIGHT:mobBoss,mobsty2,mobsty2",
