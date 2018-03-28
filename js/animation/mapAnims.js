@@ -299,8 +299,9 @@ const mafs = {
     // HQ 6
     "BeckCry1": new MapAnimFactory("la", [25, 15, 2]), "BeckCry2": new MapAnimFactory("la", [25, 17, 2]),
     "FBBack": Ft(24, 10), "FBSide": Ft(24, 11), "FBFront": new MapAnimFactory("la", [24, 12, 2]), "FBLook": new MapAnimFactory("la", [24, 14, 2]),
-    "FBChair": Ft(24, 16), "FBGrab": Ft(24, 17), "FBToss": Ft(24, 18), "FBPush1": Ft(24, 19), "FBPush2": Ft(25, 19), "FBStand": new MapAnimFactory("la", [24, 20, 2]),
-    "FBTable": Ft(7, 3, true), "FBTableFlip": new MapAnimFactory("la", [8, 0, 8, true]),
+    "FBMad": new MapAnimFactory("la", [26, 13, 2]), "FBChair": Ft(24, 16), "FBGrab": Ft(24, 17), "FBToss": Ft(24, 18), "FBPush1": Ft(24, 19),
+    "FBPush2": Ft(25, 19), "FBStand": new MapAnimFactory("la", [24, 20, 2]),
+    "FBTable": Ft(7, 3, true), "FBTableFlip": new MapAnimFactory("la", [8, 0, 8, true, 24]),
     "FBBtn1": Ft(25, 20), "FBBtn2": Ft(25, 21), "FBBtn3": Ft(25, 22), "FBBtn4": Ft(25, 23),
     "FloorFlip0": Ft(25, 0), "FloorFlip1": Ft(25, 1), "FloorFlip2": Ft(25, 2), "FloorFlip3": Ft(25, 3), "FloorFlip4": Ft(25, 4),
     "FloorFlip5": Ft(25, 5), "FloorFlip6": Ft(25, 6),  "FloorFlip7": Ft(25, 7), "FloorFlip8": Ft(25, 8), "FloorFlip9": Ft(25, 9),
