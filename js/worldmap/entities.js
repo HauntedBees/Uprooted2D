@@ -460,7 +460,11 @@ const mapentities = {
         // Misc. Entities
         GetFellow("Pigeon1", 30, 22, 0, "Pigeon1", undefined, undefined, { moving: true, boring: true }),
         GetFellow("Pigeon2", 36, 21, 0, "Pigeon2", undefined, undefined, { moving: true, boring: true }),
-        GetFellow("Pigeon3", 33, 22, 0, "Pigeon1", undefined, undefined, { moving: true, boring: true })
+        GetFellow("Pigeon3", 33, 22, 0, "Pigeon1", undefined, undefined, { moving: true, boring: true }),
+        GetNoIMFellow("FountainUL", 32.5, 22.75, "FountainUL", { big: true, solid: false }), GetNoIMFellow("FountainUR", 34.5, 22.75, "FountainUR", { big: true, solid: false }),
+        GetNoIMFellow("FountainLLL", 30.5, 25.25, "FountainLLL", { big: true, solid: false }), GetNoIMFellow("FountainLML", 32.5, 25.25, "FountainLML", { big: true, solid: false }),
+        GetNoIMFellow("FountainLMR", 34.5, 25.25, "FountainLMR", { big: true, solid: false }), GetNoIMFellow("FountainLRR", 36.5, 25.25, "FountainLRR", { big: true, solid: false }),
+        GetFellow("PoopBagDispenser", 27, 31, 0, "DoggyBags", OneSpeak("poopBag"), undefined, { big: true })
     ],
     "northcity": () => [
         // Map Switches

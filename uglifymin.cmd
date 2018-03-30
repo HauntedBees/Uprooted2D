@@ -34,6 +34,7 @@ uglifyjs ^
     js/combat/combatinbetween.js ^
     js/combat/tutorial.js ^
     js/combat/wacg.js ^
+    js/main.js ^
     js/animation/mapAnims.js ^
     js/worldmap/cutsceneParser.js ^
     js/worldmap/worldmap.js ^
@@ -59,6 +60,5 @@ uglifyjs ^
     js/playerstats/savemenu.js ^
     js/player.js^
     js/rendering.js ^
-    js/main.js ^
     js/lib/lz-string.js ^
 -o out.min.js

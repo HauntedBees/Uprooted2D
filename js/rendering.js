@@ -175,7 +175,8 @@ const gfx = {
         layer = layer || "characters";
         let w = (big ? 34 : 18), h = (big ? 42 : 22), dy = (big ? 8 : 4);
         if(other !== undefined && other.bigBoy === true) { w = 22; h = 27; dy = 8; }
-        const leftx = sx * w, topy = sy * h;
+        let leftx = sx * w, topy = sy * h;
+        if(game.glitch) { w += game.glitch.offX; h += game.glitch.offY; leftx += game.glitch.dx; topy += game.glitch.dy; }
         if(other !== undefined) {
             if(other.slightlyWider) {
                 gfx.drawImage(gfx.ctx[layer], gfx.spritesheets[sheet], leftx + 1, topy + 1, w + 10, h - 2, (pos.x - offset.x) * 16, (pos.y - offset.y) * 16 - dy, w + 10, h - 2);

@@ -3577,6 +3577,11 @@ const fulltext = {
 		"en-dm": "Catalina: Oh hey! You brought me my mail! Wow, thank you very much! Just for that, I'm gonna open up my RARE BEE COLLECTION for sale, just for you!", 
 		"type": "shop"
 	},
+	"poopBag": {
+		"en-us": "", 
+		"en-dm": "\"Please pick up after your pet and help keep our park clean, JERRY.\"", 
+		"type": "map"
+	},
 	// Area 8: North City
 	"mushMan0": {
 		"en-us": "", 

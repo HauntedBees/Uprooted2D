@@ -46,7 +46,7 @@ const nwHelpers = {
 };
 const game = {
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14, //w: 960, h: 640,
-    currentInputHandler: worldmap, target: null, language: "en-dm",
+    currentInputHandler: null, target: null, language: "en-dm",
     sheetsToLoad: [
                     "title", "titleGround", "titleTop", // Title Screen
                     "mapChar", "mapCharBig", "mapPlayer", "mapPlayerHelp", // Map Stuff

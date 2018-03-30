@@ -1,6 +1,6 @@
 function P(x, y) { return { x: x, y: y }; }
 function MapAnimFactory(type, args) {
-    let func = null;
+    let func = null, glitched = false, origArgs = [...args];
     switch(type) {
         case "sw": func = StandardWalk; break;
         case "dw": func = DiffWalk; break;
@@ -9,7 +9,54 @@ function MapAnimFactory(type, args) {
         case "la": func = LineAnim; break;
         case "ft": func = SoloTile; break;
     }
-    this.Get = () => new func(...args);
+    this.Get = function() {
+        if(game.glitch === undefined && glitched) {
+            glitched = false;
+            args = [...origArgs];
+        } else if(game.glitch && !glitched) {
+            glitched = true;
+            switch(type) {
+                case "sw": {
+                    const big = args[2];
+                    args[0] = Range(0, big ? 10: 26) - 4;
+                    args[1] = Range(0, big ? 9 : 23) - 5;
+                    break;
+                }
+                case "dw": {
+                    const big = args[3];
+                    args[0] = Range(0, big ? 10: 26) - 4;
+                    args[1] = Range(0, big ? 9 : 23) - args[2];
+                    break;
+                }
+                case "as": {
+                    const big = args[1];
+                    for(let j = 0; j < posArrs[i].length; j++) {
+                        args[0][j] = P(Range(0, big ? 10 : 26), Range(0, (big ? 9 : 23)));
+                    }
+                }
+                case "ds": {
+                    const big = args[1];
+                    for(let i = 0; i < posArrs.length; i++) {
+                        for(let j = 0; j < posArrs[i].length; j++) {
+                            args[0][i][j] = P(Range(0, big ? 10 : 26), Range(0, (big ? 9 : 23)));
+                        }
+                    }
+                }
+                case "la": {
+                    const big = args[3];
+                    args[0] = Range(0, big ? 10: 26);
+                    args[1] = Range(0, big ? 9 : 23) - args[2];
+                    break;
+                }
+                case "ft": {
+                    const big = args[2];
+                    args[0] = Range(0, big ? 10: 26);
+                    args[1] = Range(0, big ? 9 : 23);
+                }
+            }
+        }
+        return new func(...args);
+    };
 }
 
 function MapAnim(big, fps) {
@@ -248,7 +295,7 @@ const mafs = {
     "PirateMonk": new MapAnimFactory("la", [17, 10, 2]), "ChestX": Ft(13, 11),
     "ShipL": Ft(1, 1, true), "ShipM": Ft(2, 1, true), "ShipR": Ft(3, 1, true),
     "SeaMonL": Ft(1, 2, true), "SeaMonM": new MapAnimFactory("la", [2, 2, 2, true]), "SeaMonR": Ft(3, 2, true),
-    "SeaMon2L": Ft(1, 8, true), "SeaMon2M": new MapAnimFactory("la", [2, 8, 2, true]), "SeaMon2R": Ft(3, 8, true),
+    "SeaMon2L": Ft(1, 3, true), "SeaMon2M": new MapAnimFactory("la", [1, 8, 2, true]), "SeaMon2R": Ft(3, 3, true),
     "Waterfall": new MapAnimFactory("dw", [0, 12, 4]), "WaterfallEnd": new MapAnimFactory("dw", [0, 16, 4]), "Rock": Ft(16, 11),
     // Fake Farm
     "Jef": new MapAnimFactory("sw", [8, 12]), "JefTalkR": new MapAnimFactory("as", [[P(11, 12), P(12, 12)]]), "JefTalkS": new MapAnimFactory("as", [[P(10, 12), P(12, 13)]]),
@@ -262,8 +309,11 @@ const mafs = {
     "Skumpy1": new MapAnimFactory("la", [15, 16, 2]), "Skumpy2": new MapAnimFactory("la", [13, 16, 2]),
     "Skumpy3": new MapAnimFactory("la", [14, 16, 2]), "Skumpy4": new MapAnimFactory("la", [12, 16, 2]),
     "BarL": Ft(18, 15), "BarM": Ft(19, 15), "MobstyOut": Ft(17, 15), "MobstyHurt": new MapAnimFactory("la", [26, 3, 2]),
-    "Pigeon1": new MapAnimFactory("la", [17, 13, 2]), "Pigeon2": new MapAnimFactory("la", [18, 13, 2]), 
+    "Pigeon1": new MapAnimFactory("la", [17, 13, 2]), "Pigeon2": new MapAnimFactory("la", [18, 13, 2]), "DoggyBags": Ft(0, 2, true),
     "Abuelita": new MapAnimFactory("la", [19, 13, 2]), "AbuelitaThrow": new MapAnimFactory("la", [26, 15, 2, false, 1]),
+    "FountainUL": new MapAnimFactory("as", [[P(3, 8), P(7, 8)], true]), "FountainUR": new MapAnimFactory("as", [[P(4, 8), P(8, 8)], true]),
+    "FountainLLL": new MapAnimFactory("as", [[P(2, 9), P(6, 9)], true]), "FountainLML": new MapAnimFactory("as", [[P(3, 9), P(7, 9)], true]),
+    "FountainLMR": new MapAnimFactory("as", [[P(4, 9), P(8, 9)], true]), "FountainLRR": new MapAnimFactory("as", [[P(5, 9), P(9, 9)], true]),
     // North City
     "Car1": new MapAnimFactory("dw", [0, 4, 2, true]), "Car2": new MapAnimFactory("dw", [4, 4, 2, true]),
     "Car3": new MapAnimFactory("dw", [0, 6, 2, true]), "Car4": new MapAnimFactory("dw", [4, 6, 2, true]),

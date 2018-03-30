@@ -1,4 +1,13 @@
 const debug = {
+    GlitchItUp: function() {
+        game.glitch = {
+            offX: InclusiveRange(-4, 4),
+            offY: InclusiveRange(-6, 6),
+            dx: InclusiveRange(-16, 16),
+            dy: InclusiveRange(20, 20)
+        };
+    },
+    Unglitch: function() { delete game.glitch; },
     testEnemyState: "cropHeal",
     DoFuckBattle:  function() {
         player.hasFalcon = false;
