@@ -185,7 +185,7 @@ worldmap.optionsMenu = {
                 this.options[this.cursory].val = newVal;
                 if(this.options[this.cursory].idx) {
                     this.localOptions[this.options[this.cursory].idx] = newVal;
-                    if(this.options[this.cursory].idx === "font") { player.options.font = newOp; }
+                    if(this.options[this.cursory].idx === "font") { player.options.font = newVal; }
                 }
                 this.RedimOptions();
                 return true;
