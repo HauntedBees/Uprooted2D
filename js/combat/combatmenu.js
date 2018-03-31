@@ -35,6 +35,8 @@ combat.menu = {
             } else { // no crops are growing
                 plantState = "combatSurrender";
             }
+        } else if(!this.PlayerHasThingsToPlant()) {
+            plantState = "combatSkip";
         }
         this.plantState = plantState;
         this.drawOption(GetText(plantState), 0, this.cursorY === 0);
@@ -45,11 +47,7 @@ combat.menu = {
         let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
         switch(this.cursorY) {
             case 0:
-                if(combat.isFalcon) {
-                    text = GetText("seeds_one");
-                    charAnim = "LOOKBACK";
-                    birdAnim = "WANTPLANT";
-                } else if(plantState !== "combatPlant") {
+                if(plantState !== "combatPlant") {
                     if(plantState === "combatSkip") {
                         text = GetText("combatSkipNoSeed");
                         charAnim = "CANTDO";
@@ -57,6 +55,10 @@ combat.menu = {
                         text = GetText("combatSurrenderDesc");
                         charAnim = "CANTDO";
                     }
+                } else if(combat.isFalcon) {
+                    text = GetText("seeds_one");
+                    charAnim = "LOOKBACK";
+                    birdAnim = "WANTPLANT";
                 } else if(combat.numPlantTurns == 0) {
                     text = GetText("seeds_none");
                     charAnim = "CANTDO";
@@ -287,5 +289,20 @@ combat.menu = {
         } else {
             return this.mouseMove(pos);
         }
+    },
+    PlayerHasThingsToPlant: function() {
+        const crops = player.inventory.filter(e => e[0][0] !== "!" && e[0][0] !== "_");
+        for(let i = 0; i < crops.length; i++) {
+            const crop = GetCrop(crops[i][0]);
+            for(let x = 0; x < player.gridWidth; x++) {
+                for(let y = 0; y < player.gridHeight; y++) {
+                    combat.plant.activeCrop = crop;
+                    if(combat.plant.isValidPlantingLocation(x, y, crop.size - 1) && combat.plant.isValidLocationForCrop(x, y)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 };

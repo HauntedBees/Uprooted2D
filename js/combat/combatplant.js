@@ -6,6 +6,7 @@ combat.plant = {
     setup: function() {
         this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy };
         this.actualIndexes = [];
+        this.activeCrop = null;
         this.isValid = true;
         for(let i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
