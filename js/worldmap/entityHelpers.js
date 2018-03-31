@@ -464,10 +464,14 @@ function OneSpeak(t, extra) {
 }
 
 // Enemy and Movement Data
+const CommonConditions = {
+    "finishedOpening": () => player.completedQuest("openingCutscene"),
+    "beatBigBot": () => player.completedQuest("bigBot")
+};
 const requiredEnemyMetadata = {
     // Farm
-    robo: { interactname: "robo", dialogMax: 5, setEnemies: ["robo"], isRobo: true },
-    roboDouble: { interactname: "robo", dialogMax: 5, setEnemies: ["robo", "robo"], isRobo: true },
+    robo: { interactname: "robo", dialogMax: 5, setEnemies: ["robo"], isRobo: true, showIf: CommonConditions["finishedOpening"] },
+    roboDouble: { interactname: "robo", dialogMax: 5, setEnemies: ["robo", "robo"], isRobo: true, showIf: CommonConditions["finishedOpening"] },
     // Forest
     turky: { interactname: "turky", dialogMax: 3, setEnemies: ["turky"], moveTalk: true },
     // Below Village & Research Lab

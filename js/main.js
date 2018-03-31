@@ -53,7 +53,7 @@ const game = {
                     "fov", "horRorTop", "horRorBottom", "ayudame", // Specific Map Stuff
                     "sheet", "sheetBig", "combatSheet", "combatSheetBig", "combatSheetHuge", "combatPlayer", "combatEquipment", // Combat Stuff
                     //* Maps *//
-                    "maps/farm_init", "maps/producestand", "maps/farm", "maps/firstvillage", "maps/forest",
+                    "maps/producestand", "maps/farm", "maps/firstvillage", "maps/forest",
                     "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
                     "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
                     "maps/hq_6", "maps/gameover",

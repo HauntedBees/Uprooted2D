@@ -225,7 +225,3 @@ function EnemyMetadataFunc(requiredEnemy, potentialEnemies, min, max) {
         return enemies;
     }
 }
-
-const CommonConditions = {
-    "beatBigBot": () => player.completedQuest("bigBot")
-};

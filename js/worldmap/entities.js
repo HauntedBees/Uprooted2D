@@ -1,12 +1,6 @@
 const beeQueen = { interact: Cutscene("angryBee") };
 const fixTutEntity = { interact: Cutscene("fixCut") };
 const mapentities = {
-    "farm_init": () => [
-        // Opening Cutscene
-        new AutoplayCutscene("farminit"),
-        GetCSFellow("Nathan", 24, 11, 1, "Nath1", "nathanA"),
-        GetCSFellow("Iii", 16, 9, 0, "Iii1")
-    ],
     "producestand": () => [
         // Opening Cutscene
         new AutoplayCutscene("pstand"),
@@ -29,6 +23,9 @@ const mapentities = {
     ],
     "farm": function() {
         const entities = [
+            // Opening Cutscene
+            new AutoplayCutscene("farminit"),
+            GetCSFellow("Nathan", 24, 11, 1, "Nath1", "nathanA"),
             // Foreground
             GetForeground("farm", 7, 1536),
             // Opening Trigger
@@ -45,8 +42,8 @@ const mapentities = {
             EnterShop("ChickenCoop", 18, 3, "coop"),
             EnterShop("Inn", 10, 2, "inn0"),
             // Boss
-            GetFellow("Fucker", 10, 2, 0, "Boss1", Cutscene("bigBot"), undefined, { big: true, boss: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL") }),
-            GetCSFellow("FuckerDead", 10, 2, 0, "Dead1", "corpseBot", { visible: false, moving: true }),
+            GetFellow("Fucker", 10, 2, 0, "Boss1", Cutscene("bigBot"), undefined, { big: true, boss: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL"), showIf: CommonConditions["finishedOpening"] }),
+            GetCSFellow("FuckerDead", 10, 2, 0, "Dead1", "corpseBot", { visible: false, moving: true, showIf: CommonConditions["finishedOpening"] }),
             new CutsceneTrigger("bigBotW", "PostBoss"),
             // Mandatory Enemies
             GetFellow("Robo1", 20, 8, 2, "Robo1", Cutscene("enemy"), commonMovementDatas.robo(20), requiredEnemyMetadata.robo),

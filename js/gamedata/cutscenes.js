@@ -1,6 +1,6 @@
 const scripts = {
 	// Farm: Opening Cutscene
-	"farminit0": "_SLEEP:500",
+	"farminit0": "_CUSTOM:ENTERFARM&_SLEEP:500",
 	"farminit1": "pl_MOVE:y10",
 	"farminit2": "_SLEEP:500",
 	"farminit3": "pl_ANIM:crouchR&_SLEEP:1000",
@@ -20,10 +20,9 @@ const scripts = {
 	"farminit17": "_TEXT:intro(5-6)",
 	"farminit18": "_CLEARTEXT&nathanA_ISMOVING:false&pl_ANIM:think&_SLEEP:1250",
 	"farminit19": "pl_ANIM:walk&pl_SETDIR:3&nathanA_ISMOVING:true&_TEXT:intro(7-8)",
-	"farminit20": "_CLEARTEXT&nathanA_SETDIR:3&nathanA_ANIM:Nath1&nathanA_MOVE:x24",
-	"farminit21": "_GO2:[\"producestand\",10,5]",
+	"farminit20": "_CUSTOM:CLEAROPENING&_CLEARTEXT&nathanA_SETDIR:3&nathanA_ANIM:Nath1&nathanA_MOVE:x24",
 	// Produce Stand: Opening Cutscene
-	"pstand0": "pl_SETDIR:1&hipster_MOVE:x6",
+	"pstand0": "_GO2:[\"same\",10,5]&pl_SETDIR:1&hipster_MOVE:x6",
 	"pstand1": "hipster_ISMOVING:false&_SLEEP:500",
 	"pstand2": "hipster_ANIM:Beck2&hipster_ISMOVING:true&_TEXT:intro9",
 	"pstand3": "bike_VISIBLE:true&hipster_ANIM:Beck3&_CUSTOM:HIPMOV",
@@ -39,7 +38,7 @@ const scripts = {
 	"pstand13": "pl_SETDIR:0&convince_VISIBLE:true&hipster_MOVE:x12",
 	"pstand14": "pl_SETDIR:3&hipster_MOVE:x20",
 	"pstand15": "pl_SETDIR:0&_TEXT:intro23",
-	"pstand16": "_CLEARTARGET&hipster_SETTARGET&_CUSTOM:TUTORIAL",
+	"pstand16": "_COMPLETEQUEST:openingCutscene&_CLEARTARGET&hipster_SETTARGET&_CUSTOM:TUTORIAL",
 	// Produce Stand: Completion of Opening Cutscene
 	"finTut0": "_CUSTOM:LEAVETUTORIAL&_CLEARTARGET&_CUSTOM:FINISHTUTORIALATSTART&_TEXT:Pb0.0",
 	"finTut1": "_TEXT:Pb0.1",

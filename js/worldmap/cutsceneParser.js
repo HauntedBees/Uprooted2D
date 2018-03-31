@@ -149,7 +149,9 @@ const CommandParser = {
         iHandler.state.postItems.push([itemName, itemAmt]);
     },
     Parse_Transition: function(args) {
-        if(args[3] === undefined) {
+        if(args[0] === "same") {
+            worldmap.pos = { x: args[1], y: args[2] };
+        } else if(args[3] === undefined) {
             game.transition(game.currentInputHandler, worldmap, { init: { x: args[1],  y: args[2] }, map: args[0] });
         } else {
             game.transition(game.currentInputHandler, worldmap, { init: { x: args[1],  y: args[2] }, map: args[0], postCombat: args[3] });
@@ -228,6 +230,11 @@ function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
 
 const SpecialFunctions = {
     // Farm
+    "CLEAROPENING": function() {
+        worldmap.clearTarget();
+        game.target = worldmap.importantEntities["nathanA"];
+        worldmap.clearTarget();
+    },
     "WIPEFARMBOTS": function() {
         for(var i = (worldmap.entities.length - 1); i >= 0; i--) {
             var e = worldmap.entities[i];
@@ -245,6 +252,8 @@ const SpecialFunctions = {
         worldmap.importantEntities["n3"].pos = { x: -1, y: -1 };
         worldmap.importantEntities["n4"].pos = { x: -1, y: -1 };
         worldmap.refreshMap();
+        if(worldmap.importantEntities["nathanA"] !== undefined) { worldmap.importantEntities["n4"].pos = { x: 16, y: 9 }; }
+        if(!player.completedQuest("openingCutscene")) { player.lastInn = "start"; }
         if(!player.completedQuest("nathanned")) { return true; }
         if(player.completedQuest("keycard")) {
             if(!player.hasFalcon) { worldmap.importantEntities["n4"].pos = { x: 13, y: 3 }; }
