@@ -1021,5 +1021,6 @@ const sprites = {
     "printerB5": [24, 29],
     "vineBottom0": [25, 29],
     "vineBottom1": [26, 29],
+    "tutArrow": [27, 29],
     "tooLazyToWriteCodeToTrimTheLastCommaRightNow": []
 };

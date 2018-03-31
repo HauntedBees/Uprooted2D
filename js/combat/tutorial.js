@@ -22,9 +22,9 @@ const tutorial = {
         from.clean();
         to.setup(arg);
     },
-    clean: () => gfx.clearLayer("tutorial"),
+    clean: () => gfx.clearSome(["tutorial", "menutextOverBlack"]),
     drawTutorial: function() {
-        gfx.clearLayer("tutorial");
+        gfx.clearSome(["tutorial", "menutextOverBlack"]);
         if(this.state === 39) {
             this.completed = true;
             game.currentInputHandler = tutorial.currentInputHandler;
@@ -35,7 +35,25 @@ const tutorial = {
         } else {
             gfx.drawInfobox(17, this.stateDetails[this.state].height, -0.5, "tutorial");
         }
+        if(this.state === 8) {
+            this.DrawInformationalGentleman(GetText("tutInfoPower"), 7.75, 10.25);
+            this.DrawInformationalGentleman(GetText("tutInfoGrowth"), 7.75, 11.25);
+            this.DrawInformationalGentleman(GetText("tutInfoSeasons"), 7.75, 12.5);
+        }
         gfx.drawWrappedText(GetText("tut" + this.state), 2, 8, 235, "#000000", "tutorial");
+    },
+    DrawInformationalGentleman: function(text, rightx, y) {
+        let xi = 1;
+        let width = gfx.getTextWidth(text) + 20;
+        let xiimax = rightx + Math.ceil(width / 64);
+        gfx.drawTile("tutArrow", (rightx + 1) * 16, y * 16 - 5, "tutorial");
+        gfx.drawTile("recSelR", rightx * 16, y * 16 - 5, "tutorial");
+        while(width > 128) {
+            width -= 64;
+            gfx.drawTile("recSelM", rightx * 16 - 16 * xi++, y * 16 - 5, "tutorial");
+        }
+        gfx.drawTile("recSelL", rightx * 16 - 16 * xi, y * 16 - 5, "tutorial");
+        gfx.drawText(text, 7 + (rightx * 16 - 16 * xi), 3.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     mouseMove: function(pos) { return this.currentInputHandler.mouseMove(pos); },
     click: function(pos) { return true; },
@@ -86,7 +104,7 @@ const tutorial = {
         }
     },
     matchCoords: function(pos, x, y) { return pos.x === x && pos.y === y; },
-    stateDetails: [
+    stateDetails: [ // TODO: heights should be language-dependent probably
         { height: 1.8, advance: () => combat.menu.cursorY === 0 },
         { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5) },
         { height: 1.8, advance: AnyPress },
@@ -95,9 +113,9 @@ const tutorial = {
         { height: 2.5, advance: AnyPress },
         { height: 2.5, advance: AnyPress },
         { height: 1.8, advance: () => combat.menu.cursorY === 0 },
-        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
+        { height: 2.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
         { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
+        { height: 3.5, advance: AnyPress },
         { height: 1.8, advance: () => combat.menu.cursorY === 1 },
         { height: 2.5, advance: AnyPress },
         { height: 1.8, advance: AnyPress },

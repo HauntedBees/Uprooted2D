@@ -771,7 +771,7 @@ const fulltext = {
 	},
 	"tut8": {
 		"en-us": "", 
-		"en-dm": "This time we're gonna plant a tree! Select the Grape+ Seeds.", 
+		"en-dm": "This time we're gonna plant a tree! Select the Grape+ Seeds. Different crops have different stats, so keep an eye on each seed's infobox!", 
 		"type": "tut"
 	},
 	"tut9": {
@@ -781,7 +781,7 @@ const fulltext = {
 	},
 	"tut10": {
 		"en-us": "", 
-		"en-dm": "Looks like that tree will take four turns to grow. We can wait it out!", 
+		"en-dm": "Looks like that tree will take four turns to grow. We can wait it out! This crop had a nice green \"O\" in its infobox, so you know it'll do more damage when harvested in the current season!", 
 		"type": "tut"
 	},
 	"tut11": {
@@ -993,6 +993,21 @@ const fulltext = {
 		"en-us": "", 
 		"en-dm": "No.", 
 		"type": "choice"
+	},
+	"tutInfoPower": {
+		"en-us": "", 
+		"en-dm": "Attack Power", 
+		"type": "combat"
+	},
+	"tutInfoGrowth": {
+		"en-us": "", 
+		"en-dm": "Growth/Regrowth Time", 
+		"type": "combat"
+	},
+	"tutInfoSeasons": {
+		"en-us": "", 
+		"en-dm": "Seasonal Strengths", 
+		"type": "combat"
 	},
 	"noTut": {
 		"en-us": "", 
