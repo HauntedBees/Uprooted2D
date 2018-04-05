@@ -252,7 +252,7 @@ function CombatAnimHelper(enemies) {
                     } else if(iteminfo.displaySprite !== undefined) {
                         toDrawAfterwards.push({ sprite: iteminfo.displaySprite, x: (x + combat.dx), y: (y + combat.dy) });
                     } else if(item === "_lake") {
-                        gfx.drawTileToGrid(pausemenu.farmmod.getWaterFrame(x, y), x + combat.dx, y + combat.dy, "background");
+                        pausemenu.farmmenu.DrawWaterFrame(x, y, x + combat.dx, y + combat.dy, "background");
                     } else if(item === "_shooter") {
                         if(combat.getUsedShooterIndex(x, y) >= 0) {
                             gfx.drawTileToGrid("_shooterClosed", x + combat.dx, y + combat.dy, "background");

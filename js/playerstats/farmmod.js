@@ -17,7 +17,7 @@ pausemenu.farmmod = {
         ]);
         player.initGridDimensions();
         this.dx = ((16 - player.gridWidth) / 2);
-        this.dy = 6 + Math.floor((6 - player.gridHeight) / 2);
+        this.dy = 7 + Math.floor((6 - player.gridHeight) / 2);
         this.grid = combat.getGrid(player.gridWidth, player.gridHeight);
         this.backStartX = 0.125;
         this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
@@ -112,7 +112,7 @@ pausemenu.farmmod = {
                     if(iteminfo.displaySprite !== undefined) {
                         gfx.drawTileToGrid(iteminfo.displaySprite, x + this.dx, y + this.dy, "characters");
                     } else if(item === "_lake") {
-                        gfx.drawTileToGrid(this.getWaterFrame(x, y), x + this.dx, y + this.dy, "characters");
+                        this.DrawWaterFrame(x, y, x + this.dx, y + this.dy, "characters");
                     } else {
                         gfx.drawTileToGrid(item, x + this.dx, y + this.dy, "characters");
                     }
@@ -124,30 +124,41 @@ pausemenu.farmmod = {
         if(this.selectedItem !== "_paddy" || (this.cursor.y < this.dy)) { return true; }
         return (this.cursor.y - this.dy) === (player.gridHeight - 1);
     },
-    getWaterFrame: function(x, y) {
-        let res = 0;
-        if(y > 0 && player.itemGrid[x][y - 1] == "_lake") { res += 1; } // W
-        if(x > 0 && player.itemGrid[x - 1][y] == "_lake") { res += 2; } // A
-        if(y < (player.gridHeight - 1) && player.itemGrid[x][y + 1] == "_lake") { res += 4; } // S
-        if(x < (player.gridWidth - 1) && player.itemGrid[x + 1][y] == "_lake") { res += 8; } // D
+    DrawWaterFrame: function(gx, gy, vx, vy, layer) {
+        let res = this.GetWaterInfo(gx, gy), sprite = "_lake";
         switch(res) {
-            case 1: return "lakeW";
-            case 2: return "lakeA";
-            case 3: return "lakeWA";
-            case 4: return "lakeS";
-            case 5: return "lakeWS";
-            case 6: return "lakeAS";
-            case 7: return "lakeWAS";
-            case 8: return "lakeD";
-            case 9: return "lakeWD";
-            case 10: return "lakeAD";
-            case 11: return "lakeWAD";
-            case 12: return "lakeDS";
-            case 13: return "lakeWSD";
-            case 14: return "lakeASD";
-            case 15: return "lakeWASD";
-            default: return "_lake";
+            case 1: sprite = "lakeW"; break;
+            case 2: sprite = "lakeA"; break;
+            case 3: sprite = "lakeWA"; break;
+            case 4: sprite = "lakeS"; break;
+            case 5: sprite = "lakeWS"; break;
+            case 6: sprite = "lakeAS"; break;
+            case 7: sprite = "lakeWAS"; break;
+            case 8: sprite = "lakeD"; break;
+            case 9: sprite = "lakeWD"; break;
+            case 10: sprite = "lakeAD"; break;
+            case 11: sprite = "lakeWAD"; break;
+            case 12: sprite = "lakeDS"; break;
+            case 13: sprite = "lakeWSD"; break;
+            case 14: sprite = "lakeASD"; break;
+            case 15: sprite = "lakeWASD"; break;
+            default: sprite = "_lake"; break;
         }
+        gfx.drawTileToGrid(sprite, vx, vy, layer);
+        if(this.GetWaterInfo(gx - 1, gy - 1) < 0) { gfx.drawTileToGrid("clakeWA", vx, vy, layer); }
+        if(this.GetWaterInfo(gx + 1, gy - 1) < 0) { gfx.drawTileToGrid("clakeWD", vx, vy, layer); }
+        if(this.GetWaterInfo(gx - 1, gy + 1) < 0) { gfx.drawTileToGrid("clakeSA", vx, vy, layer); }
+        if(this.GetWaterInfo(gx + 1, gy + 1) < 0) { gfx.drawTileToGrid("clakeSD", vx, vy, layer); }
+    },
+    GetWaterInfo: function(x, y) {
+        let res = 0;
+        if(x < 0 || y < 0 || x >= player.gridWidth || y >= player.gridHeight) { return 0; }
+        if(player.itemGrid[x][y] !== "_lake") { return - 1; }
+        if(y > 0 && player.itemGrid[x][y - 1] === "_lake") { res += 1; } // W
+        if(x > 0 && player.itemGrid[x - 1][y] === "_lake") { res += 2; } // A
+        if(y < (player.gridHeight - 1) && player.itemGrid[x][y + 1] === "_lake") { res += 4; } // S
+        if(x < (player.gridWidth - 1) && player.itemGrid[x + 1][y] === "_lake") { res += 8; } // D
+        return res;
     },
     cancel: function() { game.innerTransition(this, pausemenu, 2); },
     removeFromField: function(x, y) {
