@@ -56,7 +56,7 @@ const sprites = {
     "bignet0": [5, 5, true],
     "bignet1": [6, 5, true],
     "chargerplaced": [7, 5, true],
-    "": [8, 5, true],
+    "bamham": [8, 5, true],
     "bigFish": [0, 6, true],
     "alignment": [1, 6, true],
     "hotspot": [2, 6, true],

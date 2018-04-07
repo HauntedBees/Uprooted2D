@@ -359,7 +359,6 @@ const SpecialFunctions = {
         worldmap.writeText("vaseWon0");
     },
     "SEAHELP0": function() {
-        console.log("WAG");
         worldmap.playerDir = 0;
         worldmap.importantEntities["slt"].visible = true;
         worldmap.importantEntities["smt"].visible = true;
@@ -369,8 +368,22 @@ const SpecialFunctions = {
         worldmap.writeText("smD5");
     },
     "SEAHELP1": function() {
-        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0, true);
-        worldmap.writeText("smD6");
+        worldmap.waitForAnimation = true;
+        let state = 1;
+        iHandler.state.animHandler = function(spedUp) {
+            gfx.clearLayer("tutorial");
+            const frame = state > 10 ? (20 - state) : state;
+            state += 0.25;
+            const finished = state === 20;
+            if(state === 10) { ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0, true); }
+            if(finished) {
+                gfx.clearLayer("tutorial");
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 20);
+        gfx.clearSome(["menuA", "menutext", "menucursorA"]);
     },
     "DEADFISH": function() {
         ClearEntitiesUnderCondition(e => e.name.indexOf("SeaCreature") === 0, true);

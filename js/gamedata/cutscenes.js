@@ -237,8 +237,8 @@ const scripts = {
 	"deadsea1": "_TEXT:bworkerA(2-3)",
 	// Bridge: Sea Monster helps you move debris
 	"seahelp0": "_CUSTOM:SEAHELP0",
-	"seahelp1": "_CUSTOM:SEAHELP1",
-	"seahelp2": "_CHIEVO:boss3help&_ALIGNGOOD:1&_COMPLETEQUEST:helpSeaMonster&_COMPLETEQUEST:getHeart&_TEXT:smD7",
+	"seahelp1": "smt_ISMOVING:false&_CUSTOM:SEAHELP1",
+	"seahelp2": "smt_ISMOVING:true&_CHIEVO:boss3help&_ALIGNGOOD:1&_COMPLETEQUEST:helpSeaMonster&_COMPLETEQUEST:getHeart&_TEXT:smD(6-7)",
 	"seahelp3": "smt_ISMOVING:false&_END&_QUIT",
 	// Underwater: Pirate Sea Monk
 	"piratemonk0": "?[{\"q\":\"player.completedQuest('seamonkey')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
