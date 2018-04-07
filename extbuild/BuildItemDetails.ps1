@@ -82,12 +82,11 @@ if($which.Contains("E")) {
 	$csv = Import-CSV ".\temp\Details_Equipment.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\equipment.js";
 	$out.WriteLine(@'
-function EquipmentDetail(name, displayname, price, sprite, type, addtl) {
+function EquipmentDetail(name, displayname, price, type, addtl) {
     this.name = name;
     this.type = type;
     this.price = price;
     this.displayname = displayname;
-    this.sprite = sprite;
     if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 }
 function GetEquipmentDesc(equipInfo, minified) {
@@ -127,15 +126,15 @@ function GetEquipmentDesc(equipInfo, minified) {
 function GetEquipment(name) {
     switch(name) {
 '@);
-	$formatStr = "		case `"{name}`": return new EquipmentDetail(name, `"{displayname}`", {price}, `"{sprite}`", `"{type}`"{addtl});";
+	$formatStr = "		case `"{name}`": return new EquipmentDetail(name, `"{displayname}`", {price}, `"{type}`"{addtl});";
 	$count = 0;
 	ForEach($row in $csv) {
-		if($row.Crop -eq "" -or $row.Crop -eq "Crop") { continue; }
+		if($row.Crop -eq "" -or $row.Crop -eq "Crop" -or $row.Id -eq "nope") { continue; }
 		if($row.Id -eq "*") {
 			$out.WriteLine("		/* _ */".replace("_", $row.Name));
 			continue;
 		}
-		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{sprite}", $row.Sprite).replace("{type}", $row.Type);
+		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{type}", $row.Type);
 		$addtl = @();
 		if($row.Tech) { $addtl += "tech: true"; }
 		# Weapons
