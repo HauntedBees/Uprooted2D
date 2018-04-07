@@ -115,6 +115,7 @@ const CommandParser = {
                 case "HIHISPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[2]; break;
                 case "HISPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[1]; break;
                 case "LOSPEED": iHandler.moveSpeed = cutsceneMoveSpeeds[0]; break;
+                case "STARTTRANSITIONANIM": game.startTransitionAnim(1, undefined, undefined, "justAnim"); break;
                 case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
                 // Text
                 case "TEXT": CommandParser.Parse_Text(actSuffix.split(",")); break;

@@ -145,6 +145,7 @@ const game = {
     },
     midTransitionPoint: function() {
         clearInterval(game.transitionInfo.animIdx);
+        if(game.transitionInfo.arg === "justAnim") { return; }
         game.innerTransition(game.transitionInfo.from, game.transitionInfo.to, game.transitionInfo.arg);
         if(game.transitionInfo.arg !== undefined && game.transitionInfo.arg.stayBlack) { return; }
         game.startTransitionAnim(-1);

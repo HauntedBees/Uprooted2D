@@ -115,7 +115,10 @@ const scripts = {
 	"rabbit4": "?[{\"q\":\"d===1\",\"v\":5},{\"q\":\"player.monies < 500\",\"v\":6},{\"q\":\"d===0\",\"v\":7}]",
 	"rabbit5": "_TEXT:rabbit2&_END",
 	"rabbit6": "_TEXT:rabbit3&_END",
-	"rabbit7": "_CHIEVO:badrabbit&_MONEY:-500&_GIVE:~strongsoil&_COMPLETEQUEST:rabbitShit&_TEXT:rabbit(4-7)",
+	"rabbit7": "_CHIEVO:badrabbit&_MONEY:-500&_GIVE:~strongsoil&_COMPLETEQUEST:rabbitShit&_TEXT:rabbit4",
+	"rabbit8": "_STARTTRANSITIONANIM&_BLACKTEXT:rabbit5",
+	"rabbit9": "_TRANSITIONANIM&_BLACKTEXT:rabbit6",
+	"rabbit10": "_TEXT:rabbit7",
 	// Forest: Sad Fish
 	"sadfish0": "?[{\"q\":\"player.completedQuest('fishyTalk')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
 	"sadfish1": "targ_VISIBLE:true&_TEXT:fishyFriend(0-1)",
