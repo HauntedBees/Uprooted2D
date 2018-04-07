@@ -1157,7 +1157,7 @@ const fulltext = {
 	},
 	"Pb1.4": {
 		"en-us": "", 
-		"en-dm": "It doesn't look like you'll be able to recover anything else from this pile of junk; it's too heavy to move.", 
+		"en-dm": "Welp, looks like that's it for that fucker.", 
 		"type": "map"
 	},
 	"Pb1.5": {
@@ -4036,11 +4036,6 @@ const fulltext = {
 	"keycard5": {
 		"en-us": "", 
 		"en-dm": "???: Ugh... you win this round...", 
-		"type": "map"
-	},
-	"keycard6": {
-		"en-us": "", 
-		"en-dm": "fucking kaboom", 
 		"type": "map"
 	},
 	"newPhone0": {

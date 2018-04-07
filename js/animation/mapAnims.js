@@ -234,6 +234,8 @@ const mafs = {
     "BeeQueen": new MapAnimFactory("as", [[P(12, 4), P(12, 5), P(12, 6), P(12, 7)]]),
     "TruckL": Ft(4, 0, true), "TruckR": Ft(5, 0, true), 
     "Chest0": Ft(14, 11), "Chest1": Ft(15, 11),
+    "Kaboom": new MapAnimFactory("as", [[P(5, 8), P(6, 8), P(9, 8), P(10, 8), P(10, 9)], true, 20]),
+    "Smonk": new MapAnimFactory("la", [26, 11, 2]),
     // Init Farm
     "Nath1": new MapAnimFactory("sw", [0, 0]),
     "Nath2": new MapAnimFactory("la", [4, 2, 2]),

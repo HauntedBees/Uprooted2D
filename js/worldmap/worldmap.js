@@ -132,7 +132,7 @@ const worldmap = {
     },
     refreshMap: function() {
         gfx.clearSome(["background", "background2", "characters", "foreground"]); // TODO: actually put things on the foreground
-        const offset = gfx.drawMap(this.mapName, this.pos.x, this.pos.y);
+        const offset = gfx.drawMap(this.mapName, this.hijackedX || this.pos.x, this.hijackedY || this.pos.y);
         const layers = [];
         const fov = [];
         const ymax = collisions[this.mapName].length;

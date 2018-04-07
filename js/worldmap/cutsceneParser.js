@@ -214,7 +214,7 @@ const CommandParser = {
         iHandler.state.animHandler = iHandler.HandleAnim;
         worldmap.animIdx = setInterval(iHandler.HandleAnim, 10);
     },
-    Parse_Special: function(id) { SpecialFunctions[id](); }
+    Parse_Special: id => SpecialFunctions[id]()
 };
 
 function ClearEntitiesUnderCondition(conditionFunc, refreshMap) {
@@ -235,6 +235,7 @@ const SpecialFunctions = {
         game.target = worldmap.importantEntities["nathanA"];
         worldmap.clearTarget();
     },
+    "KABOOMHAUER": () => SpecialFunctions["FUCKINGBOOM"](worldmap.importantEntities["corpseBot"]),
     "WIPEFARMBOTS": function() {
         for(var i = (worldmap.entities.length - 1); i >= 0; i--) {
             var e = worldmap.entities[i];
@@ -762,6 +763,7 @@ const SpecialFunctions = {
         worldmap.importantEntities["trentSafe"].visible = true;
         worldmap.importantEntities["trentSafe"].solid = true;
     },
+    "NERDBOOM": () => SpecialFunctions["FUCKINGBOOM"](worldmap.importantEntities["mech"]),
     "MUSHSTART": function() {
         const items = specialtyHelpers.getMushItems();
         if(items.length === 0) { worldmap.writeText("mushMan3"); iHandler.state.done = true; }
@@ -1030,7 +1032,19 @@ const SpecialFunctions = {
         return game.transition(game.currentInputHandler, worldmap.credits);
     },
     "SCREENSHAKE": function() {
-        // TODO
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.hijackedX = RoundNear(worldmap.pos.x - 0.25 + 0.5 * Math.random(), 8);
+            worldmap.hijackedY = RoundNear(worldmap.pos.y - 0.25 + 0.5 * Math.random(), 8);
+            worldmap.refreshMap();
+            if(spedUp) {
+                delete worldmap.hijackedX;
+                delete worldmap.hijackedY;
+                iHandler.Finish();
+            }
+            return spedUp;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 125);
     },
     "TRUCKSTART": function() {
         const items = specialtyHelpers.getTruckOptions();
@@ -1065,5 +1079,49 @@ const SpecialFunctions = {
             combat.startBattle(game.target.setEnemies);
         }
         if(game.target.moveTalk) { game.target.moving = false; }
-    }
+    },
+    "FUCKINGBOOM": function(target) {
+        const boomboy = GetNoIMFellow("boom", target.pos.x, target.pos.y, "Kaboom", { moving: true, forcedY: Math.ceil(target.pos.y + 1) });
+        InitFellow(boomboy);
+        worldmap.entities.push(boomboy);
+        let boomState = 0;
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            if(!spedUp) { worldmap.refreshMap(); }
+            gfx.clearLayer("tutorial");
+            if(boomState > 0) {
+                let innerBoomy = boomState - 1;
+                const key = "boom" + (innerBoomy < 5 ? innerBoomy : Math.min(4, 12 - innerBoomy));
+                for(let x = 0; x < game.tilew; x++) {
+                    for(let y = 0; y < game.tileh; y++) {
+                        gfx.drawTileToGrid(key, x, y, "tutorial");
+                    }
+                }
+            }
+            const finished = (++boomState) > 13;
+            if(boomState === 4) {
+                for(let i = worldmap.entities.length - 1; i >= 0; i--) {
+                    if(worldmap.entities[i].name === target.name) {
+                        worldmap.entities.splice(i, 1);
+                        break;
+                    }
+                }
+                worldmap.entities.pop();
+            }
+            if(finished) {
+                gfx.clearLayer("tutorial");
+                let firstTop = InclusiveRange(0, 1);
+                for(let i = 0; i < 2; i++) {
+                    const smonk = GetNoIMFellow("boom", target.pos.x + i, target.pos.y + (i === 0 ? firstTop : (1 - firstTop)), "Smonk", { debris: true, moving: true, forcedY: target.pos.y + 1 });
+                    InitFellow(smonk);
+                    worldmap.entities.push(smonk);
+                }
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 50);
+    },
+    "CLEANBOOM": () => ClearEntitiesUnderCondition(e => e.debris === true, true)
 };
