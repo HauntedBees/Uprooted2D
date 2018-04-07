@@ -269,7 +269,7 @@ const mafs = {
     "Aiko": new MapAnimFactory("dw", [16, 4, 2]),
     "Tanner": new MapAnimFactory("dw", [16, 6, 2]),
     // The Forest
-    "GoldMush": Ft(15, 4), "CarrotBag": Ft(15, 7), "Fishy": new MapAnimFactory("dw", [4, 6, 2]),
+    "GoldMush": Ft(15, 4), "CarrotBag": Ft(15, 7), "Fishfriend": new MapAnimFactory("dw", [4, 6, 2]),
     "Lime": new MapAnimFactory("dw", [8, 4, 2, false, 2]), "LimeTalk": new MapAnimFactory("dw", [8, 6, 2, false, 6]),
     "Rabbit": new MapAnimFactory("la", [4, 6, 2]), "RabbitTalk": new MapAnimFactory("la", [5, 6, 2]),
     "Turky": new MapAnimFactory("dw", [4, 4, 2]), "TurkyEgg": Ft(15, 5), "Bearbo": Ft(0, 8, true),

@@ -139,9 +139,9 @@ const mapentities = {
         GetFellow("Turkey4", 12, 60, 2, "Turky", Cutscene("turky")),
         GetFellow("TurkeyEggs", 12, 59, 0, "TurkyEgg", [function() { worldmap.writeText("foundTurkey"); player.increaseItem("turkey", 5); worldmap.clearTarget(); }]),
          // Misc. Entities
-        GetFellow("FishyLeft", 72, 24, 0, "Fishy", Cutscene("sadfish"), undefined, { visible: false, moving: true }),
-        GetFellow("FishyRight", 73, 24, 0, "Fishy", Cutscene("sadfish"), undefined, { visible: false, moving: true }),
-        GetFellow("FishyTop", 73, 23, 0, "Fishy", Cutscene("sadfish"), undefined, { visible: false, moving: true })
+        GetFellow("FishyLeft", 72, 24, 0, "Fishfriend", Cutscene("sadfish"), undefined, { visible: false, moving: true }),
+        GetFellow("FishyRight", 73, 24, 0, "Fishfriend", Cutscene("sadfish"), undefined, { visible: false, moving: true }),
+        GetFellow("FishyTop", 73, 23, 0, "Fishfriend", Cutscene("sadfish"), undefined, { visible: false, moving: true })
     ],
     "belowvillage": () => [
         // Map Switching
