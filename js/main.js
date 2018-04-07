@@ -180,6 +180,64 @@ const game = {
         }
     },
 
+    StartConstructionTransition: function() {
+        worldmap.waitForAnimation = true;
+        const workers = [];
+        for(let y = -1; y <= game.tileh; y++) {
+            for(let x = 0; x < 5; x++) {
+                if(x < 4 && Math.random() > 0.2) {
+                    if(Math.random() > 0.2) { continue; }
+                    const newX = RoundNear(game.tilew + x - 2 + 2 * Math.random(), 8);
+                    const newY = RoundNear(y - 1 + 2 * Math.random(), 8);
+                    workers.push({ x: newX, y: newY, frame: Range(0, 3) });
+                    workers.push({ x: game.tilew + newX + 5, y: newY, frame: Range(0, 3) });
+                }
+                workers.push({ x: game.tilew + x, y: y, frame: Range(0, 3) });
+                if(x === 4) {
+                    workers.push({ x: game.tilew + game.tilew + 4, y: y, frame: Range(0, 3) });
+                } else {
+                    workers.push({ x: game.tilew + game.tilew + x + 5, y: y, frame: Range(0, 3) });
+                }
+            }
+        }
+        game.transitionInfo = { count: 0, startBlack: -82, workers: workers };
+        iHandler.state.animHandler = this.DrawConstructionTransition;
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    DrawConstructionTransition: function(spedUp) {
+        if(spedUp) {
+            ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0, true);
+            delete game.transitionInfo.workers;
+            gfx.clearSome(["tutorial", "menuOverBlack", "menutextOverBlack"]);
+            iHandler.Finish();
+            return true;
+        }
+        gfx.clearLayer("tutorial");
+        const idx = game.transitionInfo.count++;
+        let hasWorkersOnscreen = false;
+        game.transitionInfo.workers.forEach(worker => {
+            worker.x -= 0.0625;
+            if(worker.x > -3) { hasWorkersOnscreen = true; }
+            let frame = worker.frame % 4;
+            if(frame === 3) { frame = 1; }
+            if(idx % 10 === 0) { worker.frame++; }
+            gfx.drawTileToGrid("ctran" + frame, worker.x, worker.y, "tutorial");
+        });
+        let blackx = game.tilew * 16 - game.transitionInfo.startBlack;
+        gfx.DrawBlack(game.tilew * 16 - game.transitionInfo.startBlack, game.tilew * 16);
+        if(blackx === 0) { 
+            ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0, true);
+        }
+        game.transitionInfo.startBlack += 1;
+        if(!hasWorkersOnscreen) {
+            delete game.transitionInfo.workers;
+            gfx.clearSome(["tutorial", "menuOverBlack", "menutextOverBlack"]);
+            iHandler.Finish();
+            return true;
+        }
+        return false;
+    },
+
     startQuickTransitionAnim: function(dir, from, to, arg) {
         clearInterval(game.transitionInfo.animIdx);
         game.transitionInfo = {

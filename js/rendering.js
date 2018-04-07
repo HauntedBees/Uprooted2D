@@ -352,7 +352,12 @@ const gfx = {
             gfx.drawImage(ctx, sheet, startX + d[0] * 6, startY + d[1] * 9, 5, 7, ix + (i + 1) * 4, ay, 5, 7);
         }
     },
-    
+    // Bridge
+    DrawBlack: function(x, w) {
+        const ctx = gfx.ctx["tutorial"];
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(x * gfx.scale, 0, w * gfx.scale, game.tileh * 16 * gfx.scale);
+    },
     // HQ3 - The Monster
     DrawChungus: function(x, y, w, h, offset) {
         const ctx = gfx.ctx["foreground"];

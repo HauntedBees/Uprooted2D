@@ -383,10 +383,10 @@ const SpecialFunctions = {
         worldmap.writeText("bworkerA1");
     },
     "CONSTWORKWIN": function() {
-        ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0 || e.name.indexOf("Worker") >= 0, true);
+        game.StartConstructionTransition();
         quests.completeQuest("helpSeaMonster");
         quests.completeQuest("getHeart");
-        worldmap.writeText("bworkerB5");
+        worldmap.writeText("bworkerB5", undefined, undefined, undefined, true);
     },
     "CONSTWORKFIGHT": function() {
         worldmap.writeText("bworkerMad6");
