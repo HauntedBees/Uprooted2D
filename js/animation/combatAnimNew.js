@@ -1,5 +1,6 @@
 function WalkAnim(animal, info, animProcess) {
     const baseY = RoundNear(FloatRange(info.minY, info.maxY), 8);
+    const layer = (baseY < 8.375) ? "background2" : "menucursorC";
     this.requiredY = Math.floor(baseY * 8);
     const startX = RoundNear(FloatRange((info.closeStart ? -8 : -20), (info.closeStart ? -1 : -3)), 8), endX = RoundNear(gfx.tileWidth + FloatRange(0.5, 2), 8);
     let lastAnimRan = +new Date(), animState = InclusiveRange(0, 1), animLength = Range(80, 140);
@@ -13,7 +14,7 @@ function WalkAnim(animal, info, animProcess) {
         if(!info.isWorm || animState === 0) { frame += speed; }
         const x = startX + frame;
         if(x > endX) { frame = 0; }
-        gfx.drawTileToGrid("animal" + animal + animState, x, baseY, "menucursorC");
+        gfx.drawTileToGrid("animal" + animal + animState, x, baseY, layer);
         if(info.trail !== undefined && x >= 0 && Math.floor(x) > lastCleanX) {
             lastCleanX = Math.floor(x);
             animProcess.AddBaby(new TileAnim(lastCleanX, baseY, [info.trail], false, 12, true), `${lastCleanX}, ${baseY}`);
@@ -24,6 +25,7 @@ function HoppingAnim(animal) {
     const hopMult = FloatRange(0.01, 1.5), hopHeight = FloatRange(3, 6);
     const baseY = RoundNear(FloatRange(8.125, 8.5), 8);
     this.requiredY = Math.floor(baseY * 8);
+    const layer = (baseY < 8.375) ? "background2" : "menucursorC";
     const startX = RoundNear(FloatRange(-20, -3), 8), endX = RoundNear(gfx.tileWidth + FloatRange(0.5, 2), 8);
     const radian = Math.PI / 180, period = 2 * Math.PI / hopMult;
     let frame = 0, pauseTime = 0;
@@ -32,19 +34,20 @@ function HoppingAnim(animal) {
         if(pauseTime > 0) {
             pauseTime--;
             const x = startX + frame, y = GetY(x);
-            gfx.drawTileToGrid("animal" + animal + "1", RoundNear(x, 8), y, "menucursorC");
+            gfx.drawTileToGrid("animal" + animal + "1", RoundNear(x, 8), y, layer);
             return;
         }
         frame += period * radian;
         const x = startX + frame, y = GetY(x);
         if(x > endX) { frame = 0; }
         if(y === baseY) { pauseTime = 12; }
-        gfx.drawTileToGrid("animal" + animal + "0", RoundNear(x, 8), y, "menucursorC");
+        gfx.drawTileToGrid("animal" + animal + "0", RoundNear(x, 8), y, layer);
     }
 }
 
 function TileAnim(x, y, tileArray, shake, fps, loop) {
     const pos = { x: x, y: y };
+    const layer = (pos.y < 8.375) ? "background2" : "menucursorC";
     const tiles = tileArray, doShake = shake, doLoop = loop;
     let isDone = false;
     let frame = 0, timePerFrame = 1000 / fps, numFrames = tileArray.length - 1;
@@ -71,7 +74,7 @@ function TileAnim(x, y, tileArray, shake, fps, loop) {
             x += Math.random() < 0.33 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
             y += Math.random() < 0.33 ? -0.125 : (Math.random() > 0.5 ? -0.125 : 0);
         }
-        gfx.drawTileToGrid(tiles[frame], x, y, "menucursorC");
+        gfx.drawTileToGrid(tiles[frame], x, y, layer);
     }
 }
 function VineAnim(column, bottomy, delay, callback) {

@@ -93,7 +93,7 @@ function CombatAnimHelper(enemies) {
     this.DEBUG_DrawEnemy = idx => enemyAnimInfos[idx].Animate(idx);
 
     this.Animate = function() {
-        gfx.clearSome(["characters", "menucursorC"]);
+        gfx.clearSome(["background2", "characters", "menucursorC"]);
         AnimateEntities();
         AnimateParticles();
     };
