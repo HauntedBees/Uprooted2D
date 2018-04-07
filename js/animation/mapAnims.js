@@ -290,6 +290,8 @@ const mafs = {
     "Cow1": Ft(10, 4, true), "Cow2": Ft(10, 5, true),
     "HazardVert": Ft(0, 1, true), "LogTop": Ft(4, 1, true), "LogBottom": Ft(4, 2, true),
     "ConstructionShop": Ft(19, 11),
+    "SadConstr": new MapAnimFactory("la", [27, 0, 2]),
+    "SadConstrRun": new MapAnimFactory("ds", [[[P(27, 5), P(27, 6), P(27, 7), P(27, 6)], [P(27, 2), P(27, 3), P(27, 4), P(27, 3)]]]),
     // Underwater
     "Fishy": new MapAnimFactory("dw", [4, 12, 2]), "Monky": new MapAnimFactory("dw", [4, 14, 2]), 
     "Kelp1": new MapAnimFactory("la", [17, 8, 2]), "Kelp2": new MapAnimFactory("la", [18, 8, 2]),

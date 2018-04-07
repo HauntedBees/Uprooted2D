@@ -388,10 +388,36 @@ const SpecialFunctions = {
         quests.completeQuest("getHeart");
         worldmap.writeText("bworkerB5", undefined, undefined, undefined, true);
     },
-    "CONSTWORKFIGHT": function() {
+    "CONSTWORKFLEE": function() {
         worldmap.writeText("bworkerMad6");
         player.activeQuests["helpSeaMonster"] = "gotEgg";
-        ClearEntitiesUnderCondition(e => e.name.indexOf("Worker") >= 0, false);
+        
+        const fleeingWorkers = worldmap.entities.filter(e => e.name.indexOf("Worker") >= 0);
+        fleeingWorkers.forEach(e => {
+            e.dir = 1; e.moving = true;
+            delete e.movement;
+            if(e.pos.y === worldmap.pos.y) { e.pos.y -= 0.25; }
+            if(e.name === "BeatWorker") { SetUpFellow(e, "SadConstrRun"); }
+            else { SetUpFellow(e, "Worker"); }
+        });
+        worldmap.waitForAnimation = true;
+        iHandler.state.animHandler = function(spedUp) {
+            fleeingWorkers.forEach(e => {
+                if(Math.floor(e.pos.x) === 5 && e.pos.y > 3.5) {
+                    e.dir = 0;
+                    e.pos.y -= 0.1125;
+                } else { e.dir = 1; e.pos.x -= 0.1125; }
+            });
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = !fleeingWorkers.some(e => e.pos.x >= -1);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                ClearEntitiesUnderCondition(e => e.name.indexOf("Worker") >= 0, false);
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 20);
     },
     "PIRATESTART": function() {
         const items = specialtyHelpers.getDowelItems();

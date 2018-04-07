@@ -211,8 +211,8 @@ const scripts = {
 	"workerX19": "targ_ISMOVING:true&_TEXT:bworkerC5,sYes,sNo",
 	"workerX20": "?[{\"q\":\"d===0\",\"v\":16},{\"q\":\"d===1\",\"v\":15}]",
 	"workerX21": "targ_ISMOVING:true&_TEXT:bworkerB(2-4)&_SETSTATE:18",
-	"workerF0": "targ_ISMOVING:true&_TEXT:bworkerMad(5-6)",
-	"workerF1": "_CUSTOM:CONSTWORKFIGHT&_QUIT",
+	"workerF0": "SadConstr_VISIBLE:true&_TEXT:bworkerMad(5-6)",
+	"workerF1": "_CUSTOM:CONSTWORKFLEE",
 	// Underwater: Third Boss (Sea Monster)
 	"seamon0": "?[{\"q\":\"player.completedQuest('helpSeaMonster')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"seamon1": "targ_ISMOVING:true&_TEXT:smD7&_END",

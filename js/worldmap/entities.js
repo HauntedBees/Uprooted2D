@@ -233,6 +233,7 @@ const mapentities = {
         GetFellow("KelpCow", 27, 1, 0, "Cow1", Cutscene("bridgeCow"), undefined, { big: true }),
         // Boss
         GetFellow("HeadWorker", 5, 6, 3, "BWorker", Cutscene("workerX"), undefined, { moveToTalk: true, postBattle: "BeatWorkers" }),
+        GetCSFellow("BeatWorker", 5, 6, 1, "SadConstr", "SadConstr", { moving: true, visible: false }),
         new CutsceneTrigger("workerF", "BeatWorkers"),
         // Mandatory Enemies
         GetFellow("Worker1", 24, 5, 3, "WorkerTalk", Cutscene("workerA"), undefined, { moveToTalk: true }),
