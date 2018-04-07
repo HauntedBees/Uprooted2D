@@ -2640,6 +2640,11 @@ const fulltext = {
 		"en-dm": "Sea Monster: Ah, you're back. Have you made your decision?", 
 		"type": "map"
 	},
+	"murderer": {
+		"en-us": "", 
+		"en-dm": "This Sea Monster is dead because I murdered her. I murdered her because it was more convenient for me than protecting her.", 
+		"type": "map"
+	},
 	"w21": {
 		"en-us": "", 
 		"en-dm": "get fucked four eyes", 

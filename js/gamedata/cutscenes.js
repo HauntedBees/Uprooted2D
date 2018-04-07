@@ -230,7 +230,7 @@ const scripts = {
 	"seamon13": "_FIGHT:seaHandR,seaMan,seaHandL&_END",
 	"seamon14": "targ_ISMOVING:true&_TEXT:smD(1-4)",
 	"seamon15": "_GO2:[\"bridge\",8,4.5,\"FishMoved\"]",
-	"seamon16": "_TEXT:smB2&_SETSTATE:13",
+	"seamon16": "targ_ISMOVING:true&_TEXT:smB2&_SETSTATE:13",
 	"seamon17": "targ_ISMOVING:true&_TEXT:sm5,sm4c1,sm4c2,sm4c3",
 	"seamon18": "?[{\"q\":\"d===0\",\"v\":10},{\"q\":\"d===1\",\"v\":12},{\"q\":\"d===2\",\"v\":11}]",
 	"deadsea0": "_CUSTOM:DEADFISH",

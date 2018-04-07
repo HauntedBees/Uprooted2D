@@ -297,7 +297,7 @@ const mafs = {
     "Kelp1": new MapAnimFactory("la", [17, 8, 2]), "Kelp2": new MapAnimFactory("la", [18, 8, 2]),
     "Vase1": Ft(19, 8), "Vase2": Ft(19, 9),
     "PirateMonk": new MapAnimFactory("la", [17, 10, 2]), "ChestX": Ft(13, 11),
-    "ShipL": Ft(1, 1, true), "ShipM": Ft(2, 1, true), "ShipR": Ft(3, 1, true),
+    "ShipL": Ft(1, 1, true), "ShipM": Ft(2, 1, true), "ShipR": Ft(3, 1, true), "SeaMonCorpse": Ft(2, 8, true),
     "SeaMonL": Ft(1, 2, true), "SeaMonM": new MapAnimFactory("la", [2, 2, 2, true]), "SeaMonR": Ft(3, 2, true),
     "SeaMon2L": Ft(1, 3, true), "SeaMon2M": new MapAnimFactory("la", [1, 8, 2, true]), "SeaMon2R": Ft(3, 3, true),
     "Waterfall": new MapAnimFactory("dw", [0, 12, 4]), "WaterfallEnd": new MapAnimFactory("dw", [0, 16, 4]), "Rock": Ft(16, 11),

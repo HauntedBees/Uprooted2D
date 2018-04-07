@@ -267,6 +267,7 @@ const mapentities = {
             BoringAssFellow("ShipLeft", 16, 17, "ShipL", true), BoringAssFellow("ShipMiddle", 18, 17, "ShipM", true), BoringAssFellow("ShipRight", 20, 17, "ShipR", true),
             BoringAssFellow("SeaCreatureLeft", 16, 17, "SeaMonL", true), BoringAssFellow("SeaCreatureRight", 20, 17, "SeaMonR", true),
             GetFellow("SeaCreatureMiddle", 18, 17, 0, "SeaMonM", Cutscene("seamon"), undefined, { big: true, moveToTalk: true, postBattle: "FishKilled" }),
+            GetCSFellow("SeaMonsterCorpse", 18, 15, 0, "SeaMonCorpse", "seaCorpse", { big: true, visible: false, interact: OneSpeak("murderer") }),
             new CutsceneTrigger("deadsea", "FishKilled"),
             // Mandatory Enemies
             GetFellow("SeaMonk1", 34, 18, 2, "Monky", Cutscene("enemy"), commonMovementDatas.vertline(34, 18, 10), requiredEnemyMetadata.seamonk),

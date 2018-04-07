@@ -386,7 +386,8 @@ const SpecialFunctions = {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
     },
     "DEADFISH": function() {
-        ClearEntitiesUnderCondition(e => e.name.indexOf("SeaCreature") === 0, true);
+        worldmap.importantEntities["seaCorpse"].visible = true;
+        //ClearEntitiesUnderCondition(e => e.name.indexOf("SeaCreature") === 0, true);
         if(player.hasQuest("getHeart")) {
             player.activeQuests["getHeart"] = "heart";
         } else {
