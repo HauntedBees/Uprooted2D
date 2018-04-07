@@ -433,6 +433,7 @@ const animCallbackHelpers = {
         const y = combat.dy + animEntity.bonusArgs.row;
         const startPos = { x: combat.dx + player.gridWidth, y: y };
         const endPos = { x: -1, y: startPos.y };
+        if(movingArray[0] === "saltShaker0") { startPos.y -= 0.5; endPos.y -= 0.5; }
         let anim = new MovingLinearAnim(movingArray, startPos, endPos, 0.25, 0, 24, 12, undefined);
         anim.xFunc = function(x) {
             const arrx = x - combat.dx;
@@ -449,12 +450,12 @@ const animCallbackHelpers = {
                 if(tileData.killed) { AddCropDeathAnim(animProcess, dispx, dispy, crop); }
                 if(tileData.groundAffected) { animProcess.AddBaby(new TileAnim(x, y, [effectTile], false, 24, true)); }
                 if(crop === null || crop.size === 1) {
-                    animProcess.AddBaby(new TileAnim(x, y, effectArray, false, 12, true));
+                    animProcess.AddBaby(new TileAnim(x, y, effectArray, false, 12, true), undefined, true);
                 } else if(crop.size === 2) {
-                    animProcess.AddBaby(new TileAnim(dispx, dispy, effectArray, false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy, effectArray, false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx, dispy + 1, effectArray, false, 12, true));
-                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, effectArray, false, 12, true));
+                    animProcess.AddBaby(new TileAnim(dispx, dispy, effectArray, false, 12, true), undefined, true);
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy, effectArray, false, 12, true), undefined, true);
+                    animProcess.AddBaby(new TileAnim(dispx, dispy + 1, effectArray, false, 12, true), undefined, true);
+                    animProcess.AddBaby(new TileAnim(dispx + 1, dispy + 1, effectArray, false, 12, true), undefined, true);
                 }
             }
         };

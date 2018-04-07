@@ -8,7 +8,7 @@ const debug = {
         };
     },
     Unglitch: function() { delete game.glitch; },
-    testEnemyState: "cropHeal",
+    testEnemyState: "saltRow",
     DoFuckBattle:  function() {
         player.hasFalcon = false;
         player.equipment.compost = "!jumboCompost";

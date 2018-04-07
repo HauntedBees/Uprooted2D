@@ -196,12 +196,13 @@ function AnimProcess(ae, as, babies) {
     let overlays = [];
     this.SetNewFPS = function(fps) { timePerFrame = 1000 / fps; };
     this.SetShake = function(val) { doShake = val; };
-    this.AddBaby = function(baby, id) {
+    this.AddBaby = function(baby, id, front) {
         if(id !== undefined) {
             if(this.animBabies.some(e => e.id === id)) { return; }
             baby.id = id;
         }
-        this.animBabies.push(baby);
+        if(front === true) { this.animBabies.unshift(baby); }
+        else { this.animBabies.push(baby); }
     };
     this.ClearBabies = function() { this.animBabies = []; }
     this.AddOverlay = function(overlay) { overlays.push(overlay); }
