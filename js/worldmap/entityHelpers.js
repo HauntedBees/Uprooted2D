@@ -120,7 +120,7 @@ function AutoplayCutscene(cutsceneName) {
     this.interact = Cutscene(cutsceneName);
     this.autoplay = true;
 }
-function CutsceneTrigger(cutsceneName, storageKey) {
+function CutsceneTrigger(cutsceneName, storageKey, neverClear) {
     this.boring = true;
     this.name = `trigger_${cutsceneName}`;
     this.pos = { x: -1, y: -1 };
@@ -128,6 +128,7 @@ function CutsceneTrigger(cutsceneName, storageKey) {
     this.solid = false;
     this.interact = Cutscene(cutsceneName);
     this.storageKey = storageKey;
+    this.neverClear = neverClear || false;
 }
 function GetCSFellow(name, x, y, dir, animid, storageKey, additional) {
     if(additional === undefined) { additional = { storageKey: storageKey }; }

@@ -895,5 +895,5 @@ const mapentities = {
         }
         return entities;
     }(),
-    "gameover": () => [ new CutsceneTrigger("badEnd", "brunoKill"), new CutsceneTrigger("monstWon", "lostToMonster") ]
+    "gameover": () => [ new CutsceneTrigger("badEnd", "brunoKill", true), new CutsceneTrigger("monstWon", "lostToMonster", true) ]
 };

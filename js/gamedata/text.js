@@ -7025,7 +7025,7 @@ const fulltext = {
 	},
 	"bookMan": {
 		"en-us": "", 
-		"en-dm": "\"The Food2 Manifesto\" by Beckett \n An official statement by the VP of Food2 Co., Beckett.", 
+		"en-dm": "\"The Food2 Manifesto\" by Beckett \n An official statement by the Chief Vice Communications Director of Food2 Co., Beckett.", 
 		"type": "bname"
 	},
 	"bookMan0": {
