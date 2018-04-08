@@ -295,7 +295,7 @@ const scripts = {
 	"bridgeCow3": "targ_ANIM:Cow2&_TEXT:kelpCow(1-4)",
 	"bridgeCow4": "_SETQUEST:kelpBoy,gotMilk&targ_ANIM:Cow1&_END&_QUIT",
 	// Fake Farm: Flat Tire Opening Cutscene
-	"flatTire0": "_BLACKTEXT:fakeFarmS",
+	"flatTire0": "_BLACKTEXT:fakeFarmS&_CUSTOM:ENDTRANSITION",
 	"flatTire1": "_TRANSITIONANIM&_TEXT:fakeFarm0",
 	"flatTire2": "targ_ISMOVING:true&targ_MOVE:x22",
 	"flatTire3": "targ_ANIM:JefTalkR&pl_SETDIR:1&_TEXT:fakeFarm(1-4)",

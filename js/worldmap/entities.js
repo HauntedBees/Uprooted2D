@@ -13,6 +13,8 @@ const mapentities = {
         SwitchMapSubPartialColumn("ExitAreaWest", 0, 20, 22, 12, "farm", 17.25, 22.25),
         SwitchMap("ExitAreaSouth", 16, 23, true, false, 21, 1, "firstvillage", CommonConditions["beatBigBot"]),
         GetTruckL(16, 5), GetTruckR(18, 5),
+        // Foreground
+        GetForeground("producestand", 0, 1920),
         // Misc. Entities
         GetCSFellow("EggFairy", 24, 19, 0, "EggF0", "eggFairy", { interact: Cutscene("eggfairy") }),
         // Only before BeatBigBot:
@@ -73,6 +75,8 @@ const mapentities = {
         SwitchMapSubPartialRow("ExitAreaNorth", 21, 0, 16, 22, "producestand", 20.5, 22.25),
         SwitchMapSubPartialColumn("ExitAreaWest", 0, 22, 44, 49, "forest", 21.5, 23.25),
         SwitchMapSubPartialRow("ExitAreaSouth", 21, 30, 21.5, 1, "belowvillage", 18.75, 26.25),
+        // Foreground
+        GetForeground("firstvillage", 0, 1348),
         // Shops & Hives
         EnterShop("EquipmentShop", 17, 12, "equip1"),
         GetSign(18, 13, "SignWeapon0"),
@@ -149,6 +153,8 @@ const mapentities = {
         SwitchMap("EnterFacilitySide", 13, 16, false, false, 30, 2, "researchfacility"),
         SwitchMap("EnterFacilityL", 7, 18, false, false, 12, 36, "researchfacility"),
         SwitchMap("EnterFacilityR", 8, 18, false, false, 13, 36, "researchfacility"),
+        // Foreground
+        GetForeground("belowvillage", 0, 2048),
         // Hives & Falcon
         BeeFellow("BelowHive", 4, 36),
         { name: "Falcon0", pos: { x: 21, y: 9 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
@@ -158,8 +164,10 @@ const mapentities = {
     "researchfacility": function() {
 		const entities = [
             // Map Switching
-            SwitchMap("ExitAreaSouth", 12, 37, true, false, 7.5, 19, "belowvillage"),
+            SwitchMapSubPartialRow("ExitAreaSouth", 23, 37, 7.5, 19, "belowvillage", 12, 13),
             SwitchMap("ExitAreaEast", 31, 2, false, false, 13, 15, "belowvillage"),
+            // Foreground
+            GetForeground("researchfacility", 0, 2048),
             // Quests
             GetFellow("RAPBATTLE", 28, 8, 0, "RAPBATTLE", Cutscene("rap"), undefined, { moving: true }),
             // Boss
@@ -228,7 +236,7 @@ const mapentities = {
         GetSign(9, 13, "SignMermaid"),
         GetSign(26, 3, "SignConstWork"),
         GetSign(20, 12, "SignMermaidInn"),
-        //{ name: "Falcon1", pos: { x: 27, y: 5 }, isColumn: true, visible: false, solid: false, interact: Cutscene("falcon"), autoplay: true },
+        { name: "Falcon1", pos: { x: 27, y: 5 }, isColumn: true, visible: false, solid: false, interact: Cutscene("falcon"), autoplay: true },
         GetFellow("ConstructionManShop", 25, 3, 0, "ConstructionShop", undefined, undefined, { solid: false, boring: true }),
         GetFellow("KelpCow", 27, 1, 0, "Cow1", Cutscene("bridgeCow"), undefined, { big: true }),
         // Boss
@@ -255,6 +263,8 @@ const mapentities = {
         let entities = [
             // Map Switching
             SwitchMap("GoAboveGround", 42, 20, false, false, 5, 14, "bridge"),
+            // Foreground
+            GetForeground("underwater", 0, 3200),
             // Beehives & Quests
             GetFellow("PirateFriend", 30, 11, 0, "PirateMonk", Cutscene("piratemonk"), undefined, { moveToTalk: true }),
             GetFellow("PiratesTreasure", 45, 13, 0, "ChestX", Cutscene("seamonkey"), undefined, { open: false }),
@@ -342,6 +352,8 @@ const mapentities = {
         // Map Switching
         GetFellow("AFuckingTruckL", 24, 34, 0, "TruckFuck", Cutscene("badTruck"), undefined, { big: true, storageKey: "ltruck" }),
         GetFellow("AFuckingTruckR", 26, 34, 0, "TruckR", undefined, undefined, { big: true }),
+        // Foreground
+        GetForeground("fakefarm", 0, 1408),
         // Covers
         GetJumboToggle("BarnL", 14, 30, true), GetJumboToggle("BarnR", 15, 30, true),
         GetFellow("ExitBarnL", 14, 31, 0, "", Cutscene("exitBarn"), undefined, { visible: false, solid: false, postBattle: "beatDweeb", dontClearTarget: true, boring: true }),

@@ -373,6 +373,7 @@ const SpecialFunctions = {
         iHandler.state.animHandler = function(spedUp) {
             gfx.clearLayer("tutorial");
             const frame = state > 10 ? (20 - state) : state;
+            gfx.DrawTransitionImage("bamham", game.tilew / 4, game.tileh / 4, frame);
             state += 0.25;
             const finished = state === 20;
             if(state === 10) { ClearEntitiesUnderCondition(e => e.name.indexOf("H_") === 0, true); }
@@ -387,7 +388,6 @@ const SpecialFunctions = {
     },
     "DEADFISH": function() {
         worldmap.importantEntities["seaCorpse"].visible = true;
-        //ClearEntitiesUnderCondition(e => e.name.indexOf("SeaCreature") === 0, true);
         if(player.hasQuest("getHeart")) {
             player.activeQuests["getHeart"] = "heart";
         } else {
@@ -458,6 +458,7 @@ const SpecialFunctions = {
     },
 
     // Fake Farm
+    "ENDTRANSITION": () => game.transitioning = false,
     "SETUPJEFF": function() {
         worldmap.playerDir = 0;
         worldmap.waitForAnimation = true;
