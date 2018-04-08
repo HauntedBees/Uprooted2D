@@ -238,6 +238,7 @@ let player = {
         player.inventory.push([name, amount]);
         return true;
     },
+    AddMonies: function(m) { player.monies = Math.min(9999, player.monies + m); },
     hasSeeds: function() { 
         const hasAnySeeds = player.inventory.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0);
         if(!hasAnySeeds) { return false; }
