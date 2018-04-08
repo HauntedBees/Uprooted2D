@@ -416,8 +416,8 @@ const scripts = {
 	"beatbruno2": "_CUSTOM:SKUMPYEXIT",
 	// South City: BAD END
 	"badEnd0": "_CHIEVO:murderedToDeath&_TEXT:entercityBAD(0-9)",
-	"badEnd1": "_CLEARTEXT&pl_MOVE:y21",
-	"badEnd2": "_CUSTOM:WAIT",
+	"badEnd1": "_CLEARTEXT&_NOSKIP&pl_MOVE:y18",
+	"badEnd2": "_NOSKIP&_CUSTOM:WAIT",
 	"badEnd3": "_CUSTOM:GOTOTITLE",
 	// South City: Abuelita
 	"abuela0": "?[{\"q\":\"player.completedQuest('abuelitaBonita')\",\"v\":1},{\"q\":\"player.hasQuest('abuelitaBonita')\",\"v\":4},{\"q\":\"true\",\"v\":2}]",
@@ -669,8 +669,8 @@ const scripts = {
 	"monstWon0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"monstWon1": "_TEXT:lostToMonstA(0-3)&_SETSTATE:3",
 	"monstWon2": "_TEXT:lostToMonstB(0-2)",
-	"monstWon3": "_CLEARTEXT&pl_MOVE:y21",
-	"monstWon4": "_CUSTOM:WAIT",
+	"monstWon3": "_CLEARTEXT&_NOSKIP&pl_MOVE:y18",
+	"monstWon4": "_NOSKIP&_CUSTOM:WAIT",
 	"monstWon5": "_CUSTOM:GOTOTITLE",
 	// Food2: Beat the Monster
 	"monstLost0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":1},{\"q\":\"true\",\"v\":3}]",

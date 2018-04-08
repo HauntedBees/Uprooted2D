@@ -1,6 +1,6 @@
 const cutsceneMoveSpeeds = [0.0375, 0.075, 0.1125];
 const iHandler = {
-    moveSpeed: cutsceneMoveSpeeds[0], isFirst: true,
+    moveSpeed: cutsceneMoveSpeeds[0], isFirst: true, noSkip: false, 
     state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] },
     Start: function(startkey) {
         worldmap.dialogData = {};
@@ -8,10 +8,11 @@ const iHandler = {
         iHandler.Advance(true);
     },
     SpeedUpAnimation: function() {
+        if(iHandler.noSkip) { return; }
         clearInterval(worldmap.animIdx);
         while(!iHandler.state.animHandler(true)) {}
     },
-    SleepSkip: function() { iHandler.Finish(); return true; },
+    SleepSkip: function() { if(iHandler.noSkip) { return; } iHandler.Finish(); return true; },
     Finish: function() {
         if(worldmap.mapName !== "hq_6") {
             worldmap.forceMove = false;
@@ -19,6 +20,7 @@ const iHandler = {
         worldmap.waitForAnimation = false;
         worldmap.refreshMap();
         clearInterval(worldmap.animIdx);
+        iHandler.noSkip = false;
         iHandler.Advance();
     },
     Advance: function(isFirst) {
@@ -101,9 +103,9 @@ const CommandParser = {
                 case "ALIGNGOOD": player.shiftEthics(parseFloat(actSuffix)); break;
                 case "COMPLETEQUEST": quests.completeQuest(actSuffix); break;
                 case "STARTQUEST": player.activeQuests[actSuffix] = 1; break;
-                case "SETQUEST": var args = actSuffix.split(","); player.activeQuests[args[0]] = args[1]; break;
+                case "SETQUEST": const args = actSuffix.split(","); player.activeQuests[args[0]] = args[1]; break;
                 case "GIVE": CommandParser.Parse_TryGive(actSuffix.split(",")); break;
-                case "TAKE": var a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
+                case "TAKE": const a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
                 case "MONEY": player.AddMonies(parseInt(actSuffix)); break;
                 case "LEVELUP": player.addExp(player.nextExp); player.levelUp(); break;
                 // Animation Handling
@@ -140,6 +142,7 @@ const CommandParser = {
                 case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
                 case "GO2": CommandParser.Parse_Transition(JSON.parse(actSuffix)); break;
                 case "CUSTOM": CommandParser.Parse_Special(actSuffix); break;
+                case "NOSKIP": iHandler.noSkip = true; break;
             }
         }
     },
