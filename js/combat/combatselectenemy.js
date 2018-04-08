@@ -286,6 +286,7 @@ combat.selectTarget = {
             combat.animHelper.SetPlayerAnimArg("recoils", allAttackInfo.recoilInfo);
             if(attackType === "MELEE") { combat.animHelper.PushPlayerOverlay(player.equipment.weapon + targType); }
             else {
+                combat.didHarvest = true;
                 combat.FlagFreshCropsAndGetSeedDrops(true, allAttackInfo.isCritical);
                 for(let i = 0; i < allAttackInfo.animData.length; i++) {
                     const info = allAttackInfo.animData[i];

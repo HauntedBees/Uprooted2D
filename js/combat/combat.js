@@ -5,11 +5,14 @@ const combat = {
     expEarned: 0, moniesEarned: 0, itemsEarned: [], happyCows: [], usedShooters: [],
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
+    didHarvest: false, harvestChain: 0, 
     animHelper: null, 
     startBattle: function(enemies) {
         worldmap.clean();
         gfx.clearAll();
         player.initGridDimensions();
+        this.didHarvest = false;
+        this.harvestChain = 0;
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
         this.effectGrid = this.getGrid(player.gridWidth, player.gridHeight);
         game.currentInputHandler = this.menu;
@@ -241,6 +244,14 @@ const combat = {
             game.innerTransition(game.currentInputHandler, combat.inbetween, { next: combat.checkForLevelUp, text: text });
             return;
         }
+        if(this.state === 0 && !this.isFalcon) {
+            if(combat.didHarvest) {
+                combat.harvestChain++;
+            } else {
+                combat.harvestChain = 0;
+            }
+        }
+        combat.didHarvest = false;
         this.state++;
         if(this.state === 1 && player.hasFalcon && !this.isFalcon) {
             this.state = 0;

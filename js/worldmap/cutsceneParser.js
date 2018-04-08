@@ -186,10 +186,10 @@ const CommandParser = {
             }
         }
         const formatting = [
-            RoundNear(1000 / player.c2Rate, 100),      // 0 = C2 per 1000G
+            RoundNear(1000 / player.c2Rate, 100),       // 0 = C2 per 1000G
             player.c2Rate,                              // 1 = G per 1C2
             player.monies, player.c2,                   // 2 = your G, 3 = your C2
-            RoundNear(player.c2 * player.c2Rate, 100)  // 4 = how much your C2 is worth, in G
+            RoundNear(player.c2 * player.c2Rate, 100)   // 4 = how much your C2 is worth, in G
         ];
         worldmap.writeText(text, args, false, formatting);
     },
