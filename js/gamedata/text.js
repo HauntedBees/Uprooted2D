@@ -335,6 +335,831 @@ const fulltext = {
 		"en-dm": "This big container of holy water can baptize one human child OR water a large amount of soil. Hey, corn needs protection from evil, too!", 
 		"type": "item"
 	},
+	"!babySickle": {
+		"en-us": "", 
+		"en-dm": "Small Sickle", 
+		"type": "item"
+	},
+	"!baseSickle": {
+		"en-us": "", 
+		"en-dm": "Sickle", 
+		"type": "item"
+	},
+	"!goodSickle": {
+		"en-us": "", 
+		"en-dm": "Crop Sickle", 
+		"type": "item"
+	},
+	"!dblSickle": {
+		"en-us": "", 
+		"en-dm": "Double Sickle", 
+		"type": "item"
+	},
+	"!hvySickle": {
+		"en-us": "", 
+		"en-dm": "Heavy Sickle", 
+		"type": "item"
+	},
+	"!hoe": {
+		"en-us": "", 
+		"en-dm": "Hoe", 
+		"type": "item"
+	},
+	"!salthoe": {
+		"en-us": "", 
+		"en-dm": "Salty Hoe", 
+		"type": "item"
+	},
+	"!sicklerang": {
+		"en-us": "", 
+		"en-dm": "Sicklerang", 
+		"type": "item"
+	},
+	"!sunSickle": {
+		"en-us": "", 
+		"en-dm": "Sickle of Light", 
+		"type": "item"
+	},
+	"!pltSickle": {
+		"en-us": "", 
+		"en-dm": "Platinum Sickle", 
+		"type": "item"
+	},
+	"!sickle2": {
+		"en-us": "", 
+		"en-dm": "Sickle2", 
+		"type": "item"
+	},
+	"!sickle2_weak": {
+		"en-us": "", 
+		"en-dm": "Sickle2", 
+		"type": "item"
+	},
+	"!weakCompost": {
+		"en-us": "", 
+		"en-dm": "Small Compost Bin", 
+		"type": "item"
+	},
+	"!baseCompost": {
+		"en-us": "", 
+		"en-dm": "Compost Bin", 
+		"type": "item"
+	},
+	"!strongCompost": {
+		"en-us": "", 
+		"en-dm": "Battle Compost Bin", 
+		"type": "item"
+	},
+	"!sturdyCompost": {
+		"en-us": "", 
+		"en-dm": "Sturdy Compost Bin", 
+		"type": "item"
+	},
+	"!jumboCompost": {
+		"en-us": "", 
+		"en-dm": "Jumbo Compost Bin", 
+		"type": "item"
+	},
+	"!vitaminCompost": {
+		"en-us": "", 
+		"en-dm": "Vitamin-Enriched Compost Bin", 
+		"type": "item"
+	},
+	"!compost2": {
+		"en-us": "", 
+		"en-dm": "Compost2", 
+		"type": "item"
+	},
+	"!weakGloves": {
+		"en-us": "", 
+		"en-dm": "Gloves", 
+		"type": "item"
+	},
+	"!pairGloves": {
+		"en-us": "", 
+		"en-dm": "Slapping Gloves", 
+		"type": "item"
+	},
+	"!gardenGloves": {
+		"en-us": "", 
+		"en-dm": "Gardening Gloves", 
+		"type": "item"
+	},
+	"!sbGloves": {
+		"en-us": "", 
+		"en-dm": "Boxing Gloves", 
+		"type": "item"
+	},
+	"!gloves2": {
+		"en-us": "", 
+		"en-dm": "Gloves2", 
+		"type": "item"
+	},
+	"!weakSoil": {
+		"en-us": "", 
+		"en-dm": "Watering Can", 
+		"type": "item"
+	},
+	"!speedSoil": {
+		"en-us": "", 
+		"en-dm": "Speedy Water", 
+		"type": "item"
+	},
+	"!sturdSoil": {
+		"en-us": "", 
+		"en-dm": "Sturdy Water", 
+		"type": "item"
+	},
+	"!minSoil": {
+		"en-us": "", 
+		"en-dm": "Minmax Water", 
+		"type": "item"
+	},
+	"!waterfall": {
+		"en-us": "", 
+		"en-dm": "Waterfall Can", 
+		"type": "item"
+	},
+	"!immunity": {
+		"en-us": "", 
+		"en-dm": "Immunity Can", 
+		"type": "item"
+	},
+	"!seasonal": {
+		"en-us": "", 
+		"en-dm": "Seasonal Can", 
+		"type": "item"
+	},
+	"!pesticide2": {
+		"en-us": "", 
+		"en-dm": "Pesticide2", 
+		"type": "item"
+	},
+	"nm.asparagus": {
+		"en-us": "", 
+		"en-dm": "Asparagus", 
+		"type": "item"
+	},
+	"nm.beet": {
+		"en-us": "", 
+		"en-dm": "Beet", 
+		"type": "item"
+	},
+	"nm.bellpepper": {
+		"en-us": "", 
+		"en-dm": "Bell Pepper", 
+		"type": "item"
+	},
+	"nm.carrot": {
+		"en-us": "", 
+		"en-dm": "Carrot", 
+		"type": "item"
+	},
+	"nm.corn": {
+		"en-us": "", 
+		"en-dm": "Corn", 
+		"type": "item"
+	},
+	"nm.garlic": {
+		"en-us": "", 
+		"en-dm": "Garlic", 
+		"type": "item"
+	},
+	"nm.ginger": {
+		"en-us": "", 
+		"en-dm": "Ginger", 
+		"type": "item"
+	},
+	"nm.leek": {
+		"en-us": "", 
+		"en-dm": "Leek", 
+		"type": "item"
+	},
+	"nm.pineapple": {
+		"en-us": "", 
+		"en-dm": "Pineapple", 
+		"type": "item"
+	},
+	"nm.radish": {
+		"en-us": "", 
+		"en-dm": "Radish", 
+		"type": "item"
+	},
+	"nm.rhubarb": {
+		"en-us": "", 
+		"en-dm": "Rhubarb", 
+		"type": "item"
+	},
+	"nm.spinach": {
+		"en-us": "", 
+		"en-dm": "Spinach", 
+		"type": "item"
+	},
+	"nm.tomato": {
+		"en-us": "", 
+		"en-dm": "Tomato", 
+		"type": "item"
+	},
+	"nm.apple": {
+		"en-us": "", 
+		"en-dm": "Apple", 
+		"type": "item"
+	},
+	"nm.apricot": {
+		"en-us": "", 
+		"en-dm": "Apricot", 
+		"type": "item"
+	},
+	"nm.avocado": {
+		"en-us": "", 
+		"en-dm": "Avocado", 
+		"type": "item"
+	},
+	"nm.banana": {
+		"en-us": "", 
+		"en-dm": "Banana", 
+		"type": "item"
+	},
+	"nm.blackberry": {
+		"en-us": "", 
+		"en-dm": "Blackberry", 
+		"type": "item"
+	},
+	"nm.grapes": {
+		"en-us": "", 
+		"en-dm": "Grapes", 
+		"type": "item"
+	},
+	"nm.specialgrapes": {
+		"en-us": "", 
+		"en-dm": "Grapes+", 
+		"type": "item"
+	},
+	"nm.kiwi": {
+		"en-us": "", 
+		"en-dm": "Kiwi", 
+		"type": "item"
+	},
+	"nm.lemon": {
+		"en-us": "", 
+		"en-dm": "Lemon", 
+		"type": "item"
+	},
+	"nm.mango": {
+		"en-us": "", 
+		"en-dm": "Mango", 
+		"type": "item"
+	},
+	"nm.beeR": {
+		"en-us": "", 
+		"en-dm": "Killer Bee", 
+		"type": "item"
+	},
+	"nm.beeG": {
+		"en-us": "", 
+		"en-dm": "Stingless Bee", 
+		"type": "item"
+	},
+	"nm.beeB": {
+		"en-us": "", 
+		"en-dm": "Honey Bee", 
+		"type": "item"
+	},
+	"nm.rice": {
+		"en-us": "", 
+		"en-dm": "Rice", 
+		"type": "item"
+	},
+	"nm.arborio": {
+		"en-us": "", 
+		"en-dm": "Arborio Rice", 
+		"type": "item"
+	},
+	"nm.blackrice": {
+		"en-us": "", 
+		"en-dm": "Black Rice", 
+		"type": "item"
+	},
+	"nm.shortgrain": {
+		"en-us": "", 
+		"en-dm": "Short-Grain Rice", 
+		"type": "item"
+	},
+	"nm.chestnut": {
+		"en-us": "", 
+		"en-dm": "Water Chestnut", 
+		"type": "item"
+	},
+	"nm.spear": {
+		"en-us": "", 
+		"en-dm": "Fish Spear", 
+		"type": "item"
+	},
+	"nm.rod": {
+		"en-us": "", 
+		"en-dm": "Fish Rod", 
+		"type": "item"
+	},
+	"nm.goodrod": {
+		"en-us": "", 
+		"en-dm": "Better Rod", 
+		"type": "item"
+	},
+	"nm.metalrod": {
+		"en-us": "", 
+		"en-dm": "Metal Rod", 
+		"type": "item"
+	},
+	"nm.net": {
+		"en-us": "", 
+		"en-dm": "Fish Net", 
+		"type": "item"
+	},
+	"nm.bignet": {
+		"en-us": "", 
+		"en-dm": "Big Net", 
+		"type": "item"
+	},
+	"nm.fodder": {
+		"en-us": "", 
+		"en-dm": "Fodder", 
+		"type": "item"
+	},
+	"nm.shiitake": {
+		"en-us": "", 
+		"en-dm": "Shiitake", 
+		"type": "item"
+	},
+	"nm.milkcap": {
+		"en-us": "", 
+		"en-dm": "Milk Cap", 
+		"type": "item"
+	},
+	"nm.portobello": {
+		"en-us": "", 
+		"en-dm": "Portobello", 
+		"type": "item"
+	},
+	"nm.greenshroom": {
+		"en-us": "", 
+		"en-dm": "Parrot Toadstool", 
+		"type": "item"
+	},
+	"nm.blackshroom": {
+		"en-us": "", 
+		"en-dm": "Black Mushroom", 
+		"type": "item"
+	},
+	"nm.poisnshroom": {
+		"en-us": "", 
+		"en-dm": "Toxic Shroom", 
+		"type": "item"
+	},
+	"nm.egg": {
+		"en-us": "", 
+		"en-dm": "Chicken Egg", 
+		"type": "item"
+	},
+	"nm.quail": {
+		"en-us": "", 
+		"en-dm": "Quail Egg", 
+		"type": "item"
+	},
+	"nm.goose": {
+		"en-us": "", 
+		"en-dm": "Goose Egg", 
+		"type": "item"
+	},
+	"nm.turkey": {
+		"en-us": "", 
+		"en-dm": "Turkey Egg", 
+		"type": "item"
+	},
+	"nm.platypus": {
+		"en-us": "", 
+		"en-dm": "Platypus Egg", 
+		"type": "item"
+	},
+	"nm.battery": {
+		"en-us": "", 
+		"en-dm": "Battery", 
+		"type": "item"
+	},
+	"nm.headphones": {
+		"en-us": "", 
+		"en-dm": "Earbuds", 
+		"type": "item"
+	},
+	"nm.printer": {
+		"en-us": "", 
+		"en-dm": "3D Printer", 
+		"type": "item"
+	},
+	"nm.app": {
+		"en-us": "", 
+		"en-dm": "App", 
+		"type": "item"
+	},
+	"nm.drone": {
+		"en-us": "", 
+		"en-dm": "Drone", 
+		"type": "item"
+	},
+	"nm.frogbot": {
+		"en-us": "", 
+		"en-dm": "Fwoggybot", 
+		"type": "item"
+	},
+	"nm.coffee": {
+		"en-us": "", 
+		"en-dm": "Coffee Machine", 
+		"type": "item"
+	},
+	"nm.sicklebattery": {
+		"en-us": "", 
+		"en-dm": "Sickle2 Battery", 
+		"type": "item"
+	},
+	"nm.holywater": {
+		"en-us": "", 
+		"en-dm": "Holy Water", 
+		"type": "item"
+	},
+	"nm.holyjug": {
+		"en-us": "", 
+		"en-dm": "Holy Pitcher", 
+		"type": "item"
+	},
+	"nm.goldegg": {
+		"en-us": "", 
+		"en-dm": "Golden Egg", 
+		"type": "item"
+	},
+	"nm.coconut": {
+		"en-us": "", 
+		"en-dm": "Coconut", 
+		"type": "item"
+	},
+	"nm.gmocorn": {
+		"en-us": "", 
+		"en-dm": "GMO Corn", 
+		"type": "item"
+	},
+	"nm.ultrarod": {
+		"en-us": "", 
+		"en-dm": "Master Bait", 
+		"type": "item"
+	},
+	"nm.goodfood": {
+		"en-us": "", 
+		"en-dm": "Delicious Food", 
+		"type": "item"
+	},
+	"nm.notdrugs": {
+		"en-us": "", 
+		"en-dm": "Funny Mushroom", 
+		"type": "item"
+	},
+	"nm.lotus": {
+		"en-us": "", 
+		"en-dm": "Sacred Lotus", 
+		"type": "item"
+	},
+	"nm.hbee": {
+		"en-us": "", 
+		"en-dm": "Haunted Bee", 
+		"type": "item"
+	},
+	"nm.algae": {
+		"en-us": "", 
+		"en-dm": "Algae", 
+		"type": "item"
+	},
+	"nm.kelp": {
+		"en-us": "", 
+		"en-dm": "Kelp", 
+		"type": "item"
+	},
+	"nm.rock": {
+		"en-us": "", 
+		"en-dm": "Rock", 
+		"type": "item"
+	},
+	"nm.tire": {
+		"en-us": "", 
+		"en-dm": "Tire", 
+		"type": "item"
+	},
+	"nm.engine": {
+		"en-us": "", 
+		"en-dm": "Engine", 
+		"type": "item"
+	},
+	"nm.salt": {
+		"en-us": "", 
+		"en-dm": "Salt", 
+		"type": "item"
+	},
+	"nm.acorn": {
+		"en-us": "", 
+		"en-dm": "Acorn", 
+		"type": "item"
+	},
+	"nm.robobabby": {
+		"en-us": "", 
+		"en-dm": "Byte Baby", 
+		"type": "item"
+	},
+	"nm.bpermit": {
+		"en-us": "", 
+		"en-dm": "Building Permit", 
+		"type": "item"
+	},
+	"nm.house": {
+		"en-us": "", 
+		"en-dm": "House", 
+		"type": "item"
+	},
+	"nm.lightbulb": {
+		"en-us": "", 
+		"en-dm": "Smart Lightbulb", 
+		"type": "item"
+	},
+	"nm.download": {
+		"en-us": "", 
+		"en-dm": "Download", 
+		"type": "item"
+	},
+	"nm.cloud": {
+		"en-us": "", 
+		"en-dm": "The Cloud", 
+		"type": "item"
+	},
+	"nm.porcini": {
+		"en-us": "", 
+		"en-dm": "Porcini", 
+		"type": "item"
+	},
+	"nm.arborioB": {
+		"en-us": "", 
+		"en-dm": "Arborio Rice", 
+		"type": "item"
+	},
+	"nm.timebomb": {
+		"en-us": "", 
+		"en-dm": "Time Bomb", 
+		"type": "item"
+	},
+	"nm.shotgun": {
+		"en-us": "", 
+		"en-dm": "Shotgun", 
+		"type": "item"
+	},
+	"nm.burrito": {
+		"en-us": "", 
+		"en-dm": "Burrito", 
+		"type": "item"
+	},
+	"nm.dango": {
+		"en-us": "", 
+		"en-dm": "Dango", 
+		"type": "item"
+	},
+	"nm.taco": {
+		"en-us": "", 
+		"en-dm": "Taco", 
+		"type": "item"
+	},
+	"nm.kombucha": {
+		"en-us": "", 
+		"en-dm": "Kombucha", 
+		"type": "item"
+	},
+	"nm.cheese": {
+		"en-us": "", 
+		"en-dm": "Cheese", 
+		"type": "item"
+	},
+	"nm.batterysalt": {
+		"en-us": "", 
+		"en-dm": "Smart Salt", 
+		"type": "item"
+	},
+	"nm.gastank": {
+		"en-us": "", 
+		"en-dm": "Gas Tank", 
+		"type": "item"
+	},
+	"nm.airfilter": {
+		"en-us": "", 
+		"en-dm": "Air Filter", 
+		"type": "item"
+	},
+	"nm.dipstick": {
+		"en-us": "", 
+		"en-dm": "Dip Stick", 
+		"type": "item"
+	},
+	"nm.cacao": {
+		"en-us": "", 
+		"en-dm": "Cacao", 
+		"type": "item"
+	},
+	"nm.bananaPill": {
+		"en-us": "", 
+		"en-dm": "Banana Pill", 
+		"type": "item"
+	},
+	"nm.mushNerf": {
+		"en-us": "", 
+		"en-dm": "Mushrooms", 
+		"type": "item"
+	},
+	"nm.riceNerf": {
+		"en-us": "", 
+		"en-dm": "Paddy Crops", 
+		"type": "item"
+	},
+	"nm.treeNerf": {
+		"en-us": "", 
+		"en-dm": "Tree Crops", 
+		"type": "item"
+	},
+	"nm.vegNerf": {
+		"en-us": "", 
+		"en-dm": "Veggies", 
+		"type": "item"
+	},
+	"nm.fishNerf": {
+		"en-us": "", 
+		"en-dm": "Fishes", 
+		"type": "item"
+	},
+	"nm.beeNerf": {
+		"en-us": "", 
+		"en-dm": "Bees", 
+		"type": "item"
+	},
+	"nm.eggNerf": {
+		"en-us": "", 
+		"en-dm": "Eggs", 
+		"type": "item"
+	},
+	"nm.reNerf": {
+		"en-us": "", 
+		"en-dm": "Regrowing Crops", 
+		"type": "item"
+	},
+	"nm.char0": {
+		"en-us": "", 
+		"en-dm": "Pale Blood Horse", 
+		"type": "item"
+	},
+	"nm.char1": {
+		"en-us": "", 
+		"en-dm": "Mabingy the Elf", 
+		"type": "item"
+	},
+	"nm.char2": {
+		"en-us": "", 
+		"en-dm": "Pagan Cave Bat", 
+		"type": "item"
+	},
+	"nm.char3": {
+		"en-us": "", 
+		"en-dm": "Just a Slime", 
+		"type": "item"
+	},
+	"nm.char4": {
+		"en-us": "", 
+		"en-dm": "Trash Lobster", 
+		"type": "item"
+	},
+	"nm.elem0": {
+		"en-us": "", 
+		"en-dm": "Fire", 
+		"type": "item"
+	},
+	"nm.elem1": {
+		"en-us": "", 
+		"en-dm": "Earth", 
+		"type": "item"
+	},
+	"nm.elem2": {
+		"en-us": "", 
+		"en-dm": "Water", 
+		"type": "item"
+	},
+	"nm.elem3": {
+		"en-us": "", 
+		"en-dm": "Tech", 
+		"type": "item"
+	},
+	"nm.fx0": {
+		"en-us": "", 
+		"en-dm": "Gobulin Shield", 
+		"type": "item"
+	},
+	"nm.fx1": {
+		"en-us": "", 
+		"en-dm": "Wand of Ps'ghetti", 
+		"type": "item"
+	},
+	"nm.fx2": {
+		"en-us": "", 
+		"en-dm": "Infernal Doug", 
+		"type": "item"
+	},
+	"nm.fx3": {
+		"en-us": "", 
+		"en-dm": "Regular Baseball", 
+		"type": "item"
+	},
+	"nm.fx4": {
+		"en-us": "", 
+		"en-dm": "The Blue Winter", 
+		"type": "item"
+	},
+	"nm.food2orig": {
+		"en-us": "", 
+		"en-dm": "Food2 Original", 
+		"type": "item"
+	},
+	"nm.food2classic": {
+		"en-us": "", 
+		"en-dm": "Food2 Classic", 
+		"type": "item"
+	},
+	"nm.food2kelp": {
+		"en-us": "", 
+		"en-dm": "Food2 Crispy", 
+		"type": "item"
+	},
+	"nm.food2coffee": {
+		"en-us": "", 
+		"en-dm": "Food2 WH", 
+		"type": "item"
+	},
+	"nm.food2salsa": {
+		"en-us": "", 
+		"en-dm": "Food2 SP", 
+		"type": "item"
+	},
+	"nm.food2gamer": {
+		"en-us": "", 
+		"en-dm": "Food2 Epic", 
+		"type": "item"
+	},
+	"nm.food2cookie": {
+		"en-us": "", 
+		"en-dm": "Food2 RR", 
+		"type": "item"
+	},
+	"nm.food2black": {
+		"en-us": "", 
+		"en-dm": "Food2 Midnite", 
+		"type": "item"
+	},
+	"nm.food2purple": {
+		"en-us": "", 
+		"en-dm": "Food2 Purple", 
+		"type": "item"
+	},
+	"nm.food2crystal": {
+		"en-us": "", 
+		"en-dm": "Crystal Food2", 
+		"type": "item"
+	},
+	"nm.food2powder": {
+		"en-us": "", 
+		"en-dm": "Food2 Powder", 
+		"type": "item"
+	},
+	"nm.food2bar": {
+		"en-us": "", 
+		"en-dm": "Foobar2", 
+		"type": "item"
+	},
+	"nm.food2barChoc": {
+		"en-us": "", 
+		"en-dm": "Chocky Foobar2", 
+		"type": "item"
+	},
+	"nm.soybean": {
+		"en-us": "", 
+		"en-dm": "Soybean", 
+		"type": "item"
+	},
+	"nm.conveyorEnd": {
+		"en-us": "", 
+		"en-dm": "Food2 Conveyor", 
+		"type": "item"
+	},
+	"nm.soybaby": {
+		"en-us": "", 
+		"en-dm": "Soy Baby", 
+		"type": "item"
+	},
 	// Options
 	"saveSlotDisp": {
 		"en-us": "", 

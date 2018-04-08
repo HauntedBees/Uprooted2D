@@ -10,11 +10,11 @@ if($which.Contains("C")) {
 	$csv = Import-CSV ".\temp\Details_Crops.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\veggies.js";
 	$out.WriteLine(@'
-function CropDetail(name, displayname, price, type, size, time, frames, power, re, sp, su, au, wi, addtl) {
+function CropDetail(name, price, type, size, time, frames, power, re, sp, su, au, wi, addtl) {
     this.name = name;
     this.type = type;
     this.price = price;
-    this.displayname = displayname;
+    this.displayname = GetText("nm." + name);
     this.size = size;
     this.time = time;
     this.frames = frames;
@@ -30,7 +30,7 @@ function CropDetail(name, displayname, price, type, size, time, frames, power, r
 function GetCrop(name) {
     switch(name) {
 '@);
-	$formatStr = "		case `"{name}`": return new CropDetail(name, `"{displayname}`", {price}, `"{type}`", {size}, {time}, {frames}, {power}, {re}, {sp}, {su}, {au}, {wi}{addtl});";
+	$formatStr = "		case `"{name}`": return new CropDetail(name, {price}, `"{type}`", {size}, {time}, {frames}, {power}, {re}, {sp}, {su}, {au}, {wi}{addtl});";
 	$count = 0;
 	$allCrops = @();
 	$keepCropping = $true;
@@ -43,7 +43,7 @@ function GetCrop(name) {
 			continue;
 		}
 		if($keepCropping) { $allCrops += "`"$id`""; }
-		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{type}", $row.Type).replace("{size}", $row.Size);
+		$endStr = $formatStr.replace("{name}", $row.Id).replace("{price}", $row.Price).replace("{type}", $row.Type).replace("{size}", $row.Size);
 		$endStr = $endStr.replace("{time}", $row.Time).replace("{frames}", $row.AnimFrames).replace("{power}", $row.Power).replace("{re}", (?? $row.Re 0));
 		$endStr = $endStr.replace("{sp}", (?? $row.Sp 0)).replace("{su}", (?? $row.Su 0)).replace("{au}", (?? $row.Au 0)).replace("{wi}", (?? $row.Wi 0));
 		$addtl = @();
@@ -82,11 +82,11 @@ if($which.Contains("E")) {
 	$csv = Import-CSV ".\temp\Details_Equipment.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\equipment.js";
 	$out.WriteLine(@'
-function EquipmentDetail(name, displayname, price, type, addtl) {
+function EquipmentDetail(name, price, type, addtl) {
     this.name = name;
     this.type = type;
     this.price = price;
-    this.displayname = displayname;
+    this.displayname = GetText(name);
     if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 }
 function GetEquipmentDesc(equipInfo, minified) {
@@ -126,15 +126,15 @@ function GetEquipmentDesc(equipInfo, minified) {
 function GetEquipment(name) {
     switch(name) {
 '@);
-	$formatStr = "		case `"{name}`": return new EquipmentDetail(name, `"{displayname}`", {price}, `"{type}`"{addtl});";
+	$formatStr = "		case `"{name}`": return new EquipmentDetail(name, {price}, `"{type}`"{addtl});";
 	$count = 0;
 	ForEach($row in $csv) {
-		if($row.Crop -eq "" -or $row.Crop -eq "Crop" -or $row.Id -eq "nope") { continue; }
+		if($row.Id -eq "" -or $row.Id -eq "Id" -or $row.Id -eq "nope") { continue; }
 		if($row.Id -eq "*") {
-			$out.WriteLine("		/* _ */".replace("_", $row.Name));
+			$out.WriteLine("		/* _ */".replace("_", $row.Type));
 			continue;
 		}
-		$endStr = $formatStr.replace("{name}", $row.Id).replace("{displayname}", $row.Name).replace("{price}", $row.Price).replace("{type}", $row.Type);
+		$endStr = $formatStr.replace("{name}", $row.Id).replace("{price}", $row.Price).replace("{type}", $row.Type);
 		$addtl = @();
 		if($row.Tech) { $addtl += "tech: true"; }
 		# Weapons
