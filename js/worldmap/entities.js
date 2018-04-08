@@ -111,7 +111,6 @@ const mapentities = {
         SwitchMapSeamless("JoinDarkBlue2", 32, 59, 2, 75, 17),
         SwitchMapSeamless("JoinGrey", 100, 53, 0, 9, 46),
         SwitchMapSeamless("JoinGrey2", 101, 53, 0, 10, 46),
-        // Foreground
         // Hives & Quest Whatsits
         GetFellow("GoldenShroom", 36, 24, 0, "GoldMush", [
             function() {

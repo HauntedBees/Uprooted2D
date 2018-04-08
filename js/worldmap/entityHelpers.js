@@ -426,7 +426,6 @@ function ToggleChungus(arg, target) {
         worldmap.entities[i].visible = (acceptableChungi.indexOf(worldmap.entities[i].chungusId) < 0);
     }
     if(acceptableChungi.length === 1 && acceptableChungi[0] !== undefined) { worldmap.horRor.playerRoom = acceptableChungi[0]; }
-    worldmap.refreshMap();
     worldmap.finishDialog();
 }
 
