@@ -416,7 +416,7 @@ worldmap.shop = {
             case me.sellTypes.EQUIPMENT: price = Math.floor(GetEquipment(actualItem[0]).price * this.details.sellMult); break;
             case me.sellTypes.FIXTURES: price = Math.floor(GetFarmInfo(actualItem[0]).price * this.details.sellMult); break;
         }
-        player.monies += price;
+        player.AddMonies(price);
         player.decreaseItem(actualItem[0]);
         this.DrawDetails(GetText(this.details.didSell));
         return true;
@@ -519,17 +519,17 @@ worldmap.shop = {
             player.expandGrid(dims.x, dims.y, dims.new);
             this.cursorX = 1;
         } else if(productInfo.type === "equipment" && player.hasItem(productInfo.product)) {
-            player.monies += price;
+            player.AddMonies(price);
             this.DrawDetails(GetText("s.alreadyown"));
             return true;
         } else if(!player.increaseItem(productInfo.product, amt)) {
-            player.monies += price;
+            player.AddMonies(price);
             this.DrawDetails(GetText("s.invfull"));
             return true;
         } else if(productInfo.type === "seed" || productInfo.type === "farm") {
             if(this.howManyData === null) {
                 this.howManyData = { product: productInfo, amount: 1, price: price };
-                player.monies += price; // we already charged!
+                player.AddMonies(price); // we already charged!
                 player.decreaseItem(productInfo.product, amt); // we already added one!
                 if(productInfo.type === "farm" && player.fixtureTutorialState === 0) { player.fixtureTutorialState = 1; }
                 this.DrawDetails();

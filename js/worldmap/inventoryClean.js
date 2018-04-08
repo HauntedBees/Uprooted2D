@@ -121,7 +121,7 @@ worldmap.invClean = {
     },
     ConfirmSelection: function() {
         this.trashInfo.push({ frame: 0, coinStates: [], x: 4, y: 13, numCoins: Math.min(10, Math.ceil(this.topPrice / 30)) });
-        player.monies += this.topPrice;
+        player.AddMonies(this.topPrice);
         this.didConfirm = true;
     },
     click: function(pos) {

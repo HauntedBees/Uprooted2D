@@ -104,7 +104,7 @@ const CommandParser = {
                 case "SETQUEST": var args = actSuffix.split(","); player.activeQuests[args[0]] = args[1]; break;
                 case "GIVE": CommandParser.Parse_TryGive(actSuffix.split(",")); break;
                 case "TAKE": var a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
-                case "MONEY": player.monies += parseInt(actSuffix); break;
+                case "MONEY": player.AddMonies(parseInt(actSuffix)); break;
                 case "LEVELUP": player.addExp(player.nextExp); player.levelUp(); break;
                 // Animation Handling
                 case "TALK": SetUpFellow(target, target.talkAnim); break;
@@ -850,7 +850,7 @@ const SpecialFunctions = {
         }
     },
     "C2BUY": function() { player.monies -= 1000; player.c2 = RoundNear(player.c2 + 1000 / player.c2Rate, 100); },
-    "C2SELL": function() { player.monies += Math.round(player.c2Rate); player.c2 = RoundNear(player.c2 - 1, 100); },
+    "C2SELL": function() { player.AddMonies(Math.round(player.c2Rate)); player.c2 = RoundNear(player.c2 - 1, 100); },
     "DESTROYBUILDING": function() {
         worldmap.importantEntities["13thStBuildings"].filename = "covers/northcity2_post";
         for(let i = 0; i < worldmap.entities.length; i++) {

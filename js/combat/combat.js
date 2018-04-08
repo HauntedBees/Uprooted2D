@@ -84,22 +84,22 @@ const combat = {
         this.menu.setup();
     },
     getGrid: function(w, h) {
-        var g = [];
-        for(var x = 0; x < w; x++) {
-            var row = [];
-            for(var y = 0; y < h; y++) { row.push(null); }
+        const g = [];
+        for(let x = 0; x < w; x++) {
+            const row = [];
+            for(let y = 0; y < h; y++) { row.push(null); }
             g.push(row);
         }
         return g;
     },
     setSeason: function(enemies) {
-        var dist = [0, 0, 0, 0];
-        for(var i = 0; i < enemies.length; i++) {
-            var sd = GetEnemy(enemies[i]).seasonDistribution;
-            for(var j = 0; j < 4; j++) { dist[j] += sd[j]; }
+        const dist = [0, 0, 0, 0];
+        for(let i = 0; i < enemies.length; i++) {
+            const sd = GetEnemy(enemies[i]).seasonDistribution;
+            for(let j = 0; j < 4; j++) { dist[j] += sd[j]; }
         }
-        var season = Math.random();
-        for(var j = 0; j < 4; j++) {
+        let season = Math.random();
+        for(let j = 0; j < 4; j++) {
             dist[j] /= enemies.length;
             if(season <= dist[j]) {
                 this.season = j;
@@ -114,7 +114,7 @@ const combat = {
         combat.enemyTurn.lastIdx = -1;
         this.numPlantTurns = player.getPlantingTurns();
         combat.playerInDanger = false;
-        for(var i = 0; i < combat.enemies.length; i++) {
+        for(let i = 0; i < combat.enemies.length; i++) {
             combat.enemies[i].stickTurns = Math.max(0, combat.enemies[i].stickTurns - 1);
         }
         if(this.usedShooters.length > 0) {
@@ -155,7 +155,7 @@ const combat = {
     },
     damageEnemy: function(enemyidx, damage) {
         this.enemies[enemyidx].health -= damage;
-        var isFinalKill = false;
+        let isFinalKill = false;
         if(this.enemies[enemyidx].health <= 0 && !this.enemies[enemyidx].alreadyDead) {
             this.enemies[enemyidx].alreadyDead = true;
             const e = this.enemies[enemyidx];
@@ -183,7 +183,7 @@ const combat = {
     },
     adjustEnemyStatsWeather: function() {
         this.seasonTime = 0;
-        for(var i = 0; i < this.enemies.length; i++) {
+        for(let i = 0; i < this.enemies.length; i++) {
             if(this.enemies[i].weakSeason !== undefined && this.season === this.enemies[i].weakSeason) {
                 this.enemies[i].atk = 0.5;
                 this.enemies[i].def = 0.1;
@@ -199,7 +199,7 @@ const combat = {
     },
     addDroppedSeedToItemsEarned: function(seed, amount) {
         if(amount === 0) { return; }
-        for(var i = 0; i < this.itemsEarned; i++) {
+        for(let i = 0; i < this.itemsEarned; i++) {
             if(this.itemsEarned[i][0] == seed) {
                 this.itemsEarned[i][1] += amount;
                 return;
@@ -220,20 +220,20 @@ const combat = {
             player.addExp(this.expEarned);
             combat.animHelper.SetBirdAnimState("WON", true);
             combat.animHelper.SetPlayerAnimState("WON", true);
-            var text = GetText("youDidATheWin");
-            var resulties = [this.expEarned + "EXP"];
+            let text = GetText("youDidATheWin");
+            let resulties = [this.expEarned + "EXP"];
 
-            player.monies += this.moniesEarned;
-            for(var i = 0; i < this.itemsEarned.length; i++) {
+            player.AddMonies(this.moniesEarned);
+            for(let i = 0; i < this.itemsEarned.length; i++) {
                 player.increaseItem(this.itemsEarned[i][0], this.itemsEarned[i][1]);
             }
             if(this.moniesEarned > 0) { resulties.push(this.moniesEarned + "G"); }
             if(this.itemsEarned.length > 2) {
-                var count = 0;
-                for(var i = 0; i < this.itemsEarned.length; i++) { count += this.itemsEarned[i][1]; }
+                let count = 0;
+                for(let i = 0; i < this.itemsEarned.length; i++) { count += this.itemsEarned[i][1]; }
                 resulties.push(count + HandlePlurals(GetText("gift.itemseed") + "{s}", count));
             } else {
-                for(var i = 0; i < this.itemsEarned.length; i++) {
+                for(let i = 0; i < this.itemsEarned.length; i++) {
                     resulties.push(HandleGifts(this.itemsEarned[i][0], this.itemsEarned[i][1]));
                 }
             }
@@ -248,29 +248,29 @@ const combat = {
             this.numPlantTurns = 1;
             game.innerTransition(caller, combat.menu);
         } else if(this.state > combat.enemies.length) {
-            var anotherTurn = false;
-            for(var i = 0; i < this.enemies.length; i++) {
+            let anotherTurn = false;
+            for(let i = 0; i < this.enemies.length; i++) {
                 if(this.enemies[i].turnFunc === undefined) { continue; }
                 anotherTurn |= this.enemies[i].stickTurns === 0 && combatEndTurnFuncs[this.enemies[i].turnFunc](this.enemies[i]);
             }
             if(anotherTurn) {
                 this.state--;
-                var idx = this.state - 1;
+                const idx = this.state - 1;
                 game.innerTransition(caller, combat.enemyTurn, { enemy: this.enemies[idx], idx: idx });
             } else {
                 this.startRound();
                 game.innerTransition(caller, combat.menu);
             }
         } else {
-            var idx = this.state - 1;
+            const idx = this.state - 1;
             game.innerTransition(caller, combat.enemyTurn, { enemy: this.enemies[idx], idx: idx });
         }
     },
     cleanUpEffects: function() {
-        var redraw = false;
-        for(var x = 0; x < player.gridWidth; x++) {
-            for(var y = 0; y < player.gridHeight; y++) {
-                var obj = combat.effectGrid[x][y];
+        let redraw = false;
+        for(let x = 0; x < player.gridWidth; x++) {
+            for(let y = 0; y < player.gridHeight; y++) {
+                const obj = combat.effectGrid[x][y];
                 if(obj === null) { continue; }
                 if(--obj.duration <= 0) { redraw = true; combat.effectGrid[x][y] = null; }
             }
@@ -281,7 +281,7 @@ const combat = {
         combat.animHelper.CleanAnims();
         combat.animHelper.CleanEntities();
         combat.RemoveFlaggedCrops();
-        for(var i = combat.enemies.length - 1; i >= 0; i--) {
+        for(let i = combat.enemies.length - 1; i >= 0; i--) {
             combat.enemies[i].justStuck = false;
             if(combat.enemies[i].health <= 0) {
                 combat.animHelper.RemoveEnemy(i);
@@ -289,7 +289,7 @@ const combat = {
             }
         }
         combat.animHelper.ResetEnemyAnimHelper(combat.enemies);
-        for(var i = 0; i < combat.enemies.length; i++) {
+        for(let i = 0; i < combat.enemies.length; i++) {
             combat.animHelper.SetEnemyAnimState(i, "STAND");
         }
     },
