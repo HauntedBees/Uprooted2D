@@ -111,6 +111,7 @@ const mapentities = {
         SwitchMapSeamless("JoinDarkBlue2", 32, 59, 2, 75, 17),
         SwitchMapSeamless("JoinGrey", 100, 53, 0, 9, 46),
         SwitchMapSeamless("JoinGrey2", 101, 53, 0, 10, 46),
+        // Foreground
         // Hives & Quest Whatsits
         GetFellow("GoldenShroom", 36, 24, 0, "GoldMush", [
             function() {
@@ -415,6 +416,8 @@ const mapentities = {
         // Map Switches
         SwitchMap("GoNorth", 44, 0, true, false, 8.5, 50, "northcity"),
         GetTruckL(52, 48), GetTruckR(54, 48),
+        // Foreground
+        GetForeground("southcity", 0, 5056),
         // Covers
         GetJumbo("skumpyCover", "skumpy", 36, 39, 396, 256, 1, 1),
         GetJumbo("mobCover", "mob", 9, 27, 772, 512, 0, 0),
@@ -480,13 +483,16 @@ const mapentities = {
         GetNoIMFellow("FountainUL", 32.5, 22.75, "FountainUL", { big: true, solid: false }), GetNoIMFellow("FountainUR", 34.5, 22.75, "FountainUR", { big: true, solid: false }),
         GetNoIMFellow("FountainLLL", 30.5, 25.25, "FountainLLL", { big: true, solid: false }), GetNoIMFellow("FountainLML", 32.5, 25.25, "FountainLML", { big: true, solid: false }),
         GetNoIMFellow("FountainLMR", 34.5, 25.25, "FountainLMR", { big: true, solid: false }), GetNoIMFellow("FountainLRR", 36.5, 25.25, "FountainLRR", { big: true, solid: false }),
-        GetFellow("PoopBagDispenser", 27, 31, 0, "DoggyBags", OneSpeak("poopBag"), undefined, { big: true })
+        GetFellow("PoopBagDispenser", 27, 31, 0, "DoggyBags", OneSpeak("poopBag"), undefined, { big: true }),
+        GetNoIMFellow("Cross", 38, 9, "ChurchTip", { boring: true, forcedY: 10, solid: false })
     ],
     "northcity": () => [
         // Map Switches
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
         GetFellow("Food2Entrance", 39, 9, 0, "", Cutscene("foodDoor"), undefined, { boring: true, visible: false, solid: true }),
         SwitchMap("EnterFood2", 39, 8, false, false, 15, 29, "hq_1"),
+        // Foreground
+        GetForeground("northcity", 0, 4032),
         // Covers
         GetJumbo("12thStBuildings", "northcity3", 21, 31, 2436, 832, 1, 0),
         GetJumboToggle("Cash2", 25, 42, true), GetJumboToggle("Cash2", 25, 43, false),
@@ -590,16 +596,16 @@ const mapentities = {
         InvisFellow("bed1R", 19, 19, "someonesBed"),
         InvisFellow("bed2U", 19, 22, "someonesBed"),
         InvisFellow("bed2B", 19, 23, "someonesBed"),
-        /*GetCommonEntity("CompCover1", 50, 33, 22, 0, undefined, undefined, { forcedY: 40, sy: 7, solid: false, boring: true, visible: false, inside: true }), // TODO: AAAAAAAAAAAAAA
-        GetCommonEntity("CompCover2", 51, 33, 22, 1, undefined, undefined, { forcedY: 40, sy: 7, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover3", 50, 36, 22, 0, undefined, undefined, { forcedY: 40, sy: 8, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover4", 51, 36, 22, 1, undefined, undefined, { forcedY: 40, sy: 8, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover5", 50, 39, 22, 0, undefined, undefined, { forcedY: 40, sy: 8, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover6", 51, 39, 22, 1, undefined, undefined, { forcedY: 40, sy: 8, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover7", 55, 36, 22, 0, undefined, undefined, { forcedY: 40, sy: 7, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover8", 56, 36, 22, 1, undefined, undefined, { forcedY: 40, sy: 7, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover9", 55, 39, 22, 0, undefined, undefined, { forcedY: 40, sy: 8, solid: false, boring: true, visible: false, inside: true }),
-        GetCommonEntity("CompCover0", 56, 39, 22, 0, undefined, undefined, { forcedY: 40, sy: 6, solid: false, boring: true, visible: false, inside: true }),*/
+        GetNoIMFellow("CompCover1", 50, 33, "MacL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover2", 51, 33, "MacR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover3", 50, 36, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover4", 51, 36, "PCR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover5", 50, 39, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover6", 51, 39, "PCR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover7", 55, 36, "MacL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover8", 56, 36, "MacR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover9", 55, 39, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover0", 56, 39, "PCRbeef", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
         GetNoIMFellow("12thSt", 4, 43, "St12", { boring: true, big: true }),
         GetNoIMFellow("13thSt", 4, 26, "St13", { boring: true, big: true }),
         GetNoIMFellow("14thSt", 2, 9, "St14", { boring: true, big: true }),
@@ -609,7 +615,9 @@ const mapentities = {
         const entities = [
             // Map Switches
             SwitchMap("GoUpstairs", 5.5, 1, true, false, 5.5, 2, "hq_2", undefined, 2), SwitchMap("Leave", 15, 30, false, false, 39, 10, "northcity"),
-            GetElevator("L", 11, 2), GetElevator("R", 12, 2), 
+            GetElevator("L", 11, 2), GetElevator("R", 12, 2),
+            // Foreground
+            GetForeground("hq_1", 0, 1984),
             // Falcon & Treasure
             { name: "Falcon5", pos: { x: 15, y: 27 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
             GetTreasureChest("HQ1Chest1", 1, 26, [["spear", 20]]),
@@ -641,19 +649,19 @@ const mapentities = {
             GetNoIMFellow("Chair2", 11, 27, "HQChairL", { boring: true }),
             GetNoIMFellow("Chair3", 19, 25, "HQChairR", { boring: true }),
             GetNoIMFellow("Chair4", 19, 27, "HQChairR", { boring: true }),
-            //GetCommonEntity("CompyL", 14, 23.375, 20, 0, undefined, undefined, { boring: true, sy: 11 }), // TODO: AAAAAAAAAAAAAA
-            //GetCommonEntity("CompyR", 15, 23.375, 21, 0, undefined, undefined, { boring: true, sy: 11 }),
+            GetNoIMFellow("CompyL", 14, 23.375, "FriendPCL", { boring: true }),
+            GetNoIMFellow("CompyR", 15, 23.375, "FriendPCR", { boring: true }),
             GetNoIMFellow("rollybaby1", 29, 8, "RollerBob", { moving: true, boring: true, dir: 2 }),
             GetNoIMFellow("rollybaby2", 29, 9, "RollerBob", { moving: true, boring: true, dir: 3 }),
             GetNoIMFellow("rollybaby3", 29, 10, "RollerBob", { moving: true, boring: true, dir: 3 }),
             GetNoIMFellow("rollybaby4", 29, 11, "RollerBob", { moving: true, boring: true, dir: 3 }),
             GetNoIMFellow("rollybaby5", 30, 9, "RollerBob", { moving: true, boring: true, dir: 3 }),
             GetNoIMFellow("rollybaby6", 30, 10, "RollerBob", { moving: true, boring: true, dir: 3 }),
-            GetNoIMFellow("rollybaby7", 30, 11, "RollerBob", { moving: true, boring: true, dir: 3 })/*, // TODO: AAAAAAAAAA
-            GetCommonEntity("hqCompCover1", 13, 15, 22, 0, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
-            GetCommonEntity("hqCompCover2", 14, 15, 22, 1, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
-            GetCommonEntity("hqCompCover3", 17, 16, 22, 0, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true }),
-            GetCommonEntity("hqCompCover4", 18, 16, 22, 1, undefined, undefined, { forcedY: 29, sy: 7, solid: false, boring: true })*/
+            GetNoIMFellow("rollybaby7", 30, 11, "RollerBob", { moving: true, boring: true, dir: 3 }),
+            GetNoIMFellow("hqCompCover1", 13, 15, "MacL", { boring: true, solid: false, forcedY: 29 }),
+            GetNoIMFellow("hqCompCover2", 14, 15, "MacR", { boring: true, solid: false, forcedY: 29 }),
+            GetNoIMFellow("hqCompCover3", 17, 16, "MacL", { boring: true, solid: false, forcedY: 29 }),
+            GetNoIMFellow("hqCompCover4", 18, 16, "MacR", { boring: true, solid: false, forcedY: 29 })
         ];
         const doors = [ [20, 10, 0, false], [7, 10, 0, true],  [20, 3, 1, false], [25, 7, 1, true], [18, 6, 1, false], [17, 14, 1, true], [15, 8, 1, false],
                  [4, 17, 1, true], [10, 17, 1, false], [4, 8, 2, false], [4, 12, 2, true], [10, 12, 2, false], [7, 14, 2, true] ];
@@ -675,6 +683,8 @@ const mapentities = {
             GetStaircase("GoUpstairsL", 24, 1, 24.5, 2, "hq_3"), GetStaircase("GoUpstairsR", 25, 1, 24.5, 2, "hq_3"),
             GetStaircase("GoDownstairsL", 5, 1, 5.5, 2, "hq_1"), GetStaircase("GoDownstairsR", 6, 1, 5.5, 2, "hq_1"),
             GetElevator("L", 11, 2), GetElevator("R", 12, 2), 
+            // Foreground
+            GetForeground("hq_2", 0, 1984),
             // Treasure
             GetTreasureChest("HQ2Chest1", 9, 6, [["greenshroom", 20]]),
             GetTreasureChest("HQ2Chest2", 15, 27, [["blackshroom", 20]]),
@@ -743,6 +753,8 @@ const mapentities = {
             GetStaircase("GoDownstairsL", 24, 1, 24.5, 2, "hq_2"), GetStaircase("GoDownstairsR", 25, 1, 24.5, 2, "hq_2"),
             GetStaircase("GoUpstairsL", 5, 1, 5.5, 2, "hq_4"), GetStaircase("GoupstairsR", 6, 1, 5.5, 2, "hq_4"),
             InvisFellow("ElevatorL", 11, 2, "elevator3"), InvisFellow("ElevatorR", 12, 2, "elevator3"),
+            // Foreground
+            GetForeground("hq_3", 0, 1984),
             // Ceiling Whatsits
             GetChungus(0, 0, 15, 0, 297, 119), GetChungus(1, 0, 15, 119, 73, 192), GetChungus(2, 0, 15, 311, 185, 154), GetChungus(3, 0, 200, 375, 112, 90), 
             GetChungus(4, 0, 312, 263, 112, 160), GetChungus(5, 0, 424, 263, 57, 96), GetChungus(6, 0, 312, 103, 64, 106), GetChungus(7, 0, 88, 119, 96, 192),
@@ -813,6 +825,8 @@ const mapentities = {
             GetStaircase("GoDownstairsL", 5, 1, 5.5, 2, "hq_3"), GetStaircase("GoDownstairsR", 6, 1, 5.5, 2, "hq_3"),
             SwitchMap("GoUpstairsL", 24, 1, false, false, 8, 51, "hq_5"), SwitchMap("GoUpstairsM", 25, 1, false, false, 8, 51, "hq_5"), SwitchMap("GoUpstairsR", 26, 1, false, false, 8, 51, "hq_5"),
             GetElevator("L", 11, 2), GetElevator("R", 12, 2), 
+            // Foreground
+            GetForeground("hq_4", 0, 1984),
             // Opening Cutscene
             new AutoplayCutscene("to4F"),
             GetCSFellow("SavedWorker", 10, 3, 0, "HurtWorker", "trentSafe", { visible: false, solid: false, boring: true }),
@@ -855,6 +869,8 @@ const mapentities = {
         SwitchMap("GoDownstairsR", 9, 52, false, false, 25, 2, "hq_4"),
         SwitchMap("Flee", 11, 5, false, false, 39, 10, "northcity"),
         SwitchMap("GoUpstairs", 8, 0, false, false, 8.5, 15, "hq_6"),
+        // Foreground
+        GetForeground("hq_5", 0, 1088),
         // Shops
         EnterShop("LastInn", 5, 5, "lastInn"),
         // Boss

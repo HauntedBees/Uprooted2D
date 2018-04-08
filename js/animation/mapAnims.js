@@ -315,7 +315,7 @@ const mafs = {
     "Skumpy3": new MapAnimFactory("la", [14, 16, 2]), "Skumpy4": new MapAnimFactory("la", [12, 16, 2]),
     "BarL": Ft(18, 15), "BarM": Ft(19, 15), "MobstyOut": Ft(17, 15), "MobstyHurt": new MapAnimFactory("la", [26, 3, 2]),
     "Pigeon1": new MapAnimFactory("la", [17, 13, 2]), "Pigeon2": new MapAnimFactory("la", [18, 13, 2]), "DoggyBags": Ft(0, 2, true),
-    "Abuelita": new MapAnimFactory("la", [19, 13, 2]), "AbuelitaThrow": new MapAnimFactory("la", [26, 15, 2, false, 1]),
+    "Abuelita": new MapAnimFactory("la", [19, 13, 2]), "AbuelitaThrow": new MapAnimFactory("la", [26, 15, 2, false, 1]), "ChurchTip": Ft(8, 0),
     "FountainUL": new MapAnimFactory("as", [[P(3, 8), P(7, 8)], true]), "FountainUR": new MapAnimFactory("as", [[P(4, 8), P(8, 8)], true]),
     "FountainLLL": new MapAnimFactory("as", [[P(2, 9), P(6, 9)], true]), "FountainLML": new MapAnimFactory("as", [[P(3, 9), P(7, 9)], true]),
     "FountainLMR": new MapAnimFactory("as", [[P(4, 9), P(8, 9)], true]), "FountainLRR": new MapAnimFactory("as", [[P(5, 9), P(9, 9)], true]),
@@ -333,10 +333,12 @@ const mafs = {
     "HHolerGuy": new MapAnimFactory("la", [4, 20, 2]), "Barnt": new MapAnimFactory("la", [3, 21, 2]), "Danny": new MapAnimFactory("la", [0, 22, 2]),
     "Hole": Ft(4, 22), "CoverL": Ft(2, 22), "CoverM": Ft(3, 20), "CoverR": Ft(2, 23), "LavaLamp": new MapAnimFactory("la", [26, 5, 6]),
     "Keycard": Ft(2, 20), "Dweeb1": Ft(1, 22), "Dweeb2": Ft(1, 23), "Dweeb3": Ft(2, 21),
+    "PCL": Ft(13, 6), "PCR": Ft(13, 7), "PCRbeef": Ft(11, 0), 
     // HQ 1
     "Newbot": new MapAnimFactory("sw", [5, 20]), "Trendy1": new MapAnimFactory("dw", [10, 20, 2]), "Trendy2": new MapAnimFactory("dw", [10, 22, 2]),
     "Receptionist": new MapAnimFactory("la", [9, 22, 2]), "Fuzuru": new MapAnimFactory("la", [24, 0, 3]), "Hungy": new MapAnimFactory("la", [10, 20, 2]),
     "Food2": Ft(3, 23), "HQChairL": Ft(9, 20), "HQChairR": Ft(9, 21), "RollerBob": new MapAnimFactory("dw", [14, 20, 2]),
+    "MacL": Ft(13, 4), "MacR": Ft(13, 5), "FriendPCL": Ft(27, 8), "FriendPCR": Ft(27, 9),
     // HQ 2
     "RollerStart": new MapAnimFactory("sw", [20, 21]), "RollerEnd": new MapAnimFactory("dw", [14, 22, 2]),
     "TechRock": new MapAnimFactory("sw", [18, 20]), "TechRockPressed": new MapAnimFactory("sw", [18, 21]),

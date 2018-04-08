@@ -432,7 +432,7 @@ function ToggleChungus(arg, target) {
 
 // Foreground & Jumbo Covers
 function GetForeground(mapname, yoffset, width) {
-    return { name: "fg" + mapname, img: "foregrounds/" + mapname, visible: true, yoff: yoffset, width: width, isForeground: true, pos: { x: 0, y: 0 } };
+    return { name: "fg" + mapname, img: "fg/" + mapname, visible: true, yoff: yoffset, width: width, isForeground: true, pos: { x: 0, y: 0 } };
 }
 function GetJumbo(id, img, x, y, w, h, ox, oy) {
     return { name: id, storageKey: id, jumbo: true, filename: "covers/" + img, visible: true, w: w, h: h, offset: { x: ox, y: oy }, pos: { x: x, y: y }, boring: true };
