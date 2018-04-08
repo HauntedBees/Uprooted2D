@@ -180,8 +180,9 @@ const CommandParser = {
         if(args.length > 0) {
             if(player.c2 === 0) {
                 player.c2Rate = 500 + Math.floor(Math.random() * 500);
+                player.c2BuyingRate = player.c2Rate;
             } else {
-                player.c2Rate = RoundNear(player.c2Rate * (0.5 + Math.random() * 0.45), 100);
+                player.c2Rate = RoundNear(player.c2BuyingRate * (0.5 + Math.random() * 0.45), 100);
             }
         }
         const formatting = [
