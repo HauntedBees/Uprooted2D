@@ -120,11 +120,16 @@ const scripts = {
 	"rabbit9": "_TRANSITIONANIM&_BLACKTEXT:rabbit6",
 	"rabbit10": "_TEXT:rabbit7",
 	// Forest: Sad Fish
-	"sadfish0": "?[{\"q\":\"player.completedQuest('fishyTalk')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
+	"sadfish0": "?[{\"q\":\"player.completedQuest('friendToFish')&&player.hasUsedFish()\",\"v\":9},{\"q\":\"player.completedQuest('friendToFish')\",\"v\":8},{\"q\":\"player.hasUsedFish()\",\"v\":5},{\"q\":\"player.hasAchievement('vegan')\",\"v\":6},{\"q\":\"player.completedQuest('fishyTalk')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
 	"sadfish1": "targ_VISIBLE:true&_TEXT:fishyFriend(0-1)",
 	"sadfish2": "_COMPLETEQUEST:fishyTalk&_TEXT:fishyFriend2&_SETSTATE:4",
 	"sadfish3": "targ_VISIBLE:true&_TEXT:fishyFriendX",
 	"sadfish4": "targ_VISIBLE:false&_QUIT",
+	"sadfish5": "targ_VISIBLE:true&_TEXT:fishyFriendWronged&_SETSTATE:4",
+	"sadfish6": "targ_VISIBLE:true&_TEXT:fishyFriendGood0",
+	"sadfish7": "_COMPLETEQUEST:friendToFish&targ_VISIBLE:false&_MONEY:5000&_TEXT:fishyFriendGood1&_END",
+	"sadfish8": "targ_VISIBLE:true&_TEXT:fishyFriendBest&_SETSTATE:4",
+	"sadfish9": "targ_VISIBLE:true&_TEXT:fishyFriendBetrayed&_SETSTATE:4",
 	// Forest: Lime
 	"lime0": "?[{\"q\":\"player.completedQuest('limeAndTheCoconut')\",\"v\":3},{\"q\":\"player.hasQuest('limeAndTheCoconut')\",\"v\":4},{\"q\":\"true\",\"v\":1}]",
 	"lime1": "targ_TALK&_STARTQUEST:limeAndTheCoconut&_TEXT:lime(0-2)",

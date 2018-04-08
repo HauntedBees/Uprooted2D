@@ -1458,6 +1458,31 @@ const fulltext = {
 		"en-dm": "Fish: Please be nice to my friends.", 
 		"type": "map"
 	},
+	"fishyFriendWronged": {
+		"en-us": "", 
+		"en-dm": "Fish: I can't believe you slapped people with my friends. How could you?", 
+		"type": "map"
+	},
+	"fishyFriendGood0": {
+		"en-us": "", 
+		"en-dm": "Fish: I heard you made it all the way to Food2 and beat their CEO without using a single fish... that's great. Thank you.", 
+		"type": "map"
+	},
+	"fishyFriendGood1": {
+		"en-us": "", 
+		"en-dm": "The fish gives you 5000 monies. How did he get that much cash???", 
+		"type": "map"
+	},
+	"fishyFriendBest": {
+		"en-us": "", 
+		"en-dm": "Fish: Thank you for being nice to my friends.", 
+		"type": "map"
+	},
+	"fishyFriendBetrayed": {
+		"en-us": "", 
+		"en-dm": "Fish: How could you? After I thanked you... you went ahead and used fish in combat. You monster.", 
+		"type": "map"
+	},
 	"mouse0": {
 		"en-us": "", 
 		"en-dm": "Mouse: squeak squeak", 
