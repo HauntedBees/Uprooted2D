@@ -120,6 +120,7 @@ const mapentities = {
             }
         ]),
         GetTalkie("Lime", 103, 66, "Lime", "lime"),
+        GetCSFellow("GoldEgg", -1, -1, 0, "HatchedGold", "GoldEgg", { visible: false, solid: false, interact: OneSpeak("hatchedEgg") }),
         GetTalkie("BadInfluenceRabbit", 83, 26, "Rabbit", "rabbit", "rabbit"),
         GetFellow("CarrotSeeds", 83, 25, 0, "CarrotBag", [
             function() {
@@ -170,6 +171,7 @@ const mapentities = {
             GetForeground("researchfacility", 0, 2048),
             // Quests
             GetFellow("RAPBATTLE", 28, 8, 0, "RAPBATTLE", Cutscene("rap"), undefined, { moving: true }),
+            GetCSFellow("RAPSprout", -1, -1, 0, "RAPSprout", "RAPSprout", { visible: false, solid: false, interact: OneSpeak("growingpeppie") }),
             // Boss
             GetFellow("Jeff", 7, 1, 0, "DrJeff1", Cutscene("jeff"), undefined, { boss: true, postBattle: "PostBoss2", failedInteract: Cutscene("jeffL"), moving: true }),
             GetCSFellow("Jeff", 7, 0.75, 0, "DrJeff3", "bonkedJeff", { interact: OneSpeak("UnconsciousJeff"), visible: false, moving: true }),
@@ -177,7 +179,7 @@ const mapentities = {
             // Mandatory Enemies
             GetFellow("RFRobo1", 1, 15, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), requiredEnemyMetadata.robo2),
             GetFellow("RFRobo2", 25, 14, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [25, 14, 3], [30, 14, 3], [30, 22, 2], [25, 22, 1], [25, 14, 0] ]), requiredEnemyMetadata.robo2),
-            GetFellow("RFRobo3", 15, 7, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [14, 7, 3], [23, 7, 3], [23, 13, 2], [14, 13, 1], [14, 7, 0] ]), requiredEnemyMetadata.robo2),
+            GetFellow("RFRobo3", 14, 7, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [14, 7, 3], [23, 7, 3], [23, 13, 2], [14, 13, 1], [14, 7, 0] ]), requiredEnemyMetadata.robo2),
             GetFellow("RFRobo4", 16, 9, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [16, 9, 3], [21, 9, 3], [21, 11, 2], [16, 11, 1], [16, 9, 0] ]), requiredEnemyMetadata.robo2),
             GetFellow("RFRobo5", 14, 1, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [14, 1, 3], [18, 1, 3], [18, 5, 2], [14, 5, 1], [14, 1, 0] ]), requiredEnemyMetadata.robo2),
             // Misc. Entities
@@ -267,6 +269,9 @@ const mapentities = {
             GetForeground("underwater", 0, 3200),
             // Beehives & Quests
             GetFellow("PirateFriend", 30, 11, 0, "PirateMonk", Cutscene("piratemonk"), undefined, { moveToTalk: true }),
+            GetCSFellow("PirateField", 30, 10, 0, "", "PirateField", { visible: false, interact: OneSpeak("pirateField") }),
+            GetCSFellow("PirateRice", -1, -1, 0, "PirateRice", "PirateRice", { visible: false, solid: false, interact: OneSpeak("pirateRice") }),
+            GetCSFellow("PirateGMO", -1, -1, 0, "PirateGMO", "PirateGMO", { visible: false, solid: false, interact: OneSpeak("pirateGMO") }),
             GetFellow("PiratesTreasure", 45, 13, 0, "ChestX", Cutscene("seamonkey"), undefined, { open: false }),
             GetFellow("Vase", 45, 28, 0, "Vase1", Cutscene("kelpVase"), undefined, { postBattle: "kelpBeat", boring: true }),
             GetFellow("KelpBoy", 46, 27, 0, "Kelp1", Cutscene("kelpBoy"), undefined, { storageKey: "KelpBoy", postBattle: "kelpBeat", moveToTalk: true }),

@@ -1638,6 +1638,11 @@ const fulltext = {
 		"en-dm": "Lime: It seems my senses were wrong! Let me know if you do come across anything!", 
 		"type": "map"
 	},
+	"hatchedEgg": {
+		"en-us": "", 
+		"en-dm": "Baby: are you my mommy?", 
+		"type": "map"
+	},
 	// Area 4: Research Lab
 	"research0": {
 		"en-us": "", 
@@ -1861,7 +1866,7 @@ const fulltext = {
 	},
 	"growingpeppie": {
 		"en-us": "", 
-		"en-dm": "This bell pepper seems to be growing well enough.", 
+		"en-dm": "This crop seems to be growing well enough.", 
 		"type": "map"
 	},
 	"devbed": {
@@ -2363,6 +2368,21 @@ const fulltext = {
 	"pirateMonkNo": {
 		"en-us": "", 
 		"en-dm": "Dowel: Darn. If you find any durable crops that can grow underwater or just in tough conditions in general, let me know!", 
+		"type": "map"
+	},
+	"pirateField": {
+		"en-us": "", 
+		"en-dm": "This is some very wet dirt. It'd be hard to grow most crops in this.", 
+		"type": "map"
+	},
+	"pirateRice": {
+		"en-us": "", 
+		"en-dm": "The rice is growing well here! It's very rice to see that.", 
+		"type": "map"
+	},
+	"pirateGMO": {
+		"en-us": "", 
+		"en-dm": "The GMO Corn is growing perfectly, despite all the water. That can't be good for the soil.", 
 		"type": "map"
 	},
 	"chestLocked": {

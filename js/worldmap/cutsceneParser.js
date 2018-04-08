@@ -292,6 +292,15 @@ const SpecialFunctions = {
             case "lime.nope": worldmap.writeText("lime.denied"); iHandler.state.done = true; break;
         }
     },
+    "GIVEGOLDEGG": function() {
+        const egg = worldmap.importantEntities["GoldEgg"];
+        egg.visible = true; egg.solid = true;
+        if(Math.round(worldmap.pos.x) === 102 && Math.round(worldmap.pos.y) === 66) {
+            egg.pos = { x: 104, y: 66 };
+        } else {
+            egg.pos = { x: 102, y: 66 };
+        }
+    },
 
     // Research Lab
     "SEEDSHOT": () => { player.health -= 2; game.target.hasShot = 5; },
@@ -344,6 +353,11 @@ const SpecialFunctions = {
             case "rap.coconut": worldmap.writeText("rap.coconut1"); iHandler.state.idx = 10; break;
             case "lime.nope": worldmap.writeText("rap4"); iHandler.state.done = true; break;
         }
+    },
+    "GIVECROP": function() {
+        const crop = worldmap.importantEntities["RAPSprout"];
+        crop.visible = true; crop.solid = true;
+        crop.pos = { x: 29, y: 10 };
     },
 
     // Bridge & Underwater
@@ -455,6 +469,20 @@ const SpecialFunctions = {
         player.increaseItem("ultrarod", 4);
         quests.completeQuest("seamonkey");
         worldmap.writeText("chestUnlock3");
+    },
+    "GIVERICE": function() {
+        game.target = worldmap.importantEntities["PirateField"];
+        worldmap.clearTarget();
+        const crop = worldmap.importantEntities["PirateRice"];
+        crop.visible = true; crop.solid = true;
+        crop.pos = { x: 30, y: 10 };
+    },
+    "GIVEGMO": function() {
+        game.target = worldmap.importantEntities["PirateField"];
+        worldmap.clearTarget();
+        const crop = worldmap.importantEntities["PirateGMO"];
+        crop.visible = true; crop.solid = true;
+        crop.pos = { x: 30, y: 10 };
     },
 
     // Fake Farm

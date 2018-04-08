@@ -138,7 +138,7 @@ const scripts = {
 	"lime9": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:banana,1&_GIVE:corn,10&_TEXT:lime.banana3&_END",
 	"lime10": "_TEXT:lime.corn2",
 	"lime11": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:corn,1&_GIVE:banana,10&_TEXT:lime.corn3&_END",
-	"lime12": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:goldegg,1&_GIVE:coconut,2&_TEXT:lime.egg(2-3)",
+	"lime12": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:goldegg,1&_GIVE:coconut,2&_TEXT:lime.egg(2-3)&_CUSTOM:GIVEGOLDEGG",
 	// Below Village: Beehive
 	"BelowHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5&_CLEARTARGET",
 	// Research Lab: Seed Shooters
@@ -156,11 +156,11 @@ const scripts = {
 	"rap4": "_CUSTOM:RAPSTART",
 	"rap5": "??RAPNEXT",
 	"rap6": "_TAKE:garlic,1&_TEXT:rap.garlic(2-5)",
-	"rap7": "_CHIEVO:RAPBATTLE&_COMPLETEQUEST:rapbattle&_GIVE:battery,10&_TEXT:rap.normalgift&_END",
+	"rap7": "_CHIEVO:RAPBATTLE&_COMPLETEQUEST:rapbattle&_GIVE:battery,10&_TEXT:rap.normalgift&_CUSTOM:GIVECROP&_END",
 	"rap8": "_TAKE:rice,1&_TEXT:rap.rice(2-3)",
 	"rap9": "_TEXT:rap.rice4&_SETSTATE:7",
 	"rap10": "_TEXT:rap.coconut(2-6)",
-	"rap11": "_CHIEVO:RAPBATTLE&_COMPLETEQUEST:rapbattle&_TAKE:coconut,1&_GIVE:gmocorn,2&_TEXT:rap.coconut7&_END",
+	"rap11": "_CHIEVO:RAPBATTLE&_COMPLETEQUEST:rapbattle&_TAKE:coconut,1&_GIVE:gmocorn,2&_TEXT:rap.coconut7&_CUSTOM:GIVECROP",
 	// Research Lab: Second Boss (Jeff)
 	"jeff0": "_TEXT:B2.0",
 	"jeff1": "targ_ANIM:DrJeff2&_TEXT:B2.(1-11)",
@@ -250,9 +250,9 @@ const scripts = {
 	"piratemonk6": "targ_ISMOVING:true&_CUSTOM:PIRATESTART",
 	"piratemonk7": "??PIRATENEXT",
 	"piratemonk8": "_COMPLETEQUEST:seamonkey&_TEXT:pirateMonkR(2-4)",
-	"piratemonk9": "_GIVE:tomato,5&_GIVE:ginger,4&_GIVE:pineapple,3&_GIVE:bellpepper,2&_GIVE:greenshroom,1&_TEXT:pirateMonkR5&_END",
+	"piratemonk9": "_GIVE:tomato,5&_GIVE:ginger,4&_GIVE:pineapple,3&_GIVE:bellpepper,2&_GIVE:greenshroom,1&_TEXT:pirateMonkR5&targ_ISMOVING:false&_CUSTOM:GIVERICE&_END",
 	"piratemonk10": "_TEXT:pirateMonkG(2-5)",
-	"piratemonk11": "_TEXT:pirateMonkG6&_TAKE:gmocorn,1&_SETQUEST:seamonkey,looking",
+	"piratemonk11": "_TEXT:pirateMonkG6&_TAKE:gmocorn,1&_SETQUEST:seamonkey,looking&targ_ISMOVING:false&_CUSTOM:GIVEGMO",
 	// Underwater: Pirate Sea Monk's Treasure
 	"seamonkey0": "?[{\"q\":\"game.target.open\",\"v\":1},{\"q\":\"player.hasQuestState('seamonkey', 'looking')\",\"v\":3},{\"q\":\"true\",\"v\":2}]",
 	"seamonkey1": "_TEXT:openchest&_END",

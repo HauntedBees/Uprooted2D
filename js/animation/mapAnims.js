@@ -269,7 +269,7 @@ const mafs = {
     "Aiko": new MapAnimFactory("dw", [16, 4, 2]),
     "Tanner": new MapAnimFactory("dw", [16, 6, 2]),
     // The Forest
-    "GoldMush": Ft(15, 4), "CarrotBag": Ft(15, 7), "Fishfriend": new MapAnimFactory("dw", [4, 6, 2]),
+    "GoldMush": Ft(15, 4), "CarrotBag": Ft(15, 7), "Fishfriend": new MapAnimFactory("dw", [4, 6, 2]), "HatchedGold": Ft(19, 10),
     "Lime": new MapAnimFactory("dw", [8, 4, 2, false, 2]), "LimeTalk": new MapAnimFactory("dw", [8, 6, 2, false, 6]),
     "Rabbit": new MapAnimFactory("la", [4, 6, 2]), "RabbitTalk": new MapAnimFactory("la", [5, 6, 2]),
     "Turky": new MapAnimFactory("dw", [4, 4, 2]), "TurkyEgg": Ft(15, 5), "Bearbo": Ft(0, 8, true),
@@ -277,7 +277,7 @@ const mafs = {
     // Below Village
     "Robo2": new MapAnimFactory("sw", [4, 8]),
     // Research Lab
-    "RAPBATTLE": new MapAnimFactory("la", [3, 10, 2]),
+    "RAPBATTLE": new MapAnimFactory("la", [3, 10, 2]), "RAPSprout": Ft(6, 3),
     "Chair1": Ft(3, 8), "Chair2": Ft(3, 9),
     "DrJeff1": new MapAnimFactory("la", [8, 8, 2]), "DrJeff2": new MapAnimFactory("la", [8, 10, 2]),
     "DrJeff3": new MapAnimFactory("la", [26, 0, 2]), "DrJeff4": Ft(26, 2),
@@ -297,6 +297,7 @@ const mafs = {
     "Kelp1": new MapAnimFactory("la", [17, 8, 2]), "Kelp2": new MapAnimFactory("la", [18, 8, 2]),
     "Vase1": Ft(19, 8), "Vase2": Ft(19, 9),
     "PirateMonk": new MapAnimFactory("la", [17, 10, 2]), "ChestX": Ft(13, 11),
+    "PirateRice": Ft(18, 10), "PirateGMO": Ft(18, 11),
     "ShipL": Ft(1, 1, true), "ShipM": Ft(2, 1, true), "ShipR": Ft(3, 1, true), "SeaMonCorpse": Ft(2, 8, true),
     "SeaMonL": Ft(1, 2, true), "SeaMonM": new MapAnimFactory("la", [2, 2, 2, true]), "SeaMonR": Ft(3, 2, true),
     "SeaMon2L": Ft(1, 3, true), "SeaMon2M": new MapAnimFactory("la", [1, 8, 2, true]), "SeaMon2R": Ft(3, 3, true),
