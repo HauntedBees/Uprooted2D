@@ -5191,7 +5191,7 @@ const fulltext = {
 	},
 	"beckettText3": {
 		"en-us": "", 
-		"en-dm": "XBeck360 (to you): btw u can dismiss texts w/ the pause button", 
+		"en-dm": "XBeck360 (to you): btw u can dismiss texts w/ the cancel button", 
 		"type": "text"
 	},
 	"sext0": {

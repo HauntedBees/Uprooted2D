@@ -48,12 +48,14 @@ const game = {
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14,
     currentInputHandler: null, target: null, language: "en-dm",
     sheetsToLoad: [
-                    "title", "titleGround", "titleTop", // Title Screen
                     "mapChar", "mapCharBig", "mapPlayer", "mapPlayerHelp", // Map Stuff
                     "fov", "horRorTop", "horRorBottom", "ayudame", // Specific Map Stuff
                     "sheet", "sheetBig", "combatSheet", "combatSheetBig", "combatSheetHuge", "combatPlayer", "combatEquipment", // Combat Stuff
+                    //* Opening *//
+                    "title/logo", "title/lcover0", "title/lcover1", "title/lcover2", "title/lcover3",
+                    "title", "titleGround", "titleTop",
                     //* Maps *//
-                    "maps/producestand", "maps/farm", "maps/firstvillage", "maps/forest",
+                    "maps/farm", "maps/producestand", "maps/firstvillage", "maps/forest",
                     "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
                     "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
                     "maps/hq_6", "maps/gameover",
@@ -61,7 +63,9 @@ const game = {
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",
                     //* Map Foregrounds *//
-                    "foregrounds/farm", 
+                    "fg/farm", "fg/producestand", "fg/firstvillage", 
+                    "fg/belowvillage", "fg/researchfacility", "fg/underwater", "fg/fakefarm", 
+                    "fg/southcity", "fg/northcity", "fg/hq_1", "fg/hq_2", "fg/hq_3", "fg/hq_4", "fg/hq_5",
                     //* Shops *//
                     "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home", "shops/vendo",
                     //* Combat Backgrounds *//
@@ -107,6 +111,7 @@ const game = {
     },
     transitioning: false,
     CleanHandler: function(from) {
+        Sounds.EndAll();
         if(from.clean === undefined) {
             if(from.cursors !== undefined) { from.cursors.Perish(); }
             if(from.animHelper !== undefined) { from.animHelper = null; }
@@ -286,8 +291,8 @@ const game = {
     incrementTime: () => player.playTime++,
     sheetsLoaded: function() {
         game.initListeners();
-        game.currentInputHandler = worldmap.title;
-        worldmap.title.setup();
+        game.currentInputHandler = opening;
+        opening.setup();
     },
     obj2str: obj => LZString.compress(JSON.stringify(obj)),
     str2obj: str => JSON.parse(LZString.decompress(str)),

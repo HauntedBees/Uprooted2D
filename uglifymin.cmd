@@ -35,6 +35,8 @@ uglifyjs ^
     js/combat/tutorial.js ^
     js/combat/wacg.js ^
     js/main.js ^
+    js/sound.js ^
+    js/opening/abee.js ^
     js/animation/mapAnims.js ^
     js/worldmap/cutsceneParser.js ^
     js/worldmap/worldmap.js ^
