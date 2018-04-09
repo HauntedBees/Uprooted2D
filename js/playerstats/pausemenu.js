@@ -150,8 +150,8 @@ const pausemenu = {
             case player.controls.left: pos.x--; break;
             case player.controls.up: pos.y--; pos.x = 0; break;
             case player.controls.down: pos.y++; break;
-            case player.controls.confirm:
-            case player.controls.pause: isEnter = true; break;
+            case player.controls.confirm: isEnter = true; break;
+            case player.controls.pause: 
             case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.x < 0) { return false; }

@@ -134,8 +134,8 @@ pausemenu.equipment = {
             case player.controls.left: pos.x--; break;
             case player.controls.down: pos.y++; break;
             case player.controls.right: pos.x++; break;
-            case player.controls.confirm:
-            case player.controls.pause: isEnter = true; break;
+            case player.controls.confirm: isEnter = true; break;
+            case player.controls.pause: 
             case player.controls.cancel: return this.cancel();
         }
         if(pos.y < -1 || pos.x < 0) { return false; }
