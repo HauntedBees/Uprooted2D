@@ -203,7 +203,7 @@ const worldmap = {
     },
     clearTarget: function() {
         if(game.target) {
-            if(game.target.name[0] !== "~") { player.clearedEntities.push(game.target.name); }
+            if(game.target.name[0] !== "~" && !game.target.neverClear) { player.clearedEntities.push(game.target.name); }
             const idx = this.entities.indexOf(game.target);
             if(idx >= 0) { this.entities.splice(idx, 1); }
         }
@@ -344,13 +344,15 @@ const worldmap = {
                 dp.x += moveSpeed;
                 this.playerDir = directions.RIGHT;
                 break;
-            case player.controls.confirm:
-            case player.controls.pause: isEnter = true; break;
+            case player.controls.confirm: isEnter = true; break;
+            case player.controls.pause: 
+                if(this.inDialogue) { return; }
+                worldmap.savedImage = gfx.getSaveFileImage();
+                game.transition(this, pausemenu);
+                return;
             case player.controls.cancel: 
                 if(this.inDialogue) { return; }
                 if(this.smartphone !== null && this.smartphone.Dismiss() > 0) { return; }
-                worldmap.savedImage = gfx.getSaveFileImage();
-                game.transition(this, pausemenu);
                 return;
         }
         if(dp.x !== 0 && dp.y !== 0) { dp.x *= Math.SQRT2; dp.y *= Math.SQRT2; }

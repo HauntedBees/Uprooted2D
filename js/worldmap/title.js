@@ -77,7 +77,7 @@ worldmap.title = {
         switch(this.cursory) {
             case 0:
                 return game.transition(this, worldmap, {
-                    init: { x: 17,  y: 9 }, map: "farm_init" // beginning of game
+                    init: { x: 17,  y: 9 }, map: "farm" // beginning of game
                     //init: { x: 10,  y: 5 }, map: "producestand" // cutscene position
                     //init: { x: 12,  y: 4 }, map: "farm" // by boss
                     //init: { x: 2,  y: 1 }, map: "farm" // by beehive
