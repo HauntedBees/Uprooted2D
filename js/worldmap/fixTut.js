@@ -6,7 +6,7 @@ const fixTut = {
         this.state = 0;
         this.drawTutorial();
     },
-    transition: function(from, to, arg) { // TODO: do the fuckin fancy shit
+    transition: function(from, to, arg) { // 298 TODO: do the fuckin fancy shit
         this.currentInputHandler = to;
         game.CleanHandler(from);
         to.setup(arg);
@@ -23,7 +23,7 @@ const fixTut = {
     click: function(pos) { return true; },
     keyPress: function(key) {
         if(this.state === 0) {
-            if(key === player.controls.pause || key === player.controls.cancel) { // TODO: why the fuck did I ever make cancel do the pause when the pause button is already there you dumb fuck
+            if(key === player.controls.pause || key === player.controls.cancel) { // 295 TODO: why the fuck did I ever make cancel do the pause when the pause button is already there you dumb fuck
                 this.transition(worldmap, pausemenu);
                 this.state++;
                 this.drawTutorial();
@@ -32,7 +32,7 @@ const fixTut = {
                 return false;
             }
         } else if(this.state === 1) {
-            if(key === player.controls.cancel) { return false; } // TODO: should disable pause too, honestly
+            if(key === player.controls.cancel) { return false; } // 295 TODO: should disable pause too, honestly
             if(key === player.controls.confirm || key === player.controls.pause) {
                 if(pausemenu.cursorY !== 2) { return false; }
                 this.transition(pausemenu, pausemenu.farmmod);

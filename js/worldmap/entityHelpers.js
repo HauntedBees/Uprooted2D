@@ -532,7 +532,7 @@ function GetStdMovement(points) {
     return { state: 0, speed: 0.025, loop: true, points: newPoints };
 }
 
-function GetItemDisplayName(name, plural) { // TODO: move this fucker to the language parsing shit
+function GetItemDisplayName(name, plural) { // 296 TODO: move this fucker to the language parsing shit
     const pluralSuf = plural ? "s" : "";
     switch(name[0]) {
         case "_": return GetFarmInfo(name).displayname + pluralSuf; break;

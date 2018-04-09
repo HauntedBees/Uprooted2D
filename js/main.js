@@ -86,7 +86,7 @@ const game = {
         let canvasObj = {};
         for(let i = 0; i < game.canvasLayers.length; i++) {
             const name = game.canvasLayers[i];
-            //game.createCanvas(name) // TODO: why was I doing this??
+            //game.createCanvas(name) // NOTE: why was I doing this??
             canvasObj[name] = document.getElementById(name);
         }
         let contextObj = {};

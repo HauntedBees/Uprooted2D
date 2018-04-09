@@ -939,7 +939,7 @@ const SpecialFunctions = {
     "BYEFALCON": () => player.hasFalcon = false,
     "SWITCHTOFALCON": () => iHandler.Start("falcon"),
     "BIRDSONG.OGG": function() {
-        // TODO
+        // 284 TODO
     },
     "GETFALCONTEXT": function() {
         let keyStart = "falconMsg0.";

@@ -241,7 +241,7 @@ combat.plant = {
                 const cowDelta = (diff === 1 ? 0 : 1);
                 const cowIdx = combat.getCowIndex(px - cowDelta, py - cowDelta);
                 player.miscdata.typesPlanted["cow"] += 1;
-                if(cowIdx >= 0) { // TODO: adjust how much health different crops/types give?
+                if(cowIdx >= 0) {
                     combat.happyCows[cowIdx].feed += newCrop.power;
                 } else {
                     combat.happyCows.push({ x: px - cowDelta, y: py - cowDelta, feed: newCrop.power });
@@ -457,7 +457,7 @@ combat.plant = {
         } else {
             this.SetFieldText();
             size = this.activeCrop.size - 1;
-            if(combat.isFalcon) { // TODO: all this whatsit
+            if(combat.isFalcon) {
                 combat.animHelper.ResetPlayerAnimState();
                 combat.animHelper.SetBirdAnimState("PLANT");
                 combat.animHelper.SetBirdAnimLayer("menucursorC");
@@ -567,7 +567,7 @@ combat.plant = {
         let leftMostX = 9.5;
         if(crop.time > 0) {
             gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
-            if(crop.time === 999) { // TODO: -1 vs 999 what is the diff?
+            if(crop.time === 999) { // NOTE: -1 vs 999 what is the diff?
                 gfx.drawTileToGrid("bigNum?", leftMostX + 1, row2y, "menutext");
             }  else {
                 gfx.drawBigNumber(crop.time, leftMostX + 1, row2y, "menutext");

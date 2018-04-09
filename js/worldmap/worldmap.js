@@ -131,7 +131,7 @@ const worldmap = {
         else { worldmap.refreshMap(); }
     },
     refreshMap: function() {
-        gfx.clearSome(["background", "background2", "characters", "foreground"]); // TODO: actually put things on the foreground
+        gfx.clearSome(["background", "background2", "characters", "foreground"]);
         const offset = gfx.drawMap(this.mapName, this.hijackedX || this.pos.x, this.hijackedY || this.pos.y);
         const layers = [];
         const fov = [];
@@ -169,7 +169,7 @@ const worldmap = {
             let roundedY = e.forcedY ? e.forcedY : Math.round(e.pos.y);
             if(roundedY < 0 || roundedY >= ymax) { continue; }
             if(e.big) { roundedY++; }
-            if(layers[roundedY] !== undefined) { // TODO: address new screen size (TODO: I don't know what I meant by this...?)
+            if(layers[roundedY] !== undefined) { // NOTE: address new screen size (I don't know what I meant by this...?)
                 if(e === undefined || e.anim === undefined || e.anim.getFrame === undefined) { console.log("error with this entity:"); console.log(e); }
                 layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
             }
@@ -313,7 +313,7 @@ const worldmap = {
         worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
     },
     keyPress: function(key) {
-        if(this.inWaterfall || this.fullAnimIdx <= 0)  { return false; }
+        if(this.inWaterfall || this.fullAnimIdx <= 0 || game.transitioning)  { return false; }
         if(this.inDialogue) {
             this.freeMovement = false;
             input.clearAllKeys();

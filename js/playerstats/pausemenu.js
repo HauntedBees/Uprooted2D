@@ -77,7 +77,7 @@ const pausemenu = {
     },
     drawFarm: function() {
         var helper = new CombatAnimHelper([]);
-        var max_x = 10, min_x = max_x - player.gridWidth; // TODO: center align
+        var max_x = 10, min_x = max_x - player.gridWidth; // 297 TODO: center align
         var max_y = 5, min_y = max_y - Math.floor(player.gridHeight * 0.75);
         helper.DrawWrapper(min_x, min_y, player.gridWidth, max_y - min_y);
         for(var x = min_x; x < max_x; x++) {
@@ -98,7 +98,7 @@ const pausemenu = {
                 }
             }
         }
-        // TODO: make player walkin areund it
+        // 287 TODO: make player walkin areund it
     },
     addText: (t, x, y) => gfx.drawText(t, 2 + x * 16, 10.5 + y * 16),
     addFormattedText: function(key, num, x, y, middle, spaceNum) {

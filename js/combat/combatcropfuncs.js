@@ -131,7 +131,7 @@ combat.RemoveFlaggedCrops = function() {
 combat.PurgeCrop = function(grid, x, y) {
     if(grid[x][y] === null || grid[x][y].name === undefined) { return false; }
     const crop = grid[x][y];
-    //if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; } // TODO: why was this even here
+    //if(crop.name !== "app" && (crop.rotten || crop.activeTime > 0)) { return false; } // NOTE: why was this even here
     if(crop.respawn > 0 && crop.health > 0) {
         crop.activeTime = combat.plant.GetGrowthTime(crop, x, y, true);
         crop.flagged = false;

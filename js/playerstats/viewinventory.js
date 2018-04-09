@@ -371,7 +371,7 @@ pausemenu.inventory = {
 
         // Row 2
         gfx.drawTileToGrid("inv_time", leftMostX, rowYs[2], "menutext");
-        if(crop.time === 999 || crop.time === -1) { // TODO: -1 vs 999 what is the diff?
+        if(crop.time === 999 || crop.time === -1) { // NOTE: -1 vs 999 what is the diff?
             gfx.drawTileToGrid("bigNum?", leftMostX + 1, rowYs[2], "menutext");
         } else {
             gfx.drawBigNumber(crop.time, leftMostX + 1, rowYs[2], "menutext");

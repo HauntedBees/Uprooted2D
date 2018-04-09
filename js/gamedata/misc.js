@@ -6,7 +6,7 @@ const FloorNear = (x, num) => Math.floor(x * num) / num;
 const RandomArrayItem = arr => arr[Math.floor(Math.random() * arr.length)];
 /*const DiffPoints = (p1, p2) => ({ x: p1.x - p2.x, y: p1.y - p2.y });
 const AddPoints = (p1, p2) => ({ x: p1.x + p2.x, y: p1.y + p2.y });
-const MultPoint = (p, m) => ({ x: p.x * m, y: p.y * m });*/ // TODO: UNUSED BUT MAYBE USEFUL
+const MultPoint = (p, m) => ({ x: p.x * m, y: p.y * m });*/ // NOTE: UNUSED BUT MAYBE USEFUL
 
 const inns = {
     "start": { x: 21, y: 5.25, map: "farm" },

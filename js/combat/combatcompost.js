@@ -58,10 +58,10 @@ combat.compost = {
                 admg = Math.ceil(this.compostMultiplier * results.total / 3.5);
             }
         }
-        gfx.drawText(hdmg, 88, 165); // TODO: right align
+        gfx.drawText(hdmg, 88, 165); // 297 TODO: right align
         if(this.canAttack) {
             gfx.drawText(GetText("cmp_atkpow"), 88, 175);
-            gfx.drawText(admg, 88, 185); // TODO: right align
+            gfx.drawText(admg, 88, 185); // 297 TODO: right align
         }
 
         if(this.canAttack) {

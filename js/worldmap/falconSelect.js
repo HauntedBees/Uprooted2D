@@ -64,7 +64,7 @@ worldmap.falconSelect = {
         let leftMostX = 9.5;
         if(crop.time > 0) {
             gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
-            if(crop.time === 999) { // TODO: -1 vs 999 what is the diff?
+            if(crop.time === 999) { // NOTE: -1 vs 999 what is the diff?
                 gfx.drawTileToGrid("bigNum?", leftMostX + 1, row2y, "menutext");
             }  else {
                 gfx.drawBigNumber(crop.time, leftMostX + 1, row2y, "menutext");
@@ -127,7 +127,7 @@ worldmap.falconSelect = {
     },
     GetSeedAmountForCrop: function(crop) {
         if(["coconut", "gmocorn", "notdrugs", "lotus"].indexOf(crop) >= 0) { return 4; }
-        return 10; // TODO: probably shouldn't be this for EVERY standard crop (should this be in the spreadsheet?)
+        return 10; // 294 TODO: probably shouldn't be this for EVERY standard crop (should this be in the spreadsheet?)
     },
     click: function(pos) {
         if(this.cursor.y < 0) {

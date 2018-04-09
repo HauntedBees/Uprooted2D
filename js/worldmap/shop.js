@@ -298,7 +298,7 @@ worldmap.shop = {
         const price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
         let lineOne = farmInfo.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(farmInfo.name);
-        if(amt > 0) { lineOne += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // TODO: right align this?
+        if(amt > 0) { lineOne += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // 297 TODO: right align this?
         this.WriteWrappedText(lineOne + "\n " + farmInfo.desc);
     },
     DrawSeedText: function(productInfo, crop, price) {
@@ -306,7 +306,7 @@ worldmap.shop = {
         price = price || Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
         let str = crop.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(crop.name);
-        if(amt > 0) { str += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // TODO: right align this?
+        if(amt > 0) { str += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // 297 TODO: right align this?
         this.WriteWrappedText(str);
         pausemenu.inventory.DrawCropPower(crop, 0.5, 10, "menutext");
 
@@ -330,7 +330,7 @@ worldmap.shop = {
         gfx.drawItemNumber(crop.size, 13.75, 10, "menutext", true);
 
         gfx.drawTileToGrid("inv_time", 0.5, 11, "menutext");
-        if(crop.time === 999 || crop.time === -1) { // TODO: -1 vs 999 what is the diff?
+        if(crop.time === 999 || crop.time === -1) { // NOTE: -1 vs 999 what is the diff?
             gfx.drawTileToGrid("bigNumW?", 1.5, 11, "menutext");
         } else {
             gfx.drawBigNumber(crop.time, 1.5, 11, "menutext", true);
@@ -366,13 +366,13 @@ worldmap.shop = {
             price = Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
             topText = crop.displayname + " (" + price + "G)";
             const amt = player.getItemAmount(crop.name);
-            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // TODO: right align this?
+            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // 297 TODO: right align this?
         } else if(productInfo.type === "farm") {
             const farmInfo = GetFarmInfo(productInfo.product);
             price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
             topText = farmInfo.displayname + " (" + price + "G)";
             const amt = player.getItemAmount(farmInfo.name);
-            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // TODO: right align this?
+            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // 297 TODO: right align this?
         }
         topText += " \n \n " + GetText("s.howMany") + "       " + amount + " (" + (price * amount) + "G)";
         this.WriteWrappedText(topText);

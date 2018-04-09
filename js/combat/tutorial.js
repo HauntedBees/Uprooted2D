@@ -104,7 +104,7 @@ const tutorial = {
         }
     },
     matchCoords: function(pos, x, y) { return pos.x === x && pos.y === y; },
-    stateDetails: [ // TODO: heights should be language-dependent probably
+    stateDetails: [ // 296 TODO: heights should be language-dependent probably
         { height: 1.8, advance: () => combat.menu.cursorY === 0 },
         { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5) },
         { height: 1.8, advance: AnyPress },
