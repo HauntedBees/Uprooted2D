@@ -34,6 +34,7 @@ combat.plant = {
         return true;
     },
     isValidPlantingLocation: function(px, py, diff) {
+        if(player.gridWidth <= px || player.gridHeight <= py) { return false; }
         if(this.activeCrop.type === "moist") {
             if(diff === 1) {
                 return this.isValidLocationForCrop(px, py) || this.isValidLocationForCrop(px + 1, py)
@@ -44,6 +45,7 @@ combat.plant = {
         }
         if(diff === 1) {
             if(player.itemGrid[px][py] === "_cow") { return this.isValidLocationForCrop(px + 1, py + 1); }
+            if(player.gridWidth <= (px + 1) || player.gridHeight <= (py + 1)) { return false; }
             if(combat.grid[px][py] !== null) { return false; }
             if(combat.grid[px + 1][py] !== null) { return false; }
             if(combat.grid[px][py + 1] !== null) { return false; }
