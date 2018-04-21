@@ -2,7 +2,78 @@ let gpVals = {
     triggerMin: 0.5,
     deadZones: [0.25, 0.25, 0.25, 0.25]
 };
+let consoleCmd = {
+    Process: function(str) {
+        const args = str.split(" ");
+        const cmd = args.shift();
+        switch(cmd) {
+            case "setmonies": return consoleCmd.SetPlayerInt("monies", args);
+            case "setatk": return consoleCmd.SetPlayerInt("atk", args);
+            case "setdef": return consoleCmd.SetPlayerInt("def", args);
+            case "sethealth": return consoleCmd.SetPlayerInt("health", args);
+            case "setmaxhealth": {
+                consoleCmd.SetPlayerInt("health", args);
+                return consoleCmd.SetPlayerInt("maxhealth", args);
+            }
+            case "setluck": {
+                const v = parseFloat(args[0]);
+                if(!isNaN(v)) { player.luck = v; }
+                return;
+            }
+            case "noclip": {
+                if(args.length === 0) { return; }
+                if(args[0] === "on") {
+                    worldmap.noClip = true;
+                } else if(args[0] === "off") {
+                    worldmap.noClip = false;
+                }
+                return;
+            }
+            case "get": {
+                if(args.length !== 2) { return; }
+                const amount = parseInt(args[0]);
+                if(isNaN(amount)) { return; }
+                const item = args[1];
+                if(sprites[item] === undefined) { return; }
+                player.increaseItem(item, amount);
+            }
+            case "unsafe": return eval(args.join(" "));
+        }
+    },
+    SetPlayerInt: function(prop, args) {
+        const v = parseInt(args[0]);
+        if(!isNaN(v)) { player[prop] = v; }
+    }
+};
 let input = {
+    inConsole: false, flickerIdx: -1, consoleString: "", 
+    ConsoleKeyPress: function(key) {
+        if(key === "Backspace") {
+            input.consoleString = input.consoleString.substring(0, input.consoleString.length - 1);
+        } else if(key === "Enter") {
+            consoleCmd.Process(input.consoleString);
+            input.consoleString = "";
+            input.HandleConsole();
+        } else {
+            input.consoleString += key;
+        }
+        document.getElementById("consoleText").innerText = input.consoleString.toUpperCase();
+    },
+    HandleConsole: function() {
+        if(!input.inConsole) {
+            console.log("WA!");
+            input.inConsole = true;
+            input.flickerIdx = setInterval(function() {
+                const chorp = document.getElementById("chorp");
+                chorp.style.display = (chorp.style.display === "") ? "none" : "";
+            }, 750);
+            document.getElementById("garfield").setAttribute("style", "display: block");
+        } else {
+            clearInterval(input.flickerIdx);
+            input.inConsole = false;
+            document.getElementById("garfield").setAttribute("style", "display: none");
+        }
+    },
     FloorPoint: p => { p.x = Math.floor(p.x); p.y = Math.floor(p.y); },
     click: function(e) {
         const p = input.getMousePos(e); console.log(p);
@@ -50,6 +121,11 @@ let input = {
     GetKey: e => e.key.length === 1 ? e.key.toLowerCase() : e.key,
     keyDown: function(e) {
         const key = input.GetKey(e);
+        if(input.inConsole) { 
+            if(key === "Backspace" || key === "Delete") {
+                return input.ConsoleKeyPress("Backspace");
+            } else { return; }
+        }
         input.justPressed[key] = input.justPressed[key] === undefined ? 0 : input.justPressed[key] + 1;
         if(player.options.controltype === 1) { input.SwitchControlType(0); }
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
@@ -62,6 +138,7 @@ let input = {
     },
     keyUp: function(e) {
         const key = input.GetKey(e);
+        if(input.inConsole) { return; }
         input.justPressed[key] = -1;
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
             clearInterval(input.keys[key]);
@@ -79,6 +156,8 @@ let input = {
     },
     keyPress: function(e) {
         const key = input.GetKey(e);
+        if(key === "`") { return input.HandleConsole(); }
+        if(input.inConsole) { return input.ConsoleKeyPress(key); }
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
             return;
         }

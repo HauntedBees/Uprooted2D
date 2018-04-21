@@ -21,6 +21,19 @@
                 text-align: center;
             }
             #savegen { display: none }
+            #garfield {
+                left: 0;
+                margin: 0 auto;
+                position: absolute;
+                right: 0; 
+                text-align: left;
+                width: 1024px;
+                background-color: #000000AA;
+                color: #FFFFFF;
+                font-size: 24px;
+                padding: 10px 0;
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -41,6 +54,7 @@
             <canvas id="menuOverBlack" width="1024" height="896"></canvas>
             <canvas id="menutextOverBlack" width="1024" height="896"></canvas>
             <canvas id="savegen" width="1024" height="896"></canvas>
+            <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
         </div>
         <div id="fontLoader">
             <div style="font-family:PressStart2P">&nbsp;</div>
