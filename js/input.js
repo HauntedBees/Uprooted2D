@@ -34,8 +34,9 @@ let consoleCmd = {
                 const amount = parseInt(args[0]);
                 if(isNaN(amount)) { return; }
                 const item = args[1];
-                if(sprites[item] === undefined) { return; }
+                if((GetCrop(item) || GetFarmInfo(item) || GetEquipment(item) || false) === false) { return; }
                 player.increaseItem(item, amount);
+                return;
             }
             case "unsafe": return eval(args.join(" "));
         }
