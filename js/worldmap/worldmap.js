@@ -360,6 +360,7 @@ const worldmap = {
 
         const newPos = { x: Math.round(pos.x), y: Math.round(pos.y) }
         if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
+        if(pos.x <= 0.25 || pos.x >= (collisions[this.mapName][0].length - 0.75)) { return false; }
         if(worldmap.noClip) {
             this.pos = pos;
         } else {
