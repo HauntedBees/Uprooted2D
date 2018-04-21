@@ -761,7 +761,7 @@ const mapentities = {
             GetChungus(9, 1, 264, 119, 48, 96), GetChungus(10, 0, 312, 423, 89, 42), GetChungus(10, 1, 401, 439, 80, 26), GetChungus(11, 0, 424, 359, 57, 58),
             GetChungus(11, 1, 447, 417, 34, 22), GetChungus(12, 0, 376, 167, 105, 96), GetChungus(12, 1, 312, 231, 64, 32), GetChungus(13, 0, 312, 0, 169, 103),
             GetChungus(13, 1, 376, 103, 105, 64),
-            { id: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
+            { id: "StartChungus", name: "StartChungus", chungi: [13], autoplay: true, interact: [ function() { 
                 if(worldmap.horRor === null) {
                     const startingRoom = worldmap.pos.x < 10 ? 0 : 13;
                     worldmap.horRor = new HorRor(startingRoom);
