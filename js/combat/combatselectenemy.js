@@ -405,42 +405,42 @@ const addtlHitChecks = {
     },
     "check_SP_SU": function(cropInfo, damage) {
         let hasSpringSummer = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasSpringSummer |= (cropInfo[i].seasons[0] === 2 || cropInfo[i].seasons[1] === 2); }
+        for(let i = 0; i < cropInfo.length; i++) { hasSpringSummer |= (cropInfo[i].crop.seasons[0] === 2 || cropInfo[i].crop.seasons[1] === 2); }
         return hasSpringSummer ? (damage * 50) : 0;
     },
     "check_AU_WI": function(cropInfo, damage) {
         let hasFallWinter = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasFallWinter |= (cropInfo[i].seasons[2] === 2 || cropInfo[i].seasons[3] === 2); }
+        for(let i = 0; i < cropInfo.length; i++) { hasFallWinter |= (cropInfo[i].crop.seasons[2] === 2 || cropInfo[i].crop.seasons[3] === 2); }
         return hasFallWinter ? (damage * 50) : 0;
     },
     "check_MUSH": function(cropInfo, damage) {
         let hasMushroom = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type === "mush"; }
+        for(let i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].crop.type === "mush"; }
         return hasMushroom ? (damage * 50) : 0;
     },
     "check_FISH": function(cropInfo, damage) {
         let hasFish = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasFish |= (cropInfo[i].type === "spear" || cropInfo[i].type === "rod" || cropInfo[i].type === "water"); }
+        for(let i = 0; i < cropInfo.length; i++) { hasFish |= (cropInfo[i].crop.type === "spear" || cropInfo[i].crop.type === "rod" || cropInfo[i].crop.type === "water"); }
         return hasFish ? (damage * 50) : 0;
     },
     "check_MUSH_w": function(cropInfo, damage) {
         let hasMushroom = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].type === "mush"; }
+        for(let i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].crop.type === "mush"; }
         return hasMushroom ? damage : 0;
     },
     "check_RICE": function(cropInfo, damage) {
         let hasRice = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasRice |= cropInfo[i].type === "rice"; }
+        for(let i = 0; i < cropInfo.length; i++) { hasRice |= cropInfo[i].crop.type === "rice"; }
         return hasRice ? damage : 0;
     },
     "check_VEG": function(cropInfo, damage) {
         let hasVeg = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasVeg |= cropInfo[i].type === "veg"; }
+        for(let i = 0; i < cropInfo.length; i++) { hasVeg |= cropInfo[i].crop.type === "veg"; }
         return hasVeg ? damage : 0;
     },
     "check_FRUIT": function(cropInfo, damage) {
         let hasTree = false;
-        for(let i = 0; i < cropInfo.length; i++) { hasTree |= cropInfo[i].type === "tree"; }
+        for(let i = 0; i < cropInfo.length; i++) { hasTree |= cropInfo[i].crop.type === "tree"; }
         return hasTree ? damage : 0;
     }
 };
