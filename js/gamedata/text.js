@@ -9726,7 +9726,7 @@ const fulltext = {
 	},
 	"e.piggun0": {
 		"en-us": "", 
-		"en-dm": "Gun Pig", 
+		"en-dm": "Hamdgun", 
 		"type": "enemy"
 	},
 	"e.golem0": {
