@@ -257,8 +257,9 @@ combat.menu = {
         }
         return true;
     },
+    freeFleeEnemies: ["machineA", "machineB", "machineC", "machineD", "botMush", "botRice", "botFruit", "botVeggie"],
     tryFlee: function() {
-        if(Math.random() < (0.65 * player.luck)) {
+        if(combat.enemies.some(e => this.freeFleeEnemies.indexOf(e.id) >= 0) || Math.random() < (0.65 * player.luck)) {
             combat.animHelper.SetPlayerAnimState("FLEE", true);
             if(game.target !== null && !game.target.noRunKill) { worldmap.clearTarget(); }
             game.innerTransition(this, combat.inbetween, {
