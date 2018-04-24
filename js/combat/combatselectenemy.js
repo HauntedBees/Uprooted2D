@@ -148,7 +148,7 @@ combat.selectTarget = {
             me.CursorMove({x: Math.floor(pos.x - combat.enemydx) + combat.enemydx, y: Math.floor(pos.y - combat.enemydy) + combat.enemydy });
         } else {
             pos.y = 8;
-            pos.x = combat.animHelper.GetEnemyPosFromMouseX(pos.x); // TODO: sean you need to add a back button thanks
+            pos.x = combat.animHelper.GetEnemyPosFromMouseX(pos.x);
             me.CursorMove(pos, true);
         }
     },

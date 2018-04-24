@@ -1,4 +1,5 @@
 worldmap.title = {
+    mouseReady: true, 
     availableCrops: ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "lotus", "soybean"],
     cursory: 0, showContinue: false,
     layersToClear: ["menutext", "menucursorA"],
@@ -67,12 +68,16 @@ worldmap.title = {
         }
     },
     mouseMove: function(pos) {
+        if(pos.x < 6 || pos.x > 10 || pos.y < 7 || pos.y > 9) { return; }
+        return this.CursorMove( { x: 0, y: Math.floor(pos.y - 7) });
+    },
+    CursorMove: function(pos) {
         if(pos.y < 0 || pos.y >= this.menuItems.length) { return false; }
         this.cursory = pos.y;
         this.DrawMenu();
         return true;
     },
-    click: function(pos, isFresh) {
+    click: function(isFresh) {
         if(!isFresh) { return false; }
         switch(this.cursory) {
             case 0:
@@ -136,7 +141,7 @@ worldmap.title = {
             //case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.y > 2) { return false; }
-        if(isEnter) { return this.click(pos, input.IsFreshPauseOrConfirmPress()); }
-        else { return this.mouseMove(pos); }
+        if(isEnter) { return this.click(input.IsFreshPauseOrConfirmPress()); }
+        else { return this.CursorMove(pos); }
     }
 };
