@@ -17,6 +17,7 @@ combat.plant = {
     },
     clean: function() { gfx.clearSome(this.layersToClean) },
     cancel: function(fromKeyboard) {
+        if(game.currentInputHandler.isTutorial) { return false; }
         if(this.activeCrop === null) {
             if(combat.numPlantTurns != player.getPlantingTurns()) {
                 if(player.canAttackAfterPlanting()) {

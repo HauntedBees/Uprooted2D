@@ -1,5 +1,6 @@
 const AnyPress = () => true;
 const tutorial = {
+    mouseReady: true, 
     isTutorial: true, attemptingLeave: false, completed: false, 
     state: 0, currentInputHandler: combat.menu,
     startBattle: function() {
@@ -56,8 +57,8 @@ const tutorial = {
         gfx.drawText(text, 7 + (rightx * 16 - 16 * xi), 3.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     mouseMove: function(pos) { return this.currentInputHandler.mouseMove(pos); },
-    click: function(pos) { return true; },
-    keyPress: function(key) {
+    click: function(pos) { return this.keyPress(player.controls.confirm, true, pos); },
+    keyPress: function(key, isClick, clickPos) {
         if(this.state === 39) { return this.currentInputHandler.keyPress(key); }
         if(key === player.controls.cancel) { return false; }
         const isEnter = (key === player.controls.pause || key === player.controls.confirm);
@@ -66,7 +67,8 @@ const tutorial = {
             let success = this.stateDetails[this.state].advance();
             if(!success && !runCheck) { return false; }
             if(!runCheck) {
-                success = tutorial.currentInputHandler.keyPress(key);
+                if(isClick) { success = tutorial.currentInputHandler.click(clickPos, true); }
+                else { success = tutorial.currentInputHandler.keyPress(key); }
                 if(!success) { return false; }
             }
             this.state++;
@@ -141,10 +143,11 @@ const tutorial = {
         { height: 1.8, advance: () => combat.menu.cursorY === 2 },
         { height: 1.8, advance: function() {
                 const gridpos = { x: combat.compost.cursor.x - combat.dx, y: combat.compost.cursor.y - combat.dy };
-                const tile = combat.grid[gridpos.x][gridpos.y];
-                return tile.name === "beet" && tile.rotten;
+                if(gridpos.x >= player.gridWidth || gridpos.y >= player.gridHeight || gridpos.x < 0 || gridpos.y < 0) { return false; }
+                const tile = combat.grid[Math.floor(gridpos.x)][Math.floor(gridpos.y)];
+                return tile != null && tile.name === "beet" && tile.rotten;
             } },
-        { height: 1.8, advance: () => combat.compost.cursor.y === combat.compost.dy },
+        { height: 1.8, advance: () => combat.compost.cursor.y === (combat.compost.dy + 1) },
         { height: 3.5, advance: AnyPress },
         { height: 2.5, advance: AnyPress },
         { height: 1.8, advance: AnyPress }

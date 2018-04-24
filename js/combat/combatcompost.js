@@ -225,7 +225,7 @@ combat.compost = {
         combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
-    cancel: function() { game.innerTransition(this, combat.menu, { sel: 2, notFirst: true }); return true; },
+    cancel: function() { if(game.currentInputHandler.isTutorial) { return false; } game.innerTransition(this, combat.menu, { sel: 2, notFirst: true }); return true; },
     toggleCrop: function(gridpos) {
         for(let i = 0; i < this.selectedCrops.length; i++) {
             const old = this.selectedCrops[i];
