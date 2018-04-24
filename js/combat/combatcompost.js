@@ -1,19 +1,23 @@
 combat.compost = {
+    mouseReady: true, 
     selectedCrops: [], binSprite: "compost", binx: 3.75, biny: 8.75,
     cursor: {x: 1, y: 5}, dy: 9, compostMultiplier: 1, 
-    healY: 0, attackY: 0, canAttack: false, 
+    backY: 0, healY: 0, attackY: 0, canAttack: false, 
+    backButtonWidth: 0, backButtonSelected: false, 
     healButtonWidth: 0, healButtonSelected: false, 
     attackButtonWidth: 0, attackButtonSelected: false, 
     layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function() {
         this.canAttack = player.canAttackWithCompost();
         this.selectedCrops = [];
-        this.healY = 2 + (this.dy + 0.5) * 16;
-        this.atkY = 2 + (this.dy + 1.5) * 16;
+        this.backY = 2 + (this.dy + 0.5) * 16;
+        this.healY = this.backY + 16;
+        this.atkY = this.healY + 16;
         this.binSprite = player.equipment.compost;
         this.cursor = {x: combat.dx, y: combat.dy};
         this.healButtonSelected = false;
         this.attackButtonSelected = false;
+        this.backButtonSelected = false;
         if(player.equipment.compost !== null) {
             this.compostMultiplier = 1 + (GetEquipment(player.equipment.compost).bonus || 0);
         } else { this.compostMultiplier = 1; }
@@ -35,9 +39,11 @@ combat.compost = {
                 gfx.DrawXCursor(pos.x + combat.dx, pos.y + combat.dy, size, size);
             }
         }
+
+        this.backButtonWidth = gfx.drawInfoText(GetText("menu.Back"), 0, this.dy + 0.5, this.backButtonSelected, "menuA", "menutext");
+        
         let xi = 1, text = GetText("cmp_healsel");
         const healTile = this.healButtonSelected ? "Ssel" : "sel";
-        
         gfx.drawTile(healTile + "M", 0, this.healY, "menuA");
         let width = gfx.getTextWidth(text);
         while(width > 128) {
@@ -66,7 +72,7 @@ combat.compost = {
 
         if(this.canAttack) {
             xi = 1; text = GetText("cmp_atksel");
-            const atkTile = this.healButtonSelected ? "Ssel" : "sel";
+            const atkTile = this.attackButtonSelected ? "Ssel" : "sel";
             if(this.attackButtonSelected) { tile = 9; }
             gfx.drawTile(atkTile + "M", 0, this.atkY, "menuA");
             width = gfx.getTextWidth(text);
@@ -78,10 +84,21 @@ combat.compost = {
             this.attackButtonWidth = xi;
             gfx.drawText(text, 2, this.atkY + 8.5);
         }
-        if(this.healButtonSelected) {
+        if(this.backButtonSelected) {
             combat.animHelper.SetPlayerAnimLayer("characters");
             combat.animHelper.SetBirdAnimLayer("characters");
             combat.cursors.RedimCursor("main", 0, this.dy + 0.5, this.healButtonWidth, 0);
+            if(combat.isFalcon) {
+                combat.animHelper.SetBirdAnimState("THINK", true);
+                combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
+            } else {
+                combat.animHelper.SetBirdAnimState("STAND", true);
+                combat.animHelper.SetPlayerAnimState("THINK", true);
+            }
+        } else if(this.healButtonSelected) {
+            combat.animHelper.SetPlayerAnimLayer("characters");
+            combat.animHelper.SetBirdAnimLayer("characters");
+            combat.cursors.RedimCursor("main", 0, this.dy + 1.5, this.healButtonWidth, 0);
             if(this.selectedCrops.length > 0) {
                 let str = GetText("cmp_doHeal");
                 str = HandlePlurals(str, this.selectedCrops.length);
@@ -99,7 +116,7 @@ combat.compost = {
             }
         } else if(this.attackButtonSelected) {
             combat.animHelper.SetPlayerAnimLayer("characters");
-            combat.cursors.RedimCursor("main", 0, this.dy + 1.5, this.attackButtonWidth, 0);
+            combat.cursors.RedimCursor("main", 0, this.dy + 2.5, this.attackButtonWidth, 0);
             if(this.selectedCrops.length > 0) {
                 let str = GetText("cmp_doAttack");
                 str = HandlePlurals(str, this.selectedCrops.length);
@@ -227,12 +244,27 @@ combat.compost = {
         return (player.equipment.compost !== null && (!GetEquipment(player.equipment.compost).rotOnly || tile.rotten));
     },
     mouseMove: function(pos) {
+        if(pos.y >= combat.compost.dy) {
+            combat.compost.CursorMove({ x: Math.round(pos.x), y: Math.round(pos.y - 1) });
+        } else {
+            combat.compost.CursorMove({ 
+                x: Math.floor(pos.x - combat.dx) + combat.dx,
+                y: Math.floor(pos.y - combat.dy) + combat.dy,
+                fromHeal: combat.compost.cursor.y >= combat.compost.dy
+            });
+        }
+    },
+    CursorMove: function(pos) {
+        this.backButtonSelected = false;
         this.attackButtonSelected = false;
         this.healButtonSelected = false;
-        if(pos.y === this.dy && pos.x < 3) { // heal button
+        if(pos.y === this.dy && pos.x < 3) { // back button
+            this.cursor = pos;
+            this.backButtonSelected = true;
+        } else if(pos.y === (this.dy + 1) && pos.x < 3) { // heal button
             this.cursor = pos;
             this.healButtonSelected = true;
-        } else if(pos.y === (this.dy + 1) && pos.x < 3 && this.canAttack) { // attack button
+        } else if(pos.y === (this.dy + 2) && pos.x < 3 && this.canAttack) { // attack button
             this.cursor = pos;
             this.attackButtonSelected = true;
         } else { // compost selection
@@ -250,7 +282,7 @@ combat.compost = {
                     const dPos = { x: pos.x + dx, y: pos.y + dy };
                     if(dPos.y >= (combat.dy + player.gridHeight)) {
                         this.cursor = { x: 0, y: this.dy };
-                        this.healButtonSelected = true;
+                        this.backButtonSelected = true;
                     } else if(dPos.x < combat.dx || dPos.x >= (combat.dx + player.gridWidth) || dPos.y < combat.dy) {
                         this.cursor = pos;
                     } else { this.cursor = dPos; }
@@ -369,10 +401,13 @@ combat.compost = {
         combat.animHelper.DrawCrops();
         return true;
     },
-    click: function(pos) {
+    click: function() {
+        let pos = { x: this.cursor.x, y: this.cursor.y };
         if(pos.y == this.dy && pos.x < 3) {
+            this.cancel();
+        } else if(pos.y == (this.dy + 1) && pos.x < 3) {
             return this.healAction();
-        } else if(pos.y == (this.dy + 1) && pos.x < 3 && this.canAttack) {
+        } else if(pos.y == (this.dy + 2) && pos.x < 3 && this.canAttack) {
             return this.attackAction();
         }
         if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }
@@ -414,17 +449,17 @@ combat.compost = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(pos.y === (combat.dy + player.gridHeight) && pos.y > this.cursor.y) { // going from grid to Heal button
+        if(pos.y === (combat.dy + player.gridHeight) && pos.y > this.cursor.y) { // going from grid to Back button
             pos.y = this.dy;
             pos.x = 0;
-        } else if(pos.y === (this.dy - 1) && this.cursor.y === this.dy) { // going from Heal button to grid
+        } else if(pos.y === (this.dy - 1) && this.cursor.y === this.dy) { // going from Back button to grid
             pos.y = combat.dy + player.gridHeight - 1;
             pos.x = combat.dx;
             pos.fromHeal = true;
         }
         if(pos.y < 0 || pos.x < 0) { return false; }
-        if(isEnter) { return this.click(pos); }
-        else { return this.mouseMove(pos); }
+        if(isEnter) { return this.click(); }
+        else { return this.CursorMove(pos); }
     },
     WriteSideText: function(text) { gfx.drawWrappedText(text, 10.5 * 16, 11 + (16 * this.dy), 90); },
     WriteAboutCrop: function(crop) {

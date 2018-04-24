@@ -1,4 +1,5 @@
 combat.menu = {
+    mouseReady: true, 
     options: [], cursorY: 0, dy: 9.5, plantedAlreadyAndCantAttack: false,
     layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function(args) {
@@ -199,6 +200,12 @@ combat.menu = {
     clean: function() { gfx.clearSome(this.layersToClean); },
     drawOption: function(text, y, selected) { this.options.push(gfx.drawOption(text, this.dy + y, selected)) },
     mouseMove: function(pos) {
+        if(pos.x > 3) { return false; }
+        const y = Math.floor(pos.y - combat.menu.dy);
+        if(y < 0 || y >= combat.menu.options.length) { return; }
+        return combat.menu.CursorMove({ x: 0, y: combat.menu.dy + y });
+    },
+    CursorMove: function(pos) {
         if(pos.y >= (this.dy + this.options.length) || pos.y < this.dy) { return false; }
         if(pos.x > 4) { return false; }
         this.setup({ sel: pos.y - this.dy, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
@@ -207,7 +214,7 @@ combat.menu = {
     click: function(pos, isFresh) {
         if(!isFresh) { return false; }
         if(pos.x > 4) { return false; }
-        switch(pos.y - this.dy) {
+        switch(Math.floor(pos.y - this.dy)) {
             case 0:
                 if(this.plantState !== "combatPlant") {
                     if(this.plantState === "combatSkip") {
@@ -287,7 +294,7 @@ combat.menu = {
         if(isEnter) {
             return this.click(pos, input.IsFreshPauseOrConfirmPress());
         } else {
-            return this.mouseMove(pos);
+            return this.CursorMove(pos);
         }
     },
     PlayerHasThingsToPlant: function() {

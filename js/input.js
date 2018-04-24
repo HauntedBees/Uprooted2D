@@ -7,6 +7,8 @@ let consoleCmd = {
         const args = str.split(" ");
         const cmd = args.shift();
         switch(cmd) {
+            case "iii": player.hasFalcon = true; return;
+            case "ni": player.hasFalcon = false; return;
             case "setmonies": return consoleCmd.SetPlayerInt("monies", args);
             case "setatk": return consoleCmd.SetPlayerInt("atk", args);
             case "setdef": return consoleCmd.SetPlayerInt("def", args);
@@ -37,6 +39,13 @@ let consoleCmd = {
                 if((GetCrop(item) || GetFarmInfo(item) || GetEquipment(item) || false) === false) { return; }
                 player.increaseItem(item, amount);
                 return;
+            }
+            case "fight": {
+                if(args.length === 0) { return; }
+                for(let i = 0; i < args.length; i++) {
+                    if((GetEnemy(args[i]) || false) === false) { return; }
+                }
+                return combat.startBattle(args);
             }
             case "unsafe": return eval(args.join(" "));
         }

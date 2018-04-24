@@ -77,7 +77,15 @@ function CombatAnimHelper(enemies) {
         birdAnimInfo.ClearAnimQueue();
         this.ResetBirdAnimPos();
     };
-
+    this.GetEnemyPosFromMouseX = function(cx) {
+        if(cx < 5) { return -1; }
+        for(let i = 0; i < enemyAnimInfos.length; i++) {
+            const e = enemyAnimInfos[i];
+            const ex = e.dims.x + e.dims.w / 16;
+            if(ex >= cx) { return i; }
+        }
+        return 10;
+    }
     this.GetEnemyTopPos = function(idx) {
         const edims = enemyAnimInfos[idx].dims, cdims = enemyAnimInfos[idx].cursorinfo;
         return { x: edims.x + (edims.w / 16) / 2 - 0.5, y: edims.y - RoundNear(1 + cdims.h, 8) - 1 };

@@ -1,4 +1,5 @@
 combat.selectTarget = {
+    mouseReady: true, 
     cursorx: 0, canSickle: false, canHumans: true, dy: 10, 
     sicklePos: {x: -1, y: -1}, targets: [], maxTargets: 0, 
     layersToClear: ["menucursorA", "menucursorB", "menutext"],
@@ -66,18 +67,19 @@ combat.selectTarget = {
             combat.animHelper.SetBirdAnimState("STAND", true);
             combat.animHelper.SetPlayerAnimState("WANTATTACK", true);
         }
-        for(var i = 0; i < this.targets.length; i++) {
-            var idx = this.targets[i];
+        for(let i = 0; i < this.targets.length; i++) {
+            const idx = this.targets[i];
             if(idx.x === undefined) {
-                var cursorInfo = combat.animHelper.GetCursorInfo(idx);
+                const cursorInfo = combat.animHelper.GetCursorInfo(idx);
                 gfx.DrawXCursor(cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
             } else {
                 gfx.DrawXCursor(idx.x, idx.y, 0, 0);
             }
         }
+        const backButtonW = gfx.drawInfoText(GetText("menu.Back"), 2, this.dy + 0.25, this.cursorx === -1, "menuA", "menutext");
         combat.cursors.ReTypeCursor("main", "cursor");
         if(this.sicklePos.x >= 0) {
-            var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
+            const crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
                 combat.cursors.ReTypeCursor("main", "bcursor");
                 combat.cursors.RedimCursor("main", this.sicklePos.x, this.sicklePos.y, 0, 0);
@@ -85,21 +87,23 @@ combat.selectTarget = {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 combat.cursors.RedimCursor("main", this.sicklePos.x, this.sicklePos.y, crop.size - 1, crop.size - 1);
             }
+        } else if(this.cursorx < 0) {
+            combat.cursors.RedimCursor("main", 2, this.dy + 0.375, backButtonW, -0.25);
         } else {
-            var cursorInfo = combat.animHelper.GetCursorInfo(this.cursorx);
+            const cursorInfo = combat.animHelper.GetCursorInfo(this.cursorx);
             combat.cursors.RedimCursor("main", cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
         }
         combat.menu.highlightReadyCropsAndReturnCount();
         gfx.drawInfobox(10, 1.5, this.dy);
         if(this.sicklePos.x >= 0) {
-            var crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
+            const crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop !== null) {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 gfx.drawTileToGrid(GetHPFrame(crop), me.INFOBOXWIDTH, this.dy, "menucursorB");
                 gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 85);
             }
-        } else {
-            var enemy = combat.enemies[this.cursorx];
+        } else if(this.cursorx >= 0) {
+            const enemy = combat.enemies[this.cursorx];
             gfx.drawTileToGrid(GetHPFrame(enemy), me.INFOBOXWIDTH, this.dy, "menucursorB");
             gfx.drawWrappedText(enemy.name, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 85);
         }
@@ -110,12 +114,12 @@ combat.selectTarget = {
     
     // Selecting Logic
     keyPress: function(key) {
-        var pos = { 
+        let pos = { 
             x: (this.sicklePos.x < 0 ? (this.cursorx + (11 - combat.enemies.length)) : this.sicklePos.x), 
             y: (this.sicklePos.y < 0 ? 8 : this.sicklePos.y)
         };
-        var isEnter = false;
-        var prevy = pos.y;
+        let isEnter = false;
+        const prevy = pos.y;
         switch(key) {
             case player.controls.left: pos.x--; break;
             case player.controls.right: pos.x++; break;
@@ -134,29 +138,37 @@ combat.selectTarget = {
             this.sicklePos = { x: -1, y: -1 };
             pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 8 };
         }
-        if(isEnter) {
-            return this.click(pos);
-        } else {
-            return this.mouseMove(pos);
-        }
+        if(isEnter) { return this.click(); }
+        else { return this.CursorMove(pos); }
     },
     mouseMove: function(pos) {
-        var newx = pos.x - (11 - combat.enemies.length);
+        const me = combat.selectTarget;
+        if(pos.y < 8) {
+            if(!me.canSickle) { return false; }
+            me.CursorMove({x: Math.floor(pos.x - combat.enemydx) + combat.enemydx, y: Math.floor(pos.y - combat.enemydy) + combat.enemydy });
+        } else {
+            pos.y = 8;
+            pos.x = combat.animHelper.GetEnemyPosFromMouseX(pos.x); // TODO: sean you need to add a back button thanks
+            me.CursorMove(pos, true);
+        }
+    },
+    CursorMove: function(pos, fromMouse) {
         if(pos.y === 8) {
             if(!this.canHumans) { return false; }
-            this.sicklePos = {x: -1, y: -1};
-            if(newx < 0) { return false; }
+            this.sicklePos = { x: -1, y: -1 };
+            const newx = fromMouse ? pos.x : (pos.x - (11 - combat.enemies.length));
+            if(newx < -1) { return false; }
             if(newx >= combat.enemies.length) { return false; }
             if(pos.y < 2) { return false; }
+            if(this.cursorx === newx) { return false; }
             this.cursorx = newx;
         } else {
             if(!this.canSickle) { return false; }
-            var dpos = { x: pos.x - combat.enemydx, y: pos.y - combat.enemydy };
+            const dpos = { x: pos.x - combat.enemydx, y: pos.y - combat.enemydy };
             if(dpos.x < 0 || dpos.y < 0 || dpos.x >= combat.enemywidth || dpos.y >= combat.enemyheight) { return false; }
-            var cropObj = combat.enemyGrid[dpos.x][dpos.y];
-            var doSicklePos = true;
+            const cropObj = combat.enemyGrid[dpos.x][dpos.y];
             if(cropObj !== null && cropObj.x !== undefined) {
-                var newpos = { x: cropObj.x + combat.enemydx, y: cropObj.y + combat.enemydy };
+                const newpos = { x: cropObj.x + combat.enemydx, y: cropObj.y + combat.enemydy };
                 if(this.sicklePos.x === newpos.x && this.sicklePos.y === newpos.y) {
                     pos.x += (pos.x - this.sicklePos.x);
                     pos.y += (pos.y - this.sicklePos.y);
@@ -169,18 +181,21 @@ combat.selectTarget = {
                     if((pos.x - combat.enemydx) >= combat.enemywidth) { return false; }
                 } else { pos.x = newpos.x; pos.y = newpos.y; }
             }
-            if(doSicklePos) { this.sicklePos = pos; }
+            if(SamePoints(this.sicklePos, pos)) { return false; }
+            this.sicklePos = pos;
         }
         this.drawAll();
         return true;
     },
-    click: function(pos) {
-        var doAttack = false;
+    click: function() {
+        let doAttack = false;
         if(this.sicklePos.x >= 0) {
-            var cropPos = {x: this.sicklePos.x - combat.enemydx, y: this.sicklePos.y - combat.enemydy};
-            var crop = combat.enemyGrid[cropPos.x][cropPos.y];
+            const cropPos = {x: this.sicklePos.x - combat.enemydx, y: this.sicklePos.y - combat.enemydy};
+            const crop = combat.enemyGrid[cropPos.x][cropPos.y];
             if(crop === null) { return false; }
             doAttack = this.toggleTarget(this.sicklePos, true);
+        } else if(this.cursorx < 0) {
+            return this.cancel();
         } else {
             doAttack = this.toggleTarget(this.cursorx, false);
         }
@@ -188,9 +203,9 @@ combat.selectTarget = {
         else { this.drawAll(); }
     },
     toggleTarget: function(idx, isPoint) {
-        for(var i = 0; i < this.targets.length; i++) {
-            var sel = this.targets[i];
-            var same = false;
+        for(let i = 0; i < this.targets.length; i++) {
+            const sel = this.targets[i];
+            let same = false;
             if(isPoint) {
                 if(sel.x === undefined) { continue; }
                 same = (sel.x === idx.x && sel.y === idx.y);

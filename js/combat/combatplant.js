@@ -1,4 +1,5 @@
 combat.plant = {
+    mouseReady: true, 
     activeCrop: null, actualIndexes: [],
     cursor: {x: 0, y: 0}, isValid: true, 
     inventoryWidth: 9, dy: 8.5,
@@ -15,7 +16,7 @@ combat.plant = {
         this.DrawAll();
     },
     clean: function() { gfx.clearSome(this.layersToClean) },
-    cancel: function() {
+    cancel: function(fromKeyboard) {
         if(this.activeCrop === null) {
             if(combat.numPlantTurns != player.getPlantingTurns()) {
                 if(player.canAttackAfterPlanting()) {
@@ -28,7 +29,7 @@ combat.plant = {
             }
         } else {
             this.activeCrop = null;
-            this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy };
+            if(fromKeyboard) { this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy }; }
             this.DrawAll();
         }
         return true;
@@ -142,33 +143,61 @@ combat.plant = {
             case player.controls.right: pos.x++; break;
             case player.controls.confirm:
             case player.controls.pause: isEnter = true; break;
-            case player.controls.cancel: return this.cancel();
+            case player.controls.cancel: return this.cancel(true);
         }
         if(pos.y < 0 || pos.x < 0) { return false; }
-        if(isEnter) { return this.click(pos); }
-        else { return this.mouseMove(pos); }
+        if(isEnter) { return this.click(true); }
+        else { return this.CursorMove(pos); }
     },
     mouseMove: function(pos) {
+        const me = combat.plant;
+        if(me.activeCrop === null) {
+            const meY = Math.floor(pos.y - me.dy - 0.5) + me.dy;
+            if(meY === (me.dy - 1) && pos.x > 3) { return false; }
+            return me.CursorMove({ x: Math.floor(pos.x), y: meY });
+        } else {
+            me.CursorMove({ x: Math.floor(pos.x - combat.dx) + combat.dx, y: Math.floor(pos.y - combat.dy) + combat.dy });
+        }
+    },
+    CursorMove: function(pos) {
         if(pos.x < 0 || pos.y < 0) { return false; }
         if(this.activeCrop === null) { 
-            if(pos.x >= this.inventoryWidth) { return false; }
-            const idx = (pos.y - this.dy) * this.inventoryWidth + pos.x;
-            if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
-            this.isValid = true;
+            if(pos.y === (this.dy - 1)) {
+                if(pos.x > 3) { return false; }
+                pos.x = 0;
+            } else {
+                if(pos.x >= this.inventoryWidth) { return false; }
+                const idx = (pos.y - this.dy) * this.inventoryWidth + pos.x;
+                if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
+                this.isValid = true;
+            }
+            if(SamePoints(this.cursor, pos)) { return false; }
             this.cursor = { x: pos.x, y: pos.y };
         } else {
-            const diff = this.activeCrop.size - 1;
-            if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
-            if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight - diff)) { return false; }
-            const px = pos.x - combat.dx, py = pos.y - combat.dy;
+            if(pos.y >= (this.dy - 1)) {
+                if(pos.x > 3) { return false; }
+                pos.x = 0; pos.y = this.dy - 1;
+            } else {
+                const diff = this.activeCrop.size - 1;
+                if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
+                if(pos.y < combat.dy) { return false; }
+                if(pos.y >= (combat.dy + player.gridHeight - diff)) {
+                    pos.x = 0; pos.y = this.dy - 1;
+                } else {
+                    const px = pos.x - combat.dx, py = pos.y - combat.dy;
+                    this.isValid = this.isValidPlantingLocation(px, py, diff);
+                }
+            }
+            if(SamePoints(this.cursor, pos)) { return false; }
             this.cursor = { x: pos.x, y: pos.y };
-            this.isValid = this.isValidPlantingLocation(px, py, diff);
         }
         this.DrawAll();
         return true;
     },
-    click: function(pos) {
+    click: function(fromKeyboard) {
+        let pos = { x: this.cursor.x, y: this.cursor.y };
         if(pos.x < 0 || pos.y < 0) { return false; }
+        if(pos.y === (this.dy - 1) && pos.x === 0) { return this.cancel(fromKeyboard || false); }
         if(this.activeCrop === null) {
             pos.y = (pos.y - this.dy);
             if(pos.x >= this.inventoryWidth) { return false; }
@@ -481,9 +510,16 @@ combat.plant = {
         }
         gfx.drawInfobox(17, 5, this.dy + 0.5);
         gfx.drawInfobox(7, 5, this.dy + 0.5);
+        const backButtonW = gfx.drawInfoText(GetText("menu.Back"), 0, this.dy - 0.25, cursorY == 7.5, "menuA", "menutext");
         if(this.activeCrop === null) {
-            combat.cursors.RedimCursor("main", cursorX, cursorY + 0.5, size, size);
+            if(cursorY === (this.dy - 1)) {
+                combat.cursors.RedimCursor("main", cursorX, cursorY + 0.875, backButtonW, -0.25);
+            } else {
+                combat.cursors.RedimCursor("main", cursorX, cursorY + 0.5, size, size);
+            }
             combat.cursors.ReTypeCursor("main", "cursor");
+        } else if(cursorY === (this.dy - 1)) {
+            combat.cursors.RedimCursor("main", cursorX, cursorY + 0.875, backButtonW, -0.25);
         } else if(this.isValid) {
             combat.cursors.RedimCursor("main", cursorX, cursorY, size, size);
             combat.cursors.ReTypeCursor("main", "cursor");
@@ -496,8 +532,10 @@ combat.plant = {
             const actItem = player.inventory[this.actualIndexes[i]];
             gfx.drawInventoryItem(actItem, i % this.inventoryWidth, this.dy + 0.5 + Math.floor(i / this.inventoryWidth), "menuA");
         }
+        
     },
     SetFieldText: function() {
+        if(this.cursor.y === (this.dy - 1)) { return; }
         let x = this.cursor.x - combat.dx, y = this.cursor.y - combat.dy;
         let tileInfo = combat.grid[x][y];
         let effectInfo = combat.effectGrid[x][y];
