@@ -13,6 +13,7 @@ worldmap.shop = {
     layersToClear: ["characters", "menutext"],
     availableIndexes: [], hasTalk: "",
     sleepsyData: null, howManyData: null, 
+    blinkIdx: -1, blinkState: 0, 
     setup: function(shopName) {
         this.details = stores[shopName];
         this.sellingState = me.sellStates.BUYING;
@@ -39,6 +40,21 @@ worldmap.shop = {
         gfx.drawFullImage(this.details.img);
         this.DrawDetails(GetText(this.details.opening), true);
         this.cursors.Start();
+        this.blinkIdx = setInterval(this.Blinking, 50);
+        this.blinkState = 0;
+    },
+    Blinking: function() {
+        const blinkProb = (worldmap.shop.details.rapid ? 0.3 : 0.98);
+        const blinkH = (worldmap.shop.details.big ? 300 : 100);
+        if(worldmap.shop.blinkState === -1 || (worldmap.shop.blinkState === 0 && Math.random() >= blinkProb)) {
+            worldmap.shop.blinkState = 1;
+            gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets[worldmap.shop.details.eyes], 0, 0, 200, blinkH, worldmap.shop.details.ex, worldmap.shop.details.ey, 200, blinkH);
+        } else {
+            if(worldmap.shop.blinkState > 2 || (worldmap.shop.blinkState * Math.random()) > 0.45) {
+                gfx.clearLayer("foreground");
+                worldmap.shop.blinkState = Math.random() < 0.15 ? -1 : 0;
+            }
+        }
     },
     resetTalk: function() {
         this.hasTalk = "";
@@ -562,6 +578,7 @@ worldmap.shop = {
                 break;
             case me.sellStates.BUYING:
                 if(this.howManyData === null) {
+                    clearInterval(this.blinkIdx);
                     game.transition(this, worldmap, {
                         init: worldmap.pos,
                         map: worldmap.mapName,

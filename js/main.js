@@ -67,7 +67,20 @@ const game = {
                     "fg/belowvillage", "fg/researchfacility", "fg/underwater", "fg/fakefarm", 
                     "fg/southcity", "fg/northcity", "fg/hq_1", "fg/hq_2", "fg/hq_3", "fg/hq_4", "fg/hq_5",
                     //* Shops *//
-                    "shops/cock", "shops/dwarf", "shops/dwarf2", "shops/dwarf3", "shops/merm", "shops/home", "shops/vendo",
+                    "shops/home", "shops/cluckfuck",
+                    "shops/seedypete", "shops/daveshoes",  "shops/inn1", "shops/fixt1", "shops/expand1",
+                    "shops/constr", "shops/merm1", "shops/merm2",
+                    "shops/realactualhuman", "shops/piggy", "shops/cheebo",
+                    "shops/pawn", "shops/tinker", "shops/church", "shops/catalina", "shops/skumpy", "shops/seedshack",
+                    "shops/tech", "shops/hotel", "shops/cityfixture", "shops/epickyle", "shops/gordon", 
+                    "shops/vendo", "shops/finalInn",
+                    //* Shop Blinks *//
+                    "shopblinks/home", "shopblinks/cluckfuck",
+                    "shopblinks/seedypete", "shopblinks/daveshoes", "shopblinks/inn1", "shopblinks/fixt1", "shopblinks/expand1",
+                    "shopblinks/constr", "shopblinks/merm1", "shopblinks/merm2",
+                    "shopblinks/realactualhuman", "shopblinks/piggy", "shopblinks/cheebo",
+                    "shopblinks/pawn", "shopblinks/tinker", "shopblinks/none", "shopblinks/catalina", "shopblinks/skumpy", "shopblinks/seedshack",
+                    "shopblinks/tech", "shopblinks/hotel", "shopblinks/epickyle", "shopblinks/gordon",
                     //* Combat Backgrounds *//
                     "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq"
                 ],

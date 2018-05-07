@@ -1,7 +1,8 @@
 const stores = {
     // Debug
     "farmupgradeFull": {
-        img: "shops/cock",
+        img: "shops/cluckfuck",
+        eyes: "shopblinks/cluckfuck", ex: 137, ey: 23,
         wares: [
             { product: "farmupgradeI", price: 0, type: "upgrade" },
             { product: "farmupgradeO", price: 0, type: "upgrade" },
@@ -13,7 +14,8 @@ const stores = {
     },
     // Area 1: Farm
     "coop": {
-        img: "shops/cock",
+        img: "shops/cluckfuck",
+        eyes: "shopblinks/cluckfuck", ex: 137, ey: 23,
         wares: [
             { product: "carrot", type: "seed" },
             { product: "beet", type: "seed" },
@@ -25,6 +27,7 @@ const stores = {
     },
     "inn0": {
         img: "shops/home", innId: "inn0",
+        eyes: "shopblinks/home", ex: 118, ey: 43,
         wares: [
             { product: "sleep", price: 0, type: "inn" },
             { product: "book0", name: "bookVeg", price: 0, type: "book" },
@@ -37,7 +40,8 @@ const stores = {
     },
     // Area 1: Town
     "equip1": {
-        img: "shops/dwarf",
+        img: "shops/daveshoes",
+        eyes: "shopblinks/daveshoes", ex: 108, ey: 26,
         wares: [
             { product: "!baseSickle", type: "equipment" },
             { product: "!goodSickle", type: "equipment" },
@@ -48,14 +52,16 @@ const stores = {
         opening: "s.eq1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "upgrade1": {
-        img: "shops/dwarf2",
+        img: "shops/expand1",
+        eyes: "shopblinks/expand1", ex: 102, ey: 20,
         wares: [
             { product: "farmupgradeI", price: 1000, type: "upgrade" }
         ],
         opening: "s.up1o", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up1p"
     },
     "fixture1": {
-        img: "shops/dwarf3",
+        img: "shops/fixt1",
+        eyes: "shopblinks/fixt1", ex: 100, ey: 28,
         wares: [
             { product: "_coop", type: "farm" },
             { product: "egg", type: "seed" },
@@ -67,7 +73,8 @@ const stores = {
         opening: "s.fi1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased", talk: "quest1"
     },
     "seed1": {
-        img: "shops/dwarf",
+        img: "shops/seedypete",
+        eyes: "shopblinks/seedypete", ex: 106, ey: 23,
         wares: [
             { product: "carrot", type: "seed" },
             { product: "beet", type: "seed" },
@@ -80,7 +87,8 @@ const stores = {
         opening: "s.seed1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "inn1": {
-        img: "shops/dwarf2", innId: "inn1",
+        img: "shops/inn1", innId: "inn1",
+        eyes: "shopblinks/inn1", ex: 108, ey: 22,
         wares: [
             { product: "sleep", price: 6, type: "inn" },
             { product: "book1", name: "bookForest", price: 0, type: "book" },
@@ -93,7 +101,8 @@ const stores = {
     },
     // Area 2: Bridge
     "mermaid": {
-        img: "shops/merm",
+        img: "shops/merm2",
+        eyes: "shopblinks/merm2", ex: 113, ey: 32,
         wares: [
             { product: "_paddy", type: "farm" },
             { product: "rice", type: "seed" },
@@ -105,7 +114,8 @@ const stores = {
         opening: "s.mermhello", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "mermaidinn": {
-        img: "shops/merm", innId: "mermaidinn",
+        img: "shops/merm1", innId: "mermaidinn",
+        eyes: "shopblinks/merm1", ex: 107, ey: 28,
         wares: [
             { product: "sleep", price: 8, type: "inn" },
             { product: "book5", name: "bookPaddy", price: 0, type: "book" },
@@ -116,7 +126,8 @@ const stores = {
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     "cworker": {
-        img: "shops/dwarf",
+        img: "shops/constr",
+        eyes: "shopblinks/constr", ex: 105, ey: 33,
         wares: [
             { product: "corn", type: "seed" },
             { product: "bellpepper", type: "seed" },
@@ -136,7 +147,8 @@ const stores = {
     },
     // Area 3: Fake Farm
     "upgrade2": {
-        img: "shops/dwarf2",
+        img: "shops/cheebo",
+        eyes: "shopblinks/cheebo", ex: 83, ey: 19, big: true, 
         wares: [
             { product: "farmupgradeI", price: 1000, type: "upgrade" },
             { product: "farmupgradeO", price: 2000, type: "upgrade" },
@@ -145,7 +157,8 @@ const stores = {
         opening: "s.up2", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up2p"
     },
     "fixture2": {
-        img: "shops/dwarf2",
+        img: "shops/piggy",
+        eyes: "shopblinks/piggy", ex: 110, ey: 35,
         wares: [
             { product: "_cow", type: "farm" },
             { product: "fodder", type: "seed" },
@@ -156,7 +169,8 @@ const stores = {
     },
     // Area 4: South City
     "skumpys": {
-        img: "shops/dwarf2", innId: "skumpys",
+        img: "shops/skumpy", innId: "skumpys",
+        eyes: "shopblinks/skumpy", ex: 113, ey: 36,
         wares: [
             { product: "sleep", price: 20, type: "inn" },
             { product: "book0", name: "bookElem", price: 0, type: "book" },
@@ -167,12 +181,11 @@ const stores = {
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     "mantools": {
-        img: "shops/dwarf2",
+        img: "shops/realactualhuman",
+        eyes: "shopblinks/realactualhuman", ex: 124, ey: 28,
         wares: [
             { product: "!sicklerang", type: "equipment" },
             { product: "!sunSickle", type: "equipment" },
-            { product: "!fortCompost", type: "equipment" },
-            { product: "!healthyCompost", type: "equipment" },
             { product: "!jumboCompost", type: "equipment" },
             { product: "!vitaminCompost", type: "equipment" },
             { product: "!pairGloves", type: "equipment" },
@@ -182,7 +195,8 @@ const stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "seedshack": {
-        img: "shops/dwarf2",
+        img: "shops/seedshack",
+        eyes: "shopblinks/seedshack", ex: 110, ey: 22,
         wares: [
             { product: "asparagus", type: "seed" },
             { product: "bellpepper", type: "seed" },
@@ -202,7 +216,8 @@ const stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "catalinas": {
-        img: "shops/dwarf2",
+        img: "shops/catalina",
+        eyes: "shopblinks/catalina", ex: 100, ey: 25, big: true, 
         wares: [
             { product: "_sprinkler", type: "farm" },
             { product: "_log", type: "farm" },
@@ -218,7 +233,8 @@ const stores = {
         opening: "s.fi1o", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased", talk: "catmail"
     },
     "tinker": {
-        img: "shops/dwarf2",
+        img: "shops/tinker",
+        eyes: "shopblinks/tinker", ex: 87, ey: 9, rapid: true, 
         wares: [
             { product: "_shooter", type: "farm" },
             { product: "_modulator", type: "farm" },
@@ -233,7 +249,8 @@ const stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "pawn": {
-        img: "shops/dwarf2",
+        img: "shops/pawn",
+        eyes: "shopblinks/pawn", ex: 105, ey: 30,
         wares: [
             { product: "drone", type: "seed" },
             { product: "net", type: "seed" },
@@ -244,7 +261,8 @@ const stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "church": {
-        img: "shops/dwarf2",
+        img: "shops/church",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "alms", name: "alms", price: 1000, type: "alms" },
             { product: "book2", name: "bookWater", price: 0, type: "book" },
@@ -257,7 +275,8 @@ const stores = {
     },
     // Area 5: North City
     "cityFixtures": {
-        img: "shops/dwarf2",
+        img: "shops/cityfixture",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "_sprinkler", type: "farm" },
             { product: "_hotspot", type: "farm" },
@@ -269,7 +288,8 @@ const stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "cityInn": {
-        img: "shops/dwarf2", innId: "bigCity",
+        img: "shops/hotel", innId: "bigCity",
+        eyes: "shopblinks/hotel", ex: 113, ey: 24,
         wares: [
             { product: "sleep", price: 500, type: "inn" },
             { product: "book1", name: "bookCard", price: 0, type: "book" },
@@ -279,7 +299,8 @@ const stores = {
         opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
     },
     "gordonsFarming": {
-        img: "shops/dwarf2",
+        img: "shops/gordon",
+        eyes: "shopblinks/gordon", ex: 105, ey: 27,
         wares: [
             { product: "portobello", type: "seed" },
             { product: "milkcap", type: "seed" },
@@ -295,7 +316,8 @@ const stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "cityTech": {
-        img: "shops/dwarf2",
+        img: "shops/tech",
+        eyes: "shopblinks/tech", ex: 113, ey: 51,
         wares: [
             { product: "!sickle2", type: "equipment" },
             { product: "_charger", type: "farm" },
@@ -316,7 +338,8 @@ const stores = {
         opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
     },
     "cityExpansions": {
-        img: "shops/dwarf2",
+        img: "shops/epickyle",
+        eyes: "shopblinks/epickyle", ex: 114, ey: 24,
         wares: [
             { product: "farmupgradeI", price: 1000, type: "upgrade" },
             { product: "farmupgradeO", price: 2000, type: "upgrade" },
@@ -330,6 +353,7 @@ const stores = {
     // Final Area: HQ
     "vendo_veg": {
         img: "shops/vendo",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "asparagus", type: "seed" },
             { product: "beet", type: "seed" },
@@ -350,6 +374,7 @@ const stores = {
     },
     "vendo_tree": {
         img: "shops/vendo",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "apple", type: "seed" },
             { product: "apricot", type: "seed" },
@@ -366,6 +391,7 @@ const stores = {
     },
     "vendo_mush": {
         img: "shops/vendo",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "shiitake", type: "seed" },
             { product: "milkcap", type: "seed" },
@@ -379,6 +405,7 @@ const stores = {
     },
     "vendo_paddy": {
         img: "shops/vendo",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "rice", type: "seed" },
             { product: "arborio", type: "seed" },
@@ -391,6 +418,7 @@ const stores = {
     },
     "vendo_coop": {
         img: "shops/vendo",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "egg", type: "seed" },
             { product: "quail", type: "seed" },
@@ -403,6 +431,7 @@ const stores = {
     },
     "vendo_water": {
         img: "shops/vendo",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "spear", type: "seed" },
             { product: "rod", type: "seed" },
@@ -416,6 +445,7 @@ const stores = {
     },
     "vendo_tech": {
         img: "shops/vendo",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "battery", type: "seed" },
             { product: "headphones", type: "seed" },
@@ -430,7 +460,8 @@ const stores = {
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
     },
     "lastInn": {
-        img: "shops/dwarf2", innId: "lastInn",
+        img: "shops/finalInn", innId: "lastInn",
+        eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
             { product: "sleep", type: "inn", price: 1 },
             { product: "book3", name: "bookEnt", price: 0, type: "book" }
