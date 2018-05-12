@@ -23,7 +23,7 @@ const stores = {
             { product: "grapes", type: "seed" }
         ],
         buyMult: 1, doesSell: false,
-        opening: "s.co", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.cpurch"
+        opening: "s.co", leaving: "s.leave0", notEnough: "s.notenough0", purchased: "s.cpurch"
     },
     "inn0": {
         img: "shops/home", innId: "inn0",
@@ -36,7 +36,7 @@ const stores = {
             { product: "book2", name: "bookShop", price: 0, type: "book" },
             { product: "book4", name: "bookStun", price: 0, type: "book" }
         ],
-        opening: "s.home", leaving: "s.homeleave", purchased: "s.homesleep"
+        opening: "s.home", leaving: "s.homeleave", purchased: "s.homesleep", awake: "s.homewake"
     },
     // Area 1: Town
     "equip1": {
@@ -49,7 +49,7 @@ const stores = {
             { product: "!weakGloves", type: "equipment" },
             { product: "!weakSoil", type: "equipment" }
         ],
-        opening: "s.eq1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.eq1o", leaving: "s.leave1o", notEnough: "s.notenough1o", purchased: "s.purchased1o", benignTalk: "s.talk1o"
     },
     "upgrade1": {
         img: "shops/expand1",
@@ -57,7 +57,7 @@ const stores = {
         wares: [
             { product: "farmupgradeI", price: 1000, type: "upgrade" }
         ],
-        opening: "s.up1o", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up1p"
+        opening: "s.up1o", empty: "s.upempty", leaving: "s.up1bye", notEnough: "s.up1not", purchased: "s.up1p", benignTalk: "s.up1talk"
     },
     "fixture1": {
         img: "shops/fixt1",
@@ -70,7 +70,7 @@ const stores = {
             { product: "milkcap", type: "seed", locked: "quest1" },
             { product: "portobello", type: "seed", locked: "quest1" }
         ],
-        opening: "s.fi1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased", talk: "quest1"
+        opening: "s.fi1o", leaving: "s.chuckLeave", notEnough: "s.chuckNotEnough", purchased: "s.chuckBuy", talk: "quest1", benignTalk: "s.chuckTalk"
     },
     "seed1": {
         img: "shops/seedypete",
@@ -84,7 +84,7 @@ const stores = {
             { product: "rhubarb", type: "seed" }
         ],
         buyMult: 1, doesSell: false,
-        opening: "s.seed1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.seed1", leaving: "s.seed1leave", notEnough: "s.seed1not", purchased: "s.seed1buy", benignTalk: "s.seed1casual"
     },
     "inn1": {
         img: "shops/inn1", innId: "inn1",
@@ -97,7 +97,7 @@ const stores = {
             { product: "book3", name: "bookExpand", price: 0, type: "book" },
             { product: "book2", name: "bookRare", price: 0, type: "book" }
         ],
-        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
+        opening: "s.innEnter1", leaving: "s.innLeave1", notEnough: "s.innNot1", purchased: "s.innPurch1", awake: "s.innAwake1"
     },
     // Area 2: Bridge
     "mermaid": {
@@ -111,7 +111,7 @@ const stores = {
             { product: "rod", type: "seed" },
             { product: "net", type: "seed" }
         ],
-        opening: "s.mermhello", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.mermhello", leaving: "s.mermleave", notEnough: "s.mermnot", purchased: "s.mermbuy"
     },
     "mermaidinn": {
         img: "shops/merm1", innId: "mermaidinn",
@@ -123,7 +123,7 @@ const stores = {
             { product: "book0", name: "bookBees", price: 0, type: "book" },
             { product: "book4", name: "bookCows", price: 0, type: "book" }
         ],
-        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
+        opening: "s.merminn", leaving: "s.merminnleave", notEnough: "s.merminnnot", purchased: "s.merminnpurch", awake: "s.merminnawake", benignTalk: "s.merminntalk"
     },
     "cworker": {
         img: "shops/constr",
@@ -143,7 +143,7 @@ const stores = {
             { product: "!minSoil", type: "equipment" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: true,
-        opening: "cwk.co", selling: "s.sell", didSell: "s.didsell", leaveSell: "s.leavesell", leaving: "cwk.leave", notEnough: "s.notenough", purchased: "s.cpurch"
+        opening: "cwk.co", selling: "cwk.sell", didSell: "cwk.didsell", leaveSell: "cwk.leavesell", leaving: "cwk.leave", notEnough: "cwk.not", purchased: "cwk.purch"
     },
     // Area 3: Fake Farm
     "upgrade2": {

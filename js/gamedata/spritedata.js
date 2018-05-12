@@ -739,6 +739,7 @@ const sprites = {
     "cheese": [21, 19],
     "seeds": [22, 19],
     "infoL": [23, 19],
+    "helpBox": [24, 19],
     "infoR": [25, 19],
     "lakeS": [26, 19],
     "lakeDS": [27, 19],

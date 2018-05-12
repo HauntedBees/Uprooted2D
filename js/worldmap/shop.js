@@ -11,7 +11,7 @@ worldmap.shop = {
     maxSell: 12, sellOffset: 0, numArrows: 0, isUpgradeShop: false,
     bookReading: null, bookState: -1,
     layersToClear: ["characters", "menutext"],
-    availableIndexes: [], hasTalk: "",
+    availableIndexes: [], hasTalk: "", isQuestTalk: true, 
     sleepsyData: null, howManyData: null, 
     blinkIdx: -1, blinkState: 0, 
     setup: function(shopName) {
@@ -19,6 +19,10 @@ worldmap.shop = {
         this.sellingState = me.sellStates.BUYING;
         this.sellingType = me.sellTypes.CROPS;
         this.hasTalk = (this.details.talk && player.questsCleared.indexOf(this.details.talk) < 0) ? this.details.talk : "";
+        if(this.details.benignTalk && this.hasTalk === "") {
+            this.isQuestTalk = false;
+            this.hasTalk = this.details.benignTalk;
+        } else { this.isQuestTalk = true; }
         this.sellOffset = 0;
         this.numArrows = 0;
         this.bookReading = null;
@@ -154,7 +158,8 @@ worldmap.shop = {
     DrawDetailsBuying: function() {
         gfx.drawTileToGrid("exit", 1, this.yPos, "characters");
         if(this.hasTalk) {
-            gfx.drawTileToGrid("talk", (this.details.doesSell ? 2 : 1) + this.dx, this.yPos, "characters");
+            const talkTile = (this.isQuestTalk ? "helpBox" : "talk");
+            gfx.drawTileToGrid(talkTile, (this.details.doesSell ? 2 : 1) + this.dx, this.yPos, "characters");
         } else if(this.details.doesSell) {
             gfx.drawTileToGrid("sell", 1 + this.dx, this.yPos, "characters");
         }
@@ -480,7 +485,11 @@ worldmap.shop = {
     },
     clickBuying: function(pos) {
         if(this.hasTalk && this.cursorX === 1) {
-            this.DrawDetails(quests.getQuestText(this.hasTalk));
+            if(this.isQuestTalk) {
+                this.DrawDetails(quests.getQuestText(this.hasTalk));
+            } else {
+                this.DrawDetails(GetText(this.details.benignTalk));
+            }
             return true;
         } else if(this.details.doesSell && this.cursorX === 1) {
             this.sellingState = me.sellStates.SELLSELECT;
@@ -637,6 +646,7 @@ worldmap.shop = {
         } else if(sleepInfo.state === 1) {
             const dreamChance = Math.random() > 0.75;
             const textKey = dreamChance ? `innDream${Range(0, 9)}` : "innSleep";
+            worldmap.shop.DrawDetails(GetText(worldmap.shop.details.awake));
             gfx.drawFullText(GetText(textKey), 0, "#FFFFFF", true);
             sleepInfo.state = 2;
         } else if(sleepInfo.state === 3) {

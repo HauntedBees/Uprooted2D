@@ -2005,6 +2005,11 @@ const fulltext = {
 		"en-dm": "I should get going. There's apparently a lot I need to do today.", 
 		"type": "shop"
 	},
+	"s.homewake": {
+		"en-us": "", 
+		"en-dm": "Ahh, much better.", 
+		"type": "shop"
+	},
 	// Area 2: Produce Stand / First Village
 	"lakenoegg": {
 		"en-us": "", 
@@ -2093,17 +2098,17 @@ const fulltext = {
 	},
 	"SignFixture0": {
 		"en-us": "", 
-		"en-dm": "Fuckster's Fixtures", 
+		"en-dm": "Chuck's Fixtures", 
 		"type": "map"
 	},
 	"SignExpand0": {
 		"en-us": "", 
-		"en-dm": "Andrew D's Farm Expansions", 
+		"en-dm": "Andrew's Farm Expansions", 
 		"type": "map"
 	},
 	"SignWeapon0": {
 		"en-us": "", 
-		"en-dm": "Dave's Hoes and Sickles", 
+		"en-dm": "Velthur's Hoes and Sickles", 
 		"type": "map"
 	},
 	"villager0": {
@@ -6383,65 +6388,143 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.co": {
-		"en-us": "Bu-GAWK! Hi boss! Got some good things on sale!", 
-		"en-dm": "Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow!", 
+		"en-us": "", 
+		"en-dm": "Henrietta: Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow!", 
 		"type": "shop"
 	},
 	"s.sell": {
-		"en-us": "What're you selling?", 
+		"en-us": "", 
 		"en-dm": "WOT'RE YA SELLIN'???", 
 		"type": "shop"
 	},
+	"cwk.sell": {
+		"en-us": "", 
+		"en-dm": "\"Darryl\": Whattaya got for me?", 
+		"type": "shop"
+	},
 	"s.eq1o": {
-		"en-us": "Welcome to my Equipment Shop! Please, buy many things.", 
-		"en-dm": "Hello I am a public domain dwarf and I sell equipment. You can equip it from the Menu, which is probably a good choice.", 
+		"en-us": "", 
+		"en-dm": "Velthur: Ayana! Welcome to my Equipment Shopp! Pleaze, buy many thingz.", 
 		"type": "shop"
 	},
 	"s.leave": {
-		"en-us": "Thank you, come again!", 
+		"en-us": "", 
 		"en-dm": "fuck off", 
 		"type": "shop"
 	},
-	"s.leave2": {
-		"en-us": "Bye.", 
-		"en-dm": "bye fucker", 
+	"s.leave1o": {
+		"en-us": "", 
+		"en-dm": "Velthur: Ciao!", 
+		"type": "shop"
+	},
+	"s.notenough1o": {
+		"en-us": "", 
+		"en-dm": "Velthur: No can do, sweetie. You need more money than that!", 
+		"type": "shop"
+	},
+	"s.leave0": {
+		"en-us": "", 
+		"en-dm": "Henrietta: Cock-a-doodle-goodbye!", 
+		"type": "shop"
+	},
+	"s.notenough0": {
+		"en-us": "", 
+		"en-dm": "Henrietta: Boss.. boss... I can't give you this for free. I need the money. For reasons.", 
 		"type": "shop"
 	},
 	"s.notenough": {
-		"en-us": "You can't afford that...", 
+		"en-us": "", 
 		"en-dm": "Hey fuckface this is a store not charity. Have the money or have a gofuckyourself.", 
 		"type": "shop"
 	},
 	"s.purchased": {
-		"en-us": "Thank you!", 
+		"en-us": "", 
 		"en-dm": "thanks mom", 
 		"type": "shop"
 	},
+	"s.purchased1o": {
+		"en-us": "", 
+		"en-dm": "Velthur: Grazie!", 
+		"type": "shop"
+	},
 	"s.up1p": {
-		"en-us": "Excellent! Now you'll have a 4x3 grid of tiles to plant crops and place fixtures on!", 
+		"en-us": "", 
+		"en-dm": "Andrew: Excellent! Now you'll have a 4x3 grid of tiles to plant crops and place fixtures on! Use your new space wisely!", 
 		"type": "shop"
 	},
 	"s.didsell": {
-		"en-us": "Thank you for the goods!", 
+		"en-us": "", 
 		"en-dm": "Thanks for the shit, fucfkace.", 
 		"type": "shop"
 	},
+	"cwk.didsell": {
+		"en-us": "", 
+		"en-dm": "\"Darryl\": Thanks for the shit.", 
+		"type": "shop"
+	},
 	"s.leavesell": {
-		"en-us": "Anything else?", 
+		"en-us": "", 
 		"en-dm": "stop giving me THINGS and start giving me MONEY.", 
 		"type": "shop"
 	},
+	"cwk.leavesell": {
+		"en-us": "", 
+		"en-dm": "\"Darryl\": Back to more important matters - the ones where you give me money.", 
+		"type": "shop"
+	},
 	"s.cpurch": {
-		"en-us": "Bu-GAW! Thank you for your patronage!", 
-		"en-dm": "Bu-GAWK!! Good shit, good shit. Thank you for your patronage!", 
+		"en-us": "", 
+		"en-dm": "Henrietta: Bu-GAWK!! Good shit, good shit. Thank you for your patronage!", 
 		"type": "shop"
 	},
 	"s.up1o": {
-		"en-us": "Are you tired of only having 9 tiles to plant crops in? Tire no more! For just 2000 coins I can give you three more tiles to plant on!", 
+		"en-us": "", 
+		"en-dm": "Andrew: Hellow! Are you tired of only having 9 tiles to plant your crops in? Tire no more! For a small fee I can give you three more tiles to plant your crops on! Neat, right?", 
 		"type": "shop"
 	},
 	"s.upempty": {
-		"en-us": "Welcome. Unfortunately, I have no other upgrades for you.", 
+		"en-us": "", 
+		"en-dm": "Andrew: Welcome! Unfortunately, I have no more upgrades for you!", 
+		"type": "shop"
+	},
+	"s.up1bye": {
+		"en-us": "", 
+		"en-dm": "Andrew: Until next time, friend!", 
+		"type": "shop"
+	},
+	"s.up1not": {
+		"en-us": "", 
+		"en-dm": "Andrew: I'm sorry, but your funds are insufficient for this transaction!", 
+		"type": "shop"
+	},
+	"s.up1talk": {
+		"en-us": "", 
+		"en-dm": "Andrew: A small farm is no good! A big farm is less no good! A huge farm is good! Those are the three rules I live by!", 
+		"type": "shop"
+	},
+	"s.innEnter1": {
+		"en-us": "", 
+		"en-dm": "Rosa: Hello, my inn is in... business. It's inn business. That's a thing people say. Fuck off.", 
+		"type": "shop"
+	},
+	"s.innLeave1": {
+		"en-us": "", 
+		"en-dm": "Rosa: Adios, Ayana.", 
+		"type": "shop"
+	},
+	"s.innPurch1": {
+		"en-us": "", 
+		"en-dm": "Rosa: Sleep well!", 
+		"type": "shop"
+	},
+	"s.innNot1": {
+		"en-us": "", 
+		"en-dm": "Rosa: I'm sorry, you don't have enough money to spend the night here.", 
+		"type": "shop"
+	},
+	"s.innAwake1": {
+		"en-us": "", 
+		"en-dm": "Rosa: I hope you had a good rest!", 
 		"type": "shop"
 	},
 	"s.sellseed": {
@@ -6469,37 +6552,112 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.fi1o": {
-		"en-us": "Welcome to the my Fixture Shop! Here you can buy Fixtures to add to your farm, allowing you to plant and grow more than just your standard fruits and veggies!", 
+		"en-us": "Chuck: Welcome to my Fixture Shop! Here you can buy Fixtures to add to yer farm, allowing you to plant and grow more than just yer standard fruits 'n veggies!", 
+		"type": "shop"
+	},
+	"s.talk1o": {
+		"en-us": "", 
+		"en-dm": "Velthur: You gotta use the right tool for the job at hand. Got nailz? Hammer! Got screwz? Screwdriver! Got vampirez? Garlic! I'm kidding, ha ha! ...Garlic won't stop us.", 
+		"type": "shop"
+	},
+	"s.chuckLeave": {
+		"en-us": "", 
+		"en-dm": "Chuck: Until next time, then!", 
+		"type": "shop"
+	},
+	"s.chuckNotEnough": {
+		"en-us": "", 
+		"en-dm": "Chuck: This ain't a charity, lass! Have the moneys or have the not-buying-from-me's!", 
+		"type": "shop"
+	},
+	"s.chuckBuy": {
+		"en-us": "", 
+		"en-dm": "Chuck: Thanks much, lass!", 
+		"type": "shop"
+	},
+	"s.chuckTalk": {
+		"en-us": "", 
+		"en-dm": "Chuck: I gotta say, Golden Mushrooms don't actually taste very good.", 
 		"type": "shop"
 	},
 	"quest1": {
 		"en-us": "", 
-		"en-dm": "oi u fuck", 
+		"en-dm": "Chuck: Oy there, you got a minnut?", 
 		"type": "shop"
 	},
 	"quest1.a": {
 		"en-us": "", 
-		"en-dm": "I heard pray tell quite right what-ho rumors eh wot yes quite that there's a golden mushroom in the forest west of here. Find it for me, and there'll be something in it for you!", 
+		"en-dm": "Chuck: I heard pray tell quite right what-ho rumors eh wot yes quite that there's a Golden Mushroom in the forest west of town. If you can find it for me, you'll be rewarded handsomely!", 
 		"type": "shop"
 	},
 	"quest1.b": {
 		"en-us": "", 
-		"en-dm": "sick thanks. Have a mushroom log.", 
+		"en-dm": "Chuck: Oy oy, now THAT'S some Golden Mushroom if I ever did see one! Thank you! Take this Mushroom Log as a reward! Also, now I will sell Mushroom products if you want to buy more!", 
 		"type": "shop"
 	},
 	"quest1.c": {
 		"en-us": "", 
-		"en-dm": "are you daft, lass? Golden mushroom. Forest. West of here. Hop it to it. it.", 
+		"en-dm": "Chuck: I don't see no gold in your hands! Find me the Golden Mushroom in the Forest west of here! Hop it to it, lass!", 
 		"type": "shop"
 	},
 	"s.seed1": {
 		"en-us": "", 
-		"en-dm": "hi I got seeds", 
+		"en-dm": "Pete: Hi welcome, to my shop. Please look around and let me know if you need any seeds. To buy. If you want to buy seeds from me let me know, is what I mean.", 
+		"type": "shop"
+	},
+	"s.seed1buy": {
+		"en-us": "", 
+		"en-dm": "Pete: Thank you for your bweesness.", 
+		"type": "shop"
+	},
+	"s.seed1not": {
+		"en-us": "", 
+		"en-dm": "Pete: I don't think you have enough money to buy this, so I can't sell it to you. Sorry, but that's how money works.", 
+		"type": "shop"
+	},
+	"s.seed1leave": {
+		"en-us": "", 
+		"en-dm": "Pete: Thanks. Come again!", 
+		"type": "shop"
+	},
+	"s.seed1casual": {
+		"en-us": "", 
+		"en-dm": "Pete: It's pretty wild, huh? That you can just, like, grow things from seeds. Nature is wild.", 
 		"type": "shop"
 	},
 	"s.inn1": {
 		"en-us": "", 
 		"en-dm": "hey hey hey my inn is in... business. It's in business. That's a thing people say. Fuck off.", 
+		"type": "shop"
+	},
+	"s.merminn": {
+		"en-us": "", 
+		"en-dm": "Gorty: Welcom to the mermaid inn. Weev made shor ta keep our rooms mostly wa'er-free, so yeu won't drown in yer sleep!", 
+		"type": "shop"
+	},
+	"s.merminnleave": {
+		"en-us": "", 
+		"en-dm": "Gorty: Com back soon!", 
+		"type": "shop"
+	},
+	"s.merminnnot": {
+		"en-us": "", 
+		"en-dm": "Gorty: No money, no bed. Dat's how it wurks!", 
+		"type": "shop"
+	},
+	"s.merminnpurch": {
+		"en-us": "", 
+		"en-dm": "Gorty: Sleep well, human!", 
+		"type": "shop"
+	},
+	"s.merminnawake": {
+		"en-us": "", 
+		"en-dm": "Gorty: Good maurning! Did yeu sleep well?", 
+		"type": "shop"
+	},
+	"s.merminntalk": {
+		"en-us": "", 
+		"en-dm": "Gorty: Wot're yeu staring at? Never seen a mermaid bafore? We're just like yeu humans! We jus' have tails and gills and much higher crime rates.", 
 		"type": "shop"
 	},
 	"s.innpurch": {
@@ -6509,22 +6667,47 @@ const fulltext = {
 	},
 	"s.mermhello": {
 		"en-us": "", 
-		"en-dm": "this is a mermaid... hello!!", 
+		"en-dm": "Shelf: Dis is a mermaid shop... g'day!", 
+		"type": "shop"
+	},
+	"s.mermleave": {
+		"en-us": "", 
+		"en-dm": "Shelf: Until next time!", 
+		"type": "shop"
+	},
+	"s.mermnot": {
+		"en-us": "", 
+		"en-dm": "Shelf: I don't know how yeu humans do dis shit, but us mermaids don't give tings away unless yeu have tha MONEY for dem!", 
+		"type": "shop"
+	},
+	"s.mermbuy": {
+		"en-us": "", 
+		"en-dm": "Shelf: Thank you!", 
 		"type": "shop"
 	},
 	"cwk.co": {
 		"en-us": "", 
-		"en-dm": "Hey there. I'm too lazy to do any construction work so I'm just... running a shop. Whatever.", 
+		"en-dm": "\"Darryl\": Hey there. I'm too lazy to do any construction work so I'm just... running a shop. Whatever.", 
 		"type": "shop"
 	},
 	"cwk.leave": {
 		"en-us": "", 
-		"en-dm": "Thanks for the whatever.", 
+		"en-dm": "\"Darryl\": Thanks for the whatever.", 
+		"type": "shop"
+	},
+	"cwk.not": {
+		"en-us": "", 
+		"en-dm": "\"Darryl\": Hey hey, this is a business, not a charity. Have the money or have the go-fuck-yourself.", 
+		"type": "shop"
+	},
+	"cwk.purch": {
+		"en-us": "", 
+		"en-dm": "\"Darryl\": Thanks.", 
 		"type": "shop"
 	},
 	"quest1.d": {
 		"en-us": "", 
-		"en-dm": "hly faulk lass is that a fucken golden mushroom? I'll trade you for this log! AND I'll start selling you my special mushroom selection!", 
+		"en-dm": "Samuel: Oy lass, is that a Golden Mushroom? I'll trade you for this Mushroom Log! Also, I'll start selling Mushroom-related products for you to buy, at a discounted price!", 
 		"type": "shop"
 	},
 	"s.youHave": {
