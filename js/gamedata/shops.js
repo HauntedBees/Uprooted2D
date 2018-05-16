@@ -154,7 +154,7 @@ const stores = {
             { product: "farmupgradeO", price: 2000, type: "upgrade" },
             { product: "farmupgrade_", price: 2000, type: "upgrade" }
         ],
-        opening: "s.up2", empty: "s.upempty", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.up2p"
+        opening: "s.up2", empty: "s.up2empty", leaving: "s.up2leave", notEnough: "s.up2not", purchased: "s.up2p"
     },
     "fixture2": {
         img: "shops/piggy",
@@ -165,7 +165,7 @@ const stores = {
             { product: "_strongsoil", type: "farm" },
             { product: "_hotspot", type: "farm" }
         ],
-        opening: "s.fi1o", leaving: "s.leave2", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.f3open", leaving: "s.f3leave", notEnough: "s.f3not", purchased: "s.f3purch", benignTalk: "s.f3talk"
     },
     // Area 4: South City
     "skumpys": {
@@ -178,7 +178,7 @@ const stores = {
             { product: "book4", name: "bookTechs", price: 0, type: "book" },
             { product: "book5", name: "bookTips", price: 0, type: "book" }
         ],
-        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
+        opening: "s.skumpO", leaving: "s.skumpL", notEnough: "s.skumpN", purchased: "s.skumpP", awake: "s.skumpA", benignTalk: "s.skumpT"
     },
     "mantools": {
         img: "shops/realactualhuman",
@@ -192,7 +192,7 @@ const stores = {
             { product: "!gardenGloves", type: "equipment" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.manO", leaving: "s.manL", notEnough: "s.manN", purchased: "s.manP"
     },
     "seedshack": {
         img: "shops/seedshack",
@@ -213,7 +213,7 @@ const stores = {
             { product: "apricot", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.seedsO", leaving: "s.seedsL", notEnough: "s.seedsN", purchased: "s.seedsP"
     },
     "catalinas": {
         img: "shops/catalina",
@@ -230,7 +230,7 @@ const stores = {
             { product: "beeG", type: "seed", locked: "catmail" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "s.fi1o", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased", talk: "catmail"
+        opening: "s.catO", leaving: "s.catL", notEnough: "s.catN", purchased: "s.catP", talk: "catmail", benignTalk: "s.catT"
     },
     "tinker": {
         img: "shops/tinker",
@@ -246,7 +246,7 @@ const stores = {
             { product: "coffee", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.tierraO", leaving: "s.tierraL", notEnough: "s.tierraN", purchased: "s.tierraP", benignTalk: "s.tierraT"
     },
     "pawn": {
         img: "shops/pawn",
@@ -258,7 +258,7 @@ const stores = {
             { product: "platypus", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.pawnO", leaving: "s.pawnL", notEnough: "s.pawnN", purchased: "s.pawnP", benignTalk: "s.pawnT"
     },
     "church": {
         img: "shops/church",
@@ -271,7 +271,7 @@ const stores = {
             { product: "book3", name: "bookHits", price: 0, type: "book" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.chO", leaving: "s.chL", notEnough: "s.chN", purchased: "s.chP", benignTalk: "s.chT"
     },
     // Area 5: North City
     "cityFixtures": {
@@ -285,7 +285,7 @@ const stores = {
             { product: "_strongsoil", type: "farm" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.fnO", leaving: "s.fnL", notEnough: "s.fnN", purchased: "s.fnP"
     },
     "cityInn": {
         img: "shops/hotel", innId: "bigCity",
@@ -296,7 +296,7 @@ const stores = {
             { product: "book5", name: "bookMan", price: 0, type: "book" },
             { product: "book0", name: "bookApp", price: 0, type: "book" }
         ],
-        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
+        opening: "s.hotelO", leaving: "s.hotelL", notEnough: "s.hotelN", purchased: "s.hotelP", awake: "s.hotelA"
     },
     "gordonsFarming": {
         img: "shops/gordon",
@@ -313,7 +313,7 @@ const stores = {
             { product: "apricot", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.gordO", leaving: "s.gordL", notEnough: "s.gordN", purchased: "s.gordP", benignTalk: "s.gordT"
     },
     "cityTech": {
         img: "shops/tech",
@@ -335,7 +335,7 @@ const stores = {
             { product: "headphones", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.epicO", leaving: "s.epicL", notEnough: "s.epicN", purchased: "s.epicP"
     },
     "cityExpansions": {
         img: "shops/epickyle",
@@ -348,7 +348,7 @@ const stores = {
             { product: "farmupgrade__", price: 6000, type: "upgrade" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
-        opening: "", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.purchased"
+        opening: "s.kyleO", empty: "s.kyleE", leaving: "s.kyleL", notEnough: "s.kyleN", purchased: "s.kyleP"
     },
     // Final Area: HQ
     "vendo_veg": {
@@ -463,10 +463,10 @@ const stores = {
         img: "shops/finalInn", innId: "lastInn",
         eyes: "shopblinks/none", ex: 0, ey: 0,
         wares: [
-            { product: "sleep", type: "inn", price: 1 },
+            { product: "sleep", type: "inn", price: 0 },
             { product: "book3", name: "bookEnt", price: 0, type: "book" }
         ],
-        opening: "s.inn1", leaving: "s.leave", notEnough: "s.notenough", purchased: "s.innpurch"
+        opening: "s.innLastO", leaving: "s.leaveEnd", purchased: "s.innPurchLast", awake: "s.lastWake"
     },
 
     "template": {

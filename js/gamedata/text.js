@@ -3798,17 +3798,57 @@ const fulltext = {
 	},
 	"s.up2": {
 		"en-us": "", 
-		"en-dm": "Do you wish you had more tiles to plant crops in? Wish no more! I can give you more tiles to work with!", 
+		"en-dm": "Till-Till: Do you wish you had more tiles to plant crops in? Wish no more! I can give you more tiles to work with!", 
 		"type": "shop"
 	},
 	"s.up2p": {
 		"en-us": "", 
-		"en-dm": "Excellent! Now you'll have more tiles to plant crops and place fixtures on!", 
+		"en-dm": "Till-Till: Excellent! Now you'll have more tiles to plant crops and place fixtures on!", 
+		"type": "shop"
+	},
+	"s.up2empty": {
+		"en-us": "", 
+		"en-dm": "Till-Till: Hey there, pal! I don't have any more farm upgrades for you, but I'm still happy to see you! :)", 
+		"type": "shop"
+	},
+	"s.up2leave": {
+		"en-us": "", 
+		"en-dm": "Till-Till: Bye-bye, buddy!", 
+		"type": "shop"
+	},
+	"s.up2not": {
+		"en-us": "", 
+		"en-dm": "Till-Till: I'm sorry, friend, but I cannot perform the necessary tilling without funding! You insert money - I output field expansion!", 
+		"type": "shop"
+	},
+	"s.f3open": {
+		"en-us": "", 
+		"en-dm": "Real Pig: HELLO. WOULD YOU LIKE TO ACQUIRE A COW OR COW ACCESSORIES.? OR OTHER FIXTURES.? I HAVE THEM.", 
+		"type": "shop"
+	},
+	"s.f3leave": {
+		"en-us": "", 
+		"en-dm": "Real Pig: OINK OINK.", 
+		"type": "shop"
+	},
+	"s.f3not": {
+		"en-us": "", 
+		"en-dm": "Real Pig: INSUFFICIENT FUNDS. TRY AGAIN LATER (ASSUMING TIME IS MONEY AND YOU WILL HAVE MORE MONEY IN A FUTURE TIME).", 
+		"type": "shop"
+	},
+	"s.f3purch": {
+		"en-us": "", 
+		"en-dm": "Real Pig: TRANSACTION SUCCESSFUL. ENJOY YOUR PRODUCT AND OR COW.", 
+		"type": "shop"
+	},
+	"s.f3talk": {
+		"en-us": "", 
+		"en-dm": "Real Pig: I AM A REAL PIG WHO OINKS AND ENJOYS FOOD. GOOD PIG FOOD. LIKE BATTERIES.", 
 		"type": "shop"
 	},
 	"upgradeBarn": {
 		"en-us": "", 
-		"en-dm": "Bert's Expansion Barn", 
+		"en-dm": "The Good Times Barn For Dirt Rearranging Activities and Farm Expansions", 
 		"type": "map"
 	},
 	"arf0": {
@@ -4459,7 +4499,7 @@ const fulltext = {
 	},
 	"catmail": {
 		"en-us": "", 
-		"en-dm": "*sigh*", 
+		"en-dm": "Catalina: *sigh*", 
 		"type": "shop"
 	},
 	"catmail0": {
@@ -4476,6 +4516,291 @@ const fulltext = {
 		"en-us": "", 
 		"en-dm": "\"Please pick up after your pet and help keep our park clean, JERRY.\"", 
 		"type": "map"
+	},
+	"s.skumpO": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Hello again, farmer!", 
+		"type": "shop"
+	},
+	"s.skumpL": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Until next time!", 
+		"type": "shop"
+	},
+	"s.skumpN": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Sorry, but you don't have enough money.", 
+		"type": "shop"
+	},
+	"s.skumpP": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Sleep well!", 
+		"type": "shop"
+	},
+	"s.skumpA": {
+		"en-us": "", 
+		"en-dm": "Skumpy: Good morning! I hope you had a good sleep!", 
+		"type": "shop"
+	},
+	"s.skumpT": {
+		"en-us": "", 
+		"en-dm": "Skumpy: So many people ask \"who is Skumpy?\" but nobody ever asks \"WHY is Skumpy?\" ...Actually, that's not true. People usually just ask \"what kind of name is Skumpy?\"", 
+		"type": "shop"
+	},
+	"s.manO": {
+		"en-us": "", 
+		"en-dm": "Guy Manson: hey there! hey! hi! regular shopkeeper here! yes! hello! buy some products, won't you? yes? buy?", 
+		"type": "shop"
+	},
+	"s.manL": {
+		"en-us": "", 
+		"en-dm": "Guy Manson: come back soon! bye! bring more money!", 
+		"type": "shop"
+	},
+	"s.manN": {
+		"en-us": "", 
+		"en-dm": "Guy Manson: this isn't enough money! no! not enough! come back with more! more money! to buy this!", 
+		"type": "shop"
+	},
+	"s.manP": {
+		"en-us": "", 
+		"en-dm": "Guy Manson: thank you for your purchase! this money will be used to pay for bills! and taxes! and cheese! but mostly taxes! the government, am i right?", 
+		"type": "shop"
+	},
+	"s.seedsO": {
+		"en-us": "", 
+		"en-dm": "Sharon: Hey there, sunshine! Welcome to the Seed Shack! Check out my amazing selection!", 
+		"type": "shop"
+	},
+	"s.seedsL": {
+		"en-us": "", 
+		"en-dm": "Sharon: See ya later, sweetheart!", 
+		"type": "shop"
+	},
+	"s.seedsN": {
+		"en-us": "", 
+		"en-dm": "Sharon: Sorry, but this is not enough money!", 
+		"type": "shop"
+	},
+	"s.seedsP": {
+		"en-us": "", 
+		"en-dm": "Sharon: Pleasure doin' business with ya, sunshine!", 
+		"type": "shop"
+	},
+	"s.catO": {
+		"en-us": "", 
+		"en-dm": "Catalina: Hello! Welcome to my Fixture Shop!", 
+		"type": "shop"
+	},
+	"s.catL": {
+		"en-us": "", 
+		"en-dm": "Catalina: Thanks for stopping by!", 
+		"type": "shop"
+	},
+	"s.catN": {
+		"en-us": "", 
+		"en-dm": "Catalina: You need more money for this, sorry!", 
+		"type": "shop"
+	},
+	"s.catP": {
+		"en-us": "", 
+		"en-dm": "Catalina: Thank you for your purchase!", 
+		"type": "shop"
+	},
+	"s.catT": {
+		"en-us": "", 
+		"en-dm": "Catalina: It may not be as fancy down here as it is up north, but the community here is so much nicer. Aside from the mafia, of course.", 
+		"type": "shop"
+	},
+	"s.pawnO": {
+		"en-us": "", 
+		"en-dm": "Gabi: Hello... welcome to the pawn shop, where we sell pawned items.", 
+		"type": "shop"
+	},
+	"s.pawnL": {
+		"en-us": "", 
+		"en-dm": "Gabi: Thanks for stopping by.", 
+		"type": "shop"
+	},
+	"s.pawnN": {
+		"en-us": "", 
+		"en-dm": "Gabi: This isn't enough money, sorry.", 
+		"type": "shop"
+	},
+	"s.pawnP": {
+		"en-us": "", 
+		"en-dm": "Gabi: Thanks.", 
+		"type": "shop"
+	},
+	"s.pawnT": {
+		"en-us": "", 
+		"en-dm": "Gabi: I suppose there's a lesson to be learned here... read more than just the name of a job opening before applying.", 
+		"type": "shop"
+	},
+	"s.tierraO": {
+		"en-us": "", 
+		"en-dm": "Tierra: Hi hi hi! Welcome! Please, buy my things! I worked very hard on them!", 
+		"type": "shop"
+	},
+	"s.tierraL": {
+		"en-us": "", 
+		"en-dm": "Tierra: See you later, alligator!", 
+		"type": "shop"
+	},
+	"s.tierraN": {
+		"en-us": "", 
+		"en-dm": "Tierra: Nope! That's not enough money! My creations are worth way more than that!", 
+		"type": "shop"
+	},
+	"s.tierraP": {
+		"en-us": "", 
+		"en-dm": "Tierra: Thank you for your patronage!", 
+		"type": "shop"
+	},
+	"s.tierraT": {
+		"en-us": "", 
+		"en-dm": "Tierra: Technology is great! It's so fun to create things!", 
+		"type": "shop"
+	},
+	"s.chO": {
+		"en-us": "", 
+		"en-dm": "Father Iglecias: Welcome, my child.", 
+		"type": "shop"
+	},
+	"s.chL": {
+		"en-us": "", 
+		"en-dm": "Father Iglecias: May God be with you.", 
+		"type": "shop"
+	},
+	"s.chN": {
+		"en-us": "", 
+		"en-dm": "Father Iglecias: I'm sorry, but I'd ask that you offer me a bit more if you wish to purchase this.", 
+		"type": "shop"
+	},
+	"s.chP": {
+		"en-us": "", 
+		"en-dm": "Father Iglecias: God bless you.", 
+		"type": "shop"
+	},
+	"s.chT": {
+		"en-us": "", 
+		"en-dm": "Father Iglecias: I've been trying to appeal to the youth recently, to get them more involved in the Church. Do you know what a \"memes\" is?", 
+		"type": "shop"
+	},
+	"s.fnO": {
+		"en-us": "", 
+		"en-dm": "Lynn: Oh, uh, welcome. Let me know if you need anything.", 
+		"type": "shop"
+	},
+	"s.fnL": {
+		"en-us": "", 
+		"en-dm": "Lynn doesn't look up from her laptop.", 
+		"type": "shop"
+	},
+	"s.fnN": {
+		"en-us": "", 
+		"en-dm": "Lynn: I don't have time for this. Either have enough money or leave!", 
+		"type": "shop"
+	},
+	"s.fnP": {
+		"en-us": "", 
+		"en-dm": "Lynn: Great thanks, here's your stuff.", 
+		"type": "shop"
+	},
+	"s.hotelO": {
+		"en-us": "", 
+		"en-dm": "Benedict: Oh, hello... welcome.", 
+		"type": "shop"
+	},
+	"s.hotelL": {
+		"en-us": "", 
+		"en-dm": "Benedict: Will that be all, ma'am?", 
+		"type": "shop"
+	},
+	"s.hotelN": {
+		"en-us": "", 
+		"en-dm": "Benedict: I'm sorry, madame, but here in the city we expect to receive MONEY in exchange for goods and services.", 
+		"type": "shop"
+	},
+	"s.hotelP": {
+		"en-us": "", 
+		"en-dm": "Benedict: Wonderful. Please enjoy your stay.", 
+		"type": "shop"
+	},
+	"s.hotelA": {
+		"en-us": "", 
+		"en-dm": "Benedict: I hope you had a lovely rest.", 
+		"type": "shop"
+	},
+	"s.gordO": {
+		"en-us": "", 
+		"en-dm": "Gordon: Welcome, welcome! Please help yourself to our amazing deals!", 
+		"type": "shop"
+	},
+	"s.gordL": {
+		"en-us": "", 
+		"en-dm": "Gordon: Are you sure you don't want to buy anything else? It's cheap!", 
+		"type": "shop"
+	},
+	"s.gordN": {
+		"en-us": "", 
+		"en-dm": "Gordon: My prices may be low, but they aren't THAT low! ..yet.", 
+		"type": "shop"
+	},
+	"s.gordP": {
+		"en-us": "", 
+		"en-dm": "Gordon: Thank you! Thank you for your purchase! Please stop by again!", 
+		"type": "shop"
+	},
+	"s.gordT": {
+		"en-us": "", 
+		"en-dm": "Gordon: Business has been rough ever since all these new places opened up. I'm still not entirely sure I know what kombucha is, but all of these newcomers seem to be slurpin' it down when they judge my store for not having an app!", 
+		"type": "shop"
+	},
+	"s.epicO": {
+		"en-us": "", 
+		"en-dm": "Marty: Oh, h-hi. The STOREKEEPER 9000 is having some technical difficulties right now, so, um, uh... please don't buy anything too confusing? \n \n STOREKEEPER 9000: are you ready for EPIC? epic. epic. epic. epic. ERROR.", 
+		"type": "shop"
+	},
+	"s.epicL": {
+		"en-us": "", 
+		"en-dm": "STOREKEEPER 9000: ThANK YOU FOR COMING please THANK YOU FOR YOUR PURCHASE that will be fifty--FIFTY.... SIXTY NI-FIFTY dollars. Please insert WELCOME TO THE TECH SUPPLIES STORE! \n \n Marty: O-oh no...", 
+		"type": "shop"
+	},
+	"s.epicN": {
+		"en-us": "", 
+		"en-dm": "STOREKEEPER 9000: Thank you for your pur- ERROR. INSUFFICIENT MONEY. PLEASE RECTIFY SITUATION BY BEING LESS POOR. Now shutting down. \n \n Marty: Oh dear. That's not right at all.", 
+		"type": "shop"
+	},
+	"s.epicP": {
+		"en-us": "", 
+		"en-dm": "Marty: Um, uh... how does this cash register work... um... here we go. Thank you for your purchase. \n \n STOREKEEPER 9000: OOPSY WOOPSIE. WE MADE A FUCKY WUCKY!!", 
+		"type": "shop"
+	},
+	"s.kyleO": {
+		"en-us": "", 
+		"en-dm": "\"Epic\" Kyle: If you need some farm expansions done, I know just the guy to call! Me. Call me. For farm expansions. Be-because I can do them.", 
+		"type": "shop"
+	},
+	"s.kyleE": {
+		"en-us": "", 
+		"en-dm": "\"Epic\" Kyle: Woe be upon us all... your farm is already as big as it can be. There is no more I or anyone else can do for you.", 
+		"type": "shop"
+	},
+	"s.kyleL": {
+		"en-us": "", 
+		"en-dm": "\"Epic\" Kyle: Until we meet again, I bid you a most epic farewell.", 
+		"type": "shop"
+	},
+	"s.kyleN": {
+		"en-us": "", 
+		"en-dm": "\"Epic\" Kyle: That isn't enough money... that wasn't very epic of you.", 
+		"type": "shop"
+	},
+	"s.kyleP": {
+		"en-us": "", 
+		"en-dm": "\"Epic\" Kyle: Thank you! With the power of your money and my skills, your farm is now more epic than ever!", 
+		"type": "shop"
 	},
 	// Area 8: North City
 	"mushMan0": {
@@ -6407,9 +6732,9 @@ const fulltext = {
 		"en-dm": "Velthur: Ayana! Welcome to my Equipment Shopp! Pleaze, buy many thingz.", 
 		"type": "shop"
 	},
-	"s.leave": {
+	"s.leaveEnd": {
 		"en-us": "", 
-		"en-dm": "fuck off", 
+		"en-dm": "Time to get going.", 
 		"type": "shop"
 	},
 	"s.leave1o": {
@@ -6625,9 +6950,9 @@ const fulltext = {
 		"en-dm": "Pete: It's pretty wild, huh? That you can just, like, grow things from seeds. Nature is wild.", 
 		"type": "shop"
 	},
-	"s.inn1": {
+	"s.innLastO": {
 		"en-us": "", 
-		"en-dm": "hey hey hey my inn is in... business. It's in business. That's a thing people say. Fuck off.", 
+		"en-dm": "This is it... I'm so close to the end of this nightmare.", 
 		"type": "shop"
 	},
 	"s.merminn": {
@@ -6660,9 +6985,14 @@ const fulltext = {
 		"en-dm": "Gorty: Wot're yeu staring at? Never seen a mermaid bafore? We're just like yeu humans! We jus' have tails and gills and much higher crime rates.", 
 		"type": "shop"
 	},
-	"s.innpurch": {
+	"s.innPurchLast": {
 		"en-us": "", 
-		"en-dm": "enjoy your sleep", 
+		"en-dm": "I'm gonna need this rest.", 
+		"type": "shop"
+	},
+	"s.lastWake": {
+		"en-us": "", 
+		"en-dm": "I feel a bit better now.", 
 		"type": "shop"
 	},
 	"s.mermhello": {
