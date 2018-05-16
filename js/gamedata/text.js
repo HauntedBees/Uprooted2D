@@ -1992,7 +1992,7 @@ const fulltext = {
 	},
 	"s.home": {
 		"en-us": "", 
-		"en-dm": "Home sweet home... I can hardly believe that all these robot hijinks are happening.", 
+		"en-dm": "Home sweet home... I can hardly believe that all these hijinks are happening.", 
 		"type": "shop"
 	},
 	"s.homesleep": {
