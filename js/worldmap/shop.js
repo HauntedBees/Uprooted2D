@@ -645,7 +645,7 @@ worldmap.shop = {
             else { sleepInfo.state = 1; }
         } else if(sleepInfo.state === 1) {
             const dreamChance = Math.random() > 0.75;
-            const textKey = dreamChance ? `innDream${Range(0, 9)}` : "innSleep";
+            const textKey = dreamChance ? `innDream${Range(0, 10)}` : "innSleep";
             worldmap.shop.DrawDetails(GetText(worldmap.shop.details.awake));
             gfx.drawFullText(GetText(textKey), 0, "#FFFFFF", true);
             sleepInfo.state = 2;

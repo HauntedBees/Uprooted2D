@@ -6032,7 +6032,7 @@ const fulltext = {
 	},
 	"salsaBottle": {
 		"en-us": "", 
-		"en-dm": "\"Hola my amigos! Want a little spice in your life? Each bottle of 'Food2 Salsa Picante' includes real tomato juice from tomatos that were once near a pepper!\"", 
+		"en-dm": "\"Hola my amigos! Want a little spice in your life? Each bottle of 'Food2 Salsa Picante' includes real tomato juice from tomatoes that were once near a pepper!\"", 
 		"type": "text"
 	},
 	"cookiesBottle": {
@@ -10785,6 +10785,11 @@ const fulltext = {
 		"en-dm": "It is Sunday, and my mom wakes me up to go to church. \"I don't wanna,\" I grumble as I roll over in my bed. \"Now now, if we don't go to church, the neighbors will kill us!\" my mom says. I turn around to face her. \"Wait, what?\" The neighbors have a gun to her head. \"Please honey, let's go to church.\"", 
 		"type": "sleep"
 	},
+	"innDream9": {
+		"en-us": "", 
+		"en-dm": "I lower my body into the hot spring. After a long day of farming, this is exactly what I needed. The sound of crickets chirping in the distance is the perfect background noise. Suddenly the water turns black. A voice says sorry. I turn to see an octopus next to me. I farted.", 
+		"type": "sleep"
+	},
 	// Ya Boy at the Farm
 	"iiiTalk0": {
 		"en-us": "", 
@@ -10859,7 +10864,7 @@ const fulltext = {
 	},
 	"cr.km": {
 		"en-us": "", 
-		"en-dm": "Kelly Marie", 
+		"en-dm": "Kelly Marine", 
 		"type": "cname"
 	},
 	"cr.mkla": {
