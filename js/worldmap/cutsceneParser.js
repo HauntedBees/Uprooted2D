@@ -3,6 +3,7 @@ const iHandler = {
     moveSpeed: cutsceneMoveSpeeds[0], isFirst: true, noSkip: false, 
     state: { key: "", idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] },
     Start: function(startkey) {
+        if(startkey === "falcon" && worldmap.ignoreAutoplay === true) { iHandler.state.done = true; worldmap.finishDialog(); return; }
         worldmap.dialogData = {};
         iHandler.state = { key: startkey, idx: 0, activeAnim: null, done: false, texts: [], animHandler: null, postItems: [] };
         iHandler.Advance(true);

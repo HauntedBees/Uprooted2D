@@ -47,6 +47,33 @@ let consoleCmd = {
                 }
                 return combat.startBattle(args);
             }
+            case "nocutscene": {
+                if(args.length === 0) { return; }
+                if(args[0] === "on") {
+                    worldmap.ignoreAutoplay = true;
+                } else if(args[0] === "off") {
+                    worldmap.ignoreAutoplay = false;
+                }
+                return;
+            }
+            case "goto": {
+                if(args.length === 0) { return; }
+                let pathTo = null;
+                switch(args[0]) {
+                    case "farmintro": pathTo = { init: { x: 17,  y: 9 }, map: "farm" }; break;
+                    case "farm": pathTo = { init: { x:  12,  y: 4 }, map: "farm" }; break;
+                    case "village": pathTo = { init: { x: 19, y: 5}, map: "firstvillage" }; break;
+                    case "bridge": pathTo = { init: { x: 27, y: 5 }, map: "bridge" }; break;
+                    case "fakefarmopen": pathTo = { init: { x: 24.75, y: 35.5 }, map: "fakefarm", stayBlack: true, playerDir: 0 }; break;
+                    case "fakefarm": pathTo = { init: { x: 24.75, y: 35.5 }, map: "fakefarm" }; break;
+                    case "southcity": pathTo = { init: { x: 44, y: 44 }, map: "southcity" }; break;
+                    case "northcity": pathTo = { init: { x: 25, y: 44 }, map: "northcity" }; break;
+                    case "hq": pathTo = { init: { x: 12, y: 10 }, map: "hq_4" }; break;
+                    case "hqend": pathTo = { init: { x: 8, y: 51 }, map: "hq_5" }; break;
+                }
+                if(pathTo === null) { return; }
+                return game.transition(game.currentInputHandler, worldmap, pathTo);
+            }
             case "unsafe": return eval(args.join(" "));
         }
     },

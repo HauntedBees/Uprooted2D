@@ -10,7 +10,7 @@ const mapentities = {
         GetCSFellow("H_Hipster", 0, 4, 0, "Beck1", "hipster", { moving: true, postBattle: "PostInitialBattle" }),
         GetFellow("ConvinceATron", 10, 4, 0, "BeckTut", Cutscene("tutBuddy"), undefined, { noRunKill: true, storageKey: "convince", visible: false, postBattle: "PostStandaloneTutorial" }),
         // Map Switching
-        SwitchMapSubPartialColumn("ExitAreaWest", 0, 20, 22, 12, "farm", 17.25, 22.25),
+        SwitchMapSubPartialColumn("ExitAreaWest", 1, 20, 22, 12, "farm", 17.25, 22.25),
         SwitchMap("ExitAreaSouth", 16, 23, true, false, 21, 1, "firstvillage", CommonConditions["beatBigBot"]),
         GetTruckL(16, 5), GetTruckR(18, 5),
         // Foreground
@@ -38,7 +38,7 @@ const mapentities = {
             GetCSFellow("NathanOnTheFarm3", 12, 2, 0, "Iii5", "n3", { interact: OneSpeak("yaBoiD") }),
             GetCSFellow("IiiOnTheFarm", 16, 9, 0, "Iii1", "n4", { interact: Cutscene("iiiTalk") }),
             // Map Switching
-            SwitchMapSubPartialColumn("ExitAreaEast", 23, 12, 1, 20, "producestand", 10.5, 13.25),
+            SwitchMapSubPartialColumn("ExitAreaEast", 23, 12, 2, 20, "producestand", 10.5, 13.25),
             // Shops & Hives
             BeeFellow("FarmHive", 3, 1),
             EnterShop("ChickenCoop", 18, 3, "coop"),
@@ -73,7 +73,7 @@ const mapentities = {
     "firstvillage": () => [
         // Map Switching
         SwitchMapSubPartialRow("ExitAreaNorth", 21, 0, 16, 22, "producestand", 20.5, 22.25),
-        SwitchMapSubPartialColumn("ExitAreaWest", 0, 22, 44, 49, "forest", 21.5, 23.25),
+        SwitchMapSubPartialColumn("ExitAreaWest", 1, 22, 44, 49, "forest", 21.5, 23.25),
         SwitchMapSubPartialRow("ExitAreaSouth", 21, 30, 21.5, 1, "belowvillage", 18.75, 26.25),
         // Foreground
         GetForeground("firstvillage", 0, 1348),
@@ -98,7 +98,7 @@ const mapentities = {
     ],
     "forest": () => [
         // Map Switching
-        SwitchMap("ExitAreaEast", 46, 49, false, false, 1, 22.5, "firstvillage"),
+        SwitchMap("ExitAreaEast", 46, 49, false, false, 2, 22.5, "firstvillage"),
         SwitchMapSeamless("JoinBlue", 32, 35, 0, 70, 31),
         SwitchMapSeamless("JoinAqua", 74, 36, 2, 111, 58),
         SwitchMapSeamless("JoinMaroon", 111, 57, 0, 36, 31),
