@@ -246,7 +246,7 @@ worldmap.optionsMenu = {
         worldmap.optionsMenu.QuitWithoutSaving(true);
     },
     QuitWithoutSaving: function(dontFont) {
-        if(!dontFont) { player.options.font = this.origFont; }
+        if(!dontFont) { player.options.font = worldmap.optionsMenu.origFont; }
         if(worldmap.optionsMenu.fromPause) {
             game.innerTransition(worldmap.optionsMenu, pausemenu, 3);
         } else {
