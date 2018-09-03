@@ -11,7 +11,7 @@ let player = {
     lastInn: "start",
     options: {
         difficulty: 1, 
-        music: 1, sound: 1,
+        music: 10, sound: 10,
         controltype: 0,
         font: 0, resolution: 1, fullscreen: 0
     },

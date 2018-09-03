@@ -1,4 +1,5 @@
 worldmap.optionsMenu = {
+    soundNums: ["opOff", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"],
     cursory: 1, options: [], localOptions: {}, fromPause: false, invalidControls: [],
     headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 12, inChange: false, origFont: 0,
     setup: function(fromPause) {
@@ -49,8 +50,8 @@ worldmap.optionsMenu = {
         y = this.addButton(y, "ctrlCancel", keysToUse.cancel, "cancel");
         y = this.addButton(y, "ctrlPause", keysToUse.pause, "pause");
         y = this.addHeading(y, "opAudio");
-        y = this.addOption(y, "opMusic", this.localOptions.music, "music", ["opOff", "opOn"]);
-        y = this.addOption(y, "opSound", this.localOptions.sound, "sound", ["opOff", "opOn"]);
+        y = this.addOption(y, "opMusic", this.localOptions.music, "music", worldmap.optionsMenu.soundNums);
+        y = this.addOption(y, "opSound", this.localOptions.sound, "sound", worldmap.optionsMenu.soundNums);
         y = this.addHeading(y, "opGraphics");
         y = this.addOption(y, "opResolution", this.localOptions.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
         y = this.addOption(y, "opFullScreen", this.localOptions.fullscreen, "fullscreen", ["opNo", "opYes"]);
@@ -76,7 +77,8 @@ worldmap.optionsMenu = {
                     break;
                 case "option":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.optionSize);
-                    const optext = GetText(op.choices[op.val]);
+                    const opval = op.choices[op.val];
+                    const optext =  opval.match(/^\d+%$/) === null ? GetText(opval) : opval;
                     gfx.drawText(optext, op.optx, op.y - yoffset, "#000000", this.optionSize);
                     if(this.cursory === i) {
                         gfx.drawTileToGrid("carrotSel", op.x / 24, y - tileyoffset, "menutext");
