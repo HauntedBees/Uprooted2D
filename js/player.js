@@ -13,7 +13,7 @@ let player = {
         difficulty: 1, 
         music: 10, sound: 10,
         controltype: 0,
-        font: 0, resolution: 1, fullscreen: 0
+        font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0
     },
     controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" },
     keyboardcontrols: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" },
@@ -23,6 +23,14 @@ let player = {
         player.mapName = worldmap.mapName;
         player.mapPos = worldmap.pos;
         player.mapDir = worldmap.playerDir;
+    },
+    getSheetPath: function() {
+        switch(player.options.gfxfilter) {
+            case 0:
+            case 3: return "img";
+            case 1: return "imgs4x";
+            case 2: return "imghq4x";
+        }
     },
     getPlayTimeString: function(time) {
         time = time || this.playTime;

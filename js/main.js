@@ -120,7 +120,7 @@ const game = {
         gfx.canvasHeight = height;
         gfx.tileWidth = tilewidth;
         gfx.tileHeight = tileheight;
-        gfx.loadSpriteSheets(this.sheetsToLoad, this.sheetsLoaded);
+        gfx.loadSpriteSheets(player.getSheetPath(), this.sheetsToLoad, this.sheetsLoaded);
     },
     transitioning: false,
     CleanHandler: function(from) {

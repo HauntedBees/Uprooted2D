@@ -3,8 +3,8 @@ const gfx = {
     canvasHeight: 0, canvasWidth: 0,
     tileWidth: 0, tileHeight: 0, scale: 4,
     spritesheets: [],
-    loadSpriteSheets: function(paths, callback) {
-        count = 0;
+    loadSpriteSheets: function(source, paths, callback) {
+        count = 0; source = source || "img";
         paths.forEach(function(path) {
             const f = function(path, len) {
                 const img = new Image();
@@ -13,7 +13,7 @@ const gfx = {
                     count += 1;
                     if(count === len) { callback(); }
                 };
-                img.src = "img/" + path + ".png";
+                img.src = `${source}/${path}.png`;
             };
             f(path, paths.length);
         });

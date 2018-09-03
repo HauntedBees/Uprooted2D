@@ -1306,6 +1306,31 @@ const fulltext = {
 		"en-dm": "Yes", 
 		"type": "opts"
 	},
+	"opFilter": {
+		"en-us": "", 
+		"en-dm": "Filter", 
+		"type": "opts"
+	},
+	"opNone": {
+		"en-us": "", 
+		"en-dm": "None", 
+		"type": "opts"
+	},
+	"opS4X": {
+		"en-us": "", 
+		"en-dm": "S4X", 
+		"type": "opts"
+	},
+	"opHQ4X": {
+		"en-us": "", 
+		"en-dm": "HQ4X", 
+		"type": "opts"
+	},
+	"opGlitch": {
+		"en-us": "", 
+		"en-dm": "Glitch", 
+		"type": "opts"
+	},
 	"opNo": {
 		"en-us": "", 
 		"en-dm": "No", 
@@ -6417,7 +6442,7 @@ const fulltext = {
 	},
 	"postBeckett1": {
 		"en-us": "", 
-		"en-dm": "Beckett: I'M SMART! YOU'RE DUMB! I'M RICH! YOU'RE POOR! I'M... THIS IS IMPOSSIBLE!", 
+		"en-dm": "Beckett: I'M SMART! YOU'RE NOT! I'M RICH! YOU'RE NOT! I'M... THIS IS IMPOSSIBLE!", 
 		"type": "text"
 	},
 	"postBeckett2": {

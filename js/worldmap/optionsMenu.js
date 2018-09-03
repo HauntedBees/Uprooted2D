@@ -55,6 +55,7 @@ worldmap.optionsMenu = {
         y = this.addHeading(y, "opGraphics");
         y = this.addOption(y, "opResolution", this.localOptions.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
         y = this.addOption(y, "opFullScreen", this.localOptions.fullscreen, "fullscreen", ["opNo", "opYes"]);
+        y = this.addOption(y, "opFilter", this.localOptions.gfxfilter, "gfxfilter", ["opNone", "opS4X", "opHQ4X"]); //, "opGlitch"]);
         /*y = this.addOption(y, "opPlacehold", 1, false, ["opOff", "opOn"]);*/
         y += 5;
         y = this.addFinal(y, (this.invalidControls.length > 0 ? "opFixControls" : "opSaveQuit"), this.SaveAndQuit);
@@ -227,10 +228,19 @@ worldmap.optionsMenu = {
     },
     SaveAndQuit: function() {
         if(worldmap.optionsMenu.invalidControls.length > 0) { return false; }
+        const oldFilter = player.options.gfxfilter;
         player.keyboardcontrols = Object.assign(player.keyboardcontrols, worldmap.optionsMenu.localKeyboardControls);
         player.gamepadcontrols = Object.assign(player.gamepadcontrols, worldmap.optionsMenu.localGamepadControls);
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
         input.SwitchControlType(player.options.controltype);
+        const newFilter = player.options.gfxfilter;
+        if(oldFilter != newFilter) {
+            gfx.loadSpriteSheets(player.getSheetPath(), game.sheetsToLoad, worldmap.optionsMenu.ContinueSaveAndQuit);
+        } else {
+            worldmap.optionsMenu.ContinueSaveAndQuit();
+        }
+    },
+    ContinueSaveAndQuit: function() {
         UpdateStatsForCurrentDifficulty();
         nwHelpers.AdjustScreenSettings();
         worldmap.optionsMenu.QuitWithoutSaving(true);
