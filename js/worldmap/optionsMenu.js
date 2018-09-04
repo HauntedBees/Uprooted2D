@@ -1,6 +1,7 @@
 worldmap.optionsMenu = {
+    mouseReady: true, 
     soundNums: ["opOff", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"],
-    cursory: 1, options: [], localOptions: {}, fromPause: false, invalidControls: [],
+    specialPos: -1, cursory: 1, options: [], localOptions: {}, fromPause: false, invalidControls: [],
     headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 12, inChange: false, origFont: 0,
     setup: function(fromPause) {
         this.fromPause = fromPause;
@@ -8,6 +9,7 @@ worldmap.optionsMenu = {
         this.localGamepadControls = Object.assign({}, player.gamepadcontrols);
         this.localOptions = Object.assign({}, player.options);
         this.options = []; this.cursory = 1; this.inChange = false;
+        this.specialPos = -1;
         this.origFont = player.options.font;
         this.invalidControls = [];
         this.RedimOptions();
@@ -65,10 +67,17 @@ worldmap.optionsMenu = {
     drawEverything: function() {
         gfx.clearAll();
         const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
+        const yMax = (this.options[this.options.length - 1].y + this.optionSize - 4) / 16 - 1.8;
         let yoffset = 0, tileyoffset = 0;
-        if(y > 12.5) {
+        if(y > 12.7) {
             tileyoffset = y - 12.5;
             yoffset = 16 * tileyoffset;
+        }
+        if(yMax > 12.7 && this.cursory !== (this.options.length - 1)) {
+            gfx.drawTileToGrid("opArrDown", 0.5, gfx.tileHeight - 1.25, "menutext");
+        }
+        if(yoffset > 0) {
+            gfx.drawTileToGrid("opArrUp", 0.5, 0.25, "menutext");
         }
         for(let i = 0; i < this.options.length; i++) {
             const op = this.options[i];
@@ -180,12 +189,46 @@ worldmap.optionsMenu = {
         return y + (initVal.indexOf("Gamepad") === 0 ? this.tileSize : (this.optionSize / 3.3333));
     },
     mouseMove: function(pos) {
+        const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
+        const yMax = (this.options[this.options.length - 1].y + this.optionSize - 4) / 16 - 1.8;
+        let yoffset = 0, tileyoffset = 0;
+        if(y > 12.7) {
+            tileyoffset = y - 12.5;
+            yoffset = 16 * tileyoffset;
+        }
+        const hasDownArrow = (yMax > 12.7 && this.cursory !== (this.options.length - 1));
+        const hasUpArrow = (yoffset > 0);
+        if(hasDownArrow && Between(pos.x, 0.5, 1.5) && Between(pos.y, 12.5, 13.5)) {
+            this.specialPos = 1;
+            return true;
+        } else if(hasUpArrow && Between(pos.x, 0.5, 1.5) && Between(pos.y, 0.25, 1.25)) {
+            this.specialPos = 2;
+            return true;
+        }
+        this.specialPos = -1;
+        const actY = pos.rawY + 8;
+        if(pos.x > 2.25 && pos.x < 12.5) {
+            for(let i = this.options.length - 1; i >= 0; i--) {
+                const opt = this.options[i];
+                if(opt.type === "heading") { continue; }
+                if(actY > opt.y) { return this.CursorMove({ x: 0, y: i }); }
+            }
+        }
+        return false;
+    },
+    CursorMove: function(pos) {
         if(this.options[this.cursory].type === "option") {
-            if(pos.x !== 0) {
+            if(pos.x !== 0) { // option change
                 const newOp = this.options[this.cursory].val + pos.x;
                 if(this.options[this.cursory].textId === "opControlScheme" && this.invalidControls.length > 0) { return false; }
+                const oldVal = this.options[this.cursory].val;
                 const newVal = Math.min(Math.max(newOp, 0), this.options[this.cursory].choices.length - 1)
                 this.options[this.cursory].val = newVal;
+                if(oldVal === newVal) {
+                    Sounds.PlaySound("navNok", false, this.localOptions.sound);
+                } else {
+                    Sounds.PlaySound("navOk", false, this.localOptions.sound);
+                }
                 if(this.options[this.cursory].idx) {
                     this.localOptions[this.options[this.cursory].idx] = newVal;
                     if(this.options[this.cursory].idx === "font") { player.options.font = newVal; }
@@ -213,16 +256,47 @@ worldmap.optionsMenu = {
         return true;
     },
     click: function(pos) {
-        if(this.options[this.cursory].type === "final") {
-            this.options[this.cursory].action();
-        } else if(this.options[this.cursory].type === "option") {
-            this.cursory = this.options.length - 2;
-            this.drawEverything();
+        if(this.specialPos > 0) {
+            if(this.specialPos === 1) { // down
+                this.CursorMove({ x: 0, y: this.options.length - 1 });
+            } else { // up
+                this.CursorMove({ x: 0, y: 1 });
+            }
+            this.specialPos = -1;
+            this.mouseMove(pos);
             return true;
-        } else if(this.options[this.cursory].type === "button") {
-            this.inChange = !this.inChange;
-            this.drawEverything();
-            return true;
+        }
+        const opt = this.options[this.cursory];
+        if(pos.fromKeyboard) {
+            if(opt.type === "final") {
+                opt.action();
+            } else if(opt.type === "option") {
+                this.cursory = this.options.length - 2;
+                this.drawEverything();
+                return true;
+            } else if(opt.type === "button") {
+                this.inChange = !this.inChange;
+                Sounds.PlaySound(this.inChange ? "navOk" : "navNok", false, this.localOptions.sound);
+                this.drawEverything();
+                return true;
+            }
+        } else {
+            if(opt.type === "final") {
+                opt.action();
+            } if(opt.type === "option") {
+                const len = gfx.getTextWidth(opt.text, this.optionSize);
+                const middle = (((opt.optx / 16) - 1) + ((opt.optx + len / 4) / 16)) / 2 - 0.5;
+                if(pos.x < middle) { 
+                    return this.CursorMove({ x: -1, y: this.cursory });
+                } else {
+                    return this.CursorMove({ x: 1, y: this.cursory });
+                }
+            } else if(opt.type === "button") {
+                this.inChange = !this.inChange;
+                Sounds.PlaySound(this.inChange ? "navOk" : "navNok", false, this.localOptions.sound);
+                this.drawEverything();
+                return true;
+            }
         }
         return true;
     },
@@ -243,10 +317,11 @@ worldmap.optionsMenu = {
     ContinueSaveAndQuit: function() {
         UpdateStatsForCurrentDifficulty();
         nwHelpers.AdjustScreenSettings();
+        Sounds.PlaySound("confirm", true);
         worldmap.optionsMenu.QuitWithoutSaving(true);
     },
     QuitWithoutSaving: function(dontFont) {
-        if(!dontFont) { player.options.font = worldmap.optionsMenu.origFont; }
+        if(!dontFont) { player.options.font = worldmap.optionsMenu.origFont; Sounds.PlaySound("cancel", true); }
         if(worldmap.optionsMenu.fromPause) {
             game.innerTransition(worldmap.optionsMenu, pausemenu, 3);
         } else {
@@ -266,13 +341,16 @@ worldmap.optionsMenu = {
                 this.localGamepadControls[newKey] = key;
                 this.options[this.cursory].val = key;
             }
+            Sounds.PlaySound("navOk", false, this.localOptions.sound);
+        } else {
+            Sounds.PlaySound("navNok", false, this.localOptions.sound);
         }
         this.inChange = false;
         this.RedimOptions();
     },
     cancel: function() { return this.QuitWithoutSaving(); },
     keyPress: function(key) {
-        const pos = { x: 0, y: this.cursory };
+        const pos = { x: 0, y: this.cursory, fromKeyboard: true };
         if(this.inChange) {
             this.SaveNewButton(key);
             return true;
@@ -289,6 +367,6 @@ worldmap.optionsMenu = {
         }
         if(pos.y < 0 || pos.y >= this.options.length) { return false; }
         if(isEnter) { return this.click(pos); }
-        else { return this.mouseMove(pos); }
+        else { return this.CursorMove(pos); }
     }
 };

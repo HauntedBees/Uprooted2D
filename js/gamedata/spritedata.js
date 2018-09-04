@@ -1032,5 +1032,7 @@ const sprites = {
     "vineBottom0": [25, 29],
     "vineBottom1": [26, 29],
     "tutArrow": [27, 29],
+    "opArrDown": [28, 29],
+    "opArrUp": [29, 29],
     "tooLazyToWriteCodeToTrimTheLastCommaRightNow": []
 };
