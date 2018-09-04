@@ -1,5 +1,6 @@
 const pausemenu = {
     options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
+    animIdx: 0, anims: [],
     layersToClear: ["menuA", "menutext", "menutextOverBlack", "menuOverBlack"],
     setup: function(sel) {
         this.cursorY = sel || 0;
@@ -8,9 +9,18 @@ const pausemenu = {
             { key: "main", x: this.cursorX, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
         ]);
         this.GetQuestItems();
-        this.drawAll();
+        this.DrawAll();
         this.cursors.Start();
-        //this.drawFarm();
+        gfx.TileBackground("invTile", 10);
+        this.DrawFarm();
+        this.animIdx = setInterval(this.Animate, 10);
+        this.anims = [];
+    },
+    clean: function() {
+        clearInterval(pausemenu.animIdx);
+        pausemenu.cursors.Perish();
+        pausemenu.anims = [];
+        gfx.clearAll();
     },
     GetQuestItems: function(p) {
         p = p || player;
@@ -25,7 +35,7 @@ const pausemenu = {
         if(p.hasQuestState("catmail", 1)) { this.questItems.push("bpermit1"); }
         if(p.completedQuest("keycard")) { this.questItems.push("food2keycard"); }
     },
-    drawAll: function() {
+    DrawAll: function() {
         gfx.clearSome(pausemenu.layersToClear);
         const rowYs = [10, 10.75];
         pausemenu.options = [];
@@ -75,30 +85,95 @@ const pausemenu = {
         const headingX = gfx.getTextRightAlignedX(headingText, 22, gfx.canvasWidth) / gfx.scale - 5;
         gfx.drawText(headingText, headingX, 9);
     },
-    drawFarm: function() {
-        var helper = new CombatAnimHelper([]);
-        var max_x = 10, min_x = max_x - player.gridWidth; // 297 TODO: center align
-        var max_y = 5, min_y = max_y - Math.floor(player.gridHeight * 0.75);
-        helper.DrawWrapper(min_x, min_y, player.gridWidth, max_y - min_y);
-        for(var x = min_x; x < max_x; x++) {
-            for(var y = min_y; y < max_y; y++) {
-                gfx.drawTileToGrid("dirt", x, y, "background");
+    Animate: function() {
+        gfx.clearLayer("background2");
+        if(pausemenu.anims.length < 3 && Math.random() < 0.005) {
+            const dir = Math.random() < 0.5 ? 1 : -1;
+            const newAnim = {
+                type: `${Math.random() < 0.5 ? "butterfly" : "bee"}${dir < 0 ? "L" : "R"}`,
+                x: dir < 0 ? 17 : -1, starty: Range(2, 4), animState: 0, dir: dir, i: 0, 
+                a: FloatRange(-1.5, 1.5), b: FloatRange(0, 2), c: FloatRange(-4, 4), speed: FloatRange(0.125, 0.375)
+            };
+            pausemenu.anims.push(newAnim);
+        }
+        for(let i = pausemenu.anims.length - 1; i >= 0; i--) {
+            const a = pausemenu.anims[i];
+            a.i++;
+            if(a.i % 12 === 0) {
+                a.x += a.speed * a.dir;
+                a.y = a.starty + a.a * Math.sin(a.b * a.x + a.c);
+            }
+            gfx.drawTileToGrid(`${a.type}${a.animState}`, a.x, a.y, "background2");
+            if(a.i % 8 === 0) {
+                a.animState = a.animState === 1 ? 0 : 1;
+            }
+            if((a.dir < 0 && a.x < 0) || (a.dir > 0 && a.x > 17)) {
+                pausemenu.anims.splice(i, 1);
             }
         }
+    },
+    DrawFarm: function() {
+        const helper = new CombatAnimHelper([]);
+        const mid_x = 10, mid_y = 7.5;
+        const min_x = mid_x - player.gridWidth / 2, max_x = mid_x + player.gridWidth / 2;
+        const adjusted_y = Math.floor(player.gridHeight * 0.75);
+        const min_y = mid_y - adjusted_y / 2, max_y = mid_y + adjusted_y / 2;
+        for(let x = 0; x < gfx.tileWidth; x++) {
+            gfx.drawTileToGrid("grassTop", x, 4, "background");
+            for(let y = 5; y < 10; y++) {
+                gfx.drawTileToGrid("grass", x, y, "background");
+            }
+        }
+        helper.DrawWrapper(min_x + 0.25, min_y, player.gridWidth, max_y - min_y);
+        for(let x = min_x; x < max_x; x++) {
+            for(let y = min_y; y < max_y; y++) {
+                gfx.drawTileToGrid("dirt", x + 0.25, y, "background");
+            }
+        }
+        const randomCrops = ["ginger0", "ginger1", "ginger2", "ginger3", "spinach0", "spinach1", "tomato0", "tomato1", "garlic0", "garlic1", "garlic2", "carrot0", "carrot1", "bellpepper0", "bellpepper1", "bellpepper2", "corn0", "corn1", "corn2", "leek0", "leek1", "leek2", "asparagus0", "asparagus1", "asparagus2", "asparagus3", "beet0", "beet1", "pineapple0", "pineapple1", "pineapple2", "pineapple3", "radish0", "radish1", "rhubarb0", "rhubarb1", "rhubarb2", "rhubarb3"];
         if(player.itemGrid !== null) {
-            for(var y = 0; y < player.gridHeight; y++) {
-                for(var x = 0; x < player.gridWidth; x++) {
+            for(let y = 0; y < player.gridHeight; y++) {
+                for(let x = 0; x < player.gridWidth; x++) {
                     if(player.itemGrid[x][y] === null || player.itemGrid[x][y].coord) { continue; }
-                    var item = GetFarmInfo(player.itemGrid[x][y]);
+                    if(player.itemGrid[x][y] === "_strongsoil") {
+                        gfx.drawTileToGrid("_strongsoil", min_x + x + 0.25, min_y + y * 0.6, "background");
+                    } else if(player.itemGrid[x][y] === "_lake") {
+                        pausemenu.farmmod.DrawWaterFrame(x, y, min_x + x + 0.25, min_y + y * 0.6, "background");
+                    }
+                }
+            }
+            for(let y = 0; y < player.gridHeight; y++) {
+                for(let x = 0; x < player.gridWidth; x++) {
+                    if(player.itemGrid[x][y] === null || player.itemGrid[x][y] === "_strongsoil") {
+                        if(Math.random() > 0.15 || (player.itemGrid[x][y] !== null && player.itemGrid[x][y].coord)) { continue; }
+                        const randomCrop = RandomArrayItem(randomCrops);
+                        gfx.drawTileToGrid(randomCrop, min_x + x + 0.25, min_y + y * 0.75 - 0.75, "characters");
+                        continue;
+                    }
+                    if(player.itemGrid[x][y].coord || player.itemGrid[x][y] === "_lake") { continue; }
+                    const item = GetFarmInfo(player.itemGrid[x][y]);
                     if(item.size === 2) {
-                        gfx.drawTileToGrid(item.displaySprite, min_x + x, min_y + y * 0.75 - 0.75, "background");
+                        gfx.drawTileToGrid(item.displaySprite === "hotspot" ? "hotspotsquat" : item.displaySprite, min_x + x + 0.25, min_y + y * 0.75 - 0.9, "characters");
                     } else {
-                        gfx.drawTileToGrid(item.name, min_x + x, min_y + y * 0.75 - 0.5, "background");
+                        gfx.drawTileToGrid(item.name, min_x + x + 0.25, min_y + y * 0.75 - 0.75, "characters");
+                    }
+                }
+            }
+        } else {
+            for(let y = 0; y < player.gridHeight; y++) {
+                for(let x = 0; x < player.gridWidth; x++) {
+                    if(player.itemGrid == null || player.itemGrid[x][y] === null || player.itemGrid[x][y] === "_strongsoil") {
+                        if(Math.random() > 0.15) { continue; }
+                        const randomCrop = RandomArrayItem(randomCrops);
+                        gfx.drawTileToGrid(randomCrop, min_x + x + 0.25, min_y + y * 0.75 - 0.75, "characters");
                     }
                 }
             }
         }
-        // 287 TODO: make player walkin areund it
+        if(player.hasFalcon) {
+            gfx.DrawMapCharacter(4, 0, { x: 4.25, y: 6.5 }, { x: 0, y: 0 }, "mapChar", false, "characters");
+        }
+        gfx.DrawCombatWhatsit("combatPlayer", 5, 6, { w: 32, h: 30, x: 3.5, y: 8.5 }, "characters", 0, 0);
     },
     addText: (t, x, y) => gfx.drawText(t, 2 + x * 16, 10.5 + y * 16),
     addFormattedText: function(key, num, x, y, middle, spaceNum) {
@@ -125,7 +200,7 @@ const pausemenu = {
         if(pos.x > this.questItems.length) { return false; }
         this.cursorY = pos.y;
         this.cursorX = pos.x;
-        this.drawAll();
+        this.DrawAll();
         return true;
     },
     click: function(pos) {

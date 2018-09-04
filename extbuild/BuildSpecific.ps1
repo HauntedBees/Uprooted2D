@@ -12,17 +12,18 @@ Function ProcessFile($name) {
     Get-Item $fullPath -Filter *.png |
     ForEach-Object {
         $fullname = $_.FullName; $name = $_.Name;
-        Write-Host "Processing $name";
 		
-		$regpath = "$rootpath\img\$name";
-		& "$ffmpegpath" -y -i $fullname -vf "scale=iw*4:ih*4" -sws_flags neighbor $regpath;
-		
+        Write-Host "s4x $name";
 		$s4xpath = "$rootpath\imgs4x\$name";
 		& "$scalexpath" -k 4 $fullname $s4xpath;
 		
-		$hq4xpath = "$rootpath\imgs4x\$name";
+        Write-Host "hq4x $name";
+		$hq4xpath = "$rootpath\imghq4x\$name";
 		& "$ffmpegpath" -y -i $fullname -vf "hqx=4" $hq4xpath;
+		
+        Write-Host "reg $name";
+		$regpath = "$rootpath\img\$name";
+		& "$ffmpegpath" -y -i $fullname -vf "scale=iw*4:ih*4" -sws_flags neighbor $regpath;
     }
 }
-Write-Host "Processing $name";
 ProcessFile $name;

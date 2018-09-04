@@ -375,6 +375,8 @@ const game = {
         if(player.keyboardcontrols === undefined) { console.log("kbc"); player.keyboardcontrols = { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" }; }
         if(player.gamepadcontrols === undefined) { console.log("gpc"); player.gamepadcontrols = { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1",  pause: "Gamepad9" }; }
         if(player.options.controltype === undefined) { console.log("oct"); player.options.controltype = 0; }
+        // prior to v0.4
+        if(player.options.gfxfilter === undefined) { console.log("gfx"); player.options.gfxfilter = 0; }
         return true;
     }
 };

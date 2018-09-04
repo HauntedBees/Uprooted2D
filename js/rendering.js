@@ -227,9 +227,10 @@ const gfx = {
         if(gfx.GetFont() === "OpenDyslexic") { size += 2; }
         return justNum === true ? size : size + "px ";
     },
-    TileBackground: function(sprite) {
+    TileBackground: function(sprite, yMax) {
+        yMax = yMax || gfx.tileHeight;
         for(let x = 0; x < gfx.tileWidth; x++) {
-            for(let y = 0; y < gfx.tileHeight; y++) {
+            for(let y = 0; y < yMax; y++) {
                 gfx.drawTileToGrid(sprite, x, y, "background");
             }
         }
