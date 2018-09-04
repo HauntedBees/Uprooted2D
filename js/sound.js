@@ -1,7 +1,14 @@
 let Sounds = { // 284 TODO: this probably doesn't support playing the same sound twice at the same time
     SoundTable: {}, PlayingSounds: [], PersistingSounds: [], 
     Init: function() {
-        const sounds = ["aBee"];
+        const sounds = ["aBee",
+                        // Bosca Ceoil
+                        "confirm", "cancel",
+                        "navOk", "navNok",
+                        // BFXR
+                        "pluck", "toss", "beepattack",
+                        "pemp", "schwomp", "bops",
+                        "explode", "crybaby", "squirrel", "destroyed"];
         sounds.forEach(s => {
             Sounds.SoundTable[s] = new Audio("sound/" + s + ".ogg");
             Sounds.SoundTable[s].onended = function() {
@@ -12,7 +19,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
             };
         });
     },
-    PlaySound: function(name, persist) {
+    PlaySound: function(name, persist, forcedVolume) {
         console.log(`Now Playing: ${name}`);
         if(persist) {
             Sounds.PersistingSounds.push(name);
@@ -20,7 +27,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
             Sounds.PlayingSounds.push(name);
         }
         Sounds.SoundTable[name].currentTime = 0;
-        Sounds.SoundTable[name].volume = player.options.sound / 10;
+        Sounds.SoundTable[name].volume = (forcedVolume || player.options.sound) / 10;
         Sounds.SoundTable[name].play();
     },
     EndAll: function() {

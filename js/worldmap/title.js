@@ -79,6 +79,7 @@ worldmap.title = {
     },
     click: function(isFresh) {
         if(!isFresh) { return false; }
+        Sounds.PlaySound("confirm", true);
         switch(this.cursory) {
             case 0:
                 return game.transition(this, worldmap, {

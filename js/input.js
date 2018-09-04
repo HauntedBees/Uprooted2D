@@ -126,7 +126,7 @@ let input = {
         const rect = gfx.canvas["menutext"].getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        return { x: Math.floor(x / 16) / gfx.scale, y: Math.floor(y / 16) / gfx.scale };
+        return { x: Math.floor(x / 16) / gfx.scale, y: Math.floor(y / 16) / gfx.scale, rawX: x / gfx.scale, rawY: y / gfx.scale };
     },
 
     justPressed: {}, keys: {}, mainKey: undefined,
