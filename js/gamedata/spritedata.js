@@ -1017,6 +1017,7 @@ const sprites = {
     "vineAnim3.1": [26, 28],
     "numStart": [27, 28],
     "numEnd": [28, 28],
+    "optTile": [29, 28],
     "clakeWA": [0, 29],
     "clakeWD": [1, 29],
     "clakeSA": [2, 29],

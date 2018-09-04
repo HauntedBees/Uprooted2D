@@ -66,6 +66,7 @@ worldmap.optionsMenu = {
     },
     drawEverything: function() {
         gfx.clearAll();
+        gfx.TileBackground("optTile");
         const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
         const yMax = (this.options[this.options.length - 1].y + this.optionSize - 4) / 16 - 1.8;
         let yoffset = 0, tileyoffset = 0;
