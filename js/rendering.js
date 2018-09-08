@@ -264,6 +264,15 @@ const gfx = {
         }
         return { rows: numRows, height: dy };
     },
+    DoesOverflow: function(t, maxWidth, size) {
+        const layer = "menutext";
+        maxWidth *= gfx.scale;
+        const ctx = gfx.ctx[layer];
+        size = gfx.GetFontSize(size, true);
+        ctx.font = size + "px " + gfx.GetFont();
+        const textInfo = ctx.measureText(t);
+        return textInfo.width > maxWidth;
+    },
     drawWrappedText: function(t, x, y, maxWidth, color, layer, size) {
         layer = layer || "menutext";
         maxWidth *= gfx.scale;

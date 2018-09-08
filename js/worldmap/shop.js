@@ -5,12 +5,13 @@ me.sellTypes = {
     FIXTURES: "_", FIXIDX: 3
 };
 worldmap.shop = {
-    details: null, cursorX: 0,
+    mouseReady: true, 
+    details: null, cursorX: 0, cursorY: 0, 
     initx: 1, dx: 2, yPos: 7, cursorInitx: 0,
     sellingState: me.sellStates.BUYING, sellingType: me.sellTypes.CROPS, actualIdxs: [],
     maxSell: 12, sellOffset: 0, numArrows: 0, isUpgradeShop: false,
     bookReading: null, bookState: -1,
-    layersToClear: ["characters", "menutext"],
+    layersToClear: ["characters", "menutext", "menuA"],
     availableIndexes: [], hasTalk: "", isQuestTalk: true, 
     sleepsyData: null, howManyData: null, 
     blinkIdx: -1, blinkState: 0, 
@@ -192,14 +193,14 @@ worldmap.shop = {
         }
         if(!widecursor) { this.cursors.RedimCursor("main", 1 + this.cursorX * this.dx, this.yPos, 0, 0); }
     },
-    mouseMove: function(pos) {
+    CursorMove: function(pos) {
         switch(this.sellingState) {
-            case me.sellStates.SELLING: return this.mouseMoveSelling(pos);
-            case me.sellStates.SELLSELECT: return this.mouseMoveSellSelect(pos);
-            case me.sellStates.BUYING: return this.mouseMoveBuying(pos);
+            case me.sellStates.SELLING: return this.MoveSelling(pos);
+            case me.sellStates.SELLSELECT: return this.MoveSellSelect(pos);
+            case me.sellStates.BUYING: return this.MoveBuying(pos);
         }
     },
-    mouseMoveSelling: function(pos) {
+    MoveSelling: function(pos) {
         const newCursorX = pos.x - 1;
         if(newCursorX < 0) { return false; }
         if((this.numArrows & 2) === 2) {
@@ -242,7 +243,7 @@ worldmap.shop = {
         this.DrawDetails(text);
         return true;
     },
-    mouseMoveSellSelect: function(pos) {
+    MoveSellSelect: function(pos) {
         const newCursorX = Math.floor((pos.x - 4) / 2);
         if(newCursorX < 0 || newCursorX > 3) { return false; }
         this.cursorX = newCursorX;
@@ -256,15 +257,25 @@ worldmap.shop = {
         this.DrawDetails(text);
         return true;
     },
-    mouseMoveBuying: function(pos) {
+    MoveBuying: function(pos) {
         this.bookState = -1;
         const newCursorX = Math.floor((pos.x - 1) / this.dx);
         if(this.howManyData !== null) {
-            if(pos.y < this.yPos) { // up
-                const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
-                if(newPrice <= player.monies) { this.howManyData.amount += 1; }
-            } else if(pos.y > this.yPos) { // down
-                this.howManyData.amount = Math.max(1, this.howManyData.amount - 1);
+            if(pos.y < this.yPos) { // move up
+                if(this.cursorY === 0) { return false; }
+                this.cursorY -= 1;
+            } else if(pos.y > this.yPos) { // move down
+                if(this.cursorY === 2) { return false; }
+                this.cursorY += 1;
+            }
+            if(this.cursorY === 0) {
+                const initX = (this.cursorX * this.dx) + 1;
+                if(pos.x > initX) { // increase amount
+                    const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
+                    if(newPrice <= player.monies) { this.howManyData.amount += 1; }
+                } else if(pos.x < initX) { // decrease amount
+                    this.howManyData.amount = Math.max(1, this.howManyData.amount - 1);
+                }
             }
             this.DrawDetails();
             return true;
@@ -319,7 +330,7 @@ worldmap.shop = {
         const price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
         let lineOne = farmInfo.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(farmInfo.name);
-        if(amt > 0) { lineOne += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // 297 TODO: right align this?
+        if(amt > 0) { lineOne = this.CombineRightAligned(lineOne, GetText("s.youHave").replace(/\{0\}/g, amt)); }
         this.WriteWrappedText(lineOne + "\n " + farmInfo.desc);
     },
     DrawSeedText: function(productInfo, crop, price) {
@@ -327,7 +338,7 @@ worldmap.shop = {
         price = price || Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
         let str = crop.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(crop.name);
-        if(amt > 0) { str += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); } // 297 TODO: right align this?
+        if(amt > 0) { str = this.CombineRightAligned(str, GetText("s.youHave").replace(/\{0\}/g, amt)); }
         this.WriteWrappedText(str);
         pausemenu.inventory.DrawCropPower(crop, 0.5, 10, "menutext");
 
@@ -387,16 +398,31 @@ worldmap.shop = {
             price = Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
             topText = crop.displayname + " (" + price + "G)";
             const amt = player.getItemAmount(crop.name);
-            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // 297 TODO: right align this?
+            topText = this.CombineRightAligned(topText, GetText("s.youHave").replace(/\{0\}/g, amt));
         } else if(productInfo.type === "farm") {
             const farmInfo = GetFarmInfo(productInfo.product);
             price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
             topText = farmInfo.displayname + " (" + price + "G)";
             const amt = player.getItemAmount(farmInfo.name);
-            topText += "     " + GetText("s.youHave").replace(/\{0\}/g, amt); // 297 TODO: right align this?
+            topText = this.CombineRightAligned(topText, GetText("s.youHave").replace(/\{0\}/g, amt));
         }
-        topText += " \n \n " + GetText("s.howMany") + "       " + amount + " (" + (price * amount) + "G)";
+        topText += " \n \n " + GetText("s.howMany") + "      " + amount + "      (" + (price * amount) + "G)";
+        if(this.cursorY === 0) {
+            gfx.drawTileToGrid(`${amount === 1 ? "n" : ""}opL`, 4.25, 10.75, "menutext");
+            const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
+            gfx.drawTileToGrid(`${newPrice > player.monies ? "n" : ""}opR`, 5.75 + (amount >= 10 ? 0.5 : 0), 10.75, "menutext");
+        }
+        gfx.drawInfoText(GetText("ctrlConfirm"), 4.25, 11.75, this.cursorY === 1, "menuA", "menutext");
+        gfx.drawInfoText(GetText("ctrlCancel"), 4.25, 12.75, this.cursorY === 2, "menuA", "menutext");
         this.WriteWrappedText(topText);
+    },
+    CombineRightAligned: function(left, right) {
+        let numSpaces = 0;
+        while(true) {
+            const f = `${left}${" ".repeat(++numSpaces)}${right}`;
+            if(gfx.DoesOverflow(f, 250)) { break; }
+        }
+        return `${left}${" ".repeat(numSpaces - 1)}${right}`;
     },
     click: function(pos) {
         if(this.sleepsyData !== null) { return this.clickSleepsy(); }
@@ -411,13 +437,21 @@ worldmap.shop = {
                 return this.cancel();
             }
         }
+        if(pos.rawX !== undefined && this.howManyData !== null && this.sellingState === me.sellStates.BUYING && this.cursorY === 0) {
+            if(pos.x < 5.5) { // now is this a wonderful kludge or what?
+                this.keyPress(player.controls.left);
+            } else {
+                this.keyPress(player.controls.right);
+            }
+            return true;
+        }
         switch(this.sellingState) {
-            case me.sellStates.SELLING: return this.clickSelling(pos);
-            case me.sellStates.SELLSELECT: return this.clickSellSelect(pos);
-            case me.sellStates.BUYING: return this.clickBuying(pos);
+            case me.sellStates.SELLING: return this.clickSelling();
+            case me.sellStates.SELLSELECT: return this.clickSellSelect();
+            case me.sellStates.BUYING: return this.clickBuying();
         }
     },
-    clickSelling: function(pos) {
+    clickSelling: function() {
         if(this.cursorX > this.actualIdxs.length) {
             if((this.numArrows & 2) === 2) {
                 this.sellOffset++;
@@ -442,7 +476,7 @@ worldmap.shop = {
         this.DrawDetails(GetText(this.details.didSell));
         return true;
     },
-    clickSellSelect: function(pos) {
+    clickSellSelect: function() {
         switch(this.cursorX) {
             case me.sellTypes.CROPSIDX: this.sellingType = me.sellTypes.CROPS; break;
             case me.sellTypes.EQUIPIDX: this.sellingType = me.sellTypes.EQUIPMENT; break;
@@ -461,7 +495,7 @@ worldmap.shop = {
         if(newText === false) {
             this.sellingState = me.sellStates.BUYING;
             this.bookState = -1;
-            this.mouseMoveBuying(pos);
+            this.MoveBuying(pos);
         } else {
             this.DrawDetails(newText);
             if(this.bookReading === "bookStun" && this.bookState === 1) {
@@ -483,7 +517,7 @@ worldmap.shop = {
         }
         return true;
     },
-    clickBuying: function(pos) {
+    clickBuying: function() {
         if(this.hasTalk && this.cursorX === 1) {
             if(this.isQuestTalk) {
                 this.DrawDetails(quests.getQuestText(this.hasTalk));
@@ -495,6 +529,14 @@ worldmap.shop = {
             this.sellingState = me.sellStates.SELLSELECT;
             this.DrawDetails(GetText("s.sellseed"));
             return true;
+        } else if(this.howManyData !== null) {
+            if(this.cursorY === 2) {
+                return this.cancel();
+            } else if(this.cursorY === 0) {
+                this.cursorY = 1;
+                this.DrawDetails();
+                return true;
+            }
         }
         const cursor = this.availableIndexes[this.cursorX - this.cursorInitx];
         if(this.isUpgradeShop && this.availableIndexes.length === 0) { return false; }
@@ -553,6 +595,7 @@ worldmap.shop = {
             return true;
         } else if(productInfo.type === "seed" || productInfo.type === "farm") {
             if(this.howManyData === null) {
+                this.cursorY = 0;
                 this.howManyData = { product: productInfo, amount: 1, price: price };
                 player.AddMonies(price); // we already charged!
                 player.decreaseItem(productInfo.product, amt); // we already added one!
@@ -600,6 +643,25 @@ worldmap.shop = {
                 break;
         }
     },
+    mouseMove: function(pos) {
+        if(this.howManyData !== null && this.sellingState === me.sellStates.BUYING) {
+            if(pos.x >= 3.5 && pos.x <= 7.5) {
+                if(pos.y >= 10.75 && pos.y <= 11.5) {
+                    this.cursorY = 0;
+                } else if(pos.y >= 11.75 && pos.y <= 12.5) {
+                    this.cursorY = 1;
+                } else if(pos.y >= 12.75 && pos.y <= 13.5) {
+                    this.cursorY = 2;
+                }
+            }
+            this.DrawDetails();
+            return true;
+        } else if(this.sellingState === me.sellStates.SELLING) {
+            return this.CursorMove({ x: Math.round(pos.x - 0.5), y: this.yPos });
+        } else {
+            return this.CursorMove({ x: pos.x, y: this.yPos });
+        }
+    },
     keyPress: function(key) {
         const pos = { x: (this.cursorX * this.dx) + 1, y: this.yPos };
         let isEnter = false;
@@ -629,7 +691,7 @@ worldmap.shop = {
         if(!vertMove && moveDir === 0 && !isEnter) { return false; }
         if(moveDir !== 0 && this.sellingState === me.sellStates.READING) { this.sellingState = me.sellStates.BUYING; }
         if(isEnter) { return this.click(pos); }
-        else { return this.mouseMove(pos); }
+        else { return this.CursorMove(pos); }
     },
     Sleepsy: function() {
         const sleepInfo = worldmap.shop.sleepsyData;
