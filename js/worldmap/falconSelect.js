@@ -1,4 +1,5 @@
 worldmap.falconSelect = {
+    mouseReady: true, 
     cursor: { x: 0, y: 0 }, cropsToSend: [], 
     layersToClean: ["menuA", "menuB", "menutext"],
     actualIndexes: [], inventoryWidth: 9, dy: 9.5,
@@ -19,7 +20,6 @@ worldmap.falconSelect = {
         worldmap.cursors.Stop();
         this.cursors.Start();
     },
-
     drawAll: function() {
         gfx.clearSome(this.layersToClean);
         const cursorX = this.cursor.x, cursorY = this.cursor.y + this.dy;
@@ -101,6 +101,23 @@ worldmap.falconSelect = {
     },
 
     mouseMove: function(pos) {
+        if(pos.y >= this.dy) {
+            return this.CursorMove({ x: Math.floor(pos.x), y: Math.floor(pos.y - this.dy) });
+        }
+        if(pos.y >= 3 && pos.y <= 4 && pos.x < 3.5) {
+            return this.CursorMove({ x: 0, y: -1 });
+        }
+        if(pos.y >= 1.75 && pos.y <= 3 && pos.x >= 2.5) {
+            const newx = Math.floor(pos.x - 2.5);
+            if(newx >= this.cropsToSend.length) { return false; }
+            this.drawAll();
+            gfx.drawTileToGrid("x", 2.5 + newx, 2, "menuA");
+            return true;
+        }
+        console.log(`MouseMove: ${pos.x}, ${pos.y}`);
+    },
+    CursorMove: function(pos) {
+        console.log(`CursorMove: ${pos.x}, ${pos.y}`);
         if(pos.x < 0 || pos.y < -1) { return false; }
         if(pos.x >= this.inventoryWidth) { return false; }
         if(pos.y >= 0) {
@@ -130,6 +147,14 @@ worldmap.falconSelect = {
         return 10; // 294 TODO: probably shouldn't be this for EVERY standard crop (should this be in the spreadsheet?)
     },
     click: function(pos) {
+        if(pos !== undefined && pos.y >= 1.75 && pos.y <= 3 && pos.x >= 2.5) {
+            const newx = Math.floor(pos.x - 2.5);
+            if(newx >= this.cropsToSend.length) { return false; }
+            const seed = this.cropsToSend.splice(newx, 1)[0];
+            if(seed !== undefined) { player.increaseItem(seed); }
+            this.drawAll();
+            return true;
+        }
         if(this.cursor.y < 0) {
             return this.confirmSeeds();
         } else {
@@ -163,7 +188,7 @@ worldmap.falconSelect = {
             case player.controls.cancel: return this.cancel();
         }
         if(pos.y < -1 || pos.x < 0) { return false; }
-        if(isEnter) { return this.click(pos); }
-        else { return this.mouseMove(pos); }
+        if(isEnter) { return this.click(); }
+        else { return this.CursorMove(pos); }
     }
 };
