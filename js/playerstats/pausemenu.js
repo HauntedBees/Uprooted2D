@@ -41,13 +41,14 @@ const pausemenu = {
         const rowYs = [10, 10.75];
         pausemenu.options = [];
 
-        pausemenu.drawOption("menu.Items", 0, pausemenu.cursorY == 0);
-        pausemenu.drawOption("menu.Equipment", 1, pausemenu.cursorY == 1);
-        pausemenu.drawOption("menu.Farm", 2, pausemenu.cursorY == 2);
-        pausemenu.drawOption("menu.Options", 3, pausemenu.cursorY == 3);
-        pausemenu.drawOption("menu.Achievements", 4, pausemenu.cursorY == 4);
-        pausemenu.drawOption("menu.Save", 5, pausemenu.cursorY == 5);
-        pausemenu.drawOption("menu.Quit", 6, pausemenu.cursorY == 6);
+        pausemenu.drawOption("menu.Back", 0, pausemenu.cursorY === 0);
+        pausemenu.drawOption("menu.Items", 1, pausemenu.cursorY === 1);
+        pausemenu.drawOption("menu.Equipment", 2, pausemenu.cursorY === 2);
+        pausemenu.drawOption("menu.Farm", 3, pausemenu.cursorY === 3);
+        pausemenu.drawOption("menu.Options", 4, pausemenu.cursorY === 4);
+        pausemenu.drawOption("menu.Achievements", 5, pausemenu.cursorY === 5);
+        pausemenu.drawOption("menu.Save", 6, pausemenu.cursorY === 6);
+        pausemenu.drawOption("menu.Quit", 7, pausemenu.cursorY === 7);
         
         pausemenu.addFormattedText("menu.level", player.level, 1, rowYs[0], "", 0);
         pausemenu.addFormattedText("menu.HP", player.health + "/" + player.maxhealth, 3.5, rowYs[0], ":", 0);
@@ -223,13 +224,14 @@ const pausemenu = {
         const cursorPos = { x: this.cursorX, y: this.cursorY };
         if(cursorPos.x > 0) { return false; }
         switch(cursorPos.y) {
-            case 0: game.innerTransition(this, pausemenu.inventory); break;
-            case 1: game.innerTransition(this, pausemenu.equipment); break;
-            case 2: game.innerTransition(this, pausemenu.farmmod); break;
-            case 3: game.innerTransition(this, worldmap.optionsMenu, true); break;
-            case 4: game.innerTransition(this, pausemenu.chievos); break;
-            case 5: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
-            case 6: console.log("quit!"); break;
+            case 0: this.cancel(); break;
+            case 1: game.innerTransition(this, pausemenu.inventory); break;
+            case 2: game.innerTransition(this, pausemenu.equipment); break;
+            case 3: game.innerTransition(this, pausemenu.farmmod); break;
+            case 4: game.innerTransition(this, worldmap.optionsMenu, true); break;
+            case 5: game.innerTransition(this, pausemenu.chievos); break;
+            case 6: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
+            case 7: console.log("quit!"); break;
             default: return false;
         }
         return true;
