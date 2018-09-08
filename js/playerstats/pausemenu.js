@@ -1,4 +1,5 @@
 const pausemenu = {
+    mouseReady: true, 
     options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
     animIdx: 0, anims: [],
     layersToClear: ["menuA", "menutext", "menutextOverBlack", "menuOverBlack"],
@@ -25,7 +26,7 @@ const pausemenu = {
     GetQuestItems: function(p) {
         p = p || player;
         this.questItems = [];
-        if(p.hasQuestState("    ", 4) || p.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
+        if(p.hasQuestState("quest1", 4) || p.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
         if(p.hasQuestState("kelpBoy", "gotMilk")) { this.questItems.push("milk"); }
         if(p.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }
         if(p.hasQuestState("getHeart", "weirdheart") || p.hasQuestState("getHeart", "heart")) { this.questItems.push("monsterheart"); }
@@ -39,6 +40,7 @@ const pausemenu = {
         gfx.clearSome(pausemenu.layersToClear);
         const rowYs = [10, 10.75];
         pausemenu.options = [];
+
         pausemenu.drawOption("menu.Items", 0, pausemenu.cursorY == 0);
         pausemenu.drawOption("menu.Equipment", 1, pausemenu.cursorY == 1);
         pausemenu.drawOption("menu.Farm", 2, pausemenu.cursorY == 2);
@@ -118,12 +120,14 @@ const pausemenu = {
         const min_x = mid_x - player.gridWidth / 2, max_x = mid_x + player.gridWidth / 2;
         const adjusted_y = Math.floor(player.gridHeight * 0.75);
         const min_y = mid_y - adjusted_y / 2, max_y = mid_y + adjusted_y / 2;
+        gfx.drawMinibox(-1, 10, gfx.tileWidth + 2, 5, "background");
         for(let x = 0; x < gfx.tileWidth; x++) {
             gfx.drawTileToGrid("grassTop", x, 4, "background");
             for(let y = 5; y < 10; y++) {
                 gfx.drawTileToGrid("grass", x, y, "background");
             }
         }
+
         helper.DrawWrapper(min_x + 0.25, min_y, player.gridWidth, max_y - min_y);
         for(let x = min_x; x < max_x; x++) {
             for(let y = min_y; y < max_y; y++) {
@@ -139,6 +143,8 @@ const pausemenu = {
                         gfx.drawTileToGrid("_strongsoil", min_x + x + 0.25, min_y + y * 0.6, "background");
                     } else if(player.itemGrid[x][y] === "_lake") {
                         pausemenu.farmmod.DrawWaterFrame(x, y, min_x + x + 0.25, min_y + y * 0.6, "background");
+                    } else if(player.itemGrid[x][y] === "_paddy") {
+                        gfx.drawTileToGrid("_paddy", min_x + x + 0.25, min_y + y * 0.6, "background");
                     }
                 }
             }
@@ -150,7 +156,7 @@ const pausemenu = {
                         gfx.drawTileToGrid(randomCrop, min_x + x + 0.25, min_y + y * 0.75 - 0.75, "characters");
                         continue;
                     }
-                    if(player.itemGrid[x][y].coord || player.itemGrid[x][y] === "_lake") { continue; }
+                    if(player.itemGrid[x][y].coord || player.itemGrid[x][y] === "_lake" || player.itemGrid[x][y] === "_paddy") { continue; }
                     const item = GetFarmInfo(player.itemGrid[x][y]);
                     if(item.size === 2) {
                         gfx.drawTileToGrid(item.displaySprite === "hotspot" ? "hotspotsquat" : item.displaySprite, min_x + x + 0.25, min_y + y * 0.75 - 0.9, "characters");
@@ -194,7 +200,7 @@ const pausemenu = {
             noEntityUpdate: true
         });
     },
-    mouseMove: function(pos) {
+    CursorMove: function(pos) {
         if(pos.y > this.options.length) { return false; }
         if(pos.y < this.options.length && pos.x > 0) { pos.y = this.options.length; pos.x = 0; }
         if(pos.x > this.questItems.length) { return false; }
@@ -203,7 +209,17 @@ const pausemenu = {
         this.DrawAll();
         return true;
     },
-    click: function(pos) {
+    mouseMove: function(pos) {
+        if(pos.y < this.options.length && pos.x < 5) {
+            return this.CursorMove({x: 0, y: Math.min(Math.round(pos.y - 0.25), this.options.length - 1)});
+        }
+        if(pos.y < 11.75 || pos.x < 2) { return false; }
+        if(pos.x < 3.75) { return this.CursorMove({x: 0, y: this.options.length}); }
+        if(pos.x < 5) { return false; }
+        return this.CursorMove({x: Math.floor((pos.x - 5) / 1.5 + 1), y: this.options.length});
+    },
+    click: function() {
+        const pos = { x: this.cursorX, y: this.cursorY };
         if(pos.x > 0) { return false; }
         switch(pos.y) {
             case 0: game.innerTransition(this, pausemenu.inventory); break;
@@ -218,8 +234,8 @@ const pausemenu = {
         return true;
     },
     keyPress: function(key) {
-        var pos = { x: this.cursorX, y: this.cursorY };
-        var isEnter = false;
+        const pos = { x: this.cursorX, y: this.cursorY };
+        let isEnter = false;
         switch(key) {
             case player.controls.right: pos.x++; break;
             case player.controls.left: pos.x--; break;
@@ -231,9 +247,9 @@ const pausemenu = {
         }
         if(pos.y < 0 || pos.x < 0) { return false; }
         if(isEnter) {
-            return this.click(pos);
+            return this.click();
         } else {
-            return this.mouseMove(pos);
+            return this.CursorMove(pos);
         }
     },
     drawOption: function (text, y, selected) { this.options.push(gfx.drawOption(GetText(text), this.dy + y, selected)); }

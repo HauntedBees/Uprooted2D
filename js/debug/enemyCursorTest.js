@@ -15,6 +15,15 @@ const debug = {
         combat.startBattle(["yourWorstFuckingNightmare"]);//, "robo", "robo"]);
         return true; 
     },
+    GiveQuestItems: function() {
+        player.activeQuests["quest1"] = 4;
+        player.activeQuests["kelpBoy"] = "gotMilk";
+        player.activeQuests["getHeart"] = "heart";
+        player.activeQuests["truckRepair"] = "tire";
+        player.questsCleared.push("gotPhone");
+        player.activeQuests["catmail"] = 1;
+        player.questsCleared.push("keycard");
+    },
     AllFixtures: function() {
         player.increaseItem("_log", 20);
         player.increaseItem("_coop", 20);
