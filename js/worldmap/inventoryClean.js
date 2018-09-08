@@ -1,4 +1,5 @@
 worldmap.invClean = {
+    mouseReady: true, 
     cursor: { x: 0, y: 0 }, inventoryWidth: 4, 
     topCrops: [], topPrice: 0, didConfirm: false,
     layersToClear: ["menuA", "menucursorB", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
@@ -14,6 +15,7 @@ worldmap.invClean = {
         this.topPrice = 0;
         this.didConfirm = false;
         this.trashIdx = setInterval(this.HandleTrashCan, 50);
+        gfx.TileBackground("invTile");
         this.DrawAll();
         this.cursors.Start();
     },
@@ -46,6 +48,9 @@ worldmap.invClean = {
         this.DrawAll();
     },
     mouseMove: function(pos) {
+        this.CursorMove({x: Math.floor(pos.x), y: Math.floor(pos.y)});
+    },
+    CursorMove: function(pos) {
         if(pos.x < 0 || pos.y < 0 || pos.y > 13) { return false; }
         if(pos.y === 9) { pos.y = 12; }
         else if(pos.y === 11) {  pos.y = 8; }
@@ -189,9 +194,9 @@ worldmap.invClean = {
         }
         if(pos.y < 0 || pos.x < 0) { return false; }
         if(isEnter) {
-            return this.click(pos);
+            return this.click();
         } else {
-            return this.mouseMove(pos);
+            return this.CursorMove(pos);
         }
     },
     DrawConfirmButton: function() {
