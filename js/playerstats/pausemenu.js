@@ -218,10 +218,11 @@ const pausemenu = {
         if(pos.x < 5) { return false; }
         return this.CursorMove({x: Math.floor((pos.x - 5) / 1.5 + 1), y: this.options.length});
     },
-    click: function() {
-        const pos = { x: this.cursorX, y: this.cursorY };
-        if(pos.x > 0) { return false; }
-        switch(pos.y) {
+    click: function(mousePos) {
+        if(this.BeepHour(mousePos)) { return true; }
+        const cursorPos = { x: this.cursorX, y: this.cursorY };
+        if(cursorPos.x > 0) { return false; }
+        switch(cursorPos.y) {
             case 0: game.innerTransition(this, pausemenu.inventory); break;
             case 1: game.innerTransition(this, pausemenu.equipment); break;
             case 2: game.innerTransition(this, pausemenu.farmmod); break;
@@ -232,6 +233,15 @@ const pausemenu = {
             default: return false;
         }
         return true;
+    },
+    BeepHour: function(pos) {
+        if(pos === undefined) { return false; }
+        const hasBees = this.anims.some(e => (e.type === "beeL" || e.type === "beeR") && Math.abs(e.x - pos.x) <= 1.25 && Math.abs(e.y - pos.y) <= 1.25);
+        if(hasBees) {
+            Sounds.PlaySound("aBee");
+            return true;
+        }
+        return pos.x > 5;
     },
     keyPress: function(key) {
         const pos = { x: this.cursorX, y: this.cursorY };
