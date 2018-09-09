@@ -1,4 +1,5 @@
 const fixTut = {
+    mouseReady: true, 
     isTutorial: true, state: 0, currentInputHandler: worldmap,
     start: function() {
         game.currentInputHandler = this;
@@ -19,11 +20,15 @@ const fixTut = {
             gfx.drawFullText(GetText("fixTut" + (this.state + 1)), 11 * 16, undefined, true);
         }
     },
-    mouseMove: function(pos) { return this.currentInputHandler.mouseMove(pos); },
-    click: function(pos) { return true; },
+    mouseMove: function(pos) {
+        const res = fixTut.currentInputHandler.mouseMove(pos);
+        this.drawTutorial();
+        return res;
+    },
+    click: () => fixTut.keyPress(player.controls.confirm),
     keyPress: function(key) {
         if(this.state === 0) {
-            if(key === player.controls.pause || key === player.controls.cancel) { // 295 TODO: why the fuck did I ever make cancel do the pause when the pause button is already there you dumb fuck
+            if(key === player.controls.pause) {
                 this.transition(worldmap, pausemenu);
                 this.state++;
                 this.drawTutorial();
@@ -44,7 +49,7 @@ const fixTut = {
             this.drawTutorial();
             return res;
         } else if(this.state === 2) {
-            if(key === player.controls.cancel) { return false; } 
+            if(key === player.controls.cancel || pausemenu.farmmod.cursor.y < 0) { return false; } 
             if(key === player.controls.confirm || key === player.controls.pause) {
                 const pos = pausemenu.farmmod.cursor;
                 if(pos.y >= 4 || pos.x >= pausemenu.farmmod.inventoryWidth) { return false; }
