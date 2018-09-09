@@ -214,8 +214,21 @@ let input = {
             input.keys[key] = undefined;
             input.setMainKey();
         } else { // turn on
+            input.mainKey = undefined;
+            if(input.keys[player.controls.down] !== undefined && key === player.controls.up) {
+                clearInterval(input.keys[player.controls.down]);
+                input.keys[player.controls.down] = undefined;
+            } else if(input.keys[player.controls.up] !== undefined && key === player.controls.down) {
+                clearInterval(input.keys[player.controls.up]);
+                input.keys[player.controls.up] = undefined;
+            } else if(input.keys[player.controls.left] !== undefined && key === player.controls.right) {
+                clearInterval(input.keys[player.controls.left]);
+                input.keys[player.controls.left] = undefined;
+            } else if(input.keys[player.controls.right] !== undefined && key === player.controls.left) {
+                clearInterval(input.keys[player.controls.right]);
+                input.keys[player.controls.right] = undefined;
+            }
             input.setMainKey(key);
-            if(input.keys[key] !== undefined) { return; }
             input.keys[key] = setInterval(function() {
                 game.currentInputHandler.keyPress(key);
             }, 50);
