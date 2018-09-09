@@ -9,6 +9,7 @@ let consoleCmd = {
         switch(cmd) {
             case "iii": player.hasFalcon = true; return;
             case "ni": player.hasFalcon = false; return;
+            case "levelup": player.levelUp(); return;
             case "setmonies": return consoleCmd.SetPlayerInt("monies", args);
             case "setatk": return consoleCmd.SetPlayerInt("atk", args);
             case "setdef": return consoleCmd.SetPlayerInt("def", args);
@@ -63,6 +64,7 @@ let consoleCmd = {
                     case "farmintro": pathTo = { init: { x: 17,  y: 9 }, map: "farm" }; break;
                     case "farm": pathTo = { init: { x:  12,  y: 4 }, map: "farm" }; break;
                     case "village": pathTo = { init: { x: 19, y: 5}, map: "firstvillage" }; break;
+                    case "drjeff": pathTo = { init: { x: 7, y: 2 }, map: "researchfacility", playerDir: 0 }; break;
                     case "bridge": pathTo = { init: { x: 27, y: 5 }, map: "bridge" }; break;
                     case "fakefarmopen": pathTo = { init: { x: 24.75, y: 35.5 }, map: "fakefarm", stayBlack: true, playerDir: 0 }; break;
                     case "fakefarm": pathTo = { init: { x: 24.75, y: 35.5 }, map: "fakefarm" }; break;
