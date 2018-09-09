@@ -161,7 +161,7 @@ combat.plant = {
     },
     CursorMove: function(pos) {
         if(pos.x < 0 || pos.y < 0) { return false; }
-        if(this.activeCrop === null) { 
+        if(this.activeCrop === null) { // picking a crop to plant
             if(pos.y === (this.dy - 1)) {
                 if(pos.x > 3) { return false; }
                 pos.x = 0;
@@ -173,13 +173,20 @@ combat.plant = {
             }
             if(SamePoints(this.cursor, pos)) { return false; }
             this.cursor = { x: pos.x, y: pos.y };
-        } else {
-            if(pos.y >= (this.dy - 1)) {
+        } else { // planting said crop
+            if(pos.y >= (this.dy - 1)) { // moving from FIELD to BACK
                 if(pos.x > 3) { return false; }
                 pos.x = 0; pos.y = this.dy - 1;
             } else {
                 const diff = this.activeCrop.size - 1;
-                if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
+                if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) {
+                    if(this.cursor.y === (this.dy - 1) && pos.y === (this.dy - 2)) { // moving from BACK to FIELD
+                        pos.x = combat.dx;
+                        pos.y = combat.dy + player.gridWidth - 1;
+                    } else {
+                        return false;
+                    }
+                }
                 if(pos.y < combat.dy) { return false; }
                 if(pos.y >= (combat.dy + player.gridHeight - diff)) {
                     pos.x = 0; pos.y = this.dy - 1;
