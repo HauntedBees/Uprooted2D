@@ -173,8 +173,8 @@ const mapentities = {
             GetFellow("RAPBATTLE", 28, 8, 0, "RAPBATTLE", Cutscene("rap"), undefined, { moving: true }),
             GetCSFellow("RAPSprout", -1, -1, 0, "RAPSprout", "RAPSprout", { visible: false, solid: false, interact: OneSpeak("growingpeppie") }),
             // Boss
-            GetFellow("Jeff", 7, 1, 0, "DrJeff1", Cutscene("jeff"), undefined, { boss: true, postBattle: "PostBoss2", failedInteract: Cutscene("jeffL"), moving: true }),
-            GetCSFellow("Jeff", 7, 0.75, 0, "DrJeff3", "bonkedJeff", { interact: OneSpeak("UnconsciousJeff"), visible: false, moving: true }),
+            GetFellow("Jeff", 7, 1, 0, "DrJeff1", Cutscene("jeff"), undefined, { boss: true, postBattle: "PostBoss2", failedInteract: Cutscene("jeffL"), visible: true, moving: true }),
+            GetCSFellow("Jeff2", 7, 0.75, 0, "DrJeff3", "bonkedJeff", { interact: OneSpeak("UnconsciousJeff"), visible: false, moving: true }),
             new CutsceneTrigger("jeffW", "PostBoss2"),
             // Mandatory Enemies
             GetFellow("RFRobo1", 1, 15, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), requiredEnemyMetadata.robo2),
@@ -399,8 +399,8 @@ const mapentities = {
         GetFellow("HOUSEKEEPER", 13, 30, 0, "HOUSEKEEPER", Cutscene("housekeeper"), undefined, { boss: true, visible: false, inside: true, storageKey: "HK" }),
         new CutsceneTrigger("beatBarn", "beatDweeb"),
         // Mandatory Enemies
-        GetFellow("LawnMower", 9, 27, 3, "Mower", Cutscene("mower"), undefined, requiredEnemyMetadata.mower(5)), // 5 = bigger LtR
-        GetFellow("LawnMower", 20, 28, 1, "Mower", Cutscene("mower"), undefined, requiredEnemyMetadata.mower(6)), // 6 = bigger RtL
+        GetFellow("LawnMower1", 9, 27, 3, "Mower", Cutscene("mower"), undefined, requiredEnemyMetadata.mower(5)), // 5 = bigger LtR
+        GetFellow("LawnMower2", 20, 28, 1, "Mower", Cutscene("mower"), undefined, requiredEnemyMetadata.mower(6)), // 6 = bigger RtL
         // Misc. Entities
         GetFellow("CoveredDoorL1", 11, 15, 0, "FFDoor1", OneSpeak("barndoorChick"), undefined, { changeType: 0 }), // 0 = open door
         GetFellow("CoveredDoorL2", 11, 18, 0, "FFDoor1", OneSpeak("barndoorPig"), undefined, { changeType: 0 }),
