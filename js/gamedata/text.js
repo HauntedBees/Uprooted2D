@@ -1181,6 +1181,26 @@ const fulltext = {
 		"en-dm": "Slot", 
 		"type": "opts"
 	},
+	"clearSaves": {
+		"en-us": "", 
+		"en-dm": "Clear Save Data", 
+		"type": "opts"
+	},
+	"clearSavesInfo": {
+		"en-us": "", 
+		"en-dm": "This will clear all your existing save game data.", 
+		"type": "opts"
+	},
+	"clearSavesConfirm": {
+		"en-us": "", 
+		"en-dm": "Are you sure? This will erase ALL game save data permanently!", 
+		"type": "opts"
+	},
+	"clearSavesCleared": {
+		"en-us": "", 
+		"en-dm": "All save data erased. Press anything to return to the title screen.", 
+		"type": "opts"
+	},
 	"autosave": {
 		"en-us": "", 
 		"en-dm": "Autosave", 

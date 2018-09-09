@@ -1,5 +1,5 @@
 pausemenu.savemenu = {
-    options: [], cursorY: 0, confirmCursorY: 0, confirm: false, isSave: false, animHelper: null,
+    options: [], cursorY: 0, confirmCursorY: 0, confirm: false, isSave: false, animHelper: null, clearSavesState: 0, 
     layersToClear: ["background", "menuA", "menutext"], textX: 72, textY: 30,
     setup: function(args) {
         gfx.clearSome(this.layersToClear);
@@ -12,6 +12,7 @@ pausemenu.savemenu = {
         this.confirm = args.confirm;
         this.confirmCursorY = 0;
         this.backStartX = 0.125;
+        this.clearSavesState = 0;
         this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
         this.cursors = new CursorAnimSet([
             { key: "main", x: 0, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
@@ -30,6 +31,9 @@ pausemenu.savemenu = {
         for(let i = 0; i < game.numSaveSlots; i++) {
             this.drawOption(slotStr + (i + 1), dy + i, this.cursorY === (dy + i - 1));
         }
+        if(!this.isSave) {
+            this.drawOption(GetText("clearSaves"), dy + game.numSaveSlots, this.cursorY === (dy + game.numSaveSlots - 1));
+        }
         gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursorY === -1, "menuA", "menutext");
         gfx.drawInfobox(12, 2.5, 1.125);
         if(this.confirm) {
@@ -40,6 +44,23 @@ pausemenu.savemenu = {
         } else if(this.cursorY === -1) {
             this.drawSaveDataText(GetText("inv.BackInfo"));
             this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+        } else if(this.cursorY === (dy + game.numSaveSlots - 1)) { // clear save data
+            if(this.clearSavesState === 0) {
+                this.cursors.RedimCursor("main", 0, this.cursorY + 1, this.options[this.cursorY], 0);
+                this.drawSaveDataText(GetText("clearSavesInfo"));
+            } else if(this.clearSavesState === 1) {
+                const xi = gfx.drawInfoText(GetText("opNo"), 9, 4, true, "menuA", "menutext");
+                gfx.drawInfoText(GetText("opYes"), 9, 5, false, "menuA", "menutext");
+                this.cursors.RedimCursor("main", 9, 4, xi, 0);
+                this.drawSaveDataText(GetText("clearSavesConfirm"));
+            } else if(this.clearSavesState === 2) {
+                gfx.drawInfoText(GetText("opNo"), 9, 4, false, "menuA", "menutext");
+                const xi = gfx.drawInfoText(GetText("opYes"), 9, 5, true, "menuA", "menutext");
+                this.cursors.RedimCursor("main", 9, 5, xi, 0);
+                this.drawSaveDataText(GetText("clearSavesConfirm"));
+            } else if(this.clearSavesState === 3) {
+                this.drawSaveDataText(GetText("clearSavesCleared"));
+            }
         } else {
             this.cursors.RedimCursor("main", 0, this.cursorY + 1, this.options[this.cursorY], 0);
             const saveNum = (this.hasAuto && this.cursorY === 0 ? "auto" : (this.cursorY - (dy - 1)));
@@ -76,9 +97,12 @@ pausemenu.savemenu = {
     drawSaveDataText: t => { gfx.drawWrappedText(t, pausemenu.savemenu.textX, pausemenu.savemenu.textY, 175); return true; },
     drawOption: function (text, y, selected) { this.options.push(gfx.drawOption(text, y, selected)); },
     mouseMove: function(pos) {
-        const dpos = { x: pos.x, y: pos.y - 1 };
+        const dpos = { x: pos.x, y: pos.y - 1, isMouse: true };
         input.FloorPoint(dpos);
-        if(this.confirm) {
+        if(this.clearSavesState > 0 && this.clearSavesState < 3) {
+            if(pos.x < 9 || pos.x > 11 || pos.y < 4 || pos.y > 6) { return false; }
+            dpos.y = this.cursorY + (pos.y < 5 ? -1 : 1);
+        } else if(this.confirm) {
             if(dpos.y != 1 && dpos.y != 2) { return false; }
             if(dpos.x >= 6 && dpos.x < 9) { dpos.x = -1; }
             else if(dpos.x >= 10 && dpos.x < 12) { dpos.x = 1; }
@@ -98,6 +122,20 @@ pausemenu.savemenu = {
         const saveNum = (this.hasAuto && this.cursorY === 0 ? "auto" : (this.cursorY - dy));
         if(this.cursorY === -1) {
             this.cancel();
+        } else if(!this.isSave && this.cursorY === (dy + game.numSaveSlots)) {
+            if(this.clearSavesState === 0) {
+                this.clearSavesState = 1;
+            } else if(this.clearSavesState === 1) {
+                this.clearSavesState = 0;
+            } else if(this.clearSavesState === 2) {
+                localStorage.clear();
+                this.clearSavesState = 3;
+            } else if(this.clearSavesState === 3) {
+                this.cancel();
+                return true;
+            }
+            this.DrawAll();
+            return true;
         } else if(localStorage.getItem("player" + saveNum) === null || (this.confirm && this.confirmCursorY === 0)) {
             if(this.isSave) {
                 game.save(this.cursorY);
@@ -147,14 +185,23 @@ pausemenu.savemenu = {
         else { return this.CursorMove(pos); }
     },
     CursorMove: function(pos) {
-        if(this.confirm) {
-            if(pos.x === 1) { this.confirmCursorY = 1; }
-            else if(pos.x === -1) { this.confirmCursorY = 0; }
-            this.DrawAll();
-            return true;
+        if(this.clearSavesState === 3 && !pos.isMouse) { this.cancel(); return true; }
+        if(this.clearSavesState > 0) {
+            if(pos.y < this.cursorY) {
+                this.clearSavesState = 1;
+            } else if(pos.y > this.cursorY) {
+                this.clearSavesState = 2;
+            }
+        } else {
+            if(this.confirm) {
+                if(pos.x === 1) { this.confirmCursorY = 1; }
+                else if(pos.x === -1) { this.confirmCursorY = 0; }
+                this.DrawAll();
+                return true;
+            }
+            if(pos.y >= this.options.length) { return false; }
+            this.cursorY = pos.y;
         }
-        if(pos.y >= this.options.length) { return false; }
-        this.cursorY = pos.y;
         this.DrawAll();
         return true;
     }
