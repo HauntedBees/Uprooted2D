@@ -1,4 +1,5 @@
 const worldmap = {
+    mouseReady: true, 
     freeMovement: true, savedImage: "", angryBees: false, smartphone: null, horRor: null,
     pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, 
     animData: plAnims.walk,
@@ -273,7 +274,18 @@ const worldmap = {
             if(selected) { this.cursors.MoveCursor("main", 0, choiceTopY + i - 0.5); }
         }
     },
-    mouseMove: pos => true,
+    mouseMove: function(pos) {
+        if(!this.inDialogue) { return true; }
+        if(worldmap.dialogData === null || worldmap.dialogData.choices === undefined) { return true; }
+        const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 11 : 0;
+        const choiceTopY = (drawY === 11) ? (11.5 - choices.length) : 3.5;
+        if(pos.y < choiceTopY) { return false; }
+        const i = Math.round(pos.y - choiceTopY);
+        console.log(i);
+        if(i >= worldmap.dialogData.choices.length) { return false; }
+        worldmap.dialogData.idx = i;
+        worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
+    },
     finishAnimation: function() {
         clearInterval(this.animIdx);
         this.waitForAnimation = false;

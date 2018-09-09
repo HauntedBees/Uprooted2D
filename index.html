@@ -20,6 +20,14 @@
                 right: 0; 
                 text-align: center;
             }
+            #dpad, #dpadimg {
+                border: none;
+                left: 0;
+                margin: 0 auto;
+                position: absolute;
+                right: 0;
+                top: 900px;
+            }
             #savegen { display: none }
             #garfield {
                 left: 0;
@@ -56,6 +64,8 @@
             <canvas id="savegen" width="1024" height="896"></canvas>
             <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
         </div>
+        <canvas id="dpad" width="1024" height="320"></canvas>
+        <img id="dpadimg" src="styles/dpad.png">
         <div id="fontLoader">
             <div style="font-family:PressStart2P">&nbsp;</div>
             <div style="font-family:OpenDyslexic">&nbsp;</div>

@@ -99,19 +99,14 @@ const game = {
         let canvasObj = {};
         for(let i = 0; i < game.canvasLayers.length; i++) {
             const name = game.canvasLayers[i];
-            //game.createCanvas(name) // NOTE: why was I doing this??
             canvasObj[name] = document.getElementById(name);
         }
         let contextObj = {};
         for(const key in canvasObj) {
             contextObj[key] = canvasObj[key].getContext("2d");
         }
-        game.init(canvasObj, contextObj, game.w, game.h, 16, 14); // 15, 10)
-    },
-    createCanvas: function(name) {
-        let canvas = document.createElement("canvas");
-        canvas.id = name; canvas.width = game.w; canvas.height = game.h;
-        document.body.appendChild(canvas);
+        virtualControls.Init();
+        game.init(canvasObj, contextObj, game.w, game.h, 16, 14);
     },
     init: function(canvasObj, ctxObj, width, height, tilewidth, tileheight) {
         gfx.canvas = canvasObj;
@@ -375,7 +370,7 @@ const game = {
         if(player.keyboardcontrols === undefined) { console.log("kbc"); player.keyboardcontrols = { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" }; }
         if(player.gamepadcontrols === undefined) { console.log("gpc"); player.gamepadcontrols = { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1",  pause: "Gamepad9" }; }
         if(player.options.controltype === undefined) { console.log("oct"); player.options.controltype = 0; }
-        // prior to v0.4
+        // prior to v0.5
         if(player.options.gfxfilter === undefined) { console.log("gfx"); player.options.gfxfilter = 0; }
         return true;
     }
