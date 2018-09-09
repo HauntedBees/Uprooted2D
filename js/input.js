@@ -115,13 +115,11 @@ let input = {
     click: function(e) {
         if(player.options.ignoreMouse === 1) { return; }
         const p = input.getMousePos(e); console.log(p);
-        if(!game.currentInputHandler.mouseReady) { return; }
         if(game.currentInputHandler.click(p, true)) { return; }
     },
     moveMouse: function(e) {
         if(player.options.ignoreMouse === 1) { return; }
         const p = input.getMousePos(e);
-        if(!game.currentInputHandler.mouseReady) { return; }
         if(game.currentInputHandler.mouseMove(p)) { return; }
     },
     getMousePos: function(e) {

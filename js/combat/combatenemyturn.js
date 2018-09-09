@@ -1,5 +1,4 @@
 combat.enemyTurn = {
-    mouseReady: true, 
     dy: 9.5, lastIdx: -1,
     setup: function(args) {
         combat.cursors.RedimCursor("main", -1, -1, 0, 0);

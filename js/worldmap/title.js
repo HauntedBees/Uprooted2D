@@ -1,5 +1,4 @@
 worldmap.title = {
-    mouseReady: true, 
     availableCrops: ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "lotus", "soybean"],
     cursory: 0, showContinue: false,
     layersToClear: ["menutext", "menucursorA"],

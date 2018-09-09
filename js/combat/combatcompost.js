@@ -1,5 +1,4 @@
 combat.compost = {
-    mouseReady: true, 
     selectedCrops: [], binSprite: "compost", binx: 3.75, biny: 8.75,
     cursor: {x: 1, y: 5}, dy: 9, compostMultiplier: 1, 
     backY: 0, healY: 0, attackY: 0, canAttack: false, 

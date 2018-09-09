@@ -1,5 +1,4 @@
 const worldmap = {
-    mouseReady: true, 
     freeMovement: true, savedImage: "", angryBees: false, smartphone: null, horRor: null,
     pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, 
     animData: plAnims.walk,

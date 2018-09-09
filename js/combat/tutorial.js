@@ -1,6 +1,5 @@
 const AnyPress = () => true;
 const tutorial = {
-    mouseReady: true, 
     isTutorial: true, attemptingLeave: false, completed: false, 
     state: 0, currentInputHandler: combat.menu,
     startBattle: function() {

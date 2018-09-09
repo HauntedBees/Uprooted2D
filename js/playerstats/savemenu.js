@@ -1,5 +1,4 @@
 pausemenu.savemenu = {
-    mouseReady: true, 
     options: [], cursorY: 0, confirmCursorY: 0, confirm: false, isSave: false, animHelper: null,
     layersToClear: ["background", "menuA", "menutext"], textX: 72, textY: 30,
     setup: function(args) {

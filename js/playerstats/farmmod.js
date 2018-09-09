@@ -1,5 +1,4 @@
 pausemenu.farmmod = {
-    mouseReady: true, 
     grid: [], cursor: { x: 0, y: 0 }, animHelper: null,
     dx: 0, dy: 0, cropdx: 0.5, cropdy: 1.125,
     selectedItem: null, selectedItemPos: null, selectedItemSize: 0, 

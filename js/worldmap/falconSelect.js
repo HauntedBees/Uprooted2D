@@ -1,5 +1,4 @@
 worldmap.falconSelect = {
-    mouseReady: true, 
     cursor: { x: 0, y: 0 }, cropsToSend: [], 
     layersToClean: ["menuA", "menuB", "menutext"],
     actualIndexes: [], inventoryWidth: 9, dy: 9.5,

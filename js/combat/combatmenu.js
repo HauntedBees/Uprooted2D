@@ -1,5 +1,4 @@
 combat.menu = {
-    mouseReady: true, 
     options: [], cursorY: 0, dy: 9.5, plantedAlreadyAndCantAttack: false,
     layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function(args) {

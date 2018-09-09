@@ -5,7 +5,6 @@ me.sellTypes = {
     FIXTURES: "_", FIXIDX: 3
 };
 worldmap.shop = {
-    mouseReady: true, 
     details: null, cursorX: 0, cursorY: 0, 
     initx: 1, dx: 2, yPos: 7, cursorInitx: 0,
     sellingState: me.sellStates.BUYING, sellingType: me.sellTypes.CROPS, actualIdxs: [],

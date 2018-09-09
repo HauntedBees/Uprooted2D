@@ -1,5 +1,4 @@
 combat.selectTarget = {
-    mouseReady: true, 
     cursorx: 0, canSickle: false, canHumans: true, dy: 10, 
     sicklePos: {x: -1, y: -1}, targets: [], maxTargets: 0, 
     layersToClear: ["menucursorA", "menucursorB", "menutext"],

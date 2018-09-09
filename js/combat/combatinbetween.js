@@ -1,5 +1,4 @@
 combat.inbetween = {
-    mouseReady: true, 
     next: null, dy: 9.5, 
     setup: function(args) {
         combat.cursors.RedimCursor("main", -1, -1, 0, 0);

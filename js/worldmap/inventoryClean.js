@@ -1,5 +1,4 @@
 worldmap.invClean = {
-    mouseReady: true, 
     cursor: { x: 0, y: 0 }, inventoryWidth: 4, 
     topCrops: [], topPrice: 0, didConfirm: false,
     layersToClear: ["menuA", "menucursorB", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],

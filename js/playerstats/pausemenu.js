@@ -1,5 +1,4 @@
 const pausemenu = {
-    mouseReady: true, 
     options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
     animIdx: 0, anims: [],
     layersToClear: ["menuA", "menutext", "menutextOverBlack", "menuOverBlack"],

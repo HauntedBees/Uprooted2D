@@ -1,5 +1,4 @@
 pausemenu.inventory = {
-    mouseReady: true, 
     cursor: { x: 0, y: 0 }, inventoryWidth: 3, cropDY: 1.5, cropDX: 0.5, animHelper: null, 
     layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
     actualIndexes: [], selectedCrop: -1, trashInfo: [], trashIdx: 0, inSort: false, justSorted: -1, 

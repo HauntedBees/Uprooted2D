@@ -1,5 +1,4 @@
 combat.plant = {
-    mouseReady: true, 
     activeCrop: null, actualIndexes: [],
     cursor: {x: 0, y: 0}, isValid: true, 
     inventoryWidth: 9, dy: 8.5,

@@ -1,5 +1,4 @@
 pausemenu.equipment = {
-    mouseReady: true, 
     cursor: { x: 0, y: 0 }, textY: 80, equipTextY: 168, equipFontSize: 16, equipWidth: 55,
     rowData: [], curY: 0, dy: 1.5, dx: 2.5, animHelper: null, backStartX: 0, backButtonW: 0, 
     layersToClear: ["menuA", "menutext"],

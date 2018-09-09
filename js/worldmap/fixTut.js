@@ -1,5 +1,4 @@
 const fixTut = {
-    mouseReady: true, 
     isTutorial: true, state: 0, currentInputHandler: worldmap,
     start: function() {
         game.currentInputHandler = this;
