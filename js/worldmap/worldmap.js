@@ -277,10 +277,9 @@ const worldmap = {
         if(!this.inDialogue) { return true; }
         if(worldmap.dialogData === null || worldmap.dialogData.choices === undefined) { return true; }
         const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 11 : 0;
-        const choiceTopY = (drawY === 11) ? (11.5 - choices.length) : 3.5;
+        const choiceTopY = (drawY === 11) ? (11.5 - worldmap.dialogData.choices.length) : 3.5;
         if(pos.y < choiceTopY) { return false; }
         const i = Math.round(pos.y - choiceTopY);
-        console.log(i);
         if(i >= worldmap.dialogData.choices.length) { return false; }
         worldmap.dialogData.idx = i;
         worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
