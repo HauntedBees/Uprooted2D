@@ -292,6 +292,12 @@ const worldmap = {
         this.click(null, true);
     },
     click: function(pos, isFresh) {
+        if(pos !== null && pos.rawX !== undefined) {
+            if(player.options.ignoreMouse === 1) { return; }
+            const key = player.controls.confirm;
+            input.justPressed[key] = 0;
+            return input.keyPress({ key: key });
+        }
         if(!this.inDialogue) { if(worldmap.smartphone !== null) { return worldmap.smartphone.Read(); } return false; }
         if(this.waitForAnimation) { iHandler.SpeedUpAnimation(); }
         else {

@@ -372,6 +372,9 @@ const game = {
         if(player.options.controltype === undefined) { console.log("oct"); player.options.controltype = 0; }
         // prior to v0.5
         if(player.options.gfxfilter === undefined) { console.log("gfx"); player.options.gfxfilter = 0; }
+        if(player.options.stickyMovement === undefined) { console.log("stk"); player.options.stickyMovement = 0; }
+        if(player.options.ignoreMouse === undefined) { console.log("ign"); player.options.ignoreMouse = 0; }
+        if(player.options.virtualController === undefined) { console.log("vrt"); player.options.virtualController = 0; }
         return true;
     }
 };

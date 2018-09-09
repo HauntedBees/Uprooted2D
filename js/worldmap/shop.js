@@ -438,6 +438,7 @@ worldmap.shop = {
             }
         }
         if(pos.rawX !== undefined && this.howManyData !== null && this.sellingState === me.sellStates.BUYING && this.cursorY === 0) {
+            if(player.options.ignoreMouse === 1) { return; }
             if(pos.x < 5.5) { // now is this a wonderful kludge or what?
                 this.keyPress(player.controls.left);
             } else {

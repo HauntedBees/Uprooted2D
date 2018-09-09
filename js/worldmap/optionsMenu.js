@@ -40,6 +40,9 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opDifficulty", this.localOptions.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
         y = this.addOption(y, "opFont", this.localOptions.font, "font", ["fontStandard", "fontDyslexic"], false);
         y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
+        y = this.addOption(y, "opStickyControls", this.localOptions.stickyMovement, "stickyMovement", ["opNo", "opYes"], true);
+        y = this.addOption(y, "opIgnoreMouse", this.localOptions.ignoreMouse, "ignoreMouse", ["opNo", "opYes"], false);
+        y = this.addOption(y, "opVirtualDpad", this.localOptions.virtualController, "virtualController", ["opNo", "opYes"], false);
         y = this.addOption(y, "opControlScheme", this.localOptions.controltype, "controltype", ["opKeyboard", "opGamepad"], true);
         y = this.addHeading(y, "opControls");
         const keysToUse = this.localOptions.controltype === 1 ? this.localGamepadControls : this.localKeyboardControls;
@@ -285,8 +288,12 @@ worldmap.optionsMenu = {
             if(opt.type === "final") {
                 opt.action();
             } if(opt.type === "option") {
-                const len = gfx.getTextWidth(opt.text, this.optionSize);
-                const middle = (((opt.optx / 16) - 1) + ((opt.optx + len / 4) / 16)) / 2 - 0.5;
+                const left = (opt.optx / 16) - 1;
+                const opval = opt.choices[opt.val];
+                const optext =  opval.match(/^\d+%$/) === null ? GetText(opval) : opval;
+                const len = gfx.getTextWidth(optext, this.optionSize);
+                const right = (opt.optx + len / 4) / 16;
+                const middle = (right + left) / 2;
                 if(pos.x < middle) { 
                     return this.CursorMove({ x: -1, y: this.cursory });
                 } else {
@@ -309,6 +316,11 @@ worldmap.optionsMenu = {
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
         input.SwitchControlType(player.options.controltype);
         const newFilter = player.options.gfxfilter;
+        if(player.options.virtualController === 1) {
+            virtualControls.Show();
+        } else {
+            virtualControls.Hide();
+        }
         if(oldFilter != newFilter) {
             gfx.loadSpriteSheets(player.getSheetPath(), game.sheetsToLoad, worldmap.optionsMenu.ContinueSaveAndQuit);
         } else {

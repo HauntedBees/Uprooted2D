@@ -1416,6 +1416,31 @@ const fulltext = {
 		"en-dm": "Fix Your Controls Before Saving", 
 		"type": "opts"
 	},
+	"opStickyControls": {
+		"en-us": "", 
+		"en-dm": "Sticky Movement", 
+		"type": "opts"
+	},
+	"opYes.i": {
+		"en-us": "", 
+		"en-dm": "When moving around the world map, tap a movement key to toggle movement.", 
+		"type": "opts"
+	},
+	"opNo.i": {
+		"en-us": "", 
+		"en-dm": "When moving around the world map, hold down a movement key to move.", 
+		"type": "opts"
+	},
+	"opIgnoreMouse": {
+		"en-us": "", 
+		"en-dm": "Ignore Mouse", 
+		"type": "opts"
+	},
+	"opVirtualDpad": {
+		"en-us": "", 
+		"en-dm": "Virtual Controller", 
+		"type": "opts"
+	},
 	// Fixture Tutorial
 	"fixTut0": {
 		"en-us": "", 

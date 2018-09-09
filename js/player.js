@@ -13,6 +13,7 @@ let player = {
         difficulty: 1, 
         music: 10, sound: 10,
         controltype: 0,
+        stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
         font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0
     },
     controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" },

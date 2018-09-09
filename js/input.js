@@ -113,11 +113,13 @@ let input = {
     },
     FloorPoint: p => { p.x = Math.floor(p.x); p.y = Math.floor(p.y); },
     click: function(e) {
+        if(player.options.ignoreMouse === 1) { return; }
         const p = input.getMousePos(e); console.log(p);
         if(!game.currentInputHandler.mouseReady) { return; }
         if(game.currentInputHandler.click(p, true)) { return; }
     },
     moveMouse: function(e) {
+        if(player.options.ignoreMouse === 1) { return; }
         const p = input.getMousePos(e);
         if(!game.currentInputHandler.mouseReady) { return; }
         if(game.currentInputHandler.mouseMove(p)) { return; }
@@ -166,6 +168,7 @@ let input = {
         input.justPressed[key] = input.justPressed[key] === undefined ? 0 : input.justPressed[key] + 1;
         if(player.options.controltype === 1) { input.SwitchControlType(0); }
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
+            if(player.options.stickyMovement === 1) { return; }
             input.setMainKey(key);
             if(input.keys[key] !== undefined) { return; }
             input.keys[key] = setInterval(function() {
@@ -178,6 +181,7 @@ let input = {
         if(input.inConsole) { return; }
         input.justPressed[key] = -1;
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
+            if(player.options.stickyMovement === 1) { return; }
             clearInterval(input.keys[key]);
             input.keys[key] = undefined;
             input.setMainKey();
@@ -196,10 +200,26 @@ let input = {
         if(key === "`") { return input.HandleConsole(); }
         if(input.inConsole) { return input.ConsoleKeyPress(key); }
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {
+            if(player.options.stickyMovement === 1) {
+                input.StickyKeyPress(key);
+            }
             return;
         }
         game.currentInputHandler.keyPress(key);
         input.justPressed[key]++;
+    },
+    StickyKeyPress: function(key) {
+        if(input.keys[key] !== undefined) { // turn off
+            clearInterval(input.keys[key]);
+            input.keys[key] = undefined;
+            input.setMainKey();
+        } else { // turn on
+            input.setMainKey(key);
+            if(input.keys[key] !== undefined) { return; }
+            input.keys[key] = setInterval(function() {
+                game.currentInputHandler.keyPress(key);
+            }, 50);
+        }
     },
     SwitchControlType: function(newType) {
         player.options.controltype = newType;
@@ -278,7 +298,7 @@ let input = {
     }
 };
 let virtualControls = {
-    canvas: null, btnDown: null, 
+    canvas: null, ctx: null, btnDown: null, img: null, visible: false, 
     boxes: [ // format for coords is top x, top y, width, height
         { coords: [3, 102, 109, 116], id: "left" },
         { coords: [102, 3, 116, 109], id: "up" },
@@ -289,18 +309,20 @@ let virtualControls = {
         { coords: [855, 53, 150, 150], id: "confirm" }
     ],
     Init: function() {
-        canvas = document.getElementById("dpad");
-        const ctx = canvas.getContext("2d");
-        const img = document.getElementById("dpadimg");
-        ctx.drawImage(img, 0, 0);
-        img.remove();
-        canvas.addEventListener("mousemove", virtualControls.MouseMove);
-        canvas.addEventListener("mousedown", virtualControls.MouseDown);
-        canvas.addEventListener("mouseup", virtualControls.MouseUp);
-        canvas.addEventListener("click", virtualControls.Click);
+        virtualControls.canvas = document.getElementById("dpad");
+        virtualControls.ctx = virtualControls.canvas.getContext("2d");
+        virtualControls.img = document.getElementById("dpadimg");
+        if(player.options.virtualController) { virtualControls.Show(); }
+        virtualControls.img.style.visibility = "hidden";
+        virtualControls.canvas.addEventListener("mousemove", virtualControls.MouseMove);
+        virtualControls.canvas.addEventListener("mousedown", virtualControls.MouseDown);
+        virtualControls.canvas.addEventListener("mouseup", virtualControls.MouseUp);
+        virtualControls.canvas.addEventListener("click", virtualControls.Click);
     },
+    Hide: function() { virtualControls.visible = false; virtualControls.ctx.clearRect(0, 0, 1024, 320); },
+    Show: function() { virtualControls.visible = true; virtualControls.ctx.drawImage(virtualControls.img, 0, 0); },
     GetButton: function(e) {
-        const rect = canvas.getBoundingClientRect();
+        const rect = virtualControls.canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         for(let i = 0; i < virtualControls.boxes.length; i++) {
@@ -315,6 +337,7 @@ let virtualControls = {
     },
     GetKeyEvent: key => ({ key: key }),
     MouseMove: function(e) {
+        if(!virtualControls.visible) { return; }
         const btn = virtualControls.GetButton(e);
         if(btn === null || virtualControls.btnDown === null) { return false; }
         if(virtualControls.btnDown !== btn.id) {
@@ -324,12 +347,14 @@ let virtualControls = {
         }
     },
     MouseDown: function(e) {
+        if(!virtualControls.visible) { return; }
         const btn = virtualControls.GetButton(e);
         if(btn === null) { return false; }
         virtualControls.btnDown = btn.id;
         input.keyDown(virtualControls.GetKeyEvent(player.keyboardcontrols[btn.id]));
     },
     MouseUp: function(e) {
+        if(!virtualControls.visible) { return; }
         const btn = virtualControls.GetButton(e);
         if(btn === null) {
             if(virtualControls.btnDown !== null) {
@@ -341,6 +366,7 @@ let virtualControls = {
         virtualControls.btnDown = null;
     },
     Click: function(e) {
+        if(!virtualControls.visible) { return; }
         const btn = virtualControls.GetButton(e);
         if(btn === null) { return false; }
         const key = player.keyboardcontrols[btn.id];
