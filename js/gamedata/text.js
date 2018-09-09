@@ -495,6 +495,21 @@ const fulltext = {
 		"en-dm": "Pesticide2", 
 		"type": "item"
 	},
+	"disp.tree": {
+		"en-us": "", 
+		"en-dm": "the 0 Tree", 
+		"type": "item"
+	},
+	"disp.veg": {
+		"en-us": "", 
+		"en-dm": "the 0", 
+		"type": "item"
+	},
+	"disp.grapesSing": {
+		"en-us": "", 
+		"en-dm": "Grape", 
+		"type": "item"
+	},
 	"nm.asparagus": {
 		"en-us": "", 
 		"en-dm": "Asparagus", 

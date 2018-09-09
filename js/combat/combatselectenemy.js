@@ -220,16 +220,20 @@ combat.selectTarget = {
         this.targets.push(idx);
         return (this.targets.length === this.maxTargets);
     },
+    GetCropName: function(id, displayname) {
+        if(id === "grapes") { return GetText("disp.tree").replace(/0/g, GetText("disp.grapesSing")); } // this is very english-centric oops
+        if(["apple", "apricot", "avocado", "banana", "blackberry", "kiwi", "lemon", "mango"].indexOf(id) >= 0) { return GetText("disp.tree").replace(/0/g, displayname); }
+        return GetText("disp.veg").replace(/0/g, displayname);
+    },
 
     // Attacking Logic
     Attack: function() {
         const allAttackInfo = this.GetAttackDetails();
         const allAttacks = allAttackInfo.attackDatas;
-        let additionalTargets = [];
 
         let kills = [], hasDestroys = false;
         const hasRecoil = allAttackInfo.recoilInfo !== null && allAttackInfo.recoilInfo.some(function(e) { return e !== null; });
-        let hasAnimals = false, hasStuns = false;
+        let hasStuns = false;
         let avgDamage = 0, lastTargetName = "";
         const targArr = this.targets.length > 1;
         if(targArr) { combat.lastTarget = []; }
@@ -246,6 +250,7 @@ combat.selectTarget = {
                     cropPos = { x: crop.x, y: crop.y };
                     crop = combat.enemyGrid[crop.x][crop.y];
                 }
+                lastTargetName = this.GetCropName(crop.name, crop.displayname);
 
                 avgDamage += attackData.damage;
                 crop.health -= attackData.damage;
