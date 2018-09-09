@@ -108,12 +108,14 @@ function VineAnim(column, bottomy, delay, callback) {
 }
 function MovingLinearAnim(sprites, start, end, dt, dy, fps, animfps, doneFunc) {
     if(sprites[0] === "printer") { sprites[0] = "printerB" + Range(0, 7); }
-    const dir = (start.x < end.x) ? 1 : -1;
+    const dir = (start.x <= end.x) ? 1 : -1;
     const startPos = dir === 1 ? start : end, endPos = dir === 1 ? end : start, DoneFunction = doneFunc;
     const diffX = endPos.x - startPos.x;
     const diffY = endPos.y - startPos.y;
+    const isVertical = diffX === 0;
     const GetY = function(x) { return startPos.y + ((x - startPos.x) / diffX) * diffY; };
-    let frame = 0, timePerFrame = 1000 / fps, numFrames = (endPos.x - startPos.x) / dt;
+    let frame = 0, timePerFrame = 1000 / fps, numFrames = Math.abs(isVertical ? (endPos.y - startPos.y) : (endPos.x - startPos.x)) / dt;
+    console.log(`numFrames: ${numFrames}`);
     let animframe = 0, timePerAnimFrame = 1000 / animfps;
     let lastRan = +new Date(), lastAnimRan = +new Date(), isDone = false;
     let prevX = start.x;
@@ -135,12 +137,12 @@ function MovingLinearAnim(sprites, start, end, dt, dy, fps, animfps, doneFunc) {
             }
             lastRan = now;
         }
-        const x = dir === 1 ? (startPos.x + (frame * dt)) : (endPos.x - (frame * dt));
+        const x = isVertical ? startPos.x : (dir === 1 ? (startPos.x + (frame * dt)) : (endPos.x - (frame * dt)));
         if(prevX !== Math.floor(x) && this.xFunc !== undefined) {
             prevX = Math.floor(x);
             this.xFunc(prevX);
         }
-        const y = GetY(x);
+        const y = isVertical ? (startPos.y + (frame * dt)) : GetY(x);
         gfx.drawTileToGrid(sprites[animframe], x, y - dy, "menucursorC");
     }
 }
@@ -206,7 +208,7 @@ function AnimProcess(ae, as, babies) {
     };
     this.ClearBabies = function() { this.animBabies = []; }
     this.AddOverlay = function(overlay) { overlays.push(overlay); }
-    this.Animate = function() {
+    this.Animate = function(isStuckInGoop) {
         const now = +new Date();
         let isEnd = false;
         if((now - lastRan) >= timePerFrame) {
@@ -224,13 +226,20 @@ function AnimProcess(ae, as, babies) {
             dx = Math.random() < 0.33 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
             dy = Math.random() < 0.33 ? -0.125 : (Math.random() > 0.5 ? -0.125 : 0);
         }
-        gfx.DrawCombatWhatsit(animentity.sheet, animInfo.x + animentity.dx, animInfo.y+ animentity.dy, animentity.dims, animentity.layer, dx, dy);
+        gfx.DrawCombatWhatsit(animentity.sheet, animInfo.x + animentity.dx, animInfo.y + animentity.dy, animentity.dims, animentity.layer, dx, dy);
         overlays.forEach(function(e) {
             if(frame <= e.length) {
                 const f = e.frames[frame];
                 gfx.DrawCombatWhatsit(e.sheet, f.x, f.y, animentity.dims, animentity.layer, dx + f.dx / 16, dy + f.dy / 16);
             }
         });
+        if(isStuckInGoop) {
+            if(animentity.dims.w <= 32) {
+                gfx.drawTileToGrid("hgoop", animentity.dims.x + animentity.cursorinfo.dx + 0.25, 8.25, "characters");
+            } else {
+                gfx.drawTileToGrid("goopBig", animentity.dims.x + animentity.cursorinfo.dx + 0.25, 7.25, "characters");
+            }
+        }
         const layerMatters = [];
         this.animBabies.forEach(e => {
             if(e.requiredY) {
@@ -273,9 +282,9 @@ function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx, dy) {
     this.bonusArgs = {};
     this.layer = "characters";
     this.animQueue = [];
-    this.Animate = function() {
-        if(!runningFromQueue) { this.currentAnim.Animate(); return; }
-        const animEnded = this.currentAnim.Animate();
+    this.Animate = function(isStuckInGoop) {
+        if(!runningFromQueue) { this.currentAnim.Animate(isStuckInGoop); return; }
+        const animEnded = this.currentAnim.Animate(isStuckInGoop);
         if(animEnded) {
             let ongoingAnims = this.currentAnim.animBabies;
             this.animQueue.shift();

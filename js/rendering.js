@@ -136,7 +136,7 @@ const gfx = {
         gfx.drawImage(gfx.ctx[layer], sheet, startX, startY, size * xmult, size, x, y, size * xmult, size);
     },
     DrawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
-        const pad = sheet === "combatPlayer" ? 0 : 1;
+        const pad = sheet === "combatPlayer" || sheet === "sheet" ? 0 : 1;
         const pad2 = pad * 2;
         layer = layer || "characters"; dx = dx || 0; dy = dy || 0;
         const adjustedy = (dims.y + dy) * 16 - dims.h;

@@ -109,17 +109,9 @@ function CombatAnimHelper(enemies) {
         if(birdAnimInfo !== null) { birdAnimInfo.Animate(); }
         playerAnimInfo.Animate();
         for(let i = 0; i < enemyAnimInfos.length; i++) {
+            const isEnemyStuck = (combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck);
             if(enemyAnimInfos[i].dead) { enemyAnimInfos[i].CorpseItUp(enemyAnimInfos[i].deadFrame++, combat.enemies[i].size); }
-            else { enemyAnimInfos[i].Animate(i); }
-        }
-        for(let i = 0; i < combat.enemies.length; i++) { // 292 TODO: probably shouldn't be this
-            if(combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck) {
-                if(combat.enemies[i].size === "lg" || combat.enemies[i].size === "xl") {
-                    gfx.drawTileToGrid("hgoop", enemyAnimInfos[i].x + 0.5, enemyAnimInfos[i].y + 1, "characters");
-                } else {
-                    gfx.drawTileToGrid("hgoop", enemyAnimInfos[i].x + combat.enemies[i].cursorinfo.dx, enemyAnimInfos[i].y, "characters");
-                }
-            }
+            else { enemyAnimInfos[i].Animate(isEnemyStuck); }
         }
     };
     this.CleanEntities = function() {

@@ -74,7 +74,7 @@ const enemyCombatAnims = {
     "FUCKING_GUN": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7)], false, 12),
     "FISH_FAIL": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "REV_ENGINE": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
-    "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4), // 291 TODO: maybe some poof-in for the baby?
+    "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4),
     "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], true, 60, { doShake: true }),
     "MAIM": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7, "enemy_letItFuckingBurn"), new AnimFrame(0, 8), 
                             new AnimFrame(0, 9), new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 20),
@@ -327,7 +327,10 @@ const animCallbacks = {
         const isLast = animEntity.animQueue.length === 1;
         let callback = undefined;
         if(animEntity.bonusArgs.recoils[resetti.idx] === null) {
-            callback = () => animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
+            callback = () => {
+                animCallbackHelpers.StickSomeFriends(animProcess, animEntity.bonusArgs.targets, animEntity.bonusArgs.stickTargets);
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
+            }
         } else {
             callback = function() {
                 for(let i = 0; i < combat.enemies.length; i++) {
@@ -335,6 +338,7 @@ const animCallbacks = {
                     animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]),
                                                                 combat.animHelper.GetEnemyTopPos(i), 24, f, true));
                 }
+                animCallbackHelpers.StickSomeFriends(animProcess, animEntity.bonusArgs.targets, animEntity.bonusArgs.stickTargets);
                 animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
             };
         }
@@ -369,6 +373,16 @@ const animCallbacks = {
     "player_damageFoes2": function(animProcess) { animProcess.SetNewFPS(10); animProcess.SetShake(false); }
 };
 const animCallbackHelpers = {
+    "StickSomeFriends": function(animProcess, targets, stickTargets) {
+        console.log("sup");
+        if(stickTargets === undefined || stickTargets === null || stickTargets.length === 0) { return; }
+        for(let i = 0; i < stickTargets.length; i++) {
+            const targ = targets[stickTargets[i]];
+            const top = combat.animHelper.GetEnemyTopPos(targ);
+            top.x += RoundNear(InclusiveRange(-0.75, 0.75), 8);
+            animProcess.AddBaby(new MovingLinearAnim(["goopdrop"], { x: top.x, y: top.y - 0.5 }, { x: top.x, y: top.y + 2 }, 0.25, 0, 12, 24));
+        }
+    },
     "ThrowSomeAnimalsAtIt": function(animProcess, animal) {
         if(animal === undefined) { return; }
         const info = animalInfo[animal];

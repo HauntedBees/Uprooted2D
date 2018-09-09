@@ -237,7 +237,7 @@ combat.selectTarget = {
         let avgDamage = 0, lastTargetName = "";
         const targArr = this.targets.length > 1;
         if(targArr) { combat.lastTarget = []; }
-        let postHit = null;
+        let postHit = null, stickTargets = [];
         for(let i = 0; i < this.targets.length; i++) {
             const targetidx = this.targets[i], attackData = allAttacks[i];
             if(targArr) { combat.lastTarget.push(targetidx); }
@@ -276,6 +276,7 @@ combat.selectTarget = {
                         hasStuns = true;
                         combat.enemies[targetidx].stickRes += 0.025;
                         combat.stickEnemy(targetidx, attackData.stunLength);
+                        stickTargets.push(i);
                     }
                 }
                 if(target.postHit !== undefined) { postHit = postHits[target.postHit](target); }
@@ -303,6 +304,9 @@ combat.selectTarget = {
             combat.animHelper.SetPlayerAnimState(attackType + targType, true);
             combat.animHelper.SetPlayerAnimArg("targets", this.targets);
             combat.animHelper.SetPlayerAnimArg("recoils", allAttackInfo.recoilInfo);
+            if(stickTargets.length > 0) {
+                combat.animHelper.SetPlayerAnimArg("stickTargets", stickTargets);
+            }
             if(attackType === "MELEE") { combat.animHelper.PushPlayerOverlay(player.equipment.weapon + targType); }
             else {
                 combat.didHarvest = true;
@@ -370,7 +374,7 @@ combat.selectTarget = {
             for(let i = 0; i < combat.enemies.length; i++) { if(combat.enemies[i].health > 0) { allEnemiesDead = false; break; } }
         }
 
-        if(multipleTargets) {
+        if(multipleTargets || hasRecoil) {
             if(allEnemiesDead) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_all_pl")); }
             else if(kills.length > 0 || hasDestroys) { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_some_pl")); }
             else { damagetext = damagetext.replace(/\{casualties\}/g, GetText("kill_none_pl")); }

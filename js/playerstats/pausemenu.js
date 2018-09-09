@@ -237,7 +237,7 @@ const pausemenu = {
     },
     BeepHour: function(pos) {
         if(pos === undefined) { return false; }
-        const hasBees = this.anims.some(e => (e.type === "beeL" || e.type === "beeR") && Math.abs(e.x - pos.x) <= 1.25 && Math.abs(e.y - pos.y) <= 1.25);
+        const hasBees = this.anims.some(e => (e.type === "beeL" || e.type === "beeRR") && Math.abs(e.x - pos.x) <= 1.25 && Math.abs(e.y - pos.y) <= 1.25);
         if(hasBees) {
             Sounds.PlaySound("aBee");
             return true;
