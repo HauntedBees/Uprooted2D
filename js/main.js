@@ -292,15 +292,22 @@ const game = {
         document.addEventListener("keypress", input.keyPress);
         document.addEventListener("keydown", input.keyDown);
         document.addEventListener("keyup", input.keyUp);
+        document.addEventListener("wheel", input.onWheel);
         window.addEventListener("gamepadconnected", input.gamepadConnected);
         window.addEventListener("gamepaddisconnected", input.gamepadDisconnected);
         setInterval(game.incrementTime, 1000);
     },
     incrementTime: () => player.playTime++,
     sheetsLoaded: function() {
+        const debug = true;
         game.initListeners();
-        game.currentInputHandler = opening;
-        opening.setup();
+        if(debug) {
+            game.currentInputHandler = worldmap.title;
+            worldmap.title.setup();
+        } else {
+            game.currentInputHandler = opening;
+            opening.setup();
+        }
     },
     obj2str: obj => LZString.compress(JSON.stringify(obj)),
     str2obj: str => JSON.parse(LZString.decompress(str)),
@@ -362,9 +369,7 @@ const game = {
     },
     PatchSaveFile: function() {
         // v0.3- save files are incompatible with v0.4+
-        if(player.saveVersion === undefined) {
-            return false;
-        }
+        if(player.saveVersion === undefined) { return false; }
         // prior to v0.3
         if(player.fixtureTutorialState === undefined) { console.log("fts"); player.fixtureTutorialState = 0; }
         if(player.keyboardcontrols === undefined) { console.log("kbc"); player.keyboardcontrols = { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" }; }

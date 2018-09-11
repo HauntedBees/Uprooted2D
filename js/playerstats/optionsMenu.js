@@ -2,7 +2,10 @@ worldmap.optionsMenu = {
     soundNums: ["opOff", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"],
     specialPos: -1, cursory: 1, options: [], localOptions: {}, fromPause: false, invalidControls: [],
     headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 12, inChange: false, origFont: 0,
+    usingMouse: false, view: 0, views: [0, 15, 20], mouseoffsets: [0, 40, 120], maxView: 1,
     setup: function(fromPause) {
+        this.usingMouse = false;
+        this.view = 0;
         this.fromPause = fromPause;
         this.localKeyboardControls = Object.assign({}, player.keyboardcontrols);
         this.localGamepadControls = Object.assign({}, player.gamepadcontrols);
@@ -65,19 +68,21 @@ worldmap.optionsMenu = {
         y += 5;
         y = this.addFinal(y, (this.invalidControls.length > 0 ? "opFixControls" : "opSaveQuit"), this.SaveAndQuit);
         y = this.addFinal(y, "opQuit", this.QuitWithoutSaving);
+        this.maxView = this.localOptions.controltype === 1 ? 2 : 1;
         this.drawEverything();
     },
     drawEverything: function() {
         gfx.clearAll();
         gfx.TileBackground("optTile");
-        const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
+        const y = this.usingMouse ? this.views[this.view] : (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
+        const acty = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
         const yMax = (this.options[this.options.length - 1].y + this.optionSize - 4) / 16 - 1.8;
         let yoffset = 0, tileyoffset = 0;
         if(y > 12.7) {
             tileyoffset = y - 12.5;
             yoffset = 16 * tileyoffset;
         }
-        if(yMax > 12.7 && this.cursory !== (this.options.length - 1)) {
+        if(yMax > 12.7 && y < this.views[this.maxView]) {
             gfx.drawTileToGrid("opArrDown", 0.5, gfx.tileHeight - 1.25, "menutext");
         }
         if(yoffset > 0) {
@@ -95,10 +100,10 @@ worldmap.optionsMenu = {
                     const optext =  opval.match(/^\d+%$/) === null ? GetText(opval) : opval;
                     gfx.drawText(optext, op.optx, op.y - yoffset, "#000000", this.optionSize);
                     if(this.cursory === i) {
-                        gfx.drawTileToGrid("carrotSel", op.x / 24, y - tileyoffset, "menutext");
-                        gfx.drawTileToGrid((op.val === 0 ? "nopL" : "opL"), (op.optx / 16) - 1, y - tileyoffset, "menutext");
+                        gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext");
+                        gfx.drawTileToGrid((op.val === 0 ? "nopL" : "opL"), (op.optx / 16) - 1, acty - tileyoffset, "menutext");
                         const len = gfx.getTextWidth(optext, this.optionSize);
-                        gfx.drawTileToGrid((op.val === (op.choices.length - 1) ? "nopR" : "opR"), (op.optx + len / 4) / 16, y - tileyoffset, "menutext");
+                        gfx.drawTileToGrid((op.val === (op.choices.length - 1) ? "nopR" : "opR"), (op.optx + len / 4) / 16, acty - tileyoffset, "menutext");
                     }
                     if(op.hasInfo) {
                         const infotext = op.textId === "opControlScheme" ? GetText("opControlNote") : GetText(op.choices[op.val] + ".i");
@@ -110,7 +115,7 @@ worldmap.optionsMenu = {
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.optionSize);
                     let val = this.formatKeyName(op.val);
                     if(this.cursory === i) { 
-                        gfx.drawTileToGrid("carrotSel", op.x / 24, y - tileyoffset, "menutext");
+                        gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext");
                         if(this.inChange) { val = "?"; }
                     }
                     if(val.indexOf("Gamepad") === 0) {
@@ -130,7 +135,7 @@ worldmap.optionsMenu = {
                     break;
                 case "final":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.optionSize);
-                    if(this.cursory === i) { gfx.drawTileToGrid("carrotSel", op.x / 24, y - tileyoffset, "menutext"); }
+                    if(this.cursory === i) { gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext"); }
                     break;
             }
         }
@@ -193,7 +198,8 @@ worldmap.optionsMenu = {
         return y + (initVal.indexOf("Gamepad") === 0 ? this.tileSize : (this.optionSize / 3.3333));
     },
     mouseMove: function(pos) {
-        const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
+        this.UpdateMouse(true);
+        const y = this.usingMouse ? this.views[this.view] : (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
         const yMax = (this.options[this.options.length - 1].y + this.optionSize - 4) / 16 - 1.8;
         let yoffset = 0, tileyoffset = 0;
         if(y > 12.7) {
@@ -210,7 +216,7 @@ worldmap.optionsMenu = {
             return true;
         }
         this.specialPos = -1;
-        const actY = pos.rawY + 8;
+        const actY = pos.rawY + 8 + this.mouseoffsets[this.view];
         if(pos.x > 2.25 && pos.x < 12.5) {
             for(let i = this.options.length - 1; i >= 0; i--) {
                 const opt = this.options[i];
@@ -261,11 +267,7 @@ worldmap.optionsMenu = {
     },
     click: function(pos) {
         if(this.specialPos > 0) {
-            if(this.specialPos === 1) { // down
-                this.CursorMove({ x: 0, y: this.options.length - 1 });
-            } else { // up
-                this.CursorMove({ x: 0, y: 1 });
-            }
+            this.MouseWheel(this.specialPos === 1);
             this.specialPos = -1;
             this.mouseMove(pos);
             return true;
@@ -368,6 +370,7 @@ worldmap.optionsMenu = {
             this.SaveNewButton(key);
             return true;
         }
+        this.UpdateMouse(false);
         let isEnter = false;
         switch(key) {
             case player.controls.up: pos.y--; break;
@@ -381,5 +384,28 @@ worldmap.optionsMenu = {
         if(pos.y < 0 || pos.y >= this.options.length) { return false; }
         if(isEnter) { return this.click(pos); }
         else { return this.CursorMove(pos); }
+    },
+    MouseWheel: function(isDown) {
+        this.UpdateMouse(true);
+        if(isDown) {
+            this.view = Math.min(this.view + 1, this.maxView);
+        } else {
+            this.view = Math.max(this.view - 1, 0);
+        }
+        this.drawEverything();
+    },
+    UpdateMouse: function(newMouseCondition) {
+        if(!newMouseCondition) {
+            this.usingMouse = false;
+            return;
+        }
+        if(this.usingMouse) { return; }
+        this.usingMouse = true;
+        const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
+        for(let i = 0; i < this.views.length; i++) {
+            if(this.views[i] >= y) { continue; }
+            this.view = Math.max(0, i - 1);
+            return;
+        } 
     }
 };

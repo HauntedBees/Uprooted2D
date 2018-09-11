@@ -130,6 +130,12 @@ let input = {
         const y = e.clientY - rect.top;
         return { x: Math.floor(x / 16) / gfx.scale, y: Math.floor(y / 16) / gfx.scale, rawX: x / gfx.scale, rawY: y / gfx.scale };
     },
+    onWheel: function(e) {
+        if(player.options.ignoreMouse === 1) { return; }
+        if(e.deltaY === 0) { return; }
+        if(game.currentInputHandler.MouseWheel === undefined) { return; }
+        game.currentInputHandler.MouseWheel(e.deltaY > 0);
+    },
 
     justPressed: {}, keys: {}, mainKey: undefined,
     IsFreshPauseOrConfirmPress: () => (input.justPressed[player.controls.pause] === 0) || (input.justPressed[player.controls.confirm] === 0),
