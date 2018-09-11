@@ -1763,7 +1763,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"SignInn0": {
-		"en-us": "Frothybarf Inn", 
+		"en-us": "Rosa's Inn - When you sleep at an Inn, your game will auto-save and you'll get some bonus Health for your next battle! If you lose a battle, you will reappear at the last Inn you slept at.", 
 		"type": "map"
 	},
 	"SignForest": {
