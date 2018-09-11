@@ -15,21 +15,20 @@ const fulltext = {
 	ForEach($row in $csv) {
 		$key = $row.Key;
 		if($key -eq "") { continue; }
-		if($key -eq "*") { $out.WriteLine("	// " + ($row."en-dm")); continue; }
+		if($key -eq "*") { $out.WriteLine("	// " + ($row."en-us")); continue; }
 		$us = $row."en-us";
-		$dm = $row."en-dm";
+		$usSFW = $row."en-us-sfw";
 		if(-not $row."noTrim") {
 			$us = $us.TrimEnd();
-			$dm = $dm.TrimEnd();
+			$usSFW = $usSFW.TrimEnd();
 		}
 		$us = $us.Replace("`"", "\`"");
-		$dm = $dm.Replace("`"", "\`"");
+		$usSFW = $usSFW.Replace("`"", "\`"");
 		$typ = ($row."type");
-		$hasdm = $dm -ne "";
 		$i += 1;
 		$out.WriteLine("	`"" + $key + "`": {");
 		$out.WriteLine("		`"en-us`": `"$us`", ");
-		if($dm -ne "") { $out.WriteLine("		`"en-dm`": `"$dm`", "); }	
+		if($usSFW -ne "") { $out.WriteLine("		`"en-us-sfw`": `"$usSFW`", "); }	
 		$out.WriteLine("		`"type`": `"$typ`"");
 		if($i -eq $maxlen) {
 			$out.WriteLine("	}");

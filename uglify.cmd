@@ -44,7 +44,7 @@ uglifyjs ^
     js/worldmap/entitySaveData.js ^
     js/worldmap/credits.js ^
     js/worldmap/title.js ^
-    js/worldmap/optionsMenu.js ^
+    js/playerstats/optionsMenu.js ^
     js/worldmap/shop.js ^
     js/worldmap/collisions.js ^
     js/worldmap/entityLoader.js ^
@@ -54,6 +54,7 @@ uglifyjs ^
     js/worldmap/falconSelect.js ^
     js/worldmap/inventoryClean.js ^
     js/worldmap/fixTut.js ^
+    js/opening/pottyCheck.js ^
     js/playerstats/pausemenu.js ^
     js/playerstats/chievosmenu.js ^
     js/playerstats/viewinventory.js ^

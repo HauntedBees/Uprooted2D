@@ -46,7 +46,7 @@ const nwHelpers = {
 };
 const game = {
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14,
-    currentInputHandler: null, target: null, language: "en-dm",
+    currentInputHandler: null, target: null, language: "en-us",
     sheetsToLoad: [
                     "mapChar", "mapCharBig", "mapPlayer", "mapPlayerHelp", // Map Stuff
                     "fov", "horRorTop", "horRorBottom", "ayudame", // Specific Map Stuff
@@ -287,7 +287,7 @@ const game = {
         }
     },
     initListeners: function() {
-        //gfx.canvas["menutextOverBlack"].addEventListener("mousemove", input.moveMouse);
+        gfx.canvas["menutextOverBlack"].addEventListener("mousemove", input.moveMouse);
         gfx.canvas["menutextOverBlack"].addEventListener("click", input.click);
         document.addEventListener("keypress", input.keyPress);
         document.addEventListener("keydown", input.keyDown);
@@ -375,6 +375,7 @@ const game = {
         if(player.options.stickyMovement === undefined) { console.log("stk"); player.options.stickyMovement = 0; }
         if(player.options.ignoreMouse === undefined) { console.log("ign"); player.options.ignoreMouse = 0; }
         if(player.options.virtualController === undefined) { console.log("vrt"); player.options.virtualController = 0; }
+        if(player.options.canSayFuck === undefined) { console.log("ass"); player.options.canSayFuck = 1; }
         return true;
     }
 };

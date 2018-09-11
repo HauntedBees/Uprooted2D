@@ -1,5 +1,5 @@
 let player = {
-    health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true, saveVersion: 0.4, 
+    health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true, saveVersion: 0.5, 
     c2: 0, c2Rate: 1, beeQueensFaced: 0, nathanSeeds: [["beet", 10], ["carrot", 10], ["ginger", 5]],
     level: 1, exp: 0, nextExp: 4, totalExp: 0, ethicsAxis: 0, techAxis: 0, // 1 = good/tech, -1 = bad/nature
     monies: 1000, playTime: 0, visitedMaps: [], openedChests: [],
@@ -12,7 +12,7 @@ let player = {
     options: {
         difficulty: 1, 
         music: 10, sound: 10,
-        controltype: 0,
+        controltype: 0, canSayFuck: 0, 
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
         font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0
     },

@@ -1,8 +1,15 @@
+const IsSwearsAllowed = () => player !== undefined && player.options !== undefined && player.options.canSayFuck === 1;
 function GetText(key) {
 	try {
-		const lang = (game !== undefined) ? game.language : "en-dm";
-		const d = fulltext[key];
-		if(d[lang] !== undefined) { return d[lang]; }
+		const lang = game !== undefined ? game.language : "en-us";
+        const d = fulltext[key];
+        if(IsSwearsAllowed()) {
+            if(d[lang] !== undefined) { return d[lang]; }
+        } else {
+            const sfwlang = `${lang}-sfw`;
+            if(d[sfwlang] !== undefined) { return d[sfwlang]; }
+            if(d[lang] !== undefined) { return d[lang]; }
+        }
 		return d["en-us"];
 	} catch(e) {
 		console.log("Couldn't find key: " + key);
@@ -11,9 +18,15 @@ function GetText(key) {
 }
 function TryGetText(key) {
     try {
-		const lang = (game !== undefined) ? game.language : "en-dm";
+		const lang = (game !== undefined) ? game.language : "en-us";
 		const d = fulltext[key];
-		if(d[lang] !== undefined) { return d[lang]; }
+		if(IsSwearsAllowed()) {
+            if(d[lang] !== undefined) { return d[lang]; }
+        } else {
+            const sfwlang = `${lang}-sfw`;
+            if(d[sfwlang] !== undefined) { return d[sfwlang]; }
+            if(d[lang] !== undefined) { return d[lang]; }
+        }
         return d["en-us"];
 	} catch(e) { return false; }
 }
