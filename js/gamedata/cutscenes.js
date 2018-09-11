@@ -20,7 +20,8 @@ const scripts = {
 	"farminit17": "_TEXT:intro(5-6)",
 	"farminit18": "_CLEARTEXT&nathanA_ISMOVING:false&pl_ANIM:think&_SLEEP:1250",
 	"farminit19": "pl_ANIM:walk&pl_SETDIR:3&nathanA_ISMOVING:true&_TEXT:intro(7-8)",
-	"farminit20": "_CUSTOM:CLEAROPENING&_CLEARTEXT&nathanA_SETDIR:3&nathanA_ANIM:Nath1&nathanA_MOVE:x24",
+	"farminit20": "_CLEARTEXT&nathanA_SETDIR:3&nathanA_ANIM:Nath1&nathanA_MOVE:x24",
+	"farminit21": "_CUSTOM:CLEAROPENING&_END&_QUIT",
 	// Produce Stand: Opening Cutscene
 	"pstand0": "_GO2:[\"same\",10,5]&pl_SETDIR:1&hipster_MOVE:x6",
 	"pstand1": "hipster_ISMOVING:false&_SLEEP:500",
