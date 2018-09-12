@@ -143,7 +143,8 @@ worldmap.falconSelect = {
     },
     GetSeedAmountForCrop: function(crop) {
         if(["coconut", "gmocorn", "notdrugs", "lotus"].indexOf(crop) >= 0) { return 4; }
-        return 10; // 294 TODO: probably shouldn't be this for EVERY standard crop (should this be in the spreadsheet?)
+        const cropObj = GetCrop(crop);
+        return 16 - cropObj.power; // 6 for the strongest crops, 15 for the weakest
     },
     click: function(pos) {
         if(pos !== undefined && pos.y >= 1.75 && pos.y <= 3 && pos.x >= 2.5) {
