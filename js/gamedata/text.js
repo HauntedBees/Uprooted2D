@@ -965,6 +965,10 @@ const fulltext = {
 		"en-us": "OK", 
 		"type": "other"
 	},
+	"quitConfirm": {
+		"en-us": "If you quit, you will lose any unsaved data. Are you sure you want to quit?", 
+		"type": "other"
+	},
 	"saveSlotDisp": {
 		"en-us": "Slot", 
 		"type": "opts"

@@ -10,20 +10,40 @@
 				border: 0 !important;
 				margin: 0 !important;
 				padding: 0 !important;
-				/*background-image: url("img/fullscreen.png");*/
+                overflow: hidden;
+                /*background-image: url("img/fullscreen.png");*/
 			}
             canvas {
-                image-rendering: crisp-edges;
-				padding: 0;
-				margin: auto;
-				display: block;
-				position: absolute;
-				top: 0;
-				bottom: 0;
-				left: 0;
-				right: 0;
+                border: 1px solid black;
+                image-rendering: crisp-edges; /*pixelated;*/
+                left: 0;
+                margin: 0 auto;
+                position: absolute;
+                right: 0; 
+                text-align: center;
+            }
+            #dpad, #dpadimg {
+                border: none;
+                left: 0;
+                margin: 0 auto;
+                position: absolute;
+                right: 0;
+                top: 900px;
             }
             #savegen { display: none }
+            #garfield {
+                left: 0;
+                margin: 0 auto;
+                position: absolute;
+                right: 0; 
+                text-align: left;
+                width: 1024px;
+                background-color: #000000AA;
+                color: #FFFFFF;
+                font-size: 24px;
+                padding: 10px 0;
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -44,6 +64,13 @@
             <canvas id="menuOverBlack" width="1024" height="896"></canvas>
             <canvas id="menutextOverBlack" width="1024" height="896"></canvas>
             <canvas id="savegen" width="1024" height="896"></canvas>
+            <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
+        </div>
+        <canvas id="dpad" width="1024" height="320"></canvas>
+        <img id="dpadimg" src="styles/dpad.png">
+        <div id="fontLoader">
+            <div style="font-family:PressStart2P">&nbsp;</div>
+            <div style="font-family:OpenDyslexic">&nbsp;</div>
         </div>
         <script src="out.js"></script>
         <script type="text/javascript">document.addEventListener("DOMContentLoaded", game.fullInit);</script>

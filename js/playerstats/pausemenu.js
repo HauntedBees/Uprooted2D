@@ -1,10 +1,12 @@
 const pausemenu = {
     options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
-    animIdx: 0, anims: [],
+    animIdx: 0, anims: [], lastPressWasQuit: false, 
     layersToClear: ["menuA", "menutext", "menutextOverBlack", "menuOverBlack"],
     setup: function(sel) {
         this.cursorY = sel || 0;
+        if(this.cursorY !== 5) { player.justSaved = false; }
         this.cursorX = 0;
+        this.lastPressWasQuit = false;
         this.cursors = new CursorAnimSet([
             { key: "main", x: this.cursorX, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
         ]);
@@ -18,6 +20,7 @@ const pausemenu = {
     },
     clean: function() {
         clearInterval(pausemenu.animIdx);
+        player.justSaved = false;
         pausemenu.cursors.Perish();
         pausemenu.anims = [];
         gfx.clearAll();
@@ -92,7 +95,7 @@ const pausemenu = {
         if(pausemenu.anims.length < 3 && Math.random() < 0.005) {
             const dir = Math.random() < 0.5 ? 1 : -1;
             const newAnim = {
-                type: `${Math.random() < 0.5 ? "butterfly" : "bee"}${dir < 0 ? "L" : "R"}`,
+                type: `${Math.random() < 0.5 ? "butterfly" : "bee"}${dir < 0 ? "L" : "RR"}`,
                 x: dir < 0 ? 17 : -1, starty: Range(2, 4), animState: 0, dir: dir, i: 0, 
                 a: FloatRange(-1.5, 1.5), b: FloatRange(0, 2), c: FloatRange(-4, 4), speed: FloatRange(0.125, 0.375)
             };
@@ -204,6 +207,7 @@ const pausemenu = {
         if(pos.y > this.options.length) { return false; }
         if(pos.y < this.options.length && pos.x > 0) { pos.y = this.options.length; pos.x = 0; }
         if(pos.x > this.questItems.length) { return false; }
+        this.lastPressWasQuit = false;
         this.cursorY = pos.y;
         this.cursorX = pos.x;
         this.DrawAll();
@@ -230,10 +234,16 @@ const pausemenu = {
             case 4: game.innerTransition(this, pausemenu.chievos); break;
             case 5: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
             case 6: this.cancel(); break;
-            case 7: console.log("quit!"); break;
+            case 7: this.TryQuit(); break;
             default: return false;
         }
         return true;
+    },
+    TryQuit: function() {
+        if(player.justSaved || this.lastPressWasQuit) { return nwHelpers.Quit(); }
+        this.lastPressWasQuit = true;
+        gfx.drawInfobox(17, 1.75, 8, "menuA");
+        gfx.drawWrappedText(GetText("quitConfirm"), 5, 140, 250);
     },
     BeepHour: function(pos) {
         if(pos === undefined) { return false; }
