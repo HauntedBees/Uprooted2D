@@ -367,7 +367,7 @@ const mapentities = {
         // Opening Cutscene
         GetCSFellow("FarmerJeffOpening", 14, 35.5, 3, "Jef", "FarmerJeff", { boring: true, solid: false, autoplay: true, interact: Cutscene("flatTire") }),
         GetCSFellow("FarmTVEntrance", 10, 8, 0, "", "fuckOffFarmerJeff", { interact: Cutscene("farmTV"), boring: true, solid: false, visible: false }),
-        { pos: { x: -1, y: -1 }, innCheck: true, action: function() {
+        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: function() {
             JumboToggle(true);
             worldmap.importantEntities["barnCover"].visible = false;
             worldmap.importantEntities["FarmerJeff"].visible = true;
