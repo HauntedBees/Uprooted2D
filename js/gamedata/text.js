@@ -1671,7 +1671,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"Pb1.1": {
-		"en-us": "Inside of it, I can see a large bag of seeds the robot stole from your farm and a \"Season Modulator.\"", 
+		"en-us": "Inside of it, I can see a large bag of seeds the robot stole from my farm and a \"Season Modulator.\"", 
 		"type": "map"
 	},
 	"Pb1.2": {
@@ -1859,7 +1859,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"theHappening9": {
-		"en-us": "You got 10 Pineapple Seeds, 10 Garlic Seeds, and 10 Apple Seeds.", 
+		"en-us": "He gave me 10 Pineapple Seeds, 10 Garlic Seeds, and 10 Apple Seeds.", 
 		"type": "map"
 	},
 	"theHappening10": {
