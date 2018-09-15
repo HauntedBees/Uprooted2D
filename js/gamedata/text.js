@@ -25,7 +25,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"goodrod": {
-		"en-us": "Sturdier than the average fishing rod, this rod is capable of catching big fish without snapping in half.", 
+		"en-us": "Sturdier than the average fishing rod, this rod is capable of catching big fish without snapping in half like in a cartoon.", 
 		"type": "item"
 	},
 	"metalrod": {
@@ -46,10 +46,11 @@ const fulltext = {
 	},
 	"apple": {
 		"en-us": "An apple a day keeps the doctor away, but so does a gun.", 
+		"en-us-sfw": "An apple a day keeps the doctor away, but so does yelling really loudly and crying a lot.", 
 		"type": "item"
 	},
 	"carrot": {
-		"en-us": "crunchy", 
+		"en-us": "Contrary to the usual rule of \"if something rhymes it must be true,\" whole carrots are NOT a good food for ferrets. Cook or mash them first!", 
 		"type": "item"
 	},
 	"leek": {
@@ -61,7 +62,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"rhubarb": {
-		"en-us": "I don't know that much about rhubarb but when I visited some relatives in Wisconsin when I was a kid they loved this shit, so, there's that, I guess.", 
+		"en-us": "I don't know that much about rhubarb but I do know there's nothing better in the winter than rhubarb pie after dinner.", 
 		"type": "item"
 	},
 	"pineapple": {
@@ -70,14 +71,17 @@ const fulltext = {
 	},
 	"grapes": {
 		"en-us": "Tasty little purple eggs that you can smack on loudly in the waiting room of your therapist's office to piss off that guy who took your usual parking spot.", 
+		"en-us-sfw": "Tasty little purple eggs that you can smack on loudly in the waiting room of your therapist's office to annoy that guy who took your usual parking spot.", 
 		"type": "item"
 	},
 	"ginger": {
 		"en-us": "Ginger stimulates the production of saliva, so if you ever want to drool or spit a lot for reasons I don't want to know about, just crunch on some ginger first.", 
+		"en-us-sfw": "Ginger stimulates the production of saliva, so if you need to win an \"impersonate a dog in hot weather\" contest, here's your pro-tip for victory.", 
 		"type": "item"
 	},
 	"specialgrapes": {
 		"en-us": "Tasty little purple eggs that you can smack on loudly in the waiting room of your therapist's office to piss off that guy who took your usual parking spot.", 
+		"en-us-sfw": "Tasty little purple eggs that you can smack on loudly in the waiting room of your therapist's office to annoy that guy who took your usual parking spot.", 
 		"type": "item"
 	},
 	"battery": {
@@ -86,14 +90,17 @@ const fulltext = {
 	},
 	"headphones": {
 		"en-us": "These fancy headphones are wireless, so you'll never have to untangle them! They will, however, burrow into your ears and install apps in your fucking brain.", 
+		"en-us-sfw": "These fancy headphones are wireless, so you'll never have to untangle them! They will, however, burrow into your ears and install apps in your brain.", 
 		"type": "item"
 	},
 	"printer": {
 		"en-us": "This 3D printer is great for turning expensive prosthetics and equipment into affordable DIY projects! Or you can just make fucking action figures.", 
+		"en-us-sfw": "This 3D printer is great for turning expensive prosthetics and equipment into affordable DIY projects! Or you can just make some dumb action figures.", 
 		"type": "item"
 	},
 	"app": {
 		"en-us": "This app will do more damage the longer you leave it on your field, as it generates more and more notifications. Clear your damn notifications already!", 
+		"en-us-sfw": "This app will do more damage the longer you leave it on your field, as it generates more and more notifications. Clear your dang notifications already!", 
 		"type": "item"
 	},
 	"drone": {
@@ -130,6 +137,7 @@ const fulltext = {
 	},
 	"platypus": {
 		"en-us": "Only two mammals lay eggs: platypi and echidnas. Baby platypi are referred to as \"puggles,\" because ha ha ha ha of course they are that shit's hilarious.", 
+		"en-us-sfw": "Only two mammals lay eggs: platypi and echidnas. Baby platypi are referred to as \"puggles,\" because ha ha ha ha of course they are that's hilarious.", 
 		"type": "item"
 	},
 	"shiitake": {
@@ -197,7 +205,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"corn": {
-		"en-us": "really tasty really crunchy yum yum in my tum tum holy fuck", 
+		"en-us": "Corn is also known as maize, which is pretty acorning. That joke is the reason no translators will even try to touch this game.", 
 		"type": "item"
 	},
 	"gmocorn": {
@@ -218,10 +226,11 @@ const fulltext = {
 	},
 	"asparagus": {
 		"en-us": "When Gus eats a lot of pears, then shits, this is what you get. Ass Pear a'Gus.", 
+		"en-us-sfw": "Yo my Gus broke, do you got one I could borrow? Yeah, I need a spare a'Gus. Why are you running away?", 
 		"type": "item"
 	},
 	"bellpepper": {
-		"en-us": "Bell Peppies are great.", 
+		"en-us": "When I was a kid I shook one of these for like an hour next to my ear trying to hear a bell ringing sound. Needless to say, that's not why they're called that.", 
 		"type": "item"
 	},
 	"radish": {
@@ -238,10 +247,12 @@ const fulltext = {
 	},
 	"apricot": {
 		"en-us": "Pretend you know some rude fellow named \"Ott.\" You could say to him, \"ey prick! Ott!\" and if he gets mad you can just pretend you were loudly identifying a fruit, not insulting him.", 
+		"en-us-sfw": "Apricots have big pits so be careful not to fall into them.", 
 		"type": "item"
 	},
 	"avocado": {
-		"en-us": "How dare you. Avocados? Now you'll never be a homeowner, you fucking millenial.", 
+		"en-us": "How dare you. Avocados? Now you'll never be a homeowner, you fucking millennial.", 
+		"en-us-sfw": "How dare you. Avocados? Now you'll never be a homeowner, you millennial.", 
 		"type": "item"
 	},
 	"blackberry": {
@@ -257,7 +268,8 @@ const fulltext = {
 		"type": "item"
 	},
 	"lotus": {
-		"en-us": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. That shit's fuckin' creepy, man.", 
+		"en-us": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. That shit's fuckin' creepy, yo.", 
+		"en-us-sfw": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. Creepy stuff.", 
 		"type": "item"
 	},
 	"holywater": {
@@ -657,7 +669,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"nm.ultrarod": {
-		"en-us": "Master Bait", 
+		"en-us": "Golden Rod", 
 		"type": "item"
 	},
 	"nm.goodfood": {
@@ -666,6 +678,7 @@ const fulltext = {
 	},
 	"nm.notdrugs": {
 		"en-us": "Funny Mushroom", 
+		"en-us-sfw": "Unhealthy Mushroom", 
 		"type": "item"
 	},
 	"nm.lotus": {
@@ -1022,7 +1035,7 @@ const fulltext = {
 		"type": "opts"
 	},
 	"diffHard": {
-		"en-us": "US GAMERS!", 
+		"en-us": "Hard", 
 		"type": "opts"
 	},
 	"opPottywords": {
@@ -1239,7 +1252,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"fixTut5": {
-		"en-us": "Brontubisto! Now in battle, that fixture will be present, ready for use! Try to collect and arrange fixtures on your field to fit your playstyle and maximize your bullshit! Good luck!", 
+		"en-us": "Brontubisto! Now in battle, that fixture will be present, ready for use! Try to collect and arrange fixtures on your field to fit your playstyle and maximize your farming! Good luck!", 
 		"type": "map"
 	},
 	// Area 0: Opening Cutscene
@@ -1345,11 +1358,11 @@ const fulltext = {
 	},
 	// Area 0: Tutorial
 	"tut0": {
-		"en-us": "Oh shit, it's a throwdown! To start things off, select 'Plant' from the menu below!", 
+		"en-us": "Looks like it's time for a throwdown! To start things off, select 'Plant' from the menu below!", 
 		"type": "tut"
 	},
 	"tut1": {
-		"en-us": "Sick. Sick. You did it. Now select the Beet Seeds! Trust me, it's gonna be good.", 
+		"en-us": "Excellent! You did it! Now select the Beet Seeds! Trust me, it's gonna be good.", 
 		"type": "tut"
 	},
 	"tut2": {
@@ -1369,7 +1382,7 @@ const fulltext = {
 		"type": "tut"
 	},
 	"tut6": {
-		"en-us": "Enemy's turn again. It wouldn't be fair if you were the only one who could do anything... :(", 
+		"en-us": "Enemy's turn again. It wouldn't be fair if you were the only one who could do anything, after all.", 
 		"type": "tut"
 	},
 	"tut7": {
@@ -1413,7 +1426,7 @@ const fulltext = {
 		"type": "tut"
 	},
 	"tut17": {
-		"en-us": "This ignorant son-of-a-fuck doesn't know how just how screwed they are.", 
+		"en-us": "This robot has no idea what vegetable calamity you are about to unleash on it.", 
 		"type": "tut"
 	},
 	"tut18": {
@@ -1433,15 +1446,15 @@ const fulltext = {
 		"type": "tut"
 	},
 	"tut22": {
-		"en-us": "Everything's ready! THROW SOME FOOD AT THAT FUCKER!!", 
+		"en-us": "Everything's ready! THROW SOME FOOD AT THAT TIN CAN!", 
 		"type": "tut"
 	},
 	"tut23": {
-		"en-us": "Fucking ZING! Ha ha ha, that shit is hilarious. Fuck that guy.", 
+		"en-us": "ZING! That's gotta hurt! Assuming that robot was programmed to feel pain, at least.", 
 		"type": "tut"
 	},
 	"tut24": {
-		"en-us": "Damn. That didn't kill him.", 
+		"en-us": "But alas, it's still functional.", 
 		"type": "tut"
 	},
 	"tut25": {
@@ -1449,7 +1462,7 @@ const fulltext = {
 		"type": "tut"
 	},
 	"tut26": {
-		"en-us": "Truust me on this one, but it's time to plant some Beet Seeds.", 
+		"en-us": "Trust me on this one, but it's time to plant some Beet Seeds.", 
 		"type": "tut"
 	},
 	"tut27": {
@@ -1497,7 +1510,7 @@ const fulltext = {
 		"type": "tut"
 	},
 	"tut38": {
-		"en-us": "Now let's FINISH THIS FUTHER MUCKER OFF. You're on your own now, kid!", 
+		"en-us": "Now let's FINISH THIS FAX MACHINE OFF! You're on your own now, kid!", 
 		"type": "tut"
 	},
 	"tut999": {
@@ -1541,7 +1554,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"tutEnemy36": {
-		"en-us": "{0} is prepared to die.", 
+		"en-us": "{0} is ready to die.", 
 		"type": "combat"
 	},
 	"wantTut": {
@@ -1577,28 +1590,28 @@ const fulltext = {
 		"type": "map"
 	},
 	"quitTut": {
-		"en-us": "Don't want to Tutorial after all? Whatevs. Come back later!", 
+		"en-us": "Don't want to Tutorial after all? No worries! Come back later if you change your mind!", 
 		"type": "map"
 	},
 	// Area 1: Farm
 	"robo0": {
-		"en-us": "beep beep you ugly fuck", 
+		"en-us": "Robot: Beep beep, it's fights time.", 
 		"type": "map"
 	},
 	"robo1": {
-		"en-us": "hey kid\n i'm a compyoota\n stop all the downloadin'", 
+		"en-us": "Robot: Hey kid, I'm a computer. Stop all the downloading!", 
 		"type": "map"
 	},
 	"robo2": {
-		"en-us": "yo it's time to die motherufcker", 
+		"en-us": "Robot: Turn on the night-light because it's fight night!", 
 		"type": "map"
 	},
 	"robo3": {
-		"en-us": "beep beep beep beep beep", 
+		"en-us": "Robot: beep beep beep beep beep", 
 		"type": "map"
 	},
 	"robo4": {
-		"en-us": "TODO: give this robot a witty one-liner", 
+		"en-us": "Robot: [TODO: give this robot a witty one-liner]", 
 		"type": "map"
 	},
 	"farmMush": {
@@ -1606,7 +1619,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"farmTree": {
-		"en-us": "bananas tasty mmm yum", 
+		"en-us": "Bananas sure are tasty.", 
 		"type": "map"
 	},
 	"farmSprinkler": {
@@ -1622,7 +1635,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"farmWater": {
-		"en-us": "Water you doing? Fuck off.", 
+		"en-us": "Water you get when you combine a hole with water? A water hole!", 
 		"type": "map"
 	},
 	"farmVeggie": {
@@ -1638,7 +1651,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"B1.2": {
-		"en-us": "Robot: oH sHit tHis iS yOur fArm? fUck. i mEan... uHhhh... wAnt gIrl sCout cOokies?", 
+		"en-us": "Robot: oH dEar tHis iS yOur fArm? yOink. i mEan... uHhhh... wAnt gIrl sCout cOokies?", 
 		"type": "map"
 	},
 	"B1.3": {
@@ -1658,11 +1671,11 @@ const fulltext = {
 		"type": "map"
 	},
 	"Pb1.1": {
-		"en-us": "Inside of it, you can see a large bag of seeds the robot stole from your farm and a \"Season Modulator.\"", 
+		"en-us": "Inside of it, I can see a large bag of seeds the robot stole from your farm and a \"Season Modulator.\"", 
 		"type": "map"
 	},
 	"Pb1.2": {
-		"en-us": "You suspect you only have time to grab one of them before it explodes. Which will you grab?", 
+		"en-us": "I think I only have time to grab one of them before it explodes. Which do I grab?", 
 		"type": "map"
 	},
 	"Pb1.2a": {
@@ -1674,23 +1687,23 @@ const fulltext = {
 		"type": "choice"
 	},
 	"Pb1.2a0": {
-		"en-us": "You grab the bag of seeds. Wow, that's a lot of seeds! You can check them out in your inventory!", 
+		"en-us": "I grab the bag of seeds. Wow, that's a lot of seeds! I can check them out in my Inventory!", 
 		"type": "map"
 	},
 	"Pb1.2b0": {
-		"en-us": "You pry the Season Modulator out of the machine. You can add it to your Field in the Fixtures menu!", 
+		"en-us": "I pry the Season Modulator out of the machine. Now I can add it to my Field in the Fixtures menu!", 
 		"type": "map"
 	},
 	"Pb1.3": {
-		"en-us": "As soon as your hands are out, the machine collapses in front of you, letting out a quiet farting noise.", 
+		"en-us": "As soon as my hands are out, the machine collapses in front of me, letting out a quiet farting noise.", 
 		"type": "map"
 	},
 	"Pb1.4": {
-		"en-us": "Welp, looks like that's it for that fucker.", 
+		"en-us": "Welp, looks like that's it for that tin can.", 
 		"type": "map"
 	},
 	"Pb1.5": {
-		"en-us": "Either way, he said he came from a research plant down south. I should check that out.", 
+		"en-us": "Either way, it said it came from a research plant down south. I should check that out.", 
 		"type": "map"
 	},
 	"s.home": {
@@ -1723,7 +1736,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"lakeegg.okay": {
-		"en-us": "You chuck an egg into the lake.", 
+		"en-us": "In you go, buckaroo.", 
 		"type": "map"
 	},
 	"dotdotdot": {
@@ -1743,7 +1756,8 @@ const fulltext = {
 		"type": "map"
 	},
 	"lakeeggLie": {
-		"en-us": "???: You lying motherfucker son of a bitch how fucking dare you eat shit you jackass you don't get ANY eggs. Give me all your eggs you don't deserve them anymore.", 
+		"en-us": "???: You lying asshole how dare you, you jackass, you don't get ANY eggs. Give me all your eggs, you don't deserve them anymore!", 
+		"en-us-sfw": "???: You lying hooligan, how dare you. Just for that, you don't get ANY eggs. You don't deserve your eggs anymore!", 
 		"type": "map"
 	},
 	"lakeeggTruth": {
@@ -1756,10 +1770,11 @@ const fulltext = {
 	},
 	"badEggTry": {
 		"en-us": "A mysterious voice from beneath the lake tells you to fuck off.", 
+		"en-us-sfw": "A mysterious voice from beneath the lake mutters obscenities at you.", 
 		"type": "map"
 	},
 	"goodEggTry": {
-		"en-us": "What a beautiful lake. Pretty fucked up that there's some weird egg spirit living down there, though. People DRINK from this lake!", 
+		"en-us": "What a beautiful lake. Pretty messed up that there's some weird egg spirit living down there, though. People DRINK from this lake!", 
 		"type": "map"
 	},
 	"farmFirst": {
@@ -1771,7 +1786,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"SignForest": {
-		"en-us": "Shitblossom Forest", 
+		"en-us": "Agrios Forest - Beware of bear!", 
 		"type": "map"
 	},
 	"SignSeeds0": {
@@ -1824,15 +1839,15 @@ const fulltext = {
 		"type": "map"
 	},
 	"theHappening4": {
-		"en-us": "Nathan: Iii? He's a cute little guy. Hey, I have an idea!", 
+		"en-us": "Nathan: Iii? She's a cute little bird. Hey, I have an idea!", 
 		"type": "map"
 	},
 	"theHappening5": {
-		"en-us": "Nathan: How about Iii stays here with me, and if I need to send you any messages, I can give them to him?", 
+		"en-us": "Nathan: How about Iii stays here with me, and if I need to send you any messages, I can give them to her?", 
 		"type": "map"
 	},
 	"theHappening6": {
-		"en-us": "Nathan: Sounds good? Great! Come here, little guy!", 
+		"en-us": "Nathan: Sounds good? Great! Come here, cutie!", 
 		"type": "map"
 	},
 	"theHappening7": {
@@ -1865,23 +1880,26 @@ const fulltext = {
 		"type": "map"
 	},
 	"foundTurkey": {
-		"en-us": "You found some turkey eggs! Gobble gobble, you ugly fuck!", 
+		"en-us": "I found some turkey eggs! Gobble gobble!", 
 		"type": "map"
 	},
 	"carrotseeds0": {
-		"en-us": "Rabbit: oi you limey fucknugget, yeu want some carrot seeds? Help yourself!", 
+		"en-us": "Rabbit: oi you yankee bugger, yeu want some carrot seeds? help yourself!", 
+		"en-us-sfw": "Rabbit: oi you bloody yankee, yeu want some carrot seeds? help yourself!", 
 		"type": "map"
 	},
 	"carrotseeds1": {
-		"en-us": "Rabbit: oi lass I think you've had a bit too many focken seeds. Save some for the rest of the focken forest!", 
+		"en-us": "Rabbit: oi lass I think you've had a bit too many focken seeds. save some for the rest of the focken forest!", 
+		"en-us-sfw": "Rabbit: oi lass I think you've had a bit too many seeds. save some for the rest of the forest!", 
 		"type": "map"
 	},
 	"rabbit0": {
-		"en-us": "Rabbit: Th'fuck you want? Th'fuck you doin' here?", 
+		"en-us": "Rabbit: th'hell you want? th'hell you doin' here?", 
+		"en-us-sfw": "Rabbit: th'heck you want? th'heck you doin' here?", 
 		"type": "map"
 	},
 	"rabbit1": {
-		"en-us": "Rabbit: Oh oh, a farmer are yae? Well I have some nice FERTILIZER here if you want sumfink special! What do you say? \n (You have {g}G)", 
+		"en-us": "Rabbit: oh oh, a farmer are yae? well I have some nice FERTILIZER here if you want sumfink special! what do you say? \n (You have {g}G)", 
 		"type": "map"
 	},
 	"buyfertilizer": {
@@ -1889,67 +1907,69 @@ const fulltext = {
 		"type": "choice"
 	},
 	"rabbit2": {
-		"en-us": "Rabbit: Well fuck off then.", 
+		"en-us": "Rabbit: well bugger off then.", 
+		"en-us-sfw": "Rabbit: well go away then.", 
 		"type": "map"
 	},
 	"rabbit3": {
-		"en-us": "Rabbit: What the hell are you tryin' to pull here, lass? You don't have enough money! Feck off!", 
+		"en-us": "Rabbit: what the hell are you tryin' to pull here, lass? you don't have enough money! bugger off!", 
+		"en-us-sfw": "Rabbit: what the heck are you tryin' to pull here, lass? you don't have enough money! get out of here!", 
 		"type": "map"
 	},
 	"rabbit4": {
-		"en-us": "Rabbit: Sick. Sick. Alright, hold out your hands and close your eyes.", 
+		"en-us": "Rabbit: lourvely. alright, hold out your hands and close your eyes.", 
 		"type": "map"
 	},
 	"rabbit5": {
-		"en-us": "You feel your hands filling up. When you open your eyes, you find a nice pile of fertilizer.", 
+		"en-us": "I feel your hands filling up. When I open your eyes, you find a nice pile of fertilizer in them.", 
 		"type": "map"
 	},
 	"rabbit6": {
-		"en-us": "Rabbit: Heh heh. Enjoy. You can replace a tile of regular soil on your farm with Strong Soil now in the Fixtures Menu.", 
+		"en-us": "Rabbit: heh heh. enjoy. you can replace a tile of regular soil on your farm with Strong Soil now in the Fixtures Menu.", 
 		"type": "map"
 	},
 	"rabbit7": {
-		"en-us": "Rabbit: Pleasure doing business with you, lass.", 
+		"en-us": "Rabbit: pleasure doing business with you, lass.", 
 		"type": "map"
 	},
 	"rabbitOut": {
-		"en-us": "Rabbit: I don't have any more fertilizer for you, lady. Come back after I've had another meal.", 
+		"en-us": "Rabbit: I don't have any more fertilizer for you, lady. come back after I've had another meal.", 
 		"type": "map"
 	},
 	"fishyFriend0": {
-		"en-us": "Fish: Oh, hello there. You're that farmer going around taking care of business, right?", 
+		"en-us": "Fish: oh, hello there. you're that farmer going around taking care of business, right?", 
 		"type": "map"
 	},
 	"fishyFriend1": {
-		"en-us": "Fish: I have one request for you. If you ever find the opportunity to use fish in combat, please don't. I don't want my friends to be hurt.", 
+		"en-us": "Fish: I have one request for you. if you ever find the opportunity to use fish in combat, please don't. I don't want my friends to be hurt.", 
 		"type": "map"
 	},
 	"fishyFriend2": {
-		"en-us": "Fish: There are plenty of ways to defeat your foes without using animals. Please keep this in mind.", 
+		"en-us": "Fish: there are plenty of ways to defeat your foes without using animals. please keep this in mind.", 
 		"type": "map"
 	},
 	"fishyFriendX": {
-		"en-us": "Fish: Please be nice to my friends.", 
+		"en-us": "Fish: please be nice to my friends.", 
 		"type": "map"
 	},
 	"fishyFriendWronged": {
-		"en-us": "Fish: I can't believe you slapped people with my friends. How could you?", 
+		"en-us": "Fish: I can't believe you slapped people with my friends. how could you?", 
 		"type": "map"
 	},
 	"fishyFriendGood0": {
-		"en-us": "Fish: I heard you made it all the way to Food2 and beat their CEO without using a single fish... that's great. Thank you.", 
+		"en-us": "Fish: I heard you made it all the way to Food2 and beat their CEO without using a single fish... that's great. thank you.", 
 		"type": "map"
 	},
 	"fishyFriendGood1": {
-		"en-us": "The fish gives you 5000 monies. How did he get that much cash???", 
+		"en-us": "The fish gives you 5000 monies. How did they get that much cash???", 
 		"type": "map"
 	},
 	"fishyFriendBest": {
-		"en-us": "Fish: Thank you for being nice to my friends.", 
+		"en-us": "Fish: thank you for being nice to my friends.", 
 		"type": "map"
 	},
 	"fishyFriendBetrayed": {
-		"en-us": "Fish: How could you? After I thanked you... you went ahead and used fish in combat. You monster.", 
+		"en-us": "Fish: how could you? after I thanked you... you went ahead and used fish in combat. you monster.", 
 		"type": "map"
 	},
 	"mouse0": {
@@ -1962,10 +1982,11 @@ const fulltext = {
 	},
 	"mouse2": {
 		"en-us": "Mouse: hey kid, you wanna buy some drugs?", 
+		"en-us-sfw": "Mouse: hey kid, you wanna buy some baseball cards?", 
 		"type": "map"
 	},
 	"sqorl0": {
-		"en-us": "Squirrel: Oh nuts! A human!", 
+		"en-us": "Squirrel: oh nuts, a human!", 
 		"type": "map"
 	},
 	"sqorl1": {
@@ -1973,7 +1994,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"sqorl2": {
-		"en-us": "Squirrel: you tryna fuck with me?", 
+		"en-us": "Squirrel: you tryna start something?", 
 		"type": "map"
 	},
 	"sqorl3": {
@@ -1981,7 +2002,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"turky0": {
-		"en-us": "Turkey: Gobble gobble.", 
+		"en-us": "Turkey: gobble gobble.", 
 		"type": "map"
 	},
 	"turky1": {
@@ -1997,7 +2018,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"bossturky1": {
-		"en-us": "Turkey: Over my dead body you fucker.", 
+		"en-us": "Turkey: not on my watch, pal.", 
 		"type": "map"
 	},
 	"lime0": {
@@ -2037,15 +2058,17 @@ const fulltext = {
 		"type": "choice"
 	},
 	"lime.lemon1": {
-		"en-us": "Lime: Lemons? What the fuck?! Who the fuck just EATS LEMONS?!", 
+		"en-us": "Lime: Lemons? What the hell?! Who the hell just EATS LEMONS?!", 
+		"en-us-sfw": "Lime: Lemons? What the heck?! Who just EATS LEMONS?!", 
 		"type": "map"
 	},
 	"lime.lemon2": {
-		"en-us": "Lime: I want a tasty TREAT, not something to squeeze into my fucking aioli!", 
+		"en-us": "Lime: I want a tasty TREAT, not something to squeeze into my damn aioli!", 
+		"en-us-sfw": "Lime: I want a tasty TREAT, not something to squeeze into my dang aioli!", 
 		"type": "map"
 	},
 	"lime.lemon3": {
-		"en-us": "Lime: Come back when you learn what TASTY means, asshole!", 
+		"en-us": "Lime: Come back when you learn what TASTY means, buddy!", 
 		"type": "map"
 	},
 	"lime.banana1": {
@@ -2102,23 +2125,23 @@ const fulltext = {
 	},
 	// Area 4: Research Lab
 	"research0": {
-		"en-us": "faculty only here. get the fuck out.", 
+		"en-us": "Robot: faculty only here. get out.", 
 		"type": "map"
 	},
 	"research1": {
-		"en-us": "this is not your place you normie.", 
+		"en-us": "Robot: this is not your place.", 
 		"type": "map"
 	},
 	"research2": {
-		"en-us": "yo it's time to die motherufcker", 
+		"en-us": "Robot: yo it's time to die human.", 
 		"type": "map"
 	},
 	"research3": {
-		"en-us": "beep beep beep beep beep", 
+		"en-us": "Robot: beep beep beep beep beep beeparoonie.", 
 		"type": "map"
 	},
 	"research4": {
-		"en-us": "YOU ARE A HUMAN WHO IS NOT MY BOSS SO I MUST DESTROY YOU", 
+		"en-us": "Robot: YOU ARE A HUMAN WHO IS NOT MY BOSS SO I MUST DESTROY YOU", 
 		"type": "map"
 	},
 	"rap0": {
@@ -2242,23 +2265,23 @@ const fulltext = {
 		"type": "map"
 	},
 	"broken.robot": {
-		"en-us": "This big robot looks a lot like the one that was at your farm. Seeing it already broken puts you at ease.", 
+		"en-us": "This big robot looks a lot like the one that was at my farm. Seeing it already broken is quite a relief.", 
 		"type": "map"
 	},
 	"flask": {
-		"en-us": "You can't get this flask.", 
+		"en-us": "I can't get this flask.", 
 		"type": "map"
 	},
 	"sink": {
-		"en-us": "You wash your hands in the sink. Good for you!", 
+		"en-us": "Gotta wash my hands in the sink! Good for me!", 
 		"type": "map"
 	},
 	"labprinter": {
-		"en-us": "A pile of papers stick out of the printer. Most of them are dense scientific texts, but you find a few pirated comics in there, too.", 
+		"en-us": "A pile of papers stick out of the printer. Most of them are dense scientific texts, but I see a few pirated comics in there, too.", 
 		"type": "map"
 	},
 	"seasmod": {
-		"en-us": "This is a Season Modulator like the one that big robot on your farm had inside of it.", 
+		"en-us": "This is a Season Modulator like the one that big robot on my farm had inside of it.", 
 		"type": "map"
 	},
 	"seedshooter": {
@@ -2266,11 +2289,11 @@ const fulltext = {
 		"type": "map"
 	},
 	"seedshot": {
-		"en-us": "As soon as you step on the tile, the seed shooter smacks you with a seed. Ouch! You take 2 damage.", 
+		"en-us": "As soon as I step on the tile, the seed shooter smacks me with a seed. Ouch! I took 2 damage.", 
 		"type": "map"
 	},
 	"seedshotdeath": {
-		"en-us": "You collapse from being pelted by too many seeds.", 
+		"en-us": "Too many seeds... ugh... I can't go on...", 
 		"type": "map"
 	},
 	"rottencrop": {
@@ -2282,7 +2305,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"devbed": {
-		"en-us": "You'd be surprised at how well made this bed is, but you suspect that's just because it's never been slept in.", 
+		"en-us": "I'd be surprised at how well made this bed is, if not for the fact that that's just because it's probably never been slept in.", 
 		"type": "map"
 	},
 	"devmachines": {
@@ -2370,23 +2393,23 @@ const fulltext = {
 		"type": "map"
 	},
 	"Pb2.6": {
-		"en-us": "You turn to what Dr. Jeff is pointing at. In the corner of the room are three items: a Seed Shooter, a large bag of seeds, and a healthy drink.", 
+		"en-us": "In the corner of the room are three items: a Seed Shooter, a large bag of seeds, and a healthy drink.", 
 		"type": "map"
 	},
 	"Pb2.7": {
-		"en-us": "The Seed Shooter is a Fixture that can be placed on your Field to instantly damage all enemies.", 
+		"en-us": "The Seed Shooter is a Fixture that can be placed on my Field to instantly damage all enemies.", 
 		"type": "map"
 	},
 	"Pb2.8": {
-		"en-us": "The large bag of seeds contains lots of fruit tree seeds, some of which you haven't been able to find or grow yourself.", 
+		"en-us": "The large bag of seeds contains lots of fruit tree seeds, some of which I haven't been able to find or grow on my own so far.", 
 		"type": "map"
 	},
 	"Pb2.9": {
-		"en-us": "The healthy drink will level you up, giving you more health, attack power, and defense.", 
+		"en-us": "The healthy drink will level me up, giving me more health, attack power, and defense.", 
 		"type": "map"
 	},
 	"Pb2.10": {
-		"en-us": "Which will you grab?", 
+		"en-us": "Which should I grab?", 
 		"type": "map"
 	},
 	"Pb2.10a": {
@@ -2402,15 +2425,15 @@ const fulltext = {
 		"type": "choice"
 	},
 	"Pb2.10a0": {
-		"en-us": "You grab the Seed Shooter. You can add it to your Field from the Fixtures menu in your Inventory.", 
+		"en-us": "I got the Seed Shooter. I can add it to my Field from the Fixtures Menu.", 
 		"type": "map"
 	},
 	"Pb2.10b0": {
-		"en-us": "You grab the bag of seeds. You can see your seeds in the Seeds menu in your Inventory.", 
+		"en-us": "I got the bag of seeds. I can check seeds in the Seeds menu in my Inventory.", 
 		"type": "map"
 	},
 	"Pb2.10c0": {
-		"en-us": "You guzzle down the healthy drink. You gained three levels! *gamer voice* Nice!", 
+		"en-us": "I guzzle down the healthy drink. I gained three levels! Noice!", 
 		"type": "map"
 	},
 	"Pb2.11": {
@@ -2427,6 +2450,7 @@ const fulltext = {
 	},
 	"UnconsciousJeff": {
 		"en-us": "All the diplomas and accreditations in the world can't protect you from a vegetable-induced concussion, asshole.", 
+		"en-us-sfw": "All the diplomas and accreditations in the world can't protect you from a vegetable-induced concussion.", 
 		"type": "map"
 	},
 	// Area 5: Bridge / Underwater
@@ -2463,7 +2487,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"bworker8": {
-		"en-us": "Worker: An egg's fine and all, but it's gonna take a while to hatch, and I would prefer a cure for my butt rash sooner than later.", 
+		"en-us": "Worker: An egg's fine and all, but it's gonna take a while to hatch, and I would prefer a cure for my harmless but mildly annoying butt rash sooner than later.", 
 		"type": "map"
 	},
 	"bworker9": {
@@ -2475,7 +2499,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"rockwrong": {
-		"en-us": "You can't push the rock from this direction!", 
+		"en-us": "I can't push the rock from this direction!", 
 		"type": "map"
 	},
 	"bworkerMad1": {
@@ -2500,6 +2524,7 @@ const fulltext = {
 	},
 	"bworkerMad6": {
 		"en-us": "Worker: Here's your damn egg, but good luck clearing off this bridge all on your own!!", 
+		"en-us-sfw": "Worker: Here's your dang egg, but good luck clearing off this bridge all on your own!!", 
 		"type": "map"
 	},
 	"smD1": {
@@ -2539,7 +2564,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"bworkerA3": {
-		"en-us": "You got the Sea Monster's heart! Gross!", 
+		"en-us": "I got the Sea Monster's heart! Gross!", 
 		"type": "map"
 	},
 	"bworkerB1": {
@@ -2647,7 +2672,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"pirateMonkR4": {
-		"en-us": "You got 5 Tomato Seeds, 4 Ginger Seeds, 3 Pineapple Seeds, 2 Bell Pepper Seeds, and Parrot Toadstool Seeds.", 
+		"en-us": "I got 5 Tomato Seeds, 4 Ginger Seeds, 3 Pineapple Seeds, 2 Bell Pepper Seeds, and Parrot Toadstool Seeds.", 
 		"type": "map"
 	},
 	"pirateMonkR5": {
@@ -2695,11 +2720,11 @@ const fulltext = {
 		"type": "map"
 	},
 	"chestLocked": {
-		"en-us": "This treasure chest is locked. It doesn't look like you'll be able to open it without a key.", 
+		"en-us": "This treasure chest is locked. It doesn't look like I'll be able to open it without a key.", 
 		"type": "map"
 	},
 	"chestUnlock1": {
-		"en-us": "This treasure chest is locked, but it looks like the Sea Monk Key that Dowel gave you can open it!", 
+		"en-us": "This treasure chest is locked, but it looks like the Sea Monk Key that Dowel gave me can open it!", 
 		"type": "map"
 	},
 	"chestUnlock2": {
@@ -2707,19 +2732,19 @@ const fulltext = {
 		"type": "map"
 	},
 	"chestUnlock3": {
-		"en-us": "Inside you found 4 pieces of Master Bait!", 
+		"en-us": "Inside I found 4 Golden Rods!", 
 		"type": "map"
 	},
 	"vaseFound": {
-		"en-us": "This looks like a pretty nice vase... but you'll need to break it if you want to reach that beehive. Break the vase?", 
+		"en-us": "This looks like a pretty nice vase... but I'll need to break it if I want to reach that beehive. Should I break the vase?", 
 		"type": "map"
 	},
 	"vaseDont": {
-		"en-us": "Yeah... it's mean to break other people's vases so you can rob them.", 
+		"en-us": "Yeah... it's mean to break other people's vases in order to rob them.", 
 		"type": "map"
 	},
 	"vaseDo0": {
-		"en-us": "You smack the vase, shattering it into several pieces.", 
+		"en-us": "I smack the vase, shattering it into several pieces.", 
 		"type": "map"
 	},
 	"vaseDo1": {
@@ -2743,7 +2768,8 @@ const fulltext = {
 		"type": "map"
 	},
 	"kelpCow0": {
-		"en-us": "Cow: i'm a fucking cow", 
+		"en-us": "Cow: i'm a cow.", 
+		"en-us-sfw": "Cow: i'm a cow.", 
 		"type": "map"
 	},
 	"kelpCow1": {
@@ -2752,6 +2778,7 @@ const fulltext = {
 	},
 	"kelpCow2": {
 		"en-us": "The cow gestures to a nearby lad, who runs up and goes to fucking town on those udders.", 
+		"en-us-sfw": "The cow gestures to a nearby lad, who runs up and milks her.", 
 		"type": "map"
 	},
 	"kelpCow3": {
@@ -2760,6 +2787,7 @@ const fulltext = {
 	},
 	"kelpCow4": {
 		"en-us": "Cow: the first carton is on me, but we both know you'll be back. drink up, honey.", 
+		"en-us-sfw": "Cow: the first carton is on me! enjoy!", 
 		"type": "map"
 	},
 	"kelpBoy3": {
@@ -2820,6 +2848,7 @@ const fulltext = {
 	},
 	"seamonk2": {
 		"en-us": "Sea Monk: hey you wanna buy some smokes?", 
+		"en-us-sfw": "Sea Monk: hey you wanna buy some vitamin supplements?", 
 		"type": "map"
 	},
 	"seamonk3": {
@@ -2827,7 +2856,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"seamonk4": {
-		"en-us": "Sea Monk: This is my turf, landwalker.", 
+		"en-us": "Sea Monk: this is my turf, landwalker.", 
 		"type": "map"
 	},
 	"seamonk5": {
@@ -2835,7 +2864,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"seamonk6": {
-		"en-us": "Sea Monk: what the fuck is a sea monk", 
+		"en-us": "Sea Monk: what the heck is a sea monk", 
 		"type": "map"
 	},
 	"seamonk7": {
@@ -2851,15 +2880,15 @@ const fulltext = {
 		"type": "map"
 	},
 	"constr1.foe1": {
-		"en-us": "gonna fuck you up", 
+		"en-us": "Worker: You're going down!", 
 		"type": "map"
 	},
 	"constr1.fr1": {
-		"en-us": "hey there. We under construction, so you can't drive through here.", 
+		"en-us": "Worker: Hey there. We're under construction, so you can't drive through here.", 
 		"type": "map"
 	},
 	"constr1.fr2": {
-		"en-us": "talk to the boss-man if you got qustions. He on the bridge.", 
+		"en-us": "Worker: Talk to the boss-man if you got questions. He's on the bridge.", 
 		"type": "map"
 	},
 	"sm1": {
@@ -2919,36 +2948,36 @@ const fulltext = {
 		"type": "map"
 	},
 	"w21": {
-		"en-us": "get fucked four eyes", 
+		"en-us": "Worker: Mess with me, will ya?!", 
 		"type": "map"
 	},
 	"w22": {
-		"en-us": "hi im paul", 
+		"en-us": "Worker: Not so fast, lady!", 
 		"type": "map"
 	},
 	// Area 6: Fake Farm
 	"barndoorChick": {
-		"en-us": "You can't see too well through the door, but there appears to be some of ridiculously large chicken behind it.", 
+		"en-us": "I can't see too well through the door, but there appears to be some of ridiculously large chicken behind it.", 
 		"type": "map"
 	},
 	"barndoorPig": {
-		"en-us": "You can't see too well through the door, but it looks like there's a pig with something tied to its back in there.", 
+		"en-us": "I can't see too well through the door, but it looks like there's a pig with something tied to its back in there.", 
 		"type": "map"
 	},
 	"barndoorCrop": {
-		"en-us": "You can't see too well through the door, but you can make out a pile of fruits and veggies in it.", 
+		"en-us": "I can't see too well through the door, but I can make out a pile of fruits and veggies in it.", 
 		"type": "map"
 	},
 	"barndoorEmpty": {
-		"en-us": "You can't see too well through the door, but this stall seems to be empty.", 
+		"en-us": "I can't see too well through the door, but this stall seems to be empty.", 
 		"type": "map"
 	},
 	"barndoorShop": {
-		"en-us": "You can't see too well through the door, but I think I see a shopkeeper in there.", 
+		"en-us": "I can't see too well through the door, but I think I see a shopkeeper in there.", 
 		"type": "map"
 	},
 	"chickbot0": {
-		"en-us": "Robot: Yes hello I am a chicken. I mean, uh, \"quack.\"", 
+		"en-us": "Robot: yes hello I am a chicken. I mean, uh, \"quack.\"", 
 		"type": "map"
 	},
 	"chickbot1": {
@@ -2956,15 +2985,16 @@ const fulltext = {
 		"type": "map"
 	},
 	"chickbot2": {
-		"en-us": "Robot: ChickenNoise.ogg not found.", 
+		"en-us": "Robot: [ChickenNoise.ogg not found.]", 
 		"type": "map"
 	},
 	"pig0": {
 		"en-us": "That pig has a fucking gun tied to its back.", 
+		"en-us-sfw": "That pig has a gun tied to its back.", 
 		"type": "map"
 	},
 	"golem0": {
-		"en-us": "The pile of fruits and veggies begins shaking as you approach it. It's alive!!!", 
+		"en-us": "The pile of fruits and veggies begins shaking as I approach it. It's alive!!!", 
 		"type": "map"
 	},
 	"farmTV0": {
@@ -2997,14 +3027,15 @@ const fulltext = {
 	},
 	"farmTVunplug1": {
 		"en-us": "Actually Just Jeff: wait NO YOU SON OF A B--", 
+		"en-us-sfw": "Actually Just Jeff: wait NO YOU--", 
 		"type": "map"
 	},
 	"farmTVunplug2": {
-		"en-us": "You pull the cable out of the outlet, powering down the TV and all of the other elaborate traps in the building.", 
+		"en-us": "I pulled the cable out of the outlet, powering down the TV and all of the other elaborate traps in the building.", 
 		"type": "map"
 	},
 	"farmTVunplug3": {
-		"en-us": "Pretty sweet that just unplugging one cable powered down all of that guy's plans. Geniuses truly are the dumbest people.", 
+		"en-us": "Pretty sweet that just unplugging one cable powered down all of that guy's plans. Geniuses truly are the smartest people.", 
 		"type": "map"
 	},
 	"lawnmower": {
@@ -3017,6 +3048,7 @@ const fulltext = {
 	},
 	"mower1": {
 		"en-us": "Lawnmower: YOUR ASS IS GRASS. AND I'M A LAWNMOWER. D-...do you see where I'm going with this?", 
+		"en-us-sfw": "Lawnmower: IT'S LAWN MOWING TIME!", 
 		"type": "map"
 	},
 	"hotbox3": {
@@ -3032,11 +3064,11 @@ const fulltext = {
 		"type": "map"
 	},
 	"hotbox2": {
-		"en-us": "You already disabled the energy field.", 
+		"en-us": "I already disabled the energy field.", 
 		"type": "map"
 	},
 	"tireget": {
-		"en-us": "You got the Spare Tire!", 
+		"en-us": "I got the Spare Tire!", 
 		"type": "map"
 	},
 	"bustedTruck0": {
@@ -3044,7 +3076,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"bustedTruck1": {
-		"en-us": "You quickly change the tire.", 
+		"en-us": "I quickly changed the tire.", 
 		"type": "map"
 	},
 	"fakeFarmS": {
@@ -3089,6 +3121,7 @@ const fulltext = {
 	},
 	"fakeFarm9": {
 		"en-us": "???: Hello. HOUSEKEEPER is now active. Welcome back, Sexy Jeff.", 
+		"en-us-sfw": "???: Hello. HOUSEKEEPER is now active. Welcome back, Cool Jeff.", 
 		"type": "map"
 	},
 	"fakeFarm10": {
@@ -3101,6 +3134,7 @@ const fulltext = {
 	},
 	"fakeFarm12": {
 		"en-us": "HOUSEKEEPER: Understood, Sexy Jeff. Now attacking.", 
+		"en-us-sfw": "HOUSEKEEPER: Understood, Cool Jeff. Now attacking.", 
 		"type": "map"
 	},
 	"fakeFarm13": {
@@ -3121,6 +3155,7 @@ const fulltext = {
 	},
 	"fakeFarm17": {
 		"en-us": "Actually Just Jeff: You... bastard...", 
+		"en-us-sfw": "Actually Just Jeff: You... monster...", 
 		"type": "map"
 	},
 	"HK.s0": {
@@ -3205,6 +3240,7 @@ const fulltext = {
 	},
 	"arf.none": {
 		"en-us": "Crouton: Damn. If you have any fishing tools or good bait, holler at me.", 
+		"en-us-sfw": "Crouton: Darn. If you have any fishing tools or good bait, holler at me.", 
 		"type": "map"
 	},
 	"arf.spear": {
@@ -3224,7 +3260,7 @@ const fulltext = {
 		"type": "choice"
 	},
 	"arf.ultrarod": {
-		"en-us": "Give Master Bait.", 
+		"en-us": "Give Golden Rod.", 
 		"type": "choice"
 	},
 	"arf.spear0": {
@@ -3244,7 +3280,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"arf.good2": {
-		"en-us": "Crouton: Don't have a cow? Don't have a cow! There's a shop in one of the stalls inside this fake-ass barn that sells them!", 
+		"en-us": "Crouton: Don't have a cow? Don't have a cow! There's a shop in one of the stalls inside this fake barn that sells them!", 
 		"type": "map"
 	},
 	"arf.ultra0": {
@@ -3257,6 +3293,7 @@ const fulltext = {
 	},
 	"arf.thanks": {
 		"en-us": "Crouton: You give a dog a fish, you feed him for a day. You teach a dog to fish, you're gonna win some fucking dog shows.", 
+		"en-us-sfw": "Crouton: You give a dog a fish, you feed him for a day. You teach a dog to fish, you're gonna win some dog shows.", 
 		"type": "map"
 	},
 	// Area 7: South City
@@ -3285,7 +3322,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"entercity6": {
-		"en-us": "Bruno: ...you got rats?", 
+		"en-us": "Bruno: ...You got rats?", 
 		"type": "map"
 	},
 	"entercity7": {
@@ -3309,7 +3346,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"entercity12": {
-		"en-us": "It sounds like this mobster is trying to extort this bartender! What will you do?", 
+		"en-us": "It sounds like this mobster is trying to extort this bartender! What should I do?", 
 		"type": "map"
 	},
 	"mobchoice0": {
@@ -3377,7 +3414,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"entercity0.pb0": {
-		"en-us": "???: Wow... we're lucky he's one of the dumber ones. If I tell him he just drank too much and passed out, he'll probably buy it.", 
+		"en-us": "???: Wow... we're lucky he's one of the gullible ones. If I tell him he just drank too much and passed out, he'll probably buy it.", 
 		"type": "map"
 	},
 	"entercity0.pb1": {
@@ -3393,7 +3430,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"entercity2.1": {
-		"en-us": "Skumpy: Apparently some farmer will be coming through here to get to the city, and they're trying to cut her off.", 
+		"en-us": "Skumpy: Rumor is that some farmer will be coming through here to get to the city, and they're trying to cut her off.", 
 		"type": "map"
 	},
 	"entercity2.2": {
@@ -3406,6 +3443,7 @@ const fulltext = {
 	},
 	"entercity2.4": {
 		"en-us": "Skumpy: But whoever you pissed off, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
+		"en-us-sfw": "Skumpy: But whoever you messed with, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
 		"type": "map"
 	},
 	"entercity2.5": {
@@ -3413,7 +3451,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"entercity2.6": {
-		"en-us": "Skumpy: Either way, the city is swarming with them, so if you're still determined to get into the city, you'd better be careful.", 
+		"en-us": "Skumpy: Either way, the town is swarming with them, so if you're still determined to go north, you'd better be careful.", 
 		"type": "map"
 	},
 	"entercity2.7": {
@@ -3462,6 +3500,7 @@ const fulltext = {
 	},
 	"entercityBAD8": {
 		"en-us": "Bruno: Boss... BOSS... Boss I'm hanging up now. Boss-- ah, screw it.", 
+		"en-us-sfw": "Bruno: Boss... BOSS... Boss I'm hanging up now. Boss-- ah, forget it.", 
 		"type": "map"
 	},
 	"entercityBAD9": {
@@ -3529,7 +3568,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"kindLadyNorm3": {
-		"en-us": "You got 10,000G and 20 Asparagus Seeds.", 
+		"en-us": "She gave me 10,000G and 20 Asparagus Seeds.", 
 		"type": "map"
 	},
 	"kindLadyThanks": {
@@ -3549,7 +3588,8 @@ const fulltext = {
 		"type": "map"
 	},
 	"kindLadyGood3": {
-		"en-us": "You got 20,000G and 6 Funny Mushroom Seeds.", 
+		"en-us": "She gave me 20,000G and 6 Funny Mushroom Seeds.", 
+		"en-us-sfw": "She gave me 20,000G and 6 Unhealthy Mushroom Seeds.", 
 		"type": "map"
 	},
 	"wildmobsty0": {
@@ -3581,7 +3621,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"SignPawn": {
-		"en-us": "It's A Fucking Pawn Shop", 
+		"en-us": "Las Abejas Pawn Shop", 
 		"type": "map"
 	},
 	"mobBoss0": {
@@ -3594,14 +3634,17 @@ const fulltext = {
 	},
 	"mobBoss2": {
 		"en-us": "???: But what I really meant was more in the metaphorical sense of having guts. You got balls.", 
+		"en-us-sfw": "???: But what I really meant was more in the metaphorical sense of having guts. You got bravery.", 
 		"type": "map"
 	},
 	"mobBoss3": {
 		"en-us": "???: Again, I'm not trying to imply anything about literal testicles that you may or may not have.", 
+		"en-us-sfw": "???: Of course, bravery is an abstract concept and not something one can physically \"have.\"", 
 		"type": "map"
 	},
 	"mobBoss4": {
 		"en-us": "???: I am speaking of metaphorical balls. What I means is, you are brave for coming here.", 
+		"en-us-sfw": "???: I means it in the sense that it is a personality trait you exhibit. You's is brave for coming here.", 
 		"type": "map"
 	},
 	"mobBoss5": {
@@ -3614,6 +3657,7 @@ const fulltext = {
 	},
 	"mobBoss7": {
 		"en-us": "???: Guts and or balls and or chutzpah and or bold. That is what you are.", 
+		"en-us-sfw": "???: Guts and or nerve and or chutzpah and or bold. That is what you are.", 
 		"type": "map"
 	},
 	"mobBoss8": {
@@ -3650,6 +3694,7 @@ const fulltext = {
 	},
 	"beatMob0": {
 		"en-us": "Vagante: Mannaggia... who the hell are you, lady??", 
+		"en-us-sfw": "Vagante: Mamma mia... who the heck are you, lady??", 
 		"type": "map"
 	},
 	"beatMob1": {
@@ -3665,7 +3710,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"beatMob4": {
-		"en-us": "Vagante: Now I'm not sure if you're really tough or just really really dumb.", 
+		"en-us": "Vagante: Now I'm not sure if you're really tough or just really really gullible.", 
 		"type": "map"
 	},
 	"beatMob5": {
@@ -3706,10 +3751,11 @@ const fulltext = {
 	},
 	"catmail0": {
 		"en-us": "Catalina: I had to move out of my old apartment up north because it was getting too expensive. On one hand, it sucks, but on the other hand, my neighbors were all assholes.", 
+		"en-us-sfw": "Catalina: I had to move out of my old apartment up north because it was getting too expensive. On one hand, it's a pain, but on the other hand, my neighbors were all jerks.", 
 		"type": "shop"
 	},
 	"catmail1": {
-		"en-us": "Catalina: Oh hey! You brought me my mail! Wow, thank you very much! Just for that, I'm gonna open up my RARE BEE COLLECTION for sale, just for you!", 
+		"en-us": "Catalina: Oh hey! You brought me my mail! Thank you very much! Just for that, I'm gonna open up my RARE BEE COLLECTION for sale, just for you!", 
 		"type": "shop"
 	},
 	"poopBag": {
@@ -3914,6 +3960,7 @@ const fulltext = {
 	},
 	"s.epicL": {
 		"en-us": "STOREKEEPER 9000: ThANK YOU FOR COMING please THANK YOU FOR YOUR PURCHASE that will be fifty--FIFTY.... SIXTY NI-FIFTY dollars. Please insert WELCOME TO THE TECH SUPPLIES STORE! \n \n Marty: O-oh no...", 
+		"en-us-sfw": "STOREKEEPER 9000: ThANK YOU FOR COMING please THANK YOU FOR YOUR PURCHASE that will be fifty--FIFTY.... TWENTY NI-FIFTY dollars. Please insert WELCOME TO THE TECH SUPPLIES STORE! \n \n Marty: O-oh no...", 
 		"type": "shop"
 	},
 	"s.epicN": {
@@ -3922,6 +3969,7 @@ const fulltext = {
 	},
 	"s.epicP": {
 		"en-us": "Marty: Um, uh... how does this cash register work... um... here we go. Thank you for your purchase. \n \n STOREKEEPER 9000: OOPSY WOOPSIE. WE MADE A FUCKY WUCKY!!", 
+		"en-us-sfw": "Marty: Um, uh... how does this cash register work... um... here we go. Thank you for your purchase. \n \n STOREKEEPER 9000: OOPSY WOOPSIE. WE MADE A MISTAKEY WAKEY!!", 
 		"type": "shop"
 	},
 	"s.kyleO": {
@@ -3979,6 +4027,7 @@ const fulltext = {
 	},
 	"mushChoice4": {
 		"en-us": "Give Funny Mushroom.", 
+		"en-us-sfw": "Give Unhealthy Mushroom.", 
 		"type": "choice"
 	},
 	"mushManNope": {
@@ -4002,7 +4051,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"mushManNorm2": {
-		"en-us": "Daveothy gives you 20 Water Chestnut seeds.", 
+		"en-us": "Daveothy gives me 20 Water Chestnut seeds.", 
 		"type": "map"
 	},
 	"mushManThanks": {
@@ -4034,7 +4083,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"mushManGood2": {
-		"en-us": "Daveothy gives you 20 Sacred Lotus seeds.", 
+		"en-us": "Daveothy gives me 20 Sacred Lotus seeds.", 
 		"type": "map"
 	},
 	"mushFridge": {
@@ -4078,7 +4127,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"foundRadish0": {
-		"en-us": "There are some seeds still in this radish! You get 5 radish seeds.", 
+		"en-us": "There are some seeds still in this radish! I got 5 radish seeds.", 
 		"type": "map"
 	},
 	"foundRadish1": {
@@ -4107,6 +4156,7 @@ const fulltext = {
 	},
 	"bathroomNerd": {
 		"en-us": "???: Can I fucking help you?", 
+		"en-us-sfw": "???: I'm a little busy here.", 
 		"type": "map"
 	},
 	"troutMan0": {
@@ -4150,7 +4200,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"bmw1": {
-		"en-us": "You received 100 spinach seeds.", 
+		"en-us": "I received 100 spinach seeds.", 
 		"type": "map"
 	},
 	"bmw2": {
@@ -4255,6 +4305,7 @@ const fulltext = {
 	},
 	"robber0": {
 		"en-us": "Robber: Hey, what the hell are you doing in here?!", 
+		"en-us-sfw": "Robber: Hey, what are you doing in here?!", 
 		"type": "map"
 	},
 	"robber1": {
@@ -4338,7 +4389,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"copperStoppers5": {
-		"en-us": "The officer slides you a crisp 5000G, then walks away.", 
+		"en-us": "The officer slides me a crisp 5000G, then walks away.", 
 		"type": "map"
 	},
 	"officeLady0": {
@@ -4358,7 +4409,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"cityMonk0": {
-		"en-us": "Sea Monk: What the fuck are you looking at? Don't judge me. I pay rent. I'm ALLOWED here.", 
+		"en-us": "Sea Monk: What are you looking at? Don't judge me. I pay rent. I'm ALLOWED here.", 
 		"type": "map"
 	},
 	"cityMonk1": {
@@ -4398,27 +4449,27 @@ const fulltext = {
 		"type": "map"
 	},
 	"eggBoy.egg": {
-		"en-us": "You got two Chicken Eggs!", 
+		"en-us": "I got two Chicken Eggs!", 
 		"type": "map"
 	},
 	"eggBoy.quail": {
-		"en-us": "You got two Quail Eggs!", 
+		"en-us": "I got two Quail Eggs!", 
 		"type": "map"
 	},
 	"eggBoy.turkey": {
-		"en-us": "You got two Turkey Eggs!", 
+		"en-us": "I got two Turkey Eggs!", 
 		"type": "map"
 	},
 	"eggBoy.goose": {
-		"en-us": "You got two Goose Eggs!", 
+		"en-us": "I got two Goose Eggs!", 
 		"type": "map"
 	},
 	"eggBoy.platypus": {
-		"en-us": "You got two Platypus Eggs!", 
+		"en-us": "I got two Platypus Eggs!", 
 		"type": "map"
 	},
 	"eggBoy.goldegg": {
-		"en-us": "You got two... Golden Eggs?! Why did he even have these?!", 
+		"en-us": "I got two... Golden Eggs?! Why did he even have these?!", 
 		"type": "map"
 	},
 	"carBr0": {
@@ -4431,10 +4482,11 @@ const fulltext = {
 	},
 	"carBr2": {
 		"en-us": "Driver: Excuse me, I'm a bit lost... my phone isn't getting any reception here. Can you tell me the fastest way to KICKING YOUR ASS?", 
+		"en-us-sfw": "Driver: Excuse me, I'm a bit lost... my phone isn't getting any reception here. Can you tell me the fastest way to KICKING YOUR BUTT?", 
 		"type": "map"
 	},
 	"carBl0": {
-		"en-us": "Driver: The dealership said this car was eco-friendly... I don't really care about that shit, but if it gives me another way to feel superior to you, I'm all for it!", 
+		"en-us": "Driver: The dealership said this car was eco-friendly... I don't really care about that stuff, but if it gives me another way to feel superior to you, I'm all for it!", 
 		"type": "map"
 	},
 	"carBl1": {
@@ -4447,6 +4499,7 @@ const fulltext = {
 	},
 	"carRe0": {
 		"en-us": "Driver: Get out of the way, asshole!", 
+		"en-us-sfw": "Driver: Get out of the way, jerk!", 
 		"type": "map"
 	},
 	"carRe1": {
@@ -4467,6 +4520,7 @@ const fulltext = {
 	},
 	"foodTruck2": {
 		"en-us": "Driver: This soup is so pho-king good, and this joke has literally never been made before!", 
+		"en-us-sfw": "Driver: This soup is SOUP-er, and this joke has literally never been made before!", 
 		"type": "map"
 	},
 	"foodTruck3": {
@@ -4507,7 +4561,7 @@ const fulltext = {
 	},
 	// Area 8: North City Text Messages
 	"beckettText0": {
-		"en-us": "XBeck360 (to you): ur very dumb 4 coming here", 
+		"en-us": "XBeck360 (to you): ur very foolish 4 coming here", 
 		"type": "text"
 	},
 	"beckettText1": {
@@ -4528,6 +4582,7 @@ const fulltext = {
 	},
 	"sext1": {
 		"en-us": "carl289 (to you): Your sexy", 
+		"en-us-sfw": "carl289 (to you): Your hot", 
 		"type": "text"
 	},
 	"sext2": {
@@ -4552,6 +4607,7 @@ const fulltext = {
 	},
 	"sext7": {
 		"en-us": "carl289 (to you): fuk u", 
+		"en-us-sfw": "carl289 (to you): u r the worst", 
 		"type": "text"
 	},
 	"misctext0": {
@@ -4592,6 +4648,7 @@ const fulltext = {
 	},
 	"misctext9": {
 		"en-us": "bmw (public): i ate too much spinach and now i can't stop shitting green. plz come take the rest of this spinach away from me. 98 13th st.", 
+		"en-us-sfw": "bmw (public): i ate too much spinach and now everything is green. plz come take the rest of this spinach away from me. 98 13th st.", 
 		"type": "text"
 	},
 	"misctext10": {
@@ -4615,7 +4672,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"sistext0": {
-		"en-us": "JM (to you): Hey! Welcome to the 21st century finally! It's ur little sis!", 
+		"en-us": "JM (to you): Hey! Welcome to the 21st century finally! It's ur sis!", 
 		"type": "text"
 	},
 	"sistext1": {
@@ -4660,7 +4717,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"fuzuru1.2": {
-		"en-us": "Marty: Feed it CHEEEESE, BITCH.", 
+		"en-us": "Marty: Feed it CHEEEESE.", 
 		"type": "text"
 	},
 	"fuzuru2.1": {
@@ -4668,7 +4725,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"fuzuru2.2": {
-		"en-us": "Marty: Beckett I am not unblocking farmersonly.com no matter how many times you ask.", 
+		"en-us": "Marty: Beckett I am not unblocking farmersdate.com no matter how many times you ask.", 
 		"type": "text"
 	},
 	"fuzuru2.3": {
@@ -4680,15 +4737,16 @@ const fulltext = {
 		"type": "text"
 	},
 	"fuzuru3.2": {
-		"en-us": "Marty: Oh hey Craig, what's up? Ready to hear some fuckin' funny D&D moments?", 
+		"en-us": "Marty: Oh hey Craig, what's up? Ready to hear some funny Caves & Cryptids moments?", 
 		"type": "text"
 	},
 	"fuzuru3.3": {
 		"en-us": "Phone: Hell yeah!", 
+		"en-us-sfw": "Phone: Heck yeah!", 
 		"type": "text"
 	},
 	"fuzuru3.4": {
-		"en-us": "Marty: Okay, so, like, fuckin', these three gobulins burst through the door, and one has TWO DICKS...", 
+		"en-us": "Marty: Okay, so, like, these three gobulins burst through the door, and one has TWO BUTTS...", 
 		"type": "text"
 	},
 	"fuzuru3.5": {
@@ -4696,11 +4754,13 @@ const fulltext = {
 		"type": "text"
 	},
 	"hungryBoy0": {
-		"en-us": "???: God I'm SO FUCKING SICK of this food2 shit. I was SO HUNGRY FOR REAL FOOD.", 
+		"en-us": "???: God I'm SO SICK of this food2 crap. I was SO HUNGRY FOR REAL FOOD.", 
+		"en-us-sfw": "???: God I'm SO SICK of this food2 junk. I was SO HUNGRY FOR REAL FOOD.", 
 		"type": "text"
 	},
 	"hungryBoy1": {
-		"en-us": "???: Meats, breads, curries, pastas, fruits, fuck, even VEGETABLES. I just want some REAL FUCKING FOOD.", 
+		"en-us": "???: Meats, breads, curries, pastas, fruits, hell, even VEGETABLES. I just want some REAL DAMN FOOD.", 
+		"en-us-sfw": "???: Meats, breads, curries, pastas, fruits, heck, even VEGETABLES. I just want some REAL FOOD.", 
 		"type": "text"
 	},
 	"hungryBoy2": {
@@ -4712,15 +4772,15 @@ const fulltext = {
 		"type": "text"
 	},
 	"hungyFoodBin0": {
-		"en-us": "You scoop several handfuls of fruit and veggie seeds out of the bin.", 
+		"en-us": "I scooped several handfuls of fruit and veggie seeds out of the bin.", 
 		"type": "text"
 	},
 	"hungyFoodBin1": {
-		"en-us": "You should probably leave some of these for this guy... it looks like he'll need it.", 
+		"en-us": "I should probably leave some of these for this guy... it looks like he'll need it.", 
 		"type": "text"
 	},
 	"fuzuruLast": {
-		"en-us": "He's still talking to his friend about D&D.", 
+		"en-us": "He's still talking to his friend about role-playing games.", 
 		"type": "text"
 	},
 	"theFirstBottle": {
@@ -4744,11 +4804,11 @@ const fulltext = {
 		"type": "text"
 	},
 	"elevatorNope": {
-		"en-us": "Come on, you know how final area video game elevators work... wait until you've gotten to the second floor before using it!", 
+		"en-us": "I need to take the stairs first before I can reach higher floors through the elevator.", 
 		"type": "text"
 	},
 	"elevatorNormal": {
-		"en-us": "What floor would you like to go to?", 
+		"en-us": "What floor do I want to go to?", 
 		"type": "text"
 	},
 	"elevator0": {
@@ -4832,7 +4892,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"wowNewRobot2": {
-		"en-us": "Robot: Mankind has created artificial intelligence... and is now wasting it on shit like smart light bulbs and me.", 
+		"en-us": "Robot: Mankind has created artificial intelligence... and is now wasting it on junk like smart light bulbs and me.", 
 		"type": "text"
 	},
 	"wowNewRobot3": {
@@ -4845,6 +4905,7 @@ const fulltext = {
 	},
 	"wowNewRobot5": {
 		"en-us": "Robot: \"Man, I am not paid enough to write clever threats for these damn robots.\"", 
+		"en-us-sfw": "Robot: \"Man, I am not paid enough to write clever threats for these robots.\"", 
 		"type": "text"
 	},
 	"wowNewRobot6": {
@@ -4853,6 +4914,7 @@ const fulltext = {
 	},
 	"wowNewRobot7": {
 		"en-us": "Robot: Please turn off your ad blocking software to proceed with this ass-kicking.", 
+		"en-us-sfw": "Robot: Please turn off your ad blocking software to proceed with this battle.", 
 		"type": "text"
 	},
 	"wowNewRobot8": {
@@ -4989,6 +5051,7 @@ const fulltext = {
 	},
 	"hurtNerdN1": {
 		"en-us": "???: But... I'm serious, this thing is bad. If you aren't going to save me, at least save yourself and get the hell out of here!", 
+		"en-us-sfw": "???: But... I'm serious, this thing is bad. If you aren't going to save me, at least save yourself and get out of here!", 
 		"type": "text"
 	},
 	"hurtNerdX0": {
@@ -5052,7 +5115,8 @@ const fulltext = {
 		"type": "text"
 	},
 	"beatMonster0": {
-		"en-us": "Trent: ...Holy shit, you beat it! Who ARE you?!", 
+		"en-us": "Trent: ...Holy crap, you beat it! Who ARE you?!", 
+		"en-us-sfw": "Trent: ...Holy gwakky-mohl, you beat it! Who ARE you?!", 
 		"type": "text"
 	},
 	"beatMonster1": {
@@ -5081,6 +5145,7 @@ const fulltext = {
 	},
 	"lostToMonstA3": {
 		"en-us": "Like what the fuck.", 
+		"en-us-sfw": "Seriously, what?", 
 		"type": "text"
 	},
 	"lostToMonstB0": {
@@ -5144,7 +5209,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"dirtPilePlant2": {
-		"en-us": "You got 9 Haunted Bees!", 
+		"en-us": "I got 9 Haunted Bees!", 
 		"type": "text"
 	},
 	"dirtPileBees": {
@@ -5168,11 +5233,13 @@ const fulltext = {
 		"type": "text"
 	},
 	"tutReturn4": {
-		"en-us": "Convince-a-tron: To quote another great philosopher... \"I'm gonna fuckin' kill you, jackass!\" - Plato", 
+		"en-us": "Convince-a-tron: To quote another great philosopher... \"I'm gonna kill you, jackass!\" - Plato", 
+		"en-us-sfw": "Convince-a-tron: To quote another great philosopher... \"I'm gonna kill you!\" - Plato", 
 		"type": "text"
 	},
 	"tutReturnBack": {
 		"en-us": "Convince-a-tron: Back for more, are you? Do you need another tutorial on getting your ass kicked?", 
+		"en-us-sfw": "Convince-a-tron: Back for more, are you? Do you need another tutorial on getting your butt kicked?", 
 		"type": "text"
 	},
 	"confront0": {
@@ -5193,6 +5260,7 @@ const fulltext = {
 	},
 	"confront4": {
 		"en-us": "BECKETT, I guess: DON'T GIVE ME THAT SHIT!", 
+		"en-us-sfw": "BECKETT, I guess: DON'T GIVE ME THAT JUNK!", 
 		"type": "text"
 	},
 	"confront5": {
@@ -5217,6 +5285,7 @@ const fulltext = {
 	},
 	"confront10": {
 		"en-us": "Beckett: You are a bug in the hand of a fucking infant, who will grow up to rule the world.", 
+		"en-us-sfw": "Beckett: You are a bug in the hand of an infant, who will grow up to rule the world.", 
 		"type": "text"
 	},
 	"confront11": {
@@ -5228,7 +5297,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"beckettBack0": {
-		"en-us": "Beckett: Heh heh, back for more, are you? You dumb yokels never know when to quit!", 
+		"en-us": "Beckett: Heh heh, back for more, are you? You yokels never know when to quit!", 
 		"type": "text"
 	},
 	"postBeckett0": {
@@ -5245,6 +5314,7 @@ const fulltext = {
 	},
 	"final0": {
 		"en-us": "Beckett: There she is, boss! There's the mean old lady who beat the fucking shit out of me!", 
+		"en-us-sfw": "Beckett: There she is, boss! There's the mean old lady who beat me up!", 
 		"type": "text"
 	},
 	"final1": {
@@ -5297,6 +5367,7 @@ const fulltext = {
 	},
 	"final13": {
 		"en-us": "Nathan: But thanks to that research, we can figure out what makes her crops so damn good, so we can do the same thing to Food2!", 
+		"en-us-sfw": "Nathan: But thanks to that research, we can figure out what makes her crops so good, so we can do the same thing to Food2!", 
 		"type": "text"
 	},
 	"final14": {
@@ -5333,6 +5404,7 @@ const fulltext = {
 	},
 	"final22": {
 		"en-us": "Nathan: What the fuck!? Why the fuck did you think any of that would be a good idea?!", 
+		"en-us-sfw": "Nathan: What!? Why the heck did you think any of that would be a good idea?!", 
 		"type": "text"
 	},
 	"final23": {
@@ -5348,7 +5420,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"nathReturn": {
-		"en-us": "Nathan: Sorry, boss, but I must defeat you.", 
+		"en-us": "Nathan: Sorry, boss, but I must defeat you. The business demands it, and business is always right.", 
 		"type": "text"
 	},
 	// Area 10: Endings
@@ -5475,6 +5547,7 @@ const fulltext = {
 	},
 	"s.co": {
 		"en-us": "Henrietta: Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow!", 
+		"en-us-sfw": "Henrietta: Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Sorry - a girl's gotta make money somehow!", 
 		"type": "shop"
 	},
 	"s.sell": {
@@ -5510,11 +5583,11 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.notenough": {
-		"en-us": "Hey fuckface this is a store not charity. Have the money or have a gofuckyourself.", 
+		"en-us": "I don't think this line is actually supposed to be here but if you're seeing this you don't have enough money to buy that.", 
 		"type": "shop"
 	},
 	"s.purchased": {
-		"en-us": "thanks mom", 
+		"en-us": "I don't think this line is actually supposed to be here but if you're seeing this, you bought the thing.", 
 		"type": "shop"
 	},
 	"s.purchased1o": {
@@ -5526,15 +5599,16 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.didsell": {
-		"en-us": "Thanks for the shit, fucfkace.", 
+		"en-us": "I don't think this line is actually supposed to be here but if you're seeing this, you sold the thing.", 
 		"type": "shop"
 	},
 	"cwk.didsell": {
-		"en-us": "\"Darryl\": Thanks for the shit.", 
+		"en-us": "\"Darryl\": Thanks for the crap.", 
+		"en-us-sfw": "\"Darryl\": Thanks for the junk.", 
 		"type": "shop"
 	},
 	"s.leavesell": {
-		"en-us": "stop giving me THINGS and start giving me MONEY.", 
+		"en-us": "I don't think this line is actually supposed to be here but if you're seeing this, you left the selling menu.", 
 		"type": "shop"
 	},
 	"cwk.leavesell": {
@@ -5542,7 +5616,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.cpurch": {
-		"en-us": "Henrietta: Bu-GAWK!! Good shit, good shit. Thank you for your patronage!", 
+		"en-us": "Henrietta: Bu-GAWK!! Good stuff, good stuff. Thank you for your patronage!", 
 		"type": "shop"
 	},
 	"s.up1o": {
@@ -5566,8 +5640,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.innEnter1": {
-		"en-us": "Rosa: Hello, my inn is in... business. It's inn business. That's a thing people say. Fuck off.", 
-		"en-us-sfw": "Rosa: Hello, my inn is in... business. It's inn business. That's a thing people say. Seriously.", 
+		"en-us": "Rosa: Hello, my inn is in... business. It's inn business. That's a thing people say. Really.", 
 		"type": "shop"
 	},
 	"s.innLeave1": {
@@ -5715,7 +5788,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.mermnot": {
-		"en-us": "Shelf: I don't know how yeu humans do dis shit, but us mermaids don't give tings away unless yeu have tha MONEY for dem!", 
+		"en-us": "Shelf: I don't know how yeu humans do dis whole business wotsit, but us mermaids don't give tings away unless yeu have tha MONEY for dem!", 
 		"type": "shop"
 	},
 	"s.mermbuy": {
@@ -5732,6 +5805,7 @@ const fulltext = {
 	},
 	"cwk.not": {
 		"en-us": "\"Darryl\": Hey hey, this is a business, not a charity. Have the money or have the go-fuck-yourself.", 
+		"en-us-sfw": "\"Darryl\": Hey hey, this is a business, not a charity. Have the money or have the go-away.", 
 		"type": "shop"
 	},
 	"cwk.purch": {
@@ -6116,7 +6190,7 @@ const fulltext = {
 		"type": "book"
 	},
 	"bookCard1": {
-		"en-us": "This is mostly accomplished by spending lots of money on booster packs to get cards that aren't shit, but some strategy is involved in the gameplay itself. There are three types of cards: Character Cards, Element Cards, and Effect Cards.", 
+		"en-us": "This is mostly accomplished by spending lots of money on booster packs to get cards that aren't worthless, but some strategy is involved in the gameplay itself. There are three types of cards: Character Cards, Element Cards, and Effect Cards.", 
 		"type": "book"
 	},
 	"bookCard2": {
@@ -6212,7 +6286,7 @@ const fulltext = {
 		"type": "book"
 	},
 	"bookEnt3": {
-		"en-us": "Moving on, you may ask yourself \"I know I am destined to be a winner, but how do I go about changing from a pre-winner to a True Entrepreneur?\" The answer is simple: to make money you need to spend money, and to spend money you need to have money.", 
+		"en-us": "Moving on, you may ask yourself \"I know I'm destined to be a winner, but how do I go about changing from a pre-winner to a True Entrepreneur?\" The answer is simple: to make money you need to spend money, and to spend money you need to have money.", 
 		"type": "book"
 	},
 	"bookEnt4": {
@@ -6228,7 +6302,7 @@ const fulltext = {
 		"type": "book"
 	},
 	"bookEnt7": {
-		"en-us": "Follow all these steps, and you'll be a billionaire in no time! And if it doesn't work? It was probably your fault! Scrap everything and start over! You'll get it right eventually, as long as you still have other people's money!", 
+		"en-us": "Follow all these steps and you'll be a billionaire in no time! And if it doesn't work? It was probably your fault! Scrap everything and start over! You'll get it right eventually, as long as you still have other people's money!", 
 		"type": "book"
 	},
 	"bookElem": {
@@ -6313,7 +6387,7 @@ const fulltext = {
 	},
 	// Bees
 	"hiveGet": {
-		"en-us": "You found a beehive! You can now place one more beehive on your farm, and you caught some bees, too!", 
+		"en-us": "I found a beehive! Now I can place one more beehive on my farm. I caught some bees, too!", 
 		"type": "map"
 	},
 	"beeGoodbye": {
@@ -6361,7 +6435,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"ForestHive0": {
-		"en-us": "You hear some rumbling behind you.", 
+		"en-us": "I hear some rumbling behind me...", 
 		"type": "map"
 	},
 	"ForestHive1": {
@@ -6369,7 +6443,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"ForestHive2": {
-		"en-us": "Oh fuck it's a bear.", 
+		"en-us": "Oh no, it's a bear.", 
 		"type": "map"
 	},
 	// Recurring
@@ -6378,19 +6452,19 @@ const fulltext = {
 		"type": "map"
 	},
 	"closedchest": {
-		"en-us": "You open the chest. Inside you find {0}!", 
+		"en-us": "I opened the chest. Inside I found {0}!", 
 		"type": "map"
 	},
 	"closedchestinvfull": {
-		"en-us": "...But you don't have enough room in your inventory.", 
+		"en-us": "...But I don't have enough room in my inventory.", 
 		"type": "map"
 	},
 	"truck.where": {
-		"en-us": "Where would you like to drive to?", 
+		"en-us": "Where do I want to drive to?", 
 		"type": "map"
 	},
 	"truck.none": {
-		"en-us": "You have things to do here before driving off!", 
+		"en-us": "I have things to do here before driving off!", 
 		"type": "map"
 	},
 	"truck.nm": {
@@ -7094,6 +7168,7 @@ const fulltext = {
 	},
 	"ad.boss2": {
 		"en-us": "Broke into a research lab and beat the shit out of its head scientist.", 
+		"en-us-sfw": "Broke into a research lab and beat up its head scientist.", 
 		"type": "adesc"
 	},
 	"a.boss3help": {
@@ -7397,7 +7472,7 @@ const fulltext = {
 		"type": "aname"
 	},
 	"ad.madeForMe": {
-		"en-us": "Completed the fifth floor of the hole.", 
+		"en-us": "Completed the fifth floor of The Hole.", 
 		"type": "adesc"
 	},
 	"a.soybeat": {
@@ -7429,7 +7504,7 @@ const fulltext = {
 		"type": "aname"
 	},
 	"ad.overkill": {
-		"en-us": "You wasted an INCREDIBLY POWERFUL and RARE item on some weak-ass enemy THAT WASN'T EVEN A BOSS!", 
+		"en-us": "You wasted an INCREDIBLY POWERFUL and RARE item on some weak enemy THAT WASN'T EVEN A BOSS!", 
 		"type": "adesc"
 	},
 	"a.murderedToDeath": {
@@ -7562,7 +7637,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"run_can": {
-		"en-us": "Fuck off and cry to your mum, shitbird.", 
+		"en-us": "Try to flee the battle, ending it early.", 
 		"type": "combat"
 	},
 	"run_falcon": {
@@ -7614,11 +7689,11 @@ const fulltext = {
 		"type": "combat"
 	},
 	"tryPlantBees": {
-		"en-us": "You try to put bees in the beehive, but the pesticide scares them away, you dumbfuck.", 
+		"en-us": "You try to put bees in the beehive, but the pesticide scares them away, you jerk.", 
 		"type": "combat"
 	},
 	"tryPlantBug": {
-		"en-us": "but you found a bug in the game, I guess! Neat!", 
+		"en-us": "but instead you found a bug in the game, I guess! Neat!", 
 		"type": "combat"
 	},
 	"compost_heal": {
@@ -7638,23 +7713,23 @@ const fulltext = {
 		"type": "combat"
 	},
 	"flee_success": {
-		"en-us": "You ran away like a baby that runs which is actually pretty impressive for a baby so good job (y)", 
+		"en-us": "You ran away successfully.", 
 		"type": "combat"
 	},
 	"flee_fail": {
-		"en-us": "You tried to run away, but failed miserably, you bagel. #lmao", 
+		"en-us": "You tried to run away, but tripped and fell instead.", 
 		"type": "combat"
 	},
 	"diedInCombat": {
-		"en-us": "i can't believe the protagonist is fucking dead.", 
+		"en-us": "You have been defeated.", 
 		"type": "combat"
 	},
 	"youDidATheWin": {
-		"en-us": "You did a the win.! You's's {res}!", 
+		"en-us": "You won! You earned {res}!", 
 		"type": "combat"
 	},
 	"levelUp": {
-		"en-us": "Whoah [gamer voice] nice! You hit level {0}! You got some Bonus Seeds!", 
+		"en-us": "Level Up! Now you're Level {0}! You got some Bonus Seeds!", 
 		"type": "combat"
 	},
 	"plFishCaught": {
@@ -8053,6 +8128,7 @@ const fulltext = {
 	},
 	"queenMaim": {
 		"en-us": "{0} fucking maims you for hurting the bees again, for {1} damage.", 
+		"en-us-sfw": "{0} brutally attacks you for hurting the bees again, for {1} damage.", 
 		"type": "combat"
 	},
 	"hulkPunchKill": {
@@ -8160,7 +8236,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"hkCreepy1": {
-		"en-us": "HOUSEKEEPER: This battle is brought to you by Hearybooks! Sign up with promo code \"i'm going to kill you\" to get 25% off your first audiobook!", 
+		"en-us": "HOUSEKEEPER: This battle is brought to you by HearyBooks! Sign up with promo code \"i'm going to kill you\" to get 25% off your first audiobook!", 
 		"type": "combat"
 	},
 	"hkCreepy2": {
@@ -8197,6 +8273,7 @@ const fulltext = {
 	},
 	"convince2.1": {
 		"en-us": "Just you wait, {0} is gonna kick your ass, for sure!", 
+		"en-us-sfw": "Just you wait, {0} is gonna kick your butt, for sure!", 
 		"type": "combat"
 	},
 	"convince2.2": {
@@ -8208,7 +8285,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"convince2.4": {
-		"en-us": "{0} gets buff from being oan the protein.", 
+		"en-us": "{0} gets buff.", 
 		"type": "combat"
 	},
 	// Combat - Enemy Names
@@ -8438,6 +8515,7 @@ const fulltext = {
 	},
 	"e.hoverdweeb0": {
 		"en-us": "Hoverboard Asshole", 
+		"en-us-sfw": "Hoverboard Nerd", 
 		"type": "enemy"
 	},
 	"e.trendyNerd0": {
@@ -8563,7 +8641,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"falconMsg0.5": {
-		"en-us": "\"You give Iii some seeds, and when he gets back to me, I'll plant them for you.\"", 
+		"en-us": "\"You give Iii some seeds, and when she gets back to me, I'll plant them for you.\"", 
 		"type": "text"
 	},
 	"falconMsg0.6": {
@@ -8716,7 +8794,8 @@ const fulltext = {
 		"type": "sleep"
 	},
 	"innDream2": {
-		"en-us": "Several religious figures and deities tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she masturbated once,\" replies the deity next to them. \"Oh, she did? nm fuck that to hell with her.\"", 
+		"en-us": "Several religious figures and deities tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she masturbated once,\" replies the deity next to them. \"Oh, she did? Nevermind, to hell with her.\"", 
+		"en-us-sfw": "Several religious figures and deities tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she said a bad word once,\" replies the deity next to them. \"Oh, she did? Nevermind, she's doomed.\"", 
 		"type": "sleep"
 	},
 	"innDream3": {

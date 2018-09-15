@@ -421,8 +421,7 @@ const addtlHitChecks = {
     "beckett": function(cropInfo, damage) {
         for(let i = 0; i < cropInfo.length; i++) {
             const crop = cropInfo[i];
-            if(["carrot", "lemon"].indexOf(crop.name) >= 0 || ["spear", "rod", "water"].indexOf(crop.type) >= 0) { damage *= 1.25; }
-            else if(["spear", "rod", "water"].indexOf(crop.type) >= 0) { damage *= 1.3; }
+            if(["carrot", "lemon"].indexOf(crop.name) >= 0 || ["spear", "rod", "water"].indexOf(crop.type) >= 0) { damage *= 1.75; }
         }
         return Math.ceil(damage);
     },
