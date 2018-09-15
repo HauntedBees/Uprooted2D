@@ -7927,11 +7927,11 @@ const fulltext = {
 		"type": "combat"
 	},
 	"wacg.placeatk": {
-		"en-us": "{0} places a {2} Character Card in the Attack Position.", 
+		"en-us": "{0} places one {2} Character Card in the Attack Position.", 
 		"type": "combat"
 	},
 	"wacg.placedef": {
-		"en-us": "{0} places a {2} Character Card in the Defense Position.", 
+		"en-us": "{0} places one {2} Character Card in the Defense Position.", 
 		"type": "combat"
 	},
 	"wacg.idle": {
@@ -7939,7 +7939,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"wacg.discard": {
-		"en-us": "{0} draws a {2} Card from his hand and places it in his Discard Pile.", 
+		"en-us": "{0} draws one {2} Card from his hand and places it in his Discard Pile.", 
 		"type": "combat"
 	},
 	"wacg.swapdef": {
@@ -7959,7 +7959,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"wacg.placeFx": {
-		"en-us": "{0} places a {2} Effect Card on the field, {3}", 
+		"en-us": "{0} places one {2} Effect Card on the field, {3}", 
 		"type": "combat"
 	},
 	"wacg.attack0": {

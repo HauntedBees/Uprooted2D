@@ -99,12 +99,12 @@ combat.selectTarget = {
             if(crop !== null) {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 gfx.drawTileToGrid(GetHPFrame(crop), me.INFOBOXWIDTH, this.dy, "menucursorB");
-                gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 85);
+                gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 95);
             }
         } else if(this.cursorx >= 0) {
             const enemy = combat.enemies[this.cursorx];
             gfx.drawTileToGrid(GetHPFrame(enemy), me.INFOBOXWIDTH, this.dy, "menucursorB");
-            gfx.drawWrappedText(enemy.name, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 85);
+            gfx.drawWrappedText(enemy.name, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 95);
         }
         combat.animHelper.DrawBottom();
     },
@@ -154,12 +154,12 @@ combat.selectTarget = {
     CursorMove: function(pos, fromMouse) {
         if(pos.y === 8) {
             if(!this.canHumans) { return false; }
-            this.sicklePos = { x: -1, y: -1 };
             const newx = fromMouse ? pos.x : (pos.x - (11 - combat.enemies.length));
             if(newx < -1) { return false; }
             if(newx >= combat.enemies.length) { return false; }
             if(pos.y < 2) { return false; }
-            if(this.cursorx === newx) { return false; }
+            if(this.cursorx === newx && (fromMouse && this.sicklePos.x < 0)) { return false; }
+            this.sicklePos = { x: -1, y: -1 };
             this.cursorx = newx;
         } else {
             if(!this.canSickle) { return false; }

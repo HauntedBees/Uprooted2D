@@ -483,7 +483,9 @@ const actions = {
     "CARDGAME": function(e) {
         EnemyParser.current.data.textID = "plantAttack";
         if(e.wacg === undefined) { e.wacg = new ChildrensCardGame(e); }
-        const cardData = e.wacg.MakeMove();
+        let cardData = e.wacg.MakeMove();
+        console.log(cardData);
+        if(cardData === undefined) { console.log("weird 488"); cardData = new CardGameChoice("idle"); }
         const attackAgain = e.wacg.HandleStatusEffectsAndReturnIfCanAttackAgain();
         EnemyParser.current.data.textID = cardData.textID;
         let damage = 0, bonusArgs = {};
