@@ -308,6 +308,7 @@ const mafs = {
     "TruckFuck": Ft(4, 3, true), "FTV": new MapAnimFactory("la", [5, 1, 2, true]), "FTVOff": Ft(5, 3, true),
     "Hotbox": Ft(4, 19), "Outlet1": Ft(5, 18), "Outlet2": Ft(5, 19), "FFDoor1": Ft(6, 18), "FFDoor2": Ft(6, 19), "Zap": new MapAnimFactory("la", [7, 18, 2]),
     "HOUSEKEEPER": Ft(16, 16), "Tire1": Ft(12, 14), "Tire2": Ft(12, 15),
+    "HOUSEKEEPERTalk": new MapAnimFactory("as", [[P(16, 17), P(16, 18), P(16, 19), P(16, 18)]]),
     "Crouton": Ft(17, 12), "CroutonTalk": new MapAnimFactory("as", [[P(17, 12), P(18, 12), P(19, 12)]]),
     // South City
     "Mobsty1": new MapAnimFactory("sw", [8, 16]), "Mobsty2": new MapAnimFactory("dw", [12, 18, 2]),

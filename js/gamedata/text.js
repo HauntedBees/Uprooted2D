@@ -95,7 +95,7 @@ const fulltext = {
 	},
 	"printer": {
 		"en-us": "This 3D printer is great for turning expensive prosthetics and equipment into affordable DIY projects! Or you can just make fucking action figures.", 
-		"en-us-sfw": "This 3D printer is great for turning expensive prosthetics and equipment into affordable DIY projects! Or you can just make some dumb action figures.", 
+		"en-us-sfw": "This 3D printer is great for turning expensive prosthetics and equipment into affordable DIY projects! Or you can just make some action figures.", 
 		"type": "item"
 	},
 	"app": {
@@ -2507,7 +2507,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"bworkerMad2": {
-		"en-us": "Worker: Don't tell me you're gonna side with that creature!! It's just a dumb fish!!!", 
+		"en-us": "Worker: Don't tell me you're gonna side with that creature!! It's just a fish!!!", 
 		"type": "map"
 	},
 	"bworkerMad3": {
@@ -8709,7 +8709,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"falconMsg3.3": {
-		"en-us": "You got 10 Goose Eggs and 20 Chicken Eggs.", 
+		"en-us": "I got 10 Goose Eggs and 20 Chicken Eggs.", 
 		"type": "text"
 	},
 	"falconMsg3.4": {
