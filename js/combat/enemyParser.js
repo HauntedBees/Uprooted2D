@@ -6,7 +6,7 @@ const enemyHelpers = {
         const node = EnemyParser.current;
         let outputText = GetText(node.data.textID).replace(/\{0\}/g, EnemyParser.enemy.name).replace(/\{1\}/g, dmg)
                             .replace(/\{2\}/g, secondArg).replace(/\{3\}/g, thirdArg).replace(/\{4\}/g, fourthArg);
-        outputText = HandleArticles(outputText, secondArg);
+        outputText = HandleArticles(outputText, secondArg, false);
         return { text: outputText, animData: node.data.animData };
     },
     GetSideEffect: function(e, tile) {
@@ -1131,7 +1131,7 @@ const actions = {
             combat.enemyGrid[pos.x][pos.y + 1] = pos;
             combat.enemyGrid[pos.x + 1][pos.y + 1] = pos;
         }
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetCropPlantedDisplayName(newCrop.name, newCrop.displayname));
         combat.animHelper.DrawCrops();
         return true;
     },
@@ -1145,7 +1145,7 @@ const actions = {
 
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetCropPlantedDisplayName(newCrop.name, newCrop.displayname));
         combat.animHelper.DrawCrops();
         return true;
     },
@@ -1212,7 +1212,7 @@ const actions = {
         
         newCrop.activeTime = newCrop.time;
         combat.enemyGrid[pos.x][pos.y] = newCrop;
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetCropPlantedDisplayName(newCrop.name, newCrop.displayname));
         combat.animHelper.DrawCrops();
         return true;
     },
@@ -1312,7 +1312,7 @@ const actions = {
                 default: EnemyParser.current.data.textID = "plantAttack"; break;
             }
         }
-        EnemyParser.outputData = enemyHelpers.GetAttackData(0, newCrop.displayname);
+        EnemyParser.outputData = enemyHelpers.GetAttackData(0, GetCropPlantedDisplayName(newCrop.name, newCrop.displayname));
         combat.animHelper.DrawCrops();
         return true;
     }

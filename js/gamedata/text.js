@@ -408,20 +408,16 @@ const fulltext = {
 		"en-us": "Pesticide2", 
 		"type": "item"
 	},
-	"sel.nerf": {
+	"disp.nerf": {
 		"en-us": "0 Nerf", 
 		"type": "item"
 	},
-	"disp.nerf": {
-		"en-us": "the 0 Nerf", 
-		"type": "item"
-	},
 	"disp.tree": {
-		"en-us": "the 0 Tree", 
+		"en-us": "0 Tree", 
 		"type": "item"
 	},
 	"disp.veg": {
-		"en-us": "the 0", 
+		"en-us": "0", 
 		"type": "item"
 	},
 	"disp.grapesSing": {

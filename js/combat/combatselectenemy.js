@@ -78,7 +78,7 @@ combat.selectTarget = {
         const backButtonW = gfx.drawInfoText(GetText("menu.Back"), 2, this.dy + 0.25, this.cursorx === -1, "menuA", "menutext");
         combat.cursors.ReTypeCursor("main", "cursor");
         if(this.sicklePos.x >= 0) {
-            const crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
+            let crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
                 combat.cursors.ReTypeCursor("main", "bcursor");
                 combat.cursors.RedimCursor("main", this.sicklePos.x, this.sicklePos.y, 0, 0);
@@ -100,7 +100,7 @@ combat.selectTarget = {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 gfx.drawTileToGrid(GetHPFrame(crop), me.INFOBOXWIDTH, this.dy, "menucursorB");
                 if(crop.name.indexOf("Nerf") > 0) {
-                    gfx.drawWrappedText(GetText("sel.nerf").replace(/0/g, crop.displayname), 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
+                    gfx.drawWrappedText(GetText("disp.nerf").replace(/0/g, crop.displayname), 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
                 } else {
                     gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
                 }
@@ -225,10 +225,12 @@ combat.selectTarget = {
         return (this.targets.length === this.maxTargets);
     },
     GetCropName: function(id, displayname) {
-        if(id === "grapes") { return GetText("disp.tree").replace(/0/g, GetText("disp.grapesSing")); } // this is very english-centric oops
-        if(id.indexOf("Nerf") > 0) { return GetText("disp.nerf").replace(/0/g, displayname); }
-        if(["apple", "apricot", "avocado", "banana", "blackberry", "kiwi", "lemon", "mango"].indexOf(id) >= 0) { return GetText("disp.tree").replace(/0/g, displayname); }
-        return GetText("disp.veg").replace(/0/g, displayname);
+        const cropActualName = "{an} " + GetCropPlantedDisplayName(id, displayname);
+        if(id === "grapes") { // this is very english-centric oops
+            const crop = GetText("disp.grapesSing");
+            return HandleArticles(cropActualName, crop, true).trimStart(" ");
+        }
+        return HandleArticles(cropActualName, displayname, true).trimStart(" ");
     },
 
     // Attacking Logic

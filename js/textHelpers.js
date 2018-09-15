@@ -35,9 +35,9 @@ function GetTextSmall(key, small) {
     let trial = TryGetText(key + ".sm");
     return trial === false ? GetText(key) : trial;
 }
-function HandleArticles(mainStr, subject) {
-    if(lingHelpers.ArticleHandler[game.language] != undefined) { return lingHelpers.ArticleHandler[game.language](mainStr, subject); }
-    return lingHelpers.ArticleHandler["en-us"](mainStr, subject);
+function HandleArticles(mainStr, subject, definiteArticle) {
+    if(lingHelpers.ArticleHandler[game.language] != undefined) { return lingHelpers.ArticleHandler[game.language](mainStr, subject, definiteArticle); }
+    return lingHelpers.ArticleHandler["en-us"](mainStr, subject, definiteArticle);
 }
 function HandlePlurals(mainStr, subject) {
     if(lingHelpers.PluralHandler[game.language] != undefined) { return lingHelpers.PluralHandler[game.language](mainStr, subject); }
@@ -53,9 +53,22 @@ function HandleGifts(item, amount) {
 }
 function HasText(key) { return fulltext[key] !== undefined; }
 
+function GetCropPlantedDisplayName(id, displayname) {
+    if(id === "grapes") { // this is very english-centric oops
+        const crop = GetText("disp.grapesSing");
+        return GetText("disp.tree").replace(/0/g, crop);
+    }
+    if(id.indexOf("Nerf") > 0) { return GetText("disp.nerf").replace(/0/g, displayname); }
+    if(["apple", "apricot", "avocado", "banana", "blackberry", "kiwi", "lemon", "mango", "cacao"].indexOf(id) >= 0) {
+        return GetText("disp.tree").replace(/0/g, displayname);
+    }
+    return GetText("disp.veg").replace(/0/g, displayname);
+}
+
 var lingHelpers = { ArticleHandler: {}, PluralHandler: {}, ListHandler: {}, GiftHandler: {} };
-lingHelpers.ArticleHandler["en-us"] = function(mainStr, subject) {
+lingHelpers.ArticleHandler["en-us"] = function(mainStr, subject, definiteArticle) {
     if(subject === undefined || subject === "" || mainStr.indexOf("{an}") < 0) { return mainStr; }
+    if(definiteArticle) { return mainStr.replace(/\{an\}/g, " the"); }
 	if(subject[subject.length - 1] === "s") {                   // subject ends in "s": {an} => (nothing)
 		return mainStr.replace(/\{an\}/g, "");
 	} else if("aeiou".indexOf(subject[0].toLowerCase()) >= 0) { // subject begins with a vowel: {an} => " an"
