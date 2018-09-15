@@ -402,7 +402,7 @@ function GetMafiaMember2(num, x, y, dir) {
 
 // HQ3 Ceilings
 function GetChungusDoor(num, x, y, chungi, visState) {
-    const chungy = { name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi, boring: true };
+    const chungy = { noSave: true, name: "chungusdoor" + num, pos: { x: x, y: y }, solid: false, interact: [ ToggleChungus ], chungi: chungi, boring: true };
     if(visState !== undefined) {
         chungy.noChange = true;
         chungy.animid = "Chungus" + visState;
@@ -415,6 +415,7 @@ function GetChungusDoor(num, x, y, chungi, visState) {
 }
 function GetChungus(id, num, x, y, w, h) {
     return {
+        noSave: true,
         name: "chungus" + id + "_" + num, chungus: true, chungusId: id, 
         pos: { x: x, y: y }, width: w, height: h,
         visible: true, boring: true

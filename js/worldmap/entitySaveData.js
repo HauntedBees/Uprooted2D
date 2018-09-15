@@ -14,6 +14,7 @@ let stateBinders = {
         mapStates[mapName].ents = {};
         for(let i = 0; i < worldmap.entities.length; i++) {
             const e = worldmap.entities[i];
+            if(e.noSave === true) { continue; }
             if(e.name[0] === "~") {
                 mapStates[mapName].ents[e.name] = {
                     pos: e.pos, movement: e.movement, dir: e.dir, lastAnim: e.lastAnim,

@@ -824,7 +824,7 @@ const SpecialFunctions = {
         worldmap.clearTarget();
         SetUpFellow(worldmap, "carrywalk", true);
         const HazardL = GetFellow("BarricadeL", 23, 2, 0, "HazardL", OneSpeak("blockedOff3F"), undefined, { big: true });
-        const HazardR = GetFellow("BarricadeR", 25, 2, 0, "HazardL", OneSpeak("blockedOff3F"), undefined, { big: true });
+        const HazardR = GetFellow("BarricadeR", 25, 2, 0, "HazardR", OneSpeak("blockedOff3F"), undefined, { big: true });
         InitFellow(HazardL); InitFellow(HazardR);
         worldmap.entities.push(HazardL); worldmap.entities.push(HazardR);
         me.PLAYERMOVESPEED = me.BASEMOVESPEED / 2;
