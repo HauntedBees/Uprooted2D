@@ -10,10 +10,22 @@ function GetEntities(mapName, fromSave) {
         entities = mapentities[mapName]();
         mapCache.push( {name: mapName, entities: [...entities]} );
         if(mapCache.length > 3) { mapCache.shift(); }
-    } //const entities = [...mapentities[mapName]];
+    }
     for(let i = entities.length - 1; i >= 0; i--) {
         const e = entities[i];
-        //if(typeof e.anim === "string") { console.log("JEEPS ARE TRUCKS"); SetUpFellow(e, e.anim); }
+        if(e.name === "BadInfluenceRabbit") {
+            if(player.options.canSayFuck) {
+                e.animid = "Rabbit";
+                e.lastAnim = "Rabbit";
+                e.standAnim = "Rabbit";
+                e.talkAnim = "RabbitTalk";
+            } else {
+                e.animid = "RabbitClean";
+                e.lastAnim = "RabbitClean";
+                e.standAnim = "RabbitClean";
+                e.talkAnim = "RabbitCleanTalk";
+            }
+        }
         if(player.clearedEntities.indexOf(e.name) >= 0) {
             entities.splice(i, 1);
         } else if(e.showIf && !e.showIf()) {

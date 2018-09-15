@@ -64,7 +64,15 @@ let mapRefreshes = {
             e.dir = saveValue.dir;
             e.visible = saveValue.visible;
             e.solid = saveValue.solid;
-            SetUpFellow(e, saveValue.lastAnim);
+            if(e.name === "BadInfluenceRabbit") {
+                if(player.options.canSayFuck) {
+                    SetUpFellow(e, "Rabbit");
+                } else {
+                    SetUpFellow(e, "RabbitClean");
+                }
+            } else {
+                SetUpFellow(e, saveValue.lastAnim);
+            }
         }
     },
     "insideCheck": function(e, mapName) {

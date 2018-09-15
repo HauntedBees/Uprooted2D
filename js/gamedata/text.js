@@ -1889,7 +1889,7 @@ const fulltext = {
 	},
 	"carrotseeds0": {
 		"en-us": "Rabbit: oi you yankee bugger, yeu want some carrot seeds? help yourself!", 
-		"en-us-sfw": "Rabbit: oi you bloody yankee, yeu want some carrot seeds? help yourself!", 
+		"en-us-sfw": "Rabbit: oi you yankee, yeu want some carrot seeds? help yourself!", 
 		"type": "map"
 	},
 	"carrotseeds1": {
@@ -1925,7 +1925,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"rabbit5": {
-		"en-us": "I feel your hands filling up. When I open your eyes, you find a nice pile of fertilizer in them.", 
+		"en-us": "I feel my hands filling up. When I open my eyes, I find a nice pile of fertilizer in them.", 
 		"type": "map"
 	},
 	"rabbit6": {

@@ -272,6 +272,7 @@ const mafs = {
     "GoldMush": Ft(15, 4), "CarrotBag": Ft(15, 7), "Fishfriend": new MapAnimFactory("dw", [4, 6, 2]), "HatchedGold": Ft(19, 10),
     "Lime": new MapAnimFactory("dw", [8, 4, 2, false, 2]), "LimeTalk": new MapAnimFactory("dw", [8, 6, 2, false, 6]),
     "Rabbit": new MapAnimFactory("la", [4, 6, 2]), "RabbitTalk": new MapAnimFactory("la", [5, 6, 2]),
+    "RabbitClean": Ft(27, 10), "RabbitCleanTalk": new MapAnimFactory("la", [27, 10, 2]),
     "Turky": new MapAnimFactory("dw", [4, 4, 2]), "TurkyEgg": Ft(15, 5), "Bearbo": Ft(0, 8, true),
     "Mowz": new MapAnimFactory("dw", [0, 4, 2]), "Sqorl": new MapAnimFactory("dw", [0, 6, 2]),
     // Below Village
