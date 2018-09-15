@@ -47,7 +47,7 @@ function HoppingAnim(animal) {
 
 function TileAnim(x, y, tileArray, shake, fps, loop) {
     const pos = { x: x, y: y };
-    const layer = (pos.y < 8.375) ? "background2" : "menucursorC";
+    const layer = "menucursorC"; //(pos.y < 8.375) ? "background2" : "menucursorC"; why did i do this
     const tiles = tileArray, doShake = shake, doLoop = loop;
     let isDone = false;
     let frame = 0, timePerFrame = 1000 / fps, numFrames = tileArray.length - 1;

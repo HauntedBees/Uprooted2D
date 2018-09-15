@@ -209,9 +209,9 @@ const randEnemies = {
         GetREnemy("BuffNerd", 29, 3, 8, 2, undefined, "buffNerd")
     ]
 };
-function GetREnemy(key, x, y, firstx, dir, movement, metaDataId, param) {
-    let metadata = commonEnemyInfo[metaDataId];
-    if(param !== undefined) { metadata = metadata(param); }
+function GetREnemy(key, x, y, firstx, dir, movement, metaDataId, param, ignoreMetadata) {
+    let metadata = ignoreMetadata ? {} : commonEnemyInfo[metaDataId];
+    if(param !== undefined && !ignoreMetadata) { metadata = metadata(param); }
     const enemy = GetFellow("~" + key + Range(0, 1000), x, y, dir, metadata.anim, Cutscene("enemy"), movement, metadata);
     enemy.key = key; enemy.metadataid = metaDataId;
     enemy.fx = firstx; enemy.param = param;

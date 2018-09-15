@@ -408,6 +408,14 @@ const fulltext = {
 		"en-us": "Pesticide2", 
 		"type": "item"
 	},
+	"sel.nerf": {
+		"en-us": "0 Nerf", 
+		"type": "item"
+	},
+	"disp.nerf": {
+		"en-us": "the 0 Nerf", 
+		"type": "item"
+	},
 	"disp.tree": {
 		"en-us": "the 0 Tree", 
 		"type": "item"
@@ -818,7 +826,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"nm.fishNerf": {
-		"en-us": "Fishes", 
+		"en-us": "Fish", 
 		"type": "item"
 	},
 	"nm.beeNerf": {
@@ -8011,7 +8019,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"plantAttack": {
-		"en-us": "{0} plants {2}.", 
+		"en-us": "{0} plants{an} {2}.", 
 		"type": "combat"
 	},
 	"plantAttack2": {
@@ -8023,11 +8031,11 @@ const fulltext = {
 		"type": "combat"
 	},
 	"nEgg": {
-		"en-us": "{0} begins incubating a {2}.", 
+		"en-us": "{0} begins incubating{an} {2}.", 
 		"type": "combat"
 	},
 	"nFish": {
-		"en-us": "{0} sets up a {2}.", 
+		"en-us": "{0} sets up{an} {2}.", 
 		"type": "combat"
 	},
 	"nSpearYes": {

@@ -99,7 +99,11 @@ combat.selectTarget = {
             if(crop !== null) {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 gfx.drawTileToGrid(GetHPFrame(crop), me.INFOBOXWIDTH, this.dy, "menucursorB");
-                gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 95);
+                if(crop.name.indexOf("Nerf") > 0) {
+                    gfx.drawWrappedText(GetText("sel.nerf").replace(/0/g, crop.displayname), 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
+                } else {
+                    gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
+                }
             }
         } else if(this.cursorx >= 0) {
             const enemy = combat.enemies[this.cursorx];
@@ -222,6 +226,7 @@ combat.selectTarget = {
     },
     GetCropName: function(id, displayname) {
         if(id === "grapes") { return GetText("disp.tree").replace(/0/g, GetText("disp.grapesSing")); } // this is very english-centric oops
+        if(id.indexOf("Nerf") > 0) { return GetText("disp.nerf").replace(/0/g, displayname); }
         if(["apple", "apricot", "avocado", "banana", "blackberry", "kiwi", "lemon", "mango"].indexOf(id) >= 0) { return GetText("disp.tree").replace(/0/g, displayname); }
         return GetText("disp.veg").replace(/0/g, displayname);
     },

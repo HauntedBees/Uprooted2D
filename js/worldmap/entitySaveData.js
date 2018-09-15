@@ -39,7 +39,12 @@ let mapRefreshes = {
             for(const name in ents) {
                 if(name[0] !== "~") { continue; }
                 const e = ents[name];
-                const newEnemy = GetREnemy(e.key, e.pos.x, e.pos.y, e.fx, e.dir, e.movement, e.metadataid, e.param);
+                let newEnemy = null;
+                if(mapname === "fakefarm") {
+                    newEnemy = GetREnemy(e.key, e.pos.x, e.pos.y, e.fx, e.dir, e.movement, e.metadataid, e.param, true);
+                } else {
+                    newEnemy = GetREnemy(e.key, e.pos.x, e.pos.y, e.fx, e.dir, e.movement, e.metadataid, e.param);
+                }
                 newEnemy.solid = e.solid; newEnemy.visible = e.visible;
                 SetUpFellow(newEnemy, e.lastAnim);
                 worldmap.entities.push(newEnemy);
