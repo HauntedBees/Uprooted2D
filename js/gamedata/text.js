@@ -4313,19 +4313,19 @@ const fulltext = {
 		"type": "map"
 	},
 	"keycard0": {
-		"en-us": "You got a Food2 employee keycard! With this you should be able to get into the building!", 
+		"en-us": "I got a Food2 employee keycard! With this I should be able to get into their building!", 
 		"type": "map"
 	},
 	"foodEnter0": {
-		"en-us": "The door is locked. You need an employee keycard to get in. Maybe someone in one of the 13th St. apartments has one.", 
+		"en-us": "The door is locked. I need an employee keycard to get in. Maybe someone in one of the 13th St. apartments has one.", 
 		"type": "map"
 	},
 	"foodEnter1": {
-		"en-us": "You swipe the keycard and the door unlocks. You're in!", 
+		"en-us": "I swipe the keycard and the door unlocks. I'm in!", 
 		"type": "map"
 	},
 	"foodEnter2": {
-		"en-us": "You reach into your pocket... only to find the keycard is gone! You must have lost it in the battle!", 
+		"en-us": "I reach into my pocket... only to find the keycard is gone! I must have lost it in the battle!", 
 		"type": "map"
 	},
 	"keycard1": {
