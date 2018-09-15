@@ -43,12 +43,12 @@ function HandlePlurals(mainStr, subject) {
     if(lingHelpers.PluralHandler[game.language] != undefined) { return lingHelpers.PluralHandler[game.language](mainStr, subject); }
     return lingHelpers.PluralHandler["en-us"](mainStr, subject);
 }
-function HandleLists(mainStr, needle, list, nothingKey, pluralizeSingular) {
-    if(lingHelpers.ListHandler[game.language] != undefined) { return lingHelpers.ListHandler[game.language](mainStr, needle, list, nothingKey, pluralizeSingular); }
-    return lingHelpers.ListHandler["en-us"](mainStr, needle, list, nothingKey, pluralizeSingular);
+function HandleLists(mainStr, needle, list, nothingKey, pluralizeSingular, showCopula) {
+    if(lingHelpers.ListHandler[game.language] != undefined) { return lingHelpers.ListHandler[game.language](mainStr, needle, list, nothingKey, pluralizeSingular, showCopula); }
+    return lingHelpers.ListHandler["en-us"](mainStr, needle, list, nothingKey, pluralizeSingular, showCopula);
 }
 function HandleGifts(item, amount) {
-    if(lingHelpers.GiftHandler[game.language] != undefined) { return lingHelpers.ListHandler[game.language](item, amount); }
+    if(lingHelpers.GiftHandler[game.language] != undefined) { return lingHelpers.GiftHandler[game.language](item, amount); }
     return lingHelpers.GiftHandler["en-us"](item, amount);
 }
 function HasText(key) { return fulltext[key] !== undefined; }
@@ -65,7 +65,7 @@ function GetCropPlantedDisplayName(id, displayname) {
     return GetText("disp.veg").replace(/0/g, displayname);
 }
 
-var lingHelpers = { ArticleHandler: {}, PluralHandler: {}, ListHandler: {}, GiftHandler: {} };
+let lingHelpers = { ArticleHandler: {}, PluralHandler: {}, ListHandler: {}, GiftHandler: {} };
 lingHelpers.ArticleHandler["en-us"] = function(mainStr, subject, definiteArticle) {
     if(subject === undefined || subject === "" || mainStr.indexOf("{an}") < 0) { return mainStr; }
     if(definiteArticle) { return mainStr.replace(/\{an\}/g, " the"); }
@@ -92,15 +92,15 @@ lingHelpers.ListHandler["en-us"] = function(mainStr, needle, list, nothingKey, p
     } else if(list.length === 1) {                              // list has one item: needle => "are [...]" or "is [...]"
         return mainStr.replace(needle, (showCopula ? (pluralizeSingular ? "are " : "is ") : "") + list[0]);
     } else {                                                    // list has many items: needle => "are [...], [...], and [...]"
-        var listStr = list.join(", ");
-        var lastComma = listStr.lastIndexOf(",");
+        let listStr = list.join(", ");
+        const lastComma = listStr.lastIndexOf(",");
         listStr = listStr.substring(0, lastComma) + " and" + listStr.substring(lastComma + 1);
         return mainStr.replace(needle, (showCopula ? "are " : "") + listStr);
     }
 };
 lingHelpers.GiftHandler["en-us"] = function(item, amount) {
-    var outStr = GetText("gift.itemname");
-    var itemDetails = GetCrop(item);
+    let outStr = GetText("gift.itemname");
+    const itemDetails = GetCrop(item);
     if(["veg", "tree", "mush", "rice"].indexOf(itemDetails.type) < 0) {
         outStr = outStr.replace(/\{seed\}/g, "");
     } else {

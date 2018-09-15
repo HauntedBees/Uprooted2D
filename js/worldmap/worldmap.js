@@ -251,7 +251,7 @@ const worldmap = {
             for(const crop in actualSeedCounts) {
                 seedStrArr.push(HandleGifts(crop, actualSeedCounts[crop]));
             }
-            actualText = HandleLists(actualText, "{seeds}", seedStrArr, "falconNoGifts", true);
+            actualText = HandleLists(actualText, "{seeds}", seedStrArr, "falconNoGifts", true, true);
         }
         actualText = actualText.replace(/\{g\}/g, player.monies);
         gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
