@@ -33,6 +33,7 @@ let stateBinders = {
 };
 let mapRefreshes = {
     "resetData": function(mapname, fromSave, justStateLoad) {
+        if(mapname === "cave") { return; }
         const ents = mapStates[mapname].ents;
         const addtlFunc = mapRefreshes[mapname];
         if(fromSave) {

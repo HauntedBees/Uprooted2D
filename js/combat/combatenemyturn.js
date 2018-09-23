@@ -31,11 +31,12 @@ combat.enemyTurn = {
         if(attackData.throwables !== undefined && attackData.throwables !== null && attackData.throwables.length > 0) {
             for(let i = 0; i < attackData.throwables.length; i++) {
                 const x = attackData.throwables[i][1], y = attackData.throwables[i][2];
-                combat.animHelper.AddEnemyAttackAnim(args.idx, new CropAttackAnim("_ENEMY", combat.enemyGrid, x, y, undefined, attackData.animData)); // todo: type shudnt just be _ENEMY
+                combat.animHelper.AddEnemyAttackAnim(args.idx, new CropAttackAnim("_ENEMY", combat.enemyGrid, x, y, undefined, attackData.animData));
                 combat.enemyGrid[x][y].flagged = true;
                 combat.animHelper.StartEnemyAnimSequence(args.idx);
             }
         }
+        if(enemy.id === "negayana") { attackData.text = attackData.text.replace(/his/g, "her"); } // my bad bruh
         gfx.drawFullText(attackData.text, this.dy * 16);
         combat.animHelper.DrawBottom();
     },

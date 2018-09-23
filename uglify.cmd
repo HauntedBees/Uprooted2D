@@ -1,4 +1,5 @@
 uglifyjs ^
+    junk/logging.js ^
     js/debug/enemyCursorTest.js ^
     js/gamedata/consts.js ^
     js/gamedata/achievements.js ^
@@ -39,6 +40,7 @@ uglifyjs ^
     js/opening/abee.js ^
     js/animation/mapAnims.js ^
     js/worldmap/cutsceneParser.js ^
+    js/worldmap/cavemap.js ^
     js/worldmap/worldmap.js ^
     js/worldmap/entityHelpers.js ^
     js/worldmap/entitySaveData.js ^
@@ -47,6 +49,7 @@ uglifyjs ^
     js/playerstats/optionsMenu.js ^
     js/worldmap/shop.js ^
     js/worldmap/collisions.js ^
+    js/worldmap/cavecollisions.js ^
     js/worldmap/entityLoader.js ^
     js/worldmap/entities.js ^
     js/worldmap/smartphone.js ^

@@ -8932,4 +8932,182 @@ const fulltext = {
 		"en-us": "Copyright 2018 Haunted Bees Productions", 
 		"type": "crole"
 	},
+	// The Cave
+	"healingStation": {
+		"en-us": "Ahh, a healing station! Healthy food, bandages, antiseptics... I feel as good as new!", 
+		"type": "text"
+	},
+	"goDownCave": {
+		"en-us": "Should I go down to the next floor?", 
+		"type": "text"
+	},
+	"goUpCave": {
+		"en-us": "Should I leave the cave?", 
+		"type": "text"
+	},
+	"underground0": {
+		"en-us": "Skyler: Hello! Welcome to Cavely: the premiere cavediving adventure in Las Abejas County!", 
+		"type": "text"
+	},
+	"underground1": {
+		"en-us": "Skyler: Here's how it works: you jump down this hole and land in a magical cave full of terrifying foes and valuable treasure that's yours for the taking!", 
+		"type": "text"
+	},
+	"underground2": {
+		"en-us": "Skyler: The deeper you go, the stronger the foes and the more valuable the treasure! And best of all, going down the cave is absolutely free!", 
+		"type": "text"
+	},
+	"underground3": {
+		"en-us": "Skyler: What's the catch, you ask? Why, there's no catch!", 
+		"type": "text"
+	},
+	"underground4": {
+		"en-us": "Skyler: But here's the catch: normally after you win a battle, you recover all your health. That doesn't happen down there.", 
+		"type": "text"
+	},
+	"underground5": {
+		"en-us": "Skyler: The only ways to recover health down there are by leveling up, healing in combat with composting techniques, or finding and using special Healing Stations.", 
+		"type": "text"
+	},
+	"underground6": {
+		"en-us": "Skyler: You can bail out at any time - just tug on the Exit Rope and we'll pull you back up here again, safe and sound!", 
+		"type": "text"
+	},
+	"underground7": {
+		"en-us": "Skyler: But if you die in the cave... you die in real life. You can't run from battles, and if you lose, we have to come down and save you.", 
+		"type": "text"
+	},
+	"underground8": {
+		"en-us": "Skyler: And that's how we make our money! Cavediving is free, but we charge a very steep Recovery Fee if you lose a battle.", 
+		"type": "text"
+	},
+	"underground9": {
+		"en-us": "Skyler: How much, you ask? 5000G! But even if you don't have that on you, we're not just going to leave you down there to die, that's messed up, even for us!", 
+		"type": "text"
+	},
+	"underground10": {
+		"en-us": "Skyler: But just between you and me, I've definitely heard some rumors and accusations about our Recovery Response Team.", 
+		"type": "text"
+	},
+	"underground11": {
+		"en-us": "Skyler: Lots of cavedivers have reported that, after they were recovered, they were missing a lot more than just 5000G. Extra money and items were gone!", 
+		"type": "text"
+	},
+	"underground12": {
+		"en-us": "Skyler: They insist that the Recovery Response Team is looting their unconscious bodies, but the RRT insists that some of the mosters down there just like looting!", 
+		"type": "text"
+	},
+	"underground13": {
+		"en-us": "Skyler: The cavedivers don't have any evidence that the RRT is actually responsible for the looting, so no successful lawsuits have gone through or anything.", 
+		"type": "text"
+	},
+	"underground14": {
+		"en-us": "Skyler: Still, if you're low in health or fighting foes that are too strong for you, it's probably best to just go tug on that Exit Rope.", 
+		"type": "text"
+	},
+	"underground15": {
+		"en-us": "Skyler: Also, you can't save your game in the cave. If you do, you'll be back up here when you load that save file. It's a nonstop cavediving adventure with no brakes!", 
+		"type": "text"
+	},
+	"underground16": {
+		"en-us": "Skyler: And that's Cavely! The Risks: Looting, getting your ass kicked, nightmares. The Rewards: Amazing treasures - some of which can only be found here!", 
+		"en-us-sfw": "Skyler: And that's Cavely! The Risks: Looting, getting your butt kicked, nightmares. The Rewards: Amazing treasures - some of which can only be found here!", 
+		"type": "text"
+	},
+	"underground17": {
+		"en-us": "Skyler: I hope you'll partake in what Investors Quarterly calls \"an investment so morally bankrupt that we almost feel guilty endorsing it.\"", 
+		"type": "text"
+	},
+	"undergroundA0": {
+		"en-us": "Skyler: Hello again! Welcome to Cavely. What can I help you with?", 
+		"type": "text"
+	},
+	"under.A": {
+		"en-us": "Tell me about this place again.", 
+		"type": "choice"
+	},
+	"under.B": {
+		"en-us": "What're my stats?", 
+		"type": "choice"
+	},
+	"under.C": {
+		"en-us": "Nothing, thank you.", 
+		"type": "choice"
+	},
+	"undergroundA1": {
+		"en-us": "Skyler: Can do! Cavely is the premiere cavediving adventure in Las Abejas County!", 
+		"type": "text"
+	},
+	"undergroundB0": {
+		"en-us": "Skyler: You haven't gone into the cave yet, so you don't have any stats.", 
+		"type": "text"
+	},
+	"undergroundB1": {
+		"en-us": "Skyler: Times you've been in the cave: {0}. Your deepest depth: {1}F. Pretty good, but I know you can do better!", 
+		"type": "text"
+	},
+	"undergroundC0": {
+		"en-us": "Skyler: No problemo!", 
+		"type": "text"
+	},
+	"undergroundEscape": {
+		"en-us": "Skyler: Welcome back to the surface! I hope you had a good time down there!", 
+		"type": "text"
+	},
+	"undergroundFail": {
+		"en-us": "Skyler: Are you awake? Looks like you had a bit of a situation down there. Try to be more careful next time! There's no shame in pulling the Exit Rope!", 
+		"type": "text"
+	},
+	"enterTheCave": {
+		"en-us": "Should I enter the cave?", 
+		"type": "text"
+	},
+	"FOE0": {
+		"en-us": "A mysterious creature attacks!", 
+		"type": "text"
+	},
+	"e.seaMobster0": {
+		"en-us": "Sea Monkbster", 
+		"type": "enemy"
+	},
+	"e.soyChildCave0": {
+		"en-us": "L'enfant d'Soy", 
+		"type": "enemy"
+	},
+	"e.shinyBear0": {
+		"en-us": "Shiny Bear", 
+		"type": "enemy"
+	},
+	"e.mrWallFriend0": {
+		"en-us": "Cave Wally", 
+		"type": "enemy"
+	},
+	"e.caveNerd0": {
+		"en-us": "Cavediving Nerd", 
+		"type": "enemy"
+	},
+	"e.graveRobber0": {
+		"en-us": "Grave Robber", 
+		"type": "enemy"
+	},
+	"e.negayana0": {
+		"en-us": "Negayana", 
+		"type": "enemy"
+	},
+	"cacao": {
+		"en-us": "Cocoa is delicious, but no one ever talks about cacao. Cacao trees are where the delicious seeds used to make chocolate come from! Plus, it's such a nice, safe word. \"Cacao.\" It's fun to say. Cacao. Cacao.", 
+		"type": "item"
+	},
+	"soybean": {
+		"en-us": "Soybeans are used to create everything from tofu to miso to soy milk. This versatile and uncontroversial bean truly is an amazing thing to beanhold.", 
+		"type": "item"
+	},
+	"nm.saffron": {
+		"en-us": "Saffron", 
+		"type": "item"
+	},
+	"saffron": {
+		"en-us": "The most expensive spice in the world. The threads must be individually plucked from the Autumn Crocus flower by hand. Some people will do a lot to make their food slightly tastier.", 
+		"type": "item"
+	},
 };

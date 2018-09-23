@@ -53,7 +53,7 @@ const combat = {
         }
         this.enemywidth = 0;
         this.enemyheight = 0;
-        this.isBossBattle = false;
+        this.isBossBattle = worldmap.mapName === "cave";
         this.enemies = [];
         for(let i = 0; i < Math.min(4, enemies.length); i++) {
             const enemy = GetEnemy(enemies[i]);
@@ -306,7 +306,9 @@ const combat = {
     },
     wrapUpCombat: function() {
         if(player.equipment.weapon === "!sickle2_weak") { player.equipment.weapon = "!sickle2"; }
-        player.health = player.maxhealth;
+        if(worldmap.mapName !== "cave") {
+            player.health = player.maxhealth;
+        }
         this.cursors.Perish();
         gfx.clearLayer("menucursorC");
         CombatChievoCheck();
@@ -334,7 +336,7 @@ const combat = {
         player.health = player.maxhealth;
         clearInterval(combat.charAnimIdx);
         combat.wrapUpCombat();
-        game.transition(game.currentInputHandler, worldmap, {  init: { x: inn.x,  y: inn.y }, map: inn.map, isInn: true });
+        game.transition(game.currentInputHandler, worldmap, { init: { x: inn.x,  y: inn.y }, map: inn.map, isInn: true, playerDir: 2 });
     },
     checkForLevelUp: function() {
         if(player.exp >= player.nextExp && player.level < 20) {

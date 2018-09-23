@@ -72,6 +72,7 @@ let consoleCmd = {
                     case "northcity": pathTo = { init: { x: 25, y: 44 }, map: "northcity" }; break;
                     case "hq": pathTo = { init: { x: 12, y: 10 }, map: "hq_4" }; break;
                     case "hqend": pathTo = { init: { x: 8, y: 51 }, map: "hq_5" }; break;
+                    case "cave": pathTo = { init: { x: 3, y: 3 }, map: "cave", floor: 0 }; break;
                 }
                 if(pathTo === null) { return; }
                 return game.transition(game.currentInputHandler, worldmap, pathTo);

@@ -19,7 +19,8 @@ const inns = {
     "skumpys": { x: 41, y: 43, map: "southcity" },
     "bigCity": { x: 34.5, y: 44, map: "northcity" },
     "nerdBed": { x: 13, y: 8, map: "hq_1" },
-    "lastInn": { x: 5, y: 6, map: "hq_5" }
+    "lastInn": { x: 5, y: 6, map: "hq_5" },
+    "caveDive": { x: 17, y: 7.5, map: "northcity", inside: true }
 };
 
 const mapBattleXref = {
@@ -33,7 +34,8 @@ const mapBattleXref = {
     "hq_3": "bgs/hq",
     "hq_4": "bgs/hq",
     "hq_5": "bgs/hq",
-    "hq_6": "bgs/hq"
+    "hq_6": "bgs/hq",
+    "cave": "bgs/cave"
 };
 const mapBattleTileXref = {
     "underwater": "seaGrass",

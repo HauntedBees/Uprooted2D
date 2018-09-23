@@ -29,8 +29,17 @@ const worldmap = {
         this.importantEntities = {};
         this.allowLateStart = true;
 
-        if(!args.noEntityUpdate) { this.entities = GetEntities(this.mapName, args.fromLoad); }
-        else { justStateLoad = false; args.fromLoad = false; }
+        if(this.mapName === "cave") {
+            if(!args.noEntityUpdate) {
+                this.customMap = new CaveMap(args.floor, args.lastFloorTile, args.lastWallTile);
+                this.pos = this.customMap.startPos;
+                this.entities = this.customMap.entities;
+            }
+        } else {
+            this.customMap = null;
+            if(!args.noEntityUpdate) { this.entities = GetEntities(this.mapName, args.fromLoad); }
+            else { justStateLoad = false; args.fromLoad = false; }
+        }
 
         let targetToAutoplay = null;
         for(let i = 0; i < this.entities.length; i++) {
@@ -42,7 +51,6 @@ const worldmap = {
         if(worldmap.ignoreAutoplay === true) { targetToAutoplay = false; }
         if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, args.fromLoad, justStateLoad); }
         else if(args.isInn) { JumboToggle(false); }
-
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {
@@ -77,6 +85,7 @@ const worldmap = {
             JumboToggle(true);
             if(worldmap.entities[0].innCheck) { worldmap.entities[0].action(); }
         }
+        if(args.inside) { JumboToggle(true); }
     },
     latestart: function() {
         if(worldmap.allowLateStart) { worldmap.toggleMovement(true); }
@@ -133,7 +142,7 @@ const worldmap = {
     },
     refreshMap: function() {
         gfx.clearSome(["background", "background2", "characters", "foreground"]);
-        const offset = gfx.drawMap(this.mapName, this.hijackedX || this.pos.x, this.hijackedY || this.pos.y);
+        const offset = this.customMap !== null ? this.customMap.Draw(this.pos.x, this.pos.y) : gfx.drawMap(this.mapName, this.hijackedX || this.pos.x, this.hijackedY || this.pos.y);
         const layers = [];
         const fov = [];
         const ymax = collisions[this.mapName].length;
@@ -172,7 +181,9 @@ const worldmap = {
             if(e.big) { roundedY++; }
             if(layers[roundedY] !== undefined) { // NOTE: address new screen size (I don't know what I meant by this...?)
                 if(e === undefined || e.anim === undefined || e.anim.getFrame === undefined) { console.log("error with this entity:"); console.log(e); }
-                layers[roundedY].push(e.anim.getFrame(e.pos, e.dir, e.moving));
+                const animFrame = e.anim.getFrame(e.pos, e.dir, e.moving);
+                if(e.drawLayer) { animFrame.layer = e.drawLayer; }
+                layers[roundedY].push(animFrame);
             }
         }
         if(this.mapName !== "gameover") {
@@ -423,7 +434,7 @@ const worldmap = {
         } else {
             for(let i = 0; i < this.entities.length; i++) {
                 const e = this.entities[i];
-                if(!e.solid && (e.pos.x == newPos.x || e.isRow) && (e.pos.y == newPos.y || e.isColumn) && e.interact !== undefined) {
+                if(!e.solid && (e.pos.x === newPos.x || e.isRow) && (e.pos.y === newPos.y || e.isColumn) && e.interact !== undefined) {
                     if(e.isColumn && e.topy != undefined) {
                         if(newPos.y < e.topy || newPos.y > e.bottomy) { continue; }
                     } else if(e.isRow && e.leftx != undefined) {

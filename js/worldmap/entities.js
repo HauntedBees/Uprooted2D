@@ -354,6 +354,13 @@ const mapentities = {
         return entities;
     },
     "fakefarm": () => [
+        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: function() {
+            JumboToggle(true);
+            worldmap.importantEntities["barnCover"].visible = false;
+            worldmap.importantEntities["FarmerJeff"].visible = true;
+            worldmap.importantEntities["FarmerJeff"].pos = { x: 14.5, y: 31.5 };
+            worldmap.importantEntities["FarmerJeff"].dir = 0;
+        }},
         // Map Switching
         GetFellow("AFuckingTruckL", 24, 34, 0, "TruckFuck", Cutscene("badTruck"), undefined, { big: true, storageKey: "ltruck" }),
         GetFellow("AFuckingTruckR", 26, 34, 0, "TruckR", undefined, undefined, { big: true }),
@@ -367,13 +374,6 @@ const mapentities = {
         // Opening Cutscene
         GetCSFellow("FarmerJeffOpening", 14, 35.5, 3, "Jef", "FarmerJeff", { boring: true, solid: false, autoplay: true, interact: Cutscene("flatTire") }),
         GetCSFellow("FarmTVEntrance", 10, 8, 0, "", "fuckOffFarmerJeff", { interact: Cutscene("farmTV"), boring: true, solid: false, visible: false }),
-        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: function() {
-            JumboToggle(true);
-            worldmap.importantEntities["barnCover"].visible = false;
-            worldmap.importantEntities["FarmerJeff"].visible = true;
-            worldmap.importantEntities["FarmerJeff"].pos = { x: 14.5, y: 31.5 };
-            worldmap.importantEntities["FarmerJeff"].dir = 0;
-        }},
         // Shops & Falcon & Quests
         { name: "Falcon2", pos: { x: 14, y: 32 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
         GetSign(4, 30, "upgradeBarn"),
@@ -486,6 +486,7 @@ const mapentities = {
         GetNoIMFellow("Cross", 38, 9, "ChurchTip", { boring: true, forcedY: 10, solid: false })
     ],
     "northcity": () => [
+        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: Cutscene("caveFail")[0] },
         // Map Switches
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
         GetFellow("Food2Entrance", 39, 9, 0, "", Cutscene("foodDoor"), undefined, { boring: true, visible: false, solid: true }),
@@ -563,8 +564,9 @@ const mapentities = {
         GetFellow("Robber2", 9, 3, 0, "Robber", Cutscene("robber"), undefined, { inside: true, visible: false, robbery: true, postBattle: "PostRobbers" }),
         new CutsceneTrigger("strobbery", "PostRobbers"),
         // The Underground Man
-        GetFellow("UndergroundMan", 16, 6, 0, "HHolerGuy", OneSpeak("undergroundNotYet"), undefined, { visible: false, inside: true, moveToTalk: true }),
-        GetFellow("UndergroundHole", 17, 6, 0, "Hole", undefined, undefined, { visible: false, inside: true, boring: true }),
+        GetFellow("UndergroundMan", 16, 6, 0, "HHolerGuy", Cutscene("caveDive"), undefined, { visible: false, inside: true, storageKey: "caveboy" }),
+        GetFellow("UndergroundHole", 17, 6, 0, "Hole", Cutscene("enterCave"), undefined, { visible: false, inside: true, boring: true }),
+        new CutsceneTrigger("caveEscape", "caveEscape", true),
         // Dweeb Bank
         GetFellow("atm0", 22, 34, 15, "ATM", Cutscene("atm"), undefined, { inside: true, visible: false }),
         GetFellow("atm1", 23, 34, 15, "ATM", Cutscene("atm"), undefined, { inside: true, visible: false }),
@@ -881,7 +883,7 @@ const mapentities = {
         const entities = [
             new AutoplayCutscene("final"),
             new CutsceneTrigger("theEnd", "youWon"),
-            GetCSFellow("ChuddsMakenzie", 8.5, 10, 0, "", "pl2", { visible: false }),
+            GetCSFellow("ChuddsMakenzie", 8.5, 10, 0, "", "pl2", { visible: false, postBattle: "youWon" }),
             GetCSFellow("CryBeckett", 5, 9, 0, "BeckCry1", "beckettCry"),
             GetCSFellow("chair", 8.5, 7, 0, "FBChair", "chair", { visible: false, forcedY: 13 }),
             GetCSFellow("BigBadNathan", 8.5, 7, 0, "FBBack", "endNath", { forcedY: 14 }),

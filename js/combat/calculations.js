@@ -175,8 +175,9 @@ const dmgCalcs = {
             }
             let recoilInfo = null;
             if(isPlayer && ["rice", "veg", "tree", "mush", "bee", "egg", "tech"].indexOf(crop.type) >= 0) {
-                if(isAnimalling || crop.type === "rice" || (myCrops.length > 3 && combat.enemies.length > 1)) {
+                if(isAnimalling || crop.type === "rice" || crop.name === "saffron" || (myCrops.length > 3 && combat.enemies.length > 1)) {
                     let power = isAnimalling ? 2 : (crop.type === "rice" ? 1 : 0);
+                    if(crop.name === "saffron") { power = 15; }
                     let numCrops = myCrops.length;
                     while(!isAnimalling && (Math.random() * player.luck * numCrops--) > 0.9) {
                         power++;

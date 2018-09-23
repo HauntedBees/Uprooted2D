@@ -31,7 +31,6 @@ const nwHelpers = {
             case 0: multiplier = 0.5; break;
             case 2: multiplier = 2; break;
         }
-        const win = require("nw.gui").Window.get();
         if(player.options.fullscreen === 1) {
             this.win.enterFullscreen();
         } else if(player.options.fullscreen === 0) {
@@ -42,6 +41,10 @@ const nwHelpers = {
             this.win.width = game.w * multiplier;
             this.win.height = game.h * multiplier;
         }
+    },
+    Quit: function() {
+        if(this.win === null) { this.win = require("nw.gui").Window.get(); }
+        this.win.close(true);
     }
 };
 const game = {
@@ -58,7 +61,7 @@ const game = {
                     "maps/farm", "maps/producestand", "maps/firstvillage", "maps/forest",
                     "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
                     "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
-                    "maps/hq_6", "maps/gameover",
+                    "maps/hq_6", "maps/gameover", "cavesheet",
                     //* Map Covers *//
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",
@@ -82,7 +85,7 @@ const game = {
                     "shopblinks/pawn", "shopblinks/tinker", "shopblinks/none", "shopblinks/catalina", "shopblinks/skumpy", "shopblinks/seedshack",
                     "shopblinks/tech", "shopblinks/hotel", "shopblinks/epickyle", "shopblinks/gordon",
                     //* Combat Backgrounds *//
-                    "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq"
+                    "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "bgs/cave"
                 ],
     canvasLayers: ["background", "background2", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
@@ -335,18 +338,25 @@ const game = {
             localStorage.setItem("player" + savenum, game.obj2str(player));
             return;
         }
-        player.setMapPosition();
         player.SaveID = (Math.random() * Number.MAX_SAFE_INTEGER).toString();
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
+        if(worldmap.mapName === "cave") {
+            player.mapName = "northcity";
+            player.mapPos = { x: 17, y: 7.5 };
+            player.mapDir = 2;
+        } else {
+            player.setMapPosition();
+            stateBinders.storePositions(worldmap.mapName);
+        }
         localStorage.setItem("player" + savenum, game.obj2str(player));
         localStorage.setItem("lastSaved", savenum);
-        stateBinders.storePositions(worldmap.mapName);
         for(let i = 0; i < player.visitedMaps.length; i++) {
             const map = player.visitedMaps[i];
             if(stateBinders[map] !== undefined) { stateBinders[map](); }
         }
         if(worldmap.smartphone !== null) { mapStates["northcity"].phoneData = worldmap.smartphone.GetPhoneData(); }
         localStorage.setItem("mapent" + savenum, game.obj2str(mapStates));
+        player.justSaved = true;
     },
     load: function(savenum) {
         let loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));

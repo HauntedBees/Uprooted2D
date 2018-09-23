@@ -912,6 +912,9 @@ const SpecialFunctions = {
     },
     "GARFIELDMYPEBBLES": function() {
         worldmap.importantEntities["pl2"].visible = false;
+        game.target = worldmap.importantEntities["pl2"];
+        worldmap.forceMove = false;
+        worldmap.forcedY = -1;
         SetUpFellow(worldmap, "walk", true);
         worldmap.entities.filter(e => e.autoplay === true)[0].interact = Cutscene("finalReturn");
     },
@@ -1097,6 +1100,54 @@ const SpecialFunctions = {
         worldmap.angryBees = false;
         const enemy = player.beeQueensFaced < 2 ? "beeQueenA" : (player.beeQueensFaced < 5 ? "beeQueenB" : "beeQueenC");
         combat.startBattle([enemy]);
+    },
+
+    // The Cave
+    "HEAL": () => player.health = player.maxhealth,
+    "LEAVECAVE": () => game.transition(game.currentInputHandler, worldmap, { init: { x: 17, y: 7.5 }, playerDir: 2, map: "northcity", inside: true, postCombat: "caveEscape" }),
+    "DOWNCAVE": function() {
+        const newFloor = worldmap.customMap.floor + 1;
+        if(newFloor > player.caveDepth) { player.caveDepth = newFloor; }
+        game.transition(game.currentInputHandler, worldmap, { 
+            init: { x: 3, y: 3 }, map: "cave", 
+            floor: newFloor, 
+            lastFloorTile: worldmap.customMap.floorType,
+            lastWallTile: worldmap.customMap.wallTile
+        });
+    },
+    "ENTERCAVE": function() {
+        if(player.numCaves === undefined) {
+            player.caveDepth = 0;
+            player.numCaves = 1;
+        } else {
+            player.numCaves += 1;
+        }
+        player.lastInn = "caveDive";
+        game.transition(game.currentInputHandler, worldmap, { 
+            init: { x: 3, y: 3 }, map: "cave", floor: 0
+        });
+    },
+    "CAVESTATS": function() {
+        worldmap.writeText("undergroundB1", undefined, false, [
+            player.numCaves,
+            player.caveDepth + 1
+        ]);
+    },
+    "CAVEDIED": function() {
+        const moniesLost = Range(5000, 8000);
+        player.monies = Math.max(0, player.monies - moniesLost);
+        console.log(`Lost ${moniesLost}G.`);
+        for(let i = player.inventory.length - 1; i >= 0; i--) {
+            if(Math.random() <= 0.85) { continue; }
+            if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
+            const taken = InclusiveRange(1, 50);
+            player.inventory[i][1] -= taken;
+            console.log(`Lost ${taken} ${player.inventory[i][0]}s.`);
+            if(player.inventory[i][1] <= 0) {
+                console.log("...Which was all of them.");
+                player.inventory.splice(i, 1);
+            }
+        }
     },
 
     // Misc.

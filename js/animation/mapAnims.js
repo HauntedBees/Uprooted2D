@@ -365,4 +365,7 @@ const mafs = {
     "FloorFlip0": Ft(25, 0), "FloorFlip1": Ft(25, 1), "FloorFlip2": Ft(25, 2), "FloorFlip3": Ft(25, 3), "FloorFlip4": Ft(25, 4),
     "FloorFlip5": Ft(25, 5), "FloorFlip6": Ft(25, 6),  "FloorFlip7": Ft(25, 7), "FloorFlip8": Ft(25, 8), "FloorFlip9": Ft(25, 9),
     "FloorFlip10": Ft(25, 10), "FloorFlip11": Ft(25, 11), "FloorFlip12": Ft(25, 12), "FloorFlip13": Ft(25, 13), "FloorFlip14": Ft(25, 14),
+    // The Cave
+    "RopeTop": Ft(27, 12), "RopeFade": Ft(27, 13), "RopeSign": Ft(27, 14), "RopeBottom": Ft(27, 15), "HealingStation": Ft(27, 16),
+    "FOE": new MapAnimFactory("la", [27, 17, 4])
 };
