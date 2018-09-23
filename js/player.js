@@ -16,9 +16,9 @@ let player = {
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
         font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0
     },
-    controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" },
-    keyboardcontrols: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q",  pause: "Enter" },
-    gamepadcontrols: { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1",  pause: "Gamepad9" },
+    controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q", pause: "Enter" },
+    keyboardcontrols: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q", pause: "Enter" },
+    gamepadcontrols: { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1", pause: "Gamepad9" },
     equipment: { weapon: "!babySickle", compost: "!weakCompost", gloves: null, soil: null },
     setMapPosition: function() {
         player.mapName = worldmap.mapName;
@@ -41,8 +41,9 @@ let player = {
         time -= minutes * 60;
         return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (time < 10 ? "0" : "") + time;
     },
-    tutorialInventory: [["specialgrapes", 1], ["carrot", 2], ["beet", 3], ["!weakCompost", 1], ["!babySickle", 1]],
     tutorialEquipment: { weapon: "!goodSickle", compost: "!weakCompost", gloves: null, soil: null },
+    tutorialInventory: [["specialgrapes", 1], ["carrot", 2], ["beet", 3], ["!weakCompost", 1], ["!babySickle", 1]],
+    inventory: [["carrot", 6], ["beet", 4], ["garlic", 2], ["banana", 3], ["!weakCompost", 1], ["!babySickle", 1]],
     shiftEthics: function(d) { // + = good, - = bad
         player.ethicsAxis += d;
         if(player.ethicsAxis > 5) { player.ethicsAxis = 5; }
@@ -53,17 +54,6 @@ let player = {
         if(player.techAxis > 5) { player.techAxis = 5; }
         else if(player.techAxis < -5) { player.techAxis = -5; }
     },
-    inventory: [
-        ["specialgrapes", 1], ["carrot", 6], ["beet", 4], ["!weakCompost", 1], ["!babySickle", 1] // ACTUAL STARTING INVENTORY
-        ["_shooter", 2], ["_hotspot", 1], ["_modulator", 1], ["battery", 4], ["spear", 5], 
-        ["!baseSickle", 1], ["!goodSickle", 1], ["!weakCompost", 1], ["!strongCompost", 1], ["!weakGloves", 1], ["!pairGloves", 1],
-        ["!weakSoil", 1], ["!fortSoil", 1], ["!balancedGreenhouse", 1], ["!amplifyingGreenhouse", 1]
-        ,["shiitake", 1], ["milkcap", 1], ["portobello", 1], ["egg", 3], ["_lake", 9], ["net", 3], ["rod", 5], ["goodrod", 5], ["metalrod", 5], 
-        ["_paddy", 6], ["rice", 2], ["arborio", 2], ["blackrice", 2]
-        , ["pineapple", 5], ["leek", 2]
-        ,["apple", 20], ["lemon", 1], ["rhubarb", 8],  ["grapes", 3]*/
-        //["carrot", 69], ["pineapple", 4],["leek", 2],
-    ],
     gridWidth: 3, gridHeight: 3, gridLevel: "n",
     itemGrid: null,
     hasUsedFish: () => (player.miscdata.typesPlanted["rod"] + player.miscdata.typesPlanted["water"]) > 0,
