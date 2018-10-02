@@ -230,11 +230,11 @@ const animCallbacks = {
         const edims = animEntity.dims;
         if(resetti.crop.type === "egg") {
             const arr = [resetti.crop.name + "FlyR0", resetti.crop.name + "FlyR1"];
-            const isGrounded = resetti.crop.name === "platypus";
+            const isGrounded = resetti.crop.name === "platypus" || resetti.crop.name === "dodo";
             const dy = (isGrounded ? 1 : 1.5);
             const fps = (isGrounded ? 24 : 12);
             if(animEntity.bonusArgs.targets.length === 0) { // attacking player
-                animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetEnemyBottomPos(0), combat.animHelper.GetPlayerTopPos(), 
+                animProcess.AddBaby(new MovingLinearAnim(arr, combat.animHelper.GetEnemyBottomPos(0), combat.animHelper.GetPlayerBottomPos(), 
                                     0.25, dy, 24, fps, animCallbackHelpers.HurtPlayer));
             } else { // attacking crop
                 const targx = animEntity.bonusArgs.targets[0].x + combat.dx;

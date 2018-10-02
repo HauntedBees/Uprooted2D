@@ -6,7 +6,7 @@ const combat = {
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     didHarvest: false, harvestChain: 0, 
-    animHelper: null, 
+    animHelper: null, isTree: false, 
     startBattle: function(enemies) {
         worldmap.clean();
         gfx.clearAll();
@@ -32,6 +32,7 @@ const combat = {
         this.happyCows = [];
         this.usedShooters = [];
         this.doingFinalKill = false;
+        this.isTree = false;
         combat.enemyTurn.lastIdx = -1;
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
             const hasCharger = GetFirstWithMatch(0, player.gridWidth, 0, player.gridHeight, (x, y) => combat.grid[x][y] !== null && combat.grid[x][y].type === "sickle2");
@@ -57,6 +58,17 @@ const combat = {
         this.enemies = [];
         for(let i = 0; i < Math.min(4, enemies.length); i++) {
             const enemy = GetEnemy(enemies[i]);
+            if(worldmap.customMap !== null) {
+                const tier = 1 + 0.15 * Math.floor(worldmap.customMap.floor / 5);
+                enemy.maxhealth = Math.ceil(enemy.maxhealth * tier);
+                enemy.health = enemy.maxhealth;
+                enemy.atk = Math.ceil(enemy.atk * tier);
+                enemy.baseatk = enemy.atk;
+                enemy.def = Math.ceil(enemy.def * tier);
+                enemy.basedef = enemy.def;
+                enemy.exp = Math.ceil(enemy.exp * tier);
+            }
+            console.log(enemy);
             this.isBossBattle = this.isBossBattle || enemy.boss;
             this.enemywidth += enemy.fieldwidth;
             this.enemyheight = Math.max(this.enemyheight, enemy.fieldheight);
@@ -65,12 +77,18 @@ const combat = {
         }
         this.enemywidth = Math.min(this.enemywidth, 5);
 
-        this.enemydx = startX + 1 + (gfx.tileWidth - startX - this.enemywidth) / 2;
-        if((this.enemydx + this.enemywidth) >= gfx.tileWidth) { this.enemydx = gfx.tileWidth - this.enemywidth - 0.25; }
-        this.enemydy = this.dy + (player.gridHeight - this.enemyheight) / 2;
-        while(this.enemydy <= 0) {
-            this.enemydy += 0.25;
-            this.dy += 0.25;
+        if(enemies[0] === "garfwax") { 
+            this.enemydx = 10.625;
+            this.enemydy = 1;
+            this.isTree = true;
+        } else {
+            this.enemydx = startX + 1 + (gfx.tileWidth - startX - this.enemywidth) / 2;
+            if((this.enemydx + this.enemywidth) >= gfx.tileWidth) { this.enemydx = gfx.tileWidth - this.enemywidth - 0.25; }
+            this.enemydy = this.dy + (player.gridHeight - this.enemyheight) / 2;
+            while(this.enemydy <= 0) {
+                this.enemydy += 0.25;
+                this.dy += 0.25;
+            }
         }
 
         this.adjustEnemyStatsWeather();

@@ -46,7 +46,8 @@ const mapBattleTileXref = {
     "hq_3": "hqGrass",
     "hq_4": "hqGrass",
     "hq_5": "hqGrass",
-    "hq_6": "hqGrass"
+    "hq_6": "hqGrass",
+    "cave": "caveT"
 };
 
 const levelStats = {

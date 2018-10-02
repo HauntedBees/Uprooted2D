@@ -1,5 +1,6 @@
 const worldmap = {
-    freeMovement: true, savedImage: "", angryBees: false, smartphone: null, horRor: null,
+    freeMovement: true, savedImage: "", angryBees: false,
+    smartphone: null, horRor: null, caveInfo: null, 
     pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, 
     animData: plAnims.walk,
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
@@ -34,8 +35,10 @@ const worldmap = {
                 this.customMap = new CaveMap(args.floor, args.lastFloorTile, args.lastWallTile);
                 this.pos = this.customMap.startPos;
                 this.entities = this.customMap.entities;
+                this.caveInfo = new CaveInfo(this.customMap.floor + 1);
             }
         } else {
+            this.caveInfo = null;
             this.customMap = null;
             if(!args.noEntityUpdate) { this.entities = GetEntities(this.mapName, args.fromLoad); }
             else { justStateLoad = false; args.fromLoad = false; }
@@ -202,6 +205,7 @@ const worldmap = {
         }
         for(let i = 0; i < fov.length; i++) { gfx.drawFOV(fov[i].x, fov[i].y, fov[i].dir, fov[i].ox, fov[i].oy); }
         if(worldmap.smartphone !== null) { worldmap.smartphone.Draw(); }
+        if(worldmap.caveInfo !== null) { worldmap.caveInfo.Draw(); }
         if(worldmap.horRor !== null) { worldmap.horRor.Draw(); }
     },
     earlyclean: function() {

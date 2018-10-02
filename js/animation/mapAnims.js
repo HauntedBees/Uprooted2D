@@ -273,7 +273,7 @@ const mafs = {
     "Lime": new MapAnimFactory("dw", [8, 4, 2, false, 2]), "LimeTalk": new MapAnimFactory("dw", [8, 6, 2, false, 6]),
     "Rabbit": new MapAnimFactory("la", [4, 6, 2]), "RabbitTalk": new MapAnimFactory("la", [5, 6, 2]),
     "RabbitClean": Ft(27, 10), "RabbitCleanTalk": new MapAnimFactory("la", [27, 10, 2]),
-    "Turky": new MapAnimFactory("dw", [4, 4, 2]), "TurkyEgg": Ft(15, 5), "Bearbo": Ft(0, 8, true),
+    "Turky": new MapAnimFactory("dw", [4, 4, 2]), "TurkyEgg": Ft(15, 5), "Bearbo": Ft(0, 2, true),
     "Mowz": new MapAnimFactory("dw", [0, 4, 2]), "Sqorl": new MapAnimFactory("dw", [0, 6, 2]),
     // Below Village
     "Robo2": new MapAnimFactory("sw", [4, 8]),
@@ -316,7 +316,7 @@ const mafs = {
     "Skumpy1": new MapAnimFactory("la", [15, 16, 2]), "Skumpy2": new MapAnimFactory("la", [13, 16, 2]),
     "Skumpy3": new MapAnimFactory("la", [14, 16, 2]), "Skumpy4": new MapAnimFactory("la", [12, 16, 2]),
     "BarL": Ft(18, 15), "BarM": Ft(19, 15), "MobstyOut": Ft(17, 15), "MobstyHurt": new MapAnimFactory("la", [26, 3, 2]),
-    "Pigeon1": new MapAnimFactory("la", [17, 13, 2]), "Pigeon2": new MapAnimFactory("la", [18, 13, 2]), "DoggyBags": Ft(0, 2, true),
+    "Pigeon1": new MapAnimFactory("la", [17, 13, 2]), "Pigeon2": new MapAnimFactory("la", [18, 13, 2]), "DoggyBags": Ft(6, 3, true),
     "Abuelita": new MapAnimFactory("la", [19, 13, 2]), "AbuelitaThrow": new MapAnimFactory("la", [26, 15, 2, false, 1]), "ChurchTip": Ft(8, 0),
     "FountainUL": new MapAnimFactory("as", [[P(3, 8), P(7, 8)], true]), "FountainUR": new MapAnimFactory("as", [[P(4, 8), P(8, 8)], true]),
     "FountainLLL": new MapAnimFactory("as", [[P(2, 9), P(6, 9)], true]), "FountainLML": new MapAnimFactory("as", [[P(3, 9), P(7, 9)], true]),
@@ -367,5 +367,5 @@ const mafs = {
     "FloorFlip10": Ft(25, 10), "FloorFlip11": Ft(25, 11), "FloorFlip12": Ft(25, 12), "FloorFlip13": Ft(25, 13), "FloorFlip14": Ft(25, 14),
     // The Cave
     "RopeTop": Ft(27, 12), "RopeFade": Ft(27, 13), "RopeSign": Ft(27, 14), "RopeBottom": Ft(27, 15), "HealingStation": Ft(27, 16),
-    "FOE": new MapAnimFactory("la", [27, 17, 4])
+    "FOE": new MapAnimFactory("la", [27, 17, 4]), "FOEbig": new MapAnimFactory("la", [0, 8, 2, true, 3])
 };

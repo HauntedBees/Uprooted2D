@@ -324,6 +324,10 @@ CombatAnimEnemy.prototype.CorpseItUp = function(d, size) { gfx.DrawDitheredWhats
 
 function GetEnemyCombatAnim(x, y, spriteidx, size, cursorinfo) {
     const dims = GetEnemyCombatDims(size);
+    if(size === "xl") {
+        if(spriteidx[0] === 3) { x += 0.5; y += 0.5; }
+        else if(spriteidx[0] === 8) { y += 0.75; }
+    }
     const eca = new CombatAnimEnemy(dims.sheet, dims.w, dims.h, x, y, spriteidx[0], spriteidx[1]);
     eca.cursorinfo = cursorinfo;
     return eca;

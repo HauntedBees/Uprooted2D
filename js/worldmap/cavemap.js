@@ -77,6 +77,14 @@ const CaveEnemy = {
         return availableItems[Range(0, availableItems.length)].item;
     }
 };
+function CaveInfo(floor) {
+    this.floor = floor;
+    this.Draw = function() {
+        if(worldmap.mapName !== "cave") { return; }
+        gfx.clearSome(["smartphone", "smartphoneText"]);
+        gfx.drawInfoText(` -${this.floor}F`, 0, gfx.tileHeight - 1, false, "smartphone", "smartphoneText");
+    }
+}
 function CaveMap(floor, lastFloorTile, lastWallTile) {
     this.floor = floor;
     this.startPos = { x: -1, y: -1 };
@@ -152,11 +160,20 @@ function CaveMap(floor, lastFloorTile, lastWallTile) {
                             for(let i = 1; i <= numEnemies; i++) {
                                 contents.push(CaveEnemy.GetEnemy(me.floor));
                             }
-                            me.entities.push(GetFellow(`Enemy${myX}_${myY}`, myX, myY, 2, "FOE", Cutscene("enemy"), myMovement, { setEnemies: contents, interactname: "FOE", dialogMax: 0 }));
+                            me.entities.push(GetFellow(`Enemy${myX}_${myY}`, myX, myY, 2, "FOE", Cutscene("enemy"), myMovement, { setEnemies: contents, interactname: "FOE", dialogMax: 0, moving: true }));
                         }
                         break;
                     case 10: // boss
-                        // TODO: boss
+                        const contents = [];
+                        switch(Range(0, 6)) {
+                            case 0: contents.push("garfwax"); break;
+                            case 1: contents.push("trustworthyfriend"); break;
+                            case 2: contents.push("doodoobirdhahaha"); break;
+                            case 3: contents.push("golf"); break;
+                            case 4: contents.push("conqueredscarecrow"); break;
+                            case 5: contents.push("fishingsnake"); break;
+                        }
+                        me.entities.push(GetFellow(`FOE`, myX - 0.5, myY, 2, "FOEbig", Cutscene("enemy"), undefined, { drawLayer: "foreground", setEnemies: contents, interactname: "FOEbig", dialogMax: 10, moving: true }));
                         break;
                     case 11: // hole
                         me.endPos = { x: myX, y: myY };

@@ -9110,4 +9110,110 @@ const fulltext = {
 		"en-us": "The most expensive spice in the world. The threads must be individually plucked from the Autumn Crocus flower by hand. Some people will do a lot to make their food slightly tastier.", 
 		"type": "item"
 	},
+	"FOEbig0": {
+		"en-us": "???: I have not seen a human in a long time. Defeat me in combat, and I shall let you pass.", 
+		"type": "text"
+	},
+	"FOEbig1": {
+		"en-us": "???: If you wish to move on to the next floor of the cave, you must fight me!", 
+		"type": "text"
+	},
+	"FOEbig2": {
+		"en-us": "???: Oh hi, is that cave thing still happening? Are you a customer? Welp, guess it's time for you to get your money's worth. What? It's free now? Tsk, the economy, am I right?", 
+		"type": "text"
+	},
+	"FOEbig3": {
+		"en-us": "???: Did you know you have a skeleton inside you right now? I'd love to introduce you.", 
+		"type": "text"
+	},
+	"FOEbig4": {
+		"en-us": "???: Aw, come on, a battle? I'm busy right now! I'm about to face a boss in this game Factory Fantasy! Fine, I guess I can do it after I kick your ass.", 
+		"en-us-sfw": "???: Aw, come on, a battle? I'm busy right now! I'm about to face a boss in this game Factory Fantasy! Fine, I guess I can do it after I kick your butt.", 
+		"type": "text"
+	},
+	"FOEbig5": {
+		"en-us": "???: If it's a fight you want, it's a fight you'll get! What? You're just here to grind for experience and rare items? Well, if it's that you want, it's a fight you'll get!", 
+		"type": "text"
+	},
+	"FOEbig6": {
+		"en-us": "???: Hey what's up gamers it's CaveBoss421 here and this is part one in my Let's Play of \"beating up this farmer trying to get to the next floor of this cave.\" Please subscribe.", 
+		"type": "text"
+	},
+	"FOEbig7": {
+		"en-us": "???: Hey, can you come back later? I just ate dinner and I heard that you're not supposed to fight for half an hour after eating. What? That's swimming, not fighting? Well then!", 
+		"type": "text"
+	},
+	"FOEbig8": {
+		"en-us": "???: Dost thou seeketh to engage in battle with me? Fear not, foolish wanderer, as I shant deny you the swift death you desire.", 
+		"type": "text"
+	},
+	"FOEbig9": {
+		"en-us": "???: You want to go down? Then let's throw down! Hell no I won't slow down! ...I've been learning how to rap in my spare time. It gets lonely down here.", 
+		"en-us-sfw": "???: You want to go down? Then let's throw down! Heck no I won't slow down! ...I've been learning how to rap in my spare time. It gets lonely down here.", 
+		"type": "text"
+	},
+	"e.garfwax0": {
+		"en-us": "Sleeping Willow", 
+		"type": "enemy"
+	},
+	"e.trustworthyfriend0": {
+		"en-us": "Fun Guy", 
+		"type": "enemy"
+	},
+	"e.doodoobirdhaha0": {
+		"en-us": "Clever Girl", 
+		"type": "enemy"
+	},
+	"e.golf0": {
+		"en-us": "Lethal Greg", 
+		"type": "enemy"
+	},
+	"e.conqueredscarecrow0": {
+		"en-us": "Conquered Scarecrow", 
+		"type": "enemy"
+	},
+	"e.fishingsnake0": {
+		"en-us": "Snake Dad", 
+		"type": "enemy"
+	},
+	"nm.trapple": {
+		"en-us": "Apple", 
+		"type": "item"
+	},
+	"nm.trapricot": {
+		"en-us": "Apricot", 
+		"type": "item"
+	},
+	"nm.travocado": {
+		"en-us": "Avocado", 
+		"type": "item"
+	},
+	"nm.trbanana": {
+		"en-us": "Banana", 
+		"type": "item"
+	},
+	"nm.trgrapes": {
+		"en-us": "Grapes", 
+		"type": "item"
+	},
+	"nm.trkiwi": {
+		"en-us": "Kiwi", 
+		"type": "item"
+	},
+	"nm.trlemon": {
+		"en-us": "Lemon", 
+		"type": "item"
+	},
+	"nm.trmango": {
+		"en-us": "Mango", 
+		"type": "item"
+	},
+	"nm.trcoconut": {
+		"en-us": "Coconut", 
+		"type": "item"
+	},
+	"nm.dodo": {
+		"en-us": "Rare Egg", 
+		"type": "item"
+	},
 };

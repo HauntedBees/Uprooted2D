@@ -88,7 +88,9 @@ function CombatAnimHelper(enemies) {
     }
     this.GetEnemyTopPos = function(idx) {
         const edims = enemyAnimInfos[idx].dims, cdims = enemyAnimInfos[idx].cursorinfo;
-        return { x: edims.x + (edims.w / 16) / 2 - 0.5, y: edims.y - RoundNear(1 + cdims.h, 8) - 1 };
+        const res = { x: edims.x + (edims.w / 16) / 2 - 0.5, y: edims.y - RoundNear(1 + cdims.h, 8) - 1 };
+        if(combat.enemies[idx].id === "garfwax") { res.y -= 2; }
+        return res;
     };
     this.GetEnemyPos = idx => ({ x: enemyAnimInfos[idx].x, y: enemyAnimInfos[idx].y });
     this.GetEnemyBottomPos = idx => ({ x: enemyAnimInfos[idx].dims.x, y: enemyAnimInfos[idx].dims.y });
@@ -213,8 +215,8 @@ function CombatAnimHelper(enemies) {
         gfx.clearLayer("background");
         gfx.drawFullImage(mapBattleXref[worldmap.mapName] || "bgs/outside");
         const tileType = mapBattleTileXref[worldmap.mapName] || "grass";
-        const top = Math.min(combat.enemydy, combat.dy);
-        const bottom = Math.max(combat.enemydy + combat.enemyheight, combat.dy + player.gridHeight);
+        const top = combat.isTree ? Math.min(1, combat.dy) : Math.min(combat.enemydy, combat.dy);
+        const bottom = combat.isTree ? Math.max(5, combat.dy + player.gridHeight) : Math.max(combat.enemydy + combat.enemyheight, combat.dy + player.gridHeight);
         for(let x = 0; x < game.tilew; x++) {
             gfx.drawTileToGrid(tileType + "Top", x, top - 1, "background");
             gfx.drawTileToGrid(tileType + "Bottom", x, bottom, "background");
@@ -222,8 +224,9 @@ function CombatAnimHelper(enemies) {
                 gfx.drawTileToGrid(tileType, x, y, "background");
             }
         }
-        if(combat.enemyTile === "dirt" || combat.enemyTile === "nathan") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
+        if(["dirt", "nathan", "_strongsoil"].indexOf(combat.enemyTile) >= 0) { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
         else if(combat.enemyTile === "watertile") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "wedge"); }
+        else if(combat.enemyTile === "tree") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "tree"); }
         for(let x = 0; x < combat.enemywidth; x++) { // enemy field
             for(let y = 0; y < combat.enemyheight; y++) {
                 if(combat.enemyTile === "nathan") { gfx.drawTileToGrid("dirt", combat.enemydx + x, y + combat.enemydy, "background"); }

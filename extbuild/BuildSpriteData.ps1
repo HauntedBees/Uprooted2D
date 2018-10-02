@@ -36,9 +36,9 @@ if($which.Contains("S")) {
     
     Write-Host "Starting Details_SmallSprites.ods Conversion";
     & "C:\Program Files (x86)\LibreOffice 5\program\scalc.exe" --headless --convert-to csv:"Text - txt - csv (StarCalc)":"44,34,0,,,,true" --outdir ".\temp" "Details_SmallSprites.ods" | Out-Null;
-	$csv = Import-CSV ".\temp\Details_SmallSprites.csv" -Header 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29;
+	$csv = Import-CSV ".\temp\Details_SmallSprites.csv" -Header 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30;
     $aliases = @{}; $addFives = @{};
-    $row = 32;
+    $row = 33;
     while($true) {
         if($csv[$row].0 -eq $null) { break; }
         $key = $csv[$row].1;
@@ -52,8 +52,8 @@ if($which.Contains("S")) {
         }
         $row += 1;
     }
-    for($y = 0; $y -lt 30; $y++) {
-        for($x = 0; $x -lt 30; $x++) {
+    for($y = 0; $y -lt 31; $y++) {
+        for($x = 0; $x -lt 31; $x++) {
             $val = $csv[$y].$x;
             if($val -eq "") { continue; }
             $out.WriteLine("    `"$val`": [$x, $y],");

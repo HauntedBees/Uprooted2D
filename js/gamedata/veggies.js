@@ -166,6 +166,17 @@ function GetCrop(name) {
 		case "soybean": return new CropDetail(name, 0, "veg", 1, 10, 5, 8, 0, 1, 2, 2, 0);
 		case "conveyorEnd": return new CropDetail(name, 0, "card", 1, 999, 1, 10, 0, 0, 0, 0, 0);
 		case "soybaby": return new CropDetail(name, 0, "babby", 1, 5, 5, 0, 0, 1, 1, 1, 1, { baby: "soyChild" });
+		/* Cave */
+		case "trapple": return new CropDetail(name, 150, "tree", 1, 3, 3, 7, 0, 2, 2, 2, 2, { saltChance: 0.25 });
+		case "trapricot": return new CropDetail(name, 330, "tree", 1, 6, 3, 11, 0, 2, 2, 2, 2);
+		case "travocado": return new CropDetail(name, 330, "tree", 1, 6, 3, 11, 0, 2, 2, 2, 2);
+		case "trbanana": return new CropDetail(name, 225, "tree", 1, 3, 3, 8, 0, 2, 2, 2, 2, { burnChance: 0.25 });
+		case "trgrapes": return new CropDetail(name, 285, "tree", 1, 5, 3, 10, 0, 2, 2, 2, 2);
+		case "trkiwi": return new CropDetail(name, 210, "tree", 1, 10, 3, 11, 0, 2, 2, 2, 2);
+		case "trlemon": return new CropDetail(name, 315, "tree", 1, 3, 3, 9, 0, 2, 2, 2, 2, { saltChance: 0.25 });
+		case "trmango": return new CropDetail(name, 90, "tree", 1, 3, 3, 6, 0, 2, 2, 2, 2, { burnChance: 0.25 });
+		case "trcoconut": return new CropDetail(name, 500, "tree", 1, 3, 3, 11, 0, 2, 2, 2, 2);
+		case "dodo": return new CropDetail(name, 500, "egg", 1, 20, 4, 11, 0, 2, 2, 2, 2, { saltChance: 0.5, burnChance: 0.5 });
 	}
 }
 debug.AllCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "specialgrapes", "kiwi", "lemon", "mango", "beeR", "beeG", "beeB", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "spear", "rod", "goodrod", "metalrod", "net", "bignet", "fodder", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "egg", "quail", "goose", "turkey", "platypus", "battery", "headphones", "printer", "app", "drone", "frogbot", "coffee", "sicklebattery", "holywater", "holyjug", "goldegg", "coconut", "gmocorn", "ultrarod", "goodfood", "notdrugs", "lotus", "hbee", "saffron"];

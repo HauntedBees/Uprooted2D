@@ -108,7 +108,7 @@ combat.selectTarget = {
         } else if(this.cursorx >= 0) {
             const enemy = combat.enemies[this.cursorx];
             gfx.drawTileToGrid(GetHPFrame(enemy), me.INFOBOXWIDTH, this.dy, "menucursorB");
-            gfx.drawWrappedText(enemy.name, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 95);
+            gfx.drawWrappedText(enemy.name, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
         }
         combat.animHelper.DrawBottom();
     },
