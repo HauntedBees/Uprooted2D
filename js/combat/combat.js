@@ -328,7 +328,7 @@ const combat = {
             player.health = player.maxhealth;
         }
         this.cursors.Perish();
-        gfx.clearLayer("menucursorC");
+        gfx.clearSome(["menucursorC", "crops"]);
         CombatChievoCheck();
     },
     fuckingDead: function() {

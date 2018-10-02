@@ -139,6 +139,7 @@ function CombatAnimHelper(enemies) {
     this.CleanAnims = function() { anims = []; };
 
     const DrawCropGrid = function(grid, dx, dy, drawWeed) {
+        const drawLayer = "crops"; // was foreground
         for(let x = 0; x < grid.length; x++) {
             const xdx = x + dx;
             for(let y = 0; y < grid[0].length; y++) {
@@ -150,48 +151,48 @@ function CombatAnimHelper(enemies) {
                     let drawItemNum = true;
                     if(crop.name === "bignet") {
                         if(crop.rotten) {
-                            gfx.drawTileToGrid(crop.name + "0", xdx, ydy, "foreground");
+                            gfx.drawTileToGrid(crop.name + "0", xdx, ydy, drawLayer);
                         } else {
-                            gfx.drawTileToGrid(crop.name + "1", xdx, ydy, "foreground");
-                            gfx.drawItemNumber(0, xdx + 1, ydy, "foreground", true);
+                            gfx.drawTileToGrid(crop.name + "1", xdx, ydy, drawLayer);
+                            gfx.drawItemNumber(0, xdx + 1, ydy, drawLayer, true);
                         }
                         drawItemNum = false;
                     } else if(crop.type !== "tree") {
-                        gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
+                        gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, drawLayer);
                     } else if(newFrame < 3) {
-                        gfx.drawTileToGrid((crop.treeSprite || "tree") + newFrame, xdx, ydy, "foreground");
+                        gfx.drawTileToGrid((crop.treeSprite || "tree") + newFrame, xdx, ydy, drawLayer);
                     } else {
-                        gfx.drawTileToGrid((crop.treeSprite || "tree") + "2", xdx, ydy, "foreground");
+                        gfx.drawTileToGrid((crop.treeSprite || "tree") + "2", xdx, ydy, drawLayer);
                         newFrame -= 3;
-                        gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
+                        gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, drawLayer);
                     }
-                    if(drawItemNum) { gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx + 1, ydy, "foreground", true); }
+                    if(drawItemNum) { gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx + 1, ydy, drawLayer, true); }
                 } else if(crop.type === "water") {
                     if(crop.name === "net") {
                         if(crop.rotten) {
-                            gfx.drawTileToGrid(crop.name + "0", xdx, ydy, "foreground");
+                            gfx.drawTileToGrid(crop.name + "0", xdx, ydy, drawLayer);
                         } else {
-                            gfx.drawTileToGrid(crop.name + "1", xdx, ydy, "foreground");
-                            gfx.drawItemNumber(0, xdx, ydy, "foreground", true);
+                            gfx.drawTileToGrid(crop.name + "1", xdx, ydy, drawLayer);
+                            gfx.drawItemNumber(0, xdx, ydy, drawLayer, true);
                         }
                     }
                 } else if(crop.type === "card") {
-                    gfx.drawTileToGrid((crop.inDefensePosition ? "def" : "") + crop.name, xdx, ydy, "foreground");
+                    gfx.drawTileToGrid((crop.inDefensePosition ? "def" : "") + crop.name, xdx, ydy, drawLayer);
                 } else if(crop.type === "bee") {
-                    gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, "foreground");
+                    gfx.drawTileToGrid(crop.name + newFrame, xdx, ydy, drawLayer);
                 } else if(crop.type === "rod") {
-                    gfx.drawTileToGrid(crop.fishNum === undefined ? (crop.name + "0") : ("fish" + crop.fishNum), xdx, ydy, "foreground");
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, "foreground", true);
+                    gfx.drawTileToGrid(crop.fishNum === undefined ? (crop.name + "0") : ("fish" + crop.fishNum), xdx, ydy, drawLayer);
+                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, drawLayer, true);
                 } else {
-                    gfx.drawTileToGrid((crop.rotten && drawWeed) ? "weed" : (crop.name + newFrame), xdx, ydy, "foreground");
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, "foreground", true);
+                    gfx.drawTileToGrid((crop.rotten && drawWeed) ? "weed" : (crop.name + newFrame), xdx, ydy, drawLayer);
+                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, drawLayer, true);
                 }
-                if(crop.rotResistActive) { gfx.drawTileToGrid("rotSparkle", xdx, ydy, "foreground"); }
+                if(crop.rotResistActive) { gfx.drawTileToGrid("rotSparkle", xdx, ydy, drawLayer); }
             }
         }
     };
     this.DrawCrops = function() {
-        gfx.clearLayer("foreground");
+        gfx.clearLayer("crops");
         DrawCropGrid(combat.grid, combat.dx, combat.dy, true);
         DrawCropGrid(combat.enemyGrid, combat.enemydx, combat.enemydy);
     };
