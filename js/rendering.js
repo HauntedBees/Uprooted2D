@@ -380,6 +380,12 @@ const gfx = {
         gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorTop"], 0, 0, 1024, 252, 0, 0 - intensity, 1024, 252);
         gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorBottom"], 0, 0, 1024, 252, 0, 160 + intensity, 1024, 252);
     },
+    // Combat
+    DrawBlackRect: function(x, y, w, h) {
+        const ctx = gfx.ctx["tutorial"];
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(x * gfx.scale, y * gfx.scale, w * gfx.scale, h * gfx.scale);
+    },
     // Full Drawsies
     drawMap: function(map, centerx, centery) {
         const mapImg = gfx.spritesheets["maps/" + map];

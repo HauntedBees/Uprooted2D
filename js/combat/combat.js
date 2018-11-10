@@ -7,9 +7,7 @@ const combat = {
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     didHarvest: false, harvestChain: 0, 
     animHelper: null, isTree: false, 
-    startBattle: function(enemies) {
-        worldmap.clean();
-        gfx.clearAll();
+    startBattle: function(enemies, skipTransition) {
         player.initGridDimensions();
         this.didHarvest = false;
         this.harvestChain = 0;
@@ -98,6 +96,16 @@ const combat = {
             if(this.enemies[i].initFunc === undefined) { continue; }
             combatInitFuncs[this.enemies[i].initFunc]();
         }
+
+        if(skipTransition) {
+            this.innerStartBattle();
+        } else {
+           this.transition.Start();
+        }
+    }, 
+    innerStartBattle: function() {
+        worldmap.clean();
+        gfx.clearAll();
         combat.animHelper.DrawBackground();
         combat.animHelper.DrawCrops();
         combat.charAnimIdx = setInterval(function() { combat.animHelper.Animate() }, timers.CHARANIM);
