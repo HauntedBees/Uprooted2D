@@ -8994,7 +8994,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"underground12": {
-		"en-us": "Skyler: They insist that the Recovery Response Team is looting their unconscious bodies, but the RRT insists that some of the mosters down there just like looting!", 
+		"en-us": "Skyler: They insist that the Recovery Response Team is looting their unconscious bodies, but the RRT insists that some of the monsters down there just like looting!", 
 		"type": "text"
 	},
 	"underground13": {
