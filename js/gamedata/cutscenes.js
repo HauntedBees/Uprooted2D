@@ -734,7 +734,7 @@ const scripts = {
 	"final32": "_SLEEP:3000",
 	"final33": "_CUSTOM:GARFIELDMYPEBBLES&_FIGHT:nathan",
 	"finalReturn0": "endNath_ANIM:FBStand&endNath_ISMOVING:true&_TEXT:nathReturn",
-	"finalReturn1": "_FIGHT:nathan",
+	"finalReturn1": "_CUSTOM:GARFIELDMYPEBBLES&_FIGHT:nathan",
 	// Misc.: Pissed off Colel Cab
 	"angryBee0": "_ALIGNGOOD:-1&pl_SETDIR:2&_TEXT:BeeGuard0",
 	"angryBee1": "pl_SETDIR:1&_TEXT:BeeGuard1",

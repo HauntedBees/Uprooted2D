@@ -151,5 +151,5 @@ let mapRefreshes = {
         }
     },
     "hq_4": function(e) { if(e.name === "SavedWorker" && player.completedQuest("helpNerd")) { e.interact = OneSpeak("sleepingSavedNerd"); } },
-    "hq_6": function(e) { if(e.autoplay === true && player.failedEntities.indexOf("cutscene_final") >= 0) { e.interact = Cutscene("finalReturn"); } }
+    "hq_6": function(e) { if(e.name === "cutscene_final" && player.failedEntities.indexOf("ChuddsMakenzie") >= 0) { e.interact = Cutscene("finalReturn"); } }
 };

@@ -916,7 +916,7 @@ const SpecialFunctions = {
         worldmap.forceMove = false;
         worldmap.forcedY = -1;
         SetUpFellow(worldmap, "walk", true);
-        worldmap.entities.filter(e => e.autoplay === true)[0].interact = Cutscene("finalReturn");
+        worldmap.entities.filter(e => e.name === "cutscene_final")[0].interact = Cutscene("finalReturn");
     },
     "FLIPSHIT": function() {
         worldmap.waitForAnimation = true;
