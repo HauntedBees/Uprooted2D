@@ -46,7 +46,7 @@ worldmap.credits = {
         else if(player.hasAchievement("techGood")) { map = "northcity_IG"; }
         else if(player.hasAchievement("techBad")) { map = "northcity_IB"; }
         game.transition(this, worldmap, { init: { x: 39, y: 10 }, map: map });
-        SpecialFunctions["DESTROYBUILDING"]();
+        setTimeout(() => { SpecialFunctions["DESTROYBUILDING"]() }, 1000);
     },
     keyPress: function(key) {
         switch(key) {

@@ -62,7 +62,8 @@ const game = {
                     "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
                     "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
                     "maps/hq_6", "maps/gameover", "cavesheet",
-                    "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG",
+                    "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG", "maps/northcity_NB", "maps/hq_NB", "maps/hq_NB_side",
+                    "maps/northcity_IB", "maps/hq_IB", 
                     //* Map Covers *//
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",
@@ -70,7 +71,7 @@ const game = {
                     "fg/farm", "fg/producestand", "fg/firstvillage", 
                     "fg/belowvillage", "fg/researchfacility", "fg/underwater", "fg/fakefarm", 
                     "fg/southcity", "fg/northcity", "fg/hq_1", "fg/hq_2", "fg/hq_3", "fg/hq_4", "fg/hq_5",
-                    "fg/hq_IG",
+                    "fg/hq_IG", "fg/hq_NB",
                     //* Shops *//
                     "shops/home", "shops/cluckfuck",
                     "shops/seedypete", "shops/daveshoes",  "shops/inn1", "shops/fixt1", "shops/expand1",
@@ -78,7 +79,8 @@ const game = {
                     "shops/realactualhuman", "shops/piggy", "shops/cheebo",
                     "shops/pawn", "shops/tinker", "shops/church", "shops/catalina", "shops/skumpy", "shops/seedshack",
                     "shops/tech", "shops/hotel", "shops/cityfixture", "shops/epickyle", "shops/gordon", 
-                    "shops/vendo", "shops/finalInn", "shops/gordon2", "shops/coop", 
+                    "shops/vendo", "shops/finalInn", "shops/gordon2", "shops/coop", "shops/epickyle_empty",
+                    "shops/tech_empty", "shops/hotel_empty", "shops/cityfixture_empty",
                     //* Shop Blinks *//
                     "shopblinks/home", "shopblinks/cluckfuck",
                     "shopblinks/seedypete", "shopblinks/daveshoes", "shopblinks/inn1", "shopblinks/fixt1", "shopblinks/expand1",
@@ -127,6 +129,7 @@ const game = {
         collisions["northcity_NB"] = collisions["northcity"];
         collisions["northcity_IG"] = collisions["northcity"];
         collisions["northcity_IB"] = collisions["northcity"];
+        collisions["hq_IB"] = collisions["hq_IG"];
     },
     transitioning: false,
     CleanHandler: function(from) {
@@ -404,6 +407,9 @@ const game = {
         if(mapStates["northcity_IG"] === undefined) { mapStates["northcity_IG"] = { inside: false }; }
         if(mapStates["northcity_IB"] === undefined) { mapStates["northcity_IB"] = { inside: false }; }
         if(mapStates["hq_IG"] === undefined) { mapStates["hq_IG"] = {}; }
+        if(mapStates["hq_NB"] === undefined) { mapStates["hq_NB"] = {}; }
+        if(mapStates["hq_NB_side"] === undefined) { mapStates["hq_NB_side"] = {}; }
+        if(mapStates["hq_IB"] === undefined) { mapStates["hq_IB"] = {}; }
         return true;
     }
 };

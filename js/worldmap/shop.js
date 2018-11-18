@@ -322,12 +322,12 @@ worldmap.shop = {
     },
     DrawEquipText: function(productInfo) {
         const equipInfo = GetEquipment(productInfo.product);
-        const price = Math.floor(equipInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
+        const price = Math.floor(equipInfo.price * this.details.buyMult * GetPriceMultiplier());
         this.WriteWrappedText(equipInfo.displayname + " (" + price + " coins) \n " + GetEquipmentDesc(equipInfo));
     },
     DrawFarmText: function(productInfo) {
         const farmInfo = GetFarmInfo(productInfo.product);
-        const price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
+        const price = Math.floor(farmInfo.price * this.details.buyMult * GetPriceMultiplier());
         let lineOne = farmInfo.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(farmInfo.name);
         if(amt > 0) { lineOne = this.CombineRightAligned(lineOne, GetText("s.youHave").replace(/\{0\}/g, amt)); }
@@ -335,7 +335,7 @@ worldmap.shop = {
     },
     DrawSeedText: function(productInfo, crop, price) {
         crop = crop || GetCrop(productInfo.product);
-        price = price || Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
+        price = price || Math.floor(crop.price * this.details.buyMult * GetPriceMultiplier());
         let str = crop.displayname + " (" + price + "G)";
         const amt = player.getItemAmount(crop.name);
         if(amt > 0) { str = this.CombineRightAligned(str, GetText("s.youHave").replace(/\{0\}/g, amt)); }
@@ -395,13 +395,13 @@ worldmap.shop = {
         let topText = "", price = 0;
         if(productInfo.type === "seed") {
             const crop = GetCrop(productInfo.product);
-            price = Math.floor(crop.price * (this.details.buyMult || 1) * GetPriceMultiplier());
+            price = Math.floor(crop.price * this.details.buyMult * GetPriceMultiplier());
             topText = crop.displayname + " (" + price + "G)";
             const amt = player.getItemAmount(crop.name);
             topText = this.CombineRightAligned(topText, GetText("s.youHave").replace(/\{0\}/g, amt));
         } else if(productInfo.type === "farm") {
             const farmInfo = GetFarmInfo(productInfo.product);
-            price = Math.floor(farmInfo.price * (this.details.buyMult || 1) * GetPriceMultiplier());
+            price = Math.floor(farmInfo.price * this.details.buyMult * GetPriceMultiplier());
             topText = farmInfo.displayname + " (" + price + "G)";
             const amt = player.getItemAmount(farmInfo.name);
             topText = this.CombineRightAligned(topText, GetText("s.youHave").replace(/\{0\}/g, amt));
@@ -550,7 +550,7 @@ worldmap.shop = {
             return true;
         }
         let price = 0;
-        const mult = (this.details.buyMult || 1) * GetPriceMultiplier();
+        const mult = this.details.buyMult * GetPriceMultiplier();
         switch(productInfo.type) {
             case "seed": price = GetCrop(productInfo.product).price; break;
             case "farm": price = GetFarmInfo(productInfo.product).price; break;

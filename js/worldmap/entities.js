@@ -1125,5 +1125,215 @@ const mapentities = {
         ];
         return entities;
     },
+    "northcity_NB": () => [
+        // Map Switches
+        SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
+        SwitchMap("EnterFood2", 39, 8, false, false, 15, 29, "hq_NB"),
+        // Foreground
+        GetForeground("northcity", 0, 4032),
+        // Covers
+        GetJumbo("12thStBuildings", "northcity3", 21, 31, 2436, 832, 1, 0),
+        GetJumboToggle("Cash2", 25, 42, true), GetJumboToggle("Cash2", 25, 43, false),
+        GetJumboToggle("OfficeL", 52, 42, true), GetJumboToggle("OfficeL", 52, 43, false),
+        GetJumboToggle("OfficeR", 53, 42, true), GetJumboToggle("OfficeR", 53, 43, false),
+        GetJumbo("13thStBuildings", "northcity2", 11, 14, 3072, 832, 0, 0),
+        GetJumboToggle("Mushman", 15, 25, true), GetJumboToggle("Mushman", 15, 26, false),
+        GetJumboToggle("BoringApt", 25, 25, true), GetJumboToggle("BoringApt", 25, 26, false),
+        GetJumboToggle("FishApt", 35, 25, true), GetJumboToggle("FishApt", 35, 26, false),
+        GetJumboToggle("NerndHaus", 44, 25, true), GetJumboToggle("NerndHaus", 44, 26, false),
+        GetJumboToggle("XNerndHausL", 43, -2, true), GetJumboToggle("XNerndHausL", 43, -1, false),
+        GetJumboToggle("XNerndHausL2", 42, -2, true), GetJumboToggle("XNerndHausL2", 42, -1, false),
+        GetJumboToggle("XNerndHausR", 45, -2, true), GetJumboToggle("XNerndHausR", 45, -1, false),
+        GetJumboToggle("SpinachApt", 53, 25, true), GetJumboToggle("SpinachApt", 53, 26, false),
+        GetJumbo("14thStBuildings", "northcity1", 0, 0, 1276, 636, -1, -1),
+        GetJumboToggle("BankL", 6, 8, true), GetJumboToggle("BankL", 6, 9, false),
+        GetJumboToggle("BankR", 7, 8, true), GetJumboToggle("BankR", 7, 9, false),
+        GetJumboToggle("StrangeL", 16, 8, true), GetJumboToggle("StrangeL", 16, 9, false),
+        GetJumboToggle("StrangeR", 17, 8, true), GetJumboToggle("StrangeR", 17, 9, false),
+        // Shops
+        EnterShop("CityFixturesL", 15, 43, "cityFixtures"),
+        EnterShop("CityFixturesR", 16, 43, "cityFixtures"),
+        EnterShop("HotelL", 34, 43, "cityInn"),
+        EnterShop("HotelR", 35, 43, "cityInn"),
+        EnterShop("GordonsFarm", 43, 43, "gordonsFarming3"), 
+        EnterShop("CityExpandL", 24, 9, "cityExpansions"),
+        EnterShop("CityExpandR", 25, 9, "cityExpansions"),
+        EnterShop("CityTech", 55, 9, "cityTech"),
+        GetFellow("crazy4trout", 34, 17, 2, "FishNernd", Cutscene("crazy4trout"), undefined, { visible: false, inside: true, moveToTalk: true }),
+        GetFellow("EggBoy", 58, 30, 0, "Danny", Cutscene("eggBoy"), undefined, { moveToTalk: true }),
+        // Beehive & Falcon & Quests
+        BeeFellow("OfficeHive", 55, 32, true),
+        GetFellow("MushMan", 16, 22, 0, "Mush1", Cutscene("mushman"), undefined, { visible: false, inside: true, moveToTalk: true }),
+        GetFellow("brandt", 54, 22, 0, "Barnt", Cutscene("brandt"), undefined, { visible: false, inside: true, moveToTalk: true }),
+        // Treasure
+        GetIndoorTreasureChest("NCChest2", 37, 22, [["arborio", 5], ["rice", 5]]),
+        GetIndoorTreasureChest("NCChest3", 24, 15, [["goose", 6]]),
+        GetIndoorTreasureChest("NCChest4", 54, 15, [["coffee", 4]]),
+        GetIndoorTreasureChest("NCChest5", 57, 15, [["ginger", 6]]),
+        GetFellow("freeRadish", 13, 15, 0, "", Cutscene("freeRadish"), undefined, { visible: false }),
+        // The Underground Man
+        GetFellow("UndergroundMan", 16, 6, 0, "HHolerGuy", Cutscene("caveDive"), undefined, { visible: false, inside: true, storageKey: "caveboy" }),
+        GetFellow("UndergroundHole", 17, 6, 0, "Hole", Cutscene("enterCave"), undefined, { visible: false, inside: true, boring: true }),
+        new CutsceneTrigger("caveEscape", "caveEscape", true),
+        // People
+        GetFellow("SomeNerd", 15, 17, 3, "Nernd1", Cutscene("someNerd"), undefined, { visible: false, inside: true, moveToTalk: true }),
+        GetFellow("OfficeLady", 54, 35, 1, "GirlNernd", Cutscene("officeLady"), undefined, { visible: false, inside: true, moveToTalk: true }),
+        GetFellow("CityMonk", 36, 22, 2, "Monky", Cutscene("cityMonk"), undefined, { visible: false, inside: true }),
+        // Misc. Entities
+        GetNoIMFellow("LavaLamp", 15, 20.25, "LavaLamp", { boring: true, inside: true, visible: false, moving: true }),
+        InvisFellow("fridge", 18, 21, "mushFridge"),
+        InvisFellow("fridge2", 12, 15, "mushFridge"),
+        InvisFellow("mushGame", 17, 21, "mushGame"),
+        InvisFellow("mushPosterL", 13, 20, "mushPoster"),
+        InvisFellow("mushPosterR", 14, 20, "mushPoster"),
+        InvisFellow("mushLamp", 15, 20, "mushLamp"),
+        InvisFellow("billU", 17, 16, "rentBill"),
+        InvisFellow("billB", 17, 17, "rentBill"),
+        InvisFellow("bed1L", 18, 19, "someonesBed"),
+        InvisFellow("bed1R", 19, 19, "someonesBed"),
+        InvisFellow("bed2U", 19, 22, "someonesBed"),
+        InvisFellow("bed2B", 19, 23, "someonesBed"),
+        GetNoIMFellow("CompCover1", 50, 33, "MacL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover2", 51, 33, "MacR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover3", 50, 36, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover4", 51, 36, "PCR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover5", 50, 39, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover6", 51, 39, "PCR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover7", 55, 36, "MacL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover8", 56, 36, "MacR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover9", 55, 39, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover0", 56, 39, "PCRbeef", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("12thSt", 4, 43, "St12", { boring: true, big: true }),
+        GetNoIMFellow("13thSt", 4, 26, "St13", { boring: true, big: true }),
+        GetNoIMFellow("14thSt", 2, 9, "St14", { boring: true, big: true }),
+        GetSign(24, 19, "forRentSign")
+    ],
+    "hq_NB": function() {
+        const entities = [
+            // Map Switches
+            SwitchMap("Leave", 15, 30, false, false, 39, 10, "northcity_NB"),
+            SwitchMap("GoRightT", 30, 9, false, false, 2, 7.75, "hq_NB_side"),
+            SwitchMap("GoRightM", 30, 10, false, false, 2, 7.75, "hq_NB_side"),
+            SwitchMap("GoRightB", 30, 11, false, false, 2, 7.75, "hq_NB_side"),
+            // Foreground
+            GetForeground("hq_NB", 0, 1984),
+            // Talky Entities
+            GetFellow("hungryboy", 14, 13, 0, "Hungy", OneSpeak("stillHungyBad"), undefined, { moving: true }),
+            GetFellow("hungyBinU", 14, 11, 0, "", Cutscene("hungyBin"), undefined, { visible: false, boring: true }),
+            GetFellow("hungyBinB", 14, 12, 0, "", Cutscene("hungyBin"), undefined, { visible: false, boring: true }),
+            GetFellow("Anarchist1", 4, 24, 3, "Carlos", OneSpeak("anDiscussion"), undefined, { moving: true, noChange: true }),
+            GetFellow("Anarchist2", 5, 24, 1, "IGGirl1", OneSpeak("anDiscussion"), undefined, { moving: true, noChange: true }),
+            GetFellow("Anarchist3", 16, 23, 2, "IGGirl2", OneSpeak("anarchist1"), undefined, { moveToTalk: true }),
+            GetFellow("Anarchist4", 20, 10, 3, "Tanner", OneSpeak("anarchist2"), undefined, { moveToTalk: true }),
+            GetFellow("Anarchist5", 25, 7, 3, "RabbitCleanTalk", OneSpeak("anarchist3"), undefined, { moveToTalk: true }),
+            // Misc. Entities
+            GetNoIMFellow("Chair1", 11, 25, "HQChairL", { boring: true }),
+            GetNoIMFellow("Chair4", 19, 27, "HQChairR", { boring: true }),
+            GetFellow("BarricadeL", 4, 2, 0, "HazardL", OneSpeak("hq_noUpstairs"), undefined, { big: true }),
+            GetFellow("BarricadeR", 6, 2, 0, "HazardR", OneSpeak("hq_noUpstairs"), undefined, { big: true }),
+            InvisFellow("ElevatorL", 11, 2, "hq_noUpstairs"),
+            InvisFellow("ElevatorR", 12, 2, "hq_noUpstairs")
+        ];
+        return entities;
+    },
+    "hq_NB_side": () => [
+        SwitchMap("GoLeft", 1, 8, false, true, 29, 10, "hq_NB"),
+        GetFellow("Beckett", 8, 8, 0, "BeckBack2", undefined, undefined, { storageKey: "beckJail" }),
+        GetFellow("JailWall", 5, 8, 0, "", Cutscene("beckettJail"), undefined, { visible: false })
+    ],
+    "northcity_IB": () => [
+        // Map Switches
+        SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
+        SwitchMap("EnterFood2", 39, 8, false, false, 15, 29, "hq_IB"),
+        // Foreground
+        GetForeground("northcity", 0, 4032),
+        // Covers
+        GetJumbo("12thStBuildings", "northcity3", 21, 31, 2436, 832, 1, 0),
+        GetJumboToggle("Cash2", 25, 42, true), GetJumboToggle("Cash2", 25, 43, false),
+        GetJumboToggle("OfficeL", 52, 42, true), GetJumboToggle("OfficeL", 52, 43, false),
+        GetJumboToggle("OfficeR", 53, 42, true), GetJumboToggle("OfficeR", 53, 43, false),
+        GetJumbo("13thStBuildings", "northcity2", 11, 14, 3072, 832, 0, 0),
+        GetJumboToggle("Mushman", 15, 25, true), GetJumboToggle("Mushman", 15, 26, false),
+        GetJumboToggle("BoringApt", 25, 25, true), GetJumboToggle("BoringApt", 25, 26, false),
+        GetJumboToggle("FishApt", 35, 25, true), GetJumboToggle("FishApt", 35, 26, false),
+        GetJumboToggle("NerndHaus", 44, 25, true), GetJumboToggle("NerndHaus", 44, 26, false),
+        GetJumboToggle("XNerndHausL", 43, -2, true), GetJumboToggle("XNerndHausL", 43, -1, false),
+        GetJumboToggle("XNerndHausL2", 42, -2, true), GetJumboToggle("XNerndHausL2", 42, -1, false),
+        GetJumboToggle("XNerndHausR", 45, -2, true), GetJumboToggle("XNerndHausR", 45, -1, false),
+        GetJumboToggle("SpinachApt", 53, 25, true), GetJumboToggle("SpinachApt", 53, 26, false),
+        GetJumbo("14thStBuildings", "northcity1", 0, 0, 1276, 636, -1, -1),
+        GetJumboToggle("BankL", 6, 8, true), GetJumboToggle("BankL", 6, 9, false),
+        GetJumboToggle("BankR", 7, 8, true), GetJumboToggle("BankR", 7, 9, false),
+        GetJumboToggle("StrangeL", 16, 8, true), GetJumboToggle("StrangeL", 16, 9, false),
+        GetJumboToggle("StrangeR", 17, 8, true), GetJumboToggle("StrangeR", 17, 9, false),
+        // Shops
+        EnterShop("CityFixturesL", 15, 43, "cityFixtures_empty"),
+        EnterShop("CityFixturesR", 16, 43, "cityFixtures_empty"),
+        EnterShop("HotelL", 34, 43, "cityInn_empty"),
+        EnterShop("HotelR", 35, 43, "cityInn_empty"),
+        EnterShop("CityExpandL", 24, 9, "cityExpansions_empty"),
+        EnterShop("CityExpandR", 25, 9, "cityExpansions_empty"),
+        EnterShop("CityTech", 55, 9, "cityTech_empty"),
+        // Beehive & Falcon & Quests
+        BeeFellow("OfficeHive", 55, 32, true),
+        // The Underground Man
+        GetFellow("UndergroundMan", 16, 6, 0, "HHolerGuy", Cutscene("caveDive"), undefined, { visible: false, inside: true, storageKey: "caveboy" }),
+        GetFellow("UndergroundHole", 17, 6, 0, "Hole", Cutscene("enterCave"), undefined, { visible: false, inside: true, boring: true }),
+        new CutsceneTrigger("caveEscape", "caveEscape", true),
+        // Misc. Entities
+        GetNoIMFellow("LavaLamp", 15, 20.25, "LavaLamp", { boring: true, inside: true, visible: false, moving: true }),
+        InvisFellow("fridge", 18, 21, "mushFridge"),
+        InvisFellow("fridge2", 12, 15, "mushFridge"),
+        InvisFellow("mushGame", 17, 21, "mushGame"),
+        InvisFellow("mushPosterL", 13, 20, "mushPoster"),
+        InvisFellow("mushPosterR", 14, 20, "mushPoster"),
+        InvisFellow("mushLamp", 15, 20, "mushLamp"),
+        InvisFellow("billU", 17, 16, "rentBill"),
+        InvisFellow("billB", 17, 17, "rentBill"),
+        InvisFellow("bed1L", 18, 19, "someonesBed"),
+        InvisFellow("bed1R", 19, 19, "someonesBed"),
+        InvisFellow("bed2U", 19, 22, "someonesBed"),
+        InvisFellow("bed2B", 19, 23, "someonesBed"),
+        GetNoIMFellow("CompCover1", 50, 33, "MacL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover2", 51, 33, "MacR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover3", 50, 36, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover4", 51, 36, "PCR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover5", 50, 39, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover6", 51, 39, "PCR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover7", 55, 36, "MacL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover8", 56, 36, "MacR", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover9", 55, 39, "PCL", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("CompCover0", 56, 39, "PCRbeef", { boring: true, inside: true, visible: false, solid: false, forcedY: 40 }),
+        GetNoIMFellow("12thSt", 4, 43, "St12", { boring: true, big: true }),
+        GetNoIMFellow("13thSt", 4, 26, "St13", { boring: true, big: true }),
+        GetNoIMFellow("14thSt", 2, 9, "St14", { boring: true, big: true }),
+        GetSign(24, 19, "forRentSign")
+    ],
+    "hq_IB": function() {
+        const entities = [
+            // Map Switches
+            SwitchMap("Leave", 15, 30, false, false, 39, 10, "northcity_IB"),
+            // Foreground
+            GetForeground("hq_IG", 0, 1984),
+            // Talky Entities
+            GetFellow("hungryboy", 14, 13, 0, "Hungy", OneSpeak("stillHungyBad"), undefined, { moving: true }),
+            GetFellow("HQRoboAlly1", 27, 9, 3, "Newbot", OneSpeak("allyRobo1")),            
+            GetFellow("HQRoboAlly2", 5, 7, 2, "Newbot", OneSpeak("allyRobo4")),            
+            GetFellow("HQRoboAlly3", 6, 7, 2, "Newbot", OneSpeak("allyRobo4")),            
+            GetFellow("HQRoboAlly4", 3, 15, 0, "Newbot", OneSpeak("allyRobo5")),            
+            GetFellow("HQRoboAlly5", 2, 18, 1, "Newbot", OneSpeak("allyRobo6")),            
+            GetFellow("HQRoboAlly6", 17, 5, 3, "Newbot", OneSpeak("allyRobo2")),            
+            GetFellow("HQRoboAlly7", 19, 15, 1, "Newbot", OneSpeak("allyRobo3")),            
+            // Misc. Entities
+            GetNoIMFellow("rollybaby1", 29, 8, "RollerBob", { moving: true, boring: true, dir: 2 }),
+            GetNoIMFellow("rollybaby2", 29, 9, "RollerBob", { moving: true, boring: true, dir: 3 }),
+            GetNoIMFellow("rollybaby3", 29, 10, "RollerBob", { moving: true, boring: true, dir: 3 }),
+            GetNoIMFellow("rollybaby4", 29, 11, "RollerBob", { moving: true, boring: true, dir: 3 }),
+            GetNoIMFellow("rollybaby5", 30, 9, "RollerBob", { moving: true, boring: true, dir: 3 }),
+            GetNoIMFellow("rollybaby6", 30, 10, "RollerBob", { moving: true, boring: true, dir: 3 }),
+            GetNoIMFellow("rollybaby7", 30, 11, "RollerBob", { moving: true, boring: true, dir: 3 })
+        ];
+        return entities;
+    },
     "gameover": () => [ new CutsceneTrigger("badEnd", "brunoKill", true), new CutsceneTrigger("monstWon", "lostToMonster", true) ]
 };

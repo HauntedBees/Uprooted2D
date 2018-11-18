@@ -823,4 +823,9 @@ const scripts = {
 	// Food2 (Industrial Good): First Floor
 	"newRecep0": "recep_ISMOVING:true&_TEXT:newRecep",
 	"newRecep1": "recep_ISMOVING:false&_QUIT&_END",
+	// Food2 (Natural Bad): Beckett
+	"beckettJail0": "beckJail_ISMOVING:true&_TEXT:beckettJail0",
+	"beckettJail1": "beckJail_ISMOVING:false&_TEXT:beckettJail(1-2)",
+	"beckettJail2": "beckJail_ISMOVING:true&_TEXT:beckettJail3",
+	"beckettJail3": "beckJail_ISMOVING:false&_QUIT&_END",
 };

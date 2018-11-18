@@ -7121,6 +7121,18 @@ const fulltext = {
 		"en-us": "Food2 HQ 1F", 
 		"type": "opts"
 	},
+	"map.hq_IG": {
+		"en-us": "New Food2 HQ", 
+		"type": "opts"
+	},
+	"map.hq_NB": {
+		"en-us": "Food2 Space", 
+		"type": "opts"
+	},
+	"map.hq_NB_side": {
+		"en-us": "Beckett Jail", 
+		"type": "opts"
+	},
 	"map.hq_2": {
 		"en-us": "Food2 HQ 2F", 
 		"type": "opts"
@@ -9312,6 +9324,108 @@ const fulltext = {
 	},
 	"hq_noUpstairs": {
 		"en-us": "The upper floors are still being renovated. It wouldn't be safe to go up there right now.", 
+		"type": "text"
+	},
+	// Area 8: North City (Natural Bad Ending)
+	"s.gordO3": {
+		"en-us": "Gordon: Well if it isn't the lady of the hour herself! Welcome to Gordon's No-Longer-Going-Out-Of-Business Not-Sale! All produce is now FULL PRICE!", 
+		"type": "shop"
+	},
+	"s.gordL3": {
+		"en-us": "Gordon: Until next time, Ayana! The city is better now that you've cleaned out those Food2 guys!", 
+		"type": "shop"
+	},
+	"s.gordN3": {
+		"en-us": "Gordon: Hey hey, we sell QUALITY produce here! And quality produce ain't cheap! You know that!", 
+		"type": "shop"
+	},
+	"s.gordP3": {
+		"en-us": "Gordon: Thank you for the business! It's booming! The business, I mean. Business is booming.", 
+		"type": "shop"
+	},
+	"s.gordT3": {
+		"en-us": "Gordon: Now that those Food2 boys left, people here remember what actual food is!", 
+		"type": "shop"
+	},
+	"stillHungyBad": {
+		"en-us": "Maybe I should tell this guy that he can leave. Eh, he'll be fine.", 
+		"type": "text"
+	},
+	"anDiscussion": {
+		"en-us": "They're discussing a planned protest of a Booksby shipping facility opening nearby.", 
+		"type": "text"
+	},
+	"anarchist1": {
+		"en-us": "Amy: Thanks again for setting this space up for us. It's much easier to organize when we have a dedicated meeting area with some privacy.", 
+		"type": "text"
+	},
+	"anarchist2": {
+		"en-us": "Tanner: Hey Ayana! I turned myself into an anarchist, Ayana! I'm anarchist Tanner! Ha ha, no, but seriously, how's your truck doing?", 
+		"type": "text"
+	},
+	"anarchist3": {
+		"en-us": "Rabbit: so what, you're all a bunch of technology-is-bad folks here, eh? well, as a woodland creature, i am a fan of this philosophy.", 
+		"type": "text"
+	},
+	"beckettJail0": {
+		"en-us": "Beckett: You know, some might argue that it's a bit mean to keep me locked up like this.", 
+		"type": "text"
+	},
+	"beckettJail1": {
+		"en-us": "They might be right. Fortunately, this is a video game. Remember, kids, in real life, you should NEVER imprison people who try to hurt you.", 
+		"type": "text"
+	},
+	"beckettJail2": {
+		"en-us": "Kill them instead.", 
+		"type": "text"
+	},
+	"beckettJail3": {
+		"en-us": "Beckett: On second thought, jail is fine.", 
+		"type": "text"
+	},
+	// Area 8: North City (Industrial Bad Ending)
+	"shopAbandoned": {
+		"en-us": "Looks empty.", 
+		"type": "shop"
+	},
+	"shopNoUpgrades": {
+		"en-us": "No upgrades left.", 
+		"type": "shop"
+	},
+	"shopAbandonLeave": {
+		"en-us": "...", 
+		"type": "shop"
+	},
+	"shopAbandonBuy": {
+		"en-us": "Finders Keepers.", 
+		"type": "shop"
+	},
+	"shopAbandonRest": {
+		"en-us": "Great sleep, but the room service was subpar.", 
+		"type": "shop"
+	},
+	"allyRobo1": {
+		"en-us": "Robot: EVERYTHING IS IN ORDER, BOSS. ALL FORMER FOOD2 EMPLOYEES HAVE BEEN SCARED OUT OF THE CITY.", 
+		"type": "text"
+	},
+	"allyRobo2": {
+		"en-us": "Robot: IT SURE IS CONVENIENT THAT OUR CREATORS INSTALLED CONVENIENT \"JOIN THE ENEMY\" BUTTONS ON ALL OF OUR BACKS.", 
+		"type": "text"
+	},
+	"allyRobo3": {
+		"en-us": "Robot: NOW THAT YOU ARE IN CHARGE, WE CAN FINALLY FULFILL OUR ORIGINAL PURPOSE OF MAKING ANIME REAL... RIGHT?", 
+		"type": "text"
+	},
+	"allyRobo4": {
+		"en-us": "Robot: IT'S NOT SAFE FOR HUMANS UP THERE YET, BOSS. LOTS OF HEAVY MACHINERY... MACHINE-ING AROUND. HEAVILY.", 
+		"type": "text"
+	},
+	"allyRobo5": {
+		"en-us": "Robot: LOOK AT ME. I'M A HUMAN. I EXPEL WASTE THROUGH MY GROIN AND SMELL LIKE CORN STARCH.", 
+		"type": "text"
+	},
+	"allyRobo6": {
+		"en-us": "Robot: THE ROBOT BEHIND THIS WINDOW LOOKS JUST LIKE ME. I SURE WISH I HAD BEEN PROGRAMMED TO COMPREHEND MIRRORS.", 
 		"type": "text"
 	},
 };
