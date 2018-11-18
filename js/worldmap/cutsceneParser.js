@@ -1143,7 +1143,7 @@ const SpecialFunctions = {
 
     // The Cave
     "HEAL": () => player.health = player.maxhealth,
-    "LEAVECAVE": () => game.transition(game.currentInputHandler, worldmap, { init: { x: 17, y: 7.5 }, playerDir: 2, map: "northcity", inside: true, postCombat: "caveEscape" }),
+    "LEAVECAVE": () => game.transition(game.currentInputHandler, worldmap, { init: { x: 17, y: 7.5 }, playerDir: 2, map: GetPostGameMapName("northcity"), inside: true, postCombat: "caveEscape" }),
     "DOWNCAVE": function() {
         const newFloor = worldmap.customMap.floor + 1;
         if(newFloor > player.caveDepth) { player.caveDepth = newFloor; }

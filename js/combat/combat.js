@@ -362,7 +362,7 @@ const combat = {
         player.health = player.maxhealth;
         clearInterval(combat.charAnimIdx);
         combat.wrapUpCombat();
-        game.transition(game.currentInputHandler, worldmap, { init: { x: inn.x,  y: inn.y }, map: inn.map, isInn: true, playerDir: 2 });
+        game.transition(game.currentInputHandler, worldmap, { init: { x: inn.x,  y: inn.y }, map: GetPostGameMapName(inn.map), isInn: true, playerDir: 2 });
     },
     checkForLevelUp: function() {
         if(player.exp >= player.nextExp && player.level < 20) {

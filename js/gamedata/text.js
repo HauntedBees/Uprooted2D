@@ -7133,6 +7133,10 @@ const fulltext = {
 		"en-us": "Beckett Jail", 
 		"type": "opts"
 	},
+	"map.hq_IB": {
+		"en-us": "Former Food2 HQ", 
+		"type": "opts"
+	},
 	"map.hq_2": {
 		"en-us": "Food2 HQ 2F", 
 		"type": "opts"

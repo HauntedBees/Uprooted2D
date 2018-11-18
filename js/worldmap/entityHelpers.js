@@ -139,13 +139,16 @@ const BeeFellow = (hiveId, x, y, inside) => GetCSFellow(hiveId, x, y, 0, "Beehiv
 
 // Map Switch Entities
 const GetStaircase = (name, x, y, newx, newy, map) => SwitchMap(name, x, y, false, false, newx, newy, map, undefined, 2);
+function GetPostGameMapName(map) {
+    if(map !== "northcity") { return map; }
+    if(player.hasAchievement("natureGood")) { map = "northcity_NG"; }
+    else if(player.hasAchievement("natureBad")) { map = "northcity_NB"; }
+    else if(player.hasAchievement("techGood")) { map = "northcity_IG"; }
+    else if(player.hasAchievement("techBad")) { map = "northcity_IB"; }
+    return map;
+}
 function SwitchMap(name, x, y, row, column, newx, newy, map, showIf, newDir) {
-    if(map === "northcity") {
-        if(player.hasAchievement("natureGood")) { map = "northcity_NG"; }
-        else if(player.hasAchievement("natureBad")) { map = "northcity_NB"; }
-        else if(player.hasAchievement("techGood")) { map = "northcity_IG"; }
-        else if(player.hasAchievement("techBad")) { map = "northcity_IB"; }
-    }
+    map = GetPostGameMapName(map);
     return {
         name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row, isMapSwitch: true, destination: map, showIf: showIf, 
         interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map, playerDir: newDir }); } ]
