@@ -62,6 +62,7 @@ const game = {
                     "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
                     "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
                     "maps/hq_6", "maps/gameover", "cavesheet",
+                    "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG",
                     //* Map Covers *//
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",
@@ -69,6 +70,7 @@ const game = {
                     "fg/farm", "fg/producestand", "fg/firstvillage", 
                     "fg/belowvillage", "fg/researchfacility", "fg/underwater", "fg/fakefarm", 
                     "fg/southcity", "fg/northcity", "fg/hq_1", "fg/hq_2", "fg/hq_3", "fg/hq_4", "fg/hq_5",
+                    "fg/hq_IG",
                     //* Shops *//
                     "shops/home", "shops/cluckfuck",
                     "shops/seedypete", "shops/daveshoes",  "shops/inn1", "shops/fixt1", "shops/expand1",
@@ -76,16 +78,18 @@ const game = {
                     "shops/realactualhuman", "shops/piggy", "shops/cheebo",
                     "shops/pawn", "shops/tinker", "shops/church", "shops/catalina", "shops/skumpy", "shops/seedshack",
                     "shops/tech", "shops/hotel", "shops/cityfixture", "shops/epickyle", "shops/gordon", 
-                    "shops/vendo", "shops/finalInn",
+                    "shops/vendo", "shops/finalInn", "shops/gordon2", "shops/coop", 
                     //* Shop Blinks *//
                     "shopblinks/home", "shopblinks/cluckfuck",
                     "shopblinks/seedypete", "shopblinks/daveshoes", "shopblinks/inn1", "shopblinks/fixt1", "shopblinks/expand1",
                     "shopblinks/constr", "shopblinks/merm1", "shopblinks/merm2",
                     "shopblinks/realactualhuman", "shopblinks/piggy", "shopblinks/cheebo",
                     "shopblinks/pawn", "shopblinks/tinker", "shopblinks/none", "shopblinks/catalina", "shopblinks/skumpy", "shopblinks/seedshack",
-                    "shopblinks/tech", "shopblinks/hotel", "shopblinks/epickyle", "shopblinks/gordon",
+                    "shopblinks/tech", "shopblinks/hotel", "shopblinks/epickyle", "shopblinks/gordon", "shopblinks/gordon2", "shopblinks/coop",
                     //* Combat Backgrounds *//
-                    "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "bgs/cave"
+                    "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "bgs/cave",
+                    //* Endings *//
+                    "end/end1"
                 ],
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
@@ -119,6 +123,10 @@ const game = {
         gfx.tileWidth = tilewidth;
         gfx.tileHeight = tileheight;
         gfx.loadSpriteSheets(player.getSheetPath(), this.sheetsToLoad, this.sheetsLoaded);
+        collisions["northcity_NG"] = collisions["northcity"];
+        collisions["northcity_NB"] = collisions["northcity"];
+        collisions["northcity_IG"] = collisions["northcity"];
+        collisions["northcity_IB"] = collisions["northcity"];
     },
     transitioning: false,
     CleanHandler: function(from) {
@@ -391,6 +399,11 @@ const game = {
         if(player.options.ignoreMouse === undefined) { console.log("ign"); player.options.ignoreMouse = 0; }
         if(player.options.virtualController === undefined) { console.log("vrt"); player.options.virtualController = 0; }
         if(player.options.canSayFuck === undefined) { console.log("ass"); player.options.canSayFuck = 1; }
+        if(mapStates["northcity_NG"] === undefined) { mapStates["northcity_NG"] = { inside: false }; }
+        if(mapStates["northcity_NB"] === undefined) { mapStates["northcity_NB"] = { inside: false }; }
+        if(mapStates["northcity_IG"] === undefined) { mapStates["northcity_IG"] = { inside: false }; }
+        if(mapStates["northcity_IB"] === undefined) { mapStates["northcity_IB"] = { inside: false }; }
+        if(mapStates["hq_IG"] === undefined) { mapStates["hq_IG"] = {}; }
         return true;
     }
 };

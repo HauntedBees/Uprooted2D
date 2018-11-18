@@ -468,7 +468,44 @@ const stores = {
         ],
         opening: "s.innLastO", leaving: "s.leaveEnd", purchased: "s.innPurchLast", awake: "s.lastWake"
     },
-
+    // Area 5: North City (Post Completion)
+    "gordonsFarming2": {
+        img: "shops/gordon2",
+        eyes: "shopblinks/gordon2", huge: true, ex: 64, ey: 0,
+        wares: [
+            { product: "portobello", type: "seed" },
+            { product: "milkcap", type: "seed" },
+            { product: "blackshroom", type: "seed" },
+            { product: "shortgrain", type: "seed" },
+            { product: "blackrice", type: "seed" },
+            { product: "mango", type: "seed" },
+            { product: "lemon", type: "seed" },
+            { product: "blackberry", type: "seed" },
+            { product: "apricot", type: "seed" }
+        ],
+        buyMult: 1, sellMult: 0.5, doesSell: false,
+        opening: "s.gordO2", leaving: "s.gordL2", notEnough: "s.gordN2", purchased: "s.gordP2", benignTalk: "s.gordT2"
+    },
+    "coop": {
+        img: "shops/coop",
+        eyes: "shopblinks/coop", ex: 104, ey: 36,
+        wares: [
+            { product: "coconut", type: "seed" },
+            { product: "bellpepper", type: "seed" },
+            { product: "corn", type: "seed" },
+            { product: "garlic", type: "seed" },
+            { product: "ginger", type: "seed" },
+            { product: "leek", type: "seed" },
+            { product: "pineapple", type: "seed" },
+            { product: "spinach", type: "seed" },
+            { product: "tomato", type: "seed" },
+            { product: "blackberry", type: "seed" },
+            { product: "lemon", type: "seed" },
+            { product: "mango", type: "seed" }
+        ],
+        buyMult: 0.75, sellMult: 0.5, doesSell: false,
+        opening: "s.coopO", leaving: "s.coopL", notEnough: "s.coopN", purchased: "s.coopP", benignTalk: "s.coopT"
+    },
     "template": {
         img: "",
         wares: [

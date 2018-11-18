@@ -237,12 +237,12 @@ const worldmap = {
         }
         if(spotted) { e.moving = false; e.movement = undefined; game.target = e; e.interact[0](); }
     },
-    writeText: function(t, choices, isRefresh, formatting, overBlack) {
+    writeText: function(t, choices, isRefresh, formatting, overBlack, justWhiteText) {
         this.cursors.MoveCursor("main", -1, -1);
         worldmap.currentFormatting = formatting;
         gfx.clearSome(["menuA", "menutext", "menuOverBlack", "menutextOverBlack"]);
         const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 11 : 0;
-        gfx.drawTextBox(drawY, overBlack);
+        if(!justWhiteText) { gfx.drawTextBox(drawY, overBlack); }
         let actualText = GetText(t);
         if(actualText === "") { return; }
         let formatArray = false;
@@ -269,7 +269,10 @@ const worldmap = {
             actualText = HandleLists(actualText, "{seeds}", seedStrArr, "falconNoGifts", true, true);
         }
         actualText = actualText.replace(/\{g\}/g, player.monies);
-        gfx.drawFullText(actualText, drawY * 16, undefined, overBlack);
+        gfx.drawFullText(actualText, drawY * 16 - (justWhiteText ? 20 : 0), justWhiteText ? "#FFFFFF" : undefined, overBlack);
+        //document.getElementById("screenRead").innerText = actualText;
+        //document.getElementById("screenRead").focus();
+        //speaker.SayThing(actualText, true);
         if(choices === undefined) {
             worldmap.dialogData = {};
             return;

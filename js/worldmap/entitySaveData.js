@@ -6,7 +6,11 @@ let mapStates = {
     "southcity": { inside: false }, 
     "northcity": { inside: false }, 
     "hq_1": { rf: [false, false, false] }, 
-    "hq_2": {}, "hq_3": {}, "hq_4": {}, "hq_5": {}, "hq_6": {}
+    "hq_2": {}, "hq_3": {}, "hq_4": {}, "hq_5": {}, "hq_6": {},
+    "northcity_NG": { inside: false },
+    "northcity_NB": { inside: false },
+    "northcity_IG": { inside: false },
+    "northcity_IB": { inside: false }
 };
 let stateBinders = {
     "storePositions": function(mapName) {
@@ -34,7 +38,7 @@ let stateBinders = {
 let mapRefreshes = {
     "resetData": function(mapname, fromSave, justStateLoad) {
         if(mapname === "cave") { return; }
-        const ents = mapStates[mapname].ents;
+        const ents = mapStates[mapname].ents || {};
         const addtlFunc = mapRefreshes[mapname];
         if(fromSave) {
             for(const name in ents) {
@@ -139,6 +143,22 @@ let mapRefreshes = {
     "northcity": function(e) {
         if(e.name === "Mailman" && player.hasOrHasHadQuest("keycard")) { SpecialFunctions["DESTROYBUILDING"](); }
         mapRefreshes.insideCheck(e, "northcity");
+    },
+    "northcity_NG": function(e) {
+        SpecialFunctions["DESTROYBUILDING"]();
+        mapRefreshes.insideCheck(e, "northcity_NG");
+    },
+    "northcity_NB": function(e) {
+        SpecialFunctions["DESTROYBUILDING"]();
+        mapRefreshes.insideCheck(e, "northcity_NB");
+    },
+    "northcity_IG": function(e) {
+        SpecialFunctions["DESTROYBUILDING"]();
+        mapRefreshes.insideCheck(e, "northcity_IG");
+    },
+    "northcity_IB": function(e) {
+        SpecialFunctions["DESTROYBUILDING"]();
+        mapRefreshes.insideCheck(e, "northcity_IB");
     },
     "hq_1": (e, fromSave) => { mapRefreshes.insideCheck(e, "hq_1"); mapRefreshes.switchCheck(e, "hq_1", fromSave); },
     "hq_3": function(e) {

@@ -367,5 +367,9 @@ const mafs = {
     "FloorFlip10": Ft(25, 10), "FloorFlip11": Ft(25, 11), "FloorFlip12": Ft(25, 12), "FloorFlip13": Ft(25, 13), "FloorFlip14": Ft(25, 14),
     // The Cave
     "RopeTop": Ft(27, 12), "RopeFade": Ft(27, 13), "RopeSign": Ft(27, 14), "RopeBottom": Ft(27, 15), "HealingStation": Ft(27, 16),
-    "FOE": new MapAnimFactory("la", [27, 17, 4]), "FOEbig": new MapAnimFactory("la", [0, 8, 2, true, 3])
+    "FOE": new MapAnimFactory("la", [27, 17, 4]), "FOEbig": new MapAnimFactory("la", [0, 8, 2, true, 3]),
+    // Post-Game
+    "Carlos": new MapAnimFactory("dw", [28, 0, 2]), "CoopPainter": new MapAnimFactory("la", [27, 21, 2]),
+    "IGGirl1": new MapAnimFactory("dw", [28, 2, 2]), "IGGirl2": new MapAnimFactory("dw", [28, 4, 2]),
+    "Garlic": Ft(12, 19), "Apple": Ft(15, 19), "Corn": Ft(28, 23)
 };

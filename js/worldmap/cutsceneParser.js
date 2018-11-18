@@ -121,6 +121,7 @@ const CommandParser = {
                 case "STARTTRANSITIONANIM": game.startTransitionAnim(1, undefined, undefined, "justAnim"); break;
                 case "TRANSITIONANIM": game.startTransitionAnim(-1); break;
                 // Text
+                case "ENDCUT": CommandParser.Parse_EndCutscene(actSuffix.split(",")); break;
                 case "TEXT": CommandParser.Parse_Text(actSuffix.split(",")); break;
                 case "BLACKTEXT": CommandParser.Parse_BlackText(actSuffix); break;
                 case "CLEARTEXT": gfx.clearSome(["menuA", "menutext"]); break;
@@ -163,6 +164,44 @@ const CommandParser = {
         }
     },
     Parse_BlackText: function(args) { worldmap.writeText(args, undefined, undefined, undefined, true); },
+    Parse_EndCutscene: function(args) {
+        const image = args[0], text = args[1];
+        const isFirst = text[text.length - 1] === "0";
+        if(isFirst) {
+            gfx.clearAll();
+            gfx.drawFullImage("end/" + image, "smartphone");
+            worldmap.writeText(text, undefined, false, undefined, false, true);
+        } else {
+            let boomState = 0;
+            worldmap.waitForAnimation = true;
+            iHandler.state.animHandler = function(spedUp) {
+                if(!spedUp) { worldmap.refreshMap(); }
+                gfx.clearLayer("tutorial");
+                if(boomState > 0) {
+                    let innerBoomy = boomState - 1;
+                    const key = "dt" + (innerBoomy < 5 ? innerBoomy : Math.min(4, 12 - innerBoomy));
+                    for(let x = 0; x < game.tilew; x++) {
+                        for(let y = 0; y < game.tileh; y++) {
+                            gfx.drawTileToGrid(key, x, y, "tutorial");
+                        }
+                    }
+                }
+                const finished = (++boomState) > 13;
+                if(boomState === 6) {
+                    gfx.clearSome(["smartphone", "menutextOverBlack"]);
+                    gfx.drawFullImage("end/" + image, "smartphone");
+                    worldmap.writeText(text, undefined, false, undefined, false, true);
+                }
+                if(finished) {
+                    gfx.clearLayer("tutorial");
+                    clearInterval(worldmap.animIdx);
+                    worldmap.waitForAnimation = false;
+                }
+                return finished;
+            };
+            worldmap.animIdx = setInterval(iHandler.state.animHandler, 100);
+        }
+    },
     Parse_Text: function(args) {
         let text = args.splice(0, 1)[0];
         if(text.indexOf("(") >= 0) {
@@ -819,25 +858,6 @@ const SpecialFunctions = {
     "CATMAIL": () => player.activeQuests["catmail"] = 1,
     "NEWPHONE" : function() { worldmap.smartphone = new Smartphone(); player.questsCleared.push("gotPhone"); },
     "PHONEPRESS": function() { worldmap.smartphone.Read(); },
-    "NERDUP": function() {
-        player.hasNerd = true;
-        worldmap.clearTarget();
-        SetUpFellow(worldmap, "carrywalk", true);
-        const HazardL = GetFellow("BarricadeL", 23, 2, 0, "HazardL", OneSpeak("blockedOff3F"), undefined, { big: true });
-        const HazardR = GetFellow("BarricadeR", 25, 2, 0, "HazardR", OneSpeak("blockedOff3F"), undefined, { big: true });
-        InitFellow(HazardL); InitFellow(HazardR);
-        worldmap.entities.push(HazardL); worldmap.entities.push(HazardR);
-        me.PLAYERMOVESPEED = me.BASEMOVESPEED / 2;
-    },
-    "NERDDOWN": function() {
-        player.hasNerd = false;
-        worldmap.clearTarget();
-        SetUpFellow(worldmap, "walk", true);
-        me.PLAYERMOVESPEED = me.BASEMOVESPEED;
-        worldmap.importantEntities["trentSafe"].interact = OneSpeak("sleepingSavedNerd");
-        worldmap.importantEntities["trentSafe"].visible = true;
-        worldmap.importantEntities["trentSafe"].solid = true;
-    },
     "NERDBOOM": () => SpecialFunctions["FUCKINGBOOM"](worldmap.importantEntities["mech"]),
     "MUSHSTART": function() {
         const items = specialtyHelpers.getMushItems();
@@ -885,6 +905,25 @@ const SpecialFunctions = {
         }
         iHandler.state.done = true;
         worldmap.finishDialog();
+    },
+    "NERDUP": function() {
+        player.hasNerd = true;
+        worldmap.clearTarget();
+        SetUpFellow(worldmap, "carrywalk", true);
+        const HazardL = GetFellow("BarricadeL", 23, 2, 0, "HazardL", OneSpeak("blockedOff3F"), undefined, { big: true });
+        const HazardR = GetFellow("BarricadeR", 25, 2, 0, "HazardR", OneSpeak("blockedOff3F"), undefined, { big: true });
+        InitFellow(HazardL); InitFellow(HazardR);
+        worldmap.entities.push(HazardL); worldmap.entities.push(HazardR);
+        me.PLAYERMOVESPEED = me.BASEMOVESPEED / 2;
+    },
+    "NERDDOWN": function() {
+        player.hasNerd = false;
+        worldmap.clearTarget();
+        SetUpFellow(worldmap, "walk", true);
+        me.PLAYERMOVESPEED = me.BASEMOVESPEED;
+        worldmap.importantEntities["trentSafe"].interact = OneSpeak("sleepingSavedNerd");
+        worldmap.importantEntities["trentSafe"].visible = true;
+        worldmap.importantEntities["trentSafe"].solid = true;
     },
     "THEMONSTER": function() {
         const monster = GetNoIMFellow("Monster", worldmap.pos.x - 0.5, worldmap.pos.y - 2.25, "TheMonster", { big: true, isTheMonster: true });

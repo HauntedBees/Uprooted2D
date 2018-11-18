@@ -1106,5 +1106,10 @@ const sprites = {
     "dodo3": [3, 30],
     "dodoFlyR0": [4, 30],
     "dodoFlyR1": [5, 30],
+    "dt4": [6, 30],
+    "dt3": [7, 30],
+    "dt2": [8, 30],
+    "dt1": [9, 30],
+    "dt0": [10, 30],
     "tooLazyToWriteCodeToTrimTheLastCommaRightNow": []
 };

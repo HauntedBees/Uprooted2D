@@ -39,7 +39,15 @@ worldmap.credits = {
     },
     clean: function() { gfx.ctx["menutext"].textAlign = "left"; clearInterval(this.timer); gfx.clearAll(); },
     click: function() { this.finish(); return true; },
-    finish: function() { game.transition(this, worldmap, { init: { x: 39, y: 10 }, map: "northcity" }); },
+    finish: function() {
+        let map = "northcity";
+        if(player.hasAchievement("natureGood")) { map = "northcity_NG"; }
+        else if(player.hasAchievement("natureBad")) { map = "northcity_NB"; }
+        else if(player.hasAchievement("techGood")) { map = "northcity_IG"; }
+        else if(player.hasAchievement("techBad")) { map = "northcity_IB"; }
+        game.transition(this, worldmap, { init: { x: 39, y: 10 }, map: map });
+        SpecialFunctions["DESTROYBUILDING"]();
+    },
     keyPress: function(key) {
         switch(key) {
             case player.controls.confirm:

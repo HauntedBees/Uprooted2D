@@ -49,10 +49,11 @@ worldmap.shop = {
     },
     Blinking: function() {
         const blinkProb = (worldmap.shop.details.rapid ? 0.3 : 0.98);
-        const blinkH = (worldmap.shop.details.big ? 300 : 100);
+        const blinkH = worldmap.shop.details.huge ? 416 : (worldmap.shop.details.big ? 300 : 100);
+        const blinkW = worldmap.shop.details.huge ? 528 : 200;
         if(worldmap.shop.blinkState === -1 || (worldmap.shop.blinkState === 0 && Math.random() >= blinkProb)) {
             worldmap.shop.blinkState = 1;
-            gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets[worldmap.shop.details.eyes], 0, 0, 200, blinkH, worldmap.shop.details.ex, worldmap.shop.details.ey, 200, blinkH);
+            gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets[worldmap.shop.details.eyes], 0, 0, blinkW, blinkH, worldmap.shop.details.ex, worldmap.shop.details.ey, blinkW, blinkH);
         } else {
             if(worldmap.shop.blinkState > 2 || (worldmap.shop.blinkState * Math.random()) > 0.45) {
                 gfx.clearLayer("foreground");

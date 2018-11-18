@@ -3902,6 +3902,7 @@ const fulltext = {
 		"en-us": "Father Iglecias: I've been trying to appeal to the youth recently, to get them more involved in the Church. Do you know what a \"memes\" is?", 
 		"type": "shop"
 	},
+	// Area 8: North City
 	"s.fnO": {
 		"en-us": "Lynn: Oh, uh, welcome. Let me know if you need anything.", 
 		"type": "shop"
@@ -3996,7 +3997,6 @@ const fulltext = {
 		"en-us": "\"Epic\" Kyle: Thank you! With the power of your money and my skills, your farm is now more epic than ever!", 
 		"type": "shop"
 	},
-	// Area 8: North City
 	"mushMan0": {
 		"en-us": "Daveothy: Oh hey, what? Hi.", 
 		"type": "map"
@@ -7101,6 +7101,22 @@ const fulltext = {
 		"en-us": "Central Las Abejas", 
 		"type": "opts"
 	},
+	"map.northcity_NG": {
+		"en-us": "Central Las Abejas NP", 
+		"type": "opts"
+	},
+	"map.northcity_IG": {
+		"en-us": "Central Las Abejas IP", 
+		"type": "opts"
+	},
+	"map.northcity_NB": {
+		"en-us": "Central Las Abejas NV", 
+		"type": "opts"
+	},
+	"map.northcity_IB": {
+		"en-us": "Central Las Abejas IV", 
+		"type": "opts"
+	},
 	"map.hq_1": {
 		"en-us": "Food2 HQ 1F", 
 		"type": "opts"
@@ -9215,5 +9231,87 @@ const fulltext = {
 	"nm.dodo": {
 		"en-us": "Rare Egg", 
 		"type": "item"
+	},
+	// Area 8: North City (Natural Good Ending)
+	"s.gordO2": {
+		"en-us": "Gordon: Well if it isn't the lady of the hour herself! Welcome to Gordon's No-Longer-Going-Out-Of-Business Not-Sale! All produce is now FULL PRICE!", 
+		"type": "shop"
+	},
+	"s.gordL2": {
+		"en-us": "Gordon: Until next time, Ayana! Your co-op may be nice, but it can't compete with the Classic Gordon Charm!", 
+		"type": "shop"
+	},
+	"s.gordN2": {
+		"en-us": "Gordon: Hey hey, we sell QUALITY produce here! And quality produce ain't cheap! You know that!", 
+		"type": "shop"
+	},
+	"s.gordP2": {
+		"en-us": "Gordon: Buying from me, are ya? Don't trust your own co-op yet? Ha ha! Thanks for the business, Ayana!", 
+		"type": "shop"
+	},
+	"s.gordT2": {
+		"en-us": "Gordon: Thanks to that co-op of yours, the people in this town are buying fresh foods again! You may be my competitor, but at least there's a market for our goods now!", 
+		"type": "shop"
+	},
+	"s.coopO": {
+		"en-us": "Beth: Hey Ayana! Welcome back!", 
+		"type": "shop"
+	},
+	"s.coopL": {
+		"en-us": "Beth: See ya later!", 
+		"type": "shop"
+	},
+	"s.coopN": {
+		"en-us": "Beth: Sorry Ayana, even with your member discount that's not enough money! Of course, I won't tell anyone if you just go into the back and grab some stuff.", 
+		"type": "shop"
+	},
+	"s.coopP": {
+		"en-us": "Beth: Thank you for your purchase!", 
+		"type": "shop"
+	},
+	"s.coopT": {
+		"en-us": "Beth: Don't forget our meeting tonight! We'll be discussing potential suppliers, welcoming some new members, and giving Keith like 70 wedgies.", 
+		"type": "shop"
+	},
+	"newMoveIn0": {
+		"en-us": "Carlos: Rent prices are slowly going back to normal in this city. The news says the Las Abejas Tech Bubble has finally burst. Thank God for that.", 
+		"type": "text"
+	},
+	"newMoveIn1": {
+		"en-us": "Carlos: A few weeks ago, I couldn't dream of living here on a street cleaner's wages. It's amazing what the tech industry can do to a city.", 
+		"type": "text"
+	},
+	"newMoveIn2": {
+		"en-us": "Carlos: Hey, you work at the new co-op, don't you? My brother works on a farm, you should check out his stuff. You definitely want it on your shelves!", 
+		"type": "text"
+	},
+	"coopPainter": {
+		"en-us": "Painter: The people in this co-op argued for a week straight about what color to paint this building. In the end Burnt Sienna beat Burnt Umber by just one vote.", 
+		"type": "text"
+	},
+	// Area 8: North City (Industrial Good Ending)
+	"newTechWorkerM": {
+		"en-us": "Jorge: This seems like it'll be a good place to live.", 
+		"type": "text"
+	},
+	"newTechWorkerW": {
+		"en-us": "Farha: There are ten Barstucks coffee shops in this city, and they're only just now opening up their first specialty grocery store...", 
+		"type": "text"
+	},
+	"notCorpseLady": {
+		"en-us": "Jing: It smells like somebody died in this apartment... At least the rent is low.", 
+		"type": "text"
+	},
+	"stillHungy": {
+		"en-us": "Maybe I should tell this guy that we have more real food here now. Eh, he'll be fine.", 
+		"type": "text"
+	},
+	"newRecep": {
+		"en-us": "Receptionist: Hey, boss. No Beckett sightings today.", 
+		"type": "text"
+	},
+	"hq_noUpstairs": {
+		"en-us": "The upper floors are still being renovated. It wouldn't be safe to go up there right now.", 
+		"type": "text"
 	},
 };
