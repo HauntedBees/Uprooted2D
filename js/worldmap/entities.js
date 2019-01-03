@@ -922,7 +922,7 @@ const mapentities = {
         GetJumboToggle("StrangeL", 16, 8, true), GetJumboToggle("StrangeL", 16, 9, false),
         GetJumboToggle("StrangeR", 17, 8, true), GetJumboToggle("StrangeR", 17, 9, false),
         // Shops
-        EnterShop("Coop", 39, 9, "coop"),
+        EnterShop("Coop", 39, 9, "workerscoop"),
         EnterShop("CityFixturesL", 15, 43, "cityFixtures"),
         EnterShop("CityFixturesR", 16, 43, "cityFixtures"),
         EnterShop("HotelL", 34, 43, "cityInn"),

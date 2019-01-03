@@ -486,7 +486,7 @@ const stores = {
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.gordO2", leaving: "s.gordL2", notEnough: "s.gordN2", purchased: "s.gordP2", benignTalk: "s.gordT2"
     },
-    "coop": {
+    "workerscoop": {
         img: "shops/coop",
         eyes: "shopblinks/coop", ex: 104, ey: 36,
         wares: [
