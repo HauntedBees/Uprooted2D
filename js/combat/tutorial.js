@@ -30,17 +30,19 @@ const tutorial = {
             game.currentInputHandler = tutorial.currentInputHandler;
             return;
         }
+        const tutText = GetText("tut" + this.state);
+        const textInfo = gfx.getWrappedTextInfo(tutText, 235);
         if(this.state === 999) {
             gfx.drawInfobox(17, 3, -0.5, "tutorial");
         } else {
-            gfx.drawInfobox(17, this.stateDetails[this.state].height, -0.5, "tutorial");
+            gfx.drawInfobox(17, Math.ceil(Math.max(2, textInfo.rows * 0.8)), -0.5, "tutorial");
         }
         if(this.state === 8) {
             this.DrawInformationalGentleman(GetText("tutInfoPower"), 7.75, 10.25);
             this.DrawInformationalGentleman(GetText("tutInfoGrowth"), 7.75, 11.25);
             this.DrawInformationalGentleman(GetText("tutInfoSeasons"), 7.75, 12.5);
         }
-        gfx.drawWrappedText(GetText("tut" + this.state), 2, 8, 235, "#000000", "tutorial");
+        gfx.drawWrappedText(tutText, 2, 8, 235, "#000000", "tutorial");
     },
     DrawInformationalGentleman: function(text, rightx, y) {
         let xi = 1;
@@ -106,49 +108,49 @@ const tutorial = {
     },
     matchCoords: function(pos, x, y) { return pos.x === x && pos.y === y; },
     stateDetails: [ // 296 TODO: heights should be language-dependent probably
-        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
-        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5) },
-        { height: 1.8, advance: AnyPress },
-        { height: 3.5, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 1 },
-        { height: 2.5, advance: AnyPress },
-        { height: 2.5, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
-        { height: 2.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
-        { height: 1.8, advance: AnyPress },
-        { height: 3.5, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 1 },
-        { height: 2.5, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
-        { height: 2.5, advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
-        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 1 },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
-        { height: 1.8, advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 0 },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: AnyPress },
-        { height: 1.8, advance: () => combat.menu.cursorY === 2 },
-        { height: 1.8, advance: function() {
+        { advance: () => combat.menu.cursorY === 0 },
+        { advance: () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5) },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 1 },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 0 },
+        { advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 1 },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 0 },
+        { advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 0 },
+        { advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 1 },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 0 },
+        { advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 0 },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: () => combat.menu.cursorY === 2 },
+        { advance: function() {
                 const gridpos = { x: combat.compost.cursor.x - combat.dx, y: combat.compost.cursor.y - combat.dy };
                 if(gridpos.x >= player.gridWidth || gridpos.y >= player.gridHeight || gridpos.x < 0 || gridpos.y < 0) { return false; }
                 const tile = combat.grid[Math.floor(gridpos.x)][Math.floor(gridpos.y)];
                 return tile != null && tile.name === "beet" && tile.rotten;
             } },
-        { height: 1.8, advance: () => combat.compost.cursor.y === (combat.compost.dy + 1) },
-        { height: 3.5, advance: AnyPress },
-        { height: 2.5, advance: AnyPress },
-        { height: 1.8, advance: AnyPress }
+        { advance: () => combat.compost.cursor.y === (combat.compost.dy + 1) },
+        { advance: AnyPress },
+        { advance: AnyPress },
+        { advance: AnyPress }
     ]
 };
