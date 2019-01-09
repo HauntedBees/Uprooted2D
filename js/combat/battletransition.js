@@ -18,31 +18,31 @@ combat.transition = {
         this.frame += 0.5;
     },
     Draw: function() {
-        gfx.clearLayer("tutorial");
+        gfx.clearLayer("menutextOverBlack");
         if(this.frame < 16) {
             let actualY = 16;
             for(let i = 0; i < this.elems.length; i++) {
                 const me = this.elems[i];
                 const offsets = this.spriteOffsets[me];
                 if(i % 2 === 0) {
-                    gfx.DrawTransitionImage("trans" + me, 0 + this.frame, (actualY - offsets[0] * 2) / 16, 2, false);
-                    gfx.DrawBlackRect(0, actualY - 16, this.frame * 16 + 2, 2 * (16 - offsets[0] - offsets[1]));
+                    gfx.DrawTransitionImage("trans" + me, 0 + this.frame, (actualY - offsets[0] * 2) / 16, 2, false, "menutextOverBlack");
+                    gfx.DrawBlackRect(0, actualY - 16, this.frame * 16 + 2, 2 * (16 - offsets[0] - offsets[1]), "menutextOverBlack");
                 } else {
-                    gfx.DrawTransitionImage("trans" + me, 16 - this.frame, (actualY - offsets[0] * 2) / 16, 2, false);
-                    gfx.DrawBlackRect((16 - this.frame) * 16 - 2, actualY - 16, 288, 2 * (16 - offsets[0] - offsets[1]));                
+                    gfx.DrawTransitionImage("trans" + me, 16 - this.frame, (actualY - offsets[0] * 2) / 16, 2, false, "menutextOverBlack");
+                    gfx.DrawBlackRect((16 - this.frame) * 16 - 2, actualY - 16, 288, 2 * (16 - offsets[0] - offsets[1]), "menutextOverBlack");                
                 }
                 actualY += 16 - offsets[0] + offsets[1] * 2;
             }
         } else if(this.frame === 16) {
-            gfx.DrawBlackRect(0, 0, gfx.tileWidth * 16, gfx.tileHeight * 16);
+            gfx.DrawBlackRect(0, 0, gfx.tileWidth * 16, gfx.tileHeight * 16, "menutextOverBlack");
             combat.innerStartBattle();
         } else if(this.frame < 32) {
-            gfx.DrawBlackRect(0, 0, gfx.tileWidth * 16, gfx.tileHeight * 16);
+            gfx.DrawBlackRect(0, 0, gfx.tileWidth * 16, gfx.tileHeight * 16, "menutextOverBlack");
             const size = (this.frame - 16) * (1 + this.accel);
             this.accel += 0.1;
-            gfx.ctx["tutorial"].globalCompositeOperation = "destination-out";
-            gfx.DrawTransitionImage("trans" + this.chosenCrop, game.tilew / 2, game.tileh / 2, size, false);
-            gfx.ctx["tutorial"].globalCompositeOperation = "source-over";
+            gfx.ctx["menutextOverBlack"].globalCompositeOperation = "destination-out";
+            gfx.DrawTransitionImage("trans" + this.chosenCrop, game.tilew / 2, game.tileh / 2, size, false, "menutextOverBlack");
+            gfx.ctx["menutextOverBlack"].globalCompositeOperation = "source-over";
         } else {
             clearInterval(this.animIdx);
         }

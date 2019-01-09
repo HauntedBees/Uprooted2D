@@ -63,7 +63,8 @@ const gfx = {
     drawJumbo: function(file, x, y, w, h, ox, oy) {
         gfx.drawImage(gfx.ctx["background2"], gfx.spritesheets[file], x * 16 + (ox || 0), y * 16 + (oy || 0), w, h, 0, 0, w, h);
     },
-    DrawTransitionImage: function(spritename, x, y, mult, blackEverythingElse) {
+    DrawTransitionImage: function(spritename, x, y, mult, blackEverythingElse, layerToDraw) {
+        layerToDraw = layerToDraw || "tutorial";
         const data = sprites[spritename];
         const size = data[2] === true ? 32 : 16;
         const sheet = gfx.spritesheets[data[2] === true ? "sheetBig" : "sheet"];
@@ -71,12 +72,12 @@ const gfx = {
         const startY = data[1] * size + data[1] * 2 + 1;
         const delta = size * mult * 0.5;
         if(blackEverythingElse) {
-            const ctx = gfx.ctx["tutorial"];
+            const ctx = gfx.ctx[layerToDraw];
             ctx.fillStyle = "#000000";
             ctx.fillRect(0, 0, gfx.canvasWidth, gfx.canvasWidth);
             ctx.clearRect((x * size - delta) * gfx.scale + 4, (y * size - delta) * gfx.scale + 4, size * mult * gfx.scale - 4, size * mult * gfx.scale - 4);
         }
-        gfx.drawImage(gfx.ctx["tutorial"], sheet, startX, startY, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
+        gfx.drawImage(gfx.ctx[layerToDraw], sheet, startX, startY, size, size, x * size - delta, y * size - delta, size * mult, size * mult);
     },
     DrawYMaskedSprite: function(spritename, x, y, layer, bottomY) {
         const data = sprites[spritename];
@@ -381,8 +382,9 @@ const gfx = {
         gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["horRorBottom"], 0, 0, 1024, 252, 0, 160 + intensity, 1024, 252);
     },
     // Combat
-    DrawBlackRect: function(x, y, w, h) {
-        const ctx = gfx.ctx["tutorial"];
+    DrawBlackRect: function(x, y, w, h, layer) {
+        layer = layer || "tutorial";
+        const ctx = gfx.ctx[layer];
         ctx.fillStyle = "#000000";
         ctx.fillRect(x * gfx.scale, y * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
