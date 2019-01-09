@@ -65,7 +65,7 @@ const tutorial = {
         const isEnter = (key === player.controls.pause || key === player.controls.confirm);
         if(isEnter) {
             const runCheck = (this.state === 0 && combat.menu.cursorY === 3);
-            let success = this.stateDetails[this.state].advance();
+            let success = this.stateDetails[this.state]();
             if(!success && !runCheck) { return false; }
             if(!runCheck) {
                 if(isClick) { success = tutorial.currentInputHandler.click(clickPos, true); }
@@ -108,49 +108,49 @@ const tutorial = {
     },
     matchCoords: function(pos, x, y) { return pos.x === x && pos.y === y; },
     stateDetails: [ // 296 TODO: heights should be language-dependent probably
-        { advance: () => combat.menu.cursorY === 0 },
-        { advance: () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5) },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 1 },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 0 },
-        { advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 1 },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 0 },
-        { advance: () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5) },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 0 },
-        { advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 1 },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 0 },
-        { advance: () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5) },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 0 },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: () => combat.menu.cursorY === 2 },
-        { advance: function() {
-                const gridpos = { x: combat.compost.cursor.x - combat.dx, y: combat.compost.cursor.y - combat.dy };
-                if(gridpos.x >= player.gridWidth || gridpos.y >= player.gridHeight || gridpos.x < 0 || gridpos.y < 0) { return false; }
-                const tile = combat.grid[Math.floor(gridpos.x)][Math.floor(gridpos.y)];
-                return tile != null && tile.name === "beet" && tile.rotten;
-            } },
-        { advance: () => combat.compost.cursor.y === (combat.compost.dy + 1) },
-        { advance: AnyPress },
-        { advance: AnyPress },
-        { advance: AnyPress }
+        () => combat.menu.cursorY === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5),
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 1,
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5),
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 1,
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5),
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5),
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 1,
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5),
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 0,
+        AnyPress,
+        AnyPress,
+        AnyPress,
+        () => combat.menu.cursorY === 2,
+        function() {
+            const gridpos = { x: combat.compost.cursor.x - combat.dx, y: combat.compost.cursor.y - combat.dy };
+            if(gridpos.x >= player.gridWidth || gridpos.y >= player.gridHeight || gridpos.x < 0 || gridpos.y < 0) { return false; }
+            const tile = combat.grid[Math.floor(gridpos.x)][Math.floor(gridpos.y)];
+            return tile != null && tile.name === "beet" && tile.rotten;
+        },
+        () => combat.compost.cursor.y === (combat.compost.dy + 1),
+        AnyPress,
+        AnyPress,
+        AnyPress
     ]
 };
