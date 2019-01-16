@@ -39,10 +39,7 @@ worldmap.credits = {
     },
     clean: function() { gfx.ctx["menutext"].textAlign = "left"; clearInterval(this.timer); gfx.clearAll(); },
     click: function() { this.finish(); return true; },
-    finish: function() {
-        game.transition(this, worldmap, { init: { x: 39, y: 10 }, map: GetPostGameMapName("northcity") });
-        setTimeout(() => { SpecialFunctions["DESTROYBUILDING"]() }, 1000);
-    },
+    finish: function() { game.transition(this, worldmap, { init: { x: 39, y: 10 }, map: GetPostGameMapName("northcity") }); },
     keyPress: function(key) {
         switch(key) {
             case player.controls.confirm:

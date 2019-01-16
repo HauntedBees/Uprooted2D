@@ -144,22 +144,10 @@ let mapRefreshes = {
         if(e.name === "Mailman" && player.hasOrHasHadQuest("keycard")) { SpecialFunctions["DESTROYBUILDING"](); }
         mapRefreshes.insideCheck(e, "northcity");
     },
-    "northcity_NG": function(e) {
-        SpecialFunctions["DESTROYBUILDING"]();
-        mapRefreshes.insideCheck(e, "northcity_NG");
-    },
-    "northcity_NB": function(e) {
-        SpecialFunctions["DESTROYBUILDING"]();
-        mapRefreshes.insideCheck(e, "northcity_NB");
-    },
-    "northcity_IG": function(e) {
-        SpecialFunctions["DESTROYBUILDING"]();
-        mapRefreshes.insideCheck(e, "northcity_IG");
-    },
-    "northcity_IB": function(e) {
-        SpecialFunctions["DESTROYBUILDING"]();
-        mapRefreshes.insideCheck(e, "northcity_IB");
-    },
+    "northcity_NG": function(e) { mapRefreshes.insideCheck(e, "northcity_NG"); },
+    "northcity_NB": function(e) { mapRefreshes.insideCheck(e, "northcity_NB"); },
+    "northcity_IG": function(e) { mapRefreshes.insideCheck(e, "northcity_IG"); },
+    "northcity_IB": function(e) { mapRefreshes.insideCheck(e, "northcity_IB"); },
     "hq_1": (e, fromSave) => { mapRefreshes.insideCheck(e, "hq_1"); mapRefreshes.switchCheck(e, "hq_1", fromSave); },
     "hq_3": function(e) {
         if(e.name !== "TheMonster") { return; }
