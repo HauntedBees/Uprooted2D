@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <style>
+            canvas {
+                border: 1px solid black;
+                image-rendering: crisp-edges; /*pixelated;*/
+                left: 0;
+                margin: 0 auto;
+                position: absolute;
+                right: 0; 
+                text-align: center;
+                touch-action: none;
+                width: 100%;
+            }
+            #mainCanvas { top: 900px }
+        </style>
+    </head>
+    <body>
+        <div id="canvasContainer"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
+            <canvas id="secondCanvas" width="1024" height="896"></canvas>
+            <canvas id="mainCanvas" width="1024" height="896"></canvas>
+        </div>
+        <script src="js/lib/gamepad.js"></script>
+        <script src="js/lib/gamepadtest.js"></script>
+        <script type="text/javascript">document.addEventListener("DOMContentLoaded", function() {
+            game = new Game();
+            vgp = new VirtGamepad(game, ["mainCanvas"], [
+                new VirtButton("dpad", "dpad", "vgp_img/dpad.png", { eightDirection: true }),
+                new VirtButton("joystick", "joystick", "vgp_img/analog_back.png", { numDirections: 360, top: "vgp_img/analog_top.png" }),
+                new VirtButton("confirm", "button", "vgp_img/confirm.png"),
+                new VirtButton("cancel", "button", "vgp_img/cancel.png"),
+                new VirtButton("pause", "button", "vgp_img/pause.png"),
+                new VirtButton("opt_exit", "config", "vgp_img/opt_exit.png", { command: "exit" }),
+                new VirtButton("opt_default", "config", "vgp_img/opt_default.png", { command: "default" }),
+                new VirtButton("opt_save", "config", "vgp_img/opt_save.png", { command: "save" }),
+                new VirtButton("opt_resize", "config", "vgp_img/opt_resize.png", { command: "resize" }),
+                new VirtButton("opt_move", "config", "vgp_img/opt_move.png", { command: "move", startInvisible: true }),
+                new VirtButton("opt_cancel", "config", "vgp_img/opt_cancel.png", { command: "cancel", startInvisible: true }) // might be useless?
+            ], [
+                new VirtButtonPosition("dpad", "mainCanvas", 25, 25),
+                new VirtButtonPosition("joystick", "mainCanvas", 325, 325),
+                new VirtButtonPosition("confirm", "mainCanvas", 700, 180),
+                new VirtButtonPosition("cancel", "mainCanvas", 830, 20),
+                new VirtButtonPosition("pause", "mainCanvas", 420, 40),
+                new VirtButtonPosition("opt_exit", "mainCanvas", 0, 830),
+                new VirtButtonPosition("opt_default", "mainCanvas", 178, 830),
+                new VirtButtonPosition("opt_resize", "mainCanvas", 896, 830),
+                new VirtButtonPosition("opt_move", "mainCanvas", 896, 830),
+                new VirtButtonPosition("opt_save", "mainCanvas", 0, 730),
+                new VirtButtonPosition("opt_cancel", "mainCanvas", 448, 730)
+            ]);
+            setTimeout(function() { vgp.Draw(); }, 100);
+        });</script>
+    </body>
+</html>

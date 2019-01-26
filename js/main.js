@@ -114,7 +114,29 @@ const game = {
         for(const key in canvasObj) {
             contextObj[key] = canvasObj[key].getContext("2d");
         }
-        virtualControls.Init();
+        virtualControls = new VirtGamepad(input, ["dpad"], [
+            new VirtButton("dpad", "dpad", "vgp_img/dpad.png", { eightDirection: true }),
+            new VirtButton("confirm", "button", "vgp_img/confirm.png"),
+            new VirtButton("cancel", "button", "vgp_img/cancel.png"),
+            new VirtButton("pause", "button", "vgp_img/pause.png"),
+            new VirtButton("opt_exit", "config", "vgp_img/opt_exit.png", { command: "exit", startInvisible: true }),
+            new VirtButton("opt_default", "config", "vgp_img/opt_default.png", { command: "default", startInvisible: true }),
+            new VirtButton("opt_save", "config", "vgp_img/opt_save.png", { command: "save", startInvisible: true }),
+            new VirtButton("opt_resize", "config", "vgp_img/opt_resize.png", { command: "resize", startInvisible: true }),
+            new VirtButton("opt_move", "config", "vgp_img/opt_move.png", { command: "move", startInvisible: true }),
+            new VirtButton("opt_cancel", "config", "vgp_img/opt_cancel.png", { command: "cancel", startInvisible: true }) // might be useless?
+        ], [
+            new VirtButtonPosition("dpad", "dpad", 25, 25),
+            new VirtButtonPosition("confirm", "dpad", 700, 180),
+            new VirtButtonPosition("cancel", "dpad", 830, 20),
+            new VirtButtonPosition("pause", "dpad", 420, 40),
+            new VirtButtonPosition("opt_exit", "dpad", 0, 830),
+            new VirtButtonPosition("opt_default", "dpad", 178, 830),
+            new VirtButtonPosition("opt_resize", "dpad", 896, 830),
+            new VirtButtonPosition("opt_move", "dpad", 896, 830),
+            new VirtButtonPosition("opt_save", "dpad", 0, 730),
+            new VirtButtonPosition("opt_cancel", "dpad", 448, 730)
+        ]);
         game.init(canvasObj, contextObj, game.w, game.h, 16, 14);
     },
     init: function(canvasObj, ctxObj, width, height, tilewidth, tileheight) {

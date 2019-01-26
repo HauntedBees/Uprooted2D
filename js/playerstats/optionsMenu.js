@@ -46,6 +46,12 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opStickyControls", this.localOptions.stickyMovement, "stickyMovement", ["opNo", "opYes"], true);
         y = this.addOption(y, "opIgnoreMouse", this.localOptions.ignoreMouse, "ignoreMouse", ["opNo", "opYes"], false);
         y = this.addOption(y, "opVirtualDpad", this.localOptions.virtualController, "virtualController", ["opNo", "opYes"], false);
+        if(this.localOptions.virtualController) {
+            virtualControls.Show();
+            y = this.addVirtualControllerOptions(y, "opVirtualCustom");
+        } else {
+            virtualControls.Hide();
+        }
         y = this.addOption(y, "opControlScheme", this.localOptions.controltype, "controltype", ["opKeyboard", "opGamepad"], true);
         y = this.addHeading(y, "opControls");
         const keysToUse = this.localOptions.controltype === 1 ? this.localGamepadControls : this.localKeyboardControls;
@@ -93,6 +99,13 @@ worldmap.optionsMenu = {
             switch(op.type) {
                 case "heading":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.headingSize);
+                    break;
+                case "customvirt":
+                    const w = gfx.getTextWidth(op.text, this.optionSize);
+                    gfx.drawText(op.text, op.x + (w / 16) + 4, op.y - yoffset, "#000000", this.optionSize);
+                    if(this.cursory === i) {
+                        gfx.drawTileToGrid("carrotSel", (op.x / 24) + 1, acty - tileyoffset, "menutext");
+                    }
                     break;
                 case "option":
                     gfx.drawText(op.text, op.x, op.y - yoffset, "#000000", this.optionSize);
@@ -150,6 +163,17 @@ worldmap.optionsMenu = {
         text = GetText(text);
         this.options.push({
             type: "heading",
+            text: text, 
+            x: gfx.getTextFractionX(text, this.headingSize),
+            y: y
+        });
+        return y + (this.headingSize / 3.3333);
+    },
+    addVirtualControllerOptions: function(y, text) {
+        y += 5;
+        text = GetText(text);
+        this.options.push({
+            type: "customvirt",
             text: text, 
             x: gfx.getTextFractionX(text, this.headingSize),
             y: y
@@ -248,7 +272,7 @@ worldmap.optionsMenu = {
             } else if(pos.y !== this.cursory) {
                 return this.moveToNext(pos.y);
             }
-        } else if(this.options[this.cursory].type === "button" || this.options[this.cursory].type === "final") {
+        } else if(this.options[this.cursory].type === "button" || this.options[this.cursory].type === "final" || this.options[this.cursory].type === "customvirt") {
             if(this.inChange) {
 
             } else if(pos.y !== this.cursory) { return this.moveToNext(pos.y); }

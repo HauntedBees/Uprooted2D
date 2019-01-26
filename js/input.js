@@ -138,6 +138,62 @@ let input = {
         game.currentInputHandler.MouseWheel(e.deltaY > 0);
     },
 
+    VirtDirections: [0, 0, 0, 0], // UP LEFT DOWN RIGHT
+    GetKeyEvent: key => ({ key: key }),
+    ButtonPress: function(b) {
+        console.log(b);
+    },
+    ButtonRelease: function(b) {
+        if(b.btn === "dpad") {
+            const arr = [player.controls.up, player.controls.left, player.controls.down, player.controls.right];
+            for(let i = 0; i < 4; i++) {
+                if(input.VirtDirections[i] > 0) {
+                    const dS = (+new Date()) - input.VirtDirections[i];
+                    if(dS < 100) { input.keyPress(input.GetKeyEvent(arr[i])); }
+                    input.keyUp(input.GetKeyEvent(arr[i]));
+                    input.VirtDirections[i] = 0;
+                }
+            }
+        } else if(b.btn === "confirm") {
+            input.justPressed[player.controls.confirm] = 0;
+            input.keyPress(input.GetKeyEvent(player.controls.confirm));
+        } else if(b.btn === "cancel") {
+            input.justPressed[player.controls.cancel] = 0;
+            input.keyPress(input.GetKeyEvent(player.controls.cancel));
+        } else if(b.btn === "pause") {
+            input.justPressed[player.controls.pause] = 0;
+            input.keyPress(input.GetKeyEvent(player.controls.pause));
+        }
+    },
+    ButtonMove: function(b) {
+        if(b.btn === "dpad") {
+            if(b.y === 1) {
+                if(input.VirtDirections[2] === 0) { input.keyDown(input.GetKeyEvent(player.controls.down)); }
+                if(input.VirtDirections[0] > 0) { input.VirtDirections[0] = 0; input.keyUp(input.GetKeyEvent(player.controls.up)); }
+                input.VirtDirections[2] = +new Date();
+            } else if(b.y === -1) {
+                if(input.VirtDirections[0] === 0) { input.keyDown(input.GetKeyEvent(player.controls.up)); }
+                if(input.VirtDirections[2] > 0) { input.VirtDirections[2] = 0; input.keyUp(input.GetKeyEvent(player.controls.down)); }
+                input.VirtDirections[0] = +new Date();
+            } else {
+                if(input.VirtDirections[2] > 0) { input.VirtDirections[2] = 0; input.keyUp(input.GetKeyEvent(player.controls.down)); }
+                if(input.VirtDirections[0] > 0) { input.VirtDirections[0] = 0; input.keyUp(input.GetKeyEvent(player.controls.up)); }
+            }
+            if(b.x === 1) {
+                if(input.VirtDirections[3] === 0) { input.keyDown(input.GetKeyEvent(player.controls.right)); }
+                if(input.VirtDirections[1] > 0) { input.VirtDirections[1] = 0; input.keyUp(input.GetKeyEvent(player.controls.left)); }
+                input.VirtDirections[3] = +new Date();
+            } else if(b.x === -1) {
+                if(input.VirtDirections[1] === 0) { input.keyDown(input.GetKeyEvent(player.controls.left)); }
+                if(input.VirtDirections[3] > 0) { input.VirtDirections[3] = 0; input.keyUp(input.GetKeyEvent(player.controls.right)); }
+                input.VirtDirections[1] = +new Date();
+            } else {
+                if(input.VirtDirections[3] > 0) { input.VirtDirections[3] = 0; input.keyUp(input.GetKeyEvent(player.controls.right)); }
+                if(input.VirtDirections[1] > 0) { input.VirtDirections[1] = 0; input.keyUp(input.GetKeyEvent(player.controls.left)); }
+            }
+        }
+    },
+
     justPressed: {}, keys: {}, mainKey: undefined,
     IsFreshPauseOrConfirmPress: () => (input.justPressed[player.controls.pause] === 0) || (input.justPressed[player.controls.confirm] === 0),
     setMainKey: function(key) {
@@ -315,82 +371,5 @@ let input = {
                 }
             }
         }
-    }
-};
-let virtualControls = {
-    canvas: null, ctx: null, btnDown: null, img: null, visible: false, 
-    boxes: [ // format for coords is top x, top y, width, height
-        { coords: [3, 102, 109, 116], id: "left" },
-        { coords: [102, 3, 116, 109], id: "up" },
-        { coords: [102, 208, 116, 109], id: "down" },
-        { coords: [208, 102, 109, 116], id: "right" },
-        { coords: [424, 129, 176, 76], id: "pause" },
-        { coords: [676, 134, 150, 150], id: "cancel" },
-        { coords: [855, 53, 150, 150], id: "confirm" }
-    ],
-    Init: function() {
-        virtualControls.canvas = document.getElementById("dpad");
-        virtualControls.ctx = virtualControls.canvas.getContext("2d");
-        virtualControls.img = document.getElementById("dpadimg");
-        if(player.options.virtualController) { virtualControls.Show(); }
-        virtualControls.img.style.visibility = "hidden";
-        virtualControls.canvas.addEventListener("mousemove", virtualControls.MouseMove);
-        virtualControls.canvas.addEventListener("mousedown", virtualControls.MouseDown);
-        virtualControls.canvas.addEventListener("mouseup", virtualControls.MouseUp);
-        virtualControls.canvas.addEventListener("click", virtualControls.Click);
-    },
-    Hide: function() { virtualControls.visible = false; virtualControls.ctx.clearRect(0, 0, 1024, 320); },
-    Show: function() { virtualControls.visible = true; virtualControls.ctx.drawImage(virtualControls.img, 0, 0); },
-    GetButton: function(e) {
-        const rect = virtualControls.canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        for(let i = 0; i < virtualControls.boxes.length; i++) {
-            const btn = virtualControls.boxes[i];
-            const bx = btn.coords[0] + btn.coords[2];
-            const by = btn.coords[1] + btn.coords[3];
-            if(Between(x, btn.coords[0], bx) && Between(y, btn.coords[1], by)) {
-                return btn;
-            }
-        }
-        return null;
-    },
-    GetKeyEvent: key => ({ key: key }),
-    MouseMove: function(e) {
-        if(!virtualControls.visible) { return; }
-        const btn = virtualControls.GetButton(e);
-        if(btn === null || virtualControls.btnDown === null) { return false; }
-        if(virtualControls.btnDown !== btn.id) {
-            input.keyUp(virtualControls.GetKeyEvent(player.keyboardcontrols[virtualControls.btnDown]));
-            virtualControls.btnDown = btn.id;
-            input.keyDown(virtualControls.GetKeyEvent(player.keyboardcontrols[btn.id]));
-        }
-    },
-    MouseDown: function(e) {
-        if(!virtualControls.visible) { return; }
-        const btn = virtualControls.GetButton(e);
-        if(btn === null) { return false; }
-        virtualControls.btnDown = btn.id;
-        input.keyDown(virtualControls.GetKeyEvent(player.keyboardcontrols[btn.id]));
-    },
-    MouseUp: function(e) {
-        if(!virtualControls.visible) { return; }
-        const btn = virtualControls.GetButton(e);
-        if(btn === null) {
-            if(virtualControls.btnDown !== null) {
-                input.keyUp(virtualControls.GetKeyEvent(player.keyboardcontrols[virtualControls.btnDown]));
-            }
-        } else {
-            input.keyUp(virtualControls.GetKeyEvent(player.keyboardcontrols[btn.id]));
-        }
-        virtualControls.btnDown = null;
-    },
-    Click: function(e) {
-        if(!virtualControls.visible) { return; }
-        const btn = virtualControls.GetButton(e);
-        if(btn === null) { return false; }
-        const key = player.keyboardcontrols[btn.id];
-        input.justPressed[key] = 0;
-        input.keyPress(virtualControls.GetKeyEvent(key));
     }
 };

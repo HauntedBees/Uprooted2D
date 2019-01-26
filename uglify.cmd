@@ -36,6 +36,7 @@ uglifyjs ^
     js/combat/combatinbetween.js ^
     js/combat/tutorial.js ^
     js/combat/wacg.js ^
+    js/lib/gamepad.js ^
     js/main.js ^
     js/sound.js ^
     js/opening/abee.js ^

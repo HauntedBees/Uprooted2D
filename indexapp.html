@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="viewport" content="user-scalable=0"> 
         <style>
             @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
             @font-face { font-family: "OpenDyslexic"; src: url("styles/OpenDyslexic3-Regular.ttf") }
@@ -23,7 +24,7 @@
                 right: 0; 
                 text-align: center;
             }
-            #dpad, #dpadimg {
+            #dpad {
                 border: none;
                 left: 0;
                 margin: 0 auto;
@@ -68,8 +69,7 @@
             <canvas id="savegen" width="1024" height="896"></canvas>
             <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
         </div>
-        <canvas id="dpad" width="1024" height="320"></canvas>
-        <img id="dpadimg" src="styles/dpad.png">
+        <canvas id="dpad" width="1024" height="896"></canvas>
         <div id="fontLoader">
             <div style="font-family:PressStart2P">&nbsp;</div>
             <div style="font-family:OpenDyslexic">&nbsp;</div>
