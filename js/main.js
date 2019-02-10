@@ -91,7 +91,7 @@ const game = {
                     //* Combat Backgrounds *//
                     "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "bgs/cave",
                     //* Endings *//
-                    "end/end1"
+                    "end/end1", "end/end2p", "end/end2v", "end/end3np", "end/end4np", "end/end5np", "end/end6np", "end/end7np"
                 ],
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
