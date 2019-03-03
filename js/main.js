@@ -92,7 +92,8 @@ const game = {
                     "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "bgs/cave",
                     //* Endings *//
                     "end/end1", "end/end2p", "end/end2v", "end/end3np", "end/end4np", "end/end5np", "end/end6np", "end/end7np",
-                    "end/end3ip", "end/end4ip", "end/end5ip", "end/end6ip", "end/end7ip"
+                    "end/end3ip", "end/end4ip", "end/end5ip", "end/end6ip", "end/end7ip", "end/end3nv", "end/end4nv", "end/end5nv",
+                    "end/end6nv", "end/end7nv",
                 ],
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
