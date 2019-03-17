@@ -31,8 +31,6 @@ pausemenu.farmmod = {
         this.drawFarm();
         this.displayItems();
         gfx.drawInfobox(11, 5, this.cropdy);
-
-        if(this.actualIndexes.length === 0) { this.cursor = { x: 0, y: -1 }; }
         gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
 
         const size = (this.selectedItem === null || this.cursor.y < 3) ? 0 : this.selectedItemSize;
@@ -265,6 +263,7 @@ pausemenu.farmmod = {
         } else if(this.cursor.y == this.dy && this.cursor.y > pos.y) {
             pos.y = Math.floor(this.actualIndexes.length / (this.inventoryWidth + 1));
             pos.x = this.actualIndexes.length - (this.inventoryWidth * pos.y) - 1;
+            if(pos.x < 0) { pos.y = -1; pos.x = 0; }
         }
 
         if(isEnter) { return this.click(); }
@@ -272,13 +271,13 @@ pausemenu.farmmod = {
     },
     CursorMove: function(pos) {
         if(pos.y < -1 || pos.x < 0) { return false; }
-        if(pos.y === -1) {
+        if(pos.y === -1) { // back button
             pos.x = 0;
         } if(pos.y < 4) { // item selection
             if(pos.x >= this.inventoryWidth) { return false; }
             const idx = pos.y * this.inventoryWidth + pos.x;
             if(idx >= this.actualIndexes.length) { return false; }
-        } else {
+        } else { // crop placement
             if(pos.y < this.dy || pos.x < this.dx || pos.y >= (this.dy + player.gridHeight - this.selectedItemSize) || pos.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
         }
         this.cursor = pos;
