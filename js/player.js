@@ -16,6 +16,7 @@ let player = {
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
         font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0
     },
+    noFunDiffMod: 0, // positive = harder, negative = easier
     controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q", pause: "Enter" },
     keyboardcontrols: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q", pause: "Enter" },
     gamepadcontrols: { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1", pause: "Gamepad9" },

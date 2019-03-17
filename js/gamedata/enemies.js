@@ -16,13 +16,41 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     this.seasonDistribution = seasonDistribution;
     this.attackType = atkType;
 	this.args = (args || "").split(",");
-	
+	if(player.noFunDiffMod !== 0) { AdjustEnemyStats(this, player.noFunDiffMod); }
     this.exp = Math.ceil(health/10 + atk + def/2);
     if(this.name === "Discussly" || this.name.indexOf("beeQueen") === 0) { this.exp = 0; }
     this.drops = drops;
     this.boss = boss;
     if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 	this.GetRandomArg = function() { return RandomArrayItem(this.args); };
+}
+function AdjustEnemyStats(enemy, diff) {
+	if(diff === 0) { return; }
+	if(diff > 0) { // make strongker
+		while(diff-- > 0) {
+			enemy.maxhealth *= 1.75;
+			enemy.baseatk *= 1.5;
+			enemy.basedef *= 1.5;
+		}
+		enemy.maxhealth = Math.round(enemy.maxhealth);
+		enemy.health = enemy.maxhealth;
+		enemy.baseatk = Math.round(enemy.baseatk);
+		enemy.atk = enemy.baseatk;
+		enemy.basedef = Math.round(enemy.basedef);
+		enemy.def = enemy.basedef;
+	} else { // make weakger
+		while(diff++ < 0) {
+			enemy.maxhealth *= 0.5;
+			enemy.baseatk *= 0.75;
+			enemy.basedef *= 0.75;
+		}
+		enemy.maxhealth = Math.max(5, Math.round(enemy.maxhealth));
+		enemy.health = enemy.maxhealth;
+		enemy.baseatk = Math.max(1, Math.round(enemy.baseatk));
+		enemy.atk = enemy.baseatk;
+		enemy.basedef = Math.max(1, Math.round(enemy.basedef));
+		enemy.def = enemy.basedef;
+	}
 }
 function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math.floor(Math.random() * max)); }
 function GetEnemy(name) {

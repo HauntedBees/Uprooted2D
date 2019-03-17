@@ -1,11 +1,12 @@
 const pausemenu = {
-    options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [],
+    options: [], dy: 0, cursorX: 0, cursorY: 0, updateIdx: -1, questItems: [], inNoFun: false,
     animIdx: 0, anims: [], lastPressWasQuit: false, 
     layersToClear: ["menuA", "menutext", "menutextOverBlack", "menuOverBlack"],
     setup: function(sel) {
         this.cursorY = sel || 0;
         if(this.cursorY !== 5) { player.justSaved = false; }
         this.cursorX = 0;
+        this.inNoFun = false;
         this.lastPressWasQuit = false;
         this.cursors = new CursorAnimSet([
             { key: "main", x: this.cursorX, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
@@ -43,7 +44,7 @@ const pausemenu = {
         const rowYs = [10, 10.75];
         pausemenu.options = [];
 
-        pausemenu.drawOption("menu.Items", 0, pausemenu.cursorY === 0);
+        pausemenu.drawOption("menu.Items", 0, pausemenu.cursorY === 0 && !pausemenu.inNoFun);
         pausemenu.drawOption("menu.Equipment", 1, pausemenu.cursorY === 1);
         pausemenu.drawOption("menu.Farm", 2, pausemenu.cursorY === 2);
         pausemenu.drawOption("menu.Options", 3, pausemenu.cursorY === 3);
@@ -51,7 +52,12 @@ const pausemenu = {
         pausemenu.drawOption("menu.Save", 5, pausemenu.cursorY === 5);
         pausemenu.drawOption("menu.Back", 6, pausemenu.cursorY === 6);
         pausemenu.drawOption("menu.Quit", 7, pausemenu.cursorY === 7);
-        
+        if(pausemenu.inNoFun) {
+            gfx.drawRightOption(GetText("noFunInner"), 0);
+        } else {
+            gfx.drawRightOption(GetText("noFunPreview"), 0);
+        }
+
         pausemenu.addFormattedText("menu.level", player.level, 1, rowYs[0], "", 0);
         pausemenu.addFormattedText("menu.HP", player.health + "/" + player.maxhealth, 3.5, rowYs[0], ":", 0);
         pausemenu.addFormattedText("menu.ATK", player.atk, 8.5, rowYs[0], ":", 2);
@@ -60,7 +66,10 @@ const pausemenu = {
         pausemenu.addFormattedText("menu.coins", player.monies, 1, rowYs[1], ":", 4);
         pausemenu.addFormattedText("menu.nextLevel", (player.level === 50 ? "-/-" : (player.exp + "/" + player.nextExp)), 6.75, rowYs[1], ":", 0);
 
-        if(pausemenu.cursorY < pausemenu.options.length) {
+        if(pausemenu.inNoFun) {
+            const textWidth = gfx.getTextWidth(GetText("noFunInner")) / (16 * gfx.scale);
+            this.cursors.RedimCursor("main", gfx.tileWidth - textWidth - 0.5, 0, textWidth - 0.5, 0);
+        } else if(pausemenu.cursorY < pausemenu.options.length) {
             this.cursors.RedimCursor("main", 0, pausemenu.dy + pausemenu.cursorY, pausemenu.options[pausemenu.cursorY], 0);
         } else {
             if(pausemenu.cursorX === 0) {
@@ -204,9 +213,15 @@ const pausemenu = {
         });
     },
     CursorMove: function(pos) {
-        if(pos.y > this.options.length) { return false; }
-        if(pos.y < this.options.length && pos.x > 0) { pos.y = this.options.length; pos.x = 0; }
-        if(pos.x > this.questItems.length) { return false; }
+        if(pos.x === 1 && pos.y === 0 && this.cursorY === 0) {
+            this.inNoFun = true;
+        } else {
+            if(this.inNoFun) { pos.x = 0; }
+            this.inNoFun = false;
+            if(pos.y > this.options.length) { return false; }
+            if(pos.y < this.options.length && pos.x > 0) { pos.y = this.options.length; pos.x = 0; }
+            if(pos.x > this.questItems.length) { return false; }
+        }
         this.lastPressWasQuit = false;
         this.cursorY = pos.y;
         this.cursorX = pos.x;
@@ -214,6 +229,10 @@ const pausemenu = {
         return true;
     },
     mouseMove: function(pos) {
+        if(pos.x >= 9 && pos.y <= 1) { // the "I'm Not Having Fun" menu
+            this.cursorX = 0; this.cursorY = 0;
+            return this.CursorMove({ x: 1, y: 0 });
+        }
         if(pos.y < this.options.length && pos.x < 5) {
             return this.CursorMove({x: 0, y: Math.min(Math.round(pos.y - 0.25), this.options.length - 1)});
         }
@@ -225,7 +244,10 @@ const pausemenu = {
     click: function(mousePos) {
         if(this.BeepHour(mousePos)) { return true; }
         const cursorPos = { x: this.cursorX, y: this.cursorY };
-        if(cursorPos.x > 0) { return false; }
+        if(cursorPos.x > 0) {
+            if(this.inNoFun) { game.innerTransition(this, pausemenu.noFun); return true; }
+            else { return false; }
+        }
         switch(cursorPos.y) {
             case 0: game.innerTransition(this, pausemenu.inventory); break;
             case 1: game.innerTransition(this, pausemenu.equipment); break;

@@ -434,6 +434,8 @@ const game = {
         if(mapStates["hq_NB"] === undefined) { mapStates["hq_NB"] = {}; }
         if(mapStates["hq_NB_side"] === undefined) { mapStates["hq_NB_side"] = {}; }
         if(mapStates["hq_IB"] === undefined) { mapStates["hq_IB"] = {}; }
+        if(player.noFunDiffMod === undefined) { console.log("nof"); player.noFunDiffMod = 0; }
+        if(player.questsCleared.indexOf("truckRepair") >= 0 && player.questsCleared.indexOf("findFakeFarm") < 0) { console.log("fkf"); player.questsCleared.push("findFakeFarm"); }
         return true;
     }
 };

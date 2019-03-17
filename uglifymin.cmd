@@ -60,6 +60,7 @@ uglifyjs ^
     js/worldmap/fixTut.js ^
     js/opening/pottyCheck.js ^
     js/playerstats/pausemenu.js ^
+    js/playerstats/noFun.js ^
     js/playerstats/chievosmenu.js ^
     js/playerstats/viewinventory.js ^
     js/playerstats/equipment.js ^

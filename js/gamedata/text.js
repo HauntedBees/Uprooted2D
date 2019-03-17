@@ -1263,6 +1263,10 @@ const fulltext = {
 		"en-us": "Brontubisto! Now in battle, that fixture will be present, ready for use! Try to collect and arrange fixtures on your field to fit your playstyle and maximize your farming! Good luck!", 
 		"type": "map"
 	},
+	"fixTutNoFun": {
+		"en-us": "Alrighty then, fixture tutorial! In the Pause Menu, move to the \"Fixtures\" option and select it!", 
+		"type": "map"
+	},
 	// Area 0: Opening Cutscene
 	"intro1": {
 		"en-us": "???: This must be the place!", 
@@ -9417,7 +9421,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"allyRobo2": {
-		"en-us": "Robot: IT SURE IS CONVENIENT THAT OUR CREATORS INSTALLED CONVENIENT \"JOIN THE ENEMY\" BUTTONS ON ALL OF OUR BACKS.", 
+		"en-us": "Robot: IT SURE IS CONVENIENT THAT OUR CREATORS INSTALLED BIG \"JOIN THE ENEMY\" BUTTONS ON ALL OF OUR BACKS.", 
 		"type": "text"
 	},
 	"allyRobo3": {
@@ -9435,5 +9439,202 @@ const fulltext = {
 	"allyRobo6": {
 		"en-us": "Robot: THE ROBOT BEHIND THIS WINDOW LOOKS JUST LIKE ME. I SURE WISH I HAD BEEN PROGRAMMED TO COMPREHEND MIRRORS.", 
 		"type": "text"
+	},
+	// The "I'm Not Having Fun" Menu
+	"noFunPreview": {
+		"en-us": ":(", 
+		"type": "opts"
+	},
+	"noFunInner": {
+		"en-us": "I'm not having fun!", 
+		"type": "opts"
+	},
+	"noFunStart": {
+		"en-us": "If you're not having fun, I want to fix that! What's not fun for you?", 
+		"type": "opts"
+	},
+	"noFunBattle": {
+		"en-us": "It's the battles.", 
+		"type": "opts"
+	},
+	"noFunPuzzle": {
+		"en-us": "It's the puzzles.", 
+		"type": "opts"
+	},
+	"noFunSomething": {
+		"en-us": "It's something else.", 
+		"type": "opts"
+	},
+	"noFunNevermind": {
+		"en-us": "Nevermind.", 
+		"type": "opts"
+	},
+	"noFunBattleSel": {
+		"en-us": "What don't you like about battles?", 
+		"type": "opts"
+	},
+	"noFunBattle0": {
+		"en-us": "They're too hard.", 
+		"type": "opts"
+	},
+	"noFunBattle1": {
+		"en-us": "They're too easy.", 
+		"type": "opts"
+	},
+	"noFunBattle2": {
+		"en-us": "My items suck.", 
+		"type": "opts"
+	},
+	"noFunBattle3": {
+		"en-us": "My stats are too low.", 
+		"type": "opts"
+	},
+	"noFunBattle4": {
+		"en-us": "I don't get how they work.", 
+		"type": "opts"
+	},
+	"noFunSomethingSel": {
+		"en-us": "What don't you like about the game?", 
+		"type": "opts"
+	},
+	"noFunSomething0": {
+		"en-us": "I don't know how to play.", 
+		"type": "opts"
+	},
+	"noFunSomething1": {
+		"en-us": "It needs more bees.", 
+		"type": "opts"
+	},
+	"noFunSomething2": {
+		"en-us": "It just isn't fun.", 
+		"type": "opts"
+	},
+	"noFunSomething3": {
+		"en-us": "I don't get the story.", 
+		"type": "opts"
+	},
+	"noFunHardBattle": {
+		"en-us": "I can make enemies weaker for you. This can be done multiple times. Would you like that?", 
+		"type": "opts"
+	},
+	"noFunEasyBattle": {
+		"en-us": "I can make enemies stronger for you. This can be done multiple times. Would you like that?", 
+		"type": "opts"
+	},
+	"noFunItemsSuck": {
+		"en-us": "Would you like me to give you some new equipment and seeds?", 
+		"type": "opts"
+	},
+	"noFunStatsSuck": {
+		"en-us": "Would you like me to level you up a bit?", 
+		"type": "opts"
+	},
+	"noFunPuzzleNone": {
+		"en-us": "You're not in an area with any puzzles right now. Go to the area that you're stuck at and ask for help again.", 
+		"type": "opts"
+	},
+	"noFunPuzzleFound": {
+		"en-us": "Would you like me to solve the puzzle for you?", 
+		"type": "opts"
+	},
+	"noFunDontGetBattles": {
+		"en-us": "Would you like to go through the battle tutorial?", 
+		"type": "opts"
+	},
+	"noFunDontGetIt": {
+		"en-us": "Would you like to view a tutorial?", 
+		"type": "opts"
+	},
+	"noFunTut0": {
+		"en-us": "Battle Tutorial", 
+		"type": "opts"
+	},
+	"noFunTut1": {
+		"en-us": "Fixtures Tutorial", 
+		"type": "opts"
+	},
+	"noFunBees": {
+		"en-us": "Would you like a complementary beehive and some bees?", 
+		"type": "opts"
+	},
+	"noFunNoFun": {
+		"en-us": "I'm very sorry to hear that. Would you like to play Slapfarts instead?", 
+		"type": "opts"
+	},
+	"noFunComplete": {
+		"en-us": "It has been done. I hope that helps!", 
+		"type": "opts"
+	},
+	"noFun.Heading": {
+		"en-us": "Fun Assistance", 
+		"type": "opts"
+	},
+	"noFunDone": {
+		"en-us": "Thanks.", 
+		"type": "opts"
+	},
+	"plotSummary0": {
+		"en-us": "You are Ayana, a farmer in the town of San Ambrosio, California. A stranger just asked to be your apprentice, then ran off to run some errands for you.", 
+		"type": "plot"
+	},
+	"plotSummary1": {
+		"en-us": "A strange nerd tried to buy your farm, then sicced a robot on you when you refused. Now your farm is swarming with even more robots! Not cool, nerd.", 
+		"type": "plot"
+	},
+	"plotSummary2": {
+		"en-us": "A strange nerd sent a bunch of robots to mess up your farm, which is a pretty rude thing to do. You should see if anyone in town knows what's going on.", 
+		"type": "plot"
+	},
+	"plotSummary3": {
+		"en-us": "A strange nerd sent robots to attack your farm, and his company has a research lab just south of town. Your new apprentice, Nathan, agreed to watch over your farm and your pet falcon while you go investigate.", 
+		"type": "plot"
+	},
+	"plotSummary4": {
+		"en-us": "Beckett, a dweeb working for the \"Food2\" company, sent robots to attack your farm. His accomplice, Jeff, revealed that Food2 plans to \"change the world\" by replacing all food with a proprietary food replacement drink. Gross. Your new apprentice Nathan agreed to watch your farm while you head into the big city to confront Beckett.", 
+		"type": "plot"
+	},
+	"plotSummary5": {
+		"en-us": "On your journey to find Beckett, the Food2 goon who tried to destroy your farm, your car gets a flat tire in front of another farm, but something about this place seems a bit suspicious...", 
+		"type": "plot"
+	},
+	"plotSummary6": {
+		"en-us": "On your way to confront Beckett, the obnoxious nerd who tried to ruin your farm for the sake of his Food2 company, you were interrupted by Farmer Jeff, an agent sent from Food2 to stop you. You broke his toys and thwarted his plan. Now it's on to the big city to face Beckett!", 
+		"type": "plot"
+	},
+	"plotSummary7": {
+		"en-us": "Beckett, a mysterious man working for the Food2 company, tried to destroy your farm. You left your farm in the hands of your new apprentice, Nathan, and set off to stop Food2. Now, in the city of Las Abejas, you find that Beckett has sent the mafia to stop you. That seems a bit overkill, but sure, okay.", 
+		"type": "plot"
+	},
+	"plotSummary8": {
+		"en-us": "Beckett, an angry dweeb working for the Food2 company, tried to destroy your farm. You left your farm in the hands of your new apprentice, Nathan, and set off to stop Food2. After getting past the mafia he sent to stop you, you've arrived in the business district of Las Abejas. Time to find a way into the Food2 building to give Beckett a piece of my mind!", 
+		"type": "plot"
+	},
+	"plotSummary9": {
+		"en-us": "Beckett, a jerk working for the Food2 company, tried to destroy your farm. You left your farm in the hands of your new apprentice, Nathan, and set off to stop Food2. After getting past the mafia he sent to stop you, you've arrived in the business district of Las Abejas and stole a keycard into the Food2 building. Time to find Beckett!", 
+		"type": "plot"
+	},
+	"plotSummary10": {
+		"en-us": "You are Ayana, a farmer from San Ambrosio, California, on a mission to find answers after Beckett - an employee of the Food2 company - tried to destroy your farm. After working your way through the Food2 tower, you confronted him. He crumbled like a house of collectible cards and fled to his boss. Now it's time to face the CEO of Food2!", 
+		"type": "plot"
+	},
+	"plotSummaryNG": {
+		"en-us": "You are Ayana, the farmer hero of Las Abejas County in California. After stopping the Food2 company from trying to replace all food with their own food replacement product, you took over their office and turned it into a farmer's market co-op.", 
+		"type": "plot"
+	},
+	"plotSummaryIG": {
+		"en-us": "You are Ayana, the farmer hero of Las Abejas County in California. After stopping the Food2 company from trying to replace all food with their own food replacement product, you took over their office and are using their technology to help provide food to poor communities and food deserts.", 
+		"type": "plot"
+	},
+	"plotSummaryNV": {
+		"en-us": "You are Ayana, the farmer hero of Las Abejas County in California. After stopping the Food2 company from trying to replace all food with their own food replacement product, you took over their office and convert it into a meeting space for fellow activists to help combat the tech boom.", 
+		"type": "plot"
+	},
+	"plotSummaryIV": {
+		"en-us": "You are Ayana, the farmer hero of Las Abejas County in California. After stopping the Food2 company from trying to replace all food with their own food replacement product, you took over their office and are using their technology to fight back against other tech start-ups.", 
+		"type": "plot"
+	},
+	"plotSummaryUhh": {
+		"en-us": "You did something that confused the code here. Good job! Anyway, you're Ayana, a farmer, and you are either on a quest to beat up some startup nerds or you already finished doing that.", 
+		"type": "plot"
 	},
 };

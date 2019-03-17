@@ -1,10 +1,18 @@
 const fixTut = {
-    isTutorial: true, state: 0, currentInputHandler: worldmap,
-    start: function() {
+    isTutorial: true, state: 0, currentInputHandler: worldmap, fromNoFunMenu: false,
+    start: function(fromNoFunMenu) {
         game.currentInputHandler = this;
-        this.currentInputHandler = worldmap;
-        this.state = 0;
-        this.drawTutorial();
+        if(fromNoFunMenu) {
+            this.fromNoFunMenu = true;
+            this.currentInputHandler = pausemenu;
+            this.state = 1;
+            this.drawTutorial();
+        } else {
+            this.fromNoFunMenu = false;
+            this.currentInputHandler = worldmap;
+            this.state = 0;
+            this.drawTutorial();
+        }
     },
     transition: function(from, to, arg) { // 298 TODO: do the fuckin fancy shit
         this.currentInputHandler = to;
@@ -16,7 +24,11 @@ const fixTut = {
         gfx.clearSome(["menutextOverBlack", "menuOverBlack"]);
         if(this.state > 0) {
             gfx.drawTextBox(11, true);
-            gfx.drawFullText(GetText("fixTut" + (this.state + 1)), 11 * 16, undefined, true);
+            if(this.fromNoFunMenu && this.state === 1) {
+                gfx.drawFullText(GetText("fixTutNoFun"), 11 * 16, undefined, true);
+            } else {
+                gfx.drawFullText(GetText("fixTut" + (this.state + 1)), 11 * 16, undefined, true);
+            }
         }
     },
     mouseMove: function(pos) {
