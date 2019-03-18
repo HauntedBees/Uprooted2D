@@ -9533,8 +9533,24 @@ const fulltext = {
 		"en-us": "You're not in an area with any puzzles right now. Go to the area that you're stuck at and ask for help again.", 
 		"type": "opts"
 	},
-	"noFunPuzzleFound": {
-		"en-us": "Would you like me to solve the puzzle for you?", 
+	"noFunPuzzleForest": {
+		"en-us": "Would you like me to solve the puzzle for you? This will warp you directly to the golden mushroom.", 
+		"type": "opts"
+	},
+	"noFunPuzzleForest2": {
+		"en-us": "Would you like me to solve the puzzle for you? This will warp you directly to the exit.", 
+		"type": "opts"
+	},
+	"noFunPuzzleWater": {
+		"en-us": "Would you like me to solve the puzzle for you? This will cover all the water currents with rocks.", 
+		"type": "opts"
+	},
+	"noFunPuzzleBlocks": {
+		"en-us": "Would you like me to solve the puzzle for you? This will move all of the moving walls into their passable positions.", 
+		"type": "opts"
+	},
+	"noFunPuzzleHQ": {
+		"en-us": "Would you like me to solve the puzzle for you? This will warp you directly to the staircase to the next floor.", 
 		"type": "opts"
 	},
 	"noFunDontGetBattles": {

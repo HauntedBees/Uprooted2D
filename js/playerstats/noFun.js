@@ -1,10 +1,11 @@
 pausemenu.noFun = {
     cursor: { x: 0, y: 0 }, state: 0, maxY: 0,
-    backStartX: 0, backButtonW: 0, 
+    backStartX: 0, backButtonW: 0, puzzle: 2, 
     layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
     setup: function() {
         this.cursor = { x: 0, y: 0 };
         this.state = 0; this.maxY = 3;
+        this.SetPuzzle();
         this.cursors = new CursorAnimSet([
             { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
         ]);
@@ -13,6 +14,84 @@ pausemenu.noFun = {
         gfx.TileBackground("invTile");
         this.DrawAll();
         this.cursors.Start();
+    },
+    SetPuzzle: function() {
+        this.puzzle = 2;
+        switch(worldmap.mapName) {
+            case "forest": 
+                if(player.completedQuest("quest1") || player.activeQuests["quest1"] === 2 || player.activeQuests["quest1"] === 4) {
+                    this.puzzle = 24;
+                } else {
+                    this.puzzle = 21;
+                }
+                break;
+            case "researchfacility": this.puzzle = 22; break;
+            case "underwater": this.puzzle = 23; break;
+            case "hq_1": this.puzzle = 25; break;
+            case "hq_2": this.puzzle = 26; break;
+            case "hq_3": this.puzzle = 27; break;
+        }
+    },
+    SolvePuzzle: function() {
+        switch(this.puzzle) {
+            case 21: // forest TO MUSHROOM
+                game.transition(this, worldmap, {
+                    init: { x: 36, y: 26 },
+                    map: "forest",
+                    noEntityUpdate: true
+                });
+                break;
+            case 22: // research lab
+            case 25: // HQ 1
+                for(let i = 0; i < worldmap.entities.length; i++) {
+                    if(worldmap.entities[i].rfd) {
+                        const newActive = true;
+                        worldmap.entities[i].active = newActive;
+                        SetUpFellow(worldmap.entities[i], "Door" + worldmap.entities[i].type + (newActive ? "d" : ""));
+                        worldmap.entities[i].solid = !newActive;
+                    }
+                }
+                break;
+            case 23: // underwater
+                for(let i = worldmap.entities.length - 1; i >= 0; i--) {
+                    const e = worldmap.entities[i];
+                    if(e.pushDir !== undefined && e.donePushing !== true) {
+                        switch(e.pushDir) {
+                            case 0: e.pos.y -= 1; break;
+                            case 1: e.pos.x -= 1; break;
+                            case 2: e.pos.y += 1; break;
+                            case 3: e.pos.x += 1; break;
+                        }
+                        e.donePushing = true;
+                    } else if(e.isWaterfall === true || e.isEnd === true) {
+                        player.clearedEntities.push(worldmap.entities[i].name);
+                        worldmap.entities.splice(i, 1);
+                    }
+                }
+                break;
+            case 24: // forest TO EXIT
+                game.transition(this, worldmap, {
+                    init: { x: 44, y: 49 },
+                    map: "forest",
+                    noEntityUpdate: true
+                });
+                break;
+            case 26: // HQ 2
+                game.transition(this, worldmap, {
+                    init: { x: 23, y: 6 },
+                    map: "hq_2",
+                    noEntityUpdate: true
+                });
+                break;
+            case 27: // HQ 3
+                worldmap.horRor.playerRoom = 0;
+                game.transition(this, worldmap, {
+                    init: { x: 5.5, y: 4 },
+                    map: "hq_3",
+                    noEntityUpdate: true
+                });
+                break;
+        }
     },
     DrawAll: function() {
         gfx.clearSome(this.layersToClear);
@@ -78,7 +157,41 @@ pausemenu.noFun = {
                 gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
                 break;
             case 2: // No Puzzles!
-                // TODO: puzzle check
+                gfx.drawMinibox(0.5, 4.5, 14, 3, "menuA");
+                gfx.drawWrappedText(GetText("noFunPuzzleNone"), 20, 85, 220);
+                gfx.drawInfoText(GetText("noFunDone"), 7, 6.5, true, "menuA", "menutext");
+                break;
+            case 21: // Forest
+                gfx.drawMinibox(0.5, 4.5, 14, 3, "menuA");
+                gfx.drawWrappedText(GetText("noFunPuzzleForest"), 20, 85, 220);
+                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                break;
+            case 24: // Forest2
+                gfx.drawMinibox(0.5, 4.5, 14, 3, "menuA");
+                gfx.drawWrappedText(GetText("noFunPuzzleForest2"), 20, 85, 220);
+                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                break;
+            case 22:
+            case 25: // Block Puzzles
+                gfx.drawMinibox(0.5, 4.5, 14, 3, "menuA");
+                gfx.drawWrappedText(GetText("noFunPuzzleBlocks"), 20, 85, 220);
+                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                break;
+            case 23: // Water Puzzle
+                gfx.drawMinibox(0.5, 4.5, 14, 3, "menuA");
+                gfx.drawWrappedText(GetText("noFunPuzzleWater"), 20, 85, 220);
+                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                break;
+            case 26:
+            case 27: // Travel Puzzles
+                gfx.drawMinibox(0.5, 4.5, 14, 3, "menuA");
+                gfx.drawWrappedText(GetText("noFunPuzzleHQ"), 20, 85, 220);
+                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
                 break;
             case 3: // Something Else!
                 gfx.drawMinibox(0.5, 4.5, 14, 5, "menuA");
@@ -226,7 +339,7 @@ pausemenu.noFun = {
         switch(this.state) {
             case 0:
                 if(this.cursor.y === 0) { this.state = 1; this.maxY = 5; } // Battles
-                else if(this.cursor.y === 1) { this.state = 2; } // Puzzles
+                else if(this.cursor.y === 1) { this.state = this.puzzle; this.maxY = this.puzzle === 2 ? 0 : 1; } // Puzzles
                 else if(this.cursor.y === 2) { this.state = 3; this.maxY = 4; } // Other
                 else if(this.cursor.y === 3) { return this.cancel(); } // Nevermind
                 break;
@@ -272,8 +385,15 @@ pausemenu.noFun = {
                     return;
                 } else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; } // No Thanks
                 break;
-            case 2:
-                // TODO puzzles
+            case 21: // forest
+            case 22: // research lab
+            case 23: // underwater
+            case 24: // fake farm
+            case 25: // hq 1
+            case 26: // hq 2
+            case 27: // hq 3
+                if(this.cursor.y === 0) { this.SolvePuzzle(); this.state = 50; this.maxY = 0; } // Do It!
+                else if(this.cursor.y === 1) { this.state = 0; this.maxY = 3; } // Nevermind
                 break;
             case 3:
                 if(this.cursor.y === 0) { this.state = 31; this.maxY = 2; } // How Play?
@@ -310,12 +430,9 @@ pausemenu.noFun = {
             case 33: 
                 // TODO: Slappy Farts
                 break;
-            case 34:
-                this.state = 0; this.maxY = 3;
-                break;
-            case 50:
-                this.state = 0; this.maxY = 3;
-                break;
+            case 2:
+            case 34: 
+            case 50: this.state = 0; this.maxY = 3; break;
         }
         this.cursor.y = 0;
         this.DrawAll();
