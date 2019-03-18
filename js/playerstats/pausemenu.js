@@ -274,7 +274,7 @@ const pausemenu = {
             Sounds.PlaySound("aBee");
             return true;
         }
-        return pos.x > 5;
+        return false;
     },
     keyPress: function(key) {
         const pos = { x: this.cursorX, y: this.cursorY };
