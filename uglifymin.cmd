@@ -66,6 +66,7 @@ uglifyjs ^
     js/playerstats/equipment.js ^
     js/playerstats/farmmod.js ^
     js/playerstats/savemenu.js ^
+    js/playerstats/tobytern.js ^
     js/player.js^
     js/rendering.js ^
     js/lib/lz-string.js ^

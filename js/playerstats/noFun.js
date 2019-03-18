@@ -427,9 +427,7 @@ pausemenu.noFun = {
                     this.maxY = 0;
                 } else if(this.cursor.y === 1) { this.state = 3; this.maxY = 4; } // No Thanks
                 break;
-            case 33: 
-                // TODO: Slappy Farts
-                break;
+            case 33: return game.transition(this, tobyTern);
             case 2:
             case 34: 
             case 50: this.state = 0; this.maxY = 3; break;

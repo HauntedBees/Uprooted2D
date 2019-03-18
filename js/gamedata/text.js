@@ -9574,7 +9574,7 @@ const fulltext = {
 		"type": "opts"
 	},
 	"noFunNoFun": {
-		"en-us": "I'm very sorry to hear that. Would you like to play Slapfarts instead?", 
+		"en-us": "I'm very sorry to hear that. Would you like to play a much better and much more epic video game instead?", 
 		"type": "opts"
 	},
 	"noFunComplete": {
@@ -9652,5 +9652,69 @@ const fulltext = {
 	"plotSummaryUhh": {
 		"en-us": "You did something that confused the code here. Good job! Anyway, you're Ayana, a farmer, and you are either on a quest to beat up some startup nerds or you already finished doing that.", 
 		"type": "plot"
+	},
+	"pigeonTrick0": {
+		"en-us": "Seed Eat +10", 
+		"type": "trick"
+	},
+	"pigeonTrick1": {
+		"en-us": "Berry Eat +10", 
+		"type": "trick"
+	},
+	"pigeonTrick2": {
+		"en-us": "Grain Eat +10", 
+		"type": "trick"
+	},
+	"pigeonTrick3": {
+		"en-us": "Bug Eat +10", 
+		"type": "trick"
+	},
+	"pigeonTrick4": {
+		"en-us": "Worm Eat +10", 
+		"type": "trick"
+	},
+	"pigeonTrick5": {
+		"en-us": "Kickflip +100", 
+		"type": "trick"
+	},
+	"pigeonTrick6": {
+		"en-us": "Freak Phone +150", 
+		"type": "trick"
+	},
+	"pigeonTrick7": {
+		"en-us": "Bear Beret +200", 
+		"type": "trick"
+	},
+	"pigeonTrick8": {
+		"en-us": "Crouching Tiger Hidden Crumbs +1000", 
+		"type": "trick"
+	},
+	"pigeonTrick9": {
+		"en-us": "Ballroom Blitz +300", 
+		"type": "trick"
+	},
+	"pigeonTrick10": {
+		"en-us": "Delicious Seeds +20", 
+		"type": "trick"
+	},
+	"pigeonTrick11": {
+		"en-us": "Stale Baguette +50", 
+		"type": "trick"
+	},
+	"pigeonTrick12": {
+		"en-us": "Someone Dropped French Fries! +2000", 
+		"type": "trick"
+	},
+	"pigeonTrick13": {
+		"en-us": "Impressive Trick +500", 
+		"type": "trick"
+	},
+	"pigeonTrick14": {
+		"en-us": "Punk Rock +50", 
+		"type": "trick"
+	},
+	"pigeonScore": {
+		"en-us": "Score:", 
+		"type": "trick"
 	},
 };
