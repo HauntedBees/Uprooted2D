@@ -44,7 +44,7 @@ function MapAnimFactory(type, args) {
                 }
                 case "la": {
                     const big = args[3];
-                    args[0] = Range(0, big ? 10: 26);
+                    args[0] = Range(0, big ? 10 : 26);
                     args[1] = Range(0, big ? 9 : 23) - args[2];
                     break;
                 }

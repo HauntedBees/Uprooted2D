@@ -88,7 +88,7 @@ const scripts = {
 	"bigBotW1": "_TEXT:Pb1.2,Pb1.2a,Pb1.2b",
 	"bigBotW2": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":4}]",
 	"bigBotW3": "_ALIGNTECH:-1&_TEXT:Pb1.2a0&_SETSTATE:5&_GIVE:beet,10&_GIVE:banana,5&_GIVE:spinach,5&_GIVE:rhubarb,2&_GIVE:ginger,10",
-	"bigBotW4": "_ALIGNTECH:1&_TEXT:Pb1.2b0&_GIVE:~modulator,1",
+	"bigBotW4": "_ALIGNTECH:1&_TEXT:Pb1.2b0&_GIVE:~modulator,1&_FIXTUT",
 	"bigBotW5": "_TEXT:Pb1.3",
 	"bigBotW6": "_CUSTOM:KABOOMHAUER",
 	"bigBotW7": "_TEXT:Pb1.(4-5)",

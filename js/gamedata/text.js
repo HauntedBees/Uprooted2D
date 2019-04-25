@@ -1236,7 +1236,7 @@ const fulltext = {
 	},
 	// Fixture Tutorial
 	"fixTut0": {
-		"en-us": "Looks like you just bought your first fixture! You can place it on your field by selecting \"Fixtures\" from the Pause Menu. Would you like a quick rundown of how do?", 
+		"en-us": "Looks like you just got your first fixture! You can place it on your field by selecting \"Fixtures\" from the Pause Menu. Would you like a quick rundown of how do?", 
 		"type": "map"
 	},
 	"fixTutNo": {

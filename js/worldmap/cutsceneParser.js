@@ -109,6 +109,7 @@ const CommandParser = {
                 case "TAKE": const a = actSuffix.split(","); player.decreaseItem(a[0].replace("~", "_"), parseInt(a[1])); break;
                 case "MONEY": player.AddMonies(parseInt(actSuffix)); break;
                 case "LEVELUP": player.addExp(player.nextExp); player.levelUp(); break;
+                case "FIXTUT": if(player.fixtureTutorialState === 0) { player.fixtureTutorialState = 1; } break;
                 // Animation Handling
                 case "TALK": SetUpFellow(target, target.talkAnim); break;
                 case "ANIM": SetUpFellow(target, actSuffix, isPlayer); break;

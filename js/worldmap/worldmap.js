@@ -2,7 +2,7 @@ const worldmap = {
     freeMovement: true, savedImage: "", angryBees: false,
     smartphone: null, horRor: null, caveInfo: null, 
     pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, 
-    animData: plAnims.walk,
+    animData: plAnims.walk, 
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
@@ -331,6 +331,12 @@ const worldmap = {
         this.inDialogue = false;
         this.freeMovement = true;
         worldmap.toggleMovement(true);
+        if(player.fixtureTutorialState === 1) {
+            this.dialogState = 0;
+            this.inDialogue = true;
+            game.target = fixTutEntity;
+            fixTutEntity.interact[0](0, fixTutEntity);
+        }
     },
     handleMenuChoices: function(key) {
         let dy = 0;

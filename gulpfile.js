@@ -3,14 +3,18 @@ var fs = require("fs");
 var cp = require("child_process");
 var foreach = require("gulp-foreach");
 var getPixels = require("get-pixels");
-gulp.task("default", function() {
+gulp.task("default", function(cb) {
     var version = Math.floor(1000 * Math.random());
-    fs.writeFile("junk/logging.js", "console.log('Code Version: " + version + "');");
+    fs.writeFile("junk/logging.js", "console.log('Code Version: " + version + "');", function() { console.log("ye"); });
     cp.execFile("uglify.cmd");
     cp.execFile("uglifymin.cmd");
+    cb();
 });
 gulp.task("watch", function() {
-    gulp.watch("./js/**/*.*", ["default"]);
+    return gulp.watch("./js/**/*.*", gulp.series("default"));
+});
+gulp.task("egg", function() {
+    console.log("poop");
 });
 gulp.task("buildcollisions", function() {
     fs.writeFile("js/worldmap/collisions.js", "const collisions = {\r\n");

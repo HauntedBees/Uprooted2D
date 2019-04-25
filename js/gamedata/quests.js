@@ -69,6 +69,7 @@ const quests = {
                 player.increaseItem("_log", 1);
                 player.decreaseItem("shiitake");
                 quests.completeQuest("quest1");
+                if(player.fixtureTutorialState === 0) { player.fixtureTutorialState = 1; }
             }
         },
         { text: "quest1.c", next: function() { player.activeQuests["quest1"] = 1 } },

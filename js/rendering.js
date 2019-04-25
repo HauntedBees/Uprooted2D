@@ -20,7 +20,7 @@ const gfx = {
     },
     GetFont: () => player.options.font === 1 ? "OpenDyslexic" : "PressStart2P",
 
-    clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasWidth),
+    clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasHeight),
     clearSome: keys => keys.forEach(e => gfx.clearLayer(e)),
     clearAll: function(includingTutorial) {
         for(const key in gfx.ctx) {
