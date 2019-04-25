@@ -1148,6 +1148,7 @@ const SpecialFunctions = {
     "DOWNCAVE": function() {
         const newFloor = worldmap.customMap.floor + 1;
         if(newFloor > player.caveDepth) { player.caveDepth = newFloor; }
+        if(newFloor === 4) { AddAchievementIfMissing("madeForMe"); }
         game.transition(game.currentInputHandler, worldmap, { 
             init: { x: 3, y: 3 }, map: "cave", 
             floor: newFloor, 
