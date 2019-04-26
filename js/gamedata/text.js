@@ -8897,7 +8897,7 @@ const fulltext = {
 	},
 	// Credits
 	"cr0": {
-		"en-us": "Credits", 
+		"en-us": "CREDITS", 
 		"type": "chead"
 	},
 	"cr.sf": {
@@ -8941,36 +8941,52 @@ const fulltext = {
 		"type": "cname"
 	},
 	"cr.gd": {
-		"en-us": "Game Design", 
+		"en-us": "GAME DESIGN", 
 		"type": "crole"
 	},
 	"cr.p": {
-		"en-us": "Programming", 
+		"en-us": "PROGRAMMING", 
 		"type": "crole"
 	},
 	"cr.sw": {
-		"en-us": "Story & Writing", 
+		"en-us": "STORY & WRITING", 
 		"type": "crole"
 	},
 	"cr.g": {
-		"en-us": "Graphics", 
+		"en-us": "GRAPHICS", 
 		"type": "crole"
 	},
 	"cr.m": {
-		"en-us": "Music", 
+		"en-us": "MUSIC", 
 		"type": "crole"
 	},
 	"cr.qa": {
-		"en-us": "Quality Assurance", 
+		"en-us": "QUALITY ASSURANCE", 
 		"type": "crole"
 	},
 	"cr.spec": {
-		"en-us": "Special Thanks", 
+		"en-us": "SPECIAL THANKS", 
 		"type": "crole"
 	},
 	"cr.copy": {
-		"en-us": "Copyright 2018 Haunted Bees Productions", 
+		"en-us": "COPYRIGHT 2018-2019 HAUNTED BEES PRODUCTIONS", 
 		"type": "crole"
+	},
+	"crEnd1": {
+		"en-us": "Hey FoodTooters! Hope you had a good time with Farming Fantasy!", 
+		"type": "cend"
+	},
+	"crEnd2": {
+		"en-us": "Remember, if you liked this game, be sure to like, comment, and subscribe!", 
+		"type": "cend"
+	},
+	"crEnd3": {
+		"en-us": "And donate to my Paytron account to help me pay bail! Thank you!", 
+		"type": "cend"
+	},
+	"crEnd4": {
+		"en-us": "Up Next: WI-FI HOTSPOT HOTPANTS???", 
+		"type": "cend"
 	},
 	// The Cave
 	"healingStation": {
