@@ -6538,11 +6538,11 @@ const fulltext = {
 		"type": "opts"
 	},
 	"aligngood": {
-		"en-us": "Good", 
+		"en-us": "Pacifist", 
 		"type": "opts"
 	},
 	"alignbad": {
-		"en-us": "Evil", 
+		"en-us": "Combative", 
 		"type": "opts"
 	},
 	"aligntech": {

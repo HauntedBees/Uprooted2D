@@ -75,7 +75,7 @@ const pausemenu = {
             if(pausemenu.cursorX === 0) {
                 this.cursors.RedimCursor("main", 2, 11.75, 1, 1);
                 const str = GetText("alignment") + ": " + GetText(player.techAxis <= 0 ? "alignnature" : "aligntech") + " " + GetText(player.ethicsAxis >= 0 ? "aligngood" : "alignbad");
-                gfx.drawInfoText(str, 0, 10.75);
+                gfx.drawInfoText(str + " ", 0, 10.75);
             } else {
                 const idx = pausemenu.cursorX - 1;
                 const item = pausemenu.questItems[idx];
