@@ -62,5 +62,7 @@ extbuild/rawimg*
 imghq*
 imgs*
 junk/*
-web2exe_backup/*
+web2exe_backup/package-lock.json
+web2exe_backup/package.json
+web2exe_backup/web2exe.json
 com.hauntedbees.farmingfantasy/*
