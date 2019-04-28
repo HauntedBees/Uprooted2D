@@ -45,7 +45,7 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opPottywords", this.localOptions.canSayFuck, "canSayFuck", ["opNo", "opYes"], false);
         y = this.addOption(y, "opStickyControls", this.localOptions.stickyMovement, "stickyMovement", ["opNo", "opYes"], true);
         y = this.addOption(y, "opIgnoreMouse", this.localOptions.ignoreMouse, "ignoreMouse", ["opNo", "opYes"], false);
-        y = this.addOption(y, "opVirtualDpad", this.localOptions.virtualController, "virtualController", ["opNo", "opYes"], false);
+        //y = this.addOption(y, "opVirtualDpad", this.localOptions.virtualController, "virtualController", ["opNo", "opYes"], false);
         if(this.localOptions.virtualController) {
             virtualControls.Show();
             y = this.addVirtualControllerOptions(y, "opVirtualCustom");
