@@ -19,7 +19,7 @@ Function ProcessDir($path, $type) {
             & "$ffmpegpath" -y -i $fullOutPath\$name -vf "scale=iw*2:ih*2" -sws_flags neighbor $fullOutPath\$name;
         } elseif($type -eq "hq2x") { # nah
             & "$ffmpegpath" -y -i $fullname -vf "hqx=2,scale=iw*2:ih*2" -sws_flags neighbor $fullOutPath\$name;
-        } elseif($type -eq "hq4x") { # needs manual trimming of player combat
+        } elseif($type -eq "hq4x") { # requires manual trimming of player combat and combat equipment
             & "$ffmpegpath" -y -i $fullname -vf "hqx=4" $fullOutPath\$name;
         }
     }
@@ -27,6 +27,7 @@ Function ProcessDir($path, $type) {
 Write-Host "Processing $which";
 ProcessDir "" $which;
 ProcessDir "\bgs" $which;
+ProcessDir "\end" $which;
 ProcessDir "\covers" $which;
 ProcessDir "\fg" $which;
 ProcessDir "\maps" $which;
