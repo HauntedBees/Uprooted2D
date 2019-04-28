@@ -8976,6 +8976,54 @@ const fulltext = {
 		"en-us": "COPYRIGHT 2018-2019 HAUNTED BEES PRODUCTIONS", 
 		"type": "crole"
 	},
+	"cr.font1": {
+		"en-us": "PressStart2P Font", 
+		"type": "cname"
+	},
+	"cr.font1b": {
+		"en-us": "2011 Cody Boisclair", 
+		"type": "cname"
+	},
+	"cr.font2": {
+		"en-us": "Nevis Font", 
+		"type": "cname"
+	},
+	"cr.font2b": {
+		"en-us": "2007 Ed Merritt", 
+		"type": "cname"
+	},
+	"cr.font3": {
+		"en-us": "OpenDyslexic Font", 
+		"type": "cname"
+	},
+	"cr.font3b": {
+		"en-us": "2003 Abbie Gonzalez", 
+		"type": "cname"
+	},
+	"cr.nwjs": {
+		"en-us": "NW.js Runtime", 
+		"type": "cname"
+	},
+	"cr.nwjsb": {
+		"en-us": "2015 NW.js Community", 
+		"type": "cname"
+	},
+	"cr.web2": {
+		"en-us": "Web2Executable", 
+		"type": "cname"
+	},
+	"cr.web2b": {
+		"en-us": "2015 Joey Payne", 
+		"type": "cname"
+	},
+	"cr.lz": {
+		"en-us": "lz-string Library", 
+		"type": "cname"
+	},
+	"cr.lzb": {
+		"en-us": "2013 pieroxy", 
+		"type": "cname"
+	},
 	"crEnd1": {
 		"en-us": "Hey FoodTwoters! Hope you had a good time with Farming Fantasy!", 
 		"type": "cend"
