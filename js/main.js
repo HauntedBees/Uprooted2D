@@ -8,22 +8,19 @@ const nwHelpers = {
     InitScreenSizeAdjustment: function() {
         if(typeof require === "undefined") { return; }
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }
-        let forceReset = true;
         if(window.screen.availWidth > this.win.width || window.screen.availHeight > this.win.height) {
-            this.win.width = window.screen.availWidth;
-            this.win.height = window.screen.availHeight;
-            forceReset = false;
-        }
-        if(this.win.width < 1024) {
+            player.options.resolution = 0;
+            console.log(`shrunky from ${window.screen.availWidth}/${window.screen.availHeight}`);
+        } else if(this.win.width < 1024) {
             player.options.resolution = 0;
         } else if(this.win.width < 2048) {
             player.options.resolution = 1;
         } else {
             player.options.resolution = 2;
         }
-        nwHelpers.AdjustScreenSettings(forceReset);
+        nwHelpers.AdjustScreenSettings();
     },
-    AdjustScreenSettings: function(skipWinAdjustments) {
+    AdjustScreenSettings: function() {
         if(typeof require === "undefined") { return; }
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }
         let multiplier = 1;
@@ -37,10 +34,8 @@ const nwHelpers = {
             this.win.leaveFullscreen();
         }
         this.win.zoomLevel = Math.log(multiplier) / Math.log(1.2);
-        if(!skipWinAdjustments) {
-            this.win.width = game.w * multiplier;
-            this.win.height = game.h * multiplier;
-        }
+        this.win.width = game.w * multiplier;
+        this.win.height = game.h * multiplier;
     },
     Quit: function() {
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }

@@ -1,0 +1,40 @@
+{
+    "app_name": "Farming Fantasy",
+    "main": "indexapp.html",
+    "name": "farmingfantasy",
+    "nodejs": true,
+    "version": "0.6",
+    "webexe_settings": {
+        "blacklist": "*",
+        "custom_script": "",
+        "download_dir": "",
+        "export_dir": "E:\\GitHub\\CropRPGout",
+        "force_download": false,
+        "linux-x32": false,
+        "linux-x64": false,
+        "mac-x64": false,
+        "nw_compression_level": 0,
+        "nw_version": "0.28.2",
+        "output_pattern": "",
+        "sdk_build": true,
+        "uncompressed_folder": false,
+        "whitelist": "*.json\nimg*\nout.js\nstyles*\nindexapp.html\nff.png\nsound*",
+        "windows-x64": true
+    },
+    "webkit": {},
+    "window": {
+        "exe_icon": "ff.png",
+        "height": 896,
+        "icon": "ff.png",
+        "id": "FarmingFantasy",
+        "position": "center",
+        "show": true,
+        "title": "Farming Fantasy",
+        "visible": true,
+        "width": 1024
+    },
+    "dependencies": {
+        "gulp": "^4.0.1",
+        "gulp-cli": "^2.2.0"
+    }
+}

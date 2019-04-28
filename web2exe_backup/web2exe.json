@@ -9,11 +9,11 @@
         "linux-x64": false,
         "mac-x64": false,
         "nw_compression_level": 0,
-        "nw_version": "0.38.0",
+        "nw_version": "0.28.2",
         "output_pattern": "",
         "sdk_build": true,
-        "uncompressed_folder": true,
-        "whitelist": "*.json\nimg*\nout.js\nstyles*\nindexapp.html\nff.png\nsound*\nvgp_img*",
+        "uncompressed_folder": false,
+        "whitelist": "*.json\nimg*\nout.js\nstyles*\nindexapp.html\nff.png\nsound*",
         "windows-x64": true
     }
 }
