@@ -8908,6 +8908,10 @@ const fulltext = {
 		"en-us": "Skyler Johnson", 
 		"type": "cname"
 	},
+	"cr.gw": {
+		"en-us": "Galen Wiley", 
+		"type": "cname"
+	},
 	"cr.tr": {
 		"en-us": "Tanner Roof", 
 		"type": "cname"
@@ -8973,7 +8977,7 @@ const fulltext = {
 		"type": "crole"
 	},
 	"crEnd1": {
-		"en-us": "Hey FoodTooters! Hope you had a good time with Farming Fantasy!", 
+		"en-us": "Hey FoodTwoters! Hope you had a good time with Farming Fantasy!", 
 		"type": "cend"
 	},
 	"crEnd2": {

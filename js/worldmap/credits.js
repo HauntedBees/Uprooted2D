@@ -11,6 +11,7 @@ worldmap.credits = {
         this.creditsStr += " \n  \n " + GetText("cr.sw");
         this.creditsStr += " \n " + GetText("cr.sf");
         this.creditsStr += " \n " + GetText("cr.sj");
+        this.creditsStr += " \n " + GetText("cr.gw");
         this.creditsStr += " \n  \n " + GetText("cr.g");
         this.creditsStr += " \n " + GetText("cr.sf");
         this.creditsStr += " \n  \n " + GetText("cr.m");
