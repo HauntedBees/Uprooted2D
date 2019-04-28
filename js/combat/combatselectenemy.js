@@ -455,21 +455,21 @@ const addtlHitChecks = {
     "check_MUSH_w": function(cropInfo, damage) {
         let hasMushroom = false;
         for(let i = 0; i < cropInfo.length; i++) { hasMushroom |= cropInfo[i].crop.type === "mush"; }
-        return hasMushroom ? damage : 0;
+        return hasMushroom ? (damage * 25) : 0;
     },
     "check_RICE": function(cropInfo, damage) {
         let hasRice = false;
         for(let i = 0; i < cropInfo.length; i++) { hasRice |= cropInfo[i].crop.type === "rice"; }
-        return hasRice ? damage : 0;
+        return hasRice ? (damage * 25) : 0;
     },
     "check_VEG": function(cropInfo, damage) {
         let hasVeg = false;
         for(let i = 0; i < cropInfo.length; i++) { hasVeg |= cropInfo[i].crop.type === "veg"; }
-        return hasVeg ? damage : 0;
+        return hasVeg ? (damage * 25) : 0;
     },
     "check_FRUIT": function(cropInfo, damage) {
         let hasTree = false;
         for(let i = 0; i < cropInfo.length; i++) { hasTree |= cropInfo[i].crop.type === "tree"; }
-        return hasTree ? damage : 0;
+        return hasTree ? (damage * 25) : 0;
     }
 };
