@@ -371,5 +371,6 @@ const mafs = {
     // Post-Game
     "Carlos": new MapAnimFactory("dw", [28, 0, 2]), "CoopPainter": new MapAnimFactory("la", [27, 21, 2]),
     "IGGirl1": new MapAnimFactory("dw", [28, 2, 2]), "IGGirl2": new MapAnimFactory("dw", [28, 4, 2]),
-    "Garlic": Ft(12, 19), "Apple": Ft(15, 19), "Corn": Ft(28, 23)
+    "IGWorker1": new MapAnimFactory("dw", [28, 6, 2]), "IGWorker2": new MapAnimFactory("dw", [28, 8, 2]),
+    "IGWorker3": new MapAnimFactory("dw", [28, 10, 2]), "Garlic": Ft(12, 19), "Apple": Ft(15, 19), "Corn": Ft(28, 23)
 };

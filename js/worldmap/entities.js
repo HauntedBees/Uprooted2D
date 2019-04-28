@@ -1121,7 +1121,11 @@ const mapentities = {
             GetNoIMFellow("rollybaby4", 29, 11, "RollerBob", { moving: true, boring: true, dir: 3 }),
             GetNoIMFellow("rollybaby5", 30, 9, "RollerBob", { moving: true, boring: true, dir: 3 }),
             GetNoIMFellow("rollybaby6", 30, 10, "RollerBob", { moving: true, boring: true, dir: 3 }),
-            GetNoIMFellow("rollybaby7", 30, 11, "RollerBob", { moving: true, boring: true, dir: 3 })
+            GetNoIMFellow("rollybaby7", 30, 11, "RollerBob", { moving: true, boring: true, dir: 3 }),
+            GetFellow("RAPBATTLE", 22, 18, 2, "RAPBATTLE", OneSpeak("IGworker4"), undefined, { moving: true }),
+            GetFellow("IGWorker1", 18, 3, 2, "IGWorker1", OneSpeak("IGworker3"), undefined, { moveToTalk: true }),
+            GetFellow("IGWorker2", 27, 9, 3, "IGWorker2", OneSpeak("IGworker1"), undefined, { moveToTalk: true }),
+            GetFellow("IGWorker3", 2, 17, 1, "IGWorker3", OneSpeak("IGworker2"), undefined, { moveToTalk: true })
         ];
         return entities;
     },

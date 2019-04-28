@@ -7118,11 +7118,11 @@ const fulltext = {
 		"type": "opts"
 	},
 	"map.northcity_NB": {
-		"en-us": "Central Las Abejas NV", 
+		"en-us": "Central Las Abejas NC", 
 		"type": "opts"
 	},
 	"map.northcity_IB": {
-		"en-us": "Central Las Abejas IV", 
+		"en-us": "Central Las Abejas IC", 
 		"type": "opts"
 	},
 	"map.hq_1": {
@@ -7340,7 +7340,7 @@ const fulltext = {
 		"type": "aname"
 	},
 	"ad.techGood": {
-		"en-us": "Completed the game with an Industrial Good alignment.", 
+		"en-us": "Completed the game with an Industrial Pacifist alignment.", 
 		"type": "adesc"
 	},
 	"a.techBad": {
@@ -7348,7 +7348,7 @@ const fulltext = {
 		"type": "aname"
 	},
 	"ad.techBad": {
-		"en-us": "Completed the game with an Industrial Bad alignment.", 
+		"en-us": "Completed the game with an Industrial Combative alignment.", 
 		"type": "adesc"
 	},
 	"a.natureGood": {
@@ -7356,7 +7356,7 @@ const fulltext = {
 		"type": "aname"
 	},
 	"ad.natureGood": {
-		"en-us": "Completed the game with a Natural Good alignment.", 
+		"en-us": "Completed the game with a Natural Pacifist alignment.", 
 		"type": "adesc"
 	},
 	"a.natureBad": {
@@ -7364,7 +7364,7 @@ const fulltext = {
 		"type": "aname"
 	},
 	"ad.natureBad": {
-		"en-us": "Completed the game with a Natural Bad alignment.", 
+		"en-us": "Completed the game with a Natural Combative alignment.", 
 		"type": "adesc"
 	},
 	"a.vegan": {
@@ -9352,6 +9352,22 @@ const fulltext = {
 	},
 	"hq_noUpstairs": {
 		"en-us": "The upper floors are still being renovated. It wouldn't be safe to go up there right now.", 
+		"type": "text"
+	},
+	"IGworker1": {
+		"en-us": "Belfter: Processing is going smoothly! These veggies will be Guaranteed Fresh upon delivery!", 
+		"type": "text"
+	},
+	"IGworker2": {
+		"en-us": "Beth: People who start small talk with strangers in public bathrooms are the worst. Please stop.", 
+		"type": "text"
+	},
+	"IGworker3": {
+		"en-us": "Torbo: When are we investing in one of those robot vacuums, eh?", 
+		"type": "text"
+	},
+	"IGworker4": {
+		"en-us": "RAPBATTLE: Status Report: Everything is wonderful. Food is delicious.", 
 		"type": "text"
 	},
 	// Area 8: North City (Natural Bad Ending)
