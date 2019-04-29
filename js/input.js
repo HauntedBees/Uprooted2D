@@ -2,6 +2,63 @@ let gpVals = {
     triggerMin: 0.5,
     deadZones: [0.25, 0.25, 0.25, 0.25]
 };
+let speaker = {
+    voices: [], timeout: null, lastSpeaker: null, playerVoice: null, attempts: 0, failed: false, voiceMap: {},
+    Init: function() {
+        speaker.voices = speechSynthesis.getVoices();
+        if(speaker.voices.length === 0) {
+            if(++speaker.attempts > 20) {
+                console.log("Couldn't find any voices!");
+                speaker.failed = true;
+                return;
+            }
+            setTimeout(speaker.Init, 100);
+            return;
+        }
+        const eng = speaker.voices.filter(e => e.lang.indexOf("en") === 0);
+        if(eng.length > 0) { speaker.voices = eng; }
+        
+        speaker.playerVoice = speaker.TryGetVoice("Zira");
+        if(speaker.playerVoice === null) { speaker.playerVoice = speaker.TryGetVoice("Hazel"); }
+        if(speaker.playerVoice === null) { speaker.playerVoice = speaker.TryGetVoice("Female"); }
+        if(speaker.playerVoice === null) { speaker.playerVoice = speaker.voices[0]; }
+    },
+    TryGetVoice: function(key) {
+        for(let i = 0; i < speaker.voices.length; i++) {
+            if(speaker.voices[i].name.indexOf(key) >= 0) { return speaker.voices[i]; }
+        }
+        return null;
+    },
+    GetVoice: function(s) {
+        if(speaker.voiceMap[s] !== undefined) { return speaker.voiceMap[s]; }
+        if(s === "" || s === null || s === undefined) { return speaker.playerVoice; }
+        const v = s.split("").map(e => e.charCodeAt(0)).reduce((a, c) => a + c) % speaker.voices.length;
+        speaker.voiceMap[s] = speaker.voices[v];
+        return speaker.voiceMap[s];
+    },
+    SayThing: function(t, isDialogue) {
+        if(speaker.timeout !== null) { clearTimeout(speaker.timeout); }
+        const wasSpeaking = speechSynthesis.speaking;
+        if(wasSpeaking) { speechSynthesis.cancel(); }
+        if(isDialogue) {
+            if(speaker.lastSpeaker !== null && t.indexOf(speaker.lastSpeaker) === 0) {
+                t = t.replace(speaker.lastSpeaker, "");
+            } else {
+                if(t.indexOf(": ") > 0) { speaker.lastSpeaker = t.substring(0, t.indexOf(": ") + 2); }
+                else { t.lastSpeaker = null; }
+                t = t.replace(": ", " says, ");
+            }
+        }
+        t = t.replace(/Food2/g, "Food Two").replace(/ emo /g, " eemo ").replace(/\?\?\?/g, "unknown").replace(/Iii/g, "E");
+        const phrase = new SpeechSynthesisUtterance(t);
+        phrase.voice = speaker.GetVoice(speaker.lastSpeaker);
+        if(wasSpeaking) {
+            speaker.timeout = setTimeout(() => { speechSynthesis.speak(phrase); speaker.timeout = null; }, 500);
+        } else {
+            speechSynthesis.speak(phrase);
+        }
+    }
+};
 let consoleCmd = {
     Process: function(str) {
         const args = str.split(" ");
