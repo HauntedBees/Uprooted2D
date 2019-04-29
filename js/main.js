@@ -109,6 +109,7 @@ const game = {
             const name = game.canvasLayers[i];
             canvasObj[name] = document.getElementById(name);
         }
+        speaker.Init();
         let contextObj = {};
         for(const key in canvasObj) {
             contextObj[key] = canvasObj[key].getContext("2d");
@@ -164,6 +165,8 @@ const game = {
         }
     },
     transition: function(from, to, arg) {
+        //game.innerTransition(from, to, arg);
+        //if(game.currentInputHandler.latestart !== undefined) { game.currentInputHandler.latestart(); }
         if(game.transitioning) { return false; }
         game.transitioning = true;
         if(from.earlyclean !== undefined) { from.earlyclean(); }
@@ -197,6 +200,7 @@ const game = {
         game.innerTransition(game.transitionInfo.from, game.transitionInfo.to, game.transitionInfo.arg);
         if(game.transitionInfo.arg !== undefined && game.transitionInfo.arg.stayBlack) { return; }
         game.startTransitionAnim(-1);
+        //setTimeout(function() { game.startTransitionAnim(-1); }, 1000);
     },
     finishTransition: function() {
         clearInterval(game.transitionInfo.animIdx);
