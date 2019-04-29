@@ -4,7 +4,7 @@ A turn-based farming RPG.
 ## disclaimer
 The codebase currently has lots of dummy text in it. If you don't want to see potty words, maybe don't look at this yet.
 ## license
-This game's source code is licensed with the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html). All art assets are licensed with the [CC BY-SA 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
+This game's source code is licensed with the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html). All art assets are licensed with the [CC BY-SA 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 ## why
 Sometimes I make choices. They aren't always good ones.
 ## building
