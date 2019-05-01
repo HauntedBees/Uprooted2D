@@ -37,6 +37,7 @@ let speaker = {
         return speaker.voiceMap[s];
     },
     SayThing: function(t, isDialogue) {
+        if(speaker.failed) { return; }
         if(speaker.timeout !== null) { clearTimeout(speaker.timeout); }
         const wasSpeaking = speechSynthesis.speaking;
         if(wasSpeaking) { speechSynthesis.cancel(); }

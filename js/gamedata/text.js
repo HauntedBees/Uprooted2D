@@ -959,7 +959,7 @@ const fulltext = {
 	},
 	// Options
 	"pottyWordPanic": {
-		"en-us": "Occasionally, the characters in Farming Fantasy may use strong language because potty words can be funny sometimes. Are you okay with this?", 
+		"en-us": "Occasionally, the characters in this game may use strong language because potty words can be funny sometimes. Are you okay with this?", 
 		"type": "other"
 	},
 	"pottyYes": {
@@ -4664,7 +4664,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"misctext10": {
-		"en-us": "gamers4Gameing (public): please sign our petition to stop Haunted Bees from making fun of nerds in their game Farming Fantasy.", 
+		"en-us": "gamers4Gameing (public): please sign our petition to stop Haunted Bees from making fun of nerds in their weird farming game.", 
 		"type": "text"
 	},
 	"misctext11": {
@@ -9025,7 +9025,7 @@ const fulltext = {
 		"type": "cname"
 	},
 	"crEnd1": {
-		"en-us": "Hey FoodTwoters! Hope you had a good time with Farming Fantasy!", 
+		"en-us": "Hey FoodTwoters! Hope you had a good time with this game!", 
 		"type": "cend"
 	},
 	"crEnd2": {
