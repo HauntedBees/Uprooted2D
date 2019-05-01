@@ -80,7 +80,7 @@ worldmap.shop = {
             case me.sellStates.BUYING: this.DrawDetailsBuying(); break;
         }
         if(this.isUpgradeShop && this.availableIndexes.length === 0 && isopening) { text = GetText(this.details.empty); }
-        gfx.drawText(GetText("s.coins").replace(/\{0\}/g, player.monies), 2, 16 * 9.25 + 1.5, "#FFFFFF");
+        gfx.drawText(GetText("s.coins").replace(/\{0\}/g, player.monies), 2, 16 * 9.25 + 1.5, gfx.GetWhite());
         if(text === undefined) {
             if(this.sellingState === me.sellStates.BUYING) { this.DrawText(); }
         } else {
@@ -89,7 +89,7 @@ worldmap.shop = {
     },
     WriteWrappedText: function(text, y) {
         y = y || 159; // 16 * 10 - 1
-        gfx.drawWrappedText(text, 4, y, 250, "#FFFFFF");
+        gfx.drawWrappedText(text, 4, y, 250, gfx.GetWhite());
     },
     isValidSellIdx: function(i) {
         if(this.sellingType === me.sellTypes.CROPS) {
@@ -710,7 +710,7 @@ worldmap.shop = {
             const dreamChance = Math.random() > 0.75;
             const textKey = dreamChance ? `innDream${Range(0, 10)}` : "innSleep";
             worldmap.shop.DrawDetails(GetText(worldmap.shop.details.awake));
-            gfx.drawFullText(GetText(textKey), 0, "#FFFFFF", true);
+            gfx.drawFullText(GetText(textKey), 0, gfx.GetWhite(), true);
             sleepInfo.state = 2;
         } else if(sleepInfo.state === 3) {
             gfx.clearLayer("tutorial");

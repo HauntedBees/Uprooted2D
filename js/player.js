@@ -29,9 +29,10 @@ let player = {
     getSheetPath: function() {
         switch(player.options.gfxfilter) {
             case 0:
-            case 3: return "img";
+            case 4: return "img"; // glitch
             case 1: return "imgs4x";
             case 2: return "imghq4x";
+            case 3: return "imggb";
         }
     },
     getPlayTimeString: function(time) {

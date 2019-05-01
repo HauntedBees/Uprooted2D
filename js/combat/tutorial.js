@@ -42,7 +42,7 @@ const tutorial = {
             this.DrawInformationalGentleman(GetText("tutInfoGrowth"), 7.75, 11.25);
             this.DrawInformationalGentleman(GetText("tutInfoSeasons"), 7.75, 12.5);
         }
-        gfx.drawWrappedText(tutText, 2, 8, 235, "#000000", "tutorial");
+        gfx.drawWrappedText(tutText, 2, 8, 235, gfx.GetBlack(), "tutorial");
     },
     DrawInformationalGentleman: function(text, rightx, y) {
         let xi = 1;

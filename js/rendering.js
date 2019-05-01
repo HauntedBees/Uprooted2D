@@ -19,6 +19,9 @@ const gfx = {
         });
     },
     GetFont: () => player.options.font === 1 ? "OpenDyslexic" : "PressStart2P",
+    GetBlack: () => (player.options.gfxfilter === 3 ? "#081820" : "#000000"),
+    GetWhite: () => (player.options.gfxfilter === 3 ? "#E0F8D0" : "#FFFFFF"),
+    GetLightBlue: () => (player.options.gfxfilter === 3 ? "#88C070" : "#8B8CDE"),
 
     clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasHeight),
     clearSome: keys => keys.forEach(e => gfx.clearLayer(e)),
@@ -73,7 +76,7 @@ const gfx = {
         const delta = size * mult * 0.5;
         if(blackEverythingElse) {
             const ctx = gfx.ctx[layerToDraw];
-            ctx.fillStyle = "#000000";
+            ctx.fillStyle = gfx.GetBlack();
             ctx.fillRect(0, 0, gfx.canvasWidth, gfx.canvasWidth);
             ctx.clearRect((x * size - delta) * gfx.scale + 4, (y * size - delta) * gfx.scale + 4, size * mult * gfx.scale - 4, size * mult * gfx.scale - 4);
         }
@@ -230,7 +233,7 @@ const gfx = {
         gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
-    drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = "#000000"; gfx.ctx["menutext"].fillRect(x, y, w, 5); },
+    drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = gfx.GetBlack(); gfx.ctx["menutext"].fillRect(x, y, w, 5); },
     drawChoice: function(y, t, selected) {
         const tile = selected ? "SselM" : "selM";
         for(let x = 0; x < 16; x++) { gfx.drawTile(tile, x * 16, y * 16 - 8, "menuA"); }
@@ -254,7 +257,7 @@ const gfx = {
     drawText: function(t, x, y, color, size, layer) {
         layer = layer || "menutext";
         gfx.ctx[layer].font = gfx.GetFontSize(size) + gfx.GetFont();
-        gfx.ctx[layer].fillStyle = (color || "#000000");
+        gfx.ctx[layer].fillStyle = (color || gfx.GetBlack());
         gfx.ctx[layer].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
     },
     getTextLength: function(t, size) {
@@ -291,7 +294,7 @@ const gfx = {
         layer = layer || "menutext";
         maxWidth *= gfx.scale;
         const ctx = gfx.ctx[layer];
-        ctx.fillStyle = (color || "#000000");
+        ctx.fillStyle = (color || gfx.GetBlack());
         size = gfx.GetFontSize(size, true);
         ctx.font = size + "px " + gfx.GetFont();
         const ddy = size / 2.75, ts = t.split(" ");
@@ -325,7 +328,7 @@ const gfx = {
             gfx.drawTile("infoR", (x + w) * 16, y2 * 16, layer);
         }
         const ctx = gfx.ctx[layer];
-        ctx.fillStyle = "#8B8CDE";
+        ctx.fillStyle = gfx.GetLightBlue();
         ctx.fillRect((x + 1) * 16 * gfx.scale, (y + 1) * 16 * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
     },
     drawInfobox: function(w, h, y, layer) {
@@ -343,7 +346,7 @@ const gfx = {
             gfx.drawTile("infoL", startx * 16, y + y2 * 16, layer);
         }
         const ctx = gfx.ctx[layer];
-        ctx.fillStyle = "#8B8CDE";
+        ctx.fillStyle = gfx.GetLightBlue();
         ctx.fillRect((startx + 1) * 16 * gfx.scale, (y + 16) * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
     },
     drawBigNumber: function(number, x, y, layer, white) {
@@ -379,13 +382,13 @@ const gfx = {
     // Bridge
     DrawBlack: function(x, w) {
         const ctx = gfx.ctx["tutorial"];
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = gfx.GetBlack();
         ctx.fillRect(x * gfx.scale, 0, w * gfx.scale, game.tileh * 16 * gfx.scale);
     },
     // HQ3 - The Monster
     DrawChungus: function(x, y, w, h, offset) {
         const ctx = gfx.ctx["foreground"];
-        ctx.fillStyle = "#64A5FF";
+        ctx.fillStyle = player.options.gfxfilter === 3 ? "#88C070" : "#64A5FF";
         ctx.fillRect((x - offset.x * 16) * gfx.scale, (y - offset.y * 16) * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
     DrawHelp: () => gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 220, 195, 34, 24),
@@ -398,7 +401,7 @@ const gfx = {
     DrawBlackRect: function(x, y, w, h, layer) {
         layer = layer || "tutorial";
         const ctx = gfx.ctx[layer];
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = gfx.GetBlack();
         ctx.fillRect(x * gfx.scale, y * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
     // Full Drawsies

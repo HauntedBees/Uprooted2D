@@ -1138,6 +1138,10 @@ const fulltext = {
 		"en-us": "HQ4X", 
 		"type": "opts"
 	},
+	"opGB": {
+		"en-us": "Retro", 
+		"type": "opts"
+	},
 	"opGlitch": {
 		"en-us": "Glitch", 
 		"type": "opts"

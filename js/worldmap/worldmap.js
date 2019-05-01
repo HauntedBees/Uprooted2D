@@ -269,7 +269,7 @@ const worldmap = {
             actualText = HandleLists(actualText, "{seeds}", seedStrArr, "falconNoGifts", true, true);
         }
         actualText = actualText.replace(/\{g\}/g, player.monies);
-        gfx.drawFullText(actualText, drawY * 16 - (justWhiteText ? 20 : 0), justWhiteText ? "#FFFFFF" : undefined, overBlack);
+        gfx.drawFullText(actualText, drawY * 16 - (justWhiteText ? 20 : 0), justWhiteText ? gfx.GetWhite() : undefined, overBlack);
         //document.getElementById("screenRead").innerText = actualText;
         //document.getElementById("screenRead").focus();
         //speaker.SayThing(actualText, true);
