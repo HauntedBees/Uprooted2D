@@ -1639,19 +1639,19 @@ const fulltext = {
 		"type": "map"
 	},
 	"farmSprinkler": {
-		"en-us": "These sprinklers are good, but they don't always get things right.", 
+		"en-us": "These sprinklers are good, but they don't always get things right. That's why you gotta water by hand sometimes!", 
 		"type": "map"
 	},
 	"farmHay": {
-		"en-us": "This nice soft pile of yellow stuff is great for napping on.", 
+		"en-us": "This nice soft pile of hay is great for napping on.", 
 		"type": "map"
 	},
 	"farmBin": {
-		"en-us": "A bin full of delicious fruits and veggietables.", 
+		"en-us": "A bin full of delicious fruits and vegetables.", 
 		"type": "map"
 	},
 	"farmWater": {
-		"en-us": "Water you get when you combine a hole with water? A water hole!", 
+		"en-us": "Water you get when you combine a hole with water? A water hole! That isn't really a joke...", 
 		"type": "map"
 	},
 	"farmVeggie": {
@@ -2785,7 +2785,6 @@ const fulltext = {
 	},
 	"kelpCow0": {
 		"en-us": "Cow: i'm a cow.", 
-		"en-us-sfw": "Cow: i'm a cow.", 
 		"type": "map"
 	},
 	"kelpCow1": {
@@ -2864,7 +2863,7 @@ const fulltext = {
 	},
 	"seamonk2": {
 		"en-us": "Sea Monk: hey you wanna buy some smokes?", 
-		"en-us-sfw": "Sea Monk: hey you wanna buy some vitamin supplements?", 
+		"en-us-sfw": "Sea Monk: hey you wanna buy some baseball cards?", 
 		"type": "map"
 	},
 	"seamonk3": {
