@@ -372,7 +372,7 @@ worldmap.optionsMenu = {
             } else if(opt.type === "button") {
                 this.inChange = !this.inChange;
                 Sounds.PlaySound(this.inChange ? "navOk" : "navNok", false, this.localOptions.sound);
-                this.drawEverything();
+                this.DrawEverything();
                 return true;
             }
         } else {
