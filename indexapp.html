@@ -15,7 +15,7 @@
                 background-image: url("img/fullscreen.png");
                 background-size: cover;
 			}
-            canvas {
+            canvas, #colorCover, #previews, #prev_cover {
                 border: 1px solid black;
                 image-rendering: crisp-edges; /*pixelated;*/
                 left: 0;
@@ -26,6 +26,19 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
+            #colorCover, #previews, #prev_cover {
+                width: 1024px;
+                height: 896px;
+                pointer-events: none;
+            }
+            #previews, #prev_cover { border: none }
+            #prev_cover {
+                width: 288px;
+                height: 192px;
+                margin: 0;
+                top: 0;
+            }
+            #previews > img { display: none }
             #dpad {
                 border: none;
                 left: 0;
@@ -69,7 +82,15 @@
             <canvas id="menuOverBlack" width="1024" height="896"></canvas>
             <canvas id="menutextOverBlack" width="1024" height="896"></canvas>
             <canvas id="savegen" width="1024" height="896"></canvas>
+            <div id="colorCover"></div>
             <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
+        </div>
+        <div id="previews">
+            <img id="prev_img" src="img/colorPreview.png"/>
+            <img id="prev_imgs4x" src="imgs4x/colorPreview.png"/>
+            <img id="prev_imghq4x" src="imghq4x/colorPreview.png"/>
+            <img id="prev_imggb" src="imggb/colorPreview.png"/>
+            <div id="prev_cover"></div>
         </div>
         <!--<canvas id="dpad" width="1024" height="896"></canvas>-->
         <div id="fontLoader">

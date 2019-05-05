@@ -406,6 +406,7 @@ const game = {
         }
         localStorage.setItem("lastSaved", savenum);
         if(!game.PatchSaveFile()) { return; }
+        game.ApplyBlendFilter();
         game.transition(game.currentInputHandler, worldmap, { 
             init: player.mapPos,
             map: player.mapName,
@@ -437,6 +438,58 @@ const game = {
         if(mapStates["hq_IB"] === undefined) { mapStates["hq_IB"] = {}; }
         if(player.noFunDiffMod === undefined) { console.log("nof"); player.noFunDiffMod = 0; }
         if(player.questsCleared.indexOf("truckRepair") >= 0 && player.questsCleared.indexOf("findFakeFarm") < 0) { console.log("fkf"); player.questsCleared.push("findFakeFarm"); }
+        // prior to v0.55
+        if(player.options.coverColor === undefined) { player.options.coverColor = 0; }
+        if(player.options.coverMode === undefined) { player.options.coverMode = 0; }
         return true;
+    },
+    ApplyBlendFilter: function() {
+        const style = document.getElementById("colorCover").style;
+        const opts = player.options;
+        if(opts.gfxfilter === 3) { // Color Shift
+            style["display"] = "block";
+            switch(opts.coverMode) {
+                case 0: // monochrome
+                    console.log("W");
+                    style["mix-blend-mode"] = "hue";
+                    switch(opts.coverColor) {
+                        case 0: // retro
+                            style["background-color"] = "";
+                            break;
+                        case 1: // gray
+                            style["background-color"] = "#FFFFFF";
+                            break;
+                        case 2: // amber
+                            style["background-color"] = "#FFBF00";
+                            break;
+                        case 3: // blue
+                            style["background-color"] = "#0000FF";
+                            break;
+                        case 4: // pink
+                            style["background-color"] = "#FFCCCC";
+                            break;
+                    }
+                    break;
+                case 1: // pastel
+                    console.log("G");
+                    style["mix-blend-mode"] = "soft-light";
+                    style["background-color"] = "#FFCCCC";
+                    break;
+                case 2: // faded
+                    style["mix-blend-mode"] = "saturation";
+                    style["background-color"] = "#FFCCCC";
+                    break;
+                case 3: // dark
+                    style["mix-blend-mode"] = "hard-light";
+                    style["background-color"] = "#666666";
+                    break;
+                case 4: // bright
+                    style["mix-blend-mode"] = "hard-light";
+                    style["background-color"] = "#BBBBBB";
+                    break;
+            }
+        } else {
+            style["display"] = "none";
+        }
     }
 };

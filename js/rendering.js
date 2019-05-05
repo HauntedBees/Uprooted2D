@@ -19,9 +19,9 @@ const gfx = {
         });
     },
     GetFont: () => player.options.font === 1 ? "OpenDyslexic" : "PressStart2P",
-    GetBlack: () => (player.options.gfxfilter === 3 ? "#081820" : "#000000"),
-    GetWhite: () => (player.options.gfxfilter === 3 ? "#E0F8D0" : "#FFFFFF"),
-    GetLightBlue: () => (player.options.gfxfilter === 3 ? "#E0F8D0" : "#8B8CDE"),
+    GetBlack: () => (player.IsMonochrome() ? "#081820" : "#000000"),
+    GetWhite: () => (player.IsMonochrome() ? "#E0F8D0" : "#FFFFFF"),
+    GetLightBlue: () => (player.IsMonochrome() ? "#E0F8D0" : "#8B8CDE"),
 
     clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasHeight),
     clearSome: keys => keys.forEach(e => gfx.clearLayer(e)),
@@ -388,7 +388,7 @@ const gfx = {
     // HQ3 - The Monster
     DrawChungus: function(x, y, w, h, offset) {
         const ctx = gfx.ctx["foreground"];
-        ctx.fillStyle = player.options.gfxfilter === 3 ? "#88C070" : "#64A5FF";
+        ctx.fillStyle = player.IsMonochrome() ? "#88C070" : "#64A5FF";
         ctx.fillRect((x - offset.x * 16) * gfx.scale, (y - offset.y * 16) * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
     DrawHelp: () => gfx.drawImage(gfx.ctx["foreground"], gfx.spritesheets["ayudame"], 0, 0, 34, 24, 220, 195, 34, 24),

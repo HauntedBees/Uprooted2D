@@ -127,7 +127,7 @@ function Smartphone() {
                     gfx.drawTile("infoR", 16 * xi, 2 + (topy + i + 1) * 16, "smartphone");
                 }
                 let ctx = gfx.ctx["smartphone"];
-                ctx.fillStyle = player.options.gfxfilter === 3 ? "#E0F8D0" : "#8B8CDE";
+                ctx.fillStyle = player.IsMonochrome() ? "#E0F8D0" : "#8B8CDE";
                 ctx.fillRect(0, 8 + (topy + 1) * 16 * gfx.scale, 112 * gfx.scale, drawRows * 16 * gfx.scale);
             }
             return rows - 0.5;

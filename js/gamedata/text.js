@@ -1139,11 +1139,59 @@ const fulltext = {
 		"type": "opts"
 	},
 	"opGB": {
-		"en-us": "Retro", 
+		"en-us": "Color Shift", 
 		"type": "opts"
 	},
 	"opGlitch": {
 		"en-us": "Glitch", 
+		"type": "opts"
+	},
+	"opColorH": {
+		"en-us": "Palette Style", 
+		"type": "opts"
+	},
+	"opColor0": {
+		"en-us": "Monochrome", 
+		"type": "opts"
+	},
+	"opColor1": {
+		"en-us": "Pastel", 
+		"type": "opts"
+	},
+	"opColor2": {
+		"en-us": "Faded", 
+		"type": "opts"
+	},
+	"opColor3": {
+		"en-us": "Dark", 
+		"type": "opts"
+	},
+	"opColor4": {
+		"en-us": "Bright", 
+		"type": "opts"
+	},
+	"opMonoH": {
+		"en-us": "Color Tint", 
+		"type": "opts"
+	},
+	"opMono0": {
+		"en-us": "Retro", 
+		"type": "opts"
+	},
+	"opMono1": {
+		"en-us": "Gray", 
+		"type": "opts"
+	},
+	"opMono2": {
+		"en-us": "Amber", 
+		"type": "opts"
+	},
+	"opMono3": {
+		"en-us": "Blue", 
+		"type": "opts"
+	},
+	"opMono4": {
+		"en-us": "Pink", 
 		"type": "opts"
 	},
 	"opNo": {
@@ -8841,8 +8889,7 @@ const fulltext = {
 		"type": "sleep"
 	},
 	"innDream2": {
-		"en-us": "Several religious figures and deities tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she masturbated once,\" replies the deity next to them. \"Oh, she did? Nevermind, to hell with her.\"", 
-		"en-us-sfw": "Several religious figures and deities tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she said a bad word once,\" replies the deity next to them. \"Oh, she did? Nevermind, she's doomed.\"", 
+		"en-us": "Several religious figures and deities tower over me. They are talking amongst themselves. \"I'd let her into my afterlife,\" one says, \"she's good in my book.\" Another chimes in \"I'd reincarnate her into a cow. See how much she likes dairy after THAT.\" The others nod. \"I like that, maybe my religion needs reincarnation\" one mutters. \"I think her heart's in the right place. She's no saint, but I'd let her into my heaven,\" says another. \"Yeah but she said a bad word once,\" replies the deity next to them. \"Oh, she did? Nevermind, she's doomed.\"", 
 		"type": "sleep"
 	},
 	"innDream3": {

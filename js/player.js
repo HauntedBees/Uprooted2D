@@ -1,5 +1,5 @@
 let player = {
-    health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true, saveVersion: 0.5, 
+    health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true, saveVersion: 0.51, 
     c2: 0, c2Rate: 1, beeQueensFaced: 0, nathanSeeds: [["beet", 10], ["carrot", 10], ["ginger", 5]],
     level: 1, exp: 0, nextExp: 4, totalExp: 0, ethicsAxis: 0, techAxis: 0, // 1 = good/tech, -1 = bad/nature
     monies: 1000, playTime: 0, visitedMaps: [], openedChests: [],
@@ -14,7 +14,8 @@ let player = {
         music: 10, sound: 10,
         controltype: 0, canSayFuck: 0, 
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
-        font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0
+        font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0,
+        coverColor: 0, coverMode: 0, 
     },
     noFunDiffMod: 0, // positive = harder, negative = easier
     controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q", pause: "Enter" },
@@ -32,7 +33,7 @@ let player = {
             case 4: return "img"; // glitch
             case 1: return "imgs4x";
             case 2: return "imghq4x";
-            case 3: return "imggb";
+            case 3: return player.options.coverMode === 0 ? "imggb" : "img";
         }
     },
     getPlayTimeString: function(time) {
@@ -280,5 +281,6 @@ let player = {
         }
         let hasAll = !debug.AllCrops.some(c => player.miscdata.cropsPlanted[c] === undefined);
         if(hasAll) { AddAchievementIfMissing("allCrop"); }
-    }
+    },
+    IsMonochrome: () => player.options.gfxfilter === 3 && player.options.coverMode === 0
 };

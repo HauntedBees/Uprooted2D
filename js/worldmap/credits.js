@@ -56,7 +56,7 @@ worldmap.credits = {
         if(worldmap.credits.dy > 585) {
             gfx.drawFullImage("upnext", "menuOverBlack");
             gfx.drawText(GetText("crEnd4"), 5, 10, gfx.GetBlack(), 26, "menutextOverBlack");
-            gfx.drawText(worldmap.credits.finalTime + "/" + worldmap.credits.finalTime, 55, 218, player.options.gfxfilter === 3 ? "#88C070" : "#A5A5A5", 26, "menutextOverBlack");
+            gfx.drawText(worldmap.credits.finalTime + "/" + worldmap.credits.finalTime, 55, 218, player.IsMonochrome() ? "#88C070" : "#A5A5A5", 26, "menutextOverBlack");
         } else {
             gfx.drawFullImage("endcreditscover", "menuOverBlack");
             gfx.drawWrappedText(worldmap.credits.creditsStr, 194, 200 - worldmap.credits.dy, 130);
@@ -80,7 +80,7 @@ worldmap.credits = {
             gfx.ctx["menutextOverBlack"].textAlign = "center";
             gfx.drawWrappedText(str, 23 + width / 2, 185, width, gfx.GetWhite(), "menutextOverBlack");
             gfx.ctx["menutextOverBlack"].textAlign = "left";
-            gfx.drawText((worldmap.credits.stillCounting ? now : worldmap.credits.finalTime) + "/" + worldmap.credits.finalTime, 55, 218, player.options.gfxfilter === 3 ? "#88C070" : "#A5A5A5", 26, "menutextOverBlack");
+            gfx.drawText((worldmap.credits.stillCounting ? now : worldmap.credits.finalTime) + "/" + worldmap.credits.finalTime, 55, 218, player.IsMonochrome() ? "#88C070" : "#A5A5A5", 26, "menutextOverBlack");
         }
         worldmap.credits.dy += worldmap.credits.delta;
         if(worldmap.credits.dy > 785) { clearInterval(worldmap.credits.timer); worldmap.credits.finish(); }

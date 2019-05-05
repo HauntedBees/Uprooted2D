@@ -70,14 +70,20 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opResolution", this.localOptions.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
         y = this.addOption(y, "opFullScreen", this.localOptions.fullscreen, "fullscreen", ["opNo", "opYes"]);
         y = this.addOption(y, "opFilter", this.localOptions.gfxfilter, "gfxfilter", ["opNone", "opS4X", "opHQ4X", "opGB"]); //, "opGlitch"]);
+        if(this.localOptions.gfxfilter === 3) {
+            y = this.addOption(y, "opColorH", this.localOptions.coverMode, "coverMode", ["opColor0", "opColor1", "opColor2", "opColor3", "opColor4"]);
+            if(this.localOptions.coverMode === 0) {
+                y = this.addOption(y, "opMonoH", this.localOptions.coverColor, "coverColor", ["opMono0", "opMono1", "opMono2", "opMono3", "opMono4"]);
+            }
+        }
         /*y = this.addOption(y, "opPlacehold", 1, false, ["opOff", "opOn"]);*/
         y += 5;
         y = this.addFinal(y, (this.invalidControls.length > 0 ? "opFixControls" : "opSaveQuit"), this.SaveAndQuit);
         y = this.addFinal(y, "opQuit", this.QuitWithoutSaving);
         this.maxView = this.localOptions.controltype === 1 ? 2 : 1;
-        this.drawEverything();
+        this.DrawEverything();
     },
-    drawEverything: function() {
+    DrawEverything: function() {
         gfx.clearAll();
         gfx.TileBackground("optTile");
         const y = this.usingMouse ? this.views[this.view] : (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
@@ -142,7 +148,7 @@ worldmap.optionsMenu = {
                             gfx.drawTile("x", op.optx - 4, op.y - yoffset - 8, "menutext");
                         }
                     } else {
-                        const color = this.invalidControls.indexOf(op.idx) >= 0 ? (player.options.gfxfilter === 3 ? "#346856" : "#FF0000") : gfx.GetBlack();
+                        const color = this.invalidControls.indexOf(op.idx) >= 0 ? (player.IsMonochrome() ? "#346856" : "#FF0000") : gfx.GetBlack();
                         gfx.drawText(val, op.optx, op.y - yoffset, color, this.optionSize);
                     }
                     break;
@@ -151,6 +157,65 @@ worldmap.optionsMenu = {
                     if(this.cursory === i) { gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext"); }
                     break;
             }
+        }
+        this.DrawColorPreview();
+    },
+    DrawColorPreview: function(isClosing) {
+        const meOpt = this.options[this.cursory];
+        if(isClosing === true || ["gfxfilter", "coverMode", "coverColor"].indexOf(meOpt.idx) < 0) {
+            document.getElementById("prev_img").style["display"] = "none";
+            document.getElementById("prev_imgs4x").style["display"] = "none";
+            document.getElementById("prev_imghq4x").style["display"] = "none";
+            document.getElementById("prev_imggb").style["display"] = "none";
+            document.getElementById("prev_cover").style["display"] = "none";
+            return;
+        }
+        document.getElementById("prev_img").style["display"] = (this.localOptions.gfxfilter === 0 || (this.localOptions.gfxfilter === 3 && this.localOptions.coverMode !== 0)) ? "block" : "none";
+        document.getElementById("prev_imgs4x").style["display"] = (this.localOptions.gfxfilter === 1) ? "block" : "none";
+        document.getElementById("prev_imghq4x").style["display"] = (this.localOptions.gfxfilter === 2) ? "block" : "none";
+        document.getElementById("prev_imggb").style["display"] = (this.localOptions.gfxfilter === 3 && this.localOptions.coverMode === 0) ? "block" : "none";
+        if(this.localOptions.gfxfilter === 3) { // Color Shift
+            document.getElementById("prev_cover").style["display"] = "block";
+            switch(this.localOptions.coverMode) {
+                case 0: // monochrome
+                    document.getElementById("prev_cover").style["mix-blend-mode"] = "hue";
+                    switch(this.localOptions.coverColor) {
+                        case 0: // retro
+                            document.getElementById("prev_cover").style["background-color"] = "";
+                            break;
+                        case 1: // gray
+                            document.getElementById("prev_cover").style["background-color"] = "#FFFFFF";
+                            break;
+                        case 2: // amber
+                            document.getElementById("prev_cover").style["background-color"] = "#FFBF00";
+                            break;
+                        case 3: // blue
+                            document.getElementById("prev_cover").style["background-color"] = "#0000FF";
+                            break;
+                        case 4: // pink
+                            document.getElementById("prev_cover").style["background-color"] = "#FFCCCC";
+                            break;
+                    }
+                    break;
+                case 1: // pastel
+                    document.getElementById("prev_cover").style["mix-blend-mode"] = "soft-light";
+                    document.getElementById("prev_cover").style["background-color"] = "#FFCCCC";
+                    break;
+                case 2: // faded
+                    document.getElementById("prev_cover").style["mix-blend-mode"] = "saturation";
+                    document.getElementById("prev_cover").style["background-color"] = "#FFCCCC";
+                    break;
+                case 3: // dark
+                    document.getElementById("prev_cover").style["mix-blend-mode"] = "hard-light";
+                    document.getElementById("prev_cover").style["background-color"] = "#666666";
+                    break;
+                case 4: // bright
+                    document.getElementById("prev_cover").style["mix-blend-mode"] = "hard-light";
+                    document.getElementById("prev_cover").style["background-color"] = "#BBBBBB";
+                    break;
+            }
+        } else {
+            document.getElementById("prev_cover").style["display"] = "none";
         }
     },
     formatKeyName: function(keyName) {
@@ -286,7 +351,7 @@ worldmap.optionsMenu = {
         }
         if(newY < 0 || newY >= this.options.length) { return false; }
         this.cursory = newY;
-        this.drawEverything();
+        this.DrawEverything();
         return true;
     },
     click: function(pos) {
@@ -302,7 +367,7 @@ worldmap.optionsMenu = {
                 opt.action();
             } else if(opt.type === "option") {
                 this.cursory = this.options.length - 2;
-                this.drawEverything();
+                this.DrawEverything();
                 return true;
             } else if(opt.type === "button") {
                 this.inChange = !this.inChange;
@@ -328,7 +393,7 @@ worldmap.optionsMenu = {
             } else if(opt.type === "button") {
                 this.inChange = !this.inChange;
                 Sounds.PlaySound(this.inChange ? "navOk" : "navNok", false, this.localOptions.sound);
-                this.drawEverything();
+                this.DrawEverything();
                 return true;
             }
         }
@@ -337,17 +402,21 @@ worldmap.optionsMenu = {
     SaveAndQuit: function() {
         if(worldmap.optionsMenu.invalidControls.length > 0) { return false; }
         const oldFilter = player.options.gfxfilter;
+        const oldFilterMode = player.options.coverMode;
         player.keyboardcontrols = Object.assign(player.keyboardcontrols, worldmap.optionsMenu.localKeyboardControls);
         player.gamepadcontrols = Object.assign(player.gamepadcontrols, worldmap.optionsMenu.localGamepadControls);
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
         input.SwitchControlType(player.options.controltype);
         const newFilter = player.options.gfxfilter;
+        const newFilterMode = player.options.coverMode;
         if(player.options.virtualController === 1) {
             //virtualControls.Show();
         } else {
             //virtualControls.Hide();
         }
-        if(oldFilter != newFilter) {
+        game.ApplyBlendFilter();
+        worldmap.optionsMenu.DrawColorPreview(true);
+        if(oldFilter != newFilter || oldFilterMode != newFilterMode) {
             gfx.loadSpriteSheets(player.getSheetPath(), game.sheetsToLoad, worldmap.optionsMenu.ContinueSaveAndQuit);
         } else {
             worldmap.optionsMenu.ContinueSaveAndQuit();
@@ -361,6 +430,7 @@ worldmap.optionsMenu = {
     },
     QuitWithoutSaving: function(dontFont) {
         if(!dontFont) { player.options.font = worldmap.optionsMenu.origFont; Sounds.PlaySound("cancel", true); }
+        worldmap.optionsMenu.DrawColorPreview(true);
         if(worldmap.optionsMenu.fromPause) {
             game.innerTransition(worldmap.optionsMenu, pausemenu, 3);
         } else {
@@ -416,7 +486,7 @@ worldmap.optionsMenu = {
         } else {
             this.view = Math.max(this.view - 1, 0);
         }
-        this.drawEverything();
+        this.DrawEverything();
     },
     UpdateMouse: function(newMouseCondition) {
         if(!newMouseCondition) {
