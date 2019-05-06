@@ -35,9 +35,10 @@ class VirtButton {
         this.name = name;
         this.type = type;
         this.visible = true;
+        this.ready = false;
         const f = function(me, img) {
             const imgElem = new Image();
-            imgElem.onload = function() { me.imgElem = this; };
+            imgElem.onload = function() { me.imgElem = this; me.ready = true; };
             imgElem.src = img;
         };
         f(this, imgPath);
@@ -68,6 +69,13 @@ class VirtButton {
     }
     Draw(ctx, pos, isSelected, isResize, resizeLR, resizeUD) {
         if(!this.visible) { return; }
+        if(!this.ready) {
+            const imBaby = this;
+            setTimeout(function() {
+                imBaby.Draw(ctx, pos, isSelected, isResize, resizeLR, resizeUD);
+            }, 100);
+            return;
+        }
         ctx.drawImage(this.imgElem, 0, 0, this.imgElem.width, this.imgElem.height, pos.x, pos.y, this.imgElem.width * pos.w, this.imgElem.height * pos.h);
         if(this.command) { return; }
         if(isSelected) {

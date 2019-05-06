@@ -44,31 +44,37 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
         y = this.addOption(y, "opPottywords", this.localOptions.canSayFuck, "canSayFuck", ["opNo", "opYes"], false);
         y = this.addOption(y, "opStickyControls", this.localOptions.stickyMovement, "stickyMovement", ["opNo", "opYes"], true);
-        y = this.addOption(y, "opIgnoreMouse", this.localOptions.ignoreMouse, "ignoreMouse", ["opNo", "opYes"], false);
-        //y = this.addOption(y, "opVirtualDpad", this.localOptions.virtualController, "virtualController", ["opNo", "opYes"], false);
+        if(game.type !== 2) {
+            y = this.addOption(y, "opIgnoreMouse", this.localOptions.ignoreMouse, "ignoreMouse", ["opNo", "opYes"], false);
+        }
+        /*y = this.addOption(y, "opVirtualDpad", this.localOptions.virtualController, "virtualController", ["opNo", "opYes"], false);
         if(this.localOptions.virtualController) {
             virtualControls.Show();
             y = this.addVirtualControllerOptions(y, "opVirtualCustom");
         } else {
             virtualControls.Hide();
+        }*/
+        if(game.type !== 2) {
+            y = this.addOption(y, "opControlScheme", this.localOptions.controltype, "controltype", ["opKeyboard", "opGamepad"], true);
+            y = this.addHeading(y, "opControls");
+            const keysToUse = this.localOptions.controltype === 1 ? this.localGamepadControls : this.localKeyboardControls;
+            this.GetBadControls(keysToUse);
+            y = this.addButton(y, "ctrlUp", keysToUse.up, "up");
+            y = this.addButton(y, "ctrlLeft", keysToUse.left, "left");
+            y = this.addButton(y, "ctrlDown", keysToUse.down, "down");
+            y = this.addButton(y, "ctrlRight", keysToUse.right, "right");
+            y = this.addButton(y, "ctrlConfirm", keysToUse.confirm, "confirm");
+            y = this.addButton(y, "ctrlCancel", keysToUse.cancel, "cancel");
+            y = this.addButton(y, "ctrlPause", keysToUse.pause, "pause");
         }
-        y = this.addOption(y, "opControlScheme", this.localOptions.controltype, "controltype", ["opKeyboard", "opGamepad"], true);
-        y = this.addHeading(y, "opControls");
-        const keysToUse = this.localOptions.controltype === 1 ? this.localGamepadControls : this.localKeyboardControls;
-        this.GetBadControls(keysToUse);
-        y = this.addButton(y, "ctrlUp", keysToUse.up, "up");
-        y = this.addButton(y, "ctrlLeft", keysToUse.left, "left");
-        y = this.addButton(y, "ctrlDown", keysToUse.down, "down");
-        y = this.addButton(y, "ctrlRight", keysToUse.right, "right");
-        y = this.addButton(y, "ctrlConfirm", keysToUse.confirm, "confirm");
-        y = this.addButton(y, "ctrlCancel", keysToUse.cancel, "cancel");
-        y = this.addButton(y, "ctrlPause", keysToUse.pause, "pause");
         y = this.addHeading(y, "opAudio");
         y = this.addOption(y, "opMusic", this.localOptions.music, "music", worldmap.optionsMenu.soundNums);
         y = this.addOption(y, "opSound", this.localOptions.sound, "sound", worldmap.optionsMenu.soundNums);
         y = this.addHeading(y, "opGraphics");
-        y = this.addOption(y, "opResolution", this.localOptions.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
-        y = this.addOption(y, "opFullScreen", this.localOptions.fullscreen, "fullscreen", ["opNo", "opYes"]);
+        if(game.type === 1) {
+            y = this.addOption(y, "opResolution", this.localOptions.resolution, "resolution", ["opRes0", "opRes1", "opRes2"]);
+            y = this.addOption(y, "opFullScreen", this.localOptions.fullscreen, "fullscreen", ["opNo", "opYes"]);
+        }
         y = this.addOption(y, "opFilter", this.localOptions.gfxfilter, "gfxfilter", ["opNone", "opS4X", "opHQ4X", "opGB"]); //, "opGlitch"]);
         if(this.localOptions.gfxfilter === 3) {
             y = this.addOption(y, "opColorH", this.localOptions.coverMode, "coverMode", ["opColor0", "opColor1", "opColor2", "opColor3", "opColor4"]);
