@@ -53,12 +53,17 @@ const game = {
                     "title/logo", "title/lcover0", "title/lcover1", "title/lcover2", "title/lcover3",
                     "title", "titleGround", "titleTop",
                     //* Maps *//
-                    "maps/farm", "maps/producestand", "maps/firstvillage", "maps/forest",
+                    "maps/farm", "maps/producestand", "maps/firstvillage",
                     "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
                     "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
                     "maps/hq_6", "maps/gameover", "cavesheet",
                     "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG", "maps/northcity_NB", "maps/hq_NB", "maps/hq_NB_side",
                     "maps/northcity_IB", "maps/hq_IB", 
+                    //* Forest Map *//
+                    "maps/forest00", "maps/forest10", "maps/forest20",
+                    "maps/forest01", "maps/forest11", "maps/forest21", "maps/forest31",
+                    "maps/forest02", "maps/forest12", "maps/forest22", "maps/forest32",
+                    "maps/forest03", "maps/forest13", "maps/forest23", "maps/forest33",
                     //* Map Covers *//
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",
