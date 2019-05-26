@@ -2,7 +2,7 @@ const worldmap = {
     freeMovement: true, savedImage: "", angryBees: false,
     smartphone: null, horRor: null, caveInfo: null, 
     pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, 
-    animData: plAnims.walk, 
+    animData: plAnims.walk, runState: 0, runPressStart: -1,
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
@@ -10,6 +10,8 @@ const worldmap = {
     setup: function(args) {
         this.forceMove = false;
         this.forcedY = -1;
+        this.runState = 0;
+        this.runPressStart = -1;
         this.savedImage = "";
         this.inDialogue = false;
         this.waitForAnimation = false;
@@ -140,8 +142,7 @@ const worldmap = {
                 worldmap.entities[i].movement.state = (em.state + 1) % em.points.length;
             }
         }
-        if(worldmap.justDidA > 0) { worldmap.justDidA--; }
-        else { worldmap.refreshMap(); }
+        worldmap.refreshMap();
     },
     refreshMap: function() {
         gfx.clearSome(["background", "background2", "characters", "foreground"]);
@@ -159,6 +160,30 @@ const worldmap = {
             else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
             else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
             else { moving = this.forceMove; }
+            if(this.runState === 2) {
+                const speed = me.PLAYERMOVESPEED * 1.5;
+                moving = true;
+                switch(this.playerDir) {
+                    case 0: this.TryMovePlayer(0, -speed); break;
+                    case 1: this.TryMovePlayer(-speed, 0); break;
+                    case 2: this.TryMovePlayer(0, speed); break;
+                    case 3: this.TryMovePlayer(speed, 0); break;
+                }
+            }
+            if(input.justPressed[player.controls.cancel] >= 0) {
+                if(this.runState === 2) {
+                    this.runState = 0;
+                    this.animData = plAnims.walk;
+                } else if(++this.runPressStart >= 20) {
+                    this.animData = plAnims.run;
+                    this.runState = 1;
+                }
+            } else {
+                this.runPressStart = -1;
+                if(this.runState === 1) {
+                    this.runState = 2;
+                }
+            }
         } else { moving = this.forceMove; }
         const playery = this.forcedY < 0 ? Math.round(this.pos.y) : this.forcedY;
         for(let i = 0; i < this.entities.length; i++) {
@@ -364,7 +389,6 @@ const worldmap = {
             return this.handleMenuChoices(key);
         }
         this.freeMovement = true;
-        const pos = { x: this.pos.x, y: this.pos.y };
         let isEnter = false;
         const moveSpeed = me.PLAYERMOVESPEED;
         const dp = { x: 0, y: 0 };
@@ -394,29 +418,32 @@ const worldmap = {
             case player.controls.cancel: 
                 if(this.inDialogue) { return; }
                 if(this.smartphone !== null && this.smartphone.Dismiss() > 0) { return; }
-                return;
         }
-        if(dp.x !== 0 && dp.y !== 0) { dp.x *= Math.SQRT2; dp.y *= Math.SQRT2; }
-        pos.x += dp.x; pos.y += dp.y;
 
-        const newPos = { x: Math.round(pos.x), y: Math.round(pos.y) }
-        if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
-        if(pos.x <= 0.25 || pos.x >= (collisions[this.mapName][0].length - 0.75)) { return false; }
-        if(worldmap.noClip) {
-            this.pos = pos;
-        } else {
-            let hasCollisions = collisions[this.mapName][newPos.y][newPos.x];
-            if(!hasCollisions) {
-                for(let i = 0; i < this.entities.length; i++) {
-                    const e = this.entities[i];
-                    if(worldmap.isCollision(e, newPos)) {
-                        hasCollisions = true;
-                        break;
-                    }
-                }
-            }
-            if(!hasCollisions) { this.pos = pos; }
+        this.TryMovePlayer(dp.x, dp.y, isEnter);
+        return true;
+    },
+    InvertDir: function(dir) {
+        switch(dir) {
+            case directions.UP: return directions.DOWN;
+            case directions.LEFT: return directions.RIGHT;
+            case directions.DOWN: return directions.UP;
+            case directions.RIGHT: return directions.LEFT;
         }
+    },
+    TryMovePlayer: function(dx, dy, isEnter) {
+        const pos = { x: this.pos.x, y: this.pos.y };
+        if(dx !== 0 && dy !== 0) { dx *= Math.SQRT2; dy *= Math.SQRT2; } // this will never actually work since presses are handled separately lol
+        pos.x += dx; pos.y += dy;
+
+        const checkBoth = false;//[directions.LEFT, directions.RIGHT].indexOf(this.playerDir) < 0;
+        const newPos = {
+            x: Math.round(pos.x), //checkBoth ? pos.x : (this.playerDir === directions.LEFT ? Math.floor(pos.x) : Math.ceil(pos.x)),
+            y: Math.round(pos.y)
+        }
+        if(this.IsValidPlayerPos(newPos, pos, checkBoth)) { this.pos = pos; }
+        newPos.x = Math.round(newPos.x);
+        
         if(isEnter && input.IsFreshPauseOrConfirmPress()) {
             switch(this.playerDir) {
                 case directions.UP: newPos.y--; break;
@@ -471,16 +498,37 @@ const worldmap = {
                 }
             }
         }
-        worldmap.justDidA = 5;
-        this.refreshMap();
-        return true;
     },
-    InvertDir: function(dir) {
-        switch(dir) {
-            case directions.UP: return directions.DOWN;
-            case directions.LEFT: return directions.RIGHT;
-            case directions.DOWN: return directions.UP;
-            case directions.RIGHT: return directions.LEFT;
+    IsValidPlayerPos: function(newPos, pos, checkBoth) {
+        if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
+        if(pos.x <= 0.25 || pos.x >= (collisions[this.mapName][0].length - 0.75)) { return false; }
+        if(worldmap.noClip) {
+            return true;
+        } else {
+            let hasCollisions = false;
+            if(checkBoth) {
+                hasCollisions = collisions[this.mapName][newPos.y][Math.floor(newPos.x)] || collisions[this.mapName][newPos.y][Math.ceil(newPos.x)];
+                //newPos.x = Math.round(newPos.x);
+            } else {
+                newPos.x = Math.round(newPos.x);
+                hasCollisions = collisions[this.mapName][newPos.y][newPos.x];
+            }
+            //newPos.x = Math.round(newPos.x);//(this.playerDir === directions.LEFT ? Math.ceil(newPos.x) : Math.floor(newPos.x));
+            if(!hasCollisions) {
+                if(checkBoth) {
+                    hasCollisions = this.entities.some(e => worldmap.isCollision(e, { x: Math.floor(newPos.x), y: newPos.y }) || worldmap.isCollision(e, { x: Math.ceil(newPos.x), y: newPos.y }));
+                } else {
+                    hasCollisions = this.entities.some(e => worldmap.isCollision(e, newPos));
+                }
+                /*for(let i = 0; i < this.entities.length; i++) {
+                    const e = this.entities[i];
+                    if(worldmap.isCollision(e, newPos)) {
+                        hasCollisions = true;
+                        break;
+                    }
+                }*/
+            }
+            return !hasCollisions;
         }
     },
     isCollision: function(e, newPos) {

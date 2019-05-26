@@ -216,7 +216,7 @@ SlightlyWiderSoloTile.prototype.constructor = MapAnim;
 
 const PlAnim = a => { a.sheet = "mapPlayer"; return a };
 const plAnims = {
-    "walk": PlAnim(new StandardWalk(0, 0)), "carrywalk": PlAnim(new StandardWalk(0, 0)),
+    "walk": PlAnim(new StandardWalk(0, 0)), "carrywalk": PlAnim(new StandardWalk(0, 0)), "run": PlAnim(new StandardWalk(0, 4)),
     "crouchR": PlAnim(new SoloTile(4, 0)), "crouchL": PlAnim(new SoloTile(6, 1)),
     "water1": PlAnim(new SlightlyWiderSoloTile(4, 1)), "water2": PlAnim(new SlightlyWiderSoloTile(4, 2)),
     "think": PlAnim(new SoloTile(4, 3)), "read": PlAnim(new SoloTile(6, 0)),

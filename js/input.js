@@ -149,7 +149,7 @@ let consoleCmd = {
     }
 };
 let input = {
-    inConsole: false, flickerIdx: -1, consoleString: "", 
+    inConsole: false, flickerIdx: -1, consoleString: "", BUTTONDELAY: 10, 
     ConsoleKeyPress: function(key) {
         if(key === "Backspace") {
             input.consoleString = input.consoleString.substring(0, input.consoleString.length - 1);
@@ -299,7 +299,7 @@ let input = {
             if(input.keys[key] !== undefined) { return; }
             input.keys[key] = setInterval(function() {
                 game.currentInputHandler.keyPress(key);
-            }, 50);
+            }, input.BUTTONDELAY);
         } else if(input.IsIgnoredByKeyPress(key)) { game.currentInputHandler.keyPress(key); }
     },
     keyUp: function(e) {
@@ -317,7 +317,7 @@ let input = {
                 && input.keys[player.controls.left] === undefined 
                 && input.keys[player.controls.right] === undefined 
                 && input.keys[player.controls.down] === undefined) {
-                    worldmap.refreshMap();
+                    worldmap.refreshMap(); // TODO: why is this here
                 }
         }
     },
@@ -357,7 +357,7 @@ let input = {
             input.setMainKey(key);
             input.keys[key] = setInterval(function() {
                 game.currentInputHandler.keyPress(key);
-            }, 50);
+            }, input.BUTTONDELAY);
         }
     },
     SwitchControlType: function(newType) {
@@ -429,7 +429,7 @@ let input = {
                         if(input.keys[btn] !== undefined) { return; }
                         input.keys[btn] = setInterval(function() {
                             game.currentInputHandler.keyPress(btn);
-                        }, 50);
+                        }, input.BUTTONDELAY);
                     } else { game.currentInputHandler.keyPress(btn); }
                 }
             }
