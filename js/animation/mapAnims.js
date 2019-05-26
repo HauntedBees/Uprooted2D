@@ -262,7 +262,7 @@ const mafs = {
     // Nathan on the Farm
     "NOTF0": new MapAnimFactory("la", [9, 0, 7, true]),
     "NOTF1": new MapAnimFactory("la", [10, 0, 3, true]),
-    "NOTF2": Ft(10, 3),
+    "NOTF2": Ft(10, 3, true),
     // First Village
     "Dean": new MapAnimFactory("dw", [16, 0, 2]),
     "June": new MapAnimFactory("dw", [16, 2, 2]),
