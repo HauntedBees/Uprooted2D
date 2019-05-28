@@ -438,7 +438,7 @@ function ToggleChungus(arg, target) {
         worldmap.entities[i].visible = (acceptableChungi.indexOf(worldmap.entities[i].chungusId) < 0);
     }
     if(acceptableChungi.length === 1 && acceptableChungi[0] !== undefined) { worldmap.horRor.playerRoom = acceptableChungi[0]; }
-    worldmap.finishDialog();
+    worldmap.finishDialog(true);
 }
 
 // Foreground & Jumbo Covers
@@ -460,7 +460,7 @@ function JumboToggle(inside) {
         if(worldmap.entities[i].inside) { worldmap.entities[i].visible = inside; }
         else if(worldmap.entities[i].jumbo) { worldmap.entities[i].visible = !inside; }
     }
-    worldmap.finishDialog();
+    worldmap.finishDialog(true);
 }
 
 // Helpers

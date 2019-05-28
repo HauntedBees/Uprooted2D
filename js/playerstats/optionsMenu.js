@@ -376,7 +376,7 @@ worldmap.optionsMenu = {
     },
     moveToNext: function(newY) {
         const dir = newY - this.cursory;
-        while(newY >= 0 && newY < this.options.length && this.options[newY].type === "heading") {
+        while(newY >= 0 && newY < this.options.length && (this.options[newY].type === "heading" || this.options[newY].type === "buttonLie")) {
             newY += dir;
         }
         if(newY < 0 || newY >= this.options.length) { return false; }

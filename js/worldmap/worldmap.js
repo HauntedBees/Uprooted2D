@@ -26,6 +26,7 @@ const worldmap = {
 
         this.pos = args.init;
         this.playerDir = (args.playerDir === undefined ? (this.playerDir === undefined ? 2 : this.playerDir) : args.playerDir);
+        this.playerMoveDir = 0; // 1 = up, 2 = left, 4 = down, 8 = right
         this.dialogData = null;
         this.forceEndDialog = false;
         this.inWaterfall = false;
@@ -146,11 +147,11 @@ const worldmap = {
     },
     ToggleRun: function(doRun) {
         if(this.runState === 2 && doRun || this.runState === 0 && !doRun) { return; }
-        if(doRun) { // TODO: account for carrying dude
-            this.animData = plAnims.run;
+        if(doRun) {
+            if(!player.hasNerd) { this.animData = plAnims.run; }
             this.runState = 1;
         } else {
-            this.animData = plAnims.walk;
+            if(!player.hasNerd) { this.animData = plAnims.walk; }
             this.runState = 0;
         }
     },
@@ -365,9 +366,9 @@ const worldmap = {
             iHandler.Advance();
         }
     },
-    finishDialog: function() {
+    finishDialog: function(dontCancelRun) {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
-        this.ToggleRun(false);
+        if(!dontCancelRun) { this.ToggleRun(false); }
         this.cursors.MoveCursor("main", -1, -1);
         this.forceEndDialog = false;
         this.inDialogue = false;
