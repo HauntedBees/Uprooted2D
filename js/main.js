@@ -205,7 +205,7 @@ const game = {
     startTransitionAnim: function(dir, from, to, arg) {
         clearInterval(game.transitionInfo.animIdx);
         game.transitionInfo = {
-            crop: "trans" + Range(0, 20),
+            crop: "trans" + Range(0, 20), 
             size: (dir > 0 ? 0.5 : 5),
             from: from, to: to, arg: arg, dir: dir,
             animIdx: setInterval(game.drawTransitionAnim, 10)
@@ -238,13 +238,13 @@ const game = {
             if(game.transitionInfo.size >= 5) {
                 game.midTransitionPoint();
             } else {
-                game.transitionInfo.size += 0.1;
+                game.transitionInfo.size += 0.25;
             }
         } else {
             if(game.transitionInfo.size <= 0) {
                 game.finishTransition();
             } else {
-                game.transitionInfo.size -= 0.1;
+                game.transitionInfo.size -= 0.25;
             }
         }
     },
@@ -461,6 +461,7 @@ const game = {
         if(player.options.fontSize === undefined) { player.options.fontSize = 0; }
         // prior to v0.6
         if(player.options.deadZone === undefined) { player.options.deadZone = 0; }
+        if(player.options.analogDPad === undefined) { player.options.analogDPad = 1; }
         return true;
     },
     ApplyBlendFilter: function() {

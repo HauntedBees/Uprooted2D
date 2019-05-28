@@ -1111,5 +1111,7 @@ const sprites = {
     "dt2": [8, 30],
     "dt1": [9, 30],
     "dt0": [10, 30],
+    "dpadMain": [11, 30],
+    "analogMain": [12, 30],
     "tooLazyToWriteCodeToTrimTheLastCommaRightNow": []
 };

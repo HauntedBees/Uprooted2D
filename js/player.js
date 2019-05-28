@@ -12,20 +12,33 @@ let player = {
     options: {
         difficulty: 1, 
         music: 10, sound: 10,
-        controltype: 0, canSayFuck: 0, deadZone: 0, 
+        controltype: 0, canSayFuck: 0, deadZone: 0, analogDPad: 1, 
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
         font: 0, resolution: 1, fullscreen: 0, gfxfilter: 0,
         coverColor: 0, coverMode: 0, 
     },
     noFunDiffMod: 0, // positive = harder, negative = easier
-    controls: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q", pause: "Enter" },
-    keyboardcontrols: { up: "w", left: "a", down: "s", right: "d", confirm: " ", cancel: "q", pause: "Enter" },
-    gamepadcontrols: { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", confirm: "Gamepad0", cancel: "Gamepad1", pause: "Gamepad9" },
+    controls: { up: "w", left: "a", down: "s", right: "d", up2: "", left2: "", down2: "", right2: "", confirm: " ", cancel: "q", pause: "Enter" },
+    keyboardcontrols: { up: "w", left: "a", down: "s", right: "d", up2: "", left2: "", down2: "", right2: "", confirm: " ", cancel: "q", pause: "Enter" },
+    gamepadcontrols: { up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15", up2: "GamepadA1", left2: "GamepadA0", down2: "GamepadA5", right2: "GamepadA4", confirm: "Gamepad0", cancel: "Gamepad1", pause: "Gamepad9" },
     equipment: { weapon: "!babySickle", compost: "!weakCompost", gloves: null, soil: null },
     setMapPosition: function() {
         player.mapName = worldmap.mapName;
         player.mapPos = worldmap.pos;
         player.mapDir = worldmap.playerDir;
+    },
+    ResetSecondaries: function() {
+        if(player.options.analogDPad === 1) {
+            player.gamepadcontrols = Object.assign(player.gamepadcontrols, {
+                up: "Gamepad12", left: "Gamepad14", down: "Gamepad13", right: "Gamepad15",
+                up2: "GamepadA1", left2: "GamepadA0", down2: "GamepadA5", right2: "GamepadA4"
+            });
+        } else {
+            delete player.gamepadcontrols.up2;
+            delete player.gamepadcontrols.left2;
+            delete player.gamepadcontrols.down2;
+            delete player.gamepadcontrols.right2;
+        }
     },
     getSheetPath: function() {
         switch(player.options.gfxfilter) {

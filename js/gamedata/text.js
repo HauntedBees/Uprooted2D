@@ -1262,6 +1262,30 @@ const fulltext = {
 		"en-us": "Analog Deadzone", 
 		"type": "opts"
 	},
+	"opAnalogDPad": {
+		"en-us": "Movement Controls", 
+		"type": "opts"
+	},
+	"opBoth": {
+		"en-us": "Analog Stick and D-Pad", 
+		"type": "opts"
+	},
+	"opBoth.i": {
+		"en-us": "Both the left analog stick and the directional pad control the player.", 
+		"type": "opts"
+	},
+	"opBelow": {
+		"en-us": "Specified Below", 
+		"type": "opts"
+	},
+	"opBelow.i": {
+		"en-us": "Choose your own controls for player movement.", 
+		"type": "opts"
+	},
+	"opBtnMove": {
+		"en-us": "Movement", 
+		"type": "opts"
+	},
 	"opFixControls": {
 		"en-us": "Fix Your Controls Before Saving", 
 		"type": "opts"

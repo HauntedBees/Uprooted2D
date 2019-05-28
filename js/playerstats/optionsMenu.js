@@ -56,13 +56,21 @@ worldmap.optionsMenu = {
         }*/
         if(game.type !== 2) {
             y = this.addOption(y, "opControlScheme", this.localOptions.controltype, "controltype", ["opKeyboard", "opGamepad"], true);
+            if(this.localOptions.controltype === 1) {
+                y = this.addOption(y, "opDeadzone", this.localOptions.deadZone, "deadZone", ["0.25", "0.33", "0.50", "0.66", "0.75"], false);
+                y = this.addOption(y, "opAnalogDPad", this.localOptions.analogDPad, "analogDPad", ["opBelow", "opBoth"], true);
+            }
             y = this.addHeading(y, "opControls");
             const keysToUse = this.localOptions.controltype === 1 ? this.localGamepadControls : this.localKeyboardControls;
             this.GetBadControls(keysToUse);
-            y = this.addButton(y, "ctrlUp", keysToUse.up, "up");
-            y = this.addButton(y, "ctrlLeft", keysToUse.left, "left");
-            y = this.addButton(y, "ctrlDown", keysToUse.down, "down");
-            y = this.addButton(y, "ctrlRight", keysToUse.right, "right");
+            if(this.localOptions.controltype === 0 || this.localOptions.analogDPad === 0) {
+                y = this.addButton(y, "ctrlUp", keysToUse.up, "up");
+                y = this.addButton(y, "ctrlLeft", keysToUse.left, "left");
+                y = this.addButton(y, "ctrlDown", keysToUse.down, "down");
+                y = this.addButton(y, "ctrlRight", keysToUse.right, "right");
+            } else {
+                y = this.addButtonLie(y);
+            }
             y = this.addButton(y, "ctrlConfirm", keysToUse.confirm, "confirm");
             y = this.addButton(y, "ctrlCancel", keysToUse.cancel, "cancel");
             y = this.addButton(y, "ctrlPause", keysToUse.pause, "pause");
@@ -109,6 +117,11 @@ worldmap.optionsMenu = {
         for(let i = 0; i < this.options.length; i++) {
             const op = this.options[i];
             switch(op.type) {
+                case "buttonLie":
+                    gfx.drawText(op.text, op.x, op.y - yoffset, gfx.GetBlack(), this.optionSize);
+                    gfx.drawTile("analogMain", op.optx - 4, op.y - yoffset - 8, "menutext");
+                    gfx.drawTile("dpadMain", op.optx + 16, op.y - yoffset - 8, "menutext");
+                    break;
                 case "heading":
                     gfx.drawText(op.text, op.x, op.y - yoffset, gfx.GetBlack(), this.headingSize);
                     break;
@@ -122,7 +135,7 @@ worldmap.optionsMenu = {
                 case "option":
                     gfx.drawText(op.text, op.x, op.y - yoffset, gfx.GetBlack(), this.optionSize);
                     const opval = op.choices[op.val];
-                    const optext =  opval.match(/^\d+%$/) === null ? GetText(opval) : opval;
+                    const optext =  opval.match(/^(0\.)?\d+%?$/) === null ? GetText(opval) : opval;
                     gfx.drawText(optext, op.optx, op.y - yoffset, gfx.GetBlack(), this.optionSize);
                     if(this.cursory === i) {
                         gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext");
@@ -279,6 +292,17 @@ worldmap.optionsMenu = {
         });
         return y + (this.optionSize / 3.3333) * (hasInfo ? 2 : 1);
     },
+    addButtonLie: function(y) {
+        const text = GetText("opBtnMove");
+        this.options.push({
+            type: "buttonLie",
+            x: gfx.getTextRightAlignedX(text, this.optionSize, gfx.canvasWidth / 2) / gfx.scale - 5,
+            optx: gfx.canvasWidth / 8 + 5,
+            y: y,
+            text: text
+        });
+        return y + this.tileSize;
+    },
     addButton: function(y, text, initVal, idx) {
         text = GetText(text);
         this.options.push({
@@ -415,11 +439,11 @@ worldmap.optionsMenu = {
         input.SwitchControlType(player.options.controltype);
         const newFilter = player.options.gfxfilter;
         const newFilterMode = player.options.coverMode;
-        if(player.options.virtualController === 1) {
-            //virtualControls.Show();
+        /*if(player.options.virtualController === 1) {
+            virtualControls.Show();
         } else {
-            //virtualControls.Hide();
-        }
+            virtualControls.Hide();
+        }*/
         game.ApplyBlendFilter();
         worldmap.optionsMenu.DrawColorPreview(true);
         if(oldFilter != newFilter || oldFilterMode != newFilterMode) {

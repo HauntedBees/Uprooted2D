@@ -363,7 +363,7 @@ let input = {
     SwitchControlType: function(newType) {
         player.options.controltype = newType;
         switch(newType) {
-            case 1: player.controls = player.gamepadcontrols; break;
+            case 1: player.ResetSecondaries(); player.controls = player.gamepadcontrols; break;
             case 0: player.controls = player.keyboardcontrols; break;
         }
     },
@@ -388,11 +388,25 @@ let input = {
             input.SwitchControlType(0);
         }
     },
+    SwapPrimaryAndSecondaryGamepadControls: function() {
+        const up2 = player.controls.up2;
+        const left2 = player.controls.left2;
+        const down2 = player.controls.down2;
+        const right2 = player.controls.right2;
+        player.controls.up2 = player.controls.up;
+        player.controls.left2 = player.controls.left;
+        player.controls.down2 = player.controls.down;
+        player.controls.right2 = player.controls.right;
+        player.controls.up = up2;
+        player.controls.left = left2;
+        player.controls.down = down2;
+        player.controls.right = right2;
+    },
     QueryGamepads: function() {
         const gamepads = navigator.getGamepads();
         if(gamepads === undefined || gamepads === null) { return; }
         const buttonsDown = [];
-        let forceDeadzone = player.options.deadZone || 0;
+        let forceDeadzone = player.options.deadZone || 0; // oh no game-specific code; my beautiful game-agnostic control code :'()
         switch(forceDeadzone) {
             case 1: forceDeadzone = 0.3333; break;
             case 2: forceDeadzone = 0.5; break;
@@ -412,15 +426,22 @@ let input = {
                 }
             });
         }
-        if(buttonsDown.length > 0 && player.options.controltype === 0) { input.SwitchControlType(1); }
+        if(buttonsDown.length > 0 && player.options.controltype === 0) { input.SwitchControlType(1); } // oh wait it was already ruiend lol
         for(let i = 0; i < input.gamepadButtons.length; i++) {
             const prevState = input.gamepadButtons[i];
             const btn = (i < 16) ? ("Gamepad" + i) : ("GamepadA" + (i - 16));
+            const movements = [player.controls.up, player.controls.left, player.controls.down, player.controls.right];
+            const altMovements = [player.controls.up2, player.controls.left2, player.controls.down2, player.controls.right2];
             if(buttonsDown.indexOf(i) < 0 && buttonsDown.indexOf(-i) < 0) { // not pressed
                 if(prevState > 0) { // just released
                     input.gamepadButtons[i] = -1;
                     input.justPressed[btn] = -1;
-                    if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(btn) >= 0 && game.currentInputHandler.freeMovement) {
+                    let currMovements = movements;
+                    if(altMovements.indexOf(btn) >= 0) {
+                        currMovements = altMovements;
+                        input.SwapPrimaryAndSecondaryGamepadControls();
+                    }
+                    if(currMovements.indexOf(btn) >= 0 && game.currentInputHandler.freeMovement) {
                         clearInterval(input.keys[btn]);
                         input.keys[btn] = undefined;
                         input.setMainKey();
@@ -431,7 +452,12 @@ let input = {
                 const btnVal = input.gamepadButtons[i];
                 if(btnVal === 1 || (btnVal >= 45 && btnVal % 15 === 0)) {
                     input.justPressed[btn] = input.justPressed[btn] === undefined ? 0 : input.justPressed[btn] + 1;
-                    if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(btn) >= 0 && game.currentInputHandler.freeMovement) {
+                    let currMovements = movements;
+                    if(altMovements.indexOf(btn) >= 0) {
+                        currMovements = altMovements;
+                        input.SwapPrimaryAndSecondaryGamepadControls();
+                    }
+                    if(currMovements.indexOf(btn) >= 0 && game.currentInputHandler.freeMovement) {
                         input.setMainKey(btn);
                         if(input.keys[btn] !== undefined) { return; }
                         input.keys[btn] = setInterval(function() {
