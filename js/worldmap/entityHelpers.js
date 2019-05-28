@@ -63,7 +63,7 @@ const specialtyHelpers = {
             switch(player.questsCleared[i]) {
                 case "researchLab": if(worldmap.mapName !== "bridge") { options.push("truck.bridge"); } break;
                 case "gotTire": if(worldmap.mapName !== "fakefarm") { options.push("truck.fake"); } break;
-                case "helpSeaMonster": if(worldmap.mapName !== "outerCity") { options.push("truck.city"); } break;
+                case "helpSeaMonster": if(worldmap.mapName !== "southcity") { options.push("truck.city"); } break;
             }
         }
         options.push("truck.nm");

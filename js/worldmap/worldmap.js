@@ -26,7 +26,14 @@ const worldmap = {
 
         this.pos = args.init;
         this.playerDir = (args.playerDir === undefined ? (this.playerDir === undefined ? 2 : this.playerDir) : args.playerDir);
-        this.playerMoveDir = 0; // 1 = up, 2 = left, 4 = down, 8 = right
+        if(this.playerMoveDir === 0 || args.playerDir !== undefined) {
+            switch(this.playerDir) {
+                case 0: this.playerMoveDir = 1; break;
+                case 1: this.playerMoveDir = 2; break;
+                case 2: this.playerMoveDir = 4; break;
+                case 3: this.playerMoveDir = 8; break;
+            }
+        } 
         this.dialogData = null;
         this.forceEndDialog = false;
         this.inWaterfall = false;

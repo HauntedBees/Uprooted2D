@@ -185,6 +185,7 @@ const game = {
         //game.innerTransition(from, to, arg);
         //if(game.currentInputHandler.latestart !== undefined) { game.currentInputHandler.latestart(); }
         if(game.transitioning) { return false; }
+        worldmap.ToggleRun(false);
         game.transitioning = true;
         if(from.earlyclean !== undefined) { from.earlyclean(); }
         if(arg !== undefined && arg.quickTransition === true) {
