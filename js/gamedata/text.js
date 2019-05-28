@@ -1258,6 +1258,10 @@ const fulltext = {
 		"en-us": "You can switch between these in-game by pressing a key or button on either device.", 
 		"type": "opts"
 	},
+	"opDeadzone": {
+		"en-us": "Analog Deadzone", 
+		"type": "opts"
+	},
 	"opFixControls": {
 		"en-us": "Fix Your Controls Before Saving", 
 		"type": "opts"
@@ -1292,7 +1296,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"fixTutNo": {
-		"en-us": "No problem! Remember: just select the \"Fixtures\" option in the Pause Menu to place fixtures on your field. You can't use special crops or abilities in combat unless you place the fixture first!", 
+		"en-us": "No problem! Remember, just select the \"Fixtures\" option in the Pause Menu to place fixtures on your field. You can't use special crops or abilities in combat unless you place the fixture first!", 
 		"type": "map"
 	},
 	"fixTut1": {
@@ -6678,7 +6682,7 @@ const fulltext = {
 		"type": "opts"
 	},
 	"inv.BackInfo": {
-		"en-us": "Return to the main Pause Menu.", 
+		"en-us": "Go back to the previous menu.", 
 		"type": "opts"
 	},
 	"inv.SortInfo": {

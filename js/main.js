@@ -458,6 +458,9 @@ const game = {
         // prior to v0.55
         if(player.options.coverColor === undefined) { player.options.coverColor = 0; }
         if(player.options.coverMode === undefined) { player.options.coverMode = 0; }
+        if(player.options.fontSize === undefined) { player.options.fontSize = 0; }
+        // prior to v0.6
+        if(player.options.deadZone === undefined) { player.options.deadZone = 0; }
         return true;
     },
     ApplyBlendFilter: function() {

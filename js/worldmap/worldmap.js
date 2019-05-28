@@ -1,7 +1,7 @@
 const worldmap = {
     freeMovement: true, savedImage: "", angryBees: false,
     smartphone: null, horRor: null, caveInfo: null, 
-    pos: { x: 0, y: 0 }, playerDir: 2, forceMove: false, 
+    pos: { x: 0, y: 0 }, playerDir: 2, playerMoveDir: 2, forceMove: false, 
     animData: plAnims.walk, runState: 0, runPressStart: -1,
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
     entities: [], importantEntities: {},
@@ -144,6 +144,16 @@ const worldmap = {
         }
         worldmap.refreshMap();
     },
+    ToggleRun: function(doRun) {
+        if(this.runState === 2 && doRun || this.runState === 0 && !doRun) { return; }
+        if(doRun) { // TODO: account for carrying dude
+            this.animData = plAnims.run;
+            this.runState = 1;
+        } else {
+            this.animData = plAnims.walk;
+            this.runState = 0;
+        }
+    },
     refreshMap: function() {
         gfx.clearSome(["background", "background2", "characters", "foreground"]);
         const offset = this.customMap !== null ? this.customMap.Draw(this.pos.x, this.pos.y) : gfx.drawMap(this.mapName, this.hijackedX || this.pos.x, this.hijackedY || this.pos.y);
@@ -153,30 +163,36 @@ const worldmap = {
         for(let y = 0; y < ymax; y++) { layers.push([]); }
 
         let animDir = this.playerDir, moving = true;
-        if(!worldmap.inDialogue) {
+        const disallowPlayerMove = (this.inWaterfall || this.fullAnimIdx <= 0 || game.transitioning);
+        if(!worldmap.inDialogue && !disallowPlayerMove) {
             if(input.mainKey !== undefined) { animDir = input.mainKey; }
             else if(input.keys[player.controls.up] !== undefined) { animDir = directions.UP; }
             else if(input.keys[player.controls.left] !== undefined) { animDir = directions.LEFT; }
             else if(input.keys[player.controls.down] !== undefined) { animDir = directions.DOWN; }
             else if(input.keys[player.controls.right] !== undefined) { animDir = directions.RIGHT; }
             else { moving = this.forceMove; }
+
+            let newPlayerMoveDir = 0;
+            if(input.justPressed[player.controls.up] >= 0) { newPlayerMoveDir += 1; this.playerDir = 0; }
+            if(input.justPressed[player.controls.left] >= 0) { newPlayerMoveDir += 2; this.playerDir = 1; }
+            if(input.justPressed[player.controls.down] >= 0) { newPlayerMoveDir += 4; this.playerDir = 2; }
+            if(input.justPressed[player.controls.right] >= 0) { newPlayerMoveDir += 8; this.playerDir = 3; }
+            if(newPlayerMoveDir != 0) { this.playerMoveDir = newPlayerMoveDir; }
+
+            const dx = (this.playerMoveDir & 2) === 2 ? -me.PLAYERMOVESPEED : ((this.playerMoveDir & 8) === 8 ? me.PLAYERMOVESPEED : 0);
+            const dy = (this.playerMoveDir & 1) === 1 ? -me.PLAYERMOVESPEED : ((this.playerMoveDir & 4) === 4 ? me.PLAYERMOVESPEED : 0);
             if(this.runState === 2) {
-                const speed = me.PLAYERMOVESPEED * 1.5;
                 moving = true;
-                switch(this.playerDir) {
-                    case 0: this.TryMovePlayer(0, -speed); break;
-                    case 1: this.TryMovePlayer(-speed, 0); break;
-                    case 2: this.TryMovePlayer(0, speed); break;
-                    case 3: this.TryMovePlayer(speed, 0); break;
-                }
+                this.TryMovePlayer(dx * me.RUNSPEEDMULT, dy * me.RUNSPEEDMULT);
+            } else if(newPlayerMoveDir > 0) {
+                moving = true;
+                this.TryMovePlayer(dx, dy);
             }
             if(input.justPressed[player.controls.cancel] >= 0) {
                 if(this.runState === 2) {
-                    this.runState = 0;
-                    this.animData = plAnims.walk;
+                    this.ToggleRun(false);
                 } else if(++this.runPressStart >= 20) {
-                    this.animData = plAnims.run;
-                    this.runState = 1;
+                    this.ToggleRun(true);
                 }
             } else {
                 this.runPressStart = -1;
@@ -351,6 +367,7 @@ const worldmap = {
     },
     finishDialog: function() {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
+        this.ToggleRun(false);
         this.cursors.MoveCursor("main", -1, -1);
         this.forceEndDialog = false;
         this.inDialogue = false;
@@ -379,9 +396,10 @@ const worldmap = {
         worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
     },
     keyPress: function(key) {
-        if(this.inWaterfall || this.fullAnimIdx <= 0 || game.transitioning)  { return false; }
+        if(this.inWaterfall || this.fullAnimIdx <= 0 || game.transitioning)  { this.ToggleRun(false); return false; }
         if(this.inDialogue) {
             this.freeMovement = false;
+            this.ToggleRun(false);
             input.clearAllKeys();
             if(this.dialogData === null) { 
                 return (key === player.controls.confirm || key === player.controls.pause) ? this.click(null) : false;
@@ -389,29 +407,14 @@ const worldmap = {
             return this.handleMenuChoices(key);
         }
         this.freeMovement = true;
-        let isEnter = false;
-        const moveSpeed = me.PLAYERMOVESPEED;
-        const dp = { x: 0, y: 0 };
         switch(key) {
-            case player.controls.up: 
-                dp.y -= moveSpeed;
-                this.playerDir = directions.UP;
+            case player.controls.confirm:
+                this.ToggleRun(false);
+                this.TryMovePlayer(0, 0, true);
                 break;
-            case player.controls.left:
-                dp.x -= moveSpeed;
-                this.playerDir = directions.LEFT;
-                break;
-            case player.controls.down:
-                dp.y += moveSpeed;
-                this.playerDir = directions.DOWN;
-                break;
-            case player.controls.right:
-                dp.x += moveSpeed;
-                this.playerDir = directions.RIGHT;
-                break;
-            case player.controls.confirm: isEnter = true; break;
             case player.controls.pause: 
                 if(this.inDialogue) { return; }
+                this.ToggleRun(false);
                 worldmap.savedImage = gfx.getSaveFileImage();
                 game.transition(this, pausemenu);
                 return;
@@ -419,8 +422,6 @@ const worldmap = {
                 if(this.inDialogue) { return; }
                 if(this.smartphone !== null && this.smartphone.Dismiss() > 0) { return; }
         }
-
-        this.TryMovePlayer(dp.x, dp.y, isEnter);
         return true;
     },
     InvertDir: function(dir) {
@@ -433,7 +434,7 @@ const worldmap = {
     },
     TryMovePlayer: function(dx, dy, isEnter) {
         const pos = { x: this.pos.x, y: this.pos.y };
-        if(dx !== 0 && dy !== 0) { dx *= Math.SQRT2; dy *= Math.SQRT2; } // this will never actually work since presses are handled separately lol
+        if(dx !== 0 && dy !== 0) { dx *= 0.85; dy *= 0.85; } 
         pos.x += dx; pos.y += dy;
 
         const checkBoth = false;//[directions.LEFT, directions.RIGHT].indexOf(this.playerDir) < 0;

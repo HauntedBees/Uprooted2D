@@ -302,6 +302,7 @@ function EnterWaterfall() {
         worldmap.pos.x -= 0.5;
     }
     worldmap.inWaterfall = true;
+    worldmap.ToggleRun(false);
     worldmap.waterfallIdx = setInterval(AdvanceWaterfall, timers.FULLANIM * 4);
 }
 function AdvanceWaterfall() {

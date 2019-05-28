@@ -392,15 +392,22 @@ let input = {
         const gamepads = navigator.getGamepads();
         if(gamepads === undefined || gamepads === null) { return; }
         const buttonsDown = [];
+        let forceDeadzone = player.options.deadZone || 0;
+        switch(forceDeadzone) {
+            case 1: forceDeadzone = 0.3333; break;
+            case 2: forceDeadzone = 0.5; break;
+            case 3: forceDeadzone = 0.6666; break;
+            case 4: forceDeadzone = 0.75; break;
+        }
         for(const gp in gamepads) {
             if(gamepads[gp] === null || gamepads[gp].id === undefined) { continue; }
             gamepads[gp].buttons.forEach((e, i) => {
                 if(e.pressed && e.value >= gpVals.triggerMin && i < 16) { buttonsDown.push(i); }
             });
             gamepads[gp].axes.forEach((e, i) => {
-                if(e <= -gpVals.deadZones[i]) {
+                if(e <= -(forceDeadzone || gpVals.deadZones[i])) {
                     buttonsDown.push(16 + i);
-                } else if(e >= gpVals.deadZones[i]) {
+                } else if(e >= (forceDeadzone || gpVals.deadZones[i])) {
                     buttonsDown.push(20 + i);
                 }
             });
