@@ -55,7 +55,7 @@ let speaker = {
                 t = t.replace(": ", " says, ");
             }
         }
-        t = t.replace(/Food2/g, "Food Two").replace(/ emo /g, " eemo ").replace(/\?\?\?/g, "unknown").replace(/Iii/g, "E");
+        t = t.replace(/Food2/g, "Food Two").replace(/ emo /g, " eemo ").replace(/\?\?\?/g, "unknown").replace(/Eee/g, "E").replace(/(\d)G/g, "$1 monies");
         const phrase = new SpeechSynthesisUtterance(t);
         phrase.voice = speaker.GetVoice(speaker.lastSpeaker);
         if(wasSpeaking) {
