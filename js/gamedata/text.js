@@ -230,7 +230,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"bellpepper": {
-		"en-us": "When I was a kid I shook one of these for like an hour next to my ear trying to hear a bell ringing sound. Needless to say, that's not why they're called that.", 
+		"en-us": "When I was a kid I shook one of these for like an hour next to my ear trying to hear a bell ringing sound. Needless to say, that's not why they're called this.", 
 		"type": "item"
 	},
 	"radish": {
@@ -1183,7 +1183,7 @@ const fulltext = {
 		"type": "opts"
 	},
 	"opMono2": {
-		"en-us": "Amber", 
+		"en-us": "Sepia", 
 		"type": "opts"
 	},
 	"opMono3": {
@@ -1196,6 +1196,22 @@ const fulltext = {
 	},
 	"opNo": {
 		"en-us": "No", 
+		"type": "opts"
+	},
+	"opFontSize": {
+		"en-us": "Font Size", 
+		"type": "opts"
+	},
+	"opFontSize1": {
+		"en-us": "Normal", 
+		"type": "opts"
+	},
+	"opFontSize2": {
+		"en-us": "Big", 
+		"type": "opts"
+	},
+	"opFontSize3": {
+		"en-us": "Huge", 
 		"type": "opts"
 	},
 	"ctrlUp": {
@@ -1931,11 +1947,11 @@ const fulltext = {
 		"type": "map"
 	},
 	"theHappening4": {
-		"en-us": "Nathan: Iii? She's a cute little bird. Hey, I have an idea!", 
+		"en-us": "Nathan: Eee? She's a cute little bird. Hey, I have an idea!", 
 		"type": "map"
 	},
 	"theHappening5": {
-		"en-us": "Nathan: How about Iii stays here with me, and if I need to send you any messages, I can give them to her?", 
+		"en-us": "Nathan: How about Eee stays here with me, and if I need to send you any messages, I can give them to her?", 
 		"type": "map"
 	},
 	"theHappening6": {
@@ -3080,8 +3096,8 @@ const fulltext = {
 		"type": "map"
 	},
 	"pig0": {
-		"en-us": "That pig has a fucking gun tied to its back.", 
-		"en-us-sfw": "That pig has a gun tied to its back.", 
+		"en-us": "This pig has a fucking gun tied to its back.", 
+		"en-us-sfw": "This pig has a gun tied to its back.", 
 		"type": "map"
 	},
 	"golem0": {
@@ -5637,12 +5653,8 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.co": {
-		"en-us": "Henrietta: Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Cluck off - a girl's gotta make money somehow!", 
-		"en-us-sfw": "Henrietta: Bu-GAWK! Hi boss! Got some good seeds on sale! What? You want a discount? Sorry - a girl's gotta make money somehow!", 
-		"type": "shop"
-	},
-	"s.sell": {
-		"en-us": "WOT'RE YA SELLIN'???", 
+		"en-us": "Henrietta: bu-GAWK! hi boss! got some good seeds on sale! what? you want a discount? cluck off - a girl's gotta make money somehow!", 
+		"en-us-sfw": "Henrietta: bu-GAWK! hi boss! got some good seeds on sale! what? you want a discount? sorry - a girl's gotta make money somehow!", 
 		"type": "shop"
 	},
 	"cwk.sell": {
@@ -5666,11 +5678,11 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.leave0": {
-		"en-us": "Henrietta: Cock-a-doodle-goodbye!", 
+		"en-us": "Henrietta: cock-a-doodle-goodbye!", 
 		"type": "shop"
 	},
 	"s.notenough0": {
-		"en-us": "Henrietta: Boss.. boss... I can't give you this for free. I need the money. For reasons.", 
+		"en-us": "Henrietta: boss.. boss... i can't give you this for free. i need the money. for reasons.", 
 		"type": "shop"
 	},
 	"s.notenough": {
@@ -5707,7 +5719,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.cpurch": {
-		"en-us": "Henrietta: Bu-GAWK!! Good stuff, good stuff. Thank you for your patronage!", 
+		"en-us": "Henrietta: bu-GAWK!! good stuff, good stuff. thank you for your patronage!", 
 		"type": "shop"
 	},
 	"s.up1o": {
@@ -7897,7 +7909,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"subject_falcon": {
-		"en-us": "Iii", 
+		"en-us": "Eee", 
 		"type": "combat"
 	},
 	"obj_secondperson": {
@@ -8764,7 +8776,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"falconMsg0.5": {
-		"en-us": "\"You give Iii some seeds, and when she gets back to me, I'll plant them for you.\"", 
+		"en-us": "\"You give Eee some seeds, and when she gets back to me, I'll plant them for you.\"", 
 		"type": "text"
 	},
 	"falconMsg0.6": {
@@ -8896,11 +8908,11 @@ const fulltext = {
 		"type": "text"
 	},
 	"falconMsg5.8": {
-		"en-us": "Care to join me, Iii?", 
+		"en-us": "Care to join me, Eee?", 
 		"type": "text"
 	},
 	"falconMsg5.9": {
-		"en-us": "Iii has joined my party! Now I can attack one more time per turn!", 
+		"en-us": "Eee has joined my party! Now I can attack one more time per turn!", 
 		"type": "text"
 	},
 	// Sleeping at an Inn
@@ -8950,11 +8962,11 @@ const fulltext = {
 	},
 	// Ya Boy at the Farm
 	"iiiTalk0": {
-		"en-us": "Iii: IIIIIII, IIIIII!!! III! IIIIIII!!! IIIIEIIIIIEIIIEEEEE!!!", 
+		"en-us": "Eee: EEEEEEE, EEEEE!!! EEEE! EEEEEEE!!! IIIIEIIIIIEIIIEEEEE!!!", 
 		"type": "text"
 	},
 	"iiiTalk1": {
-		"en-us": "Iii never fails to remind me why I named her that.", 
+		"en-us": "Eee never fails to remind me why I named her that.", 
 		"type": "text"
 	},
 	"yaBoiA": {
