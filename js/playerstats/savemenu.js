@@ -8,7 +8,7 @@ pausemenu.savemenu = {
         this.isSave = args.saving;
         this.hasAuto = !this.isSave && localStorage.getItem("fileImgauto") !== null;
         this.options = [];
-        this.cursorY = args.sel || 0;
+        this.cursorY = args.sel || player.lastSaveSlot;
         this.confirm = args.confirm;
         this.confirmCursorY = 0;
         this.backStartX = 0.125;
@@ -138,6 +138,7 @@ pausemenu.savemenu = {
             return true;
         } else if(localStorage.getItem("player" + saveNum) === null || (this.confirm && this.confirmCursorY === 0)) {
             if(this.isSave) {
+                player.lastSaveSlot = saveNum;
                 game.save(this.cursorY);
                 this.saving = true;
                 this.confirm = false;

@@ -8,7 +8,7 @@ let player = {
               },
     clearedEntities: [], achievements: [], failedEntities: [], 
     questsCleared: [], activeQuests: {}, fixtureTutorialState: 0, 
-    lastInn: "start",
+    lastInn: "start", lastSaveSlot: 0, 
     options: {
         difficulty: 1, 
         music: 10, sound: 10,

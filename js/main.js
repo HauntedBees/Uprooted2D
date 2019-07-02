@@ -463,6 +463,7 @@ const game = {
         // prior to v0.6
         if(player.options.deadZone === undefined) { player.options.deadZone = 0; }
         if(player.options.analogDPad === undefined) { player.options.analogDPad = 1; }
+        if(player.lastSaveSlot === undefined) { player.lastSaveSlot = 0; }
         return true;
     },
     ApplyBlendFilter: function() {
