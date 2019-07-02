@@ -107,7 +107,7 @@ const scripts = {
 	"ForestHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
 	"ForestHive1": "_TEXT:ForestHive(0-1)",
 	"ForestHive2": "bearbo_VISIBLE:true&pl_SETDIR:2&_TEXT:ForestHive2",
-	"ForestHive3": "_FIGHT:bear",
+	"ForestHive3": "bearbo_SETTARGET&_CLEARTARGET&_FIGHT:bear",
 	// Forest: Bad Influence Rabbit
 	"rabbit0": "?[{\"q\":\"player.completedQuest('rabbitShit')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"rabbit1": "targ_TALK&_TEXT:rabbitOut&_END",
