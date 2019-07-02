@@ -280,7 +280,7 @@ const scripts = {
 	"kelpBoy2": "KelpBoy_ISMOVING:true&_SETQUEST:kelpBoy,wantMilk&_TEXT:kelpBoy(0-2)&_END",
 	"kelpBoy3": "KelpBoy_ISMOVING:true&_TEXT:kelpBoy2&_END",
 	"kelpBoy4": "KelpBoy_ISMOVING:true&_COMPLETEQUEST:kelpBoy&_ALIGNGOOD:0.25&_TEXT:kelpBoy(3-5)",
-	"kelpBoy5": "_CHIEVO:kelpBuddy&meHive_SETTARGET&_CLEARTARGET&_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_END",
+	"kelpBoy5": "KelpBoy_ISMOVING:false&_CHIEVO:kelpBuddy&meHive_SETTARGET&_CLEARTARGET&_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_END",
 	"kelpBoy6": "KelpBoy_ISMOVING:true&_TEXT:vaseDo3",
 	"kelpBoy7": "_FIGHT:kelpBoy",
 	// Underwater: Kelp Boy Defeated
