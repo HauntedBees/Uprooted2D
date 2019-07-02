@@ -335,7 +335,7 @@ pausemenu.inventory = {
         rowTextYs.forEach((e, i) => rowTextYs[i] = e + pausemenu.inventory.cropDY * 16 - 4);
         gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 11.5);
 
-        const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
+        const idx = (this.cursor.x === this.inventoryWidth ? this.selectedCrop : (this.cursor.y * this.inventoryWidth + this.cursor.x));
         const actIdx = this.actualIndexes[idx];
         const item = player.inventory[actIdx];
         if(item === undefined) { return; }
