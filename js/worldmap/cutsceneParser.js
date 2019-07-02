@@ -1269,6 +1269,7 @@ const SpecialFunctions = {
             if(boomState === 4) {
                 for(let i = worldmap.entities.length - 1; i >= 0; i--) {
                     if(worldmap.entities[i].name === target.name) {
+                        player.clearedEntities.push(target.name);
                         worldmap.entities.splice(i, 1);
                         break;
                     }
