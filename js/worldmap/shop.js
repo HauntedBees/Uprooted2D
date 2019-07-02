@@ -707,7 +707,8 @@ worldmap.shop = {
             else if(sleepInfo.waitTimer > 0) { sleepInfo.waitTimer--; }
             else { sleepInfo.state = 1; }
         } else if(sleepInfo.state === 1) {
-            const dreamChance = Math.random() > 0.75;
+            const dreamChance = (Math.random() + player.dreamBonus) > 0.75;
+            player.dreamBonus = dreamChance ? 0 : (2 * player.dreamBonus + 0.1);
             const textKey = dreamChance ? `innDream${Range(0, 10)}` : "innSleep";
             worldmap.shop.DrawDetails(GetText(worldmap.shop.details.awake));
             gfx.drawFullText(GetText(textKey), 0, gfx.GetWhite(), true);
