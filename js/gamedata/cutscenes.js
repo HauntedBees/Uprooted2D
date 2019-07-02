@@ -205,7 +205,7 @@ const scripts = {
 	"workerX7": "_TEXT:bworker9&_SETQUEST:getHeart,yep&_END",
 	"workerX8": "targ_ISMOVING:true&_TEXT:bworker10&_END",
 	"workerX9": "targ_ISMOVING:true&_SETQUEST:getHeart,nope&_TEXT:bworkerMad(1-3)",
-	"workerX10": "_FIGHT:Worker,BossWorker,Worker",
+	"workerX10": "targ_ISMOVING:false&_FIGHT:Worker,BossWorker,Worker",
 	"workerX11": "targ_ISMOVING:true&_TEXT:bworkerMad4&_SETSTATE:10",
 	"workerX12": "targ_ISMOVING:true&_TEXT:bworkerC(1-3)",
 	"workerX13": "_TEXT:bworkerC4,sYes,sNo",
