@@ -363,8 +363,15 @@ let input = {
     SwitchControlType: function(newType) {
         player.options.controltype = newType;
         switch(newType) {
-            case 1: player.ResetSecondaries(); player.controls = player.gamepadcontrols; break;
-            case 0: player.controls = player.keyboardcontrols; break;
+            case 1:
+                player.ResetSecondaries();
+                player.controls = player.gamepadcontrols;
+                document.body.requestPointerLock();
+                break;
+            case 0:
+                player.controls = player.keyboardcontrols;
+                document.exitPointerLock();
+                break;
         }
     },
     gamepads: {}, gamepadQueryIdx: -1,
