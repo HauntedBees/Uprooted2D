@@ -43,6 +43,7 @@ const mapentities = {
             BeeFellow("FarmHive", 3, 1),
             EnterShop("ChickenCoop", 18, 3, "coop"),
             EnterShop("Inn", 10, 2, "inn0"),
+            GetFellow("MushroomLog", 4, 6, 0, "", Cutscene("FarmMush"), undefined, { visible: false, boring: true }),
             // Boss
             GetFellow("Fucker", 10, 2, 0, "Boss1", Cutscene("bigBot"), undefined, { big: true, boss: true, postBattle: "PostBoss", failedInteract: Cutscene("bigBotL"), showIf: CommonConditions["finishedOpening"] }),
             GetCSFellow("FuckerDead", 10, 2, 0, "Dead1", "corpseBot", { visible: false, moving: true, showIf: CommonConditions["finishedOpening"] }),
@@ -63,7 +64,7 @@ const mapentities = {
         ]
         veggies.forEach((e, i) => entities.push(InvisFellow("veggie" + i, e[0], e[1], "farmVeggie")));
         const otherObjs = [
-            [4, 6, "farmMush"], [6, 8, "farmTree"], [7, 8, "farmTree"], [6, 7, "farmTree"], [7, 7, "farmTree"], [21, 4, "farmHay"], [17, 3, "farmBin"], [13, 2, "farmWater"], 
+            [6, 8, "farmTree"], [7, 8, "farmTree"], [6, 7, "farmTree"], [7, 7, "farmTree"], [21, 4, "farmHay"], [17, 3, "farmBin"], [13, 2, "farmWater"], 
             [14, 2, "farmWater"], [15, 2, "farmWater"], [11, 9, "farmSprinkler"], [14, 9, "farmSprinkler"], [19, 9, "farmSprinkler"], [10, 12, "farmSprinkler"], 
             [15, 12, "farmSprinkler"], [18, 12, "farmSprinkler"], [11, 15, "farmSprinkler"], [14, 15, "farmSprinkler"], [19, 15, "farmSprinkler"]
         ];

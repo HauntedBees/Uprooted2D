@@ -1722,8 +1722,12 @@ const fulltext = {
 		"en-us": "Robot: [TODO: give this robot a witty one-liner]", 
 		"type": "map"
 	},
-	"farmMush": {
+	"farmMush0": {
 		"en-us": "I've been growing mushrooms on this log for years. It's what one might call... a mushroom log.", 
+		"type": "map"
+	},
+	"farmMush1": {
+		"en-us": "You got one (1) mushroom! You can plant it on a mushroom log during battles once you get one!", 
 		"type": "map"
 	},
 	"farmTree": {

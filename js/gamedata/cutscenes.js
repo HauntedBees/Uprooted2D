@@ -96,6 +96,8 @@ const scripts = {
 	// Misc.: Standard Enemy
 	"enemy0": "_CUSTOM:ENEMY0",
 	"enemy1": "_CUSTOM:ENEMY1",
+	// Farm: Mushroom Log
+	"FarmMush0": "_GIVE:portobello,1&_TEXT:farmMush(0-1)",
 	// Farm: Beehive
 	"FarmHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeG,5",
 	"FarmHive1": "_CUSTOM:BEEGUARDIANAPPEAR&_TEXT:FarmHive(0-3)",
