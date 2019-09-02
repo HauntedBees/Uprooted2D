@@ -21,7 +21,7 @@ const gfx = {
     GetFont: () => player.options.font === 1 ? "OpenDyslexic" : "PressStart2P",
     GetBlack: () => (player.IsMonochrome() ? "#081820" : "#000000"),
     GetWhite: () => (player.IsMonochrome() ? "#E0F8D0" : "#FFFFFF"),
-    GetLightBlue: () => (player.IsMonochrome() ? "#E0F8D0" : "#8B8CDE"),
+    GetLightBlue: () => (player.IsMonochrome() ? "#E0F8D0" : "#B2B5FF"), // 8B8CDE
 
     clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasHeight),
     clearSome: keys => keys.forEach(e => gfx.clearLayer(e)),
