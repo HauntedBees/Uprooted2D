@@ -393,6 +393,7 @@ const game = {
             return;
         }
         player.SaveID = (Math.random() * Number.MAX_SAFE_INTEGER).toString();
+        player.saveTime = +(new Date());
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
         if(worldmap.mapName === "cave") {
             player.mapName = "northcity";

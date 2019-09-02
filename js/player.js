@@ -57,6 +57,25 @@ let player = {
         time -= minutes * 60;
         return (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (time < 10 ? "0" : "") + time;
     },
+    GetLastSaveTime: function(lastSaveTime) {
+        if(lastSaveTime === undefined) { return "A while ago."; }
+        const now = +(new Date());
+        const distTime = Math.floor((now - lastSaveTime) / 60000);
+        if(distTime < 1) {
+            return GetText("lastSaveJustNow");
+        } else if(distTime < 60) {
+            return HandlePlurals(GetText("lastSaveMinutes"), distTime).replace("{0}", distTime);
+        } else {
+            const distInHours = Math.floor(distTime / 60);
+            if(distInHours < 24) {
+                return HandlePlurals(GetText("lastSaveHours"), distInHours).replace("{0}", distInHours);
+            } else {
+                const fullDate = new Date(lastSaveTime);
+                const months = GetText("lastSaveMonths").split(",");
+                return fullDate.getDate() + months[fullDate.getMonth()] + fullDate.getFullYear() + " " + fullDate.getHours() + ":" + fullDate.getMinutes();
+            }
+        }
+    },
     tutorialEquipment: { weapon: "!goodSickle", compost: "!weakCompost", gloves: null, soil: null },
     tutorialInventory: [["specialgrapes", 1], ["carrot", 2], ["beet", 3], ["!weakCompost", 1], ["!babySickle", 1]],
     inventory: [["carrot", 6], ["beet", 4], ["garlic", 2], ["banana", 3], ["!weakCompost", 1], ["!babySickle", 1]],

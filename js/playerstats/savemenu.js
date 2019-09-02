@@ -78,6 +78,7 @@ pausemenu.savemenu = {
                             .replace(/\{level\}/g, loadedPlayer.level)
                             .replace(/\{monies\}/g, loadedPlayer.monies)
                             .replace(/\{time\}/g, player.getPlayTimeString(loadedPlayer.playTime))
+                            .replace(/\{lastSave\}/g, player.GetLastSaveTime(loadedPlayer.saveTime))
                             .replace(/\{location\}/g, GetText("map." + loadedPlayer.mapName));
         loadedPlayer.hasQuest = q => loadedPlayer.activeQuests[q] !== undefined;
         loadedPlayer.hasQuestState = (q, state) => loadedPlayer.activeQuests[q] !== undefined && state === loadedPlayer.activeQuests[q];
@@ -85,7 +86,7 @@ pausemenu.savemenu = {
         loadedPlayer.hasOrHasHadQuest = q => loadedPlayer.questsCleared.indexOf(q) >= 0 || loadedPlayer.activeQuests[q] !== undefined;
         pausemenu.GetQuestItems(loadedPlayer);
         for(let i = 0; i < pausemenu.questItems.length; i++) {
-            gfx.drawTileToGrid(pausemenu.questItems[i], 5 + (i * 1.5), 2.5, "menuA");
+            gfx.drawTileToGrid(pausemenu.questItems[i], 5 + (i * 1.5), 3, "menuA");
         }
         const image = localStorage.getItem("fileImg" + savenum);
         if(image !== null && image !== "null") {

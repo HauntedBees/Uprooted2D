@@ -7141,7 +7141,23 @@ const fulltext = {
 		"type": "opts"
 	},
 	"saveInfoStr": {
-		"en-us": "Lv.{level}  {monies}G  Time: {time} \n Location: {location}", 
+		"en-us": "Lv.{level}  {monies}G  Time: {time} \n Last Saved: {lastSave} \n Location: {location}", 
+		"type": "opts"
+	},
+	"lastSaveJustNow": {
+		"en-us": "Just Now", 
+		"type": "opts"
+	},
+	"lastSaveMinutes": {
+		"en-us": "{0} Minute{s} Ago", 
+		"type": "opts"
+	},
+	"lastSaveHours": {
+		"en-us": "{0} Hour{s} Ago", 
+		"type": "opts"
+	},
+	"lastSaveMonths": {
+		"en-us": "JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC", 
 		"type": "opts"
 	},
 	"menu.Save": {
@@ -7656,6 +7672,10 @@ const fulltext = {
 	},
 	"ad.goldshroom": {
 		"en-us": "You found the shiny golden mushroom in Agrios Forest.", 
+		"type": "adesc"
+	},
+	"ad.locked": {
+		"en-us": "The description for this achievement is hidden until you complete it.", 
 		"type": "adesc"
 	},
 	"ad.none": {
