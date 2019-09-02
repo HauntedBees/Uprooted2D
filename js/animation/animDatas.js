@@ -82,7 +82,7 @@ const enemyCombatAnims = {
     "THROW_CROP_HUGE": new AnimSet([new AnimFrame(1, 0, "enemy_pullCrop"), new AnimFrame(1, 1, "enemy_throwCropAtEnemy")], false, 4),
     "VINE_SMACK": new AnimSet([new AnimFrame(1, 2), new AnimFrame(1, 3, "enemy_vineSmack")], true, 4),
     
-    "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5), new AnimFrame(0, 6)], true, 2),
+    "SERVER": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 3), new AnimFrame(0, 2)], true, 2),
     "BUTTFIX": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3)], true, 2),
     "HOUSEKEEPER_ERROR": new AnimSet([new AnimFrame(0, 0), new AnimFrame(0, 1)], true, 4),
     "HOUSEKEEPER_HARVEST": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6), new AnimFrame(0, 4, "enemy_pullCrop"), new AnimFrame(0, 6, "enemy_throwCropAtEnemy")], true, 4),
