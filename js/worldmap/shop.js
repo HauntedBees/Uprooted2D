@@ -574,7 +574,7 @@ worldmap.shop = {
             player.lastInn = this.details.innId;
             player.health = player.maxhealth + 5;
             game.save("auto", false);
-            this.sleepsyData = { state: 0, size: 0.5, waitTimer: 80, animIdx: setInterval(worldmap.shop.Sleepsy, 10) };
+            this.sleepsyData = { state: 0, size: 0.5, waitTimer: 40, animIdx: setInterval(worldmap.shop.Sleepsy, 10) };
         } else if(productInfo.type === "upgrade") {
             let dims = {x: 0, y: 0, new: "n"};
             switch(productInfo.product) {
@@ -703,7 +703,7 @@ worldmap.shop = {
                     gfx.DrawTransitionImage("transZzz", x - (y % 4 ? 1 : 0), y + 0.5, sleepInfo.size);
                 }
             }
-            if(sleepInfo.size < 35) { sleepInfo.size += sleepInfo.size / 90; }
+            if(sleepInfo.size < 35) { sleepInfo.size += sleepInfo.size / 25; }
             else if(sleepInfo.waitTimer > 0) { sleepInfo.waitTimer--; }
             else { sleepInfo.state = 1; }
         } else if(sleepInfo.state === 1) {
@@ -716,7 +716,7 @@ worldmap.shop = {
         } else if(sleepInfo.state === 3) {
             gfx.clearLayer("tutorial");
             gfx.DrawTransitionImage("transWake", game.tilew / 2, game.tileh / 2, sleepInfo.size, true);
-            if(sleepInfo.size < 50) { sleepInfo.size += sleepInfo.size / 50; }
+            if(sleepInfo.size < 50) { sleepInfo.size += sleepInfo.size / 25; }
             else { worldmap.shop.FinishSleepsy(); }
         }
     },
