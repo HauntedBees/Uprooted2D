@@ -5,6 +5,7 @@ const achievements = [
     "vegbuddy", "treebuddy", "mushbuddy", "eggbuddy", "ricebuddy", "beebuddy", "seabuddy", "cowbuddy", "techbuddy", "biglaunch", "soybeat", "fullUpgrade",
     "allCrop", "overkill", "madeForMe", "murderedToDeath"
 ];
+const hiddenChievos = ["badrabbit", "kelpBuddy", "boss3help", "boss3hurt", "unplugged", "boss4", "skumpy", "bankStop", "boss5", "helpNerd", "soybeat", "overkill"];
 function JustBeatGameChievoCheck() {
     const md = player.miscdata;
     if(player.ethicsAxis >= 0) {

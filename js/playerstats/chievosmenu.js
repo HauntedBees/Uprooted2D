@@ -83,7 +83,15 @@ pausemenu.chievos = {
     },
     setText: function() {
         const chievoInfo = this.vals[this.cursor.y * this.numPerRow + this.cursor.x];
-        gfx.drawWrappedText(GetText("a." + chievoInfo[0]), 4, this.textStartY, 235);
-        gfx.drawWrappedText(GetText("ad." + (chievoInfo[1] ? chievoInfo[0] : "none")), 4, this.textStartY + 10, 235);
+        console.log(chievoInfo);
+        const chievoKey = chievoInfo[0];
+        gfx.drawWrappedText(GetText("a." + chievoKey), 4, this.textStartY, 235);
+        if(chievoInfo[1]) { // achieved chievo
+            gfx.drawWrappedText(GetText("ad." + chievoKey), 4, this.textStartY + 10, 235);
+        } else if(hiddenChievos.indexOf(chievoKey) < 0) { // regular unachieved chievo
+            gfx.drawWrappedText(GetText("ad.none") + " \n \n " + GetText("ad." + chievoKey), 4, this.textStartY + 10, 235);
+        } else { // locked unachieved chievo
+            gfx.drawWrappedText(GetText("ad.none") + " \n \n " + GetText("ad.locked"), 4, this.textStartY + 10, 235);
+        }
     }
 };
