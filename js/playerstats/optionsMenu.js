@@ -231,7 +231,7 @@ worldmap.optionsMenu = {
                     break;
                 case 4: // bright
                     document.getElementById("prev_cover").style["mix-blend-mode"] = "hard-light";
-                    document.getElementById("prev_cover").style["background-color"] = "#BBBBBB";
+                    document.getElementById("prev_cover").style["background-color"] = "#999999";
                     break;
             }
         } else {

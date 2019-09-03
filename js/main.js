@@ -510,7 +510,7 @@ const game = {
                     break;
                 case 4: // bright
                     style["mix-blend-mode"] = "hard-light";
-                    style["background-color"] = "#BBBBBB";
+                    style["background-color"] = "#999999";
                     break;
             }
         } else {
