@@ -6648,40 +6648,92 @@ const fulltext = {
 		"en-us": "Natural", 
 		"type": "opts"
 	},
+	"infoGoodTech": {
+		"en-us": "You go out of your way to help people, and you are willing to use technology to do so.", 
+		"type": "opts"
+	},
+	"infoBadTech": {
+		"en-us": "You go out of your way to hurt people, and you are willing to use technology to do so.", 
+		"type": "opts"
+	},
+	"infoGoodNature": {
+		"en-us": "You go out of your way to help people, and you want to do so using all-natural methods.", 
+		"type": "opts"
+	},
+	"infoBadNature": {
+		"en-us": "You go out of your way to hurt people, and you want to do so using all-natural methods.", 
+		"type": "opts"
+	},
 	"qi.goldmushroom": {
 		"en-us": "Golden Mushroom", 
+		"type": "opts"
+	},
+	"qi.goldmushroomInfo": {
+		"en-us": "A golden mushroom from the forest. Someone in town was looking for this.", 
 		"type": "opts"
 	},
 	"qi.milk": {
 		"en-us": "Milk", 
 		"type": "opts"
 	},
+	"qi.milkInfo": {
+		"en-us": "A carton of milk. That weird guy in the water under the bridge might want this.", 
+		"type": "opts"
+	},
 	"qi.seamonkkey": {
 		"en-us": "Sea Monk Key", 
+		"type": "opts"
+	},
+	"qi.seamonkkeyInfo": {
+		"en-us": "This key should open the Sea Monk's treasure chest somewhere under the bridge.", 
 		"type": "opts"
 	},
 	"qi.monsterheart": {
 		"en-us": "Sea Monster Heart", 
 		"type": "opts"
 	},
+	"qi.monsterheartInfo": {
+		"en-us": "The heart of a sea monster, valued by gullible people due to its supposed healing properties.", 
+		"type": "opts"
+	},
 	"qi.monsteregg": {
 		"en-us": "Sea Monster Egg", 
+		"type": "opts"
+	},
+	"qi.monstereggInfo": {
+		"en-us": "The egg of a sea monster, which can make a baby sea monster or a gross omelette.", 
 		"type": "opts"
 	},
 	"qi.tire": {
 		"en-us": "Spare Tire", 
 		"type": "opts"
 	},
+	"qi.tireInfo": {
+		"en-us": "A tire that you can repair your truck with.", 
+		"type": "opts"
+	},
 	"qi.bpermit1": {
 		"en-us": "Mail for Catalina", 
+		"type": "opts"
+	},
+	"qi.bpermit1Info": {
+		"en-us": "Catalina in South Las Abejas will be looking for this.", 
 		"type": "opts"
 	},
 	"qi.food2keycard": {
 		"en-us": "Employee Keycard", 
 		"type": "opts"
 	},
+	"qi.food2keycardInfo": {
+		"en-us": "This will grant you access to the Food2 headquarters in Central Las Abejas.", 
+		"type": "opts"
+	},
 	"qi.smartphone": {
 		"en-us": "Smartphone", 
+		"type": "opts"
+	},
+	"qi.smartphoneInfo": {
+		"en-us": "A cell phone. You're not sure how it found its way into your pocket. Has no games; worthless.", 
 		"type": "opts"
 	},
 	"ef.shocked": {

@@ -246,7 +246,11 @@ const pausemenu = {
         const cursorPos = { x: this.cursorX, y: this.cursorY };
         if(cursorPos.x > 0) {
             if(this.inNoFun) { game.innerTransition(this, pausemenu.noFun); return true; }
-            else { return false; }
+            else {
+                const item = pausemenu.questItems[pausemenu.cursorX - 1];
+                pausemenu.ShowInfo("qi." + item + "Info");
+                return false;
+            }
         }
         switch(cursorPos.y) {
             case 0: game.innerTransition(this, pausemenu.inventory); break;
@@ -257,9 +261,15 @@ const pausemenu = {
             case 5: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
             case 6: this.cancel(); break;
             case 7: this.TryQuit(); break;
-            default: return false;
+            default:
+                this.ShowInfo("info" + (player.ethicsAxis >= 0 ? "Good" : "Bad") + (player.techAxis <= 0 ? "Nature" : "Tech"));
+                return false;
         }
         return true;
+    },
+    ShowInfo: function(key) { 
+        gfx.drawInfobox(17, 2.25, 8, "menuA");
+        gfx.drawWrappedText(GetText(key), 5, 140, 250);
     },
     TryQuit: function() {
         if(player.justSaved || this.lastPressWasQuit) { return nwHelpers.Quit(); }
