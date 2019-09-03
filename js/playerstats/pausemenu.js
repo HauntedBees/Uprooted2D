@@ -219,7 +219,7 @@ const pausemenu = {
             if(this.inNoFun) { pos.x = 0; }
             this.inNoFun = false;
             if(pos.y > this.options.length) { return false; }
-            if(pos.y < this.options.length && pos.x > 0) { pos.y = this.options.length; pos.x = 0; }
+            if(pos.y < this.options.length && pos.x > 0) { return false; }
             if(pos.x > this.questItems.length) { return false; }
         }
         this.lastPressWasQuit = false;
