@@ -543,7 +543,10 @@ const worldmap = {
     isCollision: function(e, newPos) {
         if(e.seamlessMap || !e.solid) { return false; }
         if(e.big) {
-            return (Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y + 1) === newPos.y) || Math.round(e.pos.x + 1) === newPos.x && Math.round(e.pos.y + 1) === newPos.y;
+            return (Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y + 1) === newPos.y)
+                || (Math.round(e.pos.x + 1) === newPos.x && Math.round(e.pos.y + 1) === newPos.y)
+                || (Math.round(e.pos.x + 1) === newPos.x && Math.round(e.pos.y) === newPos.y)
+                || (Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y) === newPos.y);
         } else {
             return Math.round(e.pos.x) === newPos.x && Math.round(e.pos.y) === newPos.y;
         }
