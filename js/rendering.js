@@ -22,6 +22,7 @@ const gfx = {
     GetBlack: () => (player.IsMonochrome() ? "#081820" : "#000000"),
     GetWhite: () => (player.IsMonochrome() ? "#E0F8D0" : "#FFFFFF"),
     GetLightBlue: () => (player.IsMonochrome() ? "#E0F8D0" : "#B2B5FF"),
+    GetSpeakerBGColor: () => (player.IsMonochrome() ? "#E0F8D0" : "#6BADA3"),
 
     clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasHeight),
     clearSome: keys => keys.forEach(e => gfx.clearLayer(e)),
@@ -90,23 +91,6 @@ const gfx = {
         if(dy <= -1) { return; }
         const size = (y <= bottomY ? 16 : 16 - 16 * (y - bottomY));
         gfx.drawImage(gfx.ctx[layer], gfx.spritesheets["sheet"], sx, sy, 16, size, x * 16, y * 16, 16, size);
-    },
-    drawInfoText: function(text, x, y, selected, imgLayer, textLayer) {
-        imgLayer = imgLayer || "menuOverBlack";
-        textLayer = textLayer || "menutextOverBlack";
-        let xi = 1;
-        let width = gfx.getTextWidth(text) + 20;
-        let xiimax = x + Math.ceil(width / 64);
-        const prefix = selected ? "recSel" : "sel";
-        while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
-        gfx.drawTile(prefix + "L", x * 16, 2 + y * 16, imgLayer);
-        while(width > 128) {
-            width -= 64;
-            gfx.drawTile(prefix + "M", x * 16 + 16 * xi++, 2 + y * 16, imgLayer);
-        }
-        gfx.drawTile(prefix + "R", x * 16 + 16 * xi, 2 + y * 16, imgLayer);
-        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, textLayer);
-        return xi;
     },
     drawOption: function(text, y, selected) {
         let xi = 1;
@@ -226,13 +210,6 @@ const gfx = {
         gfx.drawTileToGrid(spriteName, x, y, layer);
         gfx.drawItemNumber(itemInfo[1], x, y, layer);
     },
-    getTextRightAlignedX: (text, size, x) => x - gfx.getTextWidth(text, size),
-    getTextFractionX: (text, size, fraction) => gfx.getFractionX(gfx.getTextWidth(text, size), (fraction || 0.5)),
-    getFractionX: (width, fraction) => ((gfx.canvasWidth * fraction) - (width / 2)) / 4,
-    getTextWidth: function(t, size) {
-        gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
-        return gfx.ctx["menutext"].measureText(t).width;
-    },
     drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = gfx.GetBlack(); gfx.ctx["menutext"].fillRect(x, y, w, 5); },
     drawChoice: function(y, t, selected) {
         const tile = selected ? "SselM" : "selM";
@@ -254,6 +231,30 @@ const gfx = {
     },
 
     // Text
+    drawInfoText: function(text, x, y, selected, imgLayer, textLayer) {
+        imgLayer = imgLayer || "menuOverBlack";
+        textLayer = textLayer || "menutextOverBlack";
+        let xi = 1;
+        let width = gfx.getTextWidth(text) + 20;
+        let xiimax = x + Math.ceil(width / 64);
+        const prefix = selected ? "recSel" : "sel";
+        while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
+        gfx.drawTile(prefix + "L", x * 16, 2 + y * 16, imgLayer);
+        while(width > 128) {
+            width -= 64;
+            gfx.drawTile(prefix + "M", x * 16 + 16 * xi++, 2 + y * 16, imgLayer);
+        }
+        gfx.drawTile(prefix + "R", x * 16 + 16 * xi, 2 + y * 16, imgLayer);
+        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, textLayer);
+        return xi;
+    },
+    getTextRightAlignedX: (text, size, x) => x - gfx.getTextWidth(text, size),
+    getTextFractionX: (text, size, fraction) => gfx.getFractionX(gfx.getTextWidth(text, size), (fraction || 0.5)),
+    getFractionX: (width, fraction) => ((gfx.canvasWidth * fraction) - (width / 2)) / 4,
+    getTextWidth: function(t, size) {
+        gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
+        return gfx.ctx["menutext"].measureText(t).width;
+    },
     drawText: function(t, x, y, color, size, layer) {
         layer = layer || "menutext";
         gfx.ctx[layer].font = gfx.GetFontSize(size) + gfx.GetFont();
@@ -289,6 +290,13 @@ const gfx = {
         ctx.font = size + "px " + gfx.GetFont();
         const textInfo = ctx.measureText(t);
         return textInfo.width > maxWidth;
+    },
+    DrawBackingBox: function(name, x, y, layer) {
+        layer = layer || "menuA";
+        const ctx = gfx.ctx[layer];
+        const textWidth = gfx.getTextWidth(name);
+        ctx.fillStyle = gfx.GetSpeakerBGColor();
+        ctx.fillRect((x - 2) * gfx.scale, (y + 4.5) * gfx.scale, 1.15 * textWidth, 1.25 * gfx.GetFontSize(undefined, true));
     },
     drawWrappedText: function(t, x, y, maxWidth, color, layer, size) {
         layer = layer || "menutext";
