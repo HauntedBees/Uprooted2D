@@ -20,6 +20,7 @@ worldmap.optionsMenu = {
         const inputsAlreadyUsed = [];
         const letsReverseItIGuess = {};
         for(const key in controls) {
+            if(key.indexOf("2") > 0) { continue; }
             const val = controls[key];
             if(inputsAlreadyUsed.indexOf(val) >= 0) {
                 letsReverseItIGuess[val].push(key);

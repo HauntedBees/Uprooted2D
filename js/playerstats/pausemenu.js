@@ -29,6 +29,7 @@ const pausemenu = {
     GetQuestItems: function(p) {
         p = p || player;
         this.questItems = [];
+        if(p.completedQuest("badEgg")) { this.questItems.push("bpermit0"); }
         if(p.hasQuestState("quest1", 4) || p.hasQuestState("quest1", 2)) { this.questItems.push("goldmushroom"); }
         if(p.hasQuestState("kelpBoy", "gotMilk")) { this.questItems.push("milk"); }
         if(p.hasQuestState("seamonkey", "looking")) { this.questItems.push("seamonkkey"); }

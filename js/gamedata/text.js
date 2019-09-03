@@ -6664,6 +6664,15 @@ const fulltext = {
 		"en-us": "You go out of your way to hurt people, and you want to do so using all-natural methods.", 
 		"type": "opts"
 	},
+	"qi.bpermit0": {
+		"en-us": "Lake Fairy Note", 
+		"type": "opts"
+	},
+	"qi.bpermit0Info": {
+		"en-us": "All it says is \"fuck you.\"", 
+		"en-us-sfw": "All it says is \"you're no good.\"", 
+		"type": "opts"
+	},
 	"qi.goldmushroom": {
 		"en-us": "Golden Mushroom", 
 		"type": "opts"
