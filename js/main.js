@@ -498,7 +498,7 @@ const game = {
                 case 1: // pastel
                     console.log("G");
                     style["mix-blend-mode"] = "soft-light";
-                    style["background-color"] = "#FFCCCC";
+                    style["background-color"] = "#FFE5E5";
                     break;
                 case 2: // faded
                     style["mix-blend-mode"] = "saturation";

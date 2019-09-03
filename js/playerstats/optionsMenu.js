@@ -219,7 +219,7 @@ worldmap.optionsMenu = {
                     break;
                 case 1: // pastel
                     document.getElementById("prev_cover").style["mix-blend-mode"] = "soft-light";
-                    document.getElementById("prev_cover").style["background-color"] = "#FFCCCC";
+                    document.getElementById("prev_cover").style["background-color"] = "#FFE5E5";
                     break;
                 case 2: // faded
                     document.getElementById("prev_cover").style["mix-blend-mode"] = "saturation";
