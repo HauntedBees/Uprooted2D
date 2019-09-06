@@ -16,16 +16,19 @@ worldmap.credits = {
         this.creditsStr += " \n " + GetText("cr.sf");
         this.creditsStr += " \n  \n " + GetText("cr.m");
         this.creditsStr += " \n " + GetText("cr.sf");
+        this.creditsStr += " \n  \n " + GetText("cr.am");
+        this.creditsStr += " \n " + GetText("cr.km");
         this.creditsStr += " \n  \n " + GetText("cr.qa");
         this.creditsStr += " \n " + GetText("cr.sf");
         this.creditsStr += " \n " + GetText("cr.sj");
         this.creditsStr += " \n " + GetText("cr.so");
-        this.creditsStr += " \n " + GetText("cr.km");
         this.creditsStr += " \n  \n " + GetText("cr.spec");
         this.creditsStr += " \n " + GetText("cr.sj");
         this.creditsStr += " \n " + GetText("cr.bw");
         this.creditsStr += " \n " + GetText("cr.mr");
         this.creditsStr += " \n " + GetText("cr.tr");
+        this.creditsStr += " \n " + GetText("cr.lt");
+        this.creditsStr += " \n " + GetText("cr.wk");
         this.creditsStr += " \n " + GetText("cr.mkla");
         this.creditsStr += " \n " + GetText("cr.you");
         this.creditsStr += " \n \n " + GetText("cr.font1");
@@ -59,7 +62,7 @@ worldmap.credits = {
             gfx.drawText(worldmap.credits.finalTime + "/" + worldmap.credits.finalTime, 55, 218, player.IsMonochrome() ? "#88C070" : "#A5A5A5", 26, "menutextOverBlack");
         } else {
             gfx.drawFullImage("endcreditscover", "menuOverBlack");
-            gfx.drawWrappedText(worldmap.credits.creditsStr, 194, 200 - worldmap.credits.dy, 130);
+            gfx.drawWrappedText(worldmap.credits.creditsStr, 198, 200 - worldmap.credits.dy, 132);
             const now = player.getPlayTimeString();
             if(worldmap.credits.stillCounting && now === worldmap.credits.finalTime) {
                 worldmap.credits.stillCounting = false;

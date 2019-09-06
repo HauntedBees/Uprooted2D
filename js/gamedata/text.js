@@ -9111,6 +9111,10 @@ const fulltext = {
 		"en-us": "Kelly Marine", 
 		"type": "cname"
 	},
+	"cr.wk": {
+		"en-us": "Andrew W.K.", 
+		"type": "cname"
+	},
 	"cr.mkla": {
 		"en-us": "The MklaDiscord Gang", 
 		"type": "cname"
@@ -9143,12 +9147,16 @@ const fulltext = {
 		"en-us": "QUALITY ASSURANCE", 
 		"type": "crole"
 	},
+	"cr.am": {
+		"en-us": "ACCESSIBILITY MISTRESS", 
+		"type": "crole"
+	},
 	"cr.spec": {
 		"en-us": "SPECIAL THANKS", 
 		"type": "crole"
 	},
 	"cr.copy": {
-		"en-us": "COPYRIGHT 2018-2019 HAUNTED BEES PRODUCTIONS", 
+		"en-us": "COPYRIGHT 2018-2019 HAUNTED BEES \n PRODUCTIONS", 
 		"type": "crole"
 	},
 	"cr.font1": {
@@ -9204,7 +9212,7 @@ const fulltext = {
 		"type": "cend"
 	},
 	"crEnd2": {
-		"en-us": "Remember, if you liked this game, be sure to like, comment, and subscribe!", 
+		"en-us": "Remember, if you enjoyed this game, be sure to like, comment, and subscribe!", 
 		"type": "cend"
 	},
 	"crEnd3": {
