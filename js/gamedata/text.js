@@ -1206,11 +1206,11 @@ const fulltext = {
 		"type": "opts"
 	},
 	"opFontSize2": {
-		"en-us": "Big", 
+		"en-us": "A Bit Bigger", 
 		"type": "opts"
 	},
 	"opFontSize3": {
-		"en-us": "Huge", 
+		"en-us": "Even Bigger Still", 
 		"type": "opts"
 	},
 	"ctrlUp": {

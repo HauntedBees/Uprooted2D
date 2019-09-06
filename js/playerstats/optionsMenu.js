@@ -42,6 +42,7 @@ worldmap.optionsMenu = {
         y = this.addHeading(y, "opGameOps");
         y = this.addOption(y, "opDifficulty", this.localOptions.difficulty, "difficulty", ["diffEasy", "diffNormal", "diffHard"], true);
         y = this.addOption(y, "opFont", this.localOptions.font, "font", ["fontStandard", "fontDyslexic"], false);
+        y = this.addOption(y, "opFontSize", this.localOptions.fontSize, "fontSize", ["opFontSize1", "opFontSize2", "opFontSize3"], false);
         y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
         y = this.addOption(y, "opPottywords", this.localOptions.canSayFuck, "canSayFuck", ["opNo", "opYes"], false);
         y = this.addOption(y, "opStickyControls", this.localOptions.stickyMovement, "stickyMovement", ["opNo", "opYes"], true);

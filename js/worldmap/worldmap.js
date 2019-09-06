@@ -290,7 +290,7 @@ const worldmap = {
         this.cursors.MoveCursor("main", -1, -1);
         worldmap.currentFormatting = formatting;
         gfx.clearSome(["menuA", "menutext", "menuOverBlack", "menutextOverBlack"]);
-        const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 11 : 0;
+        const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 10 : 0;
         if(!justWhiteText) { gfx.drawTextBox(drawY, overBlack); }
         let actualText = GetText(t);
         if(actualText === "") { return; }
@@ -320,7 +320,7 @@ const worldmap = {
         actualText = actualText.replace(/\{g\}/g, player.monies);
         if(!justWhiteText && actualText.indexOf(":") > 0) {
             const speaker = actualText.split(":")[0];
-            gfx.DrawBackingBox(speaker, 4, drawY * 16);
+            gfx.DrawBackingBox(speaker, 6, 2 + drawY * 16);
         }
         gfx.drawFullText(actualText, drawY * 16 - (justWhiteText ? 20 : 0), justWhiteText ? gfx.GetWhite() : undefined, overBlack);
         //document.getElementById("screenRead").innerText = actualText;
@@ -330,8 +330,8 @@ const worldmap = {
             worldmap.dialogData = {};
             return;
         }
-        const choiceTopY = (drawY === 11) ? (11.5 - choices.length) : 3.5;
         if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
+        const choiceTopY = (drawY === 10) ? (10.5 - choices.length) : 4.5;
         for(let i = 0; i < choices.length; i++) {
             let txt = GetText(choices[i]);
             if(formatArray) {

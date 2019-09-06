@@ -218,6 +218,10 @@ const gfx = {
     },
     GetFontSize: function(size, justNum) {
         size = size || 22;
+        switch(player.options.fontSize) {
+            case 1: size += 2; break;
+            case 2: size += 3; break;
+        }
         const isDyslexic = gfx.GetFont() === "OpenDyslexic";
         if(isDyslexic) { size += 1; }
         return justNum === true ? size : ((isDyslexic ? "bold " : "") + size + "px ");
@@ -266,7 +270,7 @@ const gfx = {
         gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
-    drawFullText: function(t, y, color, overBlack) { gfx.drawWrappedText(t, 4, 11 + (y || 0), 250, color, (overBlack ? "menutextOverBlack" : undefined)); },
+    drawFullText: function(t, y, color, overBlack) { return gfx.drawWrappedText(t, 6, 13 + (y || 0), 246, color, (overBlack ? "menutextOverBlack" : undefined)); },
     getWrappedTextInfo: function(t, maxWidth) {
         maxWidth *= gfx.scale;
         const ts = t.split(" ");
@@ -320,7 +324,7 @@ const gfx = {
         }
         ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
     },
-    drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 3, y || 0, (overBlack ? "menuOverBlack" : undefined)),
+    drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 4, y || 0, (overBlack ? "menuOverBlack" : undefined)),
     drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)),
     drawMinibox: function(x, y, w, h, layer) {
         layer = layer || "menuA";

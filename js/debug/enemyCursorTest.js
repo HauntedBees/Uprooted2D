@@ -1,4 +1,23 @@
 const debug = {
+    WorldMapTextTest: function() {
+        const vals = [];
+        for(const key in fulltext) {
+            const me = fulltext[key];
+            if(me.type !== "map") { continue; }
+            const numRows = gfx.drawFullText(me["en-us"], 0);
+            if(vals[numRows] === undefined) {
+                vals[numRows] = [key];
+            } else {
+                vals[numRows].push(key);
+            }
+        }
+        switch(player.options.fontSize) {
+            case 0: console.log("FONT SIZE: NORMAL"); break;
+            case 1: console.log("FONT SIZE: BIG"); break;
+            case 2: console.log("FONT SIZE: HUGE"); break;
+        }
+        console.log(vals);
+    },
     GlitchItUp: function() {
         game.glitch = {
             offX: InclusiveRange(-4, 4),
