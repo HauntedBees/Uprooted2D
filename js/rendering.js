@@ -218,8 +218,9 @@ const gfx = {
     },
     GetFontSize: function(size, justNum) {
         size = size || 22;
-        if(gfx.GetFont() === "OpenDyslexic") { size += 2; }
-        return justNum === true ? size : size + "px ";
+        const isDyslexic = gfx.GetFont() === "OpenDyslexic";
+        if(isDyslexic) { size += 1; }
+        return justNum === true ? size : ((isDyslexic ? "bold " : "") + size + "px ");
     },
     TileBackground: function(sprite, yMax) {
         yMax = yMax || gfx.tileHeight;
