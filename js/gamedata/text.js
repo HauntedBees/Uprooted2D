@@ -54,7 +54,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"leek": {
-		"en-us": "Why did the farmer call the plumber? Because her field sprung a leek!", 
+		"en-us": "Why did the farmer call the plumber? Because her field sprung a leek! \n \n \n \n \n ...Because her field sprung a leek!", 
 		"type": "item"
 	},
 	"lemon": {
@@ -181,7 +181,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"shortgrain": {
-		"en-us": "Short-grain rice is often used for rice pudding, a tasty treat that's fun to eat! It rhymes, so it has to be true.", 
+		"en-us": "Short-grain rice is often used for rice pudding, a tasty treat that's fun to eat! It rhymes, so it has to be true. That's the rule, and it's NEVER not true.", 
 		"type": "item"
 	},
 	"chestnut": {
@@ -189,11 +189,11 @@ const fulltext = {
 		"type": "item"
 	},
 	"garlic": {
-		"en-us": "Garlic is as good as ten mothers... because my mum is great and garlic is great yum yum crunch crunch give me that garlic.", 
+		"en-us": "Garlic is as good as ten mothers... because my mum is great and garlic is great yum yum crunch crunch give me that garlic!", 
 		"type": "item"
 	},
 	"banana": {
-		"en-us": "A banana in the hand is worth one in the peel. Sure.", 
+		"en-us": "A banana in the hand is worth one in the peel. Sure. TODO: REMEMBER TO CHANGE THIS TO SOMETHING HILARIOUS IN FINAL RELEASE. DON'T NOT DO THAT.", 
 		"type": "item"
 	},
 	"goldegg": {
@@ -225,7 +225,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"asparagus": {
-		"en-us": "When Gus eats a lot of pears, then shits, this is what you get. Ass Pear a'Gus.", 
+		"en-us": "When Gus eats a lot of pears, then shits, this is what you get. Ass Pear a'Gus. What? Why are you yelling at me? Oh God I'm sorry please stop.", 
 		"en-us-sfw": "Yo my Gus broke, do you got one I could borrow? Yeah, I need a spare a'Gus. Why are you running away?", 
 		"type": "item"
 	},
@@ -246,8 +246,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"apricot": {
-		"en-us": "Pretend you know some rude fellow named \"Ott.\" You could say to him, \"ey prick! Ott!\" and if he gets mad you can just pretend you were loudly identifying a fruit, not insulting him.", 
-		"en-us-sfw": "Apricots have big pits so be careful not to fall into them.", 
+		"en-us": "Apricots have big pits so be careful not to fall into them.", 
 		"type": "item"
 	},
 	"avocado": {
@@ -256,7 +255,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"blackberry": {
-		"en-us": "These sweet and juicy berries taste as good as they look. Unless you think they look bad. In that case, they taste better than they look!", 
+		"en-us": "These sweet and juicy berries taste as good as they look. Unless you think they look bad. In that case, they taste better than they look! Unless you don't like how they taste, in which case... hold on, I'm working on it.", 
 		"type": "item"
 	},
 	"kiwi": {
@@ -268,8 +267,8 @@ const fulltext = {
 		"type": "item"
 	},
 	"lotus": {
-		"en-us": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. That shit's fuckin' creepy, yo.", 
-		"en-us-sfw": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. Creepy stuff.", 
+		"en-us": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. That shit's fuckin' creepy, yo. Also, don't do an Image Search for that word.", 
+		"en-us-sfw": "Lotus flowers are very beautiful. Lotus fruits, however, are a common cause of trypophobia. Creepy stuff. Also, don't do an Image Search for that word.", 
 		"type": "item"
 	},
 	"holywater": {
