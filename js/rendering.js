@@ -311,18 +311,25 @@ const gfx = {
         size = gfx.GetFontSize(size, true);
         ctx.font = size + "px " + gfx.GetFont();
         const ddy = size / 2.75, ts = t.split(" ");
-        let row = ts[0], dy = 0;
+        let row = ts[0], dy = 0, numRows = 1;
         for(let i = 1; i < ts.length; i++) {
             const textInfo = ctx.measureText(row + " " + ts[i]);
-            if(textInfo.width > maxWidth || row.indexOf("\n") >= 0) {
-                ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
+            if(ts[i] === "\n") {
+                ctx.fillText(row.trim(" "), x * gfx.scale, (y + dy) * gfx.scale);
+                dy += ddy;
+                row = "";
+                numRows++;
+            } else if(textInfo.width > maxWidth || row.indexOf("\n") >= 0) {
+                ctx.fillText(row.trim(" "), x * gfx.scale, (y + dy) * gfx.scale);
                 dy += ddy;
                 row = ts[i];
+                numRows++;
             } else {
                 row += " " + ts[i];
             }
         }
-        ctx.fillText(row, x * gfx.scale, (y + dy) * gfx.scale);
+        ctx.fillText(row.trim(" "), x * gfx.scale, (y + dy) * gfx.scale);
+        return numRows;
     },
     drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 4, y || 0, (overBlack ? "menuOverBlack" : undefined)),
     drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)),
