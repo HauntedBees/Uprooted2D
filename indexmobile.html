@@ -44,12 +44,14 @@
                 height: 896px;
                 pointer-events: none;
             }
-            #previews, #prev_cover { width: 15%; border: none }
+            #previews, #prev_cover { margin: 0; width: 15%; border: none }
             #prev_cover {
                 margin: 0;
                 top: 0;
+                width: 288px;
+                height: 192px;
             }
-            #previews > img { pointer-events: none; width: 15%; display: none }
+            #previews > img { pointer-events: none; display: none }
             #dpad {
                 border: none;
                 left: 0;
@@ -82,10 +84,23 @@
                 user-select:none;
                 -webkit-tap-highlight-color:rgba(0,0,0,0);
             }
+            #landscapeRight, #landscapeLeft { display: none }
+            body.landscape #landscapeRight, body.landscape #landscapeLeft {
+                display: block;
+                width: 25%;
+                height: 100%;
+            }
+            body.landscape #dpad { display: none }
+            body.landscape canvas {
+                width: 50%;
+                top: 0%;
+                height: 100%;
+            }
         </style>
     </head>
     <body>
         <div id="infobuddy" style="display:none">hi</div>
+        <canvas id="landscapeLeft"></canvas>
         <div id="canvasContainer"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
             <canvas id="background" width="1024" height="896"></canvas>
             <canvas id="background2" width="1024" height="896"></canvas>
@@ -107,6 +122,7 @@
             <div id="colorCover"></div>
             <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
         </div>
+        <canvas id="landscapeRight"></canvas>
         <div id="previews">
             <img id="prev_img" src="img/colorPreview.png"/>
             <img id="prev_imgs4x" src="imgs4x/colorPreview.png"/>

@@ -3,6 +3,20 @@ function InventoryCopy(arr) {
     for (let i = 0; i < arr.length; i++) { copy[i] = (typeof arr[i] === "object") ? InventoryCopy(arr[i]) : arr[i]; }
     return copy;
 }
+const cordovaHelpers = {
+    OrientationChange: function() {
+        if(screen.orientation.type.indexOf("landscape") >= 0) {
+            document.body.className = "landscape";
+            const width = window.screen.width;
+            const screenw = document.getElementById("background").offsetWidth;
+            const btnWidth = Math.floor((width - screenw) / 2);
+            document.getElementById("landscapeLeft").style.width = btnWidth + "px";
+            document.getElementById("landscapeRight").style.width = btnWidth + "px";
+        } else {
+            document.body.className = "";
+        }
+    }
+};
 const nwHelpers = {
     win: null,
     InitScreenSizeAdjustment: function() {
@@ -38,6 +52,7 @@ const nwHelpers = {
         this.win.height = game.h * multiplier;
     },
     Quit: function() {
+        if(typeof require === "undefined") { location.reload(); }
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }
         this.win.close(true);
     }
@@ -101,8 +116,10 @@ const game = {
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
-        if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile.html") >= 0) {
+        if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0) {
             game.type = 2;
+            window.addEventListener("orientationchange", cordovaHelpers.OrientationChange);
+            cordovaHelpers.OrientationChange();
         } else if(typeof require === "function") {
             game.type = 1;
         } else {
@@ -130,28 +147,24 @@ const game = {
         }
         
         if(game.type === 2) {
-            virtualControls = new VirtGamepad(input, ["dpad"], [
+            virtualControls = new VirtGamepad(input, ["dpad", "landscapeLeft", "landscapeRight"], [
                 new VirtButton("dpad", "dpad", "vgp_img/dpad.png", { eightDirection: true }),
                 new VirtButton("confirm", "button", "vgp_img/confirm.png"),
                 new VirtButton("cancel", "button", "vgp_img/cancel.png"),
                 new VirtButton("pause", "button", "vgp_img/pause.png"),
-                new VirtButton("opt_exit", "config", "vgp_img/opt_exit.png", { command: "exit", startInvisible: true }),
-                new VirtButton("opt_default", "config", "vgp_img/opt_default.png", { command: "default", startInvisible: true }),
-                new VirtButton("opt_save", "config", "vgp_img/opt_save.png", { command: "save", startInvisible: true }),
-                new VirtButton("opt_resize", "config", "vgp_img/opt_resize.png", { command: "resize", startInvisible: true }),
-                new VirtButton("opt_move", "config", "vgp_img/opt_move.png", { command: "move", startInvisible: true }),
-                new VirtButton("opt_cancel", "config", "vgp_img/opt_cancel.png", { command: "cancel", startInvisible: true }) // might be useless?
+                new VirtButton("dpadL", "dpad", "vgp_img/dpad.png", { eightDirection: true }),
+                new VirtButton("confirmL", "button", "vgp_img/confirm.png"),
+                new VirtButton("cancelL", "button", "vgp_img/cancel.png"),
+                new VirtButton("pauseL", "button", "vgp_img/pause.png")
             ], [
                 new VirtButtonPosition("dpad", "dpad", 45, 45, 1.25, 1.25),
                 new VirtButtonPosition("confirm", "dpad", 580, 240, 1.5, 1.5),
                 new VirtButtonPosition("cancel", "dpad", 780, 20, 1.5, 1.5),
                 new VirtButtonPosition("pause", "dpad", 420, 600),
-                new VirtButtonPosition("opt_exit", "dpad", 0, 830),
-                new VirtButtonPosition("opt_default", "dpad", 178, 830),
-                new VirtButtonPosition("opt_resize", "dpad", 896, 830),
-                new VirtButtonPosition("opt_move", "dpad", 896, 830),
-                new VirtButtonPosition("opt_save", "dpad", 0, 730),
-                new VirtButtonPosition("opt_cancel", "dpad", 448, 730)
+                new VirtButtonPosition("dpadL", "landscapeLeft", 50, 150, 1.25, 1.25),
+                new VirtButtonPosition("pauseL", "landscapeLeft", 225, 750),
+                new VirtButtonPosition("cancelL", "landscapeRight", 220, 100, 1.5, 1.5),
+                new VirtButtonPosition("confirmL", "landscapeRight", 80, 400, 1.5, 1.5)
             ]);
             virtualControls.Show();
         }
@@ -347,14 +360,16 @@ const game = {
         }
     },
     initListeners: function() {
-        gfx.canvas["menutextOverBlack"].addEventListener("mousemove", input.moveMouse);
-        gfx.canvas["menutextOverBlack"].addEventListener("click", input.click);
-        document.addEventListener("keypress", input.keyPress);
-        document.addEventListener("keydown", input.keyDown);
-        document.addEventListener("keyup", input.keyUp);
-        document.addEventListener("wheel", input.onWheel);
-        window.addEventListener("gamepadconnected", input.gamepadConnected);
-        window.addEventListener("gamepaddisconnected", input.gamepadDisconnected);
+        if(game.type !== 2) {
+            gfx.canvas["menutextOverBlack"].addEventListener("mousemove", input.moveMouse);
+            gfx.canvas["menutextOverBlack"].addEventListener("click", input.click);
+            document.addEventListener("keypress", input.keyPress);
+            document.addEventListener("keydown", input.keyDown);
+            document.addEventListener("keyup", input.keyUp);
+            document.addEventListener("wheel", input.onWheel);
+            window.addEventListener("gamepadconnected", input.gamepadConnected);
+            window.addEventListener("gamepaddisconnected", input.gamepadDisconnected);
+        }
         setInterval(game.incrementTime, 1000);
     },
     incrementTime: () => player.playTime++,
