@@ -5,7 +5,7 @@ let gpVals = {
 let speaker = {
     voices: [], timeout: null, lastSpeaker: null, playerVoice: null, attempts: 0, failed: false, voiceMap: {},
     Init: function() {
-        if(typeof speechSynthesis !== "object") {
+        if(speaker.voices.length === 0 || typeof speechSynthesis !== "object") {
             console.log("No speech synthesis module!");
             speaker.failed = true;
             return;

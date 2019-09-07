@@ -282,6 +282,7 @@ const animCallbacks = {
         animCallbackHelpers["ThrowSomeAnimalsAtIt"](animProcess, resetti.animal);
     },
     "player_pullCrop": function(animProcess, animEntity) {
+        Sounds.PlaySound("pluck");
         const resetti = animEntity.animQueue[0];
         const x = combat.dx + resetti.x, y = combat.dy + resetti.y;
         AddCropDeathAnim(animProcess, x, y, resetti.crop);
@@ -329,7 +330,7 @@ const animCallbacks = {
         if(animEntity.bonusArgs.recoils[resetti.idx] === null) {
             callback = () => {
                 animCallbackHelpers.StickSomeFriends(animProcess, animEntity.bonusArgs.targets, animEntity.bonusArgs.stickTargets);
-                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast, resetti.crop);
             }
         } else {
             callback = function() {
@@ -339,7 +340,7 @@ const animCallbacks = {
                                                                 combat.animHelper.GetEnemyTopPos(i), 24, f, true));
                 }
                 animCallbackHelpers.StickSomeFriends(animProcess, animEntity.bonusArgs.targets, animEntity.bonusArgs.stickTargets);
-                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast);
+                animCallbackHelpers.HurtTargets(animProcess, animEntity.bonusArgs.targets, isLast, resetti.crop);
             };
         }
         animProcess.AddBaby(new ParabolicThrowAnim(resetti.crop.name, combat.animHelper.GetPlayerTopPos(), combat.animHelper.GetEnemyTopPos(animEntity.bonusArgs.targets[0]), 24, callback));
@@ -422,13 +423,15 @@ const animCallbackHelpers = {
             }
         }
     },
-    "HurtTargets": function(animProcess, targets, isLast) {
+    "HurtTargets": function(animProcess, targets, isLast, crop) {
         for(let i = 0; i < targets.length; i++) {
             const targ = targets[i];
             if(targ.x === undefined) { // enemy
                 if(combat.enemies[targ].health <= 0 && isLast) {
+                    Sounds.PlaySound("squirrel"); // TODO: change based on enemy
                     combat.animHelper.MakeEnemyACorpse(targ);
                 } else {
+                    Sounds.PlayPlayerAttackSound(targ, crop);
                     combat.animHelper.SetEnemyAnimState(targ, "HURT");
                 }
             } else { // crop

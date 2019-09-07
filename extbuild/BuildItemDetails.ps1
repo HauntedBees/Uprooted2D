@@ -60,6 +60,7 @@ function GetCrop(name) {
 		if($row.SaltChance) { $addtl += "saltChance: _".replace("_", $row.SaltChance); }
 		if($row.BurnChance) { $addtl += "burnChance: _".replace("_", $row.BurnChance); }
 		if($row.AltTree) { $addtl += "treeSprite: `"_`"".replace("_", $row.AltTree); }
+		if($row.Sound) { $addtl += "sound: `"_`"".replace("_", $row.Sound); }
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";
 			$endStr = $endStr.replace("{addtl}", ", { $folded }");
@@ -238,13 +239,41 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     this.seasonDistribution = seasonDistribution;
     this.attackType = atkType;
 	this.args = (args || "").split(",");
-	
+	if(player.noFunDiffMod !== 0) { AdjustEnemyStats(this, player.noFunDiffMod); }
     this.exp = Math.ceil(health/10 + atk + def/2);
     if(this.name === "Discussly" || this.name.indexOf("beeQueen") === 0) { this.exp = 0; }
     this.drops = drops;
     this.boss = boss;
     if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 	this.GetRandomArg = function() { return RandomArrayItem(this.args); };
+}
+function AdjustEnemyStats(enemy, diff) {
+	if(diff === 0) { return; }
+	if(diff > 0) { // make strongker
+		while(diff-- > 0) {
+			enemy.maxhealth *= 1.75;
+			enemy.baseatk *= 1.5;
+			enemy.basedef *= 1.5;
+		}
+		enemy.maxhealth = Math.round(enemy.maxhealth);
+		enemy.health = enemy.maxhealth;
+		enemy.baseatk = Math.round(enemy.baseatk);
+		enemy.atk = enemy.baseatk;
+		enemy.basedef = Math.round(enemy.basedef);
+		enemy.def = enemy.basedef;
+	} else { // make weakger
+		while(diff++ < 0) {
+			enemy.maxhealth *= 0.5;
+			enemy.baseatk *= 0.75;
+			enemy.basedef *= 0.75;
+		}
+		enemy.maxhealth = Math.max(5, Math.round(enemy.maxhealth));
+		enemy.health = enemy.maxhealth;
+		enemy.baseatk = Math.max(1, Math.round(enemy.baseatk));
+		enemy.atk = enemy.baseatk;
+		enemy.basedef = Math.max(1, Math.round(enemy.basedef));
+		enemy.def = enemy.basedef;
+	}
 }
 function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math.floor(Math.random() * max)); }
 function GetEnemy(name) {
@@ -302,6 +331,7 @@ function GetEnemy(name) {
 		if($row.RCC) { $addtl += "rotClearChance: _".replace("_", $row.RCC); } else { $addtl += "rotClearChance: 0"; }
 		if($row.stickRes) { $addtl += "stickRes: _".replace("_", $row.stickRes); } else { $addtl += "stickRes: 0"; }
 		if($row.killKey) { $addtl += "killKey: `"_`"".replace("_", $row.killKey); }
+		if($row.Sound) { $addtl += "sound: `"_`"".replace("_", $row.Sound); }
 		
 		if($addtl.Count -gt 0) {
 			$folded = $addtl -join ", ";

@@ -6,9 +6,11 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "confirm", "cancel",
                         "navOk", "navNok",
                         // BFXR
-                        "pluck", "toss", "beepattack",
-                        "pemp", "schwomp", "bops",
-                        "explode", "crybaby", "squirrel", "destroyed"];
+                        "toss", "beepattack", "pemp", "schwomp", "bops",
+                        "explode", "crybaby", "squirrel", "destroyed",
+                        // 512 boys
+                        "pluck", "hit_gun", "hit_hard", "hit_hollow_metal", "hit_hollow", 
+                        "hit_light", "hit_squishy", "hit_wet", "level_up"];
         sounds.forEach(s => {
             Sounds.SoundTable[s] = new Audio("sound/" + s + ".ogg");
             Sounds.SoundTable[s].onended = function() {
@@ -18,6 +20,16 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                 if(i >= 0) { Sounds.PersistingSounds.splice(i, 1); return; }
             };
         });
+    },
+    PlayPlayerAttackSound: function(targIdx, crop) {
+        const enemyType = combat.enemies[targIdx].sound;
+        const hitType = crop === undefined ? "hollow" : crop.sound;
+        const hitStr = `hit_${hitType}`, fullHitStr = `${hitStr}_${enemyType}`;
+        if(Sounds.SoundTable[fullHitStr] !== undefined) {
+            Sounds.PlaySound(fullHitStr);
+        } else {
+            Sounds.PlaySound(hitStr);
+        }
     },
     PlaySound: function(name, persist, forcedVolume) {
         console.log(`Now Playing: ${name}`);
