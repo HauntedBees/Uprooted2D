@@ -70,6 +70,7 @@ let consoleCmd = {
         const args = str.split(" ");
         const cmd = args.shift();
         switch(cmd) {
+            case "kelly": player.options.rightBumperWin = true; return;
             case "iii": player.hasFalcon = true; return;
             case "ni": player.hasFalcon = false; return;
             case "levelup": player.levelUp(); return;

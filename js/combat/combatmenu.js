@@ -284,6 +284,13 @@ combat.menu = {
     keyPress: function(key) {
         let pos = { x: 0, y: this.cursorY + this.dy };
         let isEnter = false;
+        if(player.options.rightBumperWin === true && key === "Gamepad5") {
+            for(let i = 0; i < combat.enemies.length; i++) {
+                combat.damageEnemy(i, combat.enemies[i].health);
+            }
+            combat.endTurn(combat.menu);
+            return;
+        }
         switch(key) {
             case player.controls.up: pos.y--; break;
             case player.controls.down: pos.y++; break;

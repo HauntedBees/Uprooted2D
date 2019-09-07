@@ -196,10 +196,11 @@ const game = {
         }
         return true;
     },
-    innerTransition: function(from, to, arg) {
+    innerTransition: function(from, to, arg, clearAll) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
         game.currentInputHandler = to;
         this.CleanHandler(from);
+        if(clearAll === true) { gfx.clearAll(); }
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
         to.setup(arg);
     },
@@ -216,10 +217,9 @@ const game = {
     midTransitionPoint: function() {
         clearInterval(game.transitionInfo.animIdx);
         if(game.transitionInfo.arg === "justAnim") { return; }
-        game.innerTransition(game.transitionInfo.from, game.transitionInfo.to, game.transitionInfo.arg);
+        game.innerTransition(game.transitionInfo.from, game.transitionInfo.to, game.transitionInfo.arg, true);
         if(game.transitionInfo.arg !== undefined && game.transitionInfo.arg.stayBlack) { return; }
         game.startTransitionAnim(-1);
-        //setTimeout(function() { game.startTransitionAnim(-1); }, 1000);
     },
     finishTransition: function() {
         clearInterval(game.transitionInfo.animIdx);
