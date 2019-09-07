@@ -1329,6 +1329,10 @@ const fulltext = {
 		"en-us": "Customize Virtual Controller", 
 		"type": "opts"
 	},
+	"nowLoading": {
+		"en-us": "Now Lording", 
+		"type": "opts"
+	},
 	// Fixture Tutorial
 	"fixTut0": {
 		"en-us": "Looks like you just got your first fixture! You can place it on your field by selecting \"Fixtures\" from the Pause Menu. Would you like a quick rundown of how do?", 

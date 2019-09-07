@@ -108,6 +108,7 @@ const game = {
         } else {
             game.type = 0;
         }
+        document.getElementById("loaderText").innerText = GetText("nowLoading");
         const lastSave = localStorage.getItem("lastSaved");
         if(lastSave !== null) {
             const loadedPlayer = game.str2obj(localStorage.getItem("player" + lastSave));

@@ -12,7 +12,7 @@
                 background-image: url("img/fullscreen.png");
                 background-size: cover;
 			}
-            canvas, #colorCover, #previews, #prev_cover {
+            canvas, #loader, #colorCover, #previews, #prev_cover {
                 border: 1px solid black;
                 image-rendering: pixelated; /*;crisp-edges*/
                 left: 0;
@@ -57,10 +57,19 @@
                 padding: 10px 0;
                 display: none;
             }
+            #loader {
+                width: 1024px;
+                height: 896px;
+                background-color: #000000;
+                color: #FFFFFF;
+                font-size: xx-large;
+            }
+            #loaderText { padding-top: 40% }
         </style>
     </head>
     <body>
         <div id="canvasContainer"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
+            <div id="loader"><div id="loaderText">Now Lording</div></div>
             <canvas id="background" width="1024" height="896"></canvas>
             <canvas id="background2" width="1024" height="896"></canvas>
             <canvas id="crops" width="1024" height="896"></canvas>
