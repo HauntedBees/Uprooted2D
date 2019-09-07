@@ -16,6 +16,7 @@ worldmap.title = {
         this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options"] : ["title.new", "title.options"]);
         this.DrawMenu();
         gfx.drawText(String.fromCharCode(169) + " 2019 Haunted Bees Productions (v" + player.saveVersion + ")", 2, 222, undefined, 20, "menutextOverBlack");
+        speaker.SayThing("Uprooted: Meal Replacement Game", "regular", GetText(this.menuItems[this.cursory]));
     },
     HasSaves: function() {
         for(let i = 0; i < game.numSaveSlots; i++) {
@@ -73,6 +74,8 @@ worldmap.title = {
     CursorMove: function(pos) {
         if(pos.y < 0 || pos.y >= this.menuItems.length) { return false; }
         this.cursory = pos.y;
+        //Sounds.PlaySound("movecursor2");
+        speaker.SayThing(GetText(this.menuItems[this.cursory]), "option");
         this.DrawMenu();
         return true;
     },

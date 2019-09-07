@@ -188,6 +188,7 @@ const game = {
         if(game.transitioning) { return false; }
         worldmap.ToggleRun(false);
         game.transitioning = true;
+        speaker.UpShutTheFuck();
         if(from.earlyclean !== undefined) { from.earlyclean(); }
         if(arg !== undefined && arg.quickTransition === true) {
             game.startQuickTransitionAnim(1, from, to, arg);
@@ -199,6 +200,7 @@ const game = {
     innerTransition: function(from, to, arg, clearAll) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
         game.currentInputHandler = to;
+        speaker.UpShutTheFuck();
         this.CleanHandler(from);
         if(clearAll === true) { gfx.clearAll(); }
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }

@@ -325,13 +325,18 @@ const worldmap = {
         gfx.drawFullText(actualText, drawY * 16 - (justWhiteText ? 20 : 0), justWhiteText ? gfx.GetWhite() : undefined, overBlack);
         //document.getElementById("screenRead").innerText = actualText;
         //document.getElementById("screenRead").focus();
-        //speaker.SayThing(actualText, true);
-        if(choices === undefined) {
+        if(choices === undefined || choices.length === 0) {
+            speaker.SayThing(actualText, "dialog");
             worldmap.dialogData = {};
             return;
         }
-        if(!isRefresh) { worldmap.dialogData = { choices: choices, text: t, idx: 0 }; }
         const choiceTopY = (drawY === 10) ? (10.5 - choices.length) : 4.5;
+        if(!isRefresh) {
+            speaker.SayThing(actualText, "dialog", GetText(choices[0]));
+            worldmap.dialogData = { choices: choices, text: t, idx: 0 };
+        } else {
+            speaker.SayThing(GetText(choices[worldmap.dialogData.idx]), "option");
+        }
         for(let i = 0; i < choices.length; i++) {
             let txt = GetText(choices[i]);
             if(formatArray) {
@@ -381,6 +386,7 @@ const worldmap = {
         gfx.clearSome(["menuA", "menutext", "menucursorA"]);
         if(!dontCancelRun) { this.ToggleRun(false); }
         this.cursors.MoveCursor("main", -1, -1);
+        speaker.lastSpeaker = null;
         this.forceEndDialog = false;
         this.inDialogue = false;
         this.freeMovement = true;

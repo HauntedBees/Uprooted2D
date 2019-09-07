@@ -68,7 +68,9 @@ const pausemenu = {
         pausemenu.addFormattedText("menu.nextLevel", (player.level === 50 ? "-/-" : (player.exp + "/" + player.nextExp)), 6.75, rowYs[1], ":", 0);
 
         if(pausemenu.inNoFun) {
-            const textWidth = gfx.getTextWidth(GetText("noFunInner")) / (16 * gfx.scale);
+            const myText = GetText("noFunInner");
+            speaker.SayThing(myText, "option");
+            const textWidth = gfx.getTextWidth(myText) / (16 * gfx.scale);
             this.cursors.RedimCursor("main", gfx.tileWidth - textWidth - 0.5, 0, textWidth - 0.5, 0);
         } else if(pausemenu.cursorY < pausemenu.options.length) {
             this.cursors.RedimCursor("main", 0, pausemenu.dy + pausemenu.cursorY, pausemenu.options[pausemenu.cursorY], 0);
@@ -77,11 +79,14 @@ const pausemenu = {
                 this.cursors.RedimCursor("main", 2, 11.75, 1, 1);
                 const str = GetText("alignment") + ": " + GetText(player.techAxis <= 0 ? "alignnature" : "aligntech") + " " + GetText(player.ethicsAxis >= 0 ? "aligngood" : "alignbad");
                 gfx.drawInfoText(str + " ", 0, 10.75);
+                speaker.SayThing(str, "pauseInfo");
             } else {
                 const idx = pausemenu.cursorX - 1;
                 const item = pausemenu.questItems[idx];
                 this.cursors.RedimCursor("main", 5 + (idx * 1.5), 11.75, 0, 0);
-                gfx.drawInfoText(GetText("qi." + item), 5 + (idx * 1.5), 10.75);
+                const myText = GetText("qi." + item);
+                gfx.drawInfoText(myText, 5 + (idx * 1.5), 10.75);
+                speaker.SayThing(myText, "pauseInfo");
             }
         }
 
@@ -306,5 +311,9 @@ const pausemenu = {
             return this.CursorMove(pos);
         }
     },
-    drawOption: function (text, y, selected) { this.options.push(gfx.drawOption(GetText(text), this.dy + y, selected)); }
+    drawOption: function (text, y, selected) {
+        const realText = GetText(text);
+        if(selected) { speaker.SayThing(realText, "option"); }
+        this.options.push(gfx.drawOption(realText, this.dy + y, selected));
+    }
 };

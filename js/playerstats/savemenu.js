@@ -38,29 +38,34 @@ pausemenu.savemenu = {
         gfx.drawInfobox(12, 2.5, 1.125);
         if(this.confirm) {
             this.drawSaveDataText(GetText("eraseSave"));
+            speaker.SayThing(GetText("eraseSave"), "option");
             const yw = gfx.drawInfoText(GetText("sYes"), 6, 2.5, this.confirmCursorY === 0, "menuA", "menutext");
             const nw = gfx.drawInfoText(GetText("sNo"), 10, 2.5, this.confirmCursorY === 1, "menuA", "menutext");
             this.cursors.RedimCursor("main", this.confirmCursorY === 1 ? 10 : 6, 2.5, this.confirmCursorY === 1 ? nw : yw, 0);
         } else if(this.cursorY === -1) {
             this.drawSaveDataText(GetText("inv.BackInfo"));
             this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+            speaker.SayThing(GetText("inv.BackInfo"), "option");
         } else if(this.cursorY === (dy + game.numSaveSlots - 1)) { // clear save data
+            let myText = "";
             if(this.clearSavesState === 0) {
                 this.cursors.RedimCursor("main", 0, this.cursorY + 1, this.options[this.cursorY], 0);
-                this.drawSaveDataText(GetText("clearSavesInfo"));
+                myText = GetText("clearSavesInfo");
             } else if(this.clearSavesState === 1) {
                 const xi = gfx.drawInfoText(GetText("opNo"), 9, 4, true, "menuA", "menutext");
                 gfx.drawInfoText(GetText("opYes"), 9, 5, false, "menuA", "menutext");
                 this.cursors.RedimCursor("main", 9, 4, xi, 0);
-                this.drawSaveDataText(GetText("clearSavesConfirm"));
+                myText = GetText("clearSavesConfirm");
             } else if(this.clearSavesState === 2) {
                 gfx.drawInfoText(GetText("opNo"), 9, 4, false, "menuA", "menutext");
                 const xi = gfx.drawInfoText(GetText("opYes"), 9, 5, true, "menuA", "menutext");
                 this.cursors.RedimCursor("main", 9, 5, xi, 0);
-                this.drawSaveDataText(GetText("clearSavesConfirm"));
+                myText = GetText("clearSavesConfirm");
             } else if(this.clearSavesState === 3) {
-                this.drawSaveDataText(GetText("clearSavesCleared"));
+                myText = GetText("clearSavesCleared");
             }
+            this.drawSaveDataText(myText);
+            speaker.SayThing(myText, "option");
         } else {
             this.cursors.RedimCursor("main", 0, this.cursorY + 1, this.options[this.cursorY], 0);
             const saveNum = (this.hasAuto && this.cursorY === 0 ? "auto" : (this.cursorY - (dy - 1)));
@@ -69,11 +74,16 @@ pausemenu.savemenu = {
     },
     displaySaveDataInfo: function(savenum) {
         const slotData = localStorage.getItem("player" + savenum);
-        if(slotData === null) { return this.drawSaveDataText(GetText("noSave")); }
+        if(slotData === null) {
+            speaker.SayThing(GetText("noSave"), "option");
+            return this.drawSaveDataText(GetText("noSave"));
+        }
         const loadedPlayer = game.str2obj(slotData);
         if(loadedPlayer.saveVersion === undefined) {
+            speaker.SayThing("This Save is incompatible with this version of the game.", "option");
             return this.drawSaveDataText("This Save is incompatible with this version of the game.");
         }
+        speaker.SayThing(`Save Slot ${savenum === "auto" ? savenum : (savenum + 1)}. Level ${loadedPlayer.level}. Location: ${GetText("map." + loadedPlayer.mapName)}`, "option");
         const text = GetText("saveInfoStr")
                             .replace(/\{level\}/g, loadedPlayer.level)
                             .replace(/\{monies\}/g, loadedPlayer.monies)

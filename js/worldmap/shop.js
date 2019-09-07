@@ -84,7 +84,9 @@ worldmap.shop = {
         if(text === undefined) {
             if(this.sellingState === me.sellStates.BUYING) { this.DrawText(); }
         } else {
-             this.WriteWrappedText(text);
+            speaker.Fresh();
+            speaker.SayThing(text, "dialog");
+            this.WriteWrappedText(text);
         }
     },
     WriteWrappedText: function(text, y) {

@@ -41,12 +41,14 @@ let speaker = {
         speaker.voiceMap[s] = speaker.voices[v];
         return speaker.voiceMap[s];
     },
-    SayThing: function(t, isDialogue) {
+    UpShutTheFuck: function() { if(!speaker.failed && speechSynthesis.speaking) { speechSynthesis.cancel(); } },
+    Fresh: function() { speaker.lastSpeaker = null; },
+    SayThing: function(t, messageType, currentSelection, anyKey) {
         if(speaker.failed) { return; }
         if(speaker.timeout !== null) { clearTimeout(speaker.timeout); }
         const wasSpeaking = speechSynthesis.speaking;
         if(wasSpeaking) { speechSynthesis.cancel(); }
-        if(isDialogue) {
+        if(messageType === "dialog") {
             if(speaker.lastSpeaker !== null && t.indexOf(speaker.lastSpeaker) === 0) {
                 t = t.replace(speaker.lastSpeaker, "");
             } else {
@@ -54,6 +56,13 @@ let speaker = {
                 else { t.lastSpeaker = null; }
                 t = t.replace(": ", " says, ");
             }
+        } else if(messageType === "option") {
+            t = "Current Selection: " + t;
+        }
+        if(anyKey === true) {
+            t += " Press any button to continue.";
+        } else if(currentSelection !== undefined) {
+            t += " Current Selection: " + currentSelection;
         }
         t = t.replace(/Food2/g, "Food Two").replace(/ emo /g, " eemo ").replace(/\?\?\?/g, "unknown").replace(/Eee/g, "E").replace(/(\d)G/g, "$1 monies");
         const phrase = new SpeechSynthesisUtterance(t);

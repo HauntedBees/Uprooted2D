@@ -4,6 +4,7 @@ worldmap.pottyCheck = {
         this.cursory = 0;
         this.state = 0;
         this.DrawAll();
+        speaker.SayThing(GetText("pottyWordPanic"), "other", GetText("pottyNo"));
     },
     DrawAll: function() {
         gfx.clearAll();
@@ -16,8 +17,10 @@ worldmap.pottyCheck = {
         } else {
             if(this.cursory === 0) {
                 gfx.drawWrappedText(GetText("pottyNo2"), 20, 85, 220);
+                speaker.SayThing(GetText("pottyNo2"), "other", "", true);
             } else {
                 gfx.drawWrappedText(GetText("pottyYes2"), 20, 85, 220);
+                speaker.SayThing(GetText("pottyYes2"), "other", "", true);
             }
             gfx.drawInfoText(GetText("pottyOK"), 7, 8, true, "menuA", "menutext");
         }
@@ -29,6 +32,7 @@ worldmap.pottyCheck = {
     CursorMove: function(pos) {
         if(pos.y < 0 || pos.y > 1 || this.state === 1) { return false; }
         this.cursory = pos.y;
+        speaker.SayThing(GetText(this.cursory === 1 ? "pottyYes" : "pottyNo"), "option");
         this.DrawAll();
         return true;
     },
