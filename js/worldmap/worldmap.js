@@ -320,7 +320,7 @@ const worldmap = {
         actualText = actualText.replace(/\{g\}/g, player.monies);
         if(!justWhiteText && actualText.indexOf(":") > 0) {
             const speaker = actualText.split(":")[0];
-            if(speaker[0] !== "\"" && speaker.split(" ").length < 5) { // probably just a colon in text and not a speaker separator
+            if(speaker.split(" ").length < 5) { // probably just a colon in text and not a speaker separator
                 gfx.DrawBackingBox(speaker, 6, 2 + drawY * 16);
             }
         }
