@@ -278,7 +278,11 @@ const pausemenu = {
         gfx.drawWrappedText(GetText(key), 5, 140, 250);
     },
     TryQuit: function() {
-        if(player.justSaved || this.lastPressWasQuit) { return nwHelpers.Quit(); }
+        if(player.justSaved || this.lastPressWasQuit) {
+            localStorage.setItem("quit", "true");
+            location.reload();
+            return;
+        }
         this.lastPressWasQuit = true;
         gfx.drawInfobox(17, 1.75, 8, "menuA");
         gfx.drawWrappedText(GetText("quitConfirm"), 5, 140, 250);

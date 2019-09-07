@@ -13,7 +13,7 @@ worldmap.title = {
         this.animIdx = setInterval(worldmap.title.Animate, 41.7);
         gfx.drawFullImage("title");
         gfx.drawFullImage("titleTop", "characters");
-        this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options"] : ["title.new", "title.options"]);
+        this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options", "menu.Quit"] : ["title.new", "title.options", "menu.Quit"]);
         this.DrawMenu();
         gfx.drawText(String.fromCharCode(169) + " 2019 Haunted Bees Productions (v" + player.saveVersion + ")", 2, 222, undefined, 20, "menutextOverBlack");
         speaker.SayThing("Uprooted: Meal Replacement Game", "regular", GetText(this.menuItems[this.cursory]));
@@ -53,7 +53,7 @@ worldmap.title = {
         worldmap.title.animCrops.sort((a, b) => b.y - a.y);
     },
     DrawMenu: function() {
-        const dy = 7;
+        const dy = 6;
         gfx.clearSome(this.layersToClear);
         for(let i = 0; i < this.menuItems.length; i++) {
             const selected = this.cursory === i;
@@ -87,7 +87,10 @@ worldmap.title = {
             case 1:
                 if(this.showContinue) { return game.innerTransition(this, pausemenu.savemenu, { saving: false }); }
                 else { return game.innerTransition(this, worldmap.optionsMenu); }
-            case 2: return game.innerTransition(this, worldmap.optionsMenu);
+            case 2: 
+                if(this.showContinue) { return game.innerTransition(this, worldmap.optionsMenu); }
+                else { return nwHelpers.Quit(); }
+            case 3: return nwHelpers.Quit();
         }
     },
     clean: function() { clearInterval(this.animIdx); gfx.clearAll(); },
@@ -100,7 +103,7 @@ worldmap.title = {
             case player.controls.pause: isEnter = true; break;
             //case player.controls.cancel: return this.cancel();
         }
-        if(pos.y < 0 || pos.y > 2) { return false; }
+        if(pos.y < 0 || pos.y > 3) { return false; }
         if(isEnter) { return this.click(input.IsFreshPauseOrConfirmPress()); }
         else { return this.CursorMove(pos); }
     }

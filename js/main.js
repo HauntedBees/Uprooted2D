@@ -52,7 +52,7 @@ const nwHelpers = {
         this.win.height = game.h * multiplier;
     },
     Quit: function() {
-        if(typeof require === "undefined") { location.reload(); }
+        if(typeof require === "undefined") { location.reload(); return; }
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }
         this.win.close(true);
     }
@@ -375,8 +375,10 @@ const game = {
     incrementTime: () => player.playTime++,
     sheetsLoaded: function() {
         const debug = true;
+        const fromQuit = localStorage.getItem("quit");
         game.initListeners();
-        if(debug) {
+        if(debug || fromQuit === "true") {
+            localStorage.removeItem("quit");
             game.currentInputHandler = worldmap.title;
             worldmap.title.setup();
         } else {
