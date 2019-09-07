@@ -1,8 +1,8 @@
-# Farming Fantasy
+# Uprooted: Meal Replacement Game
 ## wut
 A turn-based farming RPG.
 ## disclaimer
-The codebase currently has lots of dummy text in it. If you don't want to see potty words, maybe don't look at this yet.
+There is some strong language in the game's text, as well as in some of the source code because I am 12 years old and think seeing a rabbit say bad words is funny.
 ## license
 This game's source code is licensed with the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html). All art assets are licensed with the [CC BY-SA 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 ## why
