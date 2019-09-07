@@ -66,6 +66,7 @@ const worldmap = {
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {
+            if(args.inside) { JumboToggle(true); }
             game.target = targetToAutoplay;
             if(game.target !== null && game.target.interact !== undefined) {
                 let keepGoing = true;

@@ -92,6 +92,7 @@ let player = {
     gridWidth: 3, gridHeight: 3, gridLevel: "n",
     itemGrid: null,
     hasUsedFish: () => (player.miscdata.typesPlanted["rod"] + player.miscdata.typesPlanted["water"]) > 0,
+    hasWon: () => (player.hasAchievement("techGood") || player.hasAchievement("natureGood") || player.hasAchievement("natureBad") || player.hasAchievement("techBad")),
     hasAchievement: a => player.achievements.indexOf(a) >= 0,
     hasQuest: q => player.activeQuests[q] !== undefined,
     hasQuestState: (q, state) => player.activeQuests[q] !== undefined && state === player.activeQuests[q],
