@@ -1834,7 +1834,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.homewake": {
-		"en-us": "Ahh, much better.", 
+		"en-us": "Ahh, much better. My game has been autosaved, and can be loaded from the \"Autosave\" slot on the Continue Screen.", 
 		"type": "shop"
 	},
 	// Area 2: Produce Stand / First Village
@@ -3893,7 +3893,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.skumpA": {
-		"en-us": "Skumpy: Good morning! I hope you had a good sleep!", 
+		"en-us": "Skumpy: Good morning! I hope you had a good sleep! Your game has been autosaved!", 
 		"type": "shop"
 	},
 	"s.skumpT": {
@@ -4046,7 +4046,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.hotelA": {
-		"en-us": "Benedict: I hope you had a lovely rest.", 
+		"en-us": "Benedict: I hope you had a lovely rest. Your game has been autosaved, for your convenience.", 
 		"type": "shop"
 	},
 	"s.gordO": {
@@ -5766,7 +5766,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.innAwake1": {
-		"en-us": "Rosa: I hope you had a good rest!", 
+		"en-us": "Rosa: I hope you had a good rest! Your game has been autosaved, and can be loaded from the \"Autosave\" slot on the Continue Screen!", 
 		"type": "shop"
 	},
 	"s.sellseed": {
@@ -5874,7 +5874,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.merminnawake": {
-		"en-us": "Gorty: Good maurning! Did yeu sleep well?", 
+		"en-us": "Gorty: Good maurning! Did yeu sleep well? Yer game has been otto-saved!", 
 		"type": "shop"
 	},
 	"s.merminntalk": {
@@ -5886,7 +5886,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.lastWake": {
-		"en-us": "I feel a bit better now.", 
+		"en-us": "I feel a bit better now. My game has been autosaved.", 
 		"type": "shop"
 	},
 	"s.mermhello": {
@@ -9683,7 +9683,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"shopAbandonRest": {
-		"en-us": "Great sleep, but the room service was subpar.", 
+		"en-us": "Great sleep, but the room service was subpar. My game was still autosaved though.", 
 		"type": "shop"
 	},
 	"allyRobo1": {
