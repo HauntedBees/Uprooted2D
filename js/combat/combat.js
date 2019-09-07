@@ -166,7 +166,7 @@ const combat = {
         }
         if(combat.playerInDanger) {
             damage = 0;
-        } else if(damage >= (player.maxhealth / 1.5) && damage >= player.health && Math.random() < combat.saveChance) {
+        } else if(damage >= (player.maxhealth / 1.5) && damage >= player.health && Math.random() < combat.saveChance && player.options.difficulty < 2) {
             combat.playerInDanger = true;
             combat.saveChance -= 0.33;
             damage = player.health - 1;
