@@ -63,7 +63,6 @@ const worldmap = {
         }
         if(worldmap.ignoreAutoplay === true) { targetToAutoplay = false; }
         if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, args.fromLoad, justStateLoad); }
-        else if(args.isInn) { JumboToggle(false); }
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }
         if(targetToAutoplay !== null) {
@@ -95,7 +94,7 @@ const worldmap = {
             beeQueen.interact[0](0, beeQueen);
         }
         if(args.isInn) {
-            JumboToggle(true);
+            JumboToggle(worldmap.mapName === "fakefarm");
             if(worldmap.entities[0].innCheck) { worldmap.entities[0].action(); }
         }
         if(args.inside) { JumboToggle(true); }
