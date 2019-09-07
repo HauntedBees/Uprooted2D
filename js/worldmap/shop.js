@@ -182,7 +182,7 @@ worldmap.shop = {
                 this.availableIndexes.push(i);
                 if(this.details.wares[i].type === "equipment") {
                     gfx.drawTileToGrid(this.details.wares[i].product, this.initx + j * this.dx, this.yPos, "characters");
-                } else if(this.bookState >= 0 && (this.cursorX - 1) === i) {
+                } else if(this.bookState >= 0 && (this.cursorX - (this.hasTalk ? 2 : 1)) === i) {
                     gfx.drawTileToGrid("bookOpenL", this.initx + j * this.dx - 0.5, this.yPos, "characters");
                     gfx.drawTileToGrid("bookOpenR", this.initx + j * this.dx + 0.5, this.yPos, "characters");
                     widecursor = true;
