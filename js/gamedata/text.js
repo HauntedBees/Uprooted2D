@@ -7336,6 +7336,10 @@ const fulltext = {
 		"en-us": "Food2 HQ 5F", 
 		"type": "opts"
 	},
+	"incompatibleSave": {
+		"en-us": "This Save is incompatible with this version of the game.", 
+		"type": "opts"
+	},
 	// Achievements
 	"a.Heading": {
 		"en-us": "Your Achievements", 

@@ -80,8 +80,9 @@ pausemenu.savemenu = {
         }
         const loadedPlayer = game.str2obj(slotData);
         if(loadedPlayer.saveVersion === undefined) {
-            speaker.SayThing("This Save is incompatible with this version of the game.", "option");
-            return this.drawSaveDataText("This Save is incompatible with this version of the game.");
+            const badSaveText = GetText("incompatibleSave");
+            speaker.SayThing(badSaveText, "option");
+            return this.drawSaveDataText(badSaveText);
         }
         speaker.SayThing(`Save Slot ${savenum === "auto" ? savenum : (savenum + 1)}. Level ${loadedPlayer.level}. Location: ${GetText("map." + loadedPlayer.mapName)}`, "option");
         const text = GetText("saveInfoStr")
