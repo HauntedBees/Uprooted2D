@@ -6652,19 +6652,19 @@ const fulltext = {
 		"type": "opts"
 	},
 	"infoGoodTech": {
-		"en-us": "You go out of your way to help people, and you are willing to use technology to do so.", 
+		"en-us": "You'd prefer to avoid violence, and you are willing to use technology to help people.", 
 		"type": "opts"
 	},
 	"infoBadTech": {
-		"en-us": "You go out of your way to hurt people, and you are willing to use technology to do so.", 
+		"en-us": "You're not afraid to use violence, and you are willing to use technology to help people.", 
 		"type": "opts"
 	},
 	"infoGoodNature": {
-		"en-us": "You go out of your way to help people, and you want to do so using all-natural methods.", 
+		"en-us": "You'd prefer to avoid violence, and you want to help people using all-natural methods.", 
 		"type": "opts"
 	},
 	"infoBadNature": {
-		"en-us": "You go out of your way to hurt people, and you want to do so using all-natural methods.", 
+		"en-us": "You're not afraid to use violence, and you want to help people using all-natural methods.", 
 		"type": "opts"
 	},
 	"qi.bpermit0": {

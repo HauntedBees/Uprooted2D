@@ -286,11 +286,11 @@ const worldmap = {
         }
         if(spotted) { e.moving = false; e.movement = undefined; game.target = e; e.interact[0](); }
     },
-    writeText: function(t, choices, isRefresh, formatting, overBlack, justWhiteText) {
+    writeText: function(t, choices, isRefresh, formatting, overBlack, justWhiteText, isEndingCutscene) {
         this.cursors.MoveCursor("main", -1, -1);
         worldmap.currentFormatting = formatting;
         gfx.clearSome(["menuA", "menutext", "menuOverBlack", "menutextOverBlack"]);
-        const drawY = (worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 10 : 0;
+        const drawY = isEndingCutscene === true ? 11 : ((worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 10 : 0);
         if(!justWhiteText) { gfx.drawTextBox(drawY, overBlack); }
         let actualText = GetText(t);
         if(actualText === "") { return; }

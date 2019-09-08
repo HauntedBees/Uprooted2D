@@ -171,7 +171,7 @@ const CommandParser = {
         if(isFirst) {
             gfx.clearAll();
             gfx.drawFullImage("end/" + image, "smartphone");
-            worldmap.writeText(text, undefined, false, undefined, false, true);
+            worldmap.writeText(text, undefined, false, undefined, false, true, true);
         } else {
             let boomState = 0;
             worldmap.waitForAnimation = true;
@@ -191,7 +191,7 @@ const CommandParser = {
                 if(boomState === 6) {
                     gfx.clearSome(["smartphone", "menutextOverBlack"]);
                     gfx.drawFullImage("end/" + image, "smartphone");
-                    worldmap.writeText(text, undefined, false, undefined, false, true);
+                    worldmap.writeText(text, undefined, false, undefined, false, true, true);
                 }
                 if(finished) {
                     gfx.clearLayer("tutorial");
