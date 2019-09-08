@@ -68,8 +68,8 @@ worldmap.title = {
         }
     },
     mouseMove: function(pos) {
-        if(pos.x < 6 || pos.x > 10 || pos.y < 7 || pos.y > 9) { return; }
-        return this.CursorMove( { x: 0, y: Math.floor(pos.y - 7) });
+        if(pos.x < 6 || pos.x > 10 || pos.y < 6 || pos.y > 9) { return; }
+        return this.CursorMove( { x: 0, y: Math.floor(pos.y - 6) });
     },
     CursorMove: function(pos) {
         if(pos.y < 0 || pos.y >= this.menuItems.length) { return false; }
