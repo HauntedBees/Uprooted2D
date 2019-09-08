@@ -446,6 +446,9 @@ const game = {
         localStorage.setItem("lastSaved", savenum);
         if(!game.PatchSaveFile()) { return; }
         game.ApplyBlendFilter();
+        if(player.mapName === "hq_3") {
+            player.mapPos = { x: 25, y: 5 };
+        }
         game.transition(game.currentInputHandler, worldmap, { 
             init: player.mapPos,
             map: player.mapName,

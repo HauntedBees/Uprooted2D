@@ -14,8 +14,8 @@ let player = {
         music: 10, sound: 10,
         controltype: 0, canSayFuck: 0, deadZone: 0, analogDPad: 1, 
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
-        font: 0, fontSize: 0, resolution: 1, fullscreen: 0, gfxfilter: 0,
-        coverColor: 0, coverMode: 0, rightBumperWin: false, 
+        font: 0, fontSize: 0, resolution: 1, fullscreen: 0, gfxfilter: 3,
+        coverColor: 0, coverMode: 1, rightBumperWin: false, 
     },
     noFunDiffMod: 0, // positive = harder, negative = easier
     controls: { up: "w", left: "a", down: "s", right: "d", up2: "", left2: "", down2: "", right2: "", confirm: " ", cancel: "q", pause: "Enter" },

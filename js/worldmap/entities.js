@@ -769,7 +769,11 @@ const mapentities = {
                     const startingRoom = worldmap.pos.x < 10 ? 0 : 13;
                     worldmap.horRor = new HorRor(startingRoom);
                     ToggleChungus(true, { chungi: [startingRoom] });
-                    Cutscene("food2Third")[0]();
+                    if(player.hasAchievement("soybeat")) {
+                        worldmap.horRor.ClearMonster();
+                    } else {
+                        Cutscene("food2Third")[0]();
+                    }
                 } else {
                     const startingRoom = worldmap.horRor.playerRoom === undefined ? (worldmap.pos.x < 10 ? 0 : 13) : worldmap.horRor.playerRoom;
                     ToggleChungus(true, { chungi: [startingRoom] });

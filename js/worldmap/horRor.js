@@ -12,6 +12,7 @@ function HorRor(playerStartingRoom) {
     ];
     const roomSizeMultiplier = [0, 0.5, 0, 1, 0.9, 1.25, 0.85, 0.5, 1, 0.5, 0, 1.5, 0.9, 0];
     this.playerRoom = playerStartingRoom;
+    this.ClearMonster = function() { stopped = true; }
     this.Draw = function() {
         if(worldmap.mapName !== "hq_3") { return; }
         gfx.DrawHorRor(intensity);
