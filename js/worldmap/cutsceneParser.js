@@ -22,6 +22,7 @@ const iHandler = {
         worldmap.refreshMap();
         clearInterval(worldmap.animIdx);
         iHandler.noSkip = false;
+        Sounds.EndAll();
         iHandler.Advance();
     },
     Advance: function(isFirst) {
@@ -142,6 +143,7 @@ const CommandParser = {
                 case "QUIT": iHandler.state.done = true; worldmap.finishDialog(); break;
                 case "END": iHandler.state.done = true; break;
                 // Other
+                case "SOUND": Sounds.PlaySound(actSuffix); break;
                 case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
                 case "GO2": CommandParser.Parse_Transition(JSON.parse(actSuffix)); break;
                 case "CUSTOM": CommandParser.Parse_Special(actSuffix); break;
@@ -368,6 +370,7 @@ const SpecialFunctions = {
         worldmap.writeText("Pb2.12");
         SetUpFellow(worldmap.importantEntities["bonkedJeff"], "DrJeff4");
         worldmap.waitForAnimation = true;
+        Sounds.PlaySound("biff");
         iHandler.state.animHandler = function(spedUp) {
             if(worldmap.importantEntities["bonkedJeff"].done) {
                 if(spedUp) { worldmap.refreshMap(); iHandler.Finish(); }
@@ -531,7 +534,11 @@ const SpecialFunctions = {
     },
 
     // Fake Farm
-    "ENDTRANSITION": () => game.transitioning = false,
+    "ENDTRANSITION": () => {
+        Sounds.EndSpecific("driv");
+        Sounds.PlaySound("carstop");
+        game.transitioning = false;
+    },
     "SETUPJEFF": function() {
         worldmap.playerDir = 0;
         worldmap.waitForAnimation = true;
@@ -547,6 +554,7 @@ const SpecialFunctions = {
         worldmap.writeText("bustedTruck1");
         quests.completeQuest("truckRepair");
         SetUpFellow(game.target, "TruckL");
+        Sounds.PlaySound("repair");
         game.target.interact = Cutscene("truck");
     },
     "MOWER0": function() {
@@ -563,6 +571,7 @@ const SpecialFunctions = {
     },
     "UNPLUGOUTLET": function(fromLoad) {
         if(!fromLoad) {
+            Sounds.PlaySound("voip");
             worldmap.writeText("farmTVunplug2");
             SetUpFellow(game.target, "Outlet2");
             player.activeQuests["fakeFarm"] = 1;
@@ -982,9 +991,7 @@ const SpecialFunctions = {
     // Falcon
     "BYEFALCON": () => player.hasFalcon = false,
     "SWITCHTOFALCON": () => iHandler.Start("falcon"),
-    "BIRDSONG.OGG": function() {
-        // 284 TODO
-    },
+    "BIRDSONG.OGG": () => Sounds.PlaySound("eee"),
     "GETFALCONTEXT": function() {
         let keyStart = "falconMsg0.";
         let rangeMax = 6;
@@ -1021,6 +1028,7 @@ const SpecialFunctions = {
         worldmap.importantEntities["bird"] = bird;
 
         worldmap.waitForAnimation = true;
+        Sounds.PlaySound("eeeflap");
         iHandler.state.animHandler = function(spedUp) {
             worldmap.importantEntities["bird"].pos.x += 0.05;
             worldmap.importantEntities["bird"].pos.y += 0.025;
@@ -1046,6 +1054,7 @@ const SpecialFunctions = {
         SetUpFellow(worldmap.importantEntities["bird"], "Iii4");
         worldmap.waitForAnimation = true;
         SetUpFellow(worldmap, "walk", true);
+        Sounds.PlaySound("eeeflap");
         iHandler.state.animHandler = function(spedUp) {
             worldmap.importantEntities["bird"].pos.y -= 0.01;
             if(!spedUp) { worldmap.refreshMap(); }
@@ -1060,6 +1069,7 @@ const SpecialFunctions = {
     },
     "EXITTHEBIRD2": function() {
         worldmap.waitForAnimation = true;
+        Sounds.PlaySound("eeeflap");
         iHandler.state.animHandler = function(spedUp) {
             worldmap.importantEntities["bird"].pos.x += 0.05;
             worldmap.importantEntities["bird"].pos.y -= 0.0125;
@@ -1219,6 +1229,7 @@ const SpecialFunctions = {
         else { worldmap.writeText("truck.where", items); }
     },
     "TRUCKNEXT": function(idx) {
+        let isDriving = true;
         switch(specialtyHelpers.getTruckOptions()[idx]) {
             case "truck.fake": game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, map: "fakefarm", playerDir: 2 }); break;
             case "truck.home": game.transition(game.currentInputHandler, worldmap, { init: { x: 16,  y: 7 }, map: "producestand", playerDir: 2 }); break;
@@ -1230,7 +1241,9 @@ const SpecialFunctions = {
                     game.transition(game.currentInputHandler, worldmap, { init: { x: 24.75,  y: 35.5 }, playerDir: 0, map: "fakefarm", stayBlack: true });
                 }
                 break;
+            default: isDriving = false;
         }
+        if(isDriving) { Sounds.PlaySound("driv", true); }
         iHandler.state.done = true;
         worldmap.finishDialog();
     },
@@ -1253,6 +1266,7 @@ const SpecialFunctions = {
         worldmap.entities.push(boomboy);
         let boomState = 0;
         worldmap.waitForAnimation = true;
+        Sounds.PlaySound("boom");
         iHandler.state.animHandler = function(spedUp) {
             if(!spedUp) { worldmap.refreshMap(); }
             gfx.clearLayer("tutorial");

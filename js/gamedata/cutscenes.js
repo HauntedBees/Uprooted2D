@@ -5,7 +5,7 @@ const scripts = {
 	"farminit2": "_SLEEP:500",
 	"farminit3": "pl_ANIM:crouchR&_SLEEP:1000",
 	"farminit4": "pl_ANIM:water1&_SLEEP:500",
-	"farminit5": "pl_ANIM:water2&_SLEEP:1500",
+	"farminit5": "_SOUND:water&pl_ANIM:water2&_SLEEP:1500",
 	"farminit6": "pl_ANIM:water1&_SLEEP:250",
 	"farminit7": "pl_ANIM:crouchR&_SLEEP:250",
 	"farminit8": "pl_ANIM:walk&pl_MOVE:y11",
@@ -70,14 +70,14 @@ const scripts = {
 	"eggfairy4": "_TEXT:lakeegg,sYes,sNo",
 	"eggfairy5": "?[{\"q\":\"d==0\",\"v\":7},{\"q\":\"d===1\",\"v\":6}]",
 	"eggfairy6": "_TEXT:lakeegg.reject&_END",
-	"eggfairy7": "_TEXT:lakeegg.okay&_TAKE:egg,1",
+	"eggfairy7": "_SOUND:eggdrop&_TEXT:lakeegg.okay&_TAKE:egg,1",
 	"eggfairy8": "_TEXT:dotdotdot",
 	"eggfairy9": "eggFairy_ANIM:EggF1&_TEXT:lakeegg(1-2)",
 	"eggfairy10": "_TEXT:lakeegg3,sYes,sNo",
 	"eggfairy11": "?[{\"q\":\"d===0\",\"v\":12},{\"q\":\"d===1\",\"v\":14}]",
 	"eggfairy12": "_TEXT:lakeeggLie&eggFairy_ANIM:EggF3&_TAKE:egg,999&_TAKE:quail,999&_TAKE:goose,999&_TAKE:turkey,999&_TAKE:platypus,999",
 	"eggfairy13": "_ALIGNGOOD:-1&_TEXT:lakeFinish&eggFairy_ANIM:EggF0&_COMPLETEQUEST:badEgg&_END",
-	"eggfairy14": "_CHIEVO:lakeFairy&_TEXT:lakeeggTruth&eggFairy_ANIM:EggF2&_GIVE:egg,1&_GIVE:goldegg,1",
+	"eggfairy14": "_SOUND:itemget&_CHIEVO:lakeFairy&_TEXT:lakeeggTruth&eggFairy_ANIM:EggF2&_GIVE:egg,1&_GIVE:goldegg,1",
 	"eggfairy15": "_TEXT:lakeFinish&eggFairy_ANIM:EggF0&_COMPLETEQUEST:goodEgg",
 	// Farm: First Boss (Big Bot)
 	"bigBot0": "_TEXT:B1.(0-4)",
@@ -99,16 +99,16 @@ const scripts = {
 	// Farm: Mushroom Log
 	"FarmMush0": "_GIVE:portobello,1&_TEXT:farmMush(0-1)",
 	// Farm: Beehive
-	"FarmHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeG,5",
+	"FarmHive0": "_SOUND:itemget&targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeG,5",
 	"FarmHive1": "_CUSTOM:BEEGUARDIANAPPEAR&_TEXT:FarmHive(0-3)",
 	"FarmHive2": "_TEXT:FarmHive4&_CLEARTARGET",
 	// Forest: Optional Boss (Turkey)
 	"turky0": "targ_ISMOVING:true&_ALIGNGOOD:-1&_TEXT:bossturky(0-1)",
 	"turky1": "_FIGHT:bossturky",
 	// Forest: Beehive
-	"ForestHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
+	"ForestHive0": "_SOUND:itemget&targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
 	"ForestHive1": "_TEXT:ForestHive(0-1)",
-	"ForestHive2": "bearbo_VISIBLE:true&pl_SETDIR:2&_TEXT:ForestHive2",
+	"ForestHive2": "_SOUND:bear&bearbo_VISIBLE:true&pl_SETDIR:2&_TEXT:ForestHive2",
 	"ForestHive3": "bearbo_SETTARGET&_CLEARTARGET&_FIGHT:bear",
 	// Forest: Bad Influence Rabbit
 	"rabbit0": "?[{\"q\":\"player.completedQuest('rabbitShit')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
@@ -146,7 +146,7 @@ const scripts = {
 	"lime9": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:banana,1&_GIVE:corn,10&_TEXT:lime.banana3&_END",
 	"lime10": "_TEXT:lime.corn2",
 	"lime11": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:corn,1&_GIVE:banana,10&_TEXT:lime.corn3&_END",
-	"lime12": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:goldegg,1&_GIVE:coconut,2&_TEXT:lime.egg(2-3)&_CUSTOM:GIVEGOLDEGG",
+	"lime12": "_SOUND:itemget&_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:goldegg,1&_GIVE:coconut,2&_TEXT:lime.egg(2-3)&_CUSTOM:GIVEGOLDEGG",
 	// Below Village: Beehive
 	"BelowHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5&_CLEARTARGET",
 	// Research Lab: Seed Shooters
@@ -168,7 +168,7 @@ const scripts = {
 	"rap8": "_TAKE:rice,1&_TEXT:rap.rice(2-3)",
 	"rap9": "_TEXT:rap.rice4&_SETSTATE:7",
 	"rap10": "_TEXT:rap.coconut(2-6)",
-	"rap11": "_CHIEVO:RAPBATTLE&_COMPLETEQUEST:rapbattle&_TAKE:coconut,1&_GIVE:gmocorn,2&_TEXT:rap.coconut7&_CUSTOM:GIVECROP",
+	"rap11": "_SOUND:itemget&_CHIEVO:RAPBATTLE&_COMPLETEQUEST:rapbattle&_TAKE:coconut,1&_GIVE:gmocorn,2&_TEXT:rap.coconut7&_CUSTOM:GIVECROP",
 	// Research Lab: Second Boss (Jeff)
 	"jeff0": "_TEXT:B2.0",
 	"jeff1": "targ_ANIM:DrJeff2&_TEXT:B2.(1-11)",
@@ -260,20 +260,20 @@ const scripts = {
 	"piratemonk8": "_COMPLETEQUEST:seamonkey&_TEXT:pirateMonkR(2-4)",
 	"piratemonk9": "_GIVE:tomato,5&_GIVE:ginger,4&_GIVE:pineapple,3&_GIVE:bellpepper,2&_GIVE:greenshroom,1&_TEXT:pirateMonkR5&targ_ISMOVING:false&_CUSTOM:GIVERICE&_END",
 	"piratemonk10": "_TEXT:pirateMonkG(2-5)",
-	"piratemonk11": "_TEXT:pirateMonkG6&_TAKE:gmocorn,1&_SETQUEST:seamonkey,looking&targ_ISMOVING:false&_CUSTOM:GIVEGMO",
+	"piratemonk11": "_SOUND:itemget&_TEXT:pirateMonkG6&_TAKE:gmocorn,1&_SETQUEST:seamonkey,looking&targ_ISMOVING:false&_CUSTOM:GIVEGMO",
 	// Underwater: Pirate Sea Monk's Treasure
 	"seamonkey0": "?[{\"q\":\"game.target.open\",\"v\":1},{\"q\":\"player.hasQuestState('seamonkey', 'looking')\",\"v\":3},{\"q\":\"true\",\"v\":2}]",
 	"seamonkey1": "_TEXT:openchest&_END",
 	"seamonkey2": "_TEXT:chestLocked&_END",
 	"seamonkey3": "_TEXT:chestUnlock(1-2)",
-	"seamonkey4": "_CHIEVO:dowel&_CUSTOM:PIRATETREASURE",
+	"seamonkey4": "_SOUND:trayjure&_CHIEVO:dowel&_CUSTOM:PIRATETREASURE",
 	// Underwater: Kelp Boy's Vase
 	"kelpVase0": "?[{\"q\":\"player.completedQuest('kelpBoy')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"kelpVase1": "_TEXT:vaseFoundBee&_END",
 	"kelpVase2": "_TEXT:vaseFound,sYes,sNo",
 	"kelpVase3": "?[{\"q\":\"d===0\",\"v\":5},{\"q\":\"d===1\",\"v\":4}]",
 	"kelpVase4": "_TEXT:vaseDont&_END",
-	"kelpVase5": "_TEXT:vaseDo0&targ_ANIM:Vase2&KelpBoy_ANIM:Kelp2&targ_SOLID:false&_SETQUEST:kelpBoy,fuck&_PUSHCLEAREDTARGET:Vase",
+	"kelpVase5": "_SOUND:breakvase&_TEXT:vaseDo0&targ_ANIM:Vase2&KelpBoy_ANIM:Kelp2&targ_SOLID:false&_SETQUEST:kelpBoy,fuck&_PUSHCLEAREDTARGET:Vase",
 	"kelpVase6": "KelpBoy_ISMOVING:true&_TEXT:vaseDo(1-2)",
 	"kelpVase7": "_ALIGNGOOD:-0.75&_FIGHT:kelpBoy",
 	// Underwater: Kelp Boy
@@ -292,16 +292,16 @@ const scripts = {
 	"kelpHive1": "KelpBoy_ISMOVING:true&_TEXT:vaseDo5&_SETSTATE:3",
 	"kelpHive2": "KelpBoy_ISMOVING:true&_TEXT:vaseDo4",
 	"kelpHive3": "_FIGHT:kelpBoy",
-	"kelpHive4": "_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeR,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
+	"kelpHive4": "_SOUND:itemget&_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeR,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
 	// Underwater: Kelp Boy Defeated At Beehive
 	"kelpDeadBee0": "_CUSTOM:KELPDEAD",
-	"kelpDeadBee1": "_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeR,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
+	"kelpDeadBee1": "_SOUND:itemget&_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeR,5&_CLEARTARGET&_COMPLETEQUEST:kelpBoy",
 	// Bridge: Cow
 	"bridgeCow0": "?[{\"q\":\"player.hasQuestState('kelpBoy', 'wantMilk')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
 	"bridgeCow1": "targ_ANIM:Cow2&_TEXT:kelpCow0",
 	"bridgeCow2": "targ_ANIM:Cow1&_END&_QUIT",
 	"bridgeCow3": "targ_ANIM:Cow2&_TEXT:kelpCow(1-4)",
-	"bridgeCow4": "_SETQUEST:kelpBoy,gotMilk&targ_ANIM:Cow1&_END&_QUIT",
+	"bridgeCow4": "_SOUND:itemget&_SETQUEST:kelpBoy,gotMilk&targ_ANIM:Cow1&_END&_QUIT",
 	// Fake Farm: Flat Tire Opening Cutscene
 	"flatTire0": "_BLACKTEXT:fakeFarmS&_CUSTOM:ENDTRANSITION",
 	"flatTire1": "_TRANSITIONANIM&_TEXT:fakeFarm0",
@@ -366,7 +366,7 @@ const scripts = {
 	"crouton6": "_TEXT:arf.spear1&_SETSTATE:10",
 	"crouton7": "_TEXT:arf.good1&_GIVE:fodder,20",
 	"crouton8": "_CHIEVO:crouton&_TEXT:arf.good2&_COMPLETEQUEST:croutonsFishingAdventure&_SETSTATE:10",
-	"crouton9": "_TEXT:arf.ultra1&_GIVE:goodfood,20&_SETSTATE:8",
+	"crouton9": "_SOUND:itemget&_TEXT:arf.ultra1&_GIVE:goodfood,20&_SETSTATE:8",
 	"crouton10": "doggy_ANIM:Crouton&_QUIT&_END",
 	// Misc.: Truck
 	"truck0": "_CUSTOM:TRUCKSTART",
@@ -435,7 +435,7 @@ const scripts = {
 	"abuela6": "_TEXT:kindLadyNorm(1-2)",
 	"abuela7": "targ_ISMOVING:false&_CHIEVO:abuelita&_GIVE:asparagus,20&_MONEY:10000&_TEXT:kindLadyNorm3&_COMPLETEQUEST:abuelitaBonita&_CUSTOM:ABUELADONE&_END",
 	"abuela8": "_TEXT:kindLadyGood(1-2)",
-	"abuela9": "targ_ISMOVING:false&_CHIEVO:abuelita&_GIVE:notdrugs,6&_MONEY:20000&_TEXT:kindLadyGood3&_CUSTOM:ABUELADONE&_COMPLETEQUEST:abuelitaBonita",
+	"abuela9": "_SOUND:itemget&targ_ISMOVING:false&_CHIEVO:abuelita&_GIVE:notdrugs,6&_MONEY:20000&_TEXT:kindLadyGood3&_CUSTOM:ABUELADONE&_COMPLETEQUEST:abuelitaBonita",
 	// South City: Fifth Boss (DON VAGANTE)
 	"mobBoss0": "targ_ISMOVING:true&_TEXT:mobBoss(0-15)",
 	"mobBoss1": "_FIGHT:mobBoss,mobsty2,mobsty2",
@@ -455,7 +455,7 @@ const scripts = {
 	"mushman8": "targ_ANIM:Mush2&_TEXT:mushManGive1",
 	"mushman9": "targ_ANIM:Mush1&_CHIEVO:stonehenge&_GIVE:chestnut,20&_TEXT:mushManNorm(0-1)&_COMPLETEQUEST:stonehenge&_SETSTATE:16",
 	"mushman10": "targ_ANIM:Mush2&_TEXT:mushManGive1",
-	"mushman11": "targ_ANIM:Mush3&_CHIEVO:stonehenge&_GIVE:lotus,20&_TEXT:mushManGood(0-1)&_COMPLETEQUEST:stonehenge&_SETSTATE:17",
+	"mushman11": "_SOUND:itemget&targ_ANIM:Mush3&_CHIEVO:stonehenge&_GIVE:lotus,20&_TEXT:mushManGood(0-1)&_COMPLETEQUEST:stonehenge&_SETSTATE:17",
 	"mushman12": "targ_ANIM:Mush2&_TEXT:mushManGive1",
 	"mushman13": "targ_ANIM:Mush4&_ALIGNGOOD:-3&_TEXT:mushManPoison0",
 	"mushman14": "targ_ANIM:Mush5&_TEXT:mushManPoison1",
@@ -469,7 +469,7 @@ const scripts = {
 	"mailman3": "targ_ISMOVING:false&_QUIT",
 	// North City: Radish on Counter
 	"freeRadish0": "?[{\"q\":\"player.completedQuest('freeRadish')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
-	"freeRadish1": "_COMPLETEQUEST:freeRadish&_GIVE:radish,5&_TEXT:foundRadish0&_END",
+	"freeRadish1": "_SOUND:itemget&_COMPLETEQUEST:freeRadish&_GIVE:radish,5&_TEXT:foundRadish0&_END",
 	"freeRadish2": "_TEXT:foundRadish1",
 	// North City: Some Nerd
 	"someNerd0": "?[{\"q\":\"Math.random() < 0.4\",\"v\":1},{\"q\":\"Math.random() < 0.5\",\"v\":2},{\"q\":\"true\",\"v\":3}]",
@@ -491,7 +491,7 @@ const scripts = {
 	"crazy4trout11": "_MONEY:-1000&_GIVE:spear,5&_TEXT:troutManBuy",
 	// North City: Brandt
 	"brandt0": "?[{\"q\":\"player.completedQuest('theGoodSpanch')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
-	"brandt1": "targ_ISMOVING:true&_COMPLETEQUEST:theGoodSpanch&_GIVE:spinach,100&_TEXT:bmw0",
+	"brandt1": "_SOUND:itemget&targ_ISMOVING:true&_COMPLETEQUEST:theGoodSpanch&_GIVE:spinach,100&_TEXT:bmw0",
 	"brandt2": "targ_ISMOVING:false&_TEXT:bmw1&_END",
 	"brandt3": "targ_ISMOVING:true&_TEXT:bmw2",
 	// North City: Cash2 Investor
@@ -518,7 +518,7 @@ const scripts = {
 	"foodDoor2": "_TEXT:foodEnter2&_END",
 	"foodDoor3": "_TEXT:foodEnter1&_CLEARTARGET",
 	// North City: Sixth Boss (DWEEBLORD)
-	"keycard0": "_STARTQUEST:keycard&_TEXT:keycard0",
+	"keycard0": "_SOUND:itemget&_STARTQUEST:keycard&_TEXT:keycard0",
 	"keycard1": "_CLEARTARGET&_QUIT",
 	"keytrap0": "?[{\"q\":\"player.hasQuest('keycard')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"keytrap1": "_QUIT",
@@ -557,7 +557,7 @@ const scripts = {
 	"food2Beat1": "_CLEARTEXT&beckettBack_ANIM:BeckBack4&_HISPEED&beckettBack_MOVE:y8",
 	"food2Beat2": "_LOSPEED&_CLEARTARGET&beckettBack_SETTARGET&_CLEARTARGET&_QUIT",
 	// Misc.: The Fucking Bird
-	"falcon0": "_CUSTOM:BIRDSONG.OGG&pl_SETDIR:0&_SLEEP:1000",
+	"falcon0": "_CUSTOM:BIRDSONG.OGG&pl_SETDIR:0&_SLEEP:1500",
 	"falcon1": "pl_SETDIR:1&_CUSTOM:ENTERTHEBIRD",
 	"falcon2": "_SLEEP:500",
 	"falcon3": "pl_ANIM:crouchL&_SLEEP:1000",
@@ -572,7 +572,7 @@ const scripts = {
 	"falcon12": "_CUSTOM:EXITTHEBIRD1",
 	"falcon13": "pl_SETDIR:3&_CLEARTARGET&_CUSTOM:EXITTHEBIRD2",
 	// Food2: The Monster Found You
-	"ohFuck0": "_TEXT:uhoh0",
+	"ohFuck0": "_SOUND:soybean&_TEXT:uhoh0",
 	"ohFuck1": "_CLEARTEXT&pl_SETDIR:0&_SLEEP:250",
 	"ohFuck2": "pl_SETDIR:1&_SLEEP:250",
 	"ohFuck3": "pl_SETDIR:2&_SLEEP:250",
@@ -582,10 +582,10 @@ const scripts = {
 	"ohFuck7": "pl_SETDIR:2&_SLEEP:250",
 	"ohFuck8": "_CUSTOM:THEMONSTER&_SLEEP:2000",
 	"ohFuck9": "pl_SETDIR:0&_SLEEP:1000",
-	"ohFuck10": "_TEXT:uhoh0",
+	"ohFuck10": "_SOUND:soybean&_TEXT:uhoh0",
 	"ohFuck11": "_FIGHT:theMonster",
 	// North City: You Got A Phone!
-	"newPhone0": "_TEXT:newPhone(0-3)",
+	"newPhone0": "_SOUND:vibrate&_TEXT:newPhone(0-3)",
 	"newPhone1": "_CUSTOM:NEWPHONE&_TEXT:newPhone4",
 	"newPhone2": "_CLEARTEXT&_CUSTOM:PHONEPRESS&_CLEARTARGET&_QUIT",
 	// North City: You Stopped a Crime!
@@ -607,7 +607,7 @@ const scripts = {
 	"strobbery15": "NewCop0_SETDIR:2&NewCop0_MOVE:y16",
 	"strobbery16": "_CUSTOM:FINISHCOPS&_QUIT",
 	// North City: Beehive
-	"OfficeHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,3&_GIVE:beeG,4&_GIVE:beeR,2&_COMPLETEQUEST:officeBeehive&_CLEARTARGET",
+	"OfficeHive0": "_SOUND:itemget&targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,3&_GIVE:beeG,4&_GIVE:beeR,2&_COMPLETEQUEST:officeBeehive&_CLEARTARGET",
 	// North City: Office Lady
 	"officeLady0": "?[{\"q\":\"player.completedQuest('officeBeehive')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"officeLady1": "targ_ISMOVING:true&_TEXT:officeLady2&_END",
@@ -621,7 +621,7 @@ const scripts = {
 	"eggBoy3": "_TEXT:eggBoyNoSale&_END",
 	"eggBoy4": "_TEXT:eggBoyNoMoney&_END",
 	"eggBoy5": "_TEXT:eggBoyBuy",
-	"eggBoy6": "targ_ISMOVING:false&_CUSTOM:THEGIFTOFEGG",
+	"eggBoy6": "_SOUND:itemget&targ_ISMOVING:false&_CUSTOM:THEGIFTOFEGG",
 	// Food2: Ed
 	"apuru0": "?[{\"q\":\"player.completedQuest('fuzuru')\",\"v\":20},{\"q\":\"true\",\"v\":1}]",
 	"apuru1": "ed_ISMOVING:true&_TEXT:fuzuruStart",
@@ -652,7 +652,7 @@ const scripts = {
 	// Food2: Hungry Boy's Food Bin
 	"hungyBin0": "?[{\"q\":\"player.completedQuest('hungybin')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"hungyBin1": "_TEXT:hungyFoodBin1&_END",
-	"hungyBin2": "_COMPLETEQUEST:hungybin&_TEXT:hungyFoodBin0&_GIVE:rhubarb,10&_GIVE:lemon,10&_GIVE:mango,10",
+	"hungyBin2": "_SOUND:itemget&_COMPLETEQUEST:hungybin&_TEXT:hungyFoodBin0&_GIVE:rhubarb,10&_GIVE:lemon,10&_GIVE:mango,10",
 	// Food2: Hurt Nerd
 	"hurtNerd0": "?[{\"q\":\"player.hasQuest('helpNerd')\",\"v\":6},{\"q\":\"true\",\"v\":1}]",
 	"hurtNerd1": "trent_ISMOVING:true&_TEXT:hurtNerd(0-4)",
@@ -690,7 +690,7 @@ const scripts = {
 	"lotus3": "?[{\"q\":\"d===0\",\"v\":5},{\"q\":\"d===1\",\"v\":4}]",
 	"lotus4": "_TEXT:dirtPileNoPlant&_END",
 	"lotus5": "targ_VISIBLE:true&_TEXT:dirtPilePlant(0-1)",
-	"lotus6": "_CHIEVO:abee&_TEXT:dirtPilePlant2&_COMPLETEQUEST:theBeeQuest&_GIVE:hbee,9&_END",
+	"lotus6": "_SOUND:itemget&_CHIEVO:abee&_TEXT:dirtPilePlant2&_COMPLETEQUEST:theBeeQuest&_GIVE:hbee,9&_END",
 	"lotus7": "_TEXT:dirtPileBees",
 	// Food2: Discussly2
 	"tutReturn0": "_TEXT:tutReturn(0-4)",

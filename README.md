@@ -37,3 +37,5 @@ Run ``BuildEnemyAttackJSON.ps1`` to merge all **.json** files in ``extbuild\enem
 Run ``uglify.cmd`` or just call the **uglifyjs** command in the file.
 ## want to make changes?
 The game isn't even done yet hold your horses yo.
+## additional assets
+Pretty much all sound effects are taken from [512 Sound Effects (8-Bit Style)](https://opengameart.org/content/512-sound-effects-8-bit-style) by [Juhani Junkala](https://juhanijunkala.com/) and are licensed under the [CC 1.0 Universal License](https://creativecommons.org/publicdomain/zero/1.0/).

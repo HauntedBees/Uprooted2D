@@ -30,7 +30,7 @@ function Smartphone() {
     };
     this.Update = function() {
         if(worldmap.mapName !== "northcity") { return; }
-        if(worldmap.pos.x % 4 !== 0 && worldmap.pos.y % 3 !== 0) { return; }
+        if(Math.round(worldmap.pos.x) % 4 !== 0 && Math.round(worldmap.pos.y) % 3 !== 0) { return; }
         if(Math.random() > 0.16) { return; }
         if(worldmap.pos.x === lastX || worldmap.pos.y === lastY) { return; }
         lastX = worldmap.pos.x; lastY = worldmap.pos.y;
@@ -64,6 +64,7 @@ function Smartphone() {
             texts[i].active = true;
             texts[i].read = true;
             if(texts[i].id === "misctext1") { player.activeQuests["stonehenge"] = 1; }
+            Sounds.PlaySound("readtext");
             notifications -= 1;
             return true;
         }
@@ -74,6 +75,7 @@ function Smartphone() {
         for(let i = 0; i < texts.length; i++) {
             if(texts[i].active) { count++; texts[i].active = false; }
         }
+        if(count > 0) { Sounds.PlaySound("dismisstext"); }
         return count;
     };
     this.Draw = function() {

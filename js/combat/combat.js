@@ -8,6 +8,7 @@ const combat = {
     didHarvest: false, harvestChain: 0, 
     animHelper: null, isTree: false, 
     startBattle: function(enemies, skipTransition) {
+        Sounds.PlaySound("enterbattle");
         player.initGridDimensions();
         this.didHarvest = false;
         this.harvestChain = 0;

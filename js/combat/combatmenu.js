@@ -2,6 +2,7 @@ combat.menu = {
     options: [], cursorY: 0, dy: 9.5, plantedAlreadyAndCantAttack: false,
     layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function(args) {
+        if(args === undefined && player.health < (player.maxhealth / 4)) { Sounds.PlaySound("dangeresque"); }
         args = args || {};
         this.plantedAlreadyAndCantAttack = args.canOnlyPlant || false;
         if(!args.notFirst) {

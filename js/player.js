@@ -72,7 +72,8 @@ let player = {
             } else {
                 const fullDate = new Date(lastSaveTime);
                 const months = GetText("lastSaveMonths").split(",");
-                return fullDate.getDate() + months[fullDate.getMonth()] + fullDate.getFullYear() + " " + fullDate.getHours() + ":" + fullDate.getMinutes();
+                const m = fullDate.getMinutes();
+                return fullDate.getDate() + months[fullDate.getMonth()] + fullDate.getFullYear() + " " + fullDate.getHours() + ":" + (m < 10 ? "0" + m : m);
             }
         }
     },

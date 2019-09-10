@@ -189,6 +189,7 @@ const mapentities = {
             GetSeedShoot("SeedShotArea3", 20, 17),
             GetSeedShoot("SeedShotArea4", 21, 17),
             GetFellow("Chair", 8, 4, 0, "Chair1", [ function() {
+                Sounds.PlaySound("biff");
                 game.target.swapped = !game.target.swapped;
                 SetUpFellow(game.target, game.target.swapped ? "Chair2" : "Chair1");
                 worldmap.finishDialog();
@@ -387,6 +388,7 @@ const mapentities = {
                 if(player.hasQuest("gotTire") || player.completedQuest("gotTire")) { worldmap.finishDialog(); return; }
                 SetUpFellow(game.target, "Tire2");
                 worldmap.writeText("tireget");
+                Sounds.PlaySound("itemget");
                 player.activeQuests["gotTire"] = 0;
                 player.activeQuests["truckRepair"] = 1;
             }

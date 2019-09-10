@@ -246,7 +246,6 @@ function GetTreasureChest(name, x, y, contents) {
             if(clen === 0) {
                 contentString = conts[0][1] + " " + GetItemDisplayName(conts[0][0], conts[0][1] > 1);
                 hasRoom = player.increaseItem(conts[0][0], 0);
-                
             } else {
                 for(let i = clen; i >= 0; i--) {
                     const itdata = conts[i]; // format = [itemname, amount]
@@ -272,6 +271,7 @@ function GetTreasureChest(name, x, y, contents) {
                     }
                 }
                 player.openedChests.push(game.target.name);
+                Sounds.PlaySound("trayjure");
             } else {
                 iHandler.state.texts = ["closedchestinvfull"];
             }
@@ -303,6 +303,7 @@ function EnterWaterfall() {
     }
     worldmap.inWaterfall = true;
     worldmap.ToggleRun(false);
+    Sounds.PlaySound("waterfall");
     worldmap.waterfallIdx = setInterval(AdvanceWaterfall, timers.FULLANIM * 4);
 }
 function AdvanceWaterfall() {
@@ -339,6 +340,7 @@ function AdvanceWaterfall() {
 function ExitWaterfall() {
     clearInterval(worldmap.waterfallIdx);
     worldmap.finishDialog();
+    Sounds.EndAll();
     worldmap.inWaterfall = false;
 }
 function GetRock(name, x, y, dir, wfid) {
@@ -353,6 +355,7 @@ function PushRock() {
         worldmap.writeText("rockwrong");
         return;
     }
+    Sounds.PlaySound("push");
     worldmap.animIdx = setInterval(function() {
         let success = false;
         switch(game.target.pushDir) {

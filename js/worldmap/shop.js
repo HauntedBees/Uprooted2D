@@ -476,6 +476,7 @@ worldmap.shop = {
         }
         player.AddMonies(price);
         player.decreaseItem(actualItem[0]);
+        Sounds.PlaySound("purchase");
         this.DrawDetails(GetText(this.details.didSell));
         return true;
     },
@@ -495,6 +496,7 @@ worldmap.shop = {
     clickBook: function(pos) {
         this.bookState++;
         const newText = TryGetText(this.bookReading + this.bookState);
+        Sounds.PlaySound("turnpage");
         if(newText === false) {
             this.sellingState = me.sellStates.BUYING;
             this.bookState = -1;
@@ -548,6 +550,7 @@ worldmap.shop = {
             this.sellingState = me.sellStates.READING;
             this.bookReading = productInfo.name;
             this.bookState = 0;
+            Sounds.PlaySound("turnpage");
             this.DrawDetails(GetText(this.bookReading + this.bookState));
             return true;
         }
@@ -562,6 +565,7 @@ worldmap.shop = {
         const amt = (this.howManyData === null ? 1 : this.howManyData.amount);
         price = amt * Math.floor(price * mult);
         if(price > player.monies) {
+            Sounds.PlaySound("cantafford");
             if(productInfo.type === "alms") { this.DrawDetails(GetText("s.almsNope")); }
             else { this.DrawDetails(GetText(this.details.notEnough)); }
             return true;
@@ -609,6 +613,7 @@ worldmap.shop = {
                 this.howManyData = null;
             }
         }
+        if(productInfo.type !== "inn") { Sounds.PlaySound("purchase"); }
         this.DrawDetails(GetText(this.details.purchased));
         return true;
     },
@@ -699,6 +704,7 @@ worldmap.shop = {
     Sleepsy: function() {
         const sleepInfo = worldmap.shop.sleepsyData;
         if(sleepInfo.state === 0) {
+            if(sleepInfo.size === 0.5) { Sounds.PlaySound("naptime"); }
             gfx.clearLayer("tutorial");
             for(let y = 2; y < game.tileh + 4; y += 4) {
                 for(let x = 2; x < game.tilew + 4; x += 4) {
@@ -716,6 +722,7 @@ worldmap.shop = {
             gfx.drawFullText(GetText(textKey), 0, gfx.GetWhite(), true);
             sleepInfo.state = 2;
         } else if(sleepInfo.state === 3) {
+            if(sleepInfo.size === 0.25) { Sounds.PlaySound("wakeup"); }
             gfx.clearLayer("tutorial");
             gfx.DrawTransitionImage("transWake", game.tilew / 2, game.tileh / 2, sleepInfo.size, true);
             if(sleepInfo.size < 50) { sleepInfo.size += sleepInfo.size / 25; }
