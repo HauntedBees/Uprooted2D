@@ -436,6 +436,7 @@ const worldmap = {
                 if(this.inDialogue) { return; }
                 this.ToggleRun(false);
                 worldmap.savedImage = gfx.getSaveFileImage();
+                Sounds.PlaySound("pauseI", true);
                 game.transition(this, pausemenu);
                 return;
             case player.controls.cancel: 

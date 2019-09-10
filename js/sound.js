@@ -38,7 +38,12 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "dismisstext",      // sfx_sounds_error7
                         "entrance",         // sfx_movement_stairs3loop
                         "door",             // sfx_movement_dooropen2
+                        "pauseI",           // sfx_sounds_pause1_in
+                        "pauseO",           // sfx_sounds_pause1_out
                         // CUTSCENE SOUNDS
+                        "dirtvwoom",        // sfx_sound_mechanicalnoise2
+                        "tabletoss",        // sfx_movement_jump8
+                        "jeflaf",           // sfx_deathscream_human12
                         "bamham",           // sfx_exp_odd3
                         "stompins",         // sfx_movement_footstepsloop4_fast
                         "nerdfall",         // sfx_sounds_falling7

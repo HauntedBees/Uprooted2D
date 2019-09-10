@@ -350,9 +350,14 @@ const SpecialFunctions = {
     },
 
     // Research Lab
-    "SEEDSHOT": () => { player.health -= 2; game.target.hasShot = 5; },
+    "SEEDSHOT": function() {
+        player.health -= 2;
+        game.target.hasShot = 5;
+        Sounds.PlaySound("hit_hard");
+    },
     "SEEDSHOTKILL": function() {
         player.health = player.maxhealth;
+        Sounds.PlaySound("biff");
         for(let i = 0; i < worldmap.entities.length; i++) {
             const newActive = worldmap.entities[i].initActive;
             if(worldmap.entities[i].rfd) {
@@ -969,6 +974,7 @@ const SpecialFunctions = {
         worldmap.entities.filter(e => e.name === "cutscene_final")[0].interact = Cutscene("finalReturn");
     },
     "FLIPSHIT": function() {
+        Sounds.PlaySound("dirtvwoom");
         worldmap.waitForAnimation = true;
         iHandler.state.animHandler = function(spedUp) {
             let newY = 0;

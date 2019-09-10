@@ -212,6 +212,7 @@ const pausemenu = {
         pausemenu.addText(str, x, y);
     },
     cancel: function() {
+        Sounds.PlaySound("pauseO", true);
         game.transition(this, worldmap, {
             init: worldmap.pos,
             map: worldmap.mapName,
