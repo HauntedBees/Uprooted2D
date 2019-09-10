@@ -242,7 +242,7 @@ const scripts = {
 	"seamon17": "targ_ISMOVING:true&_TEXT:sm5,sm4c1,sm4c2,sm4c3",
 	"seamon18": "?[{\"q\":\"d===0\",\"v\":10},{\"q\":\"d===1\",\"v\":12},{\"q\":\"d===2\",\"v\":11}]",
 	"deadsea0": "_CUSTOM:DEADFISH",
-	"deadsea1": "_TEXT:bworkerA(2-3)",
+	"deadsea1": "_SOUND:water&_TEXT:bworkerA(2-3)",
 	// Bridge: Sea Monster helps you move debris
 	"seahelp0": "_CUSTOM:SEAHELP0",
 	"seahelp1": "smt_ISMOVING:false&_CUSTOM:SEAHELP1",
@@ -516,7 +516,7 @@ const scripts = {
 	"foodDoor0": "?[{\"q\":\"player.completedQuest('keycard')\",\"v\":3},{\"q\":\"player.hasQuest('keycard')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"foodDoor1": "_TEXT:foodEnter0&_END",
 	"foodDoor2": "_TEXT:foodEnter2&_END",
-	"foodDoor3": "_TEXT:foodEnter1&_CLEARTARGET",
+	"foodDoor3": "_SOUND:door&_TEXT:foodEnter1&_CLEARTARGET",
 	// North City: Sixth Boss (DWEEBLORD)
 	"keycard0": "_SOUND:itemget&_STARTQUEST:keycard&_TEXT:keycard0",
 	"keycard1": "_CLEARTARGET&_QUIT",

@@ -286,6 +286,7 @@ const game = {
                 }
             }
         }
+        Sounds.PlaySound("stompins");
         game.transitionInfo = { count: 0, startBlack: -82, workers: workers };
         iHandler.state.animHandler = this.DrawConstructionTransition;
         worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);

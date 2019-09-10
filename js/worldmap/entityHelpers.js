@@ -223,6 +223,7 @@ function GetRFDoorButton(name, x, y, type, isDown) {
     } ], undefined, { sy: (isDown ? 1 : 0), active: isDown, initActive: isDown, type: type, noChange: true, rf: true });
 }
 function ToggleRFDoors(type) {
+    Sounds.PlaySound("bwup");
     mapStates[worldmap.mapName].rf[type] = !mapStates[worldmap.mapName].rf[type];
     for(let i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].rfd && worldmap.entities[i].type === type) {
@@ -392,6 +393,7 @@ function GetTechRock(name, x, y, dir, wfid) {
 function PushTechRock() {
     if(game.target.donePushing) { worldmap.finishDialog(); return; }
     game.target.donePushing = true;
+    Sounds.PlaySound("bwup");
     SetUpFellow(game.target, "TechRockPressed");
     for(let i = worldmap.entities.length - 1; i >= 0; i--) {
         if(worldmap.entities[i].wfid === game.target.killid) {

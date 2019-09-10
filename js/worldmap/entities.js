@@ -722,7 +722,7 @@ const mapentities = {
             GetWaterfall("tech_waterfallUS", 26, 15, 2, "UX", true), GetWaterfallEnd("tech_wfendU", 26, 25, 2, "U", true), // rock
             GetWaterfall("tech_waterfallVS", 28, 15, 2, "VX", true), GetWaterfallEnd("tech_wfendV", 28, 25, 2, "V", true),
             GetWaterfall("tech_waterfallWS", 27, 20, 3, "WX", true), GetWaterfallEnd("tech_wfendW", 29, 20, 3, "W", true),
-            GetWaterfall("tech_waterfallXS", 29, 20, 0, "XX", true), GetWaterfallEnd("tech_wfendX", 29, 13, 0, "X", true),
+            GetWaterfall("tech_waterfallXS", 29, 19, 0, "XX", true), GetWaterfallEnd("tech_wfendX", 29, 13, 0, "X", true),
             GetTechRock("TechRockF", 1, 20, 0, "F"), GetTechRock("TechRockU", 25, 15, 1, "U"),
             GetWaterfall("tech_waterfallA", 4, 11, 2, "A", true), GetWaterfall("tech_waterfallC", 7, 13, 3, "C", true),
             GetWaterfall("tech_waterfallD", 7, 12, 1, "D", true), GetWaterfall("tech_waterfallE", 6, 16, 2, "E", true),
@@ -743,7 +743,7 @@ const mapentities = {
         for(let i = 16; i < 21; i++) { entities.push(GetWaterfall("tech_waterfallS" + i, 13, i, 0, "S", true)); }
         for(let i = 16; i < 25; i++) { entities.push(GetWaterfall("tech_waterfallU" + i, 26, i, 2, "U", true)); }
         for(let i = 16; i < 25; i++) { entities.push(GetWaterfall("tech_waterfallV" + i, 28, i, 2, "V", true)); }
-        for(let i = 14; i < 20; i++) { entities.push(GetWaterfall("tech_waterfallX" + i, 29, i, 0, "X", true)); }
+        for(let i = 14; i < 19; i++) { entities.push(GetWaterfall("tech_waterfallX" + i, 29, i, 0, "X", true)); }
         entities.push(GetWaterfall("tech_waterfallW", 28, 20, 3, "W", true));
 
         const lookables = [ [18, 13, "coffeeBottle"], [18, 14, "coffeeBottle"], [19, 14, "coffeeBottle"], [20, 14, "coffeeBottle"], [20, 13, "coffeeBottle"],

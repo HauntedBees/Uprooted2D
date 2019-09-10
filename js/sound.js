@@ -29,6 +29,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "turnpage",         // sfx_movement_ladder4loop
                         "cantafford",       // sfx_sounds_error3
                         // WORLD MAP SOUNDS
+                        "bwup",             // sfx_sounds_interaction14
                         "trayjure",         // sfx_movement_dooropen2
                         "biff",             // sfx_movement_jump9_landing
                         "push",             // sfx_movement_stairs1loop
@@ -38,6 +39,8 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "entrance",         // sfx_movement_stairs3loop
                         "door",             // sfx_movement_dooropen2
                         // CUTSCENE SOUNDS
+                        "bamham",           // sfx_exp_odd3
+                        "stompins",         // sfx_movement_footstepsloop4_fast
                         "nerdfall",         // sfx_sounds_falling7
                         "nerdfall2",        // sfx_sounds_falling7
                         "vibrate",          // sfx_sounds_impact12

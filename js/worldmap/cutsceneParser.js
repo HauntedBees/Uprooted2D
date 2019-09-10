@@ -432,6 +432,7 @@ const SpecialFunctions = {
     "SEAHELP1": function() {
         worldmap.waitForAnimation = true;
         let state = 1;
+        Sounds.PlaySound("bamham");
         iHandler.state.animHandler = function(spedUp) {
             gfx.clearLayer("tutorial");
             const frame = state > 10 ? (20 - state) : state;
@@ -1047,6 +1048,7 @@ const SpecialFunctions = {
         SetUpFellow(worldmap, "walk", true);
         worldmap.writeText("falconMsg5.8");
         iHandler.state.texts.push("falconMsg5.9");
+        Sounds.PlaySound("eee");
         player.hasFalcon = true;
     },
     "EXITTHEBIRD1": function() {
