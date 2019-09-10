@@ -57,6 +57,7 @@ const enemyCombatAnims = {
     "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
     "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
     "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
+    "HEALSOY": new AnimSet([new AnimFrame(1, 2), new AnimFrame(1, 3)], true, 2),
     "TURKEY_EGG": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 1),
     
     "LAWNMOWER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
