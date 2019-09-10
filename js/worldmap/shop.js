@@ -639,6 +639,7 @@ worldmap.shop = {
             case me.sellStates.BUYING:
                 if(this.howManyData === null) {
                     clearInterval(this.blinkIdx);
+                    Sounds.PlaySound("entrance", true);
                     game.transition(this, worldmap, {
                         init: worldmap.pos,
                         map: worldmap.mapName,

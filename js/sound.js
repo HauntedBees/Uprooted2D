@@ -16,7 +16,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "hit_light",        // sfx_sounds_impact3
                         "hit_squishy",      // sfx_sounds_interaction24
                         "hit_wet",          // sfx_sounds_button6
-                        "level_up",         // sfx_sounds_fanfare3
+                        "levelup",         // sfx_sounds_fanfare3
                         // MENU SOUNDS
                         "confirm",          // made fresh
                         "cancel",           // made fresh
@@ -35,10 +35,14 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "waterfall",        // sfx_vehicle_engineloop
                         "readtext",         // sfx_movement_stairs6loop
                         "dismisstext",      // sfx_sounds_error7
+                        "entrance",         // sfx_movement_stairs3loop
+                        "door",             // sfx_movement_dooropen2
                         // CUTSCENE SOUNDS
+                        "nerdfall",         // sfx_sounds_falling7
+                        "nerdfall2",        // sfx_sounds_falling7
                         "vibrate",          // sfx_sounds_impact12
                         "repair",           // sfx_sounds_interaction10
-                        "voip",             // sfx_sound_neutral8                   *** UNPLUGGING TV
+                        "voip",             // sfx_sound_neutral8
                         "carstop",          // sfx_vehicle_breaks
                         "soybean",          // sfx_deathscream_alien5 and sfx_deathscream_alien6
                         "driv",             // sfx_vehicle_carloop1

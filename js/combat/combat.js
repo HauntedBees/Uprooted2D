@@ -367,6 +367,7 @@ const combat = {
     },
     checkForLevelUp: function() {
         if(player.exp >= player.nextExp && player.level < 20) {
+            Sounds.PlaySound("levelup", true);
             player.levelUp();
             combat.animHelper.SetPlayerAnimState("LEVELUP", true);
             game.innerTransition(game.currentInputHandler, combat.inbetween, {

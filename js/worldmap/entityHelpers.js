@@ -151,7 +151,7 @@ function SwitchMap(name, x, y, row, column, newx, newy, map, showIf, newDir) {
     map = GetPostGameMapName(map);
     return {
         name: name, solid: false, pos: {x: x, y: y}, isColumn: column, isRow: row, isMapSwitch: true, destination: map, showIf: showIf, 
-        interact: [ function() { game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map, playerDir: newDir }); } ]
+        interact: [ function() { Sounds.PlaySound("entrance", true); game.transition(game.currentInputHandler, worldmap, { init: { x: newx,  y: newy }, map: map, playerDir: newDir }); } ]
     }
 };
 function SwitchMapSubPartialColumn(name, x, y, newx, newy, map, topy, bottomy) {
@@ -184,6 +184,7 @@ function EnterShop(name, x, y, shop, shopDir) {
         name: name, solid: false, pos: { x: x, y: y }, isShop: true, shopName: shop, shopDir: shopDir,
         interact: [ (i, e) => {
             worldmap.savedImage = gfx.getSaveFileImage();
+            Sounds.PlaySound("entrance", true);
             switch(e.shopDir) {
                 case directions.UP: worldmap.pos.y -= 0.5; break;
                 case directions.LEFT: worldmap.pos.x -= 0.5; break;
@@ -458,6 +459,9 @@ function JumboEntrance() { JumboToggle(true); }
 function JumboExit() { JumboToggle(false); }
 function JumboToggle(inside) {
     worldmap.forceEndDialog = true;
+    if(mapStates[worldmap.mapName].inside !== inside) {
+        Sounds.PlaySound("door");
+    }
     mapStates[worldmap.mapName].inside = inside;
     for(let i = 0; i < worldmap.entities.length; i++) {
         if(worldmap.entities[i].inside) { worldmap.entities[i].visible = inside; }
