@@ -1,7 +1,8 @@
 combat.menu = {
-    options: [], cursorY: 0, dy: 9.5, plantedAlreadyAndCantAttack: false,
+    options: [], cursorY: 0, dy: 9.5, plantedAlreadyAndCantAttack: false, fullyLoaded: false,
     layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function(args) {
+        combat.menu.fullyLoaded = false;
         if(args === undefined && player.health < (player.maxhealth / 4)) { Sounds.PlaySound("dangeresque"); }
         args = args || {};
         this.plantedAlreadyAndCantAttack = args.canOnlyPlant || false;
@@ -149,6 +150,7 @@ combat.menu = {
         gfx.drawInfobox(12, 2, this.dy + 2);
         gfx.drawWrappedText(text, 4.5 * 16, 11 + ((2 + this.dy) * 16), 170);
         combat.animHelper.DrawBottom();
+        combat.menu.fullyLoaded = true;
     },
     GetEnemyNameInfo: function(e, useLong) {
         let name = e.name, len = Math.ceil(gfx.getTextLength(e.name) / 16 / gfx.scale * 2) / 2;
@@ -212,7 +214,7 @@ combat.menu = {
         return true;
     },
     click: function(pos, isFresh) {
-        if(!isFresh) { return false; }
+        if(!isFresh || !combat.menu.fullyLoaded) { return false; }
         if(pos.x > 4) { return false; }
         switch(Math.floor(pos.y - this.dy)) {
             case 0:
