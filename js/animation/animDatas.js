@@ -429,7 +429,7 @@ const animCallbackHelpers = {
             const targ = targets[i];
             if(targ.x === undefined) { // enemy
                 if(combat.enemies[targ].health <= 0 && isLast) {
-                    Sounds.PlaySound("squirrel"); // TODO: change based on enemy
+                    //Sounds.PlaySound("squirrel"); // TODO: change based on enemy SQUIRREL IS THE MOST ANNOYING FUCKING SOUND CLIP FUCK THAT
                     combat.animHelper.MakeEnemyACorpse(targ);
                 } else {
                     Sounds.PlayPlayerAttackSound(targ, crop);

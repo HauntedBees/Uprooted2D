@@ -2,9 +2,6 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
     SoundTable: {}, PlayingSounds: [], PersistingSounds: [], 
     Init: function() {
         const sounds = ["aBee", "superman", // that one is a joke
-                        // BFXR
-                        "toss", "beepattack", "pemp", "schwomp", "bops",
-                        "explode", "crybaby", "squirrel", "destroyed",
                         // COMBAT SOUNDS
                         "enterbattle",      // sfx_deathscream_alien1
                         "dangeresque",      // sfx_lowhealth_alarmloop4
