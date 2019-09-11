@@ -213,6 +213,7 @@ pausemenu.savemenu = {
                 return true;
             }
             if(pos.y >= this.options.length) { return false; }
+            if(this.cursorY === pos.y) { return false; }
             this.cursorY = pos.y;
         }
         this.DrawAll();

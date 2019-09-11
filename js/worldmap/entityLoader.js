@@ -11,7 +11,6 @@ function GetEntities(mapName, fromSave) {
         mapCache.push( {name: mapName, entities: [...entities]} );
         if(mapCache.length > 3) { mapCache.shift(); }
     }
-    console.log(entities);
     for(let i = entities.length - 1; i >= 0; i--) {
         const e = entities[i];
         if(e.name === "BadInfluenceRabbit") {
