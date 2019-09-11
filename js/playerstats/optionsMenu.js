@@ -382,6 +382,7 @@ worldmap.optionsMenu = {
             newY += dir;
         }
         if(newY < 0 || newY >= this.options.length) { return false; }
+        Sounds.PlaySound("menuMove", false, this.localOptions.sound);
         this.cursory = newY;
         this.DrawEverything();
         return true;

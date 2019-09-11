@@ -40,6 +40,7 @@ const fixTut = {
     keyPress: function(key) {
         if(this.state === 0) {
             if(key === player.controls.pause) {
+                Sounds.PlaySound("pauseI", true);
                 this.transition(worldmap, pausemenu);
                 this.state++;
                 this.drawTutorial();
@@ -48,10 +49,11 @@ const fixTut = {
                 return false;
             }
         } else if(this.state === 1) {
-            if(key === player.controls.cancel) { return false; } // 295 TODO: should disable pause too, honestly
-            if(key === player.controls.confirm || key === player.controls.pause) {
+            if(key === player.controls.cancel || key === player.controls.pause) { return false; }
+            if(key === player.controls.confirm) {
                 if(pausemenu.cursorY !== 2) { return false; }
                 this.transition(pausemenu, pausemenu.farmmod);
+                Sounds.PlaySound("confirm", true);
                 this.state++;
                 this.drawTutorial();
                 return true;
@@ -98,6 +100,7 @@ const fixTut = {
                     map: worldmap.mapName,
                     noEntityUpdate: true
                 });
+                Sounds.PlaySound("pauseO", true);
                 return true;
             }
             return false;

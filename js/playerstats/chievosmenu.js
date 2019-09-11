@@ -39,7 +39,7 @@ pausemenu.chievos = {
             this.setText();
         }
     },
-    cancel: function() { game.innerTransition(this, pausemenu, 4); },
+    cancel: function() { game.innerTransition(this, pausemenu, 4); Sounds.PlaySound("cancel"); },
     mouseMove: function(pos) {
         const dpos = { x: (pos.x - this.achStartX) / this.achDX, y: (pos.y - this.achStartY) / this.achDX };
         if(dpos.y < -0.8) {
@@ -77,6 +77,8 @@ pausemenu.chievos = {
     CursorMove: function(pos) {
         if(pos.x < 0 || pos.y < -1 || pos.y >= this.yMax || pos.x >= this.numPerRow) { return false; }
         if(pos.y === -1) { pos.x = 0; }
+        if(SamePoints(this.cursor, pos)) { return false; }
+        Sounds.PlaySound("menuMove");
         this.cursor = { x: pos.x, y: pos.y };
         this.drawAll();
         return true;

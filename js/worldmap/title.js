@@ -73,8 +73,8 @@ worldmap.title = {
     },
     CursorMove: function(pos) {
         if(pos.y < 0 || pos.y >= this.menuItems.length) { return false; }
+        if(this.cursory !== pos.y) { Sounds.PlaySound("menuMove"); }
         this.cursory = pos.y;
-        //Sounds.PlaySound("movecursor2");
         speaker.SayThing(GetText(this.menuItems[this.cursory]), "option");
         this.DrawMenu();
         return true;
@@ -101,7 +101,6 @@ worldmap.title = {
             case player.controls.down: pos.y++; break;
             case player.controls.confirm:
             case player.controls.pause: isEnter = true; break;
-            //case player.controls.cancel: return this.cancel();
         }
         if(pos.y < 0 || pos.y > 3) { return false; }
         if(isEnter) { return this.click(input.IsFreshPauseOrConfirmPress()); }

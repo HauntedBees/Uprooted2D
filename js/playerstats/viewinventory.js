@@ -94,13 +94,14 @@ pausemenu.inventory = {
         this.cursors.Perish();
         gfx.clearAll(true);
     },
-    cancel: function() {
+    cancel: function(noSound) {
         if(this.inSort) {
+            if(!noSound) { Sounds.PlaySound("cancel"); }
             this.inSort = false;
             this.cursor = { x: 1, y: - 1 };
             this.DrawAll();
-        } else if(this.selectedCrop < 0) { game.innerTransition(this, pausemenu); }
-        else { this.selectedCrop = -1; if(this.cursor.x >= this.inventoryWidth) { this.cursor.x = this.inventoryWidth - 1; } this.DrawAll(); }
+        } else if(this.selectedCrop < 0) { game.innerTransition(this, pausemenu); Sounds.PlaySound("cancel"); }
+        else {  this.selectedCrop = -1; if(this.cursor.x >= this.inventoryWidth) { this.cursor.x = this.inventoryWidth - 1; } this.DrawAll(); }
     },
     keyPress: function(key) {
         const pos = { x: this.cursor.x, y: this.cursor.y };
@@ -162,7 +163,9 @@ pausemenu.inventory = {
                 if(pos.x > this.inventoryWidth || pos.y >= (36 / this.inventoryWidth)) { return false; }
             }
         }
+        if(SamePoints(this.cursor, pos)) { return false; }
         this.cursor = { x: pos.x, y: pos.y };
+        Sounds.PlaySound("menuMove");
         this.DrawAll();
         return true;
     },
@@ -277,20 +280,23 @@ pausemenu.inventory = {
                     }
                     break;
             }
+            Sounds.PlaySound("confirm");
             player.inventory = [...crops, ...nonCrops];
             this.justSorted = (this.justSorted === this.cursor.y) ? -1 : this.cursor.y;
-            this.cancel();
+            this.cancel(true);
         } else if(this.cursor.y === -1) {
-            if(this.cursor.x === 0) {
+            if(this.cursor.x === 0) { // back
                 game.innerTransition(this, pausemenu);
+                Sounds.PlaySound("cancel");
                 return true;
-            } else {
+            } else { // sort
                 this.inSort = true;
                 this.cursor.y = 0;
+                Sounds.PlaySound("confirm");
                 this.DrawAll();
                 return true;
             }
-        } else if(this.cursor.x === this.inventoryWidth) {
+        } else if(this.cursor.x === this.inventoryWidth) { // sell thing
             const invfo = player.inventory[this.selectedCrop];
             const price = Math.ceil(GetCrop(invfo[0]).price * invfo[1] * 0.1);
             player.AddMonies(price);
@@ -298,10 +304,12 @@ pausemenu.inventory = {
             this.trashInfo.push({ frame: 0, coinStates: [], x: 3.5, y: (pausemenu.inventory.cropDY + pausemenu.inventory.cursor.y), numCoins: Math.min(10, Math.ceil(price / 30)) });
             this.selectedCrop = -1;
             this.cursor.x = this.inventoryWidth - 1;
+            Sounds.PlaySound("purchase");
         } else {
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             const actIdx = this.actualIndexes[idx];
-            if(actIdx === undefined) {
+            if(actIdx === undefined) { // move to end
+                Sounds.PlaySound("confirm");
                 const temp = player.inventory[this.selectedCrop];
                 player.inventory.splice(this.selectedCrop, 1);
                 player.inventory.push(temp);
@@ -309,12 +317,15 @@ pausemenu.inventory = {
                 const numItems = this.actualIndexes.length - 1;
                 this.cursor.x = numItems % this.inventoryWidth;
                 this.cursor.y = Math.floor(numItems / this.inventoryWidth);
-            } else if(this.selectedCrop < 0) {
+            } else if(this.selectedCrop < 0) { // select crop
+                Sounds.PlaySound("confirm");
                 this.selectedCrop = actIdx;
-            } else if(this.selectedCrop === this.actIdx) {
+            } else if(this.selectedCrop === actIdx) { // unselect crop
+                Sounds.PlaySound("cancel");
                 this.selectedCrop = -1;
                 if(this.cursor.x >= this.inventoryWidth) { this.cursor.x = this.inventoryWidth - 1; }
-            } else {
+            } else { // swap crop
+                Sounds.PlaySound("confirm");
                 const temp = player.inventory[actIdx];
                 player.inventory[actIdx] = player.inventory[this.selectedCrop];
                 player.inventory[this.selectedCrop] = temp;

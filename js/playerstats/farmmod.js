@@ -157,7 +157,7 @@ pausemenu.farmmod = {
         if(x < (player.gridWidth - 1) && player.itemGrid[x + 1][y] === "_lake") { res += 8; } // D
         return res;
     },
-    cancel: function() { game.innerTransition(this, pausemenu, 2); },
+    cancel: function() { game.innerTransition(this, pausemenu, 2); Sounds.PlaySound("cancel"); },
     removeFromField: function(x, y) {
         let item = player.itemGrid[x][y];
         if(item === null) { return null; }
@@ -202,6 +202,7 @@ pausemenu.farmmod = {
             const invIdx = this.actualIndexes[idx];
             const item = player.inventory[invIdx][0];
             this.selectedItem = (this.selectedItem === item ? null : item);
+            Sounds.PlaySound(this.selectedItem === null ? "cancel" : "confirm");
             this.selectedItemPos = this.cursor;
             this.selectedItemSize = (GetFarmInfo(item).size - 1) || 0;
         } else {
@@ -221,13 +222,16 @@ pausemenu.farmmod = {
                 }
                 player.itemGrid[gridX][gridY] = this.selectedItem;
                 player.itemGrid[gridX + this.selectedItemSize][gridY + this.selectedItemSize].corner = this.selectedItem;
+                Sounds.PlaySound("confirm");
             } else {
                 const item = this.removeFromField(gridX, gridY);
                 if(item !== null) { player.increaseItem(item, 1); }
                 if(this.selectedItem === null || isSameItem) {
+                    if(selItem !== null) { Sounds.PlaySound("cancel"); }
                     this.drawEverything();
                     return true;
                 }
+                Sounds.PlaySound("confirm");
                 player.itemGrid[gridX][gridY] = this.selectedItem;
             }
             const stillHasAny = player.decreaseItem(this.selectedItem);
@@ -280,6 +284,8 @@ pausemenu.farmmod = {
         } else { // crop placement
             if(pos.y < this.dy || pos.x < this.dx || pos.y >= (this.dy + player.gridHeight - this.selectedItemSize) || pos.x >= (this.dx + player.gridWidth - this.selectedItemSize)) { return false; }
         }
+        if(SamePoints(this.cursor, pos)) { return false; }
+        Sounds.PlaySound("menuMove");
         this.cursor = pos;
         this.drawEverything();
         return true;

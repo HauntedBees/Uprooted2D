@@ -22,6 +22,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "cancel",           // made fresh
                         "navOk",            // sfx_menu_move4
                         "navNok",           // sfx_sounds_error10
+                        "menuMove",         // sfx_menu_move3
                         // SHOP SOUNDS
                         "naptime",          // sfx_sounds_falling1
                         "wakeup",           // sfx_alarm_loop7
@@ -85,6 +86,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
     },
     PlaySound: function(name, persist, forcedVolume) {
         console.log(`Now Playing: ${name}`);
+        if(player.options.sound === 0) { return; }
         if(persist) {
             Sounds.PersistingSounds.push(name);
         } else {

@@ -220,7 +220,9 @@ const pausemenu = {
         });
     },
     CursorMove: function(pos) {
+        if(pos.x === this.cursorX && pos.y === this.cursorY) { return false; }
         if(pos.x === 1 && pos.y === 0 && this.cursorY === 0) {
+            if(!this.inNoFun) { Sounds.PlaySound("menuMove"); }
             this.inNoFun = true;
         } else {
             if(this.inNoFun) { pos.x = 0; }
@@ -228,6 +230,7 @@ const pausemenu = {
             if(pos.y > this.options.length) { return false; }
             if(pos.y < this.options.length && pos.x > 0) { return false; }
             if(pos.x > this.questItems.length) { return false; }
+            Sounds.PlaySound("menuMove");
         }
         this.lastPressWasQuit = false;
         this.cursorY = pos.y;
@@ -252,9 +255,10 @@ const pausemenu = {
         if(this.BeepHour(mousePos)) { return true; }
         const cursorPos = { x: this.cursorX, y: this.cursorY };
         if(cursorPos.x > 0) {
-            if(this.inNoFun) { game.innerTransition(this, pausemenu.noFun); return true; }
+            if(this.inNoFun) { game.innerTransition(this, pausemenu.noFun); Sounds.PlaySound("confirm"); return true; }
             else {
                 const item = pausemenu.questItems[pausemenu.cursorX - 1];
+                Sounds.PlaySound("confirm");
                 pausemenu.ShowInfo("qi." + item + "Info");
                 return false;
             }
@@ -269,9 +273,11 @@ const pausemenu = {
             case 6: this.cancel(); break;
             case 7: this.TryQuit(); break;
             default:
+                Sounds.PlaySound("confirm");
                 this.ShowInfo("info" + (player.ethicsAxis >= 0 ? "Good" : "Bad") + (player.techAxis <= 0 ? "Nature" : "Tech"));
                 return false;
         }
+        if(cursorPos.y !== 6) { Sounds.PlaySound("confirm"); }
         return true;
     },
     ShowInfo: function(key) { 

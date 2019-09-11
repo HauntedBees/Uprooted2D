@@ -340,6 +340,7 @@ pausemenu.noFun = {
             this.cursor.y = this.maxY;
             this.click();
         }
+        Sounds.PlaySound("cancel");
     },
     keyPress: function(key) {
         const pos = { x: this.cursor.x, y: this.cursor.y };
@@ -363,6 +364,8 @@ pausemenu.noFun = {
     CursorMove: function(pos) {
         if(this.state === 33) { return false; } 
         if(pos.y > this.maxY || pos.y < -1) { return false; }
+        if(this.cursor.y === pos.y) { return false; }
+        Sounds.PlaySound("menuMove");
         this.cursor = { x: 0, y: pos.y };
         this.DrawAll();
         return true;
@@ -371,26 +374,26 @@ pausemenu.noFun = {
         if(this.cursor.y === -1) { return this.cancel(); }
         switch(this.state) {
             case 0:
-                if(this.cursor.y === 0) { this.state = 1; this.maxY = 5; } // Battles
-                else if(this.cursor.y === 1) { this.state = this.puzzle; this.maxY = this.puzzle === 2 ? 0 : 1; } // Puzzles
-                else if(this.cursor.y === 2) { this.state = 3; this.maxY = 4; } // Other
+                if(this.cursor.y === 0) { this.state = 1; this.maxY = 5; Sounds.PlaySound("confirm"); } // Battles
+                else if(this.cursor.y === 1) { this.state = this.puzzle; this.maxY = this.puzzle === 2 ? 0 : 1; Sounds.PlaySound("confirm"); } // Puzzles
+                else if(this.cursor.y === 2) { this.state = 3; this.maxY = 4; Sounds.PlaySound("confirm"); } // Other
                 else if(this.cursor.y === 3) { return this.cancel(); } // Nevermind
                 break;
             case 1:
-                if(this.cursor.y === 0) { this.state = 11; this.maxY = 2; } // Too Hard
-                else if(this.cursor.y === 1) { this.state = 12; this.maxY = 2; } // Too Easy
-                else if(this.cursor.y === 2) { this.state = 13; this.maxY = 2; } // Items Suck
-                else if(this.cursor.y === 3) { this.state = 14; this.maxY = 2; } // Low Stats
-                else if(this.cursor.y === 4) { this.state = 15; this.maxY = 2; } // I Don't Get It
-                else if(this.cursor.y === 5) { this.state = 0; this.maxY = 3; } // Nevermind
+                if(this.cursor.y === 0) { this.state = 11; this.maxY = 2; Sounds.PlaySound("confirm"); } // Too Hard
+                else if(this.cursor.y === 1) { this.state = 12; this.maxY = 2; Sounds.PlaySound("confirm"); } // Too Easy
+                else if(this.cursor.y === 2) { this.state = 13; this.maxY = 2; Sounds.PlaySound("confirm"); } // Items Suck
+                else if(this.cursor.y === 3) { this.state = 14; this.maxY = 2; Sounds.PlaySound("confirm"); } // Low Stats
+                else if(this.cursor.y === 4) { this.state = 15; this.maxY = 2; Sounds.PlaySound("confirm"); } // I Don't Get It
+                else if(this.cursor.y === 5) { this.state = 0; this.maxY = 3; Sounds.PlaySound("cancel"); } // Nevermind
                 break;
             case 11: 
-                if(this.cursor.y === 0) { player.noFunDiffMod--; this.state = 50; this.maxY = 0; } // Go Easy On Me!
-                else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; } // No Thanks
+                if(this.cursor.y === 0) { player.noFunDiffMod--; this.state = 50; this.maxY = 0; Sounds.PlaySound("confirm"); } // Go Easy On Me!
+                else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; Sounds.PlaySound("cancel"); } // No Thanks
                 break;
             case 12: 
-                if(this.cursor.y === 0) { player.noFunDiffMod++; this.state = 50; this.maxY = 0; } // Give Me A Hard-On!
-                else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; } // No Thanks
+                if(this.cursor.y === 0) { player.noFunDiffMod++; this.state = 50; this.maxY = 0; Sounds.PlaySound("confirm"); } // Give Me A Hard-On!
+                else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; Sounds.PlaySound("cancel"); } // No Thanks
                 break;
             case 13: 
                 if(this.cursor.y === 0) { // Give Me Good Shit!
@@ -399,7 +402,8 @@ pausemenu.noFun = {
                     debug.AllFixtures();
                     this.state = 50;
                     this.maxY = 0;
-                } else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; } // No Thanks
+                    Sounds.PlaySound("confirm");
+                } else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; Sounds.PlaySound("cancel"); } // No Thanks
                 break;
             case 14: 
                 if(this.cursor.y === 0) { // Flavor-Boost Me!
@@ -408,15 +412,17 @@ pausemenu.noFun = {
                     player.levelUp();
                     this.state = 50;
                     this.maxY = 0;
-                } else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; } // No Thanks
+                    Sounds.PlaySound("confirm");
+                } else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; Sounds.PlaySound("cancel"); } // No Thanks
                 break;
             case 15: 
                 if(this.cursor.y === 0) { // Toot-oriole Me!
                     this.clean();
                     game.target = { name: "Bort" };
+                    Sounds.PlaySound("confirm", true);
                     tutorial.startBattle();
                     return;
-                } else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; } // No Thanks
+                } else if(this.cursor.y === 1) { this.state = 1; this.maxY = 5; Sounds.PlaySound("cancel"); } // No Thanks
                 break;
             case 21: // forest
             case 22: // research lab
@@ -425,20 +431,21 @@ pausemenu.noFun = {
             case 25: // hq 1
             case 26: // hq 2
             case 27: // hq 3
-                if(this.cursor.y === 0) { this.SolvePuzzle(); this.state = 50; this.maxY = 0; } // Do It!
-                else if(this.cursor.y === 1) { this.state = 0; this.maxY = 3; } // Nevermind
+                if(this.cursor.y === 0) { this.SolvePuzzle(); this.state = 50; this.maxY = 0;  Sounds.PlaySound("confirm"); } // Do It!
+                else if(this.cursor.y === 1) { this.state = 0; this.maxY = 3; Sounds.PlaySound("cancel"); } // Nevermind
                 break;
             case 3:
-                if(this.cursor.y === 0) { this.state = 31; this.maxY = 2; } // How Play?
-                else if(this.cursor.y === 1) { this.state = 32; this.maxY = 1; } // Bees!
-                else if(this.cursor.y === 2) { this.state = 33; this.maxY = 0; } // No Fun
-                else if(this.cursor.y === 3) { this.state = 34; this.maxY = 0; } // Story
-                else if(this.cursor.y === 4) { this.state = 0; this.maxY = 3; } // Nevermind
+                if(this.cursor.y === 0) { this.state = 31; this.maxY = 2; Sounds.PlaySound("confirm"); } // How Play?
+                else if(this.cursor.y === 1) { this.state = 32; this.maxY = 1; Sounds.PlaySound("confirm"); } // Bees!
+                else if(this.cursor.y === 2) { this.state = 33; this.maxY = 0; Sounds.PlaySound("confirm"); } // No Fun
+                else if(this.cursor.y === 3) { this.state = 34; this.maxY = 0; Sounds.PlaySound("confirm"); } // Story
+                else if(this.cursor.y === 4) { this.state = 0; this.maxY = 3; Sounds.PlaySound("cancel"); } // Nevermind
                 break;
             case 31: 
                 if(this.cursor.y === 0) {  // Battle Tutorial!
                     this.clean();
                     game.target = { name: "Bort" };
+                    Sounds.PlaySound("confirm", true);
                     tutorial.startBattle();
                     return;
                 } else if(this.cursor.y === 1) { // Fixture Tutorial!
@@ -446,8 +453,9 @@ pausemenu.noFun = {
                     this.clean();
                     game.innerTransition(this, pausemenu, 0);
                     fixTut.start(true);
+                    Sounds.PlaySound("confirm", true);
                     return;
-                } else if(this.cursor.y === 2) { this.state = 3; this.maxY = 4; } // No Thanks
+                } else if(this.cursor.y === 2) { this.state = 3; this.maxY = 4; Sounds.PlaySound("cancel"); } // No Thanks
                 break;
             case 32: 
                 if(this.cursor.y === 0) { // Bee Me Up, Scotty!
@@ -458,12 +466,13 @@ pausemenu.noFun = {
                     player.increaseItem("_beehive");
                     this.state = 50;
                     this.maxY = 0;
-                } else if(this.cursor.y === 1) { this.state = 3; this.maxY = 4; } // No Thanks
+                    Sounds.PlaySound("confirm");
+                } else if(this.cursor.y === 1) { this.state = 3; this.maxY = 4; Sounds.PlaySound("cancel"); } // No Thanks
                 break;
-            case 33: return game.transition(this, tobyTern);
+            case 33: Sounds.PlaySound("confirm", true); return game.transition(this, tobyTern);
             case 2:
             case 34: 
-            case 50: this.state = 0; this.maxY = 3; break;
+            case 50: this.state = 0; this.maxY = 3; Sounds.PlaySound("cancel"); break;
         }
         this.cursor.y = 0;
         this.DrawAll();

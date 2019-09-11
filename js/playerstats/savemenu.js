@@ -137,11 +137,14 @@ pausemenu.savemenu = {
         } else if(!this.isSave && this.cursorY === (dy + game.numSaveSlots)) {
             if(this.clearSavesState === 0) {
                 this.clearSavesState = 1;
+                Sounds.PlaySound("confirm");
             } else if(this.clearSavesState === 1) {
                 this.clearSavesState = 0;
+                Sounds.PlaySound("cancel");
             } else if(this.clearSavesState === 2) {
                 localStorage.clear();
                 this.clearSavesState = 3;
+                Sounds.PlaySound("confirm");
             } else if(this.clearSavesState === 3) {
                 this.cancel();
                 return true;
@@ -155,6 +158,7 @@ pausemenu.savemenu = {
                 this.saving = true;
                 this.confirm = false;
                 this.DrawAll();
+                Sounds.PlaySound("confirm");
             }
         } else {
             if(this.confirm && this.confirmCursorY === 1) {
@@ -163,9 +167,11 @@ pausemenu.savemenu = {
                 this.saving = true;
                 this.confirm = true;
                 this.confirmCursorY = 0;
+                Sounds.PlaySound("confirm");
                 this.DrawAll();
             } else {
                 game.load(saveNum);
+                Sounds.PlaySound("confirm", true);
             }
         }
         return true;
@@ -180,6 +186,7 @@ pausemenu.savemenu = {
         } else {
             game.innerTransition(this, worldmap.title, 1);
         }
+        Sounds.PlaySound("cancel");
     },
     keyPress: function(key) {
         const pos = { x: 0, y: this.cursorY };
@@ -202,11 +209,14 @@ pausemenu.savemenu = {
         if(this.clearSavesState > 0) {
             if(pos.y < this.cursorY) {
                 this.clearSavesState = 1;
+                Sounds.PlaySound("menuMove");
             } else if(pos.y > this.cursorY) {
                 this.clearSavesState = 2;
+                Sounds.PlaySound("menuMove");
             }
         } else {
             if(this.confirm) {
+                if(pos.x !== this.confirmCursorY) { Sounds.PlaySound("menuMove"); }
                 if(pos.x === 1) { this.confirmCursorY = 1; }
                 else if(pos.x === -1) { this.confirmCursorY = 0; }
                 this.DrawAll();
@@ -214,6 +224,7 @@ pausemenu.savemenu = {
             }
             if(pos.y >= this.options.length) { return false; }
             if(this.cursorY === pos.y) { return false; }
+            Sounds.PlaySound("menuMove");
             this.cursorY = pos.y;
         }
         this.DrawAll();

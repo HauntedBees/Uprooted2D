@@ -92,7 +92,7 @@ pausemenu.equipment = {
             this.setText();
         }
     },
-    cancel: function() { game.innerTransition(this, pausemenu, 1); },
+    cancel: function() { game.innerTransition(this, pausemenu, 1); Sounds.PlaySound("cancel"); },
     mouseMove: function(pos) {
         const dpos = { x: pos.x - this.dx, y: pos.y - this.dy };
         if(dpos.y < 0) {
@@ -118,8 +118,10 @@ pausemenu.equipment = {
         const item = player.inventory[this.rowData[this.cursor.y][this.cursor.x].actualIndex];
         const equipInfo = GetEquipment(item[0]);
         if(player.equipment[equipInfo.type] === item[0]) {
+            Sounds.PlaySound("cancel");
             player.equipment[equipInfo.type] = null;
         } else {
+            Sounds.PlaySound("confirm");
             player.equipment[equipInfo.type] = item[0];
         }
         this.drawAll();
@@ -158,6 +160,8 @@ pausemenu.equipment = {
             }
             if(pos.y >= this.rowData.length || this.rowData[pos.y].length === 0) { return false; }
         }
+        if(SamePoints(this.cursor, pos)) { return false; }
+        Sounds.PlaySound("menuMove");
         this.cursor = { x: pos.x, y: pos.y };
         this.drawAll();
         return true;

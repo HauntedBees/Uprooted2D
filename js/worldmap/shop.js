@@ -210,6 +210,8 @@ worldmap.shop = {
         } else {
             if(newCursorX > this.actualIdxs.length) { return false; }
         }
+        if(this.cursorX === newCursorX) { return; }
+        Sounds.PlaySound("menuMove");
         this.cursorX = newCursorX;
         let text = "hi im craig";
         if(this.cursorX === 0) {
@@ -247,8 +249,9 @@ worldmap.shop = {
     },
     MoveSellSelect: function(pos) {
         const newCursorX = Math.floor((pos.x - 4) / 2);
-        if(newCursorX < 0 || newCursorX > 3) { return false; }
+        if(newCursorX < 0 || newCursorX > 3 || newCursorX === this.cursorX) { return false; }
         this.cursorX = newCursorX;
+        Sounds.PlaySound("menuMove");
         let text = "";
         switch(this.cursorX) {
             case me.sellTypes.CROPSIDX: text = GetText("s.sellseed"); break;
@@ -259,24 +262,27 @@ worldmap.shop = {
         this.DrawDetails(text);
         return true;
     },
-    MoveBuying: function(pos) {
+    MoveBuying: function(pos, forceMove) {
         this.bookState = -1;
         const newCursorX = Math.floor((pos.x - 1) / this.dx);
         if(this.howManyData !== null) {
             if(pos.y < this.yPos) { // move up
                 if(this.cursorY === 0) { return false; }
                 this.cursorY -= 1;
+                Sounds.PlaySound("menuMove");
             } else if(pos.y > this.yPos) { // move down
                 if(this.cursorY === 2) { return false; }
                 this.cursorY += 1;
+                Sounds.PlaySound("menuMove");
             }
             if(this.cursorY === 0) {
                 const initX = (this.cursorX * this.dx) + 1;
                 if(pos.x > initX) { // increase amount
                     const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
-                    if(newPrice <= player.monies) { this.howManyData.amount += 1; }
+                    if(newPrice <= player.monies) { this.howManyData.amount += 1; Sounds.PlaySound("menuMove"); }
+                    else { Sounds.PlaySound("navNok"); }
                 } else if(pos.x < initX) { // decrease amount
-                    this.howManyData.amount = Math.max(1, this.howManyData.amount - 1);
+                    this.howManyData.amount = Math.max(1, this.howManyData.amount - 1); Sounds.PlaySound("menuMove");
                 }
             }
             this.DrawDetails();
@@ -284,6 +290,8 @@ worldmap.shop = {
         }
         if(newCursorX < 0 || newCursorX >= (this.details.wares.length + this.cursorInitx)) { return false; }
         if(newCursorX > ((this.hasTalk || this.details.doesSell ? 1 : 0) + this.availableIndexes.length)) { return false; }
+        if(this.cursorX === newCursorX && !forceMove) { return; }
+        if(!forceMove) { Sounds.PlaySound("menuMove"); }
         this.cursorX = newCursorX;
         this.DrawDetails();
         return true;
@@ -490,6 +498,7 @@ worldmap.shop = {
         this.sellingState = me.sellStates.SELLING;
         this.cursorX = 1;
         this.DrawDetails("");
+        Sounds.PlaySound("confirm");
         this.mouseMove({x: this.cursorX + 1, y: this.yPos});
         return true;
     },
@@ -500,7 +509,7 @@ worldmap.shop = {
         if(newText === false) {
             this.sellingState = me.sellStates.BUYING;
             this.bookState = -1;
-            this.MoveBuying(pos);
+            this.MoveBuying(pos, true);
         } else {
             this.DrawDetails(newText);
             if(this.bookReading === "bookStun" && this.bookState === 1) {
@@ -533,6 +542,7 @@ worldmap.shop = {
         } else if(this.details.doesSell && this.cursorX === 1) {
             this.sellingState = me.sellStates.SELLSELECT;
             this.DrawDetails(GetText("s.sellseed"));
+            Sounds.PlaySound("confirm");
             return true;
         } else if(this.howManyData !== null) {
             if(this.cursorY === 2) {
@@ -540,6 +550,7 @@ worldmap.shop = {
             } else if(this.cursorY === 0) {
                 this.cursorY = 1;
                 this.DrawDetails();
+                Sounds.PlaySound("confirm");
                 return true;
             }
         }
@@ -604,6 +615,7 @@ worldmap.shop = {
             if(this.howManyData === null) {
                 this.cursorY = 0;
                 this.howManyData = { product: productInfo, amount: 1, price: price };
+                Sounds.PlaySound("confirm");
                 player.AddMonies(price); // we already charged!
                 player.decreaseItem(productInfo.product, amt); // we already added one!
                 if(productInfo.type === "farm" && player.fixtureTutorialState === 0) { player.fixtureTutorialState = 1; }
@@ -629,11 +641,13 @@ worldmap.shop = {
                     case me.sellTypes.FIXTURES: this.cursorX = me.sellTypes.FIXIDX; break;
                 }
                 this.DrawDetails("");
+                Sounds.PlaySound("cancel");
                 this.mouseMove({ x: 2 * this.cursorX + 4, y: this.yPos });
                 break;
             case me.sellStates.SELLSELECT:
                 this.sellingState = me.sellStates.BUYING;
                 this.cursorX = 1;
+                Sounds.PlaySound("cancel");
                 this.DrawDetails(GetText(this.details.selling));
                 break;
             case me.sellStates.BUYING:
@@ -647,6 +661,7 @@ worldmap.shop = {
                     });
                 } else {
                     this.howManyData = null; 
+                    Sounds.PlaySound("cancel");
                     this.DrawDetails();
                 }
                 break;

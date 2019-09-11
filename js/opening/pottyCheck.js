@@ -31,6 +31,7 @@ worldmap.pottyCheck = {
     },
     CursorMove: function(pos) {
         if(pos.y < 0 || pos.y > 1 || this.state === 1) { return false; }
+        if(this.cursory !== pos.y) { Sounds.PlaySound("menuMove"); }
         this.cursory = pos.y;
         speaker.SayThing(GetText(this.cursory === 1 ? "pottyYes" : "pottyNo"), "option");
         this.DrawAll();
