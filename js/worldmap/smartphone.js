@@ -59,6 +59,7 @@ function Smartphone() {
     };
     this.PushText = function(msg) { notifications++; texts.push(new Text(msg)); };
     this.Read = function() {
+        if(worldmap.mapName !== "northcity") { return; }
         for(let i = 0; i < texts.length; i++) {
             if(texts[i].read || texts[i].active) { continue; }
             texts[i].active = true;
@@ -71,6 +72,7 @@ function Smartphone() {
         return false;
     };
     this.Dismiss = function() {
+        if(worldmap.mapName !== "northcity") { return; }
         let count = 0;
         for(let i = 0; i < texts.length; i++) {
             if(texts[i].active) { count++; texts[i].active = false; }
