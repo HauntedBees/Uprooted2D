@@ -11,6 +11,7 @@ function GetEntities(mapName, fromSave) {
         mapCache.push( {name: mapName, entities: [...entities]} );
         if(mapCache.length > 3) { mapCache.shift(); }
     }
+    console.log(entities);
     for(let i = entities.length - 1; i >= 0; i--) {
         const e = entities[i];
         if(e.name === "BadInfluenceRabbit") {
@@ -54,7 +55,6 @@ const randomEnemyRange = {
     "forest": [8, 9],
     "belowvillage": [4, 5],
     "underwater": [10, 14],
-    "fakefarm": [8, 8],
     "northcity": [17, 24],
     "hq_1": [6, 11],
     "hq_2": [8, 10]
@@ -155,16 +155,6 @@ const randEnemies = {
         GetREnemy("SeaMonk", 2, 9, 4, 2, commonMovementDatas.rectangle(2, 9, 1, 14), "seamonk"),
         GetREnemy("SeaMonk", 16, 24, 4, 2, commonMovementDatas.downrectangle(16, 24, 11, 2), "seamonk"),        
     ],
-    "fakefarm": [
-        GetREnemy("Chicky", 10, 15, 0, 3, undefined, "chick", 1), // 1 = full left to right
-        GetREnemy("Chicky", 19, 18, 0, 1, undefined, "chick", 2), // 2 = half right to left
-        GetREnemy("Chicky", 10, 21, 0, 3, undefined, "chick", 3), // 3 = half left to right 
-        GetREnemy("Pig", 10, 18, 3, 3, undefined, "piggn", 3), 
-        GetREnemy("Pig", 19, 24, 3, 1, undefined, "piggn", 4), // 4 = 3/4 right to left
-        GetREnemy("Golem", 10, 24, 4, 0, undefined, "golem"),
-        GetREnemy("Golem", 9, 24, 4, 0, undefined, "golem"),
-        GetREnemy("Golem", 8, 24, 4, 0, undefined, "golem")
-    ],
     "northcity": [
         GetREnemy("Car1", 8, 28, 0, 2, commonMovementDatas.fastdownrect(8, 28, 52, 16), "car1"),
         GetREnemy("Car2", 8, 44, 0, 3, commonMovementDatas.fastdownrect(8, 28, 52, 16, 1), "car2"),
@@ -227,6 +217,13 @@ function GetREnemy(key, x, y, firstx, dir, movement, metaDataId, param, ignoreMe
     const enemy = GetFellow("~" + key + Range(0, 1000), x, y, dir, metadata.anim, Cutscene("enemy"), movement, metadata);
     enemy.key = key; enemy.metadataid = metaDataId;
     enemy.fx = firstx; enemy.param = param;
+    return enemy;
+}
+function GetFarmEnemy(key, x, y, actKey, dir, movement, metaDataId, param, ignoreMetadata) {
+    let metadata = ignoreMetadata ? {} : commonEnemyInfo[metaDataId];
+    if(param !== undefined && !ignoreMetadata) { metadata = metadata(param); }
+    const enemy = GetFellow(key, x, y, dir, metadata.anim, Cutscene("enemy"), movement, metadata);
+    enemy.key = actKey;
     return enemy;
 }
 function EnemyMetadataFunc(requiredEnemy, potentialEnemies, min, max) {

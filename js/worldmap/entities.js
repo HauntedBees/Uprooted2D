@@ -402,6 +402,14 @@ const mapentities = {
         GetFellow("HOUSEKEEPER", 13, 30, 0, "HOUSEKEEPER", Cutscene("housekeeper"), undefined, { boss: true, visible: false, inside: true, storageKey: "HK" }),
         new CutsceneTrigger("beatBarn", "beatDweeb"),
         // Mandatory Enemies
+        GetFarmEnemy("Chicky1", 10, 15, "Chicky", 3, undefined, "chick", 1), // 1 = full left to right
+        GetFarmEnemy("Chicky2", 19, 18, "Chicky", 1, undefined, "chick", 2), // 2 = half right to left
+        GetFarmEnemy("Chicky3", 10, 21, "Chicky", 3, undefined, "chick", 3), // 3 = half left to right 
+        GetFarmEnemy("Pig1", 10, 18, "Pig", 3, undefined, "piggn", 3), 
+        GetFarmEnemy("Pig2", 19, 24, "Pig", 1, undefined, "piggn", 4), // 4 = 3/4 right to left
+        GetFarmEnemy("Golem1", 10, 24, "Golem", 0, undefined, "golem"),
+        GetFarmEnemy("Golem2", 9, 24, "Golem", 0, undefined, "golem"),
+        GetFarmEnemy("Golem3", 8, 24, "Golem", 0, undefined, "golem"),
         GetFellow("LawnMower1", 9, 27, 3, "Mower", Cutscene("mower"), undefined, requiredEnemyMetadata.mower(5)), // 5 = bigger LtR
         GetFellow("LawnMower2", 20, 28, 1, "Mower", Cutscene("mower"), undefined, requiredEnemyMetadata.mower(6)), // 6 = bigger RtL
         // Misc. Entities
