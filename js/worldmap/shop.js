@@ -418,9 +418,9 @@ worldmap.shop = {
         }
         topText += " \n \n " + GetText("s.howMany") + "      " + amount + "      (" + (price * amount) + "G)";
         if(this.cursorY === 0) {
-            gfx.drawTileToGrid(`${amount === 1 ? "n" : ""}opL`, 4.25, 10.75, "menutext");
+            gfx.drawTileToGrid(`${amount === 1 ? "n" : ""}opL`, 4.25, 10.25, "menutext");
             const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
-            gfx.drawTileToGrid(`${newPrice > player.monies ? "n" : ""}opR`, 5.75 + (amount >= 10 ? 0.5 : 0), 10.75, "menutext");
+            gfx.drawTileToGrid(`${newPrice > player.monies ? "n" : ""}opR`, 5.75 + (amount >= 10 ? 0.5 : 0), 10.25, "menutext");
         }
         gfx.drawInfoText(GetText("ctrlConfirm"), 4.25, 11.75, this.cursorY === 1, "menuA", "menutext");
         gfx.drawInfoText(GetText("ctrlCancel"), 4.25, 12.75, this.cursorY === 2, "menuA", "menutext");
