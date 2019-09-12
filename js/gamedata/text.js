@@ -116,11 +116,11 @@ const fulltext = {
 		"type": "item"
 	},
 	"sicklebattery": {
-		"en-us": "This battery will charge a Sickle2 Proprietary Charger Bay, allowing you to use your Sickle2 Proprietary Sickle-Type Product to its fullest proprietary potential!", 
+		"en-us": "This will charge a Sickle2 Proprietary Charger Bay, allowing you to use your Sickle2 Proprietary Sickle-Type Product to its fullest proprietary potential!", 
 		"type": "item"
 	},
 	"egg": {
-		"en-us": "Over 50 million tons of chicken eggs are laid each year; that's enough for every person in the world to eat around half an egg a day, every day! Statistics are eggciting!", 
+		"en-us": "Over 50 million tons of chicken eggs are laid each year; that's a lot of eggs! Careful not to get any on your face!", 
 		"type": "item"
 	},
 	"quail": {
@@ -6959,7 +6959,7 @@ const fulltext = {
 		"type": "opts"
 	},
 	"eq.actafter": {
-		"en-us": "Can Attack or Compost after planting.", 
+		"en-us": "Can Attack/Compost after planting.", 
 		"type": "opts"
 	},
 	"eq.actafter.sm": {
@@ -7180,7 +7180,7 @@ const fulltext = {
 		"type": "fixdesc"
 	},
 	"strongsoil.ldesc": {
-		"en-us": "Vegetables and trees planted on Strong Soil will take less damage from fire and water damage as well as standard attacks. The soil itself is also more resistant to burning and flooding.", 
+		"en-us": "Crops planted on this will take less damage from standard and elemental attacks. The soil itself is also more resistant to the elements.", 
 		"type": "fixdesc"
 	},
 	"hotspot.ldesc": {

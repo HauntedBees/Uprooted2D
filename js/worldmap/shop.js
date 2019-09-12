@@ -89,9 +89,9 @@ worldmap.shop = {
             this.WriteWrappedText(text);
         }
     },
-    WriteWrappedText: function(text, y) {
+    WriteWrappedText: function(text, y, size) {
         y = y || 159; // 16 * 10 - 1
-        gfx.drawWrappedText(text, 4, y, 250, gfx.GetWhite());
+        gfx.drawWrappedText(text, 4, y, 250, gfx.GetWhite(), undefined, size);
     },
     isValidSellIdx: function(i) {
         if(this.sellingType === me.sellTypes.CROPS) {
@@ -397,7 +397,7 @@ worldmap.shop = {
         for(let i = 0; i < bonusesToPush.length; i++) {
             gfx.drawTileToGrid(bonusesToPush[i], nextx + i, 11, "menutext");
         }
-        this.WriteWrappedText(GetText(crop.name), 198);
+        this.WriteWrappedText(GetText(crop.name), 198, 20);
     },
     DrawHowManyText: function() {
         const productInfo = this.howManyData.product;

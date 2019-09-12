@@ -214,7 +214,7 @@ const gfx = {
         if(player.options.font === 1) { y += 4; }
         switch(player.options.fontSize) {
             case 1: y += 3; break;
-            case 2: y += 8; break;
+            case 2: y += 5; break;
         }
         gfx.ctx["menutext"].fillStyle = gfx.GetBlack(); gfx.ctx["menutext"].fillRect(x, y, w, 5);
     },
