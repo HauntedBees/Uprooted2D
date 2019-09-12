@@ -210,7 +210,14 @@ const gfx = {
         gfx.drawTileToGrid(spriteName, x, y, layer);
         gfx.drawItemNumber(itemInfo[1], x, y, layer);
     },
-    drawStrikeThru: function(x, y, w) { if(player.options.font === 1) { y += 5; } gfx.ctx["menutext"].fillStyle = gfx.GetBlack(); gfx.ctx["menutext"].fillRect(x, y, w, 5); },
+    drawStrikeThru: function(x, y, w) {
+        if(player.options.font === 1) { y += 4; }
+        switch(player.options.fontSize) {
+            case 1: y += 3; break;
+            case 2: y += 8; break;
+        }
+        gfx.ctx["menutext"].fillStyle = gfx.GetBlack(); gfx.ctx["menutext"].fillRect(x, y, w, 5);
+    },
     drawChoice: function(y, t, selected) {
         const tile = selected ? "SselM" : "selM";
         for(let x = 0; x < 16; x++) { gfx.drawTile(tile, x * 16, y * 16 - 8, "menuA"); }
