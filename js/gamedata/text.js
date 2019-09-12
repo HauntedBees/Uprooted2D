@@ -1282,7 +1282,7 @@ const fulltext = {
 		"type": "opts"
 	},
 	"opBoth": {
-		"en-us": "Analog Stick and D-Pad", 
+		"en-us": "Analog Stick + D-Pad", 
 		"type": "opts"
 	},
 	"opBoth.i": {

@@ -1,7 +1,7 @@
 worldmap.optionsMenu = {
     soundNums: ["opOff", "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"],
     specialPos: -1, cursory: 1, options: [], localOptions: {}, fromPause: false, invalidControls: [],
-    headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 12, inChange: false, origFont: 0,
+    headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 18, inChange: false, origFont: 0,
     usingMouse: false, view: 0, views: [0, 15, 20], mouseoffsets: [0, 40, 120], maxView: 1,
     setup: function(fromPause) {
         this.usingMouse = false;
@@ -146,9 +146,10 @@ worldmap.optionsMenu = {
                         gfx.drawTileToGrid((op.val === (op.choices.length - 1) ? "nopR" : "opR"), (op.optx + len / 4) / 16, acty - tileyoffset, "menutext");
                     }
                     if(op.hasInfo) {
-                        const infotext = op.textId === "opControlScheme" ? GetText("opControlNote") : GetText(op.choices[op.val] + ".i");
-                        const infox = gfx.getTextFractionX(infotext, this.optionInfoSize);
-                        gfx.drawText(infotext, infox, op.y2 - yoffset, gfx.GetBlack(), this.optionInfoSize);
+                        const infotext = "+ " + (op.textId === "opControlScheme" ? GetText("opControlNote") : GetText(op.choices[op.val] + ".i"));
+                        //const infox = gfx.getTextFractionX(infotext, this.optionInfoSize);
+                        //gfx.drawText(infotext, infox, op.y2 - yoffset, gfx.GetBlack(), this.optionInfoSize);
+                        gfx.drawWrappedText(infotext, 10, op.y2 - yoffset, 236, gfx.GetBlack(), "menutext", this.optionInfoSize);
                     }
                     break;
                 case "button":
@@ -284,7 +285,7 @@ worldmap.optionsMenu = {
             x: gfx.getTextRightAlignedX(acttext, this.optionSize, gfx.canvasWidth / 2) / gfx.scale - 5,
             optx: gfx.canvasWidth / 8 + 5,
             y: y,
-            y2: y + (this.optionSize / 3.3333) - 2,
+            y2: y + (this.optionSize / 3.3333),
             text: acttext, 
             val: initVal,
             choices: options,
@@ -292,7 +293,7 @@ worldmap.optionsMenu = {
             textId: text,
             idx: idx
         });
-        return y + (this.optionSize / 3.3333) * (hasInfo ? 2 : 1);
+        return y + (this.optionSize / 3.3333) * (hasInfo ? 4 : 1);
     },
     addButtonLie: function(y) {
         const text = GetText("opBtnMove");
