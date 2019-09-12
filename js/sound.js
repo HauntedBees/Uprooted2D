@@ -90,7 +90,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
             Sounds.PlayingSounds.push(name);
         }
         Sounds.SoundTable[name].currentTime = 0;
-        Sounds.SoundTable[name].volume = (forcedVolume || player.options.sound) / 10;
+        Sounds.SoundTable[name].volume = (forcedVolume || player.options.sound) / 20;
         Sounds.SoundTable[name].play();
     },
     EndSpecific: function(name) {

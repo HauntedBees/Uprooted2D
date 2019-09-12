@@ -11,7 +11,7 @@ let player = {
     lastInn: "start", lastSaveSlot: 0, dreamBonus: 0, 
     options: {
         difficulty: 1, 
-        music: 10, sound: 10,
+        music: 20, sound: 20,
         controltype: 0, canSayFuck: 0, deadZone: 0, analogDPad: 1, 
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
         font: 0, fontSize: 0, resolution: 1, fullscreen: 0, gfxfilter: 3,

@@ -1,5 +1,5 @@
 worldmap.optionsMenu = {
-    soundNums: ["opOff", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"],
+    soundNums: ["opOff", "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"],
     specialPos: -1, cursory: 1, options: [], localOptions: {}, fromPause: false, invalidControls: [],
     headingSize: 36, optionSize: 22, tileSize: 16, optionInfoSize: 12, inChange: false, origFont: 0,
     usingMouse: false, view: 0, views: [0, 15, 20], mouseoffsets: [0, 40, 120], maxView: 1,
