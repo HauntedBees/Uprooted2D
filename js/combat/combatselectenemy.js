@@ -113,7 +113,12 @@ combat.selectTarget = {
         combat.animHelper.DrawBottom();
     },
     clean: () => gfx.clearSome(combat.selectTarget.layersToClear),
-    cancel: function() { if(game.currentInputHandler.isTutorial) { return false; } game.innerTransition(this, combat.menu, { sel: 1, notFirst: true }); return true; },
+    cancel: function() {
+        if(game.currentInputHandler.isTutorial) { Sounds.PlaySound("navNok"); return false; } // this probably never even happens actually
+        game.innerTransition(this, combat.menu, { sel: 1, notFirst: true });
+        Sounds.PlaySound("navNok");
+        return true;
+    },
     
     // Selecting Logic
     keyPress: function(key) {
@@ -187,6 +192,7 @@ combat.selectTarget = {
             if(SamePoints(this.sicklePos, pos)) { return false; }
             this.sicklePos = pos;
         }
+        Sounds.PlaySound("menuMove");
         this.drawAll();
         return true;
     },
@@ -327,6 +333,7 @@ combat.selectTarget = {
         }
         if(postHit === null) { postHit = function() { combat.endTurn(combat.inbetween); }; }
         game.innerTransition(this, combat.inbetween, { next: postHit, text: damagetext });
+        Sounds.PlaySound("navOk");
         return true;
     },
     GetAttackDetails: function() {

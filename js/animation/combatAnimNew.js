@@ -208,6 +208,12 @@ function AnimProcess(ae, as, babies) {
     };
     this.ClearBabies = function() { this.animBabies = []; }
     this.AddOverlay = function(overlay) { overlays.push(overlay); }
+    if(as.startSound) {
+        //if(typeof as.startSound === "function") {
+        //} else {
+            Sounds.PlaySound(as.startSound);
+        //}
+    }
     this.Animate = function(isStuckInGoop) {
         const now = +new Date();
         let isEnd = false;

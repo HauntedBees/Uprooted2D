@@ -60,9 +60,16 @@ function CombatAnimHelper(enemies) {
     };
     this.PushPlayerOverlay = name => playerAnimInfo.PushOverlayAnim(weaponAnims[name]);
     this.GivePlayerAHit = function(isCrop) {
-        if(isCrop) { this.SetPlayerAnimState("HURT_CROP"); }
-        else if(player.health <= 0) { this.SetPlayerAnimState("FATALBLOW"); }
-        else { this.SetPlayerAnimState("HURT"); }
+        if(isCrop) {
+            Sounds.PlaySound("hit_hollow");
+            this.SetPlayerAnimState("HURT_CROP");
+        } else if(player.health <= 0) {
+            Sounds.PlaySound("door");
+            this.SetPlayerAnimState("FATALBLOW");
+        } else {
+            Sounds.PlaySound("hit_light");
+            this.SetPlayerAnimState("HURT");
+        }
     };
 
     this.SetBirdAnimArg = (key, val) => { if(birdAnimInfo !== null) { birdAnimInfo.PushArg(key, val); }};
