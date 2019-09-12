@@ -411,7 +411,8 @@ const worldmap = {
         if(worldmap.dialogData.choices === undefined || worldmap.dialogData.choices.length === 0) { return; }
         let newchoice = worldmap.dialogData.idx + dy;
         if(newchoice < 0) { newchoice = 0; }
-        if(newchoice >= worldmap.dialogData.choices.length) { newchoice = worldmap.dialogData.choices.length - 1; }
+        else if(newchoice >= worldmap.dialogData.choices.length) { newchoice = worldmap.dialogData.choices.length - 1; }
+        else { Sounds.PlaySound("menuMove"); }
         worldmap.dialogData.idx = newchoice;
         worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
     },

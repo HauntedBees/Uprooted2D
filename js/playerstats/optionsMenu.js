@@ -147,8 +147,6 @@ worldmap.optionsMenu = {
                     }
                     if(op.hasInfo) {
                         const infotext = "+ " + (op.textId === "opControlScheme" ? GetText("opControlNote") : GetText(op.choices[op.val] + ".i"));
-                        //const infox = gfx.getTextFractionX(infotext, this.optionInfoSize);
-                        //gfx.drawText(infotext, infox, op.y2 - yoffset, gfx.GetBlack(), this.optionInfoSize);
                         gfx.drawWrappedText(infotext, 10, op.y2 - yoffset, 236, gfx.GetBlack(), "menutext", this.optionInfoSize);
                     }
                     break;

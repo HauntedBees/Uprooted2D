@@ -217,6 +217,8 @@ function AnimProcess(ae, as, babies) {
             lastRan = now;
         }
         const animInfo = animset.anims[frame];
+        if(animInfo.stopPrevSound) { Sounds.EndAll(); }
+        if(animInfo.sound) { Sounds.PlaySound(animInfo.sound); }
         if(animInfo.callback && callbacksCalled.indexOf(frame) < 0) {
             callbacksCalled.push(frame);
             animCallbacks[animInfo.callback](this, animentity);

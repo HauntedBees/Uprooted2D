@@ -16,7 +16,7 @@ combat.plant = {
     },
     clean: function() { gfx.clearSome(this.layersToClean) },
     cancel: function(fromKeyboard) {
-        if(game.currentInputHandler.isTutorial) { return false; }
+        if(game.currentInputHandler.isTutorial) { Sounds.PlaySound("navNok"); return false; }
         if(this.activeCrop === null) {
             if(combat.numPlantTurns != player.getPlantingTurns()) {
                 if(player.canAttackAfterPlanting()) {
@@ -32,6 +32,7 @@ combat.plant = {
             if(fromKeyboard) { this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy }; }
             this.DrawAll();
         }
+        Sounds.PlaySound("navNok");
         return true;
     },
     isValidPlantingLocation: function(px, py, diff) {
@@ -198,14 +199,15 @@ combat.plant = {
             if(SamePoints(this.cursor, pos)) { return false; }
             this.cursor = { x: pos.x, y: pos.y };
         }
+        Sounds.PlaySound("menuMove");
         this.DrawAll();
         return true;
     },
     click: function(fromKeyboard) {
         let pos = { x: this.cursor.x, y: this.cursor.y };
         if(pos.x < 0 || pos.y < 0) { return false; }
-        if(pos.y === (this.dy - 1) && pos.x === 0) { return this.cancel(fromKeyboard || false); }
-        if(this.activeCrop === null) {
+        if(pos.y === (this.dy - 1) && pos.x === 0) { return this.cancel(fromKeyboard || false); } // back
+        if(this.activeCrop === null) { // selecting a crop
             pos.y = (pos.y - this.dy);
             if(pos.x >= this.inventoryWidth) { return false; }
             const idx = pos.y * this.inventoryWidth + pos.x;
@@ -221,14 +223,15 @@ combat.plant = {
             }
             this.cursor = { x: combat.dx + newx, y: combat.dy + newy };
             this.isValid = this.isValidPlantingLocation(newx, newy, this.activeCrop.size - 1);
-        } else {
+            Sounds.PlaySound("navOk");
+        } else { // placing a crop
             const diff = this.activeCrop.size - 1;
             if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) { return false; }
             if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight - diff)) { return false; }
             const px = pos.x - combat.dx, py = pos.y - combat.dy;
             combat.lastPlantedPos = { x: px, y: py };
             const ppos = { x: px, y: py };
-            if(!this.isValidPlantingLocation(px, py, diff)) { return false; }
+            if(!this.isValidPlantingLocation(px, py, diff)) { Sounds.PlaySound("navNok"); return false; }
             let newCrop = GetCrop(this.activeCrop.name);
             if(combat.grid[px][py] !== null && combat.grid[px][py].name === "salt") { newCrop.power = Math.ceil(newCrop.power / 2); }
             let cropIsKill = false, killType = 0;
@@ -236,7 +239,7 @@ combat.plant = {
                 if(["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && Math.random() <= 0.1) {
                     cropIsKill = true;
                     killType = 1;
-                }
+                } // shock gloves can ruin crops
             }
             if(player.equipment.soil !== null && GetEquipment(player.equipment.soil).tech) {
                 if(["tree", "rice", "veg", "mush"].indexOf(newCrop.type) >= 0 && (newCrop.power <= 5 || newCrop.time <= 5)) {
@@ -245,36 +248,41 @@ combat.plant = {
                 } else if(newCrop.type === "bee") {
                     cropIsKill = true;
                     killType = 3;
-                }
+                } // pesticide can ruin plants and bees
             }
-            if(newCrop.type === "moist") {
+            if(newCrop.type === "moist") { // water that crop
                 const watered = [];
                 watered.push(this.WaterCrop(px, py, newCrop.power));
                 if(newCrop.size === 2) {
                     watered.push(this.WaterCrop(px + 1, py, newCrop.power, watered));
                     watered.push(this.WaterCrop(px, py + 1, newCrop.power, watered));
                     this.WaterCrop(px + 1, py + 1, newCrop.power, watered);
-                    this.finishTurn(GetText("plFishFail"));
+                    //this.finishTurn(GetText("plFishFail")); // why the fuck was this here
                 }
                 this.finishTurn(GetText("waterCrops"));
+                Sounds.PlaySound("water");
                 return true;
-            } if(player.itemGrid[px][py] === "_shooter") {
-                if(combat.getUsedShooterIndex(px, py) >= 0) { return false; }
+            } if(player.itemGrid[px][py] === "_shooter") { // seed shooter
+                if(combat.getUsedShooterIndex(px, py) >= 0) { Sounds.PlaySound("navNok"); return false; }
                 player.miscdata.techFixturesUsed++;
                 combat.usedShooters.push({x: px, y: py});
                 this.LaunchSeeds();
+                Sounds.PlaySound("hit_gun");
                 return true;
-            } else if(player.itemGrid[px][py] === "_modulator") {
+            } else if(player.itemGrid[px][py] === "_modulator") { // change season
                 player.miscdata.techFixturesUsed++;
                 this.Modulate();
+                Sounds.PlaySound("bamham");
                 return true;
-            } else if(this.activeCrop.type === "spear") {
+            } else if(this.activeCrop.type === "spear") { // throw spear
                 this.ThrowSpear(px, py);
+                Sounds.PlaySound("voip");
                 return true;
             }
             player.shiftTech(newCrop.type === "tech" ? 0.04 : -0.01);
+            let sound = "dismisstext";
             if((diff === 0 && player.itemGrid[px][py] !== null && player.itemGrid[px][py].corner === "_cow") ||
-                (diff === 1 && player.itemGrid[px + 1][py + 1] !== null && player.itemGrid[px + 1][py + 1].corner === "_cow")) {
+                (diff === 1 && player.itemGrid[px + 1][py + 1] !== null && player.itemGrid[px + 1][py + 1].corner === "_cow")) { // feed cow
                 cropIsKill = false;
                 const cowDelta = (diff === 1 ? 0 : 1);
                 const cowIdx = combat.getCowIndex(px - cowDelta, py - cowDelta);
@@ -285,7 +293,8 @@ combat.plant = {
                     combat.happyCows.push({ x: px - cowDelta, y: py - cowDelta, feed: newCrop.power });
                 }
                 combat.animHelper.DrawBackground();
-            } else {
+                sound = "itemget";
+            } else { // plant crop
                 newCrop.activeTime = this.GetGrowthTime(newCrop, px, py, false);
                 const effects = combat.effectGrid[px][py];
                 player.miscdata.typesPlanted[newCrop.type] += 1;
@@ -329,12 +338,12 @@ combat.plant = {
             }
             this.activeCrop = null;
             combat.animHelper.DrawCrops();
-            if(cropIsKill) {
-                let next = () => game.innerTransition(combat.inbetween, combat.plant);
+            if(cropIsKill) { // crop was damaged
+                let next = () => game.innerTransition(combat.inbetween, combat.plant); // but can plant more
                 if(--combat.numPlantTurns == 0) {
-                    if(player.canAttackAfterPlanting()) {
+                    if(player.canAttackAfterPlanting()) { // but can still attack
                         next = () => game.innerTransition(combat.inbetween, combat.menu, { sel: 0, notFirst: true });
-                    } else {
+                    } else { // and that's the end of it
                         next = () => combat.endTurn(combat.inbetween);
                     }
                 }
@@ -346,16 +355,19 @@ combat.plant = {
                     default: killMsg += GetText("tryPlantBug"); break;
                 }
                 game.innerTransition(this, combat.inbetween, { next: next, text: killMsg });
+                Sounds.PlaySound("navNok");
                 return true;
-            } else {
+            } else { // crop was planted
                 if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting() && !combat.isFalcon) {
                         game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
                     } else {
                         combat.endTurn(this);
                     }
+                    Sounds.PlaySound(sound);
                     return true;
                 } else {
+                    Sounds.PlaySound(sound);
                     this.setup();
                 }
             }

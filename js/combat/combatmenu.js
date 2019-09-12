@@ -210,7 +210,10 @@ combat.menu = {
     CursorMove: function(pos) {
         if(pos.y >= (this.dy + this.options.length) || pos.y < this.dy) { return false; }
         if(pos.x > 4) { return false; }
-        this.setup({ sel: pos.y - this.dy, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
+        const newcursory = pos.y - this.dy;
+        if(this.cursorY === newcursory) { return false; }
+        Sounds.PlaySound("menuMove");
+        this.setup({ sel: newcursory, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
         return true;
     },
     click: function(pos, isFresh) {
@@ -234,17 +237,18 @@ combat.menu = {
                 }
                 break;
             case 1:
-                if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { return; }
+                if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { Sounds.PlaySound("navNok"); return false; }
                 const count = this.highlightReadyCropsAndReturnCount();
                 const theircount = this.getEnemyCropCount();
-                if(!combat.isFalcon && count === 0 && !player.canMelee(theircount)) { return; }
+                if(!combat.isFalcon && count === 0 && !player.canMelee(theircount)) { Sounds.PlaySound("navNok"); return false; }
                 let attackCount = 1;
                 if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
                 game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
                 break;
             case 2:
-                if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { return; }
+                if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { Sounds.PlaySound("navNok"); return false; }
                 if(player.equipment.compost !== null && this.HasCompostableCrops()) { game.innerTransition(this, combat.compost); }
+                else { Sounds.PlaySound("navNok"); return false; }
                 break;
             case 3:
                 if(!combat.isBossBattle && !combat.isFalcon) {
@@ -253,10 +257,14 @@ combat.menu = {
                     } else {
                         this.tryFlee();
                     }
+                } else {
+                    Sounds.PlaySound("navNok");
+                    return false;
                 }
                 break;
-            default: return false;
+            default: Sounds.PlaySound("navNok"); return false;
         }
+        Sounds.PlaySound("navOk");
         return true;
     },
     freeFleeEnemies: ["machineA", "machineB", "machineC", "machineD", "botMush", "botRice", "botFruit", "botVeggie"],

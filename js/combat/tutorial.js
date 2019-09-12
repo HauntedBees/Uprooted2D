@@ -66,7 +66,7 @@ const tutorial = {
         if(isEnter) {
             const runCheck = (this.state === 0 && combat.menu.cursorY === 3);
             let success = this.stateDetails[this.state]();
-            if(!success && !runCheck) { return false; }
+            if(!success && !runCheck) { Sounds.PlaySound("navNok"); return false; }
             if(!runCheck) {
                 if(isClick) { success = tutorial.currentInputHandler.click(clickPos, true); }
                 else { success = tutorial.currentInputHandler.keyPress(key); }

@@ -5,7 +5,7 @@ function AnimSet(anims, loop, fps, options) {
     this.loop = loop || false;
     if(options !== undefined) { for(let key in options) { this[key] = options[key]; } }
 }
-function AnimFrame(sx, sy, callback) { this.x = sx; this.y = sy; this.callback = callback; }
+function AnimFrame(sx, sy, callback, sound, stopPrevSound) { this.x = sx; this.y = sy; this.callback = callback; this.sound = sound; this.stopPrevSound = stopPrevSound || false; }
 
 function OverlaySet(sheet, frames) { this.sheet = sheet; this.frames = frames; this.length = this.frames.length - 1; }
 function OverlayFrame(sx, sy, dx, dy) { this.x = sx; this.y = sy; this.dx = dx || 0; this.dy = dy || 0; }
@@ -122,8 +122,8 @@ const playerCombatAnims = {
                                 new AnimFrame(4, 4, "player_damageFoesWithAnim"), new AnimFrame(4, 4, "player_damageFoes2"), new AnimFrame(0, 0)], false),
     "MELEE_CROP": new AnimSet([new AnimFrame(4, 1), new AnimFrame(4, 2), new AnimFrame(4, 3), 
                                new AnimFrame(7, 2, "player_damageFoesWithAnim"), new AnimFrame(7, 2, "player_damageFoes2"), new AnimFrame(0, 0)], false),
-    "FLEE": new AnimSet([new AnimFrame(5, 1), new AnimFrame(5, 2), new AnimFrame(6, 1), new AnimFrame(5, 2)], true),
-    "FLEEFAIL": new AnimSet([new AnimFrame(5, 1), new AnimFrame(5, 2), new AnimFrame(6, 1), new AnimFrame(5, 2), new AnimFrame(5, 1), new AnimFrame(6, 2), new AnimFrame(7, 1)], false),
+    "FLEE": new AnimSet([new AnimFrame(5, 1, undefined, "stompins"), new AnimFrame(5, 2), new AnimFrame(6, 1), new AnimFrame(5, 2)], true),
+    "FLEEFAIL": new AnimSet([new AnimFrame(5, 1, undefined, "stompins"), new AnimFrame(5, 2), new AnimFrame(6, 1), new AnimFrame(5, 2), new AnimFrame(5, 1, undefined, "door", true), new AnimFrame(6, 2), new AnimFrame(7, 1)], false),
     "CORPSE": JustOne(2, 2),
     "FATALBLOW": JustOne(3, 2, { doShake: true }),
     "THROW_ENEMY": new AnimSet([new AnimFrame(0, 3, "player_pullCrop"), new AnimFrame(0, 4, "player_throwCropAtEnemy"), new AnimFrame(0, 4), new AnimFrame(0, 4)], false),
