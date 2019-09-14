@@ -47,8 +47,8 @@ function GetEquipment(name) {
 		case "!goodSickle": return new EquipmentDetail(name, 200, "weapon", { noEnemies: false, targetCrops: true, power: 5, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!dblSickle": return new EquipmentDetail(name, 250, "weapon", { noEnemies: false, targetCrops: true, power: 8, attacks: 2, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!hvySickle": return new EquipmentDetail(name, 250, "weapon", { noEnemies: false, targetCrops: true, power: 20, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
-		case "!hoe": return new EquipmentDetail(name, 300, "weapon", { noEnemies: true, targetCrops: true, power: 35, attacks: 3, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
-		case "!salthoe": return new EquipmentDetail(name, 300, "weapon", { noEnemies: true, targetCrops: true, power: 32, attacks: 2, wi: 15, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
+		case "!hoe": return new EquipmentDetail(name, 200, "weapon", { noEnemies: true, targetCrops: true, power: 35, attacks: 3, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
+		case "!salthoe": return new EquipmentDetail(name, 200, "weapon", { noEnemies: true, targetCrops: true, power: 32, attacks: 2, wi: 15, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!sicklerang": return new EquipmentDetail(name, 50, "weapon", { noEnemies: false, power: 20, attacks: 999, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!sunSickle": return new EquipmentDetail(name, 50, "weapon", { noEnemies: false, targetCrops: true, power: 25, sp: 10, su: 10, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!pltSickle": return new EquipmentDetail(name, 50, "weapon", { noEnemies: false, power: 30, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });

@@ -266,7 +266,7 @@ const scripts = {
 	"seamonkey1": "_TEXT:openchest&_END",
 	"seamonkey2": "_TEXT:chestLocked&_END",
 	"seamonkey3": "_TEXT:chestUnlock(1-2)",
-	"seamonkey4": "_SOUND:trayjure&_CHIEVO:dowel&_CUSTOM:PIRATETREASURE",
+	"seamonkey4": "_SOUND:itemget&_CHIEVO:dowel&_CUSTOM:PIRATETREASURE",
 	// Underwater: Kelp Boy's Vase
 	"kelpVase0": "?[{\"q\":\"player.completedQuest('kelpBoy')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"kelpVase1": "_TEXT:vaseFoundBee&_END",
@@ -282,7 +282,7 @@ const scripts = {
 	"kelpBoy2": "KelpBoy_ISMOVING:true&_SETQUEST:kelpBoy,wantMilk&_TEXT:kelpBoy(0-2)&_END",
 	"kelpBoy3": "KelpBoy_ISMOVING:true&_TEXT:kelpBoy2&_END",
 	"kelpBoy4": "KelpBoy_ISMOVING:true&_COMPLETEQUEST:kelpBoy&_ALIGNGOOD:0.25&_TEXT:kelpBoy(3-5)",
-	"kelpBoy5": "KelpBoy_ISMOVING:false&_CHIEVO:kelpBuddy&meHive_SETTARGET&_CLEARTARGET&_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_END",
+	"kelpBoy5": "_SOUND:itemget&KelpBoy_ISMOVING:false&_CHIEVO:kelpBuddy&meHive_SETTARGET&_CLEARTARGET&_TEXT:hiveGet&_GIVE:~beehive&_GIVE:beeB,5&_END",
 	"kelpBoy6": "KelpBoy_ISMOVING:true&_TEXT:vaseDo3",
 	"kelpBoy7": "_FIGHT:kelpBoy",
 	// Underwater: Kelp Boy Defeated
