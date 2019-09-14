@@ -106,7 +106,7 @@ const scripts = {
 	"turky0": "targ_ISMOVING:true&_ALIGNGOOD:-1&_TEXT:bossturky(0-1)",
 	"turky1": "_FIGHT:bossturky",
 	// Forest: Beehive
-	"ForestHive0": "_SOUND:itemget&targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
+	"ForestHive0": "_SOUND:itemget&_CLEARTARGET&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5",
 	"ForestHive1": "_TEXT:ForestHive(0-1)",
 	"ForestHive2": "_SOUND:bear&bearbo_VISIBLE:true&pl_SETDIR:2&_TEXT:ForestHive2",
 	"ForestHive3": "bearbo_SETTARGET&_CLEARTARGET&_FIGHT:bear",
@@ -119,7 +119,7 @@ const scripts = {
 	"rabbit5": "_TEXT:rabbit2&_END",
 	"rabbit6": "_TEXT:rabbit3&_END",
 	"rabbit7": "_CHIEVO:badrabbit&_MONEY:-500&_GIVE:~strongsoil&_COMPLETEQUEST:rabbitShit&_TEXT:rabbit4",
-	"rabbit8": "_STARTTRANSITIONANIM&_BLACKTEXT:rabbit5",
+	"rabbit8": "_STARTTRANSITIONANIM&_BLACKTEXT:rabbit5&_SOUND:fart",
 	"rabbit9": "_TRANSITIONANIM&_BLACKTEXT:rabbit6",
 	"rabbit10": "_TEXT:rabbit7",
 	// Forest: Sad Fish
@@ -148,7 +148,7 @@ const scripts = {
 	"lime11": "_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:corn,1&_GIVE:banana,10&_TEXT:lime.corn3&_END",
 	"lime12": "_SOUND:itemget&_CHIEVO:limeTime&_COMPLETEQUEST:limeAndTheCoconut&_TAKE:goldegg,1&_GIVE:coconut,2&_TEXT:lime.egg(2-3)&_CUSTOM:GIVEGOLDEGG",
 	// Below Village: Beehive
-	"BelowHive0": "targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5&_CLEARTARGET",
+	"BelowHive0": "_SOUND:itemget&targ_VISIBLE:false&_TEXT:hiveGet&_GIVE:~beehive,1&_GIVE:beeB,5&_CLEARTARGET",
 	// Research Lab: Seed Shooters
 	"seedShot0": "?[{\"q\":\"game.target.hasShot-- > 0\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"seedShot1": "_QUIT",

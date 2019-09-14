@@ -11,9 +11,15 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "hit_hollow_metal", // sfx_menu_move4
                         "hit_hollow",       // sfx_sounds_damage3
                         "hit_light",        // sfx_sounds_impact3
-                        "hit_squishy",      // sfx_sounds_interaction24
+                        "hit_squishy",      // sfx_sounds_impact3
                         "hit_wet",          // sfx_sounds_button6
-                        "levelup",         // sfx_sounds_fanfare3
+                        "levelup",          // sfx_sounds_fanfare3
+                        "heal",             // sfx_coin_cluster1
+                        "compost",          // sfx_lowhealth_alarmloop6
+                        "homf",             // sfx_movement_ladder5loop
+                        // COMBAT DEATH SOUNDS
+                        "die_metal",        // sfx_deathscream_android8
+                        "die_human",        // sfx_deathscream_human14
                         // MENU SOUNDS
                         "confirm",          // made fresh
                         "cancel",           // made fresh
@@ -39,6 +45,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "pauseI",           // sfx_sounds_pause1_in
                         "pauseO",           // sfx_sounds_pause1_out
                         // CUTSCENE SOUNDS
+                        "fart",             // 241000__dsisstudios__short-fart-01
                         "dirtvwoom",        // sfx_sound_mechanicalnoise2
                         "tabletoss",        // sfx_movement_jump8
                         "jeflaf",           // sfx_deathscream_human12
@@ -83,6 +90,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
     },
     PlaySound: function(name, persist, forcedVolume) {
         console.log(`Now Playing: ${name}`);
+        if(Sounds.SoundTable[name] === undefined) { return; } // placeholder for dev
         if(player.options.sound === 0) { return; }
         if(persist) {
             Sounds.PersistingSounds.push(name);

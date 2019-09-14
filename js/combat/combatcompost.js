@@ -67,9 +67,7 @@ combat.compost = {
         if(this.canAttack) {
             gfx.drawText(GetText("cmp_atkpow"), 88, 175);
             gfx.drawText(admg, 153 - Math.floor(Math.log10(admg)), 185);
-        }
 
-        if(this.canAttack) {
             xi = 1; text = GetText("cmp_atksel");
             const atkTile = this.attackButtonSelected ? "Ssel" : "sel";
             if(this.attackButtonSelected) { tile = 9; }
@@ -224,7 +222,12 @@ combat.compost = {
         combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
-    cancel: function() { if(game.currentInputHandler.isTutorial) { return false; } game.innerTransition(this, combat.menu, { sel: 2, notFirst: true }); return true; },
+    cancel: function() {
+        if(game.currentInputHandler.isTutorial) { return false; }
+        game.innerTransition(this, combat.menu, { sel: 2, notFirst: true });
+        Sounds.PlaySound("navNok");
+        return true;
+    },
     toggleCrop: function(gridpos) {
         for(let i = 0; i < this.selectedCrops.length; i++) {
             const old = this.selectedCrops[i];
@@ -233,8 +236,9 @@ combat.compost = {
                 return;
             }
         }
-        if(this.selectedCrops.length == player.getCompostMax()) { return; }
+        if(this.selectedCrops.length == player.getCompostMax()) { Sounds.PlaySound("navNok"); return; }
         this.selectedCrops.push(gridpos);
+        Sounds.PlaySound("navOk");
     },
     isCompostable: function(tile) {
         if(tile.name === "coffee" && tile.activeTime === 0) { return true; }
@@ -259,12 +263,15 @@ combat.compost = {
         this.healButtonSelected = false;
         if(pos.y === this.dy && pos.x < 3) { // back button
             this.cursor = pos;
+            if(this.backButtonSelected) { return false; }
             this.backButtonSelected = true;
         } else if(pos.y === (this.dy + 1) && pos.x < 3) { // heal button
             this.cursor = pos;
+            if(this.healButtonSelected) { return false; }
             this.healButtonSelected = true;
         } else if(pos.y === (this.dy + 2) && pos.x < 3 && this.canAttack) { // attack button
             this.cursor = pos;
+            if(this.attackButtonSelected) { return false; }
             this.attackButtonSelected = true;
         } else { // compost selection
             if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }
@@ -285,9 +292,11 @@ combat.compost = {
                     } else if(dPos.x < combat.dx || dPos.x >= (combat.dx + player.gridWidth) || dPos.y < combat.dy) {
                         this.cursor = pos;
                     } else { this.cursor = dPos; }
-                } else { this.cursor = pos; }
+                } else if(SamePoints(this.cursor, pos)) { return false; }
+                else { this.cursor = pos; }
             }
         }
+        Sounds.PlaySound("menuMove");
         this.drawAll();
         return true;
     },
@@ -334,8 +343,8 @@ combat.compost = {
         return true;
     },
     healAction: function() {
-        if(this.selectedCrops.length == 0) { return false; }
-        if(this.compostFailureCheck()) { return true; }
+        if(this.selectedCrops.length == 0) { Sounds.PlaySound("navNok"); return false; }
+        if(this.compostFailureCheck()) { Sounds.PlaySound("navNok"); return false; }
         const res = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, false);
         let healAmount = res.total, thereAreCows = res.cows;
 
@@ -347,9 +356,13 @@ combat.compost = {
                 if(res.coffee) { combat.animHelper.PushPlayerOverlay("COFFEE"); }
                 else if(res.cows) { combat.animHelper.PushPlayerOverlay("MILK"); }
                 else if(res.bees) { combat.animHelper.PushPlayerOverlay("HONEY"); }
-                else { combat.animHelper.PushPlayerOverlay("COMPOST"); }
+                else {
+                    Sounds.PlaySound("homf");
+                    combat.animHelper.PushPlayerOverlay("COMPOST"); 
+                }
             };
             combat.animHelper.AddAnim(shake);
+            Sounds.PlaySound("compost");
         };
         combat.animHelper.AddAnim(anim);
         if(thereAreCows) {
@@ -366,11 +379,12 @@ combat.compost = {
         });
         combat.animHelper.SetPlayerAnimState("WON", true);
         combat.animHelper.DrawCrops();
+        Sounds.PlaySound("pluck");
         return true;
     },
     attackAction: function() {
-        if(this.selectedCrops.length == 0) { return false; }
-        if(this.compostFailureCheck()) { return true; }
+        if(this.selectedCrops.length == 0) { Sounds.PlaySound("navNok"); return false; }
+        if(this.compostFailureCheck()) { Sounds.PlaySound("navNok"); return false; }
         const res = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, true);
         let damage = res.total, thereAreCows = res.cows;
         const anim = new NotAnAnim(this.binx, this.biny, 1000, this.binSprite);
@@ -381,6 +395,7 @@ combat.compost = {
                 combat.animHelper.StartPlayerAnimSequence();
             };
             combat.animHelper.AddAnim(shake);
+            Sounds.PlaySound("compost");
         };
         combat.animHelper.AddAnim(anim);
         if(thereAreCows) {
@@ -398,6 +413,7 @@ combat.compost = {
             text: GetText("compost_attack").replace(/\{dmg\}/g, damage).replace(/\{amt\}/g, GetText(combat.enemies.length > 1 ? "cmpatk_pl" : "cmpatk_sing"))
         });
         combat.animHelper.DrawCrops();
+        Sounds.PlaySound("pluck");
         return true;
     },
     click: function() {
@@ -423,13 +439,13 @@ combat.compost = {
             } else if(possibleCow === "_cow") {
                 cowIdx = combat.getCowIndex(gridpos.x, gridpos.y);
             }
-            if(cowIdx < 0) { return false; }
+            if(cowIdx < 0) { Sounds.PlaySound("navNok"); return false; }
         } else {
             if(tile.x !== undefined) { // tree
                 gridpos = { x: tile.x, y: tile.y };
                 tile = combat.grid[tile.x][tile.y];
             }
-            if(!this.isCompostable(tile)) { return false; }
+            if(!this.isCompostable(tile)) { Sounds.PlaySound("navNok"); return false; }
         }
         if(cowIdx < 0) { this.toggleCrop(gridpos); }
         else { this.toggleCrop({ x: cowPos.x, y: cowPos.y, cow: cowIdx }); }

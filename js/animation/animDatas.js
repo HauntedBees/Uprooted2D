@@ -54,9 +54,10 @@ const enemyCombatAnims = {
     "ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer")], false, 4),
     "ATTACK_CROP": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damageCrop")], false, 4),
     "PLANT": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2, { startSound: "dismisstext" }),
+    "MODULATE": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 2, { startSound: "dirtvwoom" }),
     "THROW_ENEMY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3, "enemy_throwCropAtEnemy")], false, 4),
     "THROW_CROP": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7, "enemy_throwCropAtEnemy")], false, 4),
-    "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2),
+    "HEAL": new AnimSet([new AnimFrame(0, 8), new AnimFrame(0, 9)], true, 2, { startSound: "heal" }),
     "HEALSOY": new AnimSet([new AnimFrame(1, 2), new AnimFrame(1, 3)], true, 2),
     "TURKEY_EGG": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 1),
     
@@ -73,7 +74,7 @@ const enemyCombatAnims = {
     "SLURP_KOMBUCH_TRUCK": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7)], false, 4),
 
     "FUCKING_GUN": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7)], false, 12),
-    "FISH_FAIL": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
+    "FISH_FAIL": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2, { startSound: "navNok" }),
     "REV_ENGINE": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4),
     "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], true, 60, { doShake: true }),
@@ -430,7 +431,11 @@ const animCallbackHelpers = {
             const targ = targets[i];
             if(targ.x === undefined) { // enemy
                 if(combat.enemies[targ].health <= 0 && isLast) {
-                    //Sounds.PlaySound("squirrel"); // TODO: change based on enemy SQUIRREL IS THE MOST ANNOYING FUCKING SOUND CLIP FUCK THAT
+                    const sound = "die_" + combat.enemies[targ].sound;
+                    switch(sound) {
+                        case "die_furry": Sounds.PlaySound("voip"); break;
+                        default: Sounds.PlaySound(sound); break;
+                    }
                     combat.animHelper.MakeEnemyACorpse(targ);
                 } else {
                     Sounds.PlayPlayerAttackSound(targ, crop);

@@ -103,7 +103,7 @@ function GetCrop(name) {
 		case "tire": return new CropDetail(name, 0, "rock", 1, 8, 1, 0, 0, 1, 1, 1, 1, { sound: "hard" });
 		case "engine": return new CropDetail(name, 0, "rock", 1, 10, 1, 0, 0, 1, 1, 1, 1, { sound: "hard" });
 		case "salt": return new CropDetail(name, 0, "rock", 1, 30, 1, 0, 0, 1, 1, 1, 1, { sound: "light" });
-		case "acorn": return new CropDetail(name, 0, "tree", 2, 6, 4, 3, 2, 0, 1, 1, 0, { sound: "light" });
+		case "acorn": return new CropDetail(name, 0, "tree", 2, 6, 4, 6, 2, 0, 1, 1, 0, { sound: "light" });
 		case "robobabby": return new CropDetail(name, 0, "babby", 1, 4, 4, 0, 0, 1, 1, 1, 1, { baby: "robo", sound: "beep" });
 		case "bpermit": return new CropDetail(name, 0, "veg", 1, 4, 4, 6, 0, 1, 1, 1, 1, { sound: "light" });
 		case "house": return new CropDetail(name, 0, "veg", 2, 12, 5, 8, 0, 1, 1, 1, 1, { sound: "hollow" });

@@ -240,10 +240,11 @@ function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fi
     this.attackType = atkType;
 	this.args = (args || "").split(",");
 	if(player.noFunDiffMod !== 0) { AdjustEnemyStats(this, player.noFunDiffMod); }
-    this.exp = Math.ceil(health/10 + atk + def/2);
+	this.exp = Math.ceil(health/10 + atk + def/2);
     if(this.name === "Discussly" || this.name.indexOf("beeQueen") === 0) { this.exp = 0; }
     this.drops = drops;
-    this.boss = boss;
+	this.boss = boss;
+	if(this.boss) { this.exp = Math.floor(this.exp * 2.5); }
     if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 	this.GetRandomArg = function() { return RandomArrayItem(this.args); };
 }

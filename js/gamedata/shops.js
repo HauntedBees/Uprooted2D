@@ -115,7 +115,7 @@ const stores = {
         img: "shops/expand1",
         eyes: "shopblinks/expand1", ex: 102, ey: 20,
         wares: [
-            { product: "farmupgradeI", price: 1000, type: "upgrade" }
+            { product: "farmupgradeI", price: 100, type: "upgrade" }
         ],
         buyMult: 1, opening: "s.up1o", empty: "s.upempty", leaving: "s.up1bye", notEnough: "s.up1not", purchased: "s.up1p", benignTalk: "s.up1talk"
     },
@@ -210,9 +210,9 @@ const stores = {
         img: "shops/cheebo",
         eyes: "shopblinks/cheebo", ex: 83, ey: 19, big: true, 
         wares: [
-            { product: "farmupgradeI", price: 1000, type: "upgrade" },
-            { product: "farmupgradeO", price: 2000, type: "upgrade" },
-            { product: "farmupgrade_", price: 2000, type: "upgrade" }
+            { product: "farmupgradeI", price: 100, type: "upgrade" },
+            { product: "farmupgradeO", price: 1000, type: "upgrade" },
+            { product: "farmupgrade_", price: 1000, type: "upgrade" }
         ],
         buyMult: 1, opening: "s.up2", empty: "s.up2empty", leaving: "s.up2leave", notEnough: "s.up2not", purchased: "s.up2p"
     },
@@ -401,11 +401,11 @@ const stores = {
         img: "shops/epickyle",
         eyes: "shopblinks/epickyle", ex: 114, ey: 24,
         wares: [
-            { product: "farmupgradeI", price: 1000, type: "upgrade" },
-            { product: "farmupgradeO", price: 2000, type: "upgrade" },
-            { product: "farmupgrade_", price: 2000, type: "upgrade" },
-            { product: "farmupgradeOO", price: 6000, type: "upgrade" },
-            { product: "farmupgrade__", price: 6000, type: "upgrade" }
+            { product: "farmupgradeI", price: 100, type: "upgrade" },
+            { product: "farmupgradeO", price: 1000, type: "upgrade" },
+            { product: "farmupgrade_", price: 1000, type: "upgrade" },
+            { product: "farmupgradeOO", price: 4000, type: "upgrade" },
+            { product: "farmupgrade__", price: 4000, type: "upgrade" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.kyleO", empty: "s.kyleE", leaving: "s.kyleL", notEnough: "s.kyleN", purchased: "s.kyleP"

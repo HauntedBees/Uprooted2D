@@ -210,8 +210,7 @@ worldmap.shop = {
         } else {
             if(newCursorX > this.actualIdxs.length) { return false; }
         }
-        if(this.cursorX === newCursorX) { return; }
-        Sounds.PlaySound("menuMove");
+        if(this.cursorX !== newCursorX) { Sounds.PlaySound("menuMove"); }
         this.cursorX = newCursorX;
         let text = "hi im craig";
         if(this.cursorX === 0) {
@@ -420,7 +419,7 @@ worldmap.shop = {
         if(this.cursorY === 0) {
             gfx.drawTileToGrid(`${amount === 1 ? "n" : ""}opL`, 4.25, 10.25, "menutext");
             const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
-            gfx.drawTileToGrid(`${newPrice > player.monies ? "n" : ""}opR`, 5.75 + (amount >= 10 ? 0.5 : 0), 10.25, "menutext");
+            gfx.drawTileToGrid(`${newPrice > player.monies ? "n" : ""}opR`, (player.options.fontSize > 0 ? 6.5 : 5.75) + (amount >= 10 ? 0.5 : 0), 10.25, "menutext");
         }
         gfx.drawInfoText(GetText("ctrlConfirm"), 4.25, 11.75, this.cursorY === 1, "menuA", "menutext");
         gfx.drawInfoText(GetText("ctrlCancel"), 4.25, 12.75, this.cursorY === 2, "menuA", "menutext");
@@ -497,9 +496,9 @@ worldmap.shop = {
         }
         this.sellingState = me.sellStates.SELLING;
         this.cursorX = 1;
-        this.DrawDetails("");
         Sounds.PlaySound("confirm");
-        this.mouseMove({x: this.cursorX + 1, y: this.yPos});
+        this.DrawDetails();
+        this.CursorMove({x: this.cursorX + 1, y: this.yPos});
         return true;
     },
     clickBook: function(pos) {
@@ -606,22 +605,23 @@ worldmap.shop = {
         } else if(productInfo.type === "equipment" && player.hasItem(productInfo.product)) {
             player.AddMonies(price);
             this.DrawDetails(GetText("s.alreadyown"));
+            Sounds.PlaySound("navNok");
             return true;
         } else if(!player.increaseItem(productInfo.product, amt)) {
             player.AddMonies(price);
             this.DrawDetails(GetText("s.invfull"));
             return true;
         } else if(productInfo.type === "seed" || productInfo.type === "farm") {
-            if(this.howManyData === null) {
+            if(this.howManyData === null) { // selecting how many of it
                 this.cursorY = 0;
                 this.howManyData = { product: productInfo, amount: 1, price: price };
                 Sounds.PlaySound("confirm");
                 player.AddMonies(price); // we already charged!
                 player.decreaseItem(productInfo.product, amt); // we already added one!
-                if(productInfo.type === "farm" && player.fixtureTutorialState === 0) { player.fixtureTutorialState = 1; }
                 this.DrawDetails();
                 return true;
-            } else {
+            } else { // actually buying it
+                if(productInfo.type === "farm" && player.fixtureTutorialState === 0) { player.fixtureTutorialState = 1; }
                 this.howManyData = null;
             }
         }

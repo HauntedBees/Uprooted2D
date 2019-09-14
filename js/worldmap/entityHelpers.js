@@ -107,7 +107,7 @@ const BoringAssFellow = (name, x, y, anim, big) => GetFellow(name, x, y, 0, anim
 const AutoPlayFellow = (name, interact) => ({ name: name, pos: {x: -1, y: -1}, solid: false, interact: interact, autoplay: true });
 const BoringInvisFellow = (name, x, y) => GetFellow(name, x, y, 0, "", undefined, undefined, { visible: false, boring: true });
 const InvisFellow = (name, x, y, textKey) => GetFellow(name, x, y, 0, "", OneSpeak(textKey), undefined, { visible: false, boring: true });
-const GetSign = (x, y, textKey) => InvisFellow("Sign", x, y, textKey);
+const GetSign = (x, y, textKey) => InvisFellow("Sign" + Math.floor(Math.random() * 10000), x, y, textKey);
 const GetTalkie = (name, x, y, anim, intidx, key) => GetFellow(name, x, y, 0, anim, Cutscene(intidx), undefined, { standAnim: anim, talkAnim: anim + "Talk", moving: true, storageKey: key });
 
 // Cutscene Entities

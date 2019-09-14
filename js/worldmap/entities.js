@@ -115,6 +115,7 @@ const mapentities = {
         // Hives & Quest Whatsits
         GetFellow("GoldenShroom", 36, 24, 0, "GoldMush", [
             function() {
+                Sounds.PlaySound("itemget");
                 if(player.hasQuest("quest1")) { worldmap.writeText("foundShroomQ"); player.activeQuests["quest1"] = 2; }
                 else { worldmap.writeText("foundShroom"); player.activeQuests["quest1"] = 4; }
                 worldmap.clearTarget();
@@ -217,8 +218,8 @@ const mapentities = {
         invisSpeaks.forEach((s, i) => entities.push(InvisFellow("Spk" + i, s[0], s[1], s[2])));
 		const chests = [
 			[21, 3, [["ginger", 10]]], [21, 2, [["lemon", 3]]], [29, 27, [["shiitake", 5]]], [8, 12, [["portobello", 5]]], [9, 12, [["milkcap", 2]]],
-			[10, 12, [["egg", 3]]], [11, 12, [["quail", 5]]], [27, 6, [["goose", 1]]], [28, 6, [["leek", 1]]], [29, 6, [["garlic", 1]]], 
-			[30, 6, [["headphones", 2]]] 
+			[10, 12, [["egg", 3]]], [11, 12, [["quail", 5]]], [27, 6, [["goose", 20]]], [28, 6, [["leek", 20]]], [29, 6, [["garlic", 30]]], 
+			[30, 6, [["headphones", 8]]] 
 		];
         chests.forEach((c, i) => entities.push(GetTreasureChest("RLChest" + i, c[0], c[1], c[2])));
         // More Mandatory Enemies
@@ -359,9 +360,11 @@ const mapentities = {
         { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: function() {
             JumboToggle(true);
             worldmap.importantEntities["barnCover"].visible = false;
-            worldmap.importantEntities["FarmerJeff"].visible = true;
-            worldmap.importantEntities["FarmerJeff"].pos = { x: 14.5, y: 31.5 };
-            worldmap.importantEntities["FarmerJeff"].dir = 0;
+            if(worldmap.importantEntities["FarmerJeff"] !== undefined) {
+                worldmap.importantEntities["FarmerJeff"].visible = true;
+                worldmap.importantEntities["FarmerJeff"].pos = { x: 14.5, y: 31.5 };
+                worldmap.importantEntities["FarmerJeff"].dir = 0;
+            }
         }},
         // Map Switching
         GetFellow("AFuckingTruckL", 24, 34, 0, "TruckFuck", Cutscene("badTruck"), undefined, { big: true, storageKey: "ltruck" }),

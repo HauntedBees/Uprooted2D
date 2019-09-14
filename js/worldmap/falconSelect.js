@@ -116,13 +116,14 @@ worldmap.falconSelect = {
         console.log(`MouseMove: ${pos.x}, ${pos.y}`);
     },
     CursorMove: function(pos) {
-        console.log(`CursorMove: ${pos.x}, ${pos.y}`);
         if(pos.x < 0 || pos.y < -1) { return false; }
         if(pos.x >= this.inventoryWidth) { return false; }
         if(pos.y >= 0) {
             const idx = pos.y * this.inventoryWidth + pos.x;
             if(idx < 0 || idx >= this.actualIndexes.length) { return false; }
         }
+        if(SamePoints(this.cursor, pos)) { return false; }
+        Sounds.PlaySound("menuMove");
         this.cursor = { x: pos.x, y: pos.y };
         this.drawAll();
         return true;
@@ -147,32 +148,37 @@ worldmap.falconSelect = {
         return 16 - cropObj.power; // 6 for the strongest crops, 15 for the weakest
     },
     click: function(pos) {
-        if(pos !== undefined && pos.y >= 1.75 && pos.y <= 3 && pos.x >= 2.5) {
+        if(pos !== undefined && pos.y >= 1.75 && pos.y <= 3 && pos.x >= 2.5) { // unselecting a seed
             const newx = Math.floor(pos.x - 2.5);
             if(newx >= this.cropsToSend.length) { return false; }
             const seed = this.cropsToSend.splice(newx, 1)[0];
-            if(seed !== undefined) { player.increaseItem(seed); }
+            if(seed === undefined) { return false; }
+            player.increaseItem(seed);
             this.drawAll();
+            Sounds.PlaySound("navOk");
             return true;
         }
         if(this.cursor.y < 0) {
             return this.confirmSeeds();
+            Sounds.PlaySound("navOk");
         } else {
-            if(this.cropsToSend.length === 5) { return false; }
+            if(this.cropsToSend.length === 5) { Sounds.PlaySound("navNok"); return false; }
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             const item = player.inventory[this.actualIndexes[idx]];
             if(item[1] === 0) { return false; }
             player.inventory[this.actualIndexes[idx]][1]--;
             this.cropsToSend.push(item[0]);
+            Sounds.PlaySound("navOk");
             this.drawAll();
             return true;
         }
     },
     cancel: function() {
         const last = this.cropsToSend.pop();
-        if(last === undefined) { return false; }
+        if(last === undefined) { Sounds.PlaySound("navNok"); return false; }
         player.increaseItem(last);
         this.drawAll();
+        Sounds.PlaySound("navOk");
         return true;
     },
     keyPress: function(key) {
