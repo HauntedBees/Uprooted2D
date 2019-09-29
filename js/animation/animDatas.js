@@ -66,7 +66,7 @@ const enemyCombatAnims = {
     "LAWNMOWER_CROP": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damageCrop"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
     
     "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_waterRow")], false, 4),
-    "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss")], false, 4),
+    "ROCK_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss")], false, 4, { startSound: "pluck" }),
     "SALT_TOSS": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_saltRow")], false, 4),
     "ROW_FIRE": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_fireRow")], false, 4),
     "HULK_PUNCH": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_thanksHulkYouBetKid")], false, 4),

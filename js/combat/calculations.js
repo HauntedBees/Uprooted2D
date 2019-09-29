@@ -58,7 +58,7 @@ const dmgCalcs = {
             case 2: cropDef *= 2; break;
             case 0: cropDef /= 3; break;
         }
-        for(let i = 0; i < attackElements; i++) {
+        for(let i = 0; i < attackElements.length; i++) {
             const attackElement = attackElements[i];
             switch(attackElement) { // 0 = water, 1 = fire, salt = 2, -1 = general
                 case 0: cropDef *= 1.5 * (crop.waterResist || 0); break;
@@ -108,7 +108,7 @@ const dmgCalcs = {
     },
 
     CropAttack: function(isPlayer, season, myAtk, myCrops, targets, attackElements) {
-        if(attackElements === undefined) { attackElement = [-1]; }
+        if(attackElements === undefined || attackElements === -1) { attackElements = [-1]; }
         let formattedDefs = [];
         for(let i = 0; i < targets.length; i++) {
             if(targets[i].name === undefined) { // enemy; value is just an integer for their defense
@@ -196,7 +196,7 @@ const dmgCalcs = {
         }
         totalDamage += myAtk + (isPlayer ? 3 : 0);
         if(isPlayer && combat.harvestChain > 0) {
-            totalDamage *= Math.min(2.5, 1 + (combat.harvestChain / 5));
+            totalDamage *= Math.min(5, 1 + (combat.harvestChain / 4));
         }
         const attacksArr = [];
         for(let i = 0; i < theirDef.length; i++) {
