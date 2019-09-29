@@ -76,6 +76,7 @@ let mapRefreshes = {
                     SetUpFellow(e, "RabbitClean");
                 }
             } else {
+                if(e.name === "SeaMidTop") { e.moving = false; }
                 SetUpFellow(e, saveValue.lastAnim);
             }
         }
