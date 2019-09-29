@@ -25,6 +25,17 @@ const iHandler = {
         Sounds.EndAll();
         iHandler.Advance();
     },
+    WrapUp: function() {
+        if(iHandler.state.postItems.length > 0) {
+            game.transition(game.currentInputHandler, worldmap.invClean, iHandler.state.postItems);
+            iHandler.state.postItems = [];
+        }
+        if(game.target !== null) {
+            if(game.target.moveToTalk) { game.target.moving = false; }
+            else if(game.target.standAnim) { SetUpFellow(game.target, game.target.standAnim); }
+        }
+        return worldmap.finishDialog();
+    },
     Advance: function(isFirst) {
         iHandler.isFirst = isFirst || false;
         worldmap.inDialogue = true;
@@ -37,17 +48,7 @@ const iHandler = {
         console.log(curKey);
         const action = scripts[curKey];
         if(action === undefined) { iHandler.state.done = true; }
-        if(iHandler.state.done) {
-            if(iHandler.state.postItems.length > 0) {
-                game.transition(game.currentInputHandler, worldmap.invClean, iHandler.state.postItems);
-                iHandler.state.postItems = [];
-            }
-            if(game.target !== null) {
-                if(game.target.moveToTalk) { game.target.moving = false; }
-                else if(game.target.standAnim) { SetUpFellow(game.target, game.target.standAnim); }
-            }
-            return worldmap.finishDialog();
-        }
+        if(iHandler.state.done) { return iHandler.WrapUp(); }
         CommandParser.Parse(action);
     },
     HandleAnim: function(spedUp) {
@@ -140,8 +141,8 @@ const CommandParser = {
                 case "CLEARTARGET": worldmap.clearTarget(); break;
                 // Cutscene Logic
                 case "SETSTATE": iHandler.state.idx = parseInt(actSuffix); break;
-                case "QUIT": iHandler.state.done = true; worldmap.finishDialog(); break;
-                case "END": iHandler.state.done = true; break;
+                case "QUIT": iHandler.state.done = true; iHandler.WrapUp(); break; // QUIT halts immediately
+                case "END": iHandler.state.done = true; break; // END prevents any future steps
                 // Other
                 case "SOUND": Sounds.PlaySound(actSuffix); break;
                 case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
