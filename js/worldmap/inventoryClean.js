@@ -44,6 +44,7 @@ worldmap.invClean = {
     cancel: function() {
         if(this.selectedCrop < 0) { this.cursor.x = this.inventoryWidth; }
         else { this.selectedCrop = -1; }
+        Sounds.PlaySound("navNok");
         this.DrawAll();
     },
     mouseMove: function(pos) {
@@ -54,11 +55,13 @@ worldmap.invClean = {
         if(pos.y === 9) { pos.y = 12; }
         else if(pos.y === 11) {  pos.y = 8; }
         if(pos.x === 4) { pos.y = this.cursor.y; }
+        if(SamePoints(pos, this.cursor)) { return false; }
         if(this.selectedCrop < 0) {
             if(pos.x > this.inventoryWidth) { return false; }
         } else {
             if(pos.x >= this.inventoryWidth) { return false; }
         }
+        Sounds.PlaySound("menuMove");
         this.cursor = { x: pos.x, y: pos.y };
         this.DrawAll();
         return true;
@@ -126,6 +129,7 @@ worldmap.invClean = {
     ConfirmSelection: function() {
         this.trashInfo.push({ frame: 0, coinStates: [], x: 4, y: 13, numCoins: Math.min(10, Math.ceil(this.topPrice / 30)) });
         player.AddMonies(this.topPrice);
+        Sounds.PlaySound("purchase");
         this.didConfirm = true;
     },
     click: function(pos) {
@@ -140,9 +144,9 @@ worldmap.invClean = {
             if(idx < this.topCrops.length) { newidx = idx; }
             newidx += 100;
         } else { return false; }
-        if(this.selectedCrop < 0 && (newidx === 99 || newidx === -1)) { return false; } // don't select empty fields
-        if(newidx === -1 && this.selectedCrop < 100) { return false; } // don't move from filled inventory space to empty one
-        if(newidx === 99 && this.selectedCrop >= 100) { return false; } // don't move from filled tossable space to empty one
+        if(this.selectedCrop < 0 && (newidx === 99 || newidx === -1)) { Sounds.PlaySound("navNok"); return false; } // don't select empty fields
+        if(newidx === -1 && this.selectedCrop < 100) { Sounds.PlaySound("navNok"); return false; } // don't move from filled inventory space to empty one
+        if(newidx === 99 && this.selectedCrop >= 100) { Sounds.PlaySound("navNok"); return false; } // don't move from filled tossable space to empty one
 
         if(this.selectedCrop < 0) {
             this.selectedCrop = newidx;
@@ -176,6 +180,7 @@ worldmap.invClean = {
             }
             this.selectedCrop = -1;
         }
+        Sounds.PlaySound("navOk");
         this.DrawAll();
         return true;
     },
@@ -219,7 +224,7 @@ worldmap.invClean = {
         const rowYs = [0.25, 1.5, 2.75, 6.25, 7.5, 8.75];
         const rowTextYs = [16, 0, 0, 113, 0, 0];
         gfx.drawInfobox(12, 4, 0);
-        gfx.drawInfobox(12, 4, 6);
+        gfx.drawInfobox(12, 5, 6);
         gfx.drawInfobox(11, 2, 12);
         gfx.drawTileToGrid("recycleArrow", 4, 12, "menuA");
 
