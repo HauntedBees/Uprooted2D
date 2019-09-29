@@ -21,7 +21,7 @@ const scripts = {
 	"farminit18": "_CLEARTEXT&nathanA_ISMOVING:false&pl_ANIM:think&_SLEEP:1250",
 	"farminit19": "pl_ANIM:walk&pl_SETDIR:3&nathanA_ISMOVING:true&_TEXT:intro(7-8)",
 	"farminit20": "_CLEARTEXT&nathanA_SETDIR:3&nathanA_ANIM:Nath1&nathanA_MOVE:x24",
-	"farminit21": "_CUSTOM:CLEAROPENING&_END&_QUIT",
+	"farminit21": "_CUSTOM:CLEAROPENING&_QUIT",
 	// Produce Stand: Opening Cutscene
 	"pstand0": "_GO2:[\"same\",10,5]&pl_SETDIR:1&hipster_MOVE:x6",
 	"pstand1": "hipster_ISMOVING:false&_SLEEP:500",
@@ -92,7 +92,7 @@ const scripts = {
 	"bigBotW5": "_TEXT:Pb1.3",
 	"bigBotW6": "_CUSTOM:KABOOMHAUER",
 	"bigBotW7": "_TEXT:Pb1.(4-5)",
-	"bigBotW8": "_CUSTOM:CLEANBOOM&_END&_QUIT",
+	"bigBotW8": "_CUSTOM:CLEANBOOM&_QUIT",
 	// Misc.: Standard Enemy
 	"enemy0": "_CUSTOM:ENEMY0",
 	"enemy1": "_CUSTOM:ENEMY1",
@@ -193,7 +193,7 @@ const scripts = {
 	// Bridge: Regular Worker
 	"workerB0": "?[{\"q\":\"player.hasQuestState('helpSeaMonster', 'help')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
 	"workerB1": "targ_ANIM:WorkerTalk&_TEXT:w22",
-	"workerB2": "targ_ANIM:Worker&_END&_QUIT",
+	"workerB2": "targ_ANIM:Worker&_QUIT",
 	"workerB3": "targ_ANIM:WorkerTalk&_TEXT:w21",
 	"workerB4": "targ_ANIM:Worker&_FIGHT:Worker",
 	// Bridge: Third Boss (Worker Chief)
@@ -247,7 +247,7 @@ const scripts = {
 	"seahelp0": "_CUSTOM:SEAHELP0",
 	"seahelp1": "smt_ISMOVING:false&_CUSTOM:SEAHELP1",
 	"seahelp2": "smt_ISMOVING:true&_CHIEVO:boss3help&_ALIGNGOOD:1&_COMPLETEQUEST:helpSeaMonster&_COMPLETEQUEST:getHeart&_TEXT:smD(6-7)",
-	"seahelp3": "smt_ISMOVING:false&_END&_QUIT",
+	"seahelp3": "smt_ISMOVING:false&_QUIT",
 	// Underwater: Pirate Sea Monk
 	"piratemonk0": "?[{\"q\":\"player.completedQuest('seamonkey')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"piratemonk1": "?[{\"q\":\"player.hasQuestState('seamonkey', 'looking')\",\"v\":2},{\"q\":\"true\",\"v\":3}]",
@@ -299,9 +299,9 @@ const scripts = {
 	// Bridge: Cow
 	"bridgeCow0": "?[{\"q\":\"player.hasQuestState('kelpBoy', 'wantMilk')\",\"v\":3},{\"q\":\"true\",\"v\":1}]",
 	"bridgeCow1": "targ_ANIM:Cow2&_TEXT:kelpCow0",
-	"bridgeCow2": "targ_ANIM:Cow1&_END&_QUIT",
+	"bridgeCow2": "targ_ANIM:Cow1&_QUIT",
 	"bridgeCow3": "targ_ANIM:Cow2&_TEXT:kelpCow(1-4)",
-	"bridgeCow4": "_SOUND:itemget&_SETQUEST:kelpBoy,gotMilk&targ_ANIM:Cow1&_END&_QUIT",
+	"bridgeCow4": "_SOUND:itemget&_SETQUEST:kelpBoy,gotMilk&targ_ANIM:Cow1&_QUIT",
 	// Fake Farm: Flat Tire Opening Cutscene
 	"flatTire0": "_BLACKTEXT:fakeFarmS&_CUSTOM:ENDTRANSITION",
 	"flatTire1": "_TRANSITIONANIM&_TEXT:fakeFarm0",
@@ -367,7 +367,7 @@ const scripts = {
 	"crouton7": "_TEXT:arf.good1&_GIVE:fodder,20",
 	"crouton8": "_CHIEVO:crouton&_TEXT:arf.good2&_COMPLETEQUEST:croutonsFishingAdventure&_SETSTATE:10",
 	"crouton9": "_SOUND:itemget&_TEXT:arf.ultra1&_GIVE:goodfood,20&_SETSTATE:8",
-	"crouton10": "doggy_ANIM:Crouton&_QUIT&_END",
+	"crouton10": "doggy_ANIM:Crouton&_QUIT",
 	// Misc.: Truck
 	"truck0": "_CUSTOM:TRUCKSTART",
 	"truck1": "??TRUCKNEXT",
@@ -537,7 +537,7 @@ const scripts = {
 	"food2Start0": "?[{\"q\":\"player.completedQuest('talkedToReceptionist')\",\"v\":1},{\"q\":\"true\",\"v\":2}]",
 	"food2Start1": "recep_ISMOVING:true&_TEXT:enterHQ4&_SETSTATE:3",
 	"food2Start2": "recep_ISMOVING:true&_COMPLETEQUEST:talkedToReceptionist&_TEXT:enterHQ(0-3)",
-	"food2Start3": "recep_ISMOVING:false&_QUIT&_END",
+	"food2Start3": "recep_ISMOVING:false&_QUIT",
 	// Food2: First Floor Bed
 	"hqBed0": "_CUSTOM:SETNERDBED&_TEXT:nerdBed",
 	// Food2: Third Floor
@@ -565,7 +565,7 @@ const scripts = {
 	"falcon5": "_CUSTOM:GETFALCONTEXT",
 	"falcon6": "?[{\"q\":\"worldmap.mapName === 'hq_1'\",\"v\":7},{\"q\":\"true\",\"v\":9}]",
 	"falcon7": "_CUSTOM:EXITTHEBIRDFINAL",
-	"falcon8": "_CLEARTARGET&bird_SETTARGET&_CLEARTARGET&_END&_QUIT",
+	"falcon8": "_CLEARTARGET&bird_SETTARGET&_CLEARTARGET&_QUIT",
 	"falcon9": "_CUSTOM:FALCONSELECT",
 	"falcon10": "pl_ANIM:crouchL&_SLEEP:1000",
 	"falcon11": "bird_ANIM:Iii2&_SLEEP:500",
@@ -659,16 +659,16 @@ const scripts = {
 	"hurtNerd2": "_TEXT:hurtNerd5,hurtNerdY,hurtNerdN",
 	"hurtNerd3": "?[{\"q\":\"d===0\",\"v\":10},{\"q\":\"d===1\",\"v\":4}]",
 	"hurtNerd4": "_SETQUEST:helpNerd,waiting&_TEXT:hurtNerdN(0-1)",
-	"hurtNerd5": "trent_ISMOVING:false&_END&_QUIT",
+	"hurtNerd5": "trent_ISMOVING:false&_QUIT",
 	"hurtNerd6": "trent_ISMOVING:true&_TEXT:hurtNerdX0,hurtNerdY,hurtNerdN",
 	"hurtNerd7": "?[{\"q\":\"d===0\",\"v\":10},{\"q\":\"d===1\",\"v\":8}]",
 	"hurtNerd8": "_TEXT:hurtNerdXN0",
-	"hurtNerd9": "trent_ISMOVING:false&_END&_QUIT",
+	"hurtNerd9": "trent_ISMOVING:false&_QUIT",
 	"hurtNerd10": "_SETQUEST:helpNerd,helping&_TEXT:hurtNerdY(0-4)",
 	"hurtNerd11": "_CUSTOM:NERDUP&_QUIT",
 	// Food2: Made it Upstairs
 	"to4F0": "?[{\"q\":\"player.hasQuestState('helpNerd', 'helping')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
-	"to4F1": "_END&_QUIT",
+	"to4F1": "_QUIT",
 	"to4F2": "_ALIGNGOOD:2.5&_TEXT:savedNerd(0-7)",
 	"to4F3": "_CHIEVO:helpNerd&_CUSTOM:NERDDOWN&_COMPLETEQUEST:helpNerd&_QUIT",
 	// Food2: BAD END
@@ -790,19 +790,19 @@ const scripts = {
 	// Cave: Going Down and Going Up
 	"leaveCave0": "_TEXT:goUpCave,sYes,sNo",
 	"leaveCave1": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":2}]",
-	"leaveCave2": "_QUIT&_END",
+	"leaveCave2": "_QUIT",
 	"leaveCave3": "_CUSTOM:LEAVECAVE",
 	"downCave0": "_TEXT:goDownCave,sYes,sNo",
 	"downCave1": "?[{\"q\":\"d===0\",\"v\":3},{\"q\":\"d===1\",\"v\":2}]",
-	"downCave2": "_QUIT&_END",
+	"downCave2": "_QUIT",
 	"downCave3": "_CUSTOM:DOWNCAVE",
 	"enterCave0": "?[{\"q\":\"!player.hasWon()\",\"v\":5},{\"q\":\"true\",\"v\":1}]",
 	"enterCave1": "_TEXT:enterTheCave,sYes,sNo",
 	"enterCave2": "?[{\"q\":\"d===0\",\"v\":4},{\"q\":\"d===1\",\"v\":3}]",
-	"enterCave3": "_QUIT&_END",
+	"enterCave3": "_QUIT",
 	"enterCave4": "_CUSTOM:ENTERCAVE",
 	"enterCave5": "caveboy_ISMOVING:true&_TEXT:undergroundNotYet",
-	"enterCave6": "caveboy_ISMOVING:false&_QUIT&_END",
+	"enterCave6": "caveboy_ISMOVING:false&_QUIT",
 	// Cave: Skyler
 	"caveDive0": "?[{\"q\":\"!player.hasWon()\",\"v\":11},{\"q\":\"player.completedQuest('spokeToCaveMan')\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"caveDive1": "targ_ISMOVING:true&_COMPLETEQUEST:spokeToCaveMan&_TEXT:underground(0-17)&_SETSTATE:10",
@@ -814,12 +814,12 @@ const scripts = {
 	"caveDive7": "_CUSTOM:CAVESTATS&_SETSTATE:10",
 	"caveDive8": "_TEXT:undergroundA1",
 	"caveDive9": "_TEXT:underground(1-17)",
-	"caveDive10": "targ_ISMOVING:false&_QUIT&_END",
+	"caveDive10": "targ_ISMOVING:false&_QUIT",
 	"caveDive11": "targ_ISMOVING:true&_TEXT:undergroundNotYet&_SETSTATE:10",
 	"caveEscape0": "caveboy_ISMOVING:true&_TEXT:undergroundEscape",
-	"caveEscape1": "caveboy_ISMOVING:false&_QUIT&_END",
+	"caveEscape1": "caveboy_ISMOVING:false&_QUIT",
 	"caveFail0": "_CUSTOM:CAVEDIED&caveboy_ISMOVING:true&_TEXT:undergroundFail",
-	"caveFail1": "caveboy_ISMOVING:false&_QUIT&_END",
+	"caveFail1": "caveboy_ISMOVING:false&_QUIT",
 	// North City (Natural Good): Some Guy
 	"newMoveIn0": "?[{\"q\":\"Math.random() < 0.4\",\"v\":1},{\"q\":\"Math.random() < 0.5\",\"v\":2},{\"q\":\"true\",\"v\":3}]",
 	"newMoveIn1": "targ_ISMOVING:true&_TEXT:newMoveIn0&_END",
@@ -827,10 +827,10 @@ const scripts = {
 	"newMoveIn3": "targ_ISMOVING:true&_TEXT:newMoveIn2",
 	// Food2 (Industrial Good): First Floor
 	"newRecep0": "recep_ISMOVING:true&_TEXT:newRecep",
-	"newRecep1": "recep_ISMOVING:false&_QUIT&_END",
+	"newRecep1": "recep_ISMOVING:false&_QUIT",
 	// Food2 (Natural Bad): Beckett
 	"beckettJail0": "beckJail_ISMOVING:true&_TEXT:beckettJail0",
 	"beckettJail1": "beckJail_ISMOVING:false&_TEXT:beckettJail(1-2)",
 	"beckettJail2": "beckJail_ISMOVING:true&_TEXT:beckettJail3",
-	"beckettJail3": "beckJail_ISMOVING:false&_QUIT&_END",
+	"beckettJail3": "beckJail_ISMOVING:false&_QUIT",
 };
