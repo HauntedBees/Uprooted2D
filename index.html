@@ -64,12 +64,12 @@
                 color: #FFFFFF;
                 font-size: xx-large;
             }
-            #loaderText { padding-top: 40% }
+            #screenRead { padding-top: 40% }
         </style>
     </head>
-    <body>
-        <div id="canvasContainer"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
-            <div id="loader"><div id="loaderText">Now Lording</div></div>
+    <body role="application">
+        <div id="canvasContainer" tabindex="0"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
+            <div id="loader"><div id="screenRead" role="alert" aria-live="assertive"></div></div>
             <canvas id="background" width="1024" height="896"></canvas>
             <canvas id="background2" width="1024" height="896"></canvas>
             <canvas id="crops" width="1024" height="896"></canvas>

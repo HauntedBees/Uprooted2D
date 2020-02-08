@@ -69,7 +69,7 @@ const pausemenu = {
 
         if(pausemenu.inNoFun) {
             const myText = GetText("noFunInner");
-            speaker.SayThing(myText, "option");
+            screenReaderHelper.SayThing(myText, "option");
             const textWidth = gfx.getTextWidth(myText) / (16 * gfx.scale);
             this.cursors.RedimCursor("main", gfx.tileWidth - textWidth - 0.5, 0, textWidth - 0.5, 0);
         } else if(pausemenu.cursorY < pausemenu.options.length) {
@@ -79,14 +79,14 @@ const pausemenu = {
                 this.cursors.RedimCursor("main", 2, 11.75, 1, 1);
                 const str = GetText("alignment") + ": " + GetText(player.techAxis <= 0 ? "alignnature" : "aligntech") + " " + GetText(player.ethicsAxis >= 0 ? "aligngood" : "alignbad");
                 gfx.drawInfoText(str + " ", 0, 10.75);
-                speaker.SayThing(str, "pauseInfo");
+                screenReaderHelper.SayThing(str, "pauseInfo");
             } else {
                 const idx = pausemenu.cursorX - 1;
                 const item = pausemenu.questItems[idx];
                 this.cursors.RedimCursor("main", 5 + (idx * 1.5), 11.75, 0, 0);
                 const myText = GetText("qi." + item);
                 gfx.drawInfoText(myText, 5 + (idx * 1.5), 10.75);
-                speaker.SayThing(myText, "pauseInfo");
+                screenReaderHelper.SayThing(myText, "pauseInfo");
             }
         }
 
@@ -324,7 +324,7 @@ const pausemenu = {
     },
     drawOption: function (text, y, selected) {
         const realText = GetText(text);
-        if(selected) { speaker.SayThing(realText, "option"); }
+        if(selected) { screenReaderHelper.SayThing(realText, "option"); }
         this.options.push(gfx.drawOption(realText, this.dy + y, selected));
     }
 };

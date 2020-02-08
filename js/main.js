@@ -125,7 +125,8 @@ const game = {
         } else {
             game.type = 0;
         }
-        document.getElementById("loaderText").innerText = GetText("nowLoading");
+        document.getElementById("screenRead").innerText = GetText("nowLoading");
+        document.getElementById("canvasContainer").focus();
         const lastSave = localStorage.getItem("lastSaved");
         if(lastSave !== null) {
             const loadedPlayer = game.str2obj(localStorage.getItem("player" + lastSave));
@@ -140,7 +141,6 @@ const game = {
             const name = game.canvasLayers[i];
             canvasObj[name] = document.getElementById(name);
         }
-        speaker.Init();
         let contextObj = {};
         for(const key in canvasObj) {
             contextObj[key] = canvasObj[key].getContext("2d");
@@ -201,7 +201,6 @@ const game = {
         if(game.transitioning) { return false; }
         worldmap.ToggleRun(false);
         game.transitioning = true;
-        speaker.UpShutTheFuck();
         if(from.earlyclean !== undefined) { from.earlyclean(); }
         if(arg !== undefined && arg.quickTransition === true) {
             game.startQuickTransitionAnim(1, from, to, arg);
@@ -213,7 +212,6 @@ const game = {
     innerTransition: function(from, to, arg, clearAll) {
         if(this.currentInputHandler.isTutorial) { return tutorial.transition(from, to, arg); }
         game.currentInputHandler = to;
-        speaker.UpShutTheFuck();
         this.CleanHandler(from);
         if(clearAll === true) { gfx.clearAll(); }
         if(!from.freeMovement || !to.freeMovement) { input.clearAllKeys(); }
