@@ -62,7 +62,7 @@ const enemyCombatAnims = {
     "TURKEY_EGG": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 1),
     
     "LAWNMOWER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damagePlayer"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
-    "LAWNMOWER_ROCK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
+    "LAWNMOWER_ROCK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_rockToss"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12, { startSound: "pluck" }),
     "LAWNMOWER_CROP": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_damageCrop"), new AnimFrame(0, 4), new AnimFrame(0, 5)], false, 12),
     
     "HEAD_ON_SPLASH_ATTACK": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3, "enemy_waterRow")], false, 4),
@@ -73,7 +73,7 @@ const enemyCombatAnims = {
     "SLURP_KOMBUCH": new AnimSet([new AnimFrame(0, 8, "enemy_pullCrop"), new AnimFrame(0, 9)], false, 4),
     "SLURP_KOMBUCH_TRUCK": new AnimSet([new AnimFrame(0, 6, "enemy_pullCrop"), new AnimFrame(0, 7)], false, 4),
 
-    "FUCKING_GUN": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7)], false, 12),
+    "FUCKING_GUN": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7)], false, 12, { startSound: "boom" }),
     "FISH_FAIL": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2, { startSound: "navNok" }),
     "REV_ENGINE": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4),
