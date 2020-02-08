@@ -1766,7 +1766,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"B1.2": {
-		"en-us": "Robot: oH dEar tHis iS yOur fArm? yOink. i mEan... uHhhh... wAnt gIrl sCout cOokies?", 
+		"en-us": "Robot: oH dEar tHis iS yOur fArm? yOink. i mEan... uHhhh... wAnt rObot sCout cOokies?", 
 		"type": "map"
 	},
 	"B1.3": {
