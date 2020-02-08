@@ -148,7 +148,7 @@ combat.menu = {
             gfx.drawTileToGrid(GetHPFrame(enemy), 4.5 + 6 * Math.floor(i / 2), topy + (i % 2), "menucursorB");
         }
         gfx.drawInfobox(12, 2, this.dy + 2);
-        gfx.drawWrappedText(text, 4.5 * 16, 11 + ((2 + this.dy) * 16), 170);
+        gfx.drawWrappedText(text, 4.5 * 16, 9 + ((2 + this.dy) * 16), 175);
         combat.animHelper.DrawBottom();
         combat.menu.fullyLoaded = true;
     },
