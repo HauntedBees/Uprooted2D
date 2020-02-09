@@ -51,7 +51,7 @@ function GetEquipment(name) {
 		case "!salthoe": return new EquipmentDetail(name, 200, "weapon", { noEnemies: true, targetCrops: true, power: 32, attacks: 2, wi: 15, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!sicklerang": return new EquipmentDetail(name, 1221, "weapon", { noEnemies: false, power: 20, attacks: 999, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!sunSickle": return new EquipmentDetail(name, 1500, "weapon", { noEnemies: false, targetCrops: true, power: 25, sp: 10, su: 10, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
-		case "!pltSickle": return new EquipmentDetail(name, 50, "weapon", { noEnemies: false, power: 30, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
+		case "!pltSickle": return new EquipmentDetail(name, 3500, "weapon", { noEnemies: false, power: 30, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!sickle2": return new EquipmentDetail(name, 3333, "weapon", { tech: true, noEnemies: false, targetCrops: true, power: 60, attacks: 2, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!sickle2_weak": return new EquipmentDetail(name, 3333, "weapon", { tech: true, noEnemies: true, power: 0, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		/* Compost */
@@ -66,16 +66,16 @@ function GetEquipment(name) {
 		case "!weakGloves": return new EquipmentDetail(name, 400, "gloves", { noEnemies: true, amount: 3, bonus: 0, def: 0.25, speed: 0, boost: 0, amplify: 0 });
 		case "!pairGloves": return new EquipmentDetail(name, 1200, "gloves", { noEnemies: true, amount: 2, canAttack: true, bonus: 0, def: 0.25, speed: 0, boost: 0, amplify: 0 });
 		case "!gardenGloves": return new EquipmentDetail(name, 1600, "gloves", { noEnemies: true, amount: 6, bonus: 0, def: 0.5, speed: 0, boost: 0, amplify: 0 });
-		case "!sbGloves": return new EquipmentDetail(name, 50, "gloves", { noEnemies: true, amount: 4, canAttack: true, bonus: 0, def: 0.5, speed: 0, boost: 0, amplify: 0 });
+		case "!sbGloves": return new EquipmentDetail(name, 3500, "gloves", { noEnemies: true, amount: 4, canAttack: true, bonus: 0, def: 0.5, speed: 0, boost: 0, amplify: 0 });
 		case "!gloves2": return new EquipmentDetail(name, 3333, "gloves", { tech: true, noEnemies: true, amount: 6, canAttack: true, bonus: 0, def: 0.5, speed: 0, boost: 0, amplify: 0 });
 		/* Watering Cans */
 		case "!weakSoil": return new EquipmentDetail(name, 200, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.15, boost: 0, amplify: 0 });
 		case "!speedSoil": return new EquipmentDetail(name, 300, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.3, boost: 0, amplify: 0 });
 		case "!sturdSoil": return new EquipmentDetail(name, 300, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0.4, amplify: 0 });
 		case "!minSoil": return new EquipmentDetail(name, 300, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 1 });
-		case "!waterfall": return new EquipmentDetail(name, 50, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.5, boost: 0, amplify: 0 });
-		case "!immunity": return new EquipmentDetail(name, 50, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0.65, amplify: 0 });
-		case "!seasonal": return new EquipmentDetail(name, 50, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 2 });
+		case "!waterfall": return new EquipmentDetail(name, 2000, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0.5, boost: 0, amplify: 0 });
+		case "!immunity": return new EquipmentDetail(name, 2000, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0.65, amplify: 0 });
+		case "!seasonal": return new EquipmentDetail(name, 2000, "soil", { noEnemies: true, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 2 });
 		case "!pesticide2": return new EquipmentDetail(name, 3333, "soil", { tech: true, noEnemies: true, bonus: 0, def: 0, speed: 0.45, boost: 0.5, amplify: 0 });
 	}
 }
