@@ -251,11 +251,14 @@ combat.menu = {
                 else { Sounds.PlaySound("navNok"); return false; }
                 break;
             case 3:
-                if(!combat.isBossBattle && !combat.isFalcon) {
+                if(!combat.isFalcon) {
                     if(this.plantedAlreadyAndCantAttack) {
                         combat.endTurn(this);
-                    } else {
+                    } else if(!combat.isBossBattle) {
                         this.tryFlee();
+                    } else {
+                        Sounds.PlaySound("navNok");
+                        return false;
                     }
                 } else {
                     Sounds.PlaySound("navNok");

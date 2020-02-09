@@ -1,4 +1,7 @@
 const debug = {
+    SeedsPlanted: function() {
+        return Object.keys(player.miscdata.cropsPlanted).reduce((i, e) => i + player.miscdata.cropsPlanted[e], 0);
+    },
     WorldMapTextTest: function() {
         const vals = [];
         for(const key in fulltext) {
