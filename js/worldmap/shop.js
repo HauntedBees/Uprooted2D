@@ -415,7 +415,8 @@ worldmap.shop = {
             const amt = player.getItemAmount(farmInfo.name);
             topText = this.CombineRightAligned(topText, GetText("s.youHave").replace(/\{0\}/g, amt));
         }
-        topText += " \n \n " + GetText("s.howMany") + "      " + amount + "      (" + (price * amount) + "G)";
+        const spaces = player.options.fontSize === 2 ? "     " : "      ";
+        topText += " \n \n " + GetText("s.howMany") + spaces + amount + "      (" + (price * amount) + "G)";
         if(this.cursorY === 0) {
             gfx.drawTileToGrid(`${amount === 1 ? "n" : ""}opL`, 4.25, 10.25, "menutext");
             const newPrice = (this.howManyData.amount + 1) * this.howManyData.price;
