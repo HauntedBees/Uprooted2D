@@ -1669,7 +1669,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"wantTut": {
-		"en-us": "Greetings, would you like to play through the tutorial?", 
+		"en-us": "Convince-a-tron: Greetings, would you like to play through the tutorial?", 
 		"type": "map"
 	},
 	"sYes": {
@@ -1693,7 +1693,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"noTut": {
-		"en-us": "Okie-dokie!", 
+		"en-us": "Convince-a-tron: Okie-dokie!", 
 		"type": "map"
 	},
 	"finTut": {
