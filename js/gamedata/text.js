@@ -8892,7 +8892,7 @@ const fulltext = {
 		"type": "text"
 	},
 	"falconMsg1.4": {
-		"en-us": "\"I mean, there's plenty of technology to make this easier for me, but if machines do all the work for me, who's really interning for you? Me, or the machines?\"", 
+		"en-us": "\"I mean, there's plenty of technology to make this easier, but if machines do all the work for me, who's really interning for you? Me, or the machines?\"", 
 		"type": "text"
 	},
 	"falconMsg1.5": {
