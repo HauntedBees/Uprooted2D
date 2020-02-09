@@ -401,7 +401,7 @@ const animCallbackHelpers = {
             const cropPos = targets[i];
             let targ = { x: cropPos.x + combat.dx, y: cropPos.y + combat.dy };
             let crop = combat.grid[cropPos.x][cropPos.y];
-            if(crop === null) { continue; }
+            if(crop === null || crop === undefined) { continue; }
             if(crop.x !== undefined) {
                 targ = { x: crop.x + combat.dx, y: crop.y + combat.dy };
                 crop = combat.grid[crop.x][crop.y];
