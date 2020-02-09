@@ -160,7 +160,7 @@ function CardGameChoice(action, card, secondaryCards, effects) {
     this.textID = "wacg." + action;
     this.isAttack = (action.indexOf("attack") === 0);
     this.action = action;
-    if(action !== "idle") {
+    if(action !== "idle" && action !== "shuffle" && card !== undefined) {
         this.cardName = card.displayname;
         this.activeEffects = effects;
         if(card.name.indexOf("fx") === 0) { this.arg = GetText("wacg." + card.name); }
