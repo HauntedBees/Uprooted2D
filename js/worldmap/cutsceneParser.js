@@ -1194,9 +1194,15 @@ const SpecialFunctions = {
         ]);
     },
     "CAVEDIED": function() {
+        if(player.lastInn !== "caveDive") {
+            iHandler.state.done = true;
+            iHandler.WrapUp();
+            return;
+        }
         const moniesLost = Range(5000, 8000);
         player.monies = Math.max(0, player.monies - moniesLost);
         console.log(`Lost ${moniesLost}G.`);
+        player.lastInn = "bigCity";
         for(let i = player.inventory.length - 1; i >= 0; i--) {
             if(Math.random() <= 0.85) { continue; }
             if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
@@ -1208,6 +1214,8 @@ const SpecialFunctions = {
                 player.inventory.splice(i, 1);
             }
         }
+        worldmap.importantEntities["caveboy"].moving = true;
+        CommandParser.Parse_Text(["undergroundFail"]);
     },
 
     // Misc.

@@ -818,7 +818,7 @@ const scripts = {
 	"caveDive11": "targ_ISMOVING:true&_TEXT:undergroundNotYet&_SETSTATE:10",
 	"caveEscape0": "caveboy_ISMOVING:true&_TEXT:undergroundEscape",
 	"caveEscape1": "caveboy_ISMOVING:false&_QUIT",
-	"caveFail0": "_CUSTOM:CAVEDIED&caveboy_ISMOVING:true&_TEXT:undergroundFail",
+	"caveFail0": "_CUSTOM:CAVEDIED",
 	"caveFail1": "caveboy_ISMOVING:false&_QUIT",
 	// North City (Natural Good): Some Guy
 	"newMoveIn0": "?[{\"q\":\"Math.random() < 0.4\",\"v\":1},{\"q\":\"Math.random() < 0.5\",\"v\":2},{\"q\":\"true\",\"v\":3}]",
