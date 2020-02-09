@@ -70,7 +70,7 @@ const dmgCalcs = {
     },
 
     MeleeAttack: function(isPlayer, season, myAtk, targets, attackElements) {
-        if(attackElements === undefined) { attackElement = [-1]; }
+        if(attackElements === undefined) { attackElements = [-1]; }
         var formattedDefs = [];
         for(var i = 0; i < targets.length; i++) {
             if(targets[i].name === undefined) { // enemy; value is just an integer for their defense
