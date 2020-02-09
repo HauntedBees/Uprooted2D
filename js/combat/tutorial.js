@@ -4,6 +4,7 @@ const tutorial = {
     state: 0, currentInputHandler: combat.menu,
     startBattle: function() {
         combat.startBattle(["Discussly"]);
+        combat.lastPlantedPos.y = 2;
         game.currentInputHandler = this;
         this.attemptingLeave = false;
         this.currentInputHandler = combat.menu;
