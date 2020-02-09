@@ -183,7 +183,7 @@ combat.plant = {
                 if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) {
                     if(this.cursor.y === (this.dy - 1) && pos.y === (this.dy - 2)) { // moving from BACK to FIELD
                         pos.x = combat.dx;
-                        pos.y = combat.dy + player.gridWidth - 2;
+                        pos.y = combat.dy + player.gridHeight - this.activeCrop.size;
                     } else {
                         return false;
                     }
