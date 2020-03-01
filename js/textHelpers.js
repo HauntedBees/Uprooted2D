@@ -1,8 +1,9 @@
 const IsSwearsAllowed = () => player !== undefined && player.options !== undefined && player.options.canSayFuck === 1;
 function GetText(key) {
 	try {
-		const lang = game !== undefined ? game.language : "en-us";
-        const d = fulltext[key];
+        const lang = game !== undefined ? game.language : "en-us";
+        const tryLarge = player !== undefined && player.options.fontSize === 2;
+        const d = fulltext[(tryLarge && fulltext[`${key}.lorge`] !== undefined) ? `${key}.lorge` : key];
         if(IsSwearsAllowed()) {
             if(d[lang] !== undefined) { return d[lang]; }
         } else {

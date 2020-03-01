@@ -1,6 +1,6 @@
 {
     "webexe_settings": {
-        "blacklist": "*",
+        "blacklist": ".git*\n.vscode\ncollision\ncom.hauntedbees*\nextbuild\nguide_assets\nnode_modules*\n*.cmd\n*.js\njunk*\npdn*\njs*\n*.csv\n*.md\n*.html",
         "custom_script": "",
         "download_dir": "",
         "export_dir": "E:\\GitHub\\CropRPGout",

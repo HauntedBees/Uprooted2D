@@ -2945,7 +2945,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"fish1": {
-		"en-us": "The fish swims menacingly towards you.", 
+		"en-us": "The fish swims menacingly towards me.", 
 		"type": "map"
 	},
 	"fish2": {
@@ -2957,7 +2957,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"seamonk1": {
-		"en-us": "The Sea Monk lunges at you.", 
+		"en-us": "The Sea Monk lunges at me.", 
 		"type": "map"
 	},
 	"seamonk2": {
@@ -7298,6 +7298,26 @@ const fulltext = {
 	},
 	"map.northcity_IB": {
 		"en-us": "Central Las Abejas IC", 
+		"type": "opts"
+	},
+	"map.northcity.lorge": {
+		"en-us": "Cen. Las Abejas", 
+		"type": "opts"
+	},
+	"map.northcity_NG.lorge": {
+		"en-us": "C. Las Abejas NP", 
+		"type": "opts"
+	},
+	"map.northcity_IG.lorge": {
+		"en-us": "C. Las Abejas IP", 
+		"type": "opts"
+	},
+	"map.northcity_NB.lorge": {
+		"en-us": "C. Las Abejas NC", 
+		"type": "opts"
+	},
+	"map.northcity_IB.lorge": {
+		"en-us": "C. Las Abejas IC", 
 		"type": "opts"
 	},
 	"map.hq_1": {
