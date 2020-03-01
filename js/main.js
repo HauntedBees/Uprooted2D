@@ -415,7 +415,7 @@ const game = {
         player.saveTime = +(new Date());
         localStorage.setItem("fileImg" + savenum, worldmap.savedImage);
         if(worldmap.mapName === "cave") {
-            player.mapName = "northcity";
+            player.mapName = GetPostGameMapName("northcity");
             player.mapPos = { x: 17, y: 7.5 };
             player.mapDir = 2;
         } else {
