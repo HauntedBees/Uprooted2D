@@ -916,6 +916,7 @@ const mapentities = {
         return entities;
     }(),
     "northcity_NG": () => [
+        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: Cutscene("caveFail")[0] },
         // Map Switches
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
         // Foreground
@@ -1014,6 +1015,7 @@ const mapentities = {
         GetSign(24, 19, "forRentSign")
     ],
     "northcity_IG": () => [
+        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: Cutscene("caveFail")[0] },
         // Map Switches
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
         SwitchMap("EnterFood2", 39, 8, false, false, 15, 29, "hq_IG"),
@@ -1148,6 +1150,7 @@ const mapentities = {
         return entities;
     },
     "northcity_NB": () => [
+        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: Cutscene("caveFail")[0] },
         // Map Switches
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
         SwitchMap("EnterFood2", 39, 8, false, false, 15, 29, "hq_NB"),
@@ -1264,6 +1267,7 @@ const mapentities = {
         GetFellow("JailWall", 5, 8, 0, "", Cutscene("beckettJail"), undefined, { visible: false })
     ],
     "northcity_IB": () => [
+        { name: "innCheck", pos: { x: -1, y: -1 }, innCheck: true, action: Cutscene("caveFail")[0] },
         // Map Switches
         SwitchMap("GoSouth", 8, 52, true, false, 44.5, 1, "southcity"),
         SwitchMap("EnterFood2", 39, 8, false, false, 15, 29, "hq_IB"),

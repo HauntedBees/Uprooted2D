@@ -1199,6 +1199,7 @@ const SpecialFunctions = {
             iHandler.WrapUp();
             return;
         }
+        JumboToggle(true);
         const moniesLost = Range(5000, 8000);
         player.monies = Math.max(0, player.monies - moniesLost);
         console.log(`Lost ${moniesLost}G.`);
@@ -1216,6 +1217,7 @@ const SpecialFunctions = {
         }
         worldmap.importantEntities["caveboy"].moving = true;
         CommandParser.Parse_Text(["undergroundFail"]);
+        worldmap.inDialogue = true;
     },
 
     // Misc.
