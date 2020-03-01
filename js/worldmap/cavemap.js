@@ -309,12 +309,24 @@ function CaveMap(floor, lastFloorTile, lastWallTile) {
     collisions["cave"] = myCollisions;
     const wallOffsetX = 4 * (this.wallTile % 3), wallOffsetY = 1 + 4 * Math.floor(this.wallTile / 3);
     this.Draw = function(centerx, centery) {
+        const bounds = {
+            x: [Math.floor(worldmap.pos.x - 9), Math.floor(worldmap.pos.x + 9)],
+            y: [Math.floor(worldmap.pos.y - 8), Math.floor(worldmap.pos.y + 8)]
+        };
+        if(bounds.x[0] <= 0) { bounds.x[1] += 8; }
+        else if(bounds.x[1] >= width) { bounds.x[0] -= 5; }
+        if(bounds.y[0] <= 0) { bounds.y[1] += 6; }
+        else if(bounds.y[1] >= height) { bounds.y[0] -= 5; }
+        bounds.x[0] = Math.max(0, bounds.x[0]);
+        bounds.y[0] = Math.max(0, bounds.y[0]);
+        bounds.x[1] = Math.min(width, bounds.x[1]);
+        bounds.y[1] = Math.min(height, bounds.y[1]);
         const offset = {
             x: Math.min(width - gfx.tileWidth, Math.max(centerx - (gfx.tileWidth / 2), 0 + 0.5)),
             y: Math.min(height - gfx.tileHeight, Math.max(centery - (gfx.tileHeight / 2), 0))
         };
-        for(let y = 0; y < height; y++) {
-            for(let x = 0; x < width; x++) {
+        for(let y = bounds.y[0]; y < bounds.y[1]; y++) {
+            for(let x = bounds.x[0]; x < bounds.x[1]; x++) {
                 const realx = x - offset.x;
                 const realy = y - offset.y;
                 gfx.DrawSprite("cavesheet", this.floorType, 0, realx * 16, realy * 16, "background", false, false); // floor
