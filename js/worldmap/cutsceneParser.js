@@ -1163,11 +1163,21 @@ const SpecialFunctions = {
 
     // The Cave
     "HEAL": () => player.health = player.maxhealth,
-    "LEAVECAVE": () => game.transition(game.currentInputHandler, worldmap, { init: { x: 17, y: 7.5 }, playerDir: 2, map: GetPostGameMapName("northcity"), inside: true, postCombat: "caveEscape" }),
+    "LEAVECAVE": function() {
+        Sounds.PlaySound("push", true);
+        game.transition(game.currentInputHandler, worldmap, { 
+            init: { x: 17, y: 7.5 }, 
+            playerDir: 2, 
+            map: GetPostGameMapName("northcity"), 
+            inside: true, 
+            postCombat: "caveEscape"
+        });
+    },
     "DOWNCAVE": function() {
         const newFloor = worldmap.customMap.floor + 1;
         if(newFloor > player.caveDepth) { player.caveDepth = newFloor; }
         if(newFloor === 4) { AddAchievementIfMissing("madeForMe"); }
+        Sounds.PlaySound("push", true);
         game.transition(game.currentInputHandler, worldmap, { 
             init: { x: 3, y: 3 }, map: "cave", 
             floor: newFloor, 
@@ -1183,6 +1193,7 @@ const SpecialFunctions = {
             player.numCaves += 1;
         }
         player.lastInn = "caveDive";
+        Sounds.PlaySound("push", true);
         game.transition(game.currentInputHandler, worldmap, { 
             init: { x: 3, y: 3 }, map: "cave", floor: 0
         });
