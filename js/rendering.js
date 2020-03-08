@@ -432,6 +432,26 @@ const gfx = {
         ctx.fillRect(x * gfx.scale, y * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
     // Full Drawsies
+    fragmentCache: [],  
+    FragmentMap: function(map) {
+        gfx.fragmentCache = [];
+        const mapImg = gfx.spritesheets["maps/" + map];
+        const w = mapImg.width, h = mapImg.height;
+        if(w < 2000 && h < 1344) { return; }
+        for(let y = 0; y < h; y += 1344) {
+            const cacheRow = [];
+            for(let x = 0; x < w; x += 2000) {
+                const canvas = document.createElement("canvas");
+                const cw = Math.min(2000, w - x);
+                const ch = Math.min(1344, h - y);
+                canvas.width = cw;
+                canvas.height = ch;
+                canvas.getContext("2d").drawImage(mapImg, x, y, cw, ch, 0, 0, cw, ch);
+                cacheRow.push(canvas);
+            }
+            gfx.fragmentCache.push(cacheRow);
+        }
+    },
     drawMap: function(map, centerx, centery) {
         const w = collisions[map][0].length;
         const h = collisions[map].length;
@@ -439,31 +459,31 @@ const gfx = {
             x: Math.min(w - gfx.tileWidth, Math.max(centerx - (gfx.tileWidth / 2), 0 + 0.5)),
             y: Math.min(h - gfx.tileHeight, Math.max(centery - (gfx.tileHeight / 2), 0))
         };
-        if(map === "forest") {
+        if(gfx.fragmentCache.length > 0) {
             const pChunkX = centerx / 31.25, pChunkY = centery / 21;
             const chunkX = Math.floor(pChunkX), chunkY = Math.floor(pChunkY);
-            gfx.drawMapChunk("forest", chunkX, chunkY, 31.25, 21, offset);
+            gfx.drawMapChunk(map, chunkX, chunkY, 31.25, 21, offset);
             const dx = pChunkX - chunkX, dy = pChunkY - chunkY;
-            const showLeft = dx <= 0.27, showRight = dx >= 0.73, showTop = dy <= 0.35, showBottom = dy >= 0.63;
+            const showLeft = dx <= 0.27, showRight = dx >= 0.73, showTop = dy <= 0.546, showBottom = dy >= 0.63;
             if(showLeft) {
                 if(showTop) {
-                    gfx.drawMapChunk("forest", chunkX - 1, chunkY - 1, 31.25, 21, offset);
+                    gfx.drawMapChunk(map, chunkX - 1, chunkY - 1, 31.25, 21, offset);
                 } else if(showBottom) {
-                    gfx.drawMapChunk("forest", chunkX - 1, chunkY + 1, 31.25, 21, offset);
+                    gfx.drawMapChunk(map, chunkX - 1, chunkY + 1, 31.25, 21, offset);
                 }
-                gfx.drawMapChunk("forest", chunkX - 1, chunkY, 31.25, 21, offset);
+                gfx.drawMapChunk(map, chunkX - 1, chunkY, 31.25, 21, offset);
             } else if(showRight) {
                 if(showTop) {
-                    gfx.drawMapChunk("forest", chunkX + 1, chunkY - 1, 31.25, 21, offset);
+                    gfx.drawMapChunk(map, chunkX + 1, chunkY - 1, 31.25, 21, offset);
                 } else if(showBottom) {
-                    gfx.drawMapChunk("forest", chunkX + 1, chunkY + 1, 31.25, 21, offset);
+                    gfx.drawMapChunk(map, chunkX + 1, chunkY + 1, 31.25, 21, offset);
                 }
-                gfx.drawMapChunk("forest", chunkX + 1, chunkY, 31.25, 21, offset);
+                gfx.drawMapChunk(map, chunkX + 1, chunkY, 31.25, 21, offset);
             }
             if(showTop) {
-                gfx.drawMapChunk("forest", chunkX, chunkY - 1, 31.25, 21, offset);
+                gfx.drawMapChunk(map, chunkX, chunkY - 1, 31.25, 21, offset);
             } else if(showBottom) {
-                gfx.drawMapChunk("forest", chunkX, chunkY + 1, 31.25, 21, offset);
+                gfx.drawMapChunk(map, chunkX, chunkY + 1, 31.25, 21, offset);
             }
         } else {
             const mapImg = gfx.spritesheets["maps/" + map];
@@ -472,7 +492,9 @@ const gfx = {
         return offset;
     },
     drawMapChunk: function(map, x, y, chunkw, chunkh, offset) {
-        const mapImg = gfx.spritesheets["maps/" + map + x + y];
+        if(y < 0 || x < 0) { return; }
+        if(y >= gfx.fragmentCache.length || x >= gfx.fragmentCache[0].length) { return; }
+        const mapImg = gfx.fragmentCache[y][x];
         if(mapImg === undefined) { return; }
         const relativeOffsetX = offset.x - chunkw * x, relativeOffsetY = offset.y - chunkh * y;
         gfx.drawImage(gfx.ctx["background"], mapImg, relativeOffsetX * 16, relativeOffsetY * 16, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);

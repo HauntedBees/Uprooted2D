@@ -17,6 +17,7 @@ const worldmap = {
         this.waitForAnimation = false;
         this.dialogState = 0;
         this.mapName = args.map;
+        gfx.FragmentMap(args.map);
         this.cursors = new CursorAnimSet([ { key: "main", x: -1, y: -1, w: 15, h: -0.25, type: "cursor", layer: "menucursorA" } ], true);
         this.freeMovement = true;
 
