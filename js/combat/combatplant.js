@@ -131,6 +131,7 @@ combat.plant = {
     },
     isSprinkler: function(x, y) {
         if(x < 0 || y < 0 || x >= player.gridWidth || y >= player.gridHeight) { return false; }
+        if(player.itemGrid[x] === null || player.itemGrid[x] === undefined) { return false; }
         return player.itemGrid[x][y] === "_sprinkler";
     },
     
