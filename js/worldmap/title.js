@@ -15,7 +15,7 @@ worldmap.title = {
         gfx.drawFullImage("titleTop", "characters");
         this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options", "menu.Quit"] : ["title.new", "title.options", "menu.Quit"]);
         this.DrawMenu();
-        gfx.drawText(String.fromCharCode(169) + " 2019 Haunted Bees Productions (v" + player.saveVersion + ")", 2, 222, undefined, 20, "menutextOverBlack");
+        gfx.drawText(String.fromCharCode(169) + " 2020 Haunted Bees Productions (v" + player.saveVersion + ")", 2, 222, undefined, 20, "menutextOverBlack");
         screenReaderHelper.SayThing("Uprooted: Meal Replacement Game", "regular", GetText(this.menuItems[this.cursory]));
     },
     HasSaves: function() {
