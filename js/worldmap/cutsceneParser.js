@@ -915,11 +915,14 @@ const SpecialFunctions = {
         else { worldmap.writeText("elevatorNormal", items); }
     },
     "ELEVATORNEXT": function(idx) {
+        let didMove = true;
         switch(specialtyHelpers.getHQElevatorOptions()[idx]) {
             case "elevator1": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_1", playerDir: 2 }); break;
             case "elevator2": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_2", playerDir: 2 }); break;
             case "elevator4": game.transition(game.currentInputHandler, worldmap, { init: { x: 11.5,  y: 3 }, map: "hq_4", playerDir: 2 }); break;
+            default: didMove = false;
         }
+        if(didMove) { Sounds.PlaySound("elevator", true); }
         iHandler.state.done = true;
         worldmap.finishDialog();
     },

@@ -44,6 +44,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "door",             // sfx_movement_dooropen2
                         "pauseI",           // sfx_sounds_pause1_in
                         "pauseO",           // sfx_sounds_pause1_out
+                        "elevator",         // sfx_vehicle_plainloop
                         // CUTSCENE SOUNDS
                         "fart",             // 241000__dsisstudios__short-fart-01
                         "dirtvwoom",        // sfx_sound_mechanicalnoise2
