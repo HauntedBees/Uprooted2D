@@ -10,7 +10,7 @@
     "main": "indexapp.html",
     "name": "uprooted",
     "nodejs": true,
-    "version": "0.51",
+    "version": "0.6",
     "webexe_settings": {
         "blacklist": ".git*\n.vscode\ncollision\ncom.hauntedbees*\nextbuild\nguide_assets\nnode_modules*\n*.cmd\n*.js\njunk*\npdn*\njs*\n*.csv\n*.md\n*.html",
         "custom_script": "",
