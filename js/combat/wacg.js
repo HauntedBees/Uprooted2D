@@ -4,7 +4,9 @@ function ChildrensCardGame(e) {
                  "elem1", "elem2", "elem3", "elem0", "elem1", "elem2", "elem3", "fx0", "fx0", "fx1", "fx1", "fx2", "fx3", "fx3", "fx4", "fx4" ];
     };
     this.DrawCard = function() {
+        console.log(this.deck);
         const card = this.deck.splice(Range(0, this.deck.length), 1)[0];
+        console.log(card);
         if(card === undefined) { return false; }
         this.hand.push(card);
         return true;
@@ -78,7 +80,7 @@ function ChildrensCardGame(e) {
                 return new CardGameChoice((cardCrop.inDefensePosition ? "placedef" : "placeatk"), cardCrop);
             }
             const discard = this.hand.splice(Math.floor(Math.random() * this.hand.length), 1)[0];
-            if(discard === undefined) { console.log("idle 81"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
+            if(discard === undefined) { console.log("idle 83"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
             return new CardGameChoice("discard", GetCrop(discard));
         }
         let elemsInHand = 0, fxInHand = 0;
@@ -102,7 +104,7 @@ function ChildrensCardGame(e) {
             else { return new CardGameChoice("attack0", charCard, undefined, effectsInPlay); }
         } else if(chosenOption === "switchPosition") {
             const cardCrop = combat.enemyGrid[1][1];
-            if(cardCrop === null) { console.log("idle 105"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
+            if(cardCrop === null) { console.log("idle 107"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
             combat.enemyGrid[1][1].inDefensePosition = !cardCrop.inDefensePosition;
             return new CardGameChoice((cardCrop.inDefensePosition ? "swapdef" : "swapatk"), cardCrop);
         } else if(chosenOption == "discardCharacter") {
@@ -120,12 +122,12 @@ function ChildrensCardGame(e) {
                 const cardCrop = GetCrop(this.hand[i]);
                 if(combat.enemyGrid[1][0] === null) { combat.enemyGrid[1][0] = cardCrop; }
                 else if(combat.enemyGrid[1][2] === null) { combat.enemyGrid[1][2] = cardCrop; }
-                else { console.log("idle 123"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
+                else { console.log("idle 125"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
                 this.hand.splice(i, 1);
                 return new CardGameChoice("placeElem", cardCrop);
             }
-            console.log("idle 127");
-            return new CardGameChoice("idle");
+            console.log("shuffle 129");
+            return new CardGameChoice("shuffle");
         } else if(chosenOption === "retractElem") {
             if(combat.enemyGrid[1][2] !== null) {
                 const cardCrop = combat.enemyGrid[1][2];
@@ -135,7 +137,7 @@ function ChildrensCardGame(e) {
                 const cardCrop = combat.enemyGrid[1][0];
                 combat.enemyGrid[1][0] = null;
                 return new CardGameChoice("removeElem", cardCrop);
-            } else { console.log("idle 138"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
+            } else { console.log("idle 140"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
         } else if(chosenOption === "placeFx") {
             for(let i = 0; i < this.hand.length; i++) {
                 if(this.hand[i].indexOf("fx") < 0) { continue; }
@@ -143,12 +145,12 @@ function ChildrensCardGame(e) {
                 if(combat.enemyGrid[0][0] === null) { combat.enemyGrid[0][0] = cardCrop; }
                 else if(combat.enemyGrid[0][2] === null) { combat.enemyGrid[0][2] = cardCrop; }
                 else if(combat.enemyGrid[0][1] === null) { combat.enemyGrid[0][1] = cardCrop; }
-                else { console.log("idle 146"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
+                else { console.log("idle 148"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
                 this.hand.splice(i, 1);
                 return new CardGameChoice("placeFx", cardCrop);
             }
             return new CardGameChoice("idle");
-        } else { console.log("idle 152"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
+        } else { console.log("shuffle 153"); return new CardGameChoice("idle"); } // this shouldn't ever actually happen
     };
     let cardPlayer = e;
     this.hand = [];
