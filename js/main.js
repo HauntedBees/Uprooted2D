@@ -23,14 +23,14 @@ const nwHelpers = {
         if(typeof require === "undefined") { return; }
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }
         if(window.screen.availWidth > this.win.width || window.screen.availHeight > this.win.height) {
-            player.options.resolution = 0;
+            universalSettings.resolution = 0;
             console.log(`shrunky from ${window.screen.availWidth}/${window.screen.availHeight}`);
         } else if(this.win.width < 1024) {
-            player.options.resolution = 0;
+            universalSettings.resolution = 0;
         } else if(this.win.width < 2048) {
-            player.options.resolution = 1;
+            universalSettings.resolution = 1;
         } else {
-            player.options.resolution = 2;
+            universalSettings.resolution = 2;
         }
         nwHelpers.AdjustScreenSettings();
     },
@@ -38,13 +38,13 @@ const nwHelpers = {
         if(typeof require === "undefined") { return; }
         if(this.win === null) { this.win = require("nw.gui").Window.get(); }
         let multiplier = 1;
-        switch(player.options.resolution) {
+        switch(universalSettings.resolution) {
             case 0: multiplier = 0.5; break;
             case 2: multiplier = 2; break;
         }
-        if(player.options.fullscreen === 1) {
+        if(universalSettings.fullScreen === 1) {
             this.win.enterFullscreen();
-        } else if(player.options.fullscreen === 0) {
+        } else if(universalSettings.fullScreen === 0) {
             this.win.leaveFullscreen();
         }
         this.win.zoomLevel = Math.log(multiplier) / Math.log(1.2);
@@ -111,14 +111,16 @@ const game = {
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
+        const univSettings = localStorage.getItem("universalSettings");
+        if(univSettings !== null) { universalSettings = game.str2obj(univSettings); }
         if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0) {
-            game.type = 2;
+            game.type = 2; // mobile
             window.addEventListener("orientationchange", cordovaHelpers.OrientationChange);
             cordovaHelpers.OrientationChange();
         } else if(typeof require === "function") {
-            game.type = 1;
+            game.type = 1; // desktop
         } else {
-            game.type = 0;
+            game.type = 0; // browser
         }
         document.getElementById("screenRead").innerText = GetText("nowLoading");
         document.getElementById("canvasContainer").focus();

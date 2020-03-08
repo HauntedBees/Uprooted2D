@@ -1,3 +1,7 @@
+let universalSettings = {
+    resolution: 1,
+    fullscreen: 0
+};
 let player = {
     health: 25, maxhealth: 25, atk: 3, def: 2, luck: 0.7, hasFalcon: true, saveVersion: 0.51, 
     c2: 0, c2Rate: 1, beeQueensFaced: 0, nathanSeeds: [["beet", 10], ["carrot", 10], ["ginger", 5]],
@@ -14,7 +18,7 @@ let player = {
         music: 20, sound: 20,
         controltype: 0, canSayFuck: 0, deadZone: 0, analogDPad: 1, 
         stickyMovement: 0, ignoreMouse: 0, virtualController: 0, 
-        font: 0, fontSize: 0, resolution: 1, fullscreen: 0, gfxfilter: 3,
+        font: 0, fontSize: 0, gfxfilter: 3,
         coverColor: 0, coverMode: 1, rightBumperWin: false, 
     },
     noFunDiffMod: 0, // positive = harder, negative = easier

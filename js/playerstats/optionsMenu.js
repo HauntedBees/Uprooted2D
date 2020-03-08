@@ -9,6 +9,8 @@ worldmap.optionsMenu = {
         this.fromPause = fromPause;
         this.localKeyboardControls = Object.assign({}, player.keyboardcontrols);
         this.localGamepadControls = Object.assign({}, player.gamepadcontrols);
+        player.options.fullscreen = universalSettings.fullscreen;
+        player.options.resolution = universalSettings.resolution;
         this.localOptions = Object.assign({}, player.options);
         this.options = []; this.cursory = 1; this.inChange = false;
         this.specialPos = -1;
@@ -439,6 +441,9 @@ worldmap.optionsMenu = {
         player.gamepadcontrols = Object.assign(player.gamepadcontrols, worldmap.optionsMenu.localGamepadControls);
         player.options = Object.assign(player.options, worldmap.optionsMenu.localOptions);
         input.SwitchControlType(player.options.controltype);
+        universalSettings.fullscreen = player.options.fullscreen;
+        universalSettings.resolution = player.options.resolution;
+        localStorage.setItem("universalSettings", game.obj2str(universalSettings));
         const newFilter = player.options.gfxfilter;
         const newFilterMode = player.options.coverMode;
         /*if(player.options.virtualController === 1) {
