@@ -1,0 +1,63 @@
+{
+	"meta": {
+		"image": "../../img2/mapJunk.png"
+	},
+	"frames": {
+		"longFenceX": {
+			"frame": { "x": 0, "y": 0, "w": 1332, "h": 64 },
+			"sourceSize": { "w": 1332, "h": 64 }
+		},
+		"nubFenceX": {
+			"frame": { "x": 328, "y": 64, "w": 69, "h": 64 },
+			"sourceSize": { "w": 69, "h": 64 }
+		},
+		"longFenceY": {
+			"frame": { "x": 0, "y": 64, "w": 36, "h": 316 },
+			"sourceSize": { "w": 36, "h": 316 }
+		},
+		"longerFenceY": {
+			"frame": { "x": 36, "y": 64, "w": 36, "h": 421 },
+			"sourceSize": { "w": 36, "h": 421 }
+		},
+		"barnHouse": {
+			"frame": { "x": 72, "y": 64, "w": 256, "h": 639 },
+			"sourceSize": { "w": 256, "h": 639 }
+		},
+		"barnHouse2": {
+			"frame": { "x": 328, "y": 128, "w": 256, "h": 384 },
+			"sourceSize": { "w": 256, "h": 384 }
+		},
+		"barnHouse3": {
+			"frame": { "x": 584, "y": 64, "w": 256, "h": 257 },
+			"sourceSize": { "w": 256, "h": 257 }
+		},
+		"barnHouse4": {
+			"frame": { "x": 840, "y": 64, "w": 320, "h": 192 },
+			"sourceSize": { "w": 320, "h": 192 }
+		},
+		"hayPile": {
+			"frame": { "x": 328, "y": 512, "w": 164, "h": 106 },
+			"sourceSize": { "w": 164, "h": 106 }
+		},
+		"stdTree": {
+			"frame": { "x": 584, "y": 321, "w": 105, "h": 125 },
+			"sourceSize": { "w": 105, "h": 125 }
+		},
+		"bigTree": {
+			"frame": { "x": 1160, "y": 64, "w": 128, "h": 192 },
+			"sourceSize": { "w": 128, "h": 192 }
+		},
+		"mushroomLog": {
+			"frame": { "x": 397, "y": 64, "w": 74, "h": 64 },
+			"sourceSize": { "w": 74, "h": 64 }
+		},
+		"bananaTree": {
+			"frame": { "x": 492, "y": 512, "w": 126, "h": 124 },
+			"sourceSize": { "w": 126, "h": 124 }
+		},
+		"smallFoodCrate": {
+			"frame": { "x": 689, "y": 321, "w": 64, "h": 68 },
+			"sourceSize": { "w": 64, "h": 68 }
+		}
+	}
+}

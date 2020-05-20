@@ -1,0 +1,31 @@
+{
+	"meta": {
+		"image": "../../img2/mapPlayer.png"
+	},
+	"frames": {
+		"d0f0": {
+			"frame": {
+				"x": 4, "y": 4, "w": 64, "h": 80
+			},
+			"sourceSize": { "w": 64, "h": 80 }
+		},
+		"d1f0": {
+			"frame": {
+				"x": 76, "y": 4, "w": 64, "h": 80
+			},
+			"sourceSize": { "w": 64, "h": 80 }
+		},
+		"d2f0": {
+			"frame": {
+				"x": 148, "y": 4, "w": 64, "h": 80
+			},
+			"sourceSize": { "w": 64, "h": 80 }
+		},
+		"d3f0": {
+			"frame": {
+				"x": 220, "y": 4, "w": 64, "h": 80
+			},
+			"sourceSize": { "w": 64, "h": 80 }
+		}
+	}
+}

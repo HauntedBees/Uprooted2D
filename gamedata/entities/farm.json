@@ -1,0 +1,231 @@
+[
+    {
+        "name": "test",
+        "type": "NPC",
+        "pos": { "x": -10, "y": 10 },
+        "dir": 2,
+        "big": false,
+        "sx": 9, "sy": 8,
+        "moveToTalk": true,
+        "oneSpeak": "villager0"
+    },
+    { "name": "enterInn", "type": "shop", "pos": { "x": 40, "y": 5.5 }, "shop": "inn0" },
+    { "name": "ChickenCoop", "type": "shop", "pos": { "x": 71, "y": 12 }, "shop": "coop" },
+    {
+        "name": "border0",
+        "type": "mapJunk",
+        "pos": { "x": 1, "y": 0 },
+        "sprite": "longFenceX",
+        "noZ": true,
+        "forceX": true
+    },
+    {
+        "name": "border1",
+        "type": "mapJunk",
+        "pos": { "x": 1, "y": 0 },
+        "sprite": "longerFenceY",
+        "forceY": true
+    },
+    {
+        "name": "border2",
+        "type": "mapJunk",
+        "pos": { "x": 1, "y": 21 },
+        "sprite": "longerFenceY",
+        "forceY": true
+    },
+    {
+        "name": "border3",
+        "type": "mapJunk",
+        "pos": { "x": 15.625, "y": 76 },
+        "sprite": "nubFenceX"
+    },
+    {
+        "name": "border4",
+        "type": "mapJunk",
+        "pos": { "x": 36, "y": 76 },
+        "sprite": "longFenceX"
+    },
+    {
+        "name": "border5",
+        "type": "mapJunk",
+        "pos": { "x": 93, "y": 23 },
+        "sprite": "longFenceY",
+        "forceY": true
+    },
+    {
+        "name": "border6",
+        "type": "mapJunk",
+        "pos": { "x": 88.875, "y": 38.75 },
+        "sprite": "nubFenceX"
+    },
+    {
+        "name": "border7",
+        "type": "mapJunk",
+        "pos": { "x": 93, "y": 58.75 },
+        "sprite": "longFenceY",
+        "forceY": true
+    },
+    {
+        "name": "border8",
+        "type": "mapJunk",
+        "pos": { "x": 88.875, "y": 58.75 },
+        "sprite": "nubFenceX"
+    },
+    {
+        "name": "barn",
+        "type": "mapJunk",
+        "pos": { "x": 0, "y": 40 },
+        "sprite": "barnHouse",
+        "forceY": true,
+        "forceX": true
+    },
+    {
+        "name": "barn2",
+        "type": "mapJunk",
+        "pos": { "x": 80, "y": 0 },
+        "sprite": "barnHouse2",
+        "noZ": true,
+        "forceY": true,
+        "forceX": true,
+        "padBottom": true
+    },
+    {
+        "name": "HenriettaShop",
+        "type": "mapJunk",
+        "pos": { "x": 64, "y": 0 },
+        "sprite": "barnHouse3",
+        "forceY": true,
+        "forceX": true,
+        "padBottom": true
+    },
+    {
+        "name": "Home",
+        "type": "mapJunk",
+        "pos": { "x": 32, "y": 0 },
+        "sprite": "barnHouse4",
+        "forceY": true,
+        "forceX": true,
+        "padBottom": true
+    },
+    {
+        "name": "tree1",
+        "type": "mapJunk",
+        "pos": { "x": 8, "y": 3 },
+        "sprite": "bigTree"
+    },
+    {
+        "name": "tree2",
+        "type": "mapJunk",
+        "pos": { "x": 18, "y": 3 },
+        "sprite": "bigTree"
+    },
+    {
+        "name": "tree3",
+        "type": "mapJunk",
+        "pos": { "x": 8, "y": 13 },
+        "sprite": "bigTree"
+    },
+    {
+        "name": "tree4",
+        "type": "mapJunk",
+        "pos": { "x": 18, "y": 13 },
+        "sprite": "bigTree"
+    },
+    {
+        "name": "tree5",
+        "type": "mapJunk",
+        "pos": { "x": 13, "y": 8 },
+        "sprite": "bigTree"
+    },
+    {
+        "name": "bananaTree",
+        "type": "mapJunk",
+        "pos": { "x": 24, "y": 28 },
+        "sprite": "bananaTree",
+        "oneSpeak": "farmTree"
+    },
+    {
+        "name": "mushroomLog",
+        "type": "mapJunk",
+        "pos": { "x": 15, "y": 22 },
+        "sprite": "mushroomLog",
+        "cutscene": "FarmMush",
+        "padBottom": true
+    },
+    {
+        "name": "hayPile",
+        "type": "mapJunk",
+        "pos": { "x": 81, "y": 20 },
+        "sprite": "hayPile",
+        "noCollision": true,
+        "noZ": true,
+        "oneSpeak": "farmHay"
+    },
+    {
+        "name": "crate",
+        "type": "mapJunk",
+        "pos": { "x": 68, "y": 14 },
+        "sprite": "smallFoodCrate",
+        "padBottom": true
+    },
+    { "name": "lakeUL", "type": "sheetObj", "pos": { "x": 52, "y": 4 }, "sprite": "lakeDS", "padBottom": true },
+    { "name": "lakeU", "type": "sheetObj", "pos": { "x": 56, "y": 4 }, "sprite": "lakeASD", "padBottom": true },
+    { "name": "lakeUR", "type": "sheetObj", "pos": { "x": 60, "y": 4 }, "sprite": "lakeAS", "padBottom": true },
+    { "name": "lakeBL", "type": "sheetObj", "pos": { "x": 52, "y": 8 }, "sprite": "lakeWD", "padBottom": true },
+    { "name": "lakeB", "type": "sheetObj", "pos": { "x": 56, "y": 8 }, "sprite": "lakeWAD", "padBottom": true },
+    { "name": "lakeBR", "type": "sheetObj", "pos": { "x": 60, "y": 8 }, "sprite": "lakeWA", "padBottom": true },
+    { "name": "veggie01", "type": "sheetObj", "pos": { "x": 39.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
+    { "name": "veggie02", "type": "sheetObj", "pos": { "x": 44.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "radish1" },
+    { "name": "veggie03", "type": "sheetObj", "pos": { "x": 39.5, "y": 36 }, "oneSpeak": "farmVeggie", "sprite": "garlic1" },
+    { "name": "sprink01", "type": "sheetObj", "pos": { "x": 44.5, "y": 36 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie04", "type": "sheetObj", "pos": { "x": 39.5, "y": 40 }, "oneSpeak": "farmVeggie", "sprite": "bellpepper2" },
+    { "name": "veggie05", "type": "sheetObj", "pos": { "x": 44.5, "y": 40 }, "oneSpeak": "farmVeggie", "sprite": "carrot1" },
+    { "name": "veggie06", "type": "sheetObj", "pos": { "x": 39.5, "y": 44 }, "oneSpeak": "farmVeggie", "sprite": "ginger2" },
+    { "name": "veggie07", "type": "sheetObj", "pos": { "x": 44.5, "y": 44 }, "oneSpeak": "farmVeggie", "sprite": "radish0" },
+    { "name": "sprink02", "type": "sheetObj", "pos": { "x": 39.5, "y": 48 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie08", "type": "sheetObj", "pos": { "x": 44.5, "y": 48 }, "oneSpeak": "farmVeggie", "sprite": "corn1" },
+    { "name": "veggie09", "type": "sheetObj", "pos": { "x": 39.5, "y": 52 }, "oneSpeak": "farmVeggie", "sprite": "garlic2" },
+    { "name": "veggie10", "type": "sheetObj", "pos": { "x": 44.5, "y": 52 }, "oneSpeak": "farmVeggie", "sprite": "ginger2" },
+    { "name": "veggie11", "type": "sheetObj", "pos": { "x": 39.5, "y": 56 }, "oneSpeak": "farmVeggie", "sprite": "carrot1" },
+    { "name": "veggie12", "type": "sheetObj", "pos": { "x": 44.5, "y": 56 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
+    { "name": "veggie13", "type": "sheetObj", "pos": { "x": 39.5, "y": 60 }, "oneSpeak": "farmVeggie", "sprite": "corn2" },
+    { "name": "sprink03", "type": "sheetObj", "pos": { "x": 44.5, "y": 60 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie14", "type": "sheetObj", "pos": { "x": 39.5, "y": 64 }, "oneSpeak": "farmVeggie", "sprite": "radish0" },
+    { "name": "veggie15", "type": "sheetObj", "pos": { "x": 44.5, "y": 64 }, "oneSpeak": "farmVeggie", "sprite": "beet1" },
+    { "name": "veggie16", "type": "sheetObj", "pos": { "x": 55.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "beet1" },
+    { "name": "veggie17", "type": "sheetObj", "pos": { "x": 60.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "corn1" },
+    { "name": "sprink04", "type": "sheetObj", "pos": { "x": 55.5, "y": 36 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie18", "type": "sheetObj", "pos": { "x": 60.5, "y": 36 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
+    { "name": "veggie19", "type": "sheetObj", "pos": { "x": 55.5, "y": 40 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
+    { "name": "veggie20", "type": "sheetObj", "pos": { "x": 60.5, "y": 40 }, "oneSpeak": "farmVeggie", "sprite": "bellpepper2" },
+    { "name": "veggie21", "type": "sheetObj", "pos": { "x": 55.5, "y": 44 }, "oneSpeak": "farmVeggie", "sprite": "corn1" },
+    { "name": "veggie22", "type": "sheetObj", "pos": { "x": 60.5, "y": 44 }, "oneSpeak": "farmVeggie", "sprite": "carrot1" },
+    { "name": "veggie23", "type": "sheetObj", "pos": { "x": 55.5, "y": 48 }, "oneSpeak": "farmVeggie", "sprite": "ginger2" },
+    { "name": "sprink05", "type": "sheetObj", "pos": { "x": 60.5, "y": 48 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie24", "type": "sheetObj", "pos": { "x": 55.5, "y": 52 }, "oneSpeak": "farmVeggie", "sprite": "radish0" },
+    { "name": "veggie25", "type": "sheetObj", "pos": { "x": 60.5, "y": 52 }, "oneSpeak": "farmVeggie", "sprite": "beet1" },
+    { "name": "veggie26", "type": "sheetObj", "pos": { "x": 55.5, "y": 56 }, "oneSpeak": "farmVeggie", "sprite": "corn2" },
+    { "name": "veggie27", "type": "sheetObj", "pos": { "x": 60.5, "y": 56 }, "oneSpeak": "farmVeggie", "sprite": "radish1" },
+    { "name": "sprink06", "type": "sheetObj", "pos": { "x": 55.5, "y": 60 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie28", "type": "sheetObj", "pos": { "x": 60.5, "y": 60 }, "oneSpeak": "farmVeggie", "sprite": "radish0" },
+    { "name": "veggie29", "type": "sheetObj", "pos": { "x": 55.5, "y": 64 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
+    { "name": "veggie30", "type": "sheetObj", "pos": { "x": 60.5, "y": 64 }, "oneSpeak": "farmVeggie", "sprite": "corn1" },
+    { "name": "veggie31", "type": "sheetObj", "pos": { "x": 71.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "radish0" },
+    { "name": "veggie32", "type": "sheetObj", "pos": { "x": 76.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "radish1" },
+    { "name": "veggie33", "type": "sheetObj", "pos": { "x": 71.5, "y": 36 }, "oneSpeak": "farmVeggie", "sprite": "radish0" },
+    { "name": "sprink07", "type": "sheetObj", "pos": { "x": 76.5, "y": 36 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie34", "type": "sheetObj", "pos": { "x": 71.5, "y": 40 }, "oneSpeak": "farmVeggie", "sprite": "carrot1" },
+    { "name": "veggie35", "type": "sheetObj", "pos": { "x": 76.5, "y": 40 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
+    { "name": "veggie36", "type": "sheetObj", "pos": { "x": 71.5, "y": 44 }, "oneSpeak": "farmVeggie", "sprite": "beet1" },
+    { "name": "veggie37", "type": "sheetObj", "pos": { "x": 76.5, "y": 44 }, "oneSpeak": "farmVeggie", "sprite": "tomato0" },
+    { "name": "sprink08", "type": "sheetObj", "pos": { "x": 71.5, "y": 48 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie38", "type": "sheetObj", "pos": { "x": 76.5, "y": 48 }, "oneSpeak": "farmVeggie", "sprite": "corn2" },
+    { "name": "veggie39", "type": "sheetObj", "pos": { "x": 71.5, "y": 52 }, "oneSpeak": "farmVeggie", "sprite": "carrot1" },
+    { "name": "veggie40", "type": "sheetObj", "pos": { "x": 76.5, "y": 52 }, "oneSpeak": "farmVeggie", "sprite": "bellpepper2" },
+    { "name": "veggie41", "type": "sheetObj", "pos": { "x": 71.5, "y": 56 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
+    { "name": "veggie42", "type": "sheetObj", "pos": { "x": 76.5, "y": 56 }, "oneSpeak": "farmVeggie", "sprite": "radish1" },
+    { "name": "veggie43", "type": "sheetObj", "pos": { "x": 71.5, "y": 60 }, "oneSpeak": "farmVeggie", "sprite": "corn2" },
+    { "name": "sprink09", "type": "sheetObj", "pos": { "x": 76.5, "y": 60 }, "oneSpeak": "farmSprinkler", "sprite": "_sprinkler" },
+    { "name": "veggie44", "type": "sheetObj", "pos": { "x": 71.5, "y": 64 }, "oneSpeak": "farmVeggie", "sprite": "radish0" },
+    { "name": "veggie45", "type": "sheetObj", "pos": { "x": 76.5, "y": 64 }, "oneSpeak": "farmVeggie", "sprite": "corn1" }
+]
