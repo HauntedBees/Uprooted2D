@@ -71,7 +71,7 @@
     </head>
     <body role="application">
         <div id="canvasContainer" tabindex="0"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
-            <div id="loader"><div id="screenRead" role="alert" aria-live="assertive"></div></div>
+            <!--<div id="loader"><div id="screenRead" role="alert" aria-live="assertive"></div></div>
             <canvas id="background" width="1024" height="896"></canvas>
             <canvas id="background2" width="1024" height="896"></canvas>
             <canvas id="crops" width="1024" height="896"></canvas>
@@ -90,7 +90,7 @@
             <canvas id="menutextOverBlack" width="1024" height="896"></canvas>
             <canvas id="savegen" width="1024" height="896"></canvas>
             <div id="colorCover"></div>
-            <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
+            <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>-->
         </div>
         <div id="previews">
             <img id="prev_img" src="img/colorPreview.png"/>
@@ -106,7 +106,22 @@
             <div style="font-family:Nevis">&nbsp;</div>
             <div style="font-family:Jura">&nbsp;</div>
         </div>
+        <script src="jsnew/lib/pixi.js"></script>
         <script src="out.js"></script>
-        <script type="text/javascript">document.addEventListener("DOMContentLoaded", game.fullInit);</script>
+        <script src="jsnew/renderer.js"></script>
+        <script src="jsnew/gamescreens/gamescreen.js"></script>
+        <script src="jsnew/gamescreens/title.js"></script>
+        <script src="jsnew/gamescreens/pottyCheck.js"></script>
+        <script src="jsnew/gamescreens/shop.js"></script>
+        <script src="jsnew/gamescreens/worldmap.js"></script>
+        <script src="jsnew/worldmap/cutsceneHandler.js"></script>
+        <script src="jsnew/worldmap/entityLoader.js"></script>
+        <script src="jsnew/commonElements.js"></script>
+        <script src="jsnew/sound.js"></script>
+        <script src="jsnew/input.js"></script>
+        <script src="jsnew/helpers.js"></script>
+        <script src="jsnew/transitions.js"></script>
+        <script src="jsnew/player.js"></script>
+        <script src="jsnew/game.js"></script>
     </body>
 </html>
