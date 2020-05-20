@@ -1,5 +1,7 @@
 <html>
     <head>
+        <title>Uprooted: Meal Replacement Game</title>
+        <link rel="shortcut icon" href="ff.png"/>
         <style>
             @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
             @font-face { font-family: "Jura"; src: url("styles/JuraBold-rmpL.ttf") }
@@ -14,7 +16,7 @@
                 background-image: url("img/fullscreen.png");
                 background-size: cover;
 			}
-            canvas, #loader, #colorCover, #previews, #prev_cover {
+            canvas {
                 border: 1px solid black;
                 image-rendering: pixelated; /*;crisp-edges*/
                 left: 0;
@@ -24,81 +26,9 @@
                 text-align: center;
                 top: 2%;
             }
-            #colorCover, #previews, #prev_cover {
-                width: 1024px;
-                height: 896px;
-                pointer-events: none;
-            }
-            #previews, #prev_cover { border: none }
-            #prev_cover {
-                width: 288px;
-                height: 192px;
-                margin: 0;
-                top: 0;
-            }
-            #previews > img { display: none }
-            #dpad {
-                border: none;
-                left: 0;
-                margin: 0 auto;
-                position: absolute;
-                right: 0;
-                top: 1030px;
-            }
-            #savegen { display: none }
-            #garfield {
-                left: 0;
-                margin: 0 auto;
-                position: absolute;
-                right: 0; 
-                text-align: left;
-                width: 1024px;
-                background-color: #000000AA;
-                color: #FFFFFF;
-                font-size: 24px;
-                padding: 10px 0;
-                display: none;
-            }
-            #loader {
-                width: 1024px;
-                height: 896px;
-                background-color: #000000;
-                color: #FFFFFF;
-                font-size: xx-large;
-            }
-            #screenRead { padding-top: 40% }
         </style>
     </head>
     <body role="application">
-        <div id="canvasContainer" tabindex="0"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
-            <!--<div id="loader"><div id="screenRead" role="alert" aria-live="assertive"></div></div>
-            <canvas id="background" width="1024" height="896"></canvas>
-            <canvas id="background2" width="1024" height="896"></canvas>
-            <canvas id="crops" width="1024" height="896"></canvas>
-            <canvas id="characters" width="1024" height="896"></canvas>
-            <canvas id="foreground" width="1024" height="896"></canvas>
-            <canvas id="smartphone" width="1024" height="896"></canvas>
-            <canvas id="smartphoneText" width="1024" height="896"></canvas>
-            <canvas id="menuA" width="1024" height="896"></canvas>
-            <canvas id="menuB" width="1024" height="896"></canvas>
-            <canvas id="menucursorA" width="1024" height="896"></canvas>
-            <canvas id="menucursorB" width="1024" height="896"></canvas>
-            <canvas id="menucursorC" width="1024" height="896"></canvas>
-            <canvas id="menutext" width="1024" height="896"></canvas>
-            <canvas id="tutorial" width="1024" height="896"></canvas>
-            <canvas id="menuOverBlack" width="1024" height="896"></canvas>
-            <canvas id="menutextOverBlack" width="1024" height="896"></canvas>
-            <canvas id="savegen" width="1024" height="896"></canvas>
-            <div id="colorCover"></div>
-            <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>-->
-        </div>
-        <div id="previews">
-            <img id="prev_img" src="img/colorPreview.png"/>
-            <img id="prev_imgs4x" src="imgs4x/colorPreview.png"/>
-            <img id="prev_imghq4x" src="imghq4x/colorPreview.png"/>
-            <img id="prev_imggb" src="imggb/colorPreview.png"/>
-            <div id="prev_cover"></div>
-        </div>
         <canvas id="dpad" width="1024" height="896"></canvas>
         <div id="fontLoader">
             <div style="font-family:PressStart2P">&nbsp;</div>
