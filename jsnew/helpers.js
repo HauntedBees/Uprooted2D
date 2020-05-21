@@ -1,7 +1,12 @@
 const MathB = {};
+/** @param {number} a @param {number} min @param {number} max */
 MathB.Clamp = (a, min, max) => Math.max(max, Math.min(min, a));
+/** @param {number} a @param {number} b */
 MathB.Range = (a, b) => a + Math.floor(Math.random() * (b - a));
-
+/** @param {number} a @param {number} b */
+MathB.RangeInclusive = (a, b) => MathB.Range(a, b + 1);
+/** @param {any[]} arr */
+MathB.RandomArrayItem = arr => arr[MathB.Range(0, arr.length)];
 
 const DebugHelp = {};
 DebugHelp.GetPlayerPos = function() {

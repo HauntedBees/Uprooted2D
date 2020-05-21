@@ -29,10 +29,22 @@ class Gfx {
                 fontFamily: "Nevis",
                 fontSize: 25
             },
+            "stdMedium": {
+                fontFamily: "Nevis",
+                fontSize: 36
+            },
+            "stdMedSml": {
+                fontFamily: "Nevis",
+                fontSize: 32
+            },
             "stdWhite": {
                 fontFamily: "Nevis",
                 fontSize: 25,
                 fill: "#FFFFFF"
+            },
+            "stdBig": {
+                fontFamily: "Nevis",
+                fontSize: 64
             },
             "stdWhiteBig": {
                 fontFamily: "Nevis",
@@ -102,13 +114,147 @@ class Gfx {
         s.zIndex = y;
         return s;
     }
-    CreateSmallSprite(key, x, y, fromGrid) {
+    /**
+     * @param {string} key
+     * @param {number} x
+     * @param {number} y
+     * @param {boolean} [fromGrid]
+     * @param {boolean} [centerAlign]
+     * @returns {PIXIObj}
+     */
+    CreateSmallSprite(key, x, y, fromGrid, centerAlign) {
         let s = new PIXI.Sprite(this.img.sprites[key]);
         if(fromGrid) { x *= 64; y *= 64; }
         [s.x, s.y] = [x, y];
+        if(centerAlign) { [s.anchor.x, s.anchor.y] = [0.5, 0.5]; }
         s.zIndex = y;
         return s;
     }
+
+    /**
+     * @param {any[]} itemInfo
+     * @param {number} x
+     * @param {number} y
+     * @param {boolean} fromGrid
+     */
+    CreateInventoryItem(itemInfo, x, y, fromGrid) {
+        const item = itemInfo[0];
+        let spriteName = itemInfo[0];
+        if(item[0] !== "_" && item[0] !== "!") {
+            const crop = GetCrop(item);
+            if(crop.showSeed) { spriteName += "seed"; }
+        }
+        const sprite = gfx2.CreateSmallSprite(spriteName, x, y, fromGrid);
+        // write number here
+        return gfx2.CreateContainer([sprite], false, true);
+    }
+    /**
+     * @param {{ power: number; seasons: string[]; type: any; size: string; time: number; displayname: string; respawn: number; waterResist: string; fireResist: string; stickChance: string; saltResist: string; saltClean: any; animal: string | number; name: any; }} crop
+     * @param {string} fontStyle
+     * @param {boolean} ignoreSun
+     * @param {number} x
+     * @param {number} y
+     * @param {number} rightSide
+     * @param {number} maxTextWidth
+     * @param {boolean} drawTop
+     */
+    DrawCropInfo(crop, fontStyle, ignoreSun, x, y, rightSide, maxTextWidth, drawTop) {
+        const elements = [];
+
+        let cropSprite = "dirt";
+        switch(crop.type) {
+            case "bee": cropSprite = "_beehive"; break;
+            case "spear":
+            case "water":
+            case "rod": cropSprite = "_lake"; break;
+            case "mush": cropSprite = "_log"; break;
+            case "egg": cropSprite = "_coop"; break;
+            case "food": cropSprite = "_cow"; break;
+            case "rice": cropSprite = "_paddy"; break;
+            case "tech": cropSprite = "_hotspot"; break;
+            case "sickle2": cropSprite = "_charger"; break;
+        }
+
+        if(drawTop) {
+            elements.push(gfx2.CreateSmallSprite(crop.name, x, y, false));
+            elements.push(gfx2.WriteText(crop.displayname, fontStyle + "Medium", x + 80, y + 12, "left"));
+            elements.push(gfx2.CreateSmallSprite(cropSprite, x + rightSide, y, false));
+            elements.push(gfx2.WriteText(crop.size, "cropNo", x + rightSide + 56, y - 10));
+            y += 80;
+        } else {
+            elements.push(gfx2.CreateSmallSprite(cropSprite, x + 840, y));
+            elements.push(gfx2.WriteText(crop.size, "cropNo", x + 896, y - 10));
+        }
+        const dx = ignoreSun ? 0 : 64;
+        if(!ignoreSun) {
+            elements.push(gfx2.CreateSmallSprite("inv_power", x, y, false));
+        }
+        const numStars = crop.power / 2, starDx = 64;
+        if(numStars > 5) {
+            for(let i = 0; i < 5; i++) {
+                elements.push(gfx2.CreateSmallSprite("starMax", dx + x + 1 + i * starDx, y, false));
+            }
+        } else {
+            for(let i = 0; i < numStars; i++) {
+                elements.push(gfx2.CreateSmallSprite("starFull", dx + x + 1 + i * starDx, y, false));
+            }
+            if(numStars % 1 !== 0) { elements.push(gfx2.CreateSmallSprite("starHalf", dx + x + 1 + (numStars - 0.5) * starDx, y, false)); }
+            for(let i = Math.ceil(numStars); i < 5; i++) {
+                elements.push(gfx2.CreateSmallSprite("starNone", dx + x + 1 + i * starDx, y, false));
+            }
+        }
+
+        const seasons = ["winter", "autumn", "summer", "spring"];
+        for(let i = 3; i >= 0; i--) { elements.push(gfx2.CreateSmallSprite(seasons[i] + crop.seasons[i], x + rightSide - 64 * i, y)); }
+
+        elements.push(gfx2.CreateSmallSprite("inv_time", x, y + 69));
+        elements.push(gfx2.GetThinNumber(crop.time, fontStyle, x + 72, y + 65));
+        if(crop.respawn > 0) {
+            elements.push(gfx2.CreateSmallSprite("inv_regrow", x + 168, y + 69));
+            elements.push(gfx2.GetThinNumber(crop.respawn, fontStyle, x + 232, y + 65));
+        }
+        
+        const bonusesToPush = [];
+        if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); }
+        if(crop.fireResist) { bonusesToPush.push("fireIco" + crop.fireResist); }
+        if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); }
+        if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
+        if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
+        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); }
+        for(let i = 0; i < bonusesToPush.length; i++) {
+            elements.push(gfx2.CreateSmallSprite(bonusesToPush[i], x + rightSide - i * 64, y + 69));
+        }
+        elements.push(gfx2.WriteWrappedText(GetText(crop.name), fontStyle + (drawTop ? "MedSml" : ""), x - 12, y + 150, maxTextWidth, "left"));
+
+        return gfx2.CreateContainer(elements, false, true);
+    }
+    /**
+     * @param {number} i
+     * @param {string} fontStyle
+     * @param {number} x
+     * @param {number} y
+     * @returns {PIXIObj}
+     */
+    GetThinNumber(i, fontStyle, x, y) {
+        let dispNum = "";
+        if(i === -1 || i === 999) { // NOTE: -1 vs 999 what is the diff?
+            dispNum = "??";
+        } else if(i < 10) {
+            dispNum = " " + i.toString();
+        } else {
+            dispNum = i.toString();
+        }
+        const thinNo = gfx2.WriteText(dispNum, fontStyle + "Big", x, y);
+        thinNo.width = 64;
+        return thinNo;
+    }
+
+    /**
+     * @param {string} key
+     * @param {number} x
+     * @param {number} y
+     * @returns {PIXIObj}
+     */
     CreateBigSprite(key, x, y) {
         let s = new PIXI.Sprite(this.img.bigSprites[key]);
         [s.x, s.y] = [x, y];
@@ -116,8 +262,29 @@ class Gfx {
         return s;
     }
 
+    /** @param {string} key */
+    CreateTiledSpriteContainer(key) {
+        const tiles = [];
+        for(let x = 0; x < game2.tilew; x++) {
+            for(let y = 0; y < game2.tileh; y++) {
+                tiles.push(gfx2.CreateSmallSprite(key, x, y, true));
+            }
+        }
+        return gfx2.CreateContainer(tiles);
+    }
+
+    /**
+     * @param {string} infoType
+     * @param {number} x
+     * @param {number} y
+     * @param {number} w
+     * @param {number} h
+     * @param {boolean} fromGrid
+     */
     DrawBox(infoType, x, y, w, h, fromGrid) {
         const sprites = [];
+        // TODO: different colors
+        sprites.push(this.CreateRectangle(0xA36F00, x + 1, y + 1, w - 1, h - 1, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}UL`, x, y, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}DL`, x, y + h, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}UR`, x + w, y, fromGrid));
@@ -130,8 +297,6 @@ class Gfx {
             sprites.push(this.CreateSmallSprite(`${infoType}L`, x, y2, fromGrid));
             sprites.push(this.CreateSmallSprite(`${infoType}R`, x + w, y2, fromGrid));
         }
-        // TODO: different colors
-        sprites.push(this.CreateRectangle(0xA36F00, x + 1, y + 1, w - 1, h - 1, fromGrid));
         return this.CreateContainer(sprites);
     }
     CreateRectangle(color, x, y, w, h, fromGrid) {
@@ -182,6 +347,14 @@ class Gfx {
         const style = new PIXI.TextStyle(this.TextStyles[styleName]);
         return PIXI.TextMetrics.measureText(text, style);
     }
+    /**
+     * @param {string} text
+     * @param {string} styleName
+     * @param {number} x
+     * @param {number} y
+     * @param {string} [alignment]
+     * @returns {PIXIObj}
+     */
     WriteText(text, styleName, x, y, alignment) {
         const t = new PIXI.Text(text, new PIXI.TextStyle(this.TextStyles[styleName]));
         [t.x, t.y] = [x, y];

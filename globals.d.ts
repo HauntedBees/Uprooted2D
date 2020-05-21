@@ -25,6 +25,10 @@ declare var PIXIObj:{
     children:PIXIObj[],
     interactive:boolean,
     texture:any,
+    text: string,
+    x: number,
+    y: number,
+    width: number,
     visible:boolean;
     on(a:string, b:any):void,
     removeChild(pixiObj)

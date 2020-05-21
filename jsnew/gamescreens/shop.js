@@ -196,50 +196,9 @@ class ShopSubState {
         const amt = game2.player.GetItemAmount(crop.name);
         const itemsToRender = [
             gfx2.WriteText(`${crop.displayname} (${price}G)`, "stdWhite", 12, 615, "left"),
-            gfx2.WriteText(GetText("s.youHave").replace(/\{0\}/g, amt), "stdWhite", gfx2.width - 12, 615, "right")
+            gfx2.WriteText(GetText("s.youHave").replace(/\{0\}/g, amt), "stdWhite", gfx2.width - 12, 615, "right"),
+            gfx2.DrawCropInfo(crop, "stdWhite", false, 24, 655, 736, gfx2.width - 24, false)
         ];
-        itemsToRender.push(GetCropPowerDisplay(crop, false, 24, 655));
-
-        const seasons = ["spring", "summer", "autumn", "winter"];
-        for(let i = 0; i < 4; i++) { itemsToRender.push(gfx2.CreateSmallSprite(seasons[i] + crop.seasons[i], 544 + 64 * i, 655)); }
-
-        let cropSprite = "dirt";
-        switch(crop.type) {
-            case "bee": cropSprite = "_beehive"; break;
-            case "spear":
-            case "water":
-            case "rod": cropSprite = "_lake"; break;
-            case "mush": cropSprite = "_log"; break;
-            case "egg": cropSprite = "_coop"; break;
-            case "food": cropSprite = "_cow"; break;
-            case "rice": cropSprite = "_paddy"; break;
-            case "tech": cropSprite = "_hotspot"; break;
-            case "sickle2": cropSprite = "_charger"; break;
-        }
-        itemsToRender.push(gfx2.CreateSmallSprite(cropSprite, 864, 655));
-        itemsToRender.push(gfx2.WriteText(crop.size, "cropNo", 920, 645));
-
-        itemsToRender.push(gfx2.CreateSmallSprite("inv_time", 24, 724));
-        itemsToRender.push(GetThinNumber(crop.time, 96, 720));
-        let nextx = 192;
-        if(crop.respawn > 0) {
-            nextx = 352;
-            itemsToRender.push(gfx2.CreateSmallSprite("inv_regrow", 192, 724));
-            itemsToRender.push(GetThinNumber(crop.respawn, 256, 720));
-        }
-        
-        const bonusesToPush = [];
-        if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); }
-        if(crop.fireResist) { bonusesToPush.push("fireIco" + crop.fireResist); }
-        if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); }
-        if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
-        if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
-        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); }
-        for(let i = 0; i < bonusesToPush.length; i++) {
-            itemsToRender.push(gfx2.CreateSmallSprite(bonusesToPush[i], nextx + i * 64, 724));
-        }
-        itemsToRender.push(gfx2.WriteWrappedText(GetText(crop.name), "stdWhite", 12, 792, gfx2.width - 24, "left"));
-
         this.SetInnerContainer(itemsToRender);
     }
     /**
@@ -436,6 +395,7 @@ class ShopSleepState extends ShopSubState {
      */
     constructor(parent) {
         super("inn", [], parent);
+        game2.player.health = Math.floor(game2.player.maxhealth * 1.2);
         this.transitionAnim = new SleepTransition(game2, 50, 5, 60, () => this.MidTransition(), () => this.FinishTransition());
     }
     Cancel() { }
@@ -475,7 +435,7 @@ class ShopBookState extends ShopSubState {
         this.oldTexture = this.book.texture;
         this.book.texture = gfx2.img.sprites["bookOpen"];
         this.book.position.x -= 32;
-        this.parent.cursor.Resize(0.75, 0).ShiftInitialPos(-20, 0).Redraw();
+        this.parent.cursor.Resize(0.75, 0, true).ShiftInitialPos(-20, 0).Redraw();
         this.Update(0, 0);
     }
     Cancel() {
@@ -529,7 +489,7 @@ class ShopBookState extends ShopSubState {
      * @param {number} i
      */
     MoveCursor(i) {
-        this.parent.cursor.ShiftInitialPos(20, 0).Resize(0, 0).Redraw();
+        this.parent.cursor.ShiftInitialPos(20, 0).Resize(0, 0, true).Redraw();
         this.book.position.x += 32;
         this.book.texture = this.oldTexture;
         sound.PlaySound("menuMove");

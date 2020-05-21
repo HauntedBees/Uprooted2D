@@ -1,10 +1,11 @@
 class TitleScreen extends GameScreen {
+    /** @param {number} cursory */
     constructor(cursory) {
         super();
         this.availableCrops = ["asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "lotus", "soybean"];
         this.cursory = cursory || 0;
         this.showContinue = false;
-        for(let i = 0; i < game.numSaveSlots; i++) {
+        for(let i = 0; i < game2.numSaveSlots; i++) {
             if(localStorage.getItem("player" + i) !== null) {
                 this.showContinue = true;
                 break;
@@ -12,6 +13,7 @@ class TitleScreen extends GameScreen {
         }
         if(this.cursory === 2 && ! this.showContinue) { this.cursory = 1; }
         this.animPos = 0;
+        /** @type {PIXIObj[]} */
         this.animCrops = [];
         this.animIdx = setInterval(() => this.Animate(), 40);
         this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options", "menu.Quit"] : ["title.new", "title.options", "menu.Quit"]);
@@ -30,6 +32,9 @@ class TitleScreen extends GameScreen {
                 gfx2.CreateImg("titleGround", 0, 640),
                 gfx2.CreateImg("titleGround", 1024, 640)
             ]),
+            "copyrightText": gfx2.CreateContainer([
+                gfx2.WriteText(String.fromCharCode(169) + " 2020 Haunted Bees Productions (v" + game2.player.saveVersion + "R)", "std", 8, 860, "left")
+            ]),
             "crops": gfx2.CreateContainer([], true),
             "menu": gfx2.CreateContainer([])
         };
@@ -37,6 +42,7 @@ class TitleScreen extends GameScreen {
         this.CreateMenu();
         for(let i = 0; i < 7; i++) { this.AddAnimCrop(true); }
         this.animCrops.sort((a, b) => b.y - a.y);
+        //screenReaderHelper.SayThing("Uprooted: Meal Replacement Game", "regular", GetText(this.menuItems[this.cursory]));
     }
     CreateMenu() {
         const dy = 6, container = this.gfxContainers["menu"];
@@ -49,11 +55,12 @@ class TitleScreen extends GameScreen {
         this.cursor = gfx2.CreateSmallSprite("carrotSel", 5.5, (dy + this.cursory), true);
         container.addChild(this.cursor);
     }
+    /** @param {boolean} [onScreen] */
     AddAnimCrop(onScreen) {
-        const crop = GetCrop(RandomArrayItem(this.availableCrops));
+        const crop = GetCrop(MathB.RandomArrayItem(this.availableCrops));
         const frame = crop.name + Math.floor(Math.random() * crop.frames);
-        const x = onScreen ? InclusiveRange(0, 1024) : InclusiveRange(1024, 1224);
-        const y = InclusiveRange(616, 646);
+        const x = onScreen ? MathB.RangeInclusive(0, 1024) : MathB.RangeInclusive(1024, 1224);
+        const y = MathB.RangeInclusive(616, 646);
         const s = gfx2.CreateSmallSprite(frame, x, y);
         this.gfxContainers["crops"].addChild(s);
         this.animCrops.push(s);
@@ -82,10 +89,10 @@ class TitleScreen extends GameScreen {
     KeyPress(key) {
         let pos = this.cursory, isEnter = false;
         switch(key) {
-            case this.controls.up: pos--; break;
-            case this.controls.down: pos++; break;
-            case this.controls.confirm:
-            case this.controls.pause: isEnter = true; break;
+            case this.controls["up"]: pos--; break;
+            case this.controls["down"]: pos++; break;
+            case this.controls["confirm"]:
+            case this.controls["pause"]: isEnter = true; break;
         }
         if(pos < 0 || pos > 3) { return false; }
         if(isEnter) { return this.Select(this.controls.IsFreshKeyPress("pause") || this.controls.IsFreshKeyPress("confirm")); }
@@ -93,7 +100,7 @@ class TitleScreen extends GameScreen {
     }
     CursorMove(pos) {
         if(pos < 0 || pos >= this.menuItems.length) { return false; }
-        if(this.cursory !== pos) { Sounds.PlaySound("menuMove"); }
+        if(this.cursory !== pos) { sound.PlaySound("menuMove"); }
         this.menuItemObjs[this.cursory].Unselect();
         this.cursory = pos;
         this.menuItemObjs[this.cursory].Select();
@@ -104,11 +111,10 @@ class TitleScreen extends GameScreen {
     MenuItemClicked(i) { this.CursorMove(i); this.Select(true); }
     Select(isFresh) {
         if(!isFresh) { return false; }
-        Sounds.PlaySound("confirm", true);
+        sound.PlaySound("confirm", true);
         switch(this.cursory) {
             case 0:
                 return game2.Transition(PottyCheckScreen);
-                //return game.transition(this, worldmap.pottyCheck);
             case 1:
                 //if(this.showContinue) { return game.innerTransition(this, pausemenu.savemenu, { saving: false }); }
                 //else { return game.innerTransition(this, worldmap.optionsMenu); }

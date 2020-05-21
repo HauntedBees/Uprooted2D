@@ -9,60 +9,14 @@ function MakeSpriteInteractive(sprite, clickHandler, mouseoverHandler) {
     sprite.on("mouseover", mouseoverHandler);
 }
 
-/**
- * @param {number} i
- * @param {number} x
- * @param {number} y
- * @returns {PIXIObj}
- */
-function GetThinNumber(i, x, y) {
-    let dispNum = "";
-    if(i === -1 || i === 999) { // NOTE: -1 vs 999 what is the diff?
-        dispNum = "??";
-    } else if(i < 10) {
-        dispNum = " " + i.toString();
-    } else {
-        dispNum = i.toString();
-    }
-    const thinNo = gfx2.WriteText(dispNum, "stdWhiteBig", x, y);
-    thinNo.width = 64;
-    return thinNo;
-}
-/**
- * @param {{ power: number }} crop
- * @param {boolean} ignoreSun
- * @param {number} x
- * @param {number} y
- * @returns {PIXIObj}
- */
-function GetCropPowerDisplay(crop, ignoreSun, x, y) {
-    const sprites = [];
-    const dx = ignoreSun ? 0 : 64;
-    if(!ignoreSun) {
-        sprites.push(gfx2.CreateSmallSprite("inv_power", x, y, false));
-    }
-    const numStars = crop.power / 2, starDx = 64;
-    if(numStars > 5) {
-        for(let i = 0; i < 5; i++) {
-            sprites.push(gfx2.CreateSmallSprite("starMax", dx + x + 1 + i * starDx, y, false));
-        }
-    } else {
-        for(let i = 0; i < numStars; i++) {
-            sprites.push(gfx2.CreateSmallSprite("starFull", dx + x + 1 + i * starDx, y, false));
-        }
-        if(numStars % 1 !== 0) { sprites.push(gfx2.CreateSmallSprite("starHalf", dx + x + 1 + (numStars - 0.5) * starDx, y, false)); }
-        for(let i = Math.ceil(numStars); i < 5; i++) {
-            sprites.push(gfx2.CreateSmallSprite("starNone", dx + x + 1 + i * starDx, y, false));
-        }
-    }
-    return gfx2.CreateContainer(sprites, false, true);
-}
 class SelCursor {
     /**
      * @param {number} x
      * @param {number} y
      * @param {number} w
      * @param {number} h
+     * @param {number} dx
+     * @param {number} dy
      * @param {any} [fromGrid]
      */
     constructor(x, y, w, h, dx, dy, fromGrid) {
@@ -99,10 +53,12 @@ class SelCursor {
     /**
      * @param {number} w
      * @param {number} h
+     * @param {boolean} fromGrid
      */
-    Resize(w, h) {
-        this.width = w * 64;
-        this.height = h * 64;
+    Resize(w, h, fromGrid) {
+        if(fromGrid) { w *= 64; h *= 64; }
+        this.width = w;
+        this.height = h;
         return this;
     }
     /**
@@ -143,39 +99,62 @@ class InfoText {
      * @param {number} x
      * @param {number} y
      * @param {boolean} selected
-     * @param {{(): void}} clickHandler
-     * @param {{(): void}} hoverHandler
+     * @param {{ (): void; }} clickHandler
+     * @param {{ (): void; }} hoverHandler
+     * @param {{ leftAlign?: boolean; rightAlign?: boolean; minX?: number }} [options]
      */
-    constructor(text, x, y, selected, clickHandler, hoverHandler) {
+    constructor(text, x, y, selected, clickHandler, hoverHandler, options) {
+        options = options || {};
+
         this.selected = selected;
         this.selSprite = "recSel";
         this.stdSprite = "sel";
 
         const info = gfx2.GetTextInfo(text, "std");
         
-        const width = info.width;
+        const width = info.width + 8;
         let leftX = Math.floor((x - width / 2) / 64) * 64;
         let rightX = Math.floor((x + width / 2) / 64) * 64;
 
-        if((x - width / 2 - leftX) > 32) {
-            leftX += 32;
-            rightX -= 32;
+        const minX = options.minX || 0;
+        while((x - width / 2 - leftX) > 16 && ((rightX - leftX) / 64) > minX) {
+            leftX += 16;
+            rightX -= 16;
         }
         if(leftX === rightX) {
             leftX -= 32;
             rightX += 32;
         }
 
+        if(options.leftAlign === true) {
+            const dx = rightX - leftX;
+            leftX = x;
+            rightX = x + dx;
+            x += 8;
+        } else if(options.rightAlign === true) {
+            const dx = rightX - leftX;
+            leftX = x - dx;
+            rightX = x;
+            x -= 8;
+        }
+        this.width = rightX - leftX;
+        this.y = y;
+
         const prefix = selected ? this.selSprite : this.stdSprite;
+        this.leftSuffix = options.leftAlign === true ? "M" : "L";
+        this.rightSuffix = options.rightAlign === true ? "M" : "R";
         this.elems = [
-            gfx2.CreateSmallSprite(`${prefix}L`, leftX, y),
-            gfx2.CreateSmallSprite(`${prefix}R`, rightX, y)
+            gfx2.CreateSmallSprite(prefix + this.leftSuffix, leftX, y),
+            gfx2.CreateSmallSprite(prefix + this.rightSuffix, rightX, y)
         ];
-        for(let x = (leftX + 64); x <= (rightX - 64); x += 64) {
+        for(let x = (leftX + 32); x <= (rightX - 32); x += 64) {
             this.elems.push(gfx2.CreateSmallSprite(`${prefix}M`, x, y));
         }
 
-        this.text = gfx2.WriteText(text, "std", x, y + 6, "center");
+        let alignment = "center";
+        if(options.leftAlign === true) { alignment = "left"; }
+        else if(options.rightAlign === true) { alignment = "right"; }
+        this.text = gfx2.WriteText(text, "std", x, y + 6, alignment);
 
         this.container = gfx2.CreateContainer([...this.elems, this.text]);
 
@@ -186,8 +165,8 @@ class InfoText {
     Select() {
         if(this.selected) { return; }
         this.selected = true;
-        this.elems[0].texture = gfx2.img.sprites[`${this.selSprite}L`];
-        this.elems[1].texture = gfx2.img.sprites[`${this.selSprite}R`];
+        this.elems[0].texture = gfx2.img.sprites[`${this.selSprite}${this.leftSuffix}`];
+        this.elems[1].texture = gfx2.img.sprites[`${this.selSprite}${this.rightSuffix}`];
         for(let i = 2; i < this.elems.length; i++) {
             this.elems[i].texture = gfx2.img.sprites[`${this.selSprite}M`];
         }
@@ -195,8 +174,8 @@ class InfoText {
     Unselect() {
         if(!this.selected) { return; }
         this.selected = false;
-        this.elems[0].texture = gfx2.img.sprites[`${this.stdSprite}L`];
-        this.elems[1].texture = gfx2.img.sprites[`${this.stdSprite}R`];
+        this.elems[0].texture = gfx2.img.sprites[`${this.stdSprite}${this.leftSuffix}`];
+        this.elems[1].texture = gfx2.img.sprites[`${this.stdSprite}${this.rightSuffix}`];
         for(let i = 2; i < this.elems.length; i++) {
             this.elems[i].texture = gfx2.img.sprites[`${this.stdSprite}M`];
         }

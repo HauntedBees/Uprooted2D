@@ -48,10 +48,10 @@ class PottyCheckScreen extends GameScreen {
     KeyPress(key) {
         let pos = this.cursory, isEnter = false;
         switch(key) {
-            case this.controls.up: pos--; break;
-            case this.controls.down: pos++; break;
-            case this.controls.confirm:
-            case this.controls.pause: isEnter = true; break;
+            case this.controls["up"]: pos--; break;
+            case this.controls["down"]: pos++; break;
+            case this.controls["confirm"]:
+            case this.controls["pause"]: isEnter = true; break;
         }
         if(pos < 0 || pos > 1) { return false; }
         if(isEnter) { return this.Select(this.controls.IsFreshKeyPress("pause") || this.controls.IsFreshKeyPress("confirm")); }
@@ -59,7 +59,7 @@ class PottyCheckScreen extends GameScreen {
     }
     CursorMove(pos) {
         if(pos < 0 || pos > 1) { return false; }
-        if(this.cursory !== pos) { Sounds.PlaySound("menuMove"); }
+        if(this.cursory !== pos) { sound.PlaySound("menuMove"); }
         this.menuItemObjs[this.cursory].Unselect();
         this.cursory = pos;
         this.menuItemObjs[this.cursory].Select();
@@ -69,7 +69,7 @@ class PottyCheckScreen extends GameScreen {
     MenuItemClicked(i) { this.CursorMove(i); this.Select(true); }
     Select(isFresh) {
         if(!isFresh) { return false; }
-        Sounds.PlaySound("confirm", true);
+        sound.PlaySound("confirm", true);
         if(this.state === 0) {
             this.state = 1;
             //player.options.canSayFuck = this.cursory;

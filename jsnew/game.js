@@ -81,7 +81,6 @@ class GameHandler {
         if(debug || fromQuit === "true") {
             localStorage.removeItem("quit");
             this.currentScreen = new WorldScreen({ init: { x: 72, y: 15 }, map: "farm" });//TitleScreen();
-            //worldmap.title.setup();
         } else {
             //game.currentInputHandler = opening;
             //opening.setup();
@@ -104,6 +103,10 @@ class GameHandler {
     }
     //IncrementTime () { player.playTime++ }
 
+    /**
+     * @param {any} toClass
+     * @param {any} [arg]
+     */
     Transition(toClass, arg) {
         const me = this;
         // TODO: tutorial transition

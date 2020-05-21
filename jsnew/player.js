@@ -158,6 +158,21 @@ class Player {
     HasOrHasHadQuest(q) {
         return this.questsCleared.indexOf(q) >= 0 || this.activeQuests[q] !== undefined;
     }
+    /** @returns {string[]} */
+    GetQuestItems() {
+        const questItems = [];
+        if(this.HasCompletedQuest("badEgg")) { questItems.push("bpermit0"); }
+        if(this.HasQuestState("quest1", 4) || this.HasQuestState("quest1", 2)) { questItems.push("goldmushroom"); }
+        if(this.HasQuestState("kelpBoy", "gotMilk")) { questItems.push("milk"); }
+        if(this.HasQuestState("seamonkey", "looking")) { questItems.push("seamonkkey"); }
+        if(this.HasQuestState("getHeart", "weirdheart") || this.HasQuestState("getHeart", "heart")) { questItems.push("monsterheart"); }
+        else if(this.HasQuestState("helpSeaMonster", "gotEgg")) { questItems.push("monsteregg"); }
+        if(this.HasQuest("truckRepair")) { questItems.push("tire"); }
+        if(this.HasCompletedQuest("gotPhone")) { questItems.push("smartphone"); }
+        if(this.HasQuestState("catmail", 1)) { questItems.push("bpermit1"); }
+        if(this.HasCompletedQuest("keycard")) { questItems.push("food2keycard"); }
+        return questItems;
+    }
     /* #endregion */
     /* #region Inventory */
     HasItem(item, amount) {

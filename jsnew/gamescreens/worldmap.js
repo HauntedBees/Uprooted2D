@@ -299,10 +299,10 @@ class WorldScreen extends GameScreen {
                 //this.ToggleRun(false);
                 break;
             case this.controls["pause"]: 
-                //if(this.inDialogue) { return; }
                 //this.ToggleRun(false);
                 //worldmap.savedImage = gfx.getSaveFileImage();
-                //Sounds.PlaySound("pauseI", true);
+                sound.PlaySound("pauseI", true);
+                game2.Transition(PauseMenuScreen);
                 //game.transition(this, pausemenu);
                 return;
             case this.controls["cancel"]: 
