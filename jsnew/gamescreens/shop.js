@@ -42,7 +42,6 @@ class ShopState {
         if(this.hasTalk) {
             this.initX = 1 + this.dx; // might be wrong
         }
-        //this.cursorX = 0;
         if(this.details.benignTalkStr && !this.hasTalk) {
             this.isQuestTalk = false;
             this.hasTalk = true;
@@ -50,13 +49,17 @@ class ShopState {
         } else { this.isQuestTalk = true; }
 
         const y = 7;
-        this.sprites = [ gfx2.CreateSmallSprite("exit", 1, y, true) ];
+        const exitSprite = gfx2.CreateSmallSprite("exit", 1, y, true);
+        MakeSpriteInteractive(exitSprite, () => this.SelectOption(), () => this.MoveCursor(0, true));
+        this.sprites = [ exitSprite ];
         this.text = gfx2.WriteWrappedText(GetText(this.details.openingStr), "stdWhite", 12, 615, gfx2.width - 24, "left");
         this.itemState = new ShopSubState("null", this.details.wares, this);
 
         if(this.hasTalk) {
             const talkTile = (this.isQuestTalk ? "helpBox" : "talk");
-            this.sprites.push(gfx2.CreateSmallSprite(talkTile, this.initX, y, true));
+            const sprite = gfx2.CreateSmallSprite(talkTile, this.initX, y, true);
+            MakeSpriteInteractive(sprite, () => this.SelectOption(), () => this.MoveCursor(1, true));
+            this.sprites.push(sprite);
         }
 
         /** @type {number[]} */
@@ -68,9 +71,8 @@ class ShopState {
             if(ware.locked !== undefined && !game2.player.HasCompletedQuest(ware.locked)) { continue; }
             this.availableIndexes.push(i);
             const sprite = gfx2.CreateSmallSprite(ware.product, this.initX + j * this.dx, y, true);
-            sprite.interactive = true;
-            sprite.on("click", () => this.SelectOption());
-            sprite.on("mouseover", () => this.MoveCursor(j, true));
+            const idx = j + (this.hasTalk ? 2 : 1);
+            MakeSpriteInteractive(sprite, () => this.SelectOption(), () => this.MoveCursor(idx, true));
             this.sprites.push(sprite);
             j++;
         }

@@ -1,4 +1,15 @@
 /**
+ * @param {PIXIObj} sprite
+ * @param {() => void} clickHandler
+ * @param {() => void} mouseoverHandler
+ */
+function MakeSpriteInteractive(sprite, clickHandler, mouseoverHandler) {
+    sprite.interactive = true;
+    sprite.on("click", clickHandler);
+    sprite.on("mouseover", mouseoverHandler);
+}
+
+/**
  * @param {number} i
  * @param {number} x
  * @param {number} y
