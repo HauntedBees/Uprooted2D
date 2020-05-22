@@ -132,6 +132,26 @@ class Gfx {
     }
 
     /**
+     * @param {string[]} keys
+     * @param {number} x
+     * @param {number} y
+     * @param {boolean} fromGrid
+     * @param {boolean} loop
+     * @param {boolean} startByDefault
+     * @param {number} animationSpeed
+     */
+    CreateSmallAnimSprite(keys, x, y, fromGrid, loop, startByDefault, animationSpeed) {
+        const textures = keys.map(k => this.img.sprites[k]);
+        const s = new PIXI.AnimatedSprite(textures);
+        if(fromGrid) { x *= 64; y *= 64; }
+        [s.x, s.y] = [x, y];
+        s.loop = loop;
+        s.animationSpeed = animationSpeed || 1;
+        if(startByDefault) { s.play(); }
+        return s;
+    }
+
+    /**
      * @param {any[]} itemInfo
      * @param {number} x
      * @param {number} y
@@ -145,8 +165,9 @@ class Gfx {
             if(crop.showSeed) { spriteName += "seed"; }
         }
         const sprite = gfx2.CreateSmallSprite(spriteName, x, y, fromGrid);
-        // write number here
-        return gfx2.CreateContainer([sprite], false, true);
+        if(fromGrid) { x *= 64; y *= 64; }
+        const text = gfx2.WriteText("x" + itemInfo[1], "cropNo", x + 64, y + 38, "right");
+        return gfx2.CreateContainer([sprite, text], false, true);
     }
     /**
      * @param {{ power: number; seasons: string[]; type: any; size: string; time: number; displayname: string; respawn: number; waterResist: string; fireResist: string; stickChance: string; saltResist: string; saltClean: any; animal: string | number; name: any; }} crop
@@ -157,6 +178,7 @@ class Gfx {
      * @param {number} rightSide
      * @param {number} maxTextWidth
      * @param {boolean} drawTop
+     * @returns {PIXIObj}
      */
     DrawCropInfo(crop, fontStyle, ignoreSun, x, y, rightSide, maxTextWidth, drawTop) {
         const elements = [];
@@ -420,7 +442,7 @@ class Gfx {
      * @param {PIXIObj} container
      */
     EmptyContainer(container) {
-        container.children.forEach(e => container.removeChild(e));
+        container.children.forEach(e => { e.visible = false; container.removeChild(e) });
     }
 
     CleanAllContainers() {

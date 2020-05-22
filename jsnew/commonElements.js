@@ -61,10 +61,13 @@ class SelCursor {
         this.height = h;
         return this;
     }
-    /**
-     * @param {number} x
-     * @param {number} y
-     */
+    /** @param {number} x @param {number} y */
+    SetInitialPos(x, y) {
+        this.initX = x;
+        this.initY = y;
+        return this;
+    }
+    /** @param {number} x @param {number} y */
     ShiftInitialPos(x, y) {
         this.initX += x;
         this.initY += y;
@@ -93,6 +96,26 @@ class SelCursor {
         this.container = null;
     }
 }
+
+class SelCursorX extends SelCursor {
+    /**
+     * @param {number} x
+     * @param {number} y
+     * @param {number} w
+     * @param {number} h
+     * @param {number} dx
+     * @param {number} dy
+     * @param {any} [fromGrid]
+     */
+    constructor(x, y, w, h, dx, dy, fromGrid) {
+        super(x, y, w, h, dx, dy, fromGrid);
+        for(let i = 0; i < 4; i++) {
+            this.sprites[i].texture = gfx2.img.sprites["bcursor0." + i];
+        }
+    }
+    Update() { }
+}
+
 class InfoText {
     /**
      * @param {string} text
@@ -101,7 +124,7 @@ class InfoText {
      * @param {boolean} selected
      * @param {{ (): void; }} clickHandler
      * @param {{ (): void; }} hoverHandler
-     * @param {{ leftAlign?: boolean; rightAlign?: boolean; minX?: number }} [options]
+     * @param {{ leftAlign?: boolean; padText?: boolean; noLeftSide?: boolean; noRightSide?: boolean; minX?: number; forceCenter?: boolean }} [options]
      */
     constructor(text, x, y, selected, clickHandler, hoverHandler, options) {
         options = options || {};
@@ -110,14 +133,31 @@ class InfoText {
         this.selSprite = "recSel";
         this.stdSprite = "sel";
 
+        if(options.padText === true) {
+            text = " " + text + " ";
+        }
+
         const info = gfx2.GetTextInfo(text, "std");
         
-        const width = info.width + 8;
+        let width = info.width + 8;
         let leftX = Math.floor((x - width / 2) / 64) * 64;
         let rightX = Math.floor((x + width / 2) / 64) * 64;
-
-        const minX = options.minX || 0;
-        while((x - width / 2 - leftX) > 16 && ((rightX - leftX) / 64) > minX) {
+        if(options.minX !== undefined) {
+            if(options.forceCenter === true) {
+                const actualWidth = Math.floor(width / 64);
+                if(actualWidth < options.minX) {
+                    width = options.minX * 64;
+                    const diff = (width - actualWidth) / 2;
+                    leftX -= diff;
+                    rightX += diff;
+                }
+            } else {
+                const calcx = options.minX * 32;
+                leftX = Math.min(leftX, Math.floor((x - calcx) / 64) * 64);
+                rightX = Math.max(rightX, Math.floor((x + calcx) / 64) * 64);
+            }
+        }
+        while((x - width / 2 - leftX) > 16) {
             leftX += 16;
             rightX -= 16;
         }
@@ -126,23 +166,24 @@ class InfoText {
             rightX += 32;
         }
 
-        if(options.leftAlign === true) {
+        if(options.noLeftSide === true || options.leftAlign === true) {
             const dx = rightX - leftX;
             leftX = x;
             rightX = x + dx;
             x += 8;
-        } else if(options.rightAlign === true) {
+        } else if(options.noRightSide === true) {
             const dx = rightX - leftX;
             leftX = x - dx;
             rightX = x;
             x -= 8;
         }
         this.width = rightX - leftX;
+        this.leftmostX = leftX;
         this.y = y;
 
         const prefix = selected ? this.selSprite : this.stdSprite;
-        this.leftSuffix = options.leftAlign === true ? "M" : "L";
-        this.rightSuffix = options.rightAlign === true ? "M" : "R";
+        this.leftSuffix = options.noLeftSide === true ? "M" : "L";
+        this.rightSuffix = options.noRightSide === true ? "M" : "R";
         this.elems = [
             gfx2.CreateSmallSprite(prefix + this.leftSuffix, leftX, y),
             gfx2.CreateSmallSprite(prefix + this.rightSuffix, rightX, y)
@@ -152,8 +193,8 @@ class InfoText {
         }
 
         let alignment = "center";
-        if(options.leftAlign === true) { alignment = "left"; }
-        else if(options.rightAlign === true) { alignment = "right"; }
+        if(options.noLeftSide === true || options.leftAlign === true) { alignment = "left"; }
+        else if(options.noRightSide === true) { alignment = "right"; }
         this.text = gfx2.WriteText(text, "std", x, y + 6, alignment);
 
         this.container = gfx2.CreateContainer([...this.elems, this.text]);

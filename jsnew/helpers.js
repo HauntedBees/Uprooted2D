@@ -13,3 +13,14 @@ DebugHelp.GetPlayerPos = function() {
     const playerPos = game2.currentScreen.player.pos;
     return [Math.floor(playerPos.x / 16), Math.floor(playerPos.y / 16)];
 };
+DebugHelp.CountPIXIObjects = function() {
+    const count = /** @param {PIXIObj} o */
+    function(o) {
+        let amt = o.children.length;
+        for(let i = 0; i < o.children.length; i++) {
+            amt += count(o.children[i]);
+        }
+        return amt;
+    }
+    console.log(count(gfx2.app.stage));
+}

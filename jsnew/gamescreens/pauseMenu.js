@@ -10,15 +10,15 @@ class PauseMenuScreen extends GameScreen {
         this.subscreen = null;
 
         this.menuOptions = [
-            new InfoText(GetText("menu.Items"), 0, 16, true, () => {}, () => { this.CursorMove(0, 0); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("menu.Equipment"), 0, 80, false, () => {}, () => { this.CursorMove(0, 1); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("menu.Farm"), 0, 144, false, () => {}, () => { this.CursorMove(0, 2); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("menu.Options"), 0, 208, false, () => {}, () => { this.CursorMove(0, 3); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("menu.Achievements"), 0, 272, false, () => {}, () => { this.CursorMove(0, 4); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("menu.Save"), 0, 336, false, () => {}, () => { this.CursorMove(0, 5); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("menu.Back"), 0, 400, false, () => {}, () => { this.CursorMove(0, 6); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("menu.Quit"), 0, 464, false, () => {}, () => { this.CursorMove(0, 7); }, { leftAlign: true, minX: 1 }),
-            new InfoText(GetText("noFunPreview"), gfx2.width, 16, false, () => {}, () => { this.CursorMove(1, 0); }, { rightAlign: true, minX: 1 })
+            new InfoText(GetText("menu.Items"), 0, 16, true, () => {}, () => { this.CursorMove(0, 0); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("menu.Equipment"), 0, 80, false, () => {}, () => { this.CursorMove(0, 1); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("menu.Farm"), 0, 144, false, () => {}, () => { this.CursorMove(0, 2); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("menu.Options"), 0, 208, false, () => {}, () => { this.CursorMove(0, 3); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("menu.Achievements"), 0, 272, false, () => {}, () => { this.CursorMove(0, 4); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("menu.Save"), 0, 336, false, () => {}, () => { this.CursorMove(0, 5); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("menu.Back"), 0, 400, false, () => {}, () => { this.CursorMove(0, 6); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("menu.Quit"), 0, 464, false, () => {}, () => { this.CursorMove(0, 7); }, { noLeftSide: true, minX: 1 }),
+            new InfoText(GetText("noFunPreview"), gfx2.width, 16, false, () => {}, () => { this.CursorMove(1, 0); }, { noRightSide: true, minX: 1 })
         ];
         this.cursor = new SelCursor(0, 16, this.menuOptions[0].width, -20, 0, 64, false);
         const player = game2.player;
@@ -72,7 +72,7 @@ class PauseMenuScreen extends GameScreen {
             switch(this.cursor.posY) {
                 case 0:
                     this.Hide();
-                    this.subscreen = new PauseViewInventoryScreen();
+                    this.subscreen = new PauseViewInventoryScreen(this, this.controls);
                     break;
             }
         } else { // no fun, alignment info, quest items
@@ -123,12 +123,22 @@ class PauseMenuScreen extends GameScreen {
 }
 
 class PauseMenuSubscreen {
-    constructor() {
+    /** @param {PauseMenuScreen} pauseMenu @param {GameInput} controls */
+    constructor(pauseMenu, controls) {
+        this.pauseMenu = pauseMenu;
         /** @type {PIXIObj[]} */
         this.containers = [ gfx2.CreateTiledSpriteContainer("invTile") ];
+        this.controls = controls;
+        this.animIter = 0;
         sound.PlaySound("confirm");
     }
     KeyPress(key) { }
     Select() { }
-    CleanUp() { this.containers.forEach(c => gfx2.RemoveContainer(c)); }
+    ReturnToMainPauseMenu() {
+        sound.PlaySound("cancel");
+        clearInterval(this.animIter);
+        this.pauseMenu.subscreen = null;
+        this.pauseMenu.Show();
+        this.containers.forEach(c => gfx2.RemoveContainer(c));
+    }
 }
