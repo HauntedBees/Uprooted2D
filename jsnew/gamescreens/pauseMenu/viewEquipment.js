@@ -185,7 +185,7 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
                 if(newVal === 0) { return ""; }
                 return `\n ${str} ${isPercent ? ((newVal * 100) + "%") : newVal}`;
             }
-            return `\n ${str} <st>${isPercent ? ((oldVal * 100) + "%") : oldVal}</st> → ${isPercent ? ((newVal * 100) + "%") : newVal}`;
+            return `\n ${str} <st>${isPercent ? ((oldVal * 100) + "%") : oldVal}</st> ➡ ${isPercent ? ((newVal * 100) + "%") : newVal}`;
         } else if(compareType === "bool") {
             if(newVal === oldVal) {
                 if(newVal === true) { 
@@ -249,17 +249,17 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
                 } else if(newVal === 999) { // from some value to ALL
                     if(oldVal > 0) {
                         const newstr = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
-                        return `\n -<st>${newstr}</st>\n → ${GetText("eq.attackall")}`;
+                        return `\n -<st>${newstr}</st>\n ➡ ${GetText("eq.attackall")}`;
                     } else {
                         return `\n +${GetText("eq.attackall")}`;
                     }
                 } else { // from some value to some other value
                     if(oldVal === 999) {
                         const newstr = GetText("eq.attackall");
-                        return `\n <st>-${newstr}</st>\n →${GetText("eq.attacksome").replace(/\{0\}/g, newVal)}`;
+                        return `\n <st>-${newstr}</st>\n ➡${GetText("eq.attacksome").replace(/\{0\}/g, newVal)}`;
                     } else if(oldVal > 0) {
                         const newstr = GetText("eq.attacksome").replace(/\{0\}/g, oldVal);
-                        return `\n <st>-${newstr}</st>\n →${GetText("eq.attacksome").replace(/\{0\}/g, newVal)}`;
+                        return `\n <st>-${newstr}</st>\n ➡${GetText("eq.attacksome").replace(/\{0\}/g, newVal)}`;
                     } else {
                         return `\n +${GetText("eq.attacksome").replace(/\{0\}/g, newVal)}`;
                     }
