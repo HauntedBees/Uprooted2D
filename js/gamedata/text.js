@@ -6974,20 +6974,12 @@ const fulltext = {
 		"en-us": "DEF:", 
 		"type": "opts"
 	},
-	"eq.mayshock1": {
-		"en-us": "May shock plants and tech when planted.", 
+	"eq.mayshock": {
+		"en-us": "May shock plants and tech when planted. Will shock you when touching water.", 
 		"type": "opts"
 	},
-	"eq.mayshock2": {
-		"en-us": "Will shock you when touching water.", 
-		"type": "opts"
-	},
-	"eq.mayshock1.sm": {
-		"en-us": "May shock crops", 
-		"type": "opts"
-	},
-	"eq.mayshock2.sm": {
-		"en-us": "or you.", 
+	"eq.mayshock.sm": {
+		"en-us": "May shock crops or you.", 
 		"type": "opts"
 	},
 	"eq.growth": {
@@ -7014,20 +7006,12 @@ const fulltext = {
 		"en-us": "S.Mult.:", 
 		"type": "opts"
 	},
-	"eq.willkill1": {
-		"en-us": "Will kill crops that are too weak or", 
+	"eq.willkill": {
+		"en-us": "Will kill crops that are too weak or grow too quickly. Bees will fly away.", 
 		"type": "opts"
 	},
-	"eq.willkill2": {
-		"en-us": "grow too quickly. Bees will fly away.", 
-		"type": "opts"
-	},
-	"eq.willkill1.sm": {
-		"en-us": "Bad for Crops", 
-		"type": "opts"
-	},
-	"eq.willkill2.sm": {
-		"en-us": "and Bees.", 
+	"eq.willkill.sm": {
+		"en-us": "Bad for Crops and Bees.", 
 		"type": "opts"
 	},
 	"eq.power": {

@@ -202,14 +202,12 @@ pausemenu.equipment = {
             str += this.GetComparison(GetText("eq.spturn") + " ", equipInfo, current, "amount", "number");
             str += this.GetComparison(GetText("eq.actafter") + " ", equipInfo, current, "canAttack", "bool");
             str += this.GetComparison(GetText("eq.dmgresist") + " ", equipInfo, current, "def", "number", true);
-            str += this.GetComparison(GetText("eq.mayshock1") + " ", equipInfo, current, "tech", "bool");
-            str += this.GetComparison(GetText("eq.mayshock2") + " ", equipInfo, current, "tech", "bool");
+            str += this.GetComparison(GetText("eq.mayshock") + " ", equipInfo, current, "tech", "bool");
         } else if(equipInfo.type === "soil") {
             str += this.GetComparison(GetText("eq.growth") + " ", equipInfo, current, "speed", "number", true);
             str += this.GetComparison(GetText("eq.sres") + " ", equipInfo, current, "boost", "number", true);
             str += this.GetComparison(GetText("eq.sstr") + " ", equipInfo, current, "amplify", "number", true);
-            str += this.GetComparison(GetText("eq.willkill1") + " ", equipInfo, current, "tech", "bool");
-            str += this.GetComparison(GetText("eq.willkill2") + " ", equipInfo, current, "tech", "bool");
+            str += this.GetComparison(GetText("eq.willkill") + " ", equipInfo, current, "tech", "bool");
         }
         return str;
     },

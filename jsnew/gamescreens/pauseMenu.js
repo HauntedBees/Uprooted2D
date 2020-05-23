@@ -18,7 +18,7 @@ class PauseMenuScreen extends GameScreen {
             new InfoText(GetText("menu.Save"), 0, 336, false, () => {}, () => { this.CursorMove(0, 5); }, { noLeftSide: true, minX: 1 }),
             new InfoText(GetText("menu.Back"), 0, 400, false, () => {}, () => { this.CursorMove(0, 6); }, { noLeftSide: true, minX: 1 }),
             new InfoText(GetText("menu.Quit"), 0, 464, false, () => {}, () => { this.CursorMove(0, 7); }, { noLeftSide: true, minX: 1 }),
-            new InfoText(GetText("noFunPreview"), gfx2.width, 16, false, () => {}, () => { this.CursorMove(1, 0); }, { noRightSide: true, minX: 1 })
+            new InfoText(GetText("noFunPreview"), gfx2.width, 16, false, () => {}, () => { this.CursorMove(1, 0); }, { noRightSide: true, minX: 1.5 })
         ];
         this.cursor = new SelCursor(0, 16, this.menuOptions[0].width, -20, 0, 64, false);
         const player = game2.player;
@@ -73,6 +73,10 @@ class PauseMenuScreen extends GameScreen {
                 case 0:
                     this.Hide();
                     this.subscreen = new PauseViewInventoryScreen(this, this.controls);
+                    break;
+                case 1:
+                    this.Hide();
+                    this.subscreen = new PauseViewEquipmentScreen(this, this.controls);
                     break;
             }
         } else { // no fun, alignment info, quest items

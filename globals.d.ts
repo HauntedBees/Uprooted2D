@@ -34,6 +34,7 @@ declare var PIXIObj:{
     removeChild(pixiObj)
     addChild(pixiObj)
 };
+declare var MultiStyleText:PIXIObj;
 declare var GetText:any;
 declare var TryGetText:any;
 declare var HandlePlurals:any;

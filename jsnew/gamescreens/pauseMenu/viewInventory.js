@@ -133,7 +133,6 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
             case this.controls["confirm"]: isEnter = true; break;
             case this.controls["cancel"]: return this.Cancel();
         }
-        console.log(moves);
         let pos = { x: moves.x + this.cursor.posX, y: moves.y + this.cursor.posY };
 
         if(this.selectedCropIdx >= 0) {

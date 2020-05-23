@@ -29,11 +29,24 @@ class Gfx {
                 fontFamily: "Nevis",
                 fontSize: 25
             },
-            "stdMedium": {
+            "stdSmall": {
                 fontFamily: "Nevis",
-                fontSize: 36
+                fontSize: 20
             },
-            "stdMedSml": {
+            "stdHeader": {
+                fontFamily: "Nevis",
+                fontSize: 36,
+                fontVariant: "small-caps",
+                fontWeight: "bold"
+            },
+            "stdWhiteHeaderSm": {
+                fontFamily: "Nevis",
+                fontSize: 32,
+                fontVariant: "small-caps",
+                fontWeight: "bold",
+                fill: "#FFFFFF"
+            },
+            "stdMedium": {
                 fontFamily: "Nevis",
                 fontSize: 32
             },
@@ -199,7 +212,7 @@ class Gfx {
 
         if(drawTop) {
             elements.push(gfx2.CreateSmallSprite(crop.name, x, y, false));
-            elements.push(gfx2.WriteText(crop.displayname, fontStyle + "Medium", x + 80, y + 12, "left"));
+            elements.push(gfx2.WriteText(crop.displayname, fontStyle + "Header", x + 80, y + 12, "left"));
             elements.push(gfx2.CreateSmallSprite(cropSprite, x + rightSide, y, false));
             elements.push(gfx2.WriteText(crop.size, "cropNo", x + rightSide + 56, y - 10));
             y += 80;
@@ -246,7 +259,7 @@ class Gfx {
         for(let i = 0; i < bonusesToPush.length; i++) {
             elements.push(gfx2.CreateSmallSprite(bonusesToPush[i], x + rightSide - i * 64, y + 69));
         }
-        elements.push(gfx2.WriteWrappedText(GetText(crop.name), fontStyle + (drawTop ? "MedSml" : ""), x - 12, y + 150, maxTextWidth, "left"));
+        elements.push(gfx2.WriteWrappedText(GetText(crop.name), fontStyle + (drawTop ? "Medium" : ""), x - 12, y + 150, maxTextWidth, "left"));
 
         return gfx2.CreateContainer(elements, false, true);
     }
@@ -306,16 +319,17 @@ class Gfx {
     DrawBox(infoType, x, y, w, h, fromGrid) {
         const sprites = [];
         // TODO: different colors
-        sprites.push(this.CreateRectangle(0xA36F00, x + 1, y + 1, w - 1, h - 1, fromGrid));
+        const delta = fromGrid ? 1 : 64;
+        sprites.push(this.CreateRectangle(0xA36F00, x + delta, y + delta, w - delta, h - delta, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}UL`, x, y, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}DL`, x, y + h, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}UR`, x + w, y, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}DR`, x + w, y + h, fromGrid));
-        for(let x2 = x + 1; x2 < x + w; x2++) {
+        for(let x2 = x + delta; x2 < x + w; x2 += delta) {
             sprites.push(this.CreateSmallSprite(`${infoType}U`, x2, y, fromGrid));
             sprites.push(this.CreateSmallSprite(`${infoType}D`, x2, y + h, fromGrid));
         }
-        for(let y2 = y + 1; y2 < y + h; y2++) {
+        for(let y2 = y + delta; y2 < y + h; y2 += delta) {
             sprites.push(this.CreateSmallSprite(`${infoType}L`, x, y2, fromGrid));
             sprites.push(this.CreateSmallSprite(`${infoType}R`, x + w, y2, fromGrid));
         }
@@ -388,6 +402,14 @@ class Gfx {
         }
         return t;
     }
+    /**
+     * @param {string} text
+     * @param {string} styleName
+     * @param {number} x
+     * @param {number} y
+     * @param {number} maxwidth
+     * @param {string} alignment
+     */
     WriteWrappedText(text, styleName, x, y, maxwidth, alignment) {
         const newStyle = Object.assign({ wordWrap: true, wordWrapWidth: maxwidth, align: alignment }, this.TextStyles[styleName]);
         const t = new PIXI.Text(text, new PIXI.TextStyle(newStyle));
@@ -398,6 +420,13 @@ class Gfx {
             case "left":
             default: t.anchor.x = 0; break;
         }
+        return t;
+    }
+    WriteWrappedMultiFormatText(text, defaultStyle, formats, x, y, maxwidth, alignment) {
+        const newStyle = Object.assign({ wordWrap: true, wordWrapWidth: maxwidth, align: alignment }, this.TextStyles[defaultStyle]);
+        formats["default"] = newStyle;
+        const t = new MultiStyleText(text, formats);
+        [t.x, t.y]  = [x, y];
         return t;
     }
 

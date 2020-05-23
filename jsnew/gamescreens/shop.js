@@ -195,7 +195,7 @@ class ShopSubState {
         const price = Math.floor(crop.price * this.parent.details.buyMult * game2.player.GetPriceMultiplier());
         const amt = game2.player.GetItemAmount(crop.name);
         const itemsToRender = [
-            gfx2.WriteText(`${crop.displayname} (${price}G)`, "stdWhite", 12, 615, "left"),
+            gfx2.WriteText(`${crop.displayname} (${price}G)`, "stdWhiteHeaderSm", 12, 615, "left"),
             gfx2.WriteText(GetText("s.youHave").replace(/\{0\}/g, amt), "stdWhite", gfx2.width - 12, 615, "right"),
             gfx2.DrawCropInfo(crop, "stdWhite", false, 24, 655, 736, gfx2.width - 24, false)
         ];

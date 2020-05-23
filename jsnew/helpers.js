@@ -24,3 +24,37 @@ DebugHelp.CountPIXIObjects = function() {
     }
     console.log(count(gfx2.app.stage));
 }
+DebugHelp.GrantAllEquipment = function() {
+    const player = game2.player;
+    player.IncreaseItem("!babySickle");
+    player.IncreaseItem("!baseSickle");
+    player.IncreaseItem("!goodSickle");
+    player.IncreaseItem("!dblSickle");
+    player.IncreaseItem("!hvySickle");
+    player.IncreaseItem("!hoe");
+    player.IncreaseItem("!salthoe");
+    player.IncreaseItem("!sicklerang");
+    player.IncreaseItem("!sunSickle");
+    player.IncreaseItem("!pltSickle");
+    player.IncreaseItem("!sickle2");
+    player.IncreaseItem("!weakCompost");
+    player.IncreaseItem("!baseCompost");
+    player.IncreaseItem("!strongCompost");
+    player.IncreaseItem("!sturdyCompost");
+    player.IncreaseItem("!jumboCompost");
+    player.IncreaseItem("!vitaminCompost");
+    player.IncreaseItem("!compost2");
+    player.IncreaseItem("!weakGloves");
+    player.IncreaseItem("!pairGloves");
+    player.IncreaseItem("!gardenGloves");
+    player.IncreaseItem("!sbGloves");
+    player.IncreaseItem("!gloves2");
+    player.IncreaseItem("!weakSoil");
+    player.IncreaseItem("!speedSoil");
+    player.IncreaseItem("!sturdSoil");
+    player.IncreaseItem("!minSoil");
+    player.IncreaseItem("!waterfall");
+    player.IncreaseItem("!immunity");
+    player.IncreaseItem("!seasonal");
+    player.IncreaseItem("!pesticide2");
+}

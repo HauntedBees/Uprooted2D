@@ -115,12 +115,12 @@ function GetEquipmentDesc(equipInfo, minified) {
         str += GetTextSmall("eq.spturn", minified) + " "  + equipInfo.amount;
         if(equipInfo.canAttack) { str += "\n " + GetTextSmall("eq.actafter", minified); }
         if(equipInfo.def) { str += "\n " + GetTextSmall("eq.dmgresist", minified) + " " + (equipInfo.def * 100) + "%"; }
-        if(equipInfo.tech) { str += "\n " + GetTextSmall("eq.mayshock1", minified) + " " + GetTextSmall("eq.mayshock2", minified); }
+        if(equipInfo.tech) { str += "\n " + GetTextSmall("eq.mayshock", minified); }
     } else if(equipInfo.type === "soil") {
         if(equipInfo.speed) { str += GetTextSmall("eq.growth", minified) + " " + (equipInfo.speed * 100) + "%"; }
         if(equipInfo.boost) { str += (str === "" ? "" : "\n ") + GetTextSmall("eq.sres", minified) + " " + (equipInfo.boost * 100) + "%"; }
         if(equipInfo.amplify) { str += (str === "" ? "" : "\n ") + GetTextSmall("eq.sstr", minified) + " " + (equipInfo.amplify * 100) + "%"; }
-        if(equipInfo.tech) { str += (str === "" ? "" : "\n ") + GetTextSmall("eq.willkill1", minified) + " " + GetTextSmall("eq.willkill2", minified); }
+        if(equipInfo.tech) { str += (str === "" ? "" : "\n ") + GetTextSmall("eq.willkill", minified); }
     }
     return str;
 }

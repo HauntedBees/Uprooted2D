@@ -1,4 +1,53 @@
 /**
+ * @param {string} key
+ * @param {boolean} small
+ */
+function GetTextSmall(key, small) {
+    if(!small) { return GetText(key); }
+    let trial = TryGetText(key + ".sm");
+    return trial === false ? GetText(key) : trial;
+}
+/**
+ * @param {{ type: string; power: string; targetCrops: any; noEnemies: any; sp: any; su: any; au: any; wi: any; tech: any; attacks: number; amount: string; canAttack: any; rotOnly: any; bonus: number; def: number; speed: number; boost: number; amplify: number; }} equipInfo
+ * @param {boolean} minified
+ */
+function GetEquipmentDesc(equipInfo, minified) {
+    let str = "";
+    if(equipInfo.type === "weapon") {
+        str += GetTextSmall("eq.power", minified) + " " + equipInfo.power;
+        if(equipInfo.targetCrops) { str += "\n" + GetTextSmall("eq.hitCrops", minified); }
+        if(!equipInfo.noEnemies) { str += "\n" + GetTextSmall("eq.hitEnemies", minified); }
+        if(equipInfo.sp) { str += "\n" + GetTextSmall("eq.su", minified); }
+        if(equipInfo.su) { str += "\n" + GetTextSmall("eq.sp", minified); }
+        if(equipInfo.au) { str += "\n" + GetTextSmall("eq.au", minified); }
+        if(equipInfo.wi) { str += "\n" + GetTextSmall("eq.wi", minified); }
+        if(equipInfo.tech) { str += "\n" + GetTextSmall("eq.sickle2", minified); }
+        if(equipInfo.attacks) { 
+            if(equipInfo.attacks === 999) { str += "\n" + GetTextSmall("eq.attackall", minified); }
+            else { str += "\n" + GetTextSmall("eq.attacksome", minified).replace(/\{0\}/g, equipInfo.attacks); }
+        }
+    } else if(equipInfo.type === "compost") {
+        str += GetTextSmall("eq.holds", minified) + " "  + equipInfo.amount;
+        if(equipInfo.canAttack) { str += "\n" + GetTextSmall("eq.compattack", minified); }
+        if(equipInfo.rotOnly) { str += "\n" + GetTextSmall("eq.rotten", minified); }
+        if(equipInfo.bonus) { str += "\n" + GetTextSmall("eq.bonus", minified) + " " + (equipInfo.bonus * 100) + "%"; }
+        if(equipInfo.tech) { str += "\n" + GetTextSmall("eq.backfire", minified); }
+    } else if(equipInfo.type === "gloves") {
+        str += GetTextSmall("eq.spturn", minified) + " "  + equipInfo.amount;
+        if(equipInfo.canAttack) { str += "\n" + GetTextSmall("eq.actafter", minified); }
+        if(equipInfo.def) { str += "\n" + GetTextSmall("eq.dmgresist", minified) + " " + (equipInfo.def * 100) + "%"; }
+        if(equipInfo.tech) { str += "\n" + GetTextSmall("eq.mayshock", minified); }
+    } else if(equipInfo.type === "soil") {
+        if(equipInfo.speed) { str += GetTextSmall("eq.growth", minified) + " " + (equipInfo.speed * 100) + "%"; }
+        if(equipInfo.boost) { str += (str === "" ? "" : "\n") + GetTextSmall("eq.sres", minified) + " " + (equipInfo.boost * 100) + "%"; }
+        if(equipInfo.amplify) { str += (str === "" ? "" : "\n") + GetTextSmall("eq.sstr", minified) + " " + (equipInfo.amplify * 100) + "%"; }
+        if(equipInfo.tech) { str += (str === "" ? "" : "\n") + GetTextSmall("eq.willkill", minified); }
+    }
+    return str;
+}
+
+
+/**
  * @param {PIXIObj} sprite
  * @param {() => void} clickHandler
  * @param {() => void} mouseoverHandler
@@ -153,6 +202,7 @@ class InfoText {
                 }
             } else {
                 const calcx = options.minX * 32;
+                width = Math.max(width, options.minX * 64);
                 leftX = Math.min(leftX, Math.floor((x - calcx) / 64) * 64);
                 rightX = Math.max(rightX, Math.floor((x + calcx) / 64) * 64);
             }
