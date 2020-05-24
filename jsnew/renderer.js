@@ -143,6 +143,22 @@ class Gfx {
         s.zIndex = y;
         return s;
     }
+    /**
+     * @param {string} key
+     * @param {number} x
+     * @param {number} y
+     * @param {boolean} [fromGrid]
+     * @param {boolean} [centerAlign]
+     * @returns {PIXIObj}
+     */
+    CreateBigSprite(key, x, y, fromGrid, centerAlign) {
+        let s = new PIXI.Sprite(this.img.bigSprites[key]);
+        if(fromGrid) { x *= 64; y *= 64; }
+        [s.x, s.y] = [x, y];
+        if(centerAlign) { [s.anchor.x, s.anchor.y] = [0.5, 0.5]; }
+        s.zIndex = y;
+        return s;
+    }
 
     /**
      * @param {string[]} keys
@@ -282,19 +298,6 @@ class Gfx {
         const thinNo = gfx2.WriteText(dispNum, fontStyle + "Big", x, y);
         thinNo.width = 64;
         return thinNo;
-    }
-
-    /**
-     * @param {string} key
-     * @param {number} x
-     * @param {number} y
-     * @returns {PIXIObj}
-     */
-    CreateBigSprite(key, x, y) {
-        let s = new PIXI.Sprite(this.img.bigSprites[key]);
-        [s.x, s.y] = [x, y];
-        s.zIndex = y;
-        return s;
     }
 
     /** @param {string} key */

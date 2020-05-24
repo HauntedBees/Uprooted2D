@@ -47,10 +47,7 @@ class PauseMenuScreen extends GameScreen {
             "menu": gfx2.CreateContainer([...this.menuOptions.map(m => m.container), ...this.playerInfo])
         }
     }
-    /**
-     * @param {number} x
-     * @param {number} y
-     */
+    /** @param {number} x @param {number} y */
     CursorMove(x, y) {
         sound.PlaySound("menuMove");
         if(x === 1) { // no fun, alignment info, quest items
@@ -77,6 +74,10 @@ class PauseMenuScreen extends GameScreen {
                 case 1:
                     this.Hide();
                     this.subscreen = new PauseViewEquipmentScreen(this, this.controls);
+                    break;
+                case 2:
+                    this.Hide();
+                    this.subscreen = new PauseViewFixturesScreen(this, this.controls);
                     break;
             }
         } else { // no fun, alignment info, quest items

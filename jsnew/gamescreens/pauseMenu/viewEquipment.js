@@ -5,7 +5,7 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
         this.cursor = new SelCursor(2, 1.5, 0, 0, 1, 1, true);
         this.backButton = new InfoText(GetText("menu.Back"), 64, 4, false, () => this.Select(), () => this.MoveCursor(0, -1));
         this.secondaryCursor = new SelCursor(this.backButton.leftmostX, 4, this.backButton.width, -20, 0, 64, false);
-        this.secondaryCursor.container.visible = false;
+        this.secondaryCursor.Hide();
         
         this.rowData = [[], [], [], []];
 
@@ -45,7 +45,7 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
         for(let y = 0; y < this.rowData.length; y++) {
             if(this.equippedCursors[y] === undefined) {
                 this.equippedCursors[y] = new SelCursorX(dx, dy + y, 0, 0, 1, 0, true);
-                this.equippedCursors[y].container.visible = false;
+                this.equippedCursors[y].Hide();
                 equipCursors.push(this.equippedCursors[y].container);
             }
         }
@@ -73,8 +73,8 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
             ...this.equippedItemInfo
         ]);
         this.cursorContainer = gfx2.CreateContainer([
-            ...equipCursors, 
             this.cursor.container,
+            ...equipCursors, 
             this.secondaryCursor.container
         ]);
         this.containers.push(this.mainContainer);
@@ -268,13 +268,13 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
     MoveCursor(x, y) {
         sound.PlaySound("menuMove");
         if(y === -1) {
-            this.cursor.container.visible = false;
+            this.cursor.Hide();
             this.cursor.MoveTo(0, 0);
-            this.secondaryCursor.container.visible = true;
+            this.secondaryCursor.Show();
             this.backButton.Select();
         } else {
-            this.cursor.container.visible = true;
-            this.secondaryCursor.container.visible = false;
+            this.cursor.Show();
+            this.secondaryCursor.Hide();
             this.backButton.Unselect();
             this.cursor.MoveTo(x, y);
             this.mainContainer.removeChild(this.selectedInfo);
@@ -290,11 +290,11 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
         if(player.equipped[equipInfo.type] === item) {
             sound.PlaySound("cancel");
             player.equipped[equipInfo.type] = null;
-            this.equippedCursors[this.cursor.posY].container.visible = false;
+            this.equippedCursors[this.cursor.posY].Hide();
         } else {
             sound.PlaySound("confirm");
             player.equipped[equipInfo.type] = item;
-            this.equippedCursors[this.cursor.posY].container.visible = true;
+            this.equippedCursors[this.cursor.posY].Show();
             this.equippedCursors[this.cursor.posY].MoveTo(this.cursor.posX, 0);
         }
         this.UpdateEquippedInfoSelection(this.cursor.posY);

@@ -91,10 +91,15 @@ class Player {
         /** @type {any[]} */
         this.fixtures = [];
         // TODO: tutorial inventory and equipment
-        this.gridWidth = 3;
+        /*this.gridWidth = 3;
         this.gridHeight = 3;
         this.gridLevel = "n";
-        this.itemGrid = null;
+        this.fixtureGrid = [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null]
+        ];*/
+        this.gridInfo = new CropFieldInfo(3, 3, "n");
     }
     /* #region Save Data */
     SetMapPosition(worldmap) {
@@ -245,7 +250,6 @@ class Player {
     /** @param {string} item @param {number} amount */
     DecreaseItem(item, amount) {
         const type = this.GetItemType(item);
-        
         if(type === "equipment") {
             const idx = this.tools.indexOf(item);
             if(idx < 0) { return false; }
@@ -255,7 +259,7 @@ class Player {
         const arr = (type === "fixture") ? this.fixtures : this.crops;
         let idx = -1;
         for(let i = 0; i < arr.length; i++) {
-            if(arr[i][0] === name) {
+            if(arr[i][0] === item) {
                 arr[i][1] -= (amount || 1);
                 idx = i;
                 break;
@@ -283,37 +287,6 @@ class Player {
     /** @param {number} m */
     AddMonies(m) {
         this.monies = Math.min(9999, this.monies + m);
-    }
-    /* #endregion */
-    /* #region Grid */
-    InitGridDimensions() {
-        if(this.itemGrid === null) {
-            // TODO: THIS IS WRONG
-            //this.itemGrid = combat.getGrid(this.gridWidth, this.gridHeight);
-        }
-    }
-    ExpandGrid(newWidth, newHeight, newLevel) {
-        let oldwidth = this.gridWidth;
-        let oldheight = this.gridHeight;
-        if(this.itemGrid === null) {
-            this.itemGrid = [];
-            oldwidth = 0;
-            oldheight = 0;
-        }
-        for(let x = 0; x < newWidth; x++) {
-            if(x < oldwidth) {
-                for(let y = oldheight; y < newHeight; y++) {
-                    this.itemGrid[x].push(null);
-                }
-            } else {
-                const row = [];
-                for(var y = 0; y < newHeight; y++) { row.push(null); }
-                this.itemGrid.push(row);
-            }
-        }
-        this.gridWidth = newWidth;
-        this.gridHeight = newHeight;
-        this.gridLevel = newLevel;
     }
     /* #endregion */
     /* #region Levelling */
@@ -427,27 +400,22 @@ class Player {
         const hasAnySeeds = this.crops.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0);
         if(!hasAnySeeds) { return false; }
         const availableTypes = [];
-        if(this.itemGrid === null || this.itemGrid === undefined) {
-            availableTypes.push("veg");
-            availableTypes.push("tree");
-        } else {
-            for(let x = 0; x < this.itemGrid.length; x++) {
-                for(let y = 0; y < this.itemGrid[0].length; y++) {
-                    const item = this.itemGrid[x][y];
-                    switch(item) {
-                        case "_log": availableTypes.push("mush"); break;
-                        case "_coop": availableTypes.push("egg"); break;
-                        case "_modulator": availableTypes.push("veg"); break;
-                        case "_shooter": availableTypes.push("veg", "mush", "rice"); break;
-                        case "_lake": availableTypes.push("water", "rod", "spear"); break;
-                        case "_paddy": availableTypes.push("rice"); break;
-                        case "_cow": availableTypes.push("food", "veg", "rice", "mush", "tree"); break;
-                        case "_strongsoil": availableTypes.push("veg", "tree"); break;
-                        case "_hotspot": availableTypes.push("tech"); break;
-                        case "_beehive": availableTypes.push("bee"); break;
-                        case "_charger": availableTypes.push("sickle2"); break;
-                        default: if(item === null) { availableTypes.push("veg", "tree"); } break;
-                    }
+        for(let x = 0; x < this.gridInfo.gridWidth; x++) {
+            for(let y = 0; y < this.gridInfo.gridHeight; y++) {
+                const item = this.gridInfo[x][y];
+                switch(item) {
+                    case "_log": availableTypes.push("mush"); break;
+                    case "_coop": availableTypes.push("egg"); break;
+                    case "_modulator": availableTypes.push("veg"); break;
+                    case "_shooter": availableTypes.push("veg", "mush", "rice"); break;
+                    case "_lake": availableTypes.push("water", "rod", "spear"); break;
+                    case "_paddy": availableTypes.push("rice"); break;
+                    case "_cow": availableTypes.push("food", "veg", "rice", "mush", "tree"); break;
+                    case "_strongsoil": availableTypes.push("veg", "tree"); break;
+                    case "_hotspot": availableTypes.push("tech"); break;
+                    case "_beehive": availableTypes.push("bee"); break;
+                    case "_charger": availableTypes.push("sickle2"); break;
+                    default: if(item === null) { availableTypes.push("veg", "tree"); } break;
                 }
             }
         }

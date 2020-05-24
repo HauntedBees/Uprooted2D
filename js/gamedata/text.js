@@ -7032,7 +7032,11 @@ const fulltext = {
 		"type": "opts"
 	},
 	"farmModDirt": {
-		"en-us": "Dirt\n Growth Speed: {0}%", 
+		"en-us": "<h>Dirt</h>\n Growth Speed: {0}%", 
+		"type": "opts"
+	},
+	"farmModNothing": {
+		"en-us": "It looks like you don't have any fixtures yet. Find or buy some, then come back to this screen to place them on your Field.", 
 		"type": "opts"
 	},
 	"growthSpeed": {

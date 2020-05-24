@@ -58,3 +58,18 @@ DebugHelp.GrantAllEquipment = function() {
     player.IncreaseItem("!seasonal");
     player.IncreaseItem("!pesticide2");
 }
+DebugHelp.GrantAllFixtures = function() {
+    const player = game2.player;
+    player.IncreaseItem("_log", 20);
+    player.IncreaseItem("_coop", 20);
+    player.IncreaseItem("_modulator", 20);
+    player.IncreaseItem("_shooter", 20);
+    player.IncreaseItem("_lake", 20);
+    player.IncreaseItem("_paddy", 20);
+    player.IncreaseItem("_cow", 20);
+    player.IncreaseItem("_strongsoil", 20);
+    player.IncreaseItem("_hotspot", 20);
+    player.IncreaseItem("_sprinkler", 20);
+    player.IncreaseItem("_beehive", 20);
+    player.IncreaseItem("_charger", 20);
+}

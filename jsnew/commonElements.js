@@ -144,6 +144,9 @@ class SelCursor {
         this.sprites = [];
         this.container = null;
     }
+    Hide() { this.container.visible = false; }
+    Show() { this.container.visible = true; }
+    IsVisible() { return this.container.visible; }
 }
 
 class SelCursorX extends SelCursor {
@@ -159,7 +162,7 @@ class SelCursorX extends SelCursor {
     constructor(x, y, w, h, dx, dy, fromGrid) {
         super(x, y, w, h, dx, dy, fromGrid);
         for(let i = 0; i < 4; i++) {
-            this.sprites[i].texture = gfx2.img.sprites["bcursor0." + i];
+            this.sprites[i].texture = gfx2.img.sprites["xcursor0." + i];
         }
     }
     Update() { }

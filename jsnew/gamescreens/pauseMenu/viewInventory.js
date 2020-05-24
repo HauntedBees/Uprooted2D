@@ -8,7 +8,7 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
         this.lastSortedIdx = -1;
         this.cursor = new SelCursor(0.5, 1.5, 0, 0, 1, 1, true);
         this.secondaryCursor = new SelCursor(0, 16, 1, -20, 0, 64, false);
-        this.secondaryCursor.container.visible = false;
+        this.secondaryCursor.Hide();
         const elements = [
             gfx2.DrawBox("FarmInfo", -64, -64, gfx2.width + 64, 64, false)
         ];
@@ -42,7 +42,7 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
 
         this.selectionContainer = null;
         this.selectionCursor = new SelCursorX(0, 0, 0, 0, 1, 1, false);
-        this.selectionCursor.container.visible = false;
+        this.selectionCursor.Hide();
 
         this.cropPowerDisplay = gfx2.DrawCropInfo(GetCrop(game2.player.crops[0][0]), "std", false, 285, 100, 640, 720, true);
         elements.push(...[
@@ -75,8 +75,8 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
                 this.secondaryCursor.SetInitialPos(this.sortButton.leftmostX, 4).Resize(this.sortButton.width, -20, false).Redraw();
             }
         } else if(y < 0) {
-            this.secondaryCursor.container.visible = true;
-            this.cursor.container.visible = false;
+            this.secondaryCursor.Show();
+            this.cursor.Hide();
             if(x === 0) { // back button
                 this.secondaryCursor.SetInitialPos(this.backButton.leftmostX, 4).Resize(this.backButton.width, -20, false).Redraw();
                 this.backButton.Select();
@@ -89,8 +89,8 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
         } else {
             this.backButton.Unselect();
             this.sortButton.Unselect();
-            this.secondaryCursor.container.visible = false;
-            this.cursor.container.visible = true;
+            this.secondaryCursor.Hide();
+            this.cursor.Show();
             this.cursor.MoveTo(x, y);
             if(this.selectedCropIdx >= 0) {
                 this.DrawSelectionInfo(x, y);
@@ -157,7 +157,7 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
             if(newY < -1 || newY > 3) { sound.PlaySound("navNok"); return false; }
             this.sortY = newY;
             pos.y = newY;
-        } else if(this.secondaryCursor.container.visible) {
+        } else if(this.secondaryCursor.IsVisible()) {
             if(moves.y > 0) {
                 pos.x = 0;
                 pos.y = 0;
@@ -266,7 +266,7 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
                 const selectedCropSprite = this.cropSprites[cropIdx];
                 this.selectedCropIdx = cropIdx;
                 this.trashCan.visible = true;
-                this.selectionCursor.container.visible = true;
+                this.selectionCursor.Show();
                 this.selectionCursor.MoveTo(selectedCropSprite.x, selectedCropSprite.y);
                 this.DrawSelectionInfo(this.cursor.posX, this.cursor.posY);
                 sound.PlaySound("confirm");
@@ -311,7 +311,7 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
     CleanUpCropSelection() {
         this.selectedCropIdx = -1;
         this.trashCan.visible = false;
-        this.selectionCursor.container.visible = false;
+        this.selectionCursor.Hide();
         this.selectionContainer.CleanUp();
         this.selectionContainer = null;
     }
@@ -350,7 +350,6 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
         /** @type {PIXIObj[]} */
         this.cropSprites = [];
         for(let i = 0; i < player.crops.length; i++) {
-            if(player.crops[i][0][0] === "_" || player.crops[i][0][0] === "!") { continue; }
             const thisX = i % this.inventoryWidth + dx;
             const thisY = Math.floor(i / this.inventoryWidth) + dy;
             elements.push(gfx2.CreateSmallSprite("invBox", thisX, thisY, true));
