@@ -44,7 +44,7 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
         this.selectionCursor = new SelCursorX(0, 0, 0, 0, 1, 1, false);
         this.selectionCursor.container.visible = false;
 
-        this.cropPowerDisplay = gfx2.DrawCropInfo(GetCrop(game2.player.inventory[this.actualIndexes[0]][0]), "std", false, 285, 100, 640, 720, true);
+        this.cropPowerDisplay = gfx2.DrawCropInfo(GetCrop(game2.player.crops[0][0]), "std", false, 285, 100, 640, 720, true);
         elements.push(...[
             gfx2.WriteText(GetText("inv.Heading"), "std", gfx2.width - 8, 10, "right"),
             this.selectionCursor.container,
@@ -96,8 +96,8 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
                 this.DrawSelectionInfo(x, y);
             } else {
                 this.containers[1].removeChild(this.cropPowerDisplay);
-                const selectedCropIdx = this.actualIndexes[y * this.inventoryWidth + x];
-                const selectedCrop = game2.player.inventory[selectedCropIdx];
+                const selectedCropIdx = y * this.inventoryWidth + x;
+                const selectedCrop = game2.player.crops[selectedCropIdx];
                 this.cropPowerDisplay = gfx2.DrawCropInfo(GetCrop(selectedCrop[0]), "std", false, 285, 100, 640, 720, true);
                 this.containers[1].addChild(this.cropPowerDisplay);
             }
@@ -110,11 +110,11 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
         const selX = 288, selY = cropSpriteY + 16;
         this.trashCan.y = cropSpriteY;
         if(x === this.inventoryWidth) { // recycle
-            const inventoryInfo = game2.player.inventory[this.selectedCropIdx];
+            const inventoryInfo = game2.player.crops[this.selectedCropIdx];
             const price = Math.ceil(GetCrop(inventoryInfo[0]).price * inventoryInfo[1] * 0.25);
             this.selectionContainer = new InfoText(GetText("inv.drop").replace(/\{0\}/g, price), selX, selY, true, () => {}, () => {}, { leftAlign: true, padText: true });
         } else {
-            const hoveredCropIdx = this.actualIndexes[y * this.inventoryWidth + x];
+            const hoveredCropIdx = y * this.inventoryWidth + x;
             if(this.selectedCropIdx === hoveredCropIdx) { // unselect
                 this.selectionContainer = new InfoText(GetText("inv.unselect"), selX, selY, true, () => {}, () => {}, { leftAlign: true, padText: true });
             } else { // swap
@@ -144,12 +144,12 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
                 if(this.cursor.posX === this.inventoryWidth) {
                     if(moves.y !== 0 || moves.x > 0) { sound.PlaySound("navNok"); return false; }
                     const newpos = pos.y * this.inventoryWidth + pos.x;
-                    if(newpos >= this.actualIndexes.length) { pos.x = 0; }
+                    if(newpos >= game2.player.crops.length) { pos.x = 0; }
                 } else {
                     if(pos.x < 0 || pos.y < 0) { sound.PlaySound("navNok"); return false; }
                     if(pos.x >= 3) { sound.PlaySound("navNok"); return false; }
                     const newpos = pos.y * this.inventoryWidth + pos.x;
-                    if(newpos >= this.actualIndexes.length) { pos.x = this.inventoryWidth; pos.y = this.cursor.posY }
+                    if(newpos >= game2.player.crops.length) { pos.x = this.inventoryWidth; pos.y = this.cursor.posY }
                 }
             }
         } else if(this.inSort) {
@@ -178,7 +178,7 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
             if(pos.x < 0 || pos.y < 0) { sound.PlaySound("navNok"); return false; }
             if(pos.x >= 3) { sound.PlaySound("navNok"); return false; }
             const newpos = pos.y * this.inventoryWidth + pos.x;
-            if(newpos >= this.actualIndexes.length) { sound.PlaySound("navNok"); return false; }
+            if(newpos >= game2.player.crops.length) { sound.PlaySound("navNok"); return false; }
         }
         if(isEnter) { this.Select(); }
         else if(doMove) { this.MoveCursor(pos.x, pos.y); }
@@ -237,35 +237,34 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
                 this.sortElemContainer.visible = true;
             }
         } else {
-            const idx = this.cursor.posY * this.inventoryWidth + this.cursor.posX;
-            const actualIdx = this.actualIndexes[idx];
+            const cropIdx = this.cursor.posY * this.inventoryWidth + this.cursor.posX;
             if(this.selectedCropIdx >= 0) {
                 if(this.cursor.posX === this.inventoryWidth) { // recycle
                     const player = game2.player;
-                    const inventoryInfo = game2.player.inventory[this.selectedCropIdx];
+                    const inventoryInfo = game2.player.crops[this.selectedCropIdx];
                     const price = Math.ceil(GetCrop(inventoryInfo[0]).price * inventoryInfo[1] * 0.25);
                     player.AddMonies(price);
-                    player.inventory.splice(this.selectedCropIdx, 1);
+                    player.crops.splice(this.selectedCropIdx, 1);
                     sound.PlaySound("purchase");
                     this.cursor.MoveTo(0, this.cursor.posY);
                     this.RefreshInventoryDisplay();
                     this.CleanUpCropSelection();
                     this.StartTrashCanAnimation();
-                } else if(this.selectedCropIdx === actualIdx) { // unselecting
+                } else if(this.selectedCropIdx === cropIdx) { // unselecting
                     sound.PlaySound("confirm");
                     this.CleanUpCropSelection();
                 } else { // swap
                     sound.PlaySound("confirm");
                     const player = game2.player;
-                    const temp = player.inventory[actualIdx];
-                    player.inventory[actualIdx] = player.inventory[this.selectedCropIdx];
-                    player.inventory[this.selectedCropIdx] = temp;
+                    const temp = player.crops[cropIdx];
+                    player.crops[cropIdx] = player.crops[this.selectedCropIdx];
+                    player.crops[this.selectedCropIdx] = temp;
                     this.RefreshInventoryDisplay();
                     this.CleanUpCropSelection();
                 }
             } else {
-                const selectedCropSprite = this.cropSprites[idx];
-                this.selectedCropIdx = actualIdx;
+                const selectedCropSprite = this.cropSprites[cropIdx];
+                this.selectedCropIdx = cropIdx;
                 this.trashCan.visible = true;
                 this.selectionCursor.container.visible = true;
                 this.selectionCursor.MoveTo(selectedCropSprite.x, selectedCropSprite.y);
@@ -329,39 +328,36 @@ class PauseViewInventoryScreen extends PauseMenuSubscreen {
      */
     SortCrops(sortIdx, ascendingSort, descendingSort) {
         const player = game2.player;
-        const nonCrops = player.inventory.filter(e => e[0][0] === "_" || e[0][0] === "!");
-        const crops = player.inventory.filter(e => e[0][0] !== "_" && e[0][0] !== "!");
+        const nonCrops = player.crops.filter(e => e[0][0] === "_" || e[0][0] === "!");
+        const crops = player.crops.filter(e => e[0][0] !== "_" && e[0][0] !== "!");
         if(sortIdx === this.lastSortedIdx) {
             crops.sort(ascendingSort);
         } else {
             crops.sort(descendingSort);
         }
         sound.PlaySound("confirm");
-        player.inventory = [...crops, ...nonCrops];
+        player.crops = [...crops, ...nonCrops];
         this.lastSortedIdx = (this.lastSortedIdx === sortIdx) ? -1 : sortIdx;
         this.RefreshInventoryDisplay();
         this.ExitSort();
     }
     DrawCropInventory() {
         const player = game2.player;
-        /** @type {number[]} */
-        this.actualIndexes = [];
         let j = 0;
         this.inventoryWidth = 3;
         const dx = 0.5, dy = 1.5;
         const elements = [];
         /** @type {PIXIObj[]} */
         this.cropSprites = [];
-        for(let i = 0; i < player.inventory.length; i++) {
-            if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
-            const thisX = j % this.inventoryWidth + dx;
-            const thisY = Math.floor(j / this.inventoryWidth) + dy;
+        for(let i = 0; i < player.crops.length; i++) {
+            if(player.crops[i][0][0] === "_" || player.crops[i][0][0] === "!") { continue; }
+            const thisX = i % this.inventoryWidth + dx;
+            const thisY = Math.floor(i / this.inventoryWidth) + dy;
             elements.push(gfx2.CreateSmallSprite("invBox", thisX, thisY, true));
-            const itemSprite = gfx2.CreateInventoryItem(player.inventory[i], thisX, thisY, true);
+            const itemSprite = gfx2.CreateInventoryItem(player.crops[i], thisX, thisY, true);
             MakeSpriteInteractive(itemSprite, () => this.Select(), () => this.MoveCursor(thisX - dx, thisY - dy));
             this.cropSprites.push(itemSprite.children[0]);
             elements.push(itemSprite);
-            this.actualIndexes.push(i);
             j++;
         }
         for(let i = j; i < 36; i++) {

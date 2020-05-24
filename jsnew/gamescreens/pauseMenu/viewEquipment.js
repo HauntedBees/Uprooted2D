@@ -20,14 +20,12 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
         this.rowData = [[], [], [], []];
         /** @type {SelCursorX[]} */
         this.equippedCursors = [];
-        let numItems = 0;
         const equipCursors = [];
-        for(let i = 0; i < player.inventory.length; i++) {
-            const itemName = player.inventory[i][0];
-            if(itemName[0] !== "!") { continue; }
+        for(let i = 0; i < player.tools.length; i++) {
+            const toolName = player.tools[i];
             let y = 0;
-            const item = GetEquipment(itemName);
-            const details = { actualIndex: i, name: itemName, type: item.type, equipped: player.IsEquipped(itemName) };
+            const item = GetEquipment(toolName);
+            const details = { actualIndex: i, name: toolName, type: item.type, equipped: player.IsEquipped(toolName) };
             switch(item.type) {
                 case "weapon": y = 0; break;
                 case "compost": y = 1; break;
@@ -35,7 +33,7 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
                 case "soil": y = 3; break;
             }
             const x = this.rowData[y].length
-            const itemSprite = gfx2.CreateSmallSprite(itemName, dx + x, dy + y, true);
+            const itemSprite = gfx2.CreateSmallSprite(toolName, dx + x, dy + y, true);
             MakeSpriteInteractive(itemSprite, () => this.Select(), () => this.MoveCursor(x, y));
             tiles.push(itemSprite);
             if(details.equipped) {
@@ -43,7 +41,6 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
                 equipCursors.push(this.equippedCursors[y].container);
             }
             this.rowData[y].push(details);
-            numItems++;
         }
         for(let y = 0; y < this.rowData.length; y++) {
             if(this.equippedCursors[y] === undefined) {
@@ -56,10 +53,10 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
 
         /** @type {PIXIObj[]} */
         this.equippedItemInfo = [
-            this.CreateEquippedInfoSelection(player.equipment.weapon, 16, 672),
-            this.CreateEquippedInfoSelection(player.equipment.compost, 272, 672),
-            this.CreateEquippedInfoSelection(player.equipment.gloves, 528, 672),
-            this.CreateEquippedInfoSelection(player.equipment.soil, 784, 672)
+            this.CreateEquippedInfoSelection(player.equipped.weapon, 16, 672),
+            this.CreateEquippedInfoSelection(player.equipped.compost, 272, 672),
+            this.CreateEquippedInfoSelection(player.equipped.gloves, 528, 672),
+            this.CreateEquippedInfoSelection(player.equipped.soil, 784, 672)
         ];
 
         this.mainContainer = gfx2.CreateContainer([
@@ -105,10 +102,10 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
     UpdateEquippedInfoSelection(i) {
         let sprite = "", x = 0;
         switch(i) {
-            case 0: x = 16; sprite = game2.player.equipment.weapon; break;
-            case 1: x = 272; sprite = game2.player.equipment.compost; break;
-            case 2: x = 528; sprite = game2.player.equipment.gloves; break;
-            case 3: x = 784; sprite = game2.player.equipment.soil; break;
+            case 0: x = 16; sprite = game2.player.equipped.weapon; break;
+            case 1: x = 272; sprite = game2.player.equipped.compost; break;
+            case 2: x = 528; sprite = game2.player.equipped.gloves; break;
+            case 3: x = 784; sprite = game2.player.equipped.soil; break;
         }
         if(sprite === "") { return; }
         this.mainContainer.removeChild(this.equippedItemInfo[i]);
@@ -118,8 +115,8 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
     /** @returns {PIXIObj} */
     GetSelectedItemInfoObj() {
         const actIdx = this.rowData[this.cursor.posY][this.cursor.posX].actualIndex;
-        const item = game2.player.inventory[actIdx];
-        const equipInfo = GetEquipment(item[0]);
+        const item = game2.player.tools[actIdx];
+        const equipInfo = GetEquipment(item);
         const str = this.GetEquipDescComparedToCurrent(equipInfo);
         const text = gfx2.WriteWrappedMultiFormatText(str, "std", {
             "st": { fontStyle: "italic" },
@@ -133,7 +130,7 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
     }
     /** @param {{ type: string; displayname: any; }} equipInfo */
     GetEquipDescComparedToCurrent(equipInfo) {
-        let current = game2.player.equipment[equipInfo.type];
+        let current = game2.player.equipped[equipInfo.type];
         if(current === null) {
             current = { power: 0, amount: equipInfo.type === "gloves" ? 1 : 0, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0, noEnemies: true };
         } else {
@@ -288,15 +285,15 @@ class PauseViewEquipmentScreen extends PauseMenuSubscreen {
     Select() {
         if(this.backButton.selected) { return this.ReturnToMainPauseMenu(); }
         const player = game2.player;
-        const item = player.inventory[this.rowData[this.cursor.posY][this.cursor.posX].actualIndex];
-        const equipInfo = GetEquipment(item[0]);
-        if(player.equipment[equipInfo.type] === item[0]) {
+        const item = player.tools[this.rowData[this.cursor.posY][this.cursor.posX].actualIndex];
+        const equipInfo = GetEquipment(item);
+        if(player.equipped[equipInfo.type] === item) {
             sound.PlaySound("cancel");
-            player.equipment[equipInfo.type] = null;
+            player.equipped[equipInfo.type] = null;
             this.equippedCursors[this.cursor.posY].container.visible = false;
         } else {
             sound.PlaySound("confirm");
-            player.equipment[equipInfo.type] = item[0];
+            player.equipped[equipInfo.type] = item;
             this.equippedCursors[this.cursor.posY].container.visible = true;
             this.equippedCursors[this.cursor.posY].MoveTo(this.cursor.posX, 0);
         }

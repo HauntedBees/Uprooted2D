@@ -42,9 +42,13 @@ class Player {
                 "tech": 0
             }
         };
+        /** @type {string[]} */
         this.clearedEntities = [];
+        /** @type {string[]} */
         this.achievements = [];
+        /** @type {string[]} */
         this.failedEntities = []; 
+        /** @type {string[]} */
         this.questsCleared = [];
         this.activeQuests = {};
         this.fixtureTutorialState = 0; 
@@ -70,21 +74,22 @@ class Player {
             rightBumperWin: false 
         };
         this.noFunDiffMod = 0; // positive=harder negative=easier
-        this.equipment = {
+        this.equipped = {
             weapon: "!babySickle",
             compost: "!weakCompost",
             gloves: null,
             soil: null
         };
         /** @type {any[]} */
-        this.inventory = [
+        this.crops = [
             ["carrot", 6],
             ["beet", 4],
             ["garlic", 2],
-            ["banana", 3],
-            ["!weakCompost", 1],
-            ["!babySickle", 1]
+            ["banana", 3]
         ];
+        this.tools = ["!weakCompost", "!babySickle"];
+        /** @type {string[]} */
+        this.fixtures = [];
         // TODO: tutorial inventory and equipment
         this.gridWidth = 3;
         this.gridHeight = 3;
@@ -175,24 +180,30 @@ class Player {
     }
     /* #endregion */
     /* #region Inventory */
+    /** @param {string} item @param {number} amount */
     HasItem(item, amount) {
         amount = amount || 1;
-        for(let i = 0; i < this.inventory.length; i++) {
-            if(this.inventory[i][0] === item && this.inventory[i][1] >= amount) { return true; }
+        for(let i = 0; i < this.crops.length; i++) {
+            if(this.crops[i][0] === item && this.crops[i][1] >= amount) { return true; }
         }
+        if(this.tools.indexOf(item) >= 0 || this.fixtures.indexOf(item) >= 0) { return true; }
         return false;
     }
+    /** @param {string} item */
     GetItemAmount(item) {
-        for(let i = 0; i < this.inventory.length; i++) {
-            if(this.inventory[i][0] === item) { return this.inventory[i][1]; }
+        for(let i = 0; i < this.crops.length; i++) {
+            if(this.crops[i][0] === item) { return this.crops[i][1]; }
         }
+        if(this.tools.indexOf(item) >= 0 || this.fixtures.indexOf(item) >= 0) { return 1; }
         return 0;
     }
+    /** @param {string} item */
     IsEquipped(item) {
-        return this.equipment.weapon === item || this.equipment.compost === item || this.equipment.gloves === item || this.equipment.soil === item || this.equipment.armor === item;
-    }
-    IncreaseItem(name, amount) {
-        if(name === "_beehive" && this.clearedEntities.indexOf("FarmHive") >= 0
+        return this.equipped.weapon === item || this.equipped.compost === item || this.equipped.gloves === item || this.equipped.soil === item || this.equipped.armor === item;
+    }   
+    /** @param {string} item @param {number} [amount] */
+    IncreaseItem(item, amount) {
+        if(item === "_beehive" && this.clearedEntities.indexOf("FarmHive") >= 0
                                 && this.clearedEntities.indexOf("BelowHive") >= 0
                                 && this.clearedEntities.indexOf("ForestHive") >= 0
                                 && this.clearedEntities.indexOf("KelpBeehive") >= 0
@@ -200,48 +211,70 @@ class Player {
             AddAchievementIfMissing("beeKing"); // TODO: chievo
         }
         if(amount === undefined) { amount = 1; }
-        let numOfType = 0;
-        const type = name[0] === "!" ? "!" : (name[0] === "_" ? "_" : "C");
-        for(var i = 0; i < this.inventory.length; i++) {
-            if(this.inventory[i][0] === name) {
-                this.inventory[i][1] += amount;
-                return true;
-            }
-            const front = this.inventory[i][0][0];
-            if(front !== "!" && front !== "_" && type === "C") { numOfType++; }
-        }
-        if(numOfType === 36) { return false; }
         if(amount === 0) { return true; }
-        this.inventory.push([name, amount]);
+        const type = item[0] === "!" ? "!" : (item[0] === "_" ? "_" : "C");
+        if(type === "!") {
+            if(this.tools.indexOf(item) >= 0) { return false; }
+            this.tools.push(item);
+        } else if(type === "_") {
+            if(this.fixtures.indexOf(item) >= 0) { return false; }
+            this.fixtures.push(item);
+        } else {
+            let numberOfCrops = 0;
+            for(var i = 0; i < this.crops.length; i++) {
+                if(this.crops[i][0] === item) {
+                    this.crops[i][1] += amount;
+                    return true;
+                }
+                numberOfCrops++;
+            }
+            if(numberOfCrops === 36) { return false; }
+            this.crops.push([item, amount]);
+        }
         return true;
     }
-    DecreaseItem(name, amount) {
-        let idx = -1;
-        for(let i = 0; i < this.inventory.length; i++) {
-            if(this.inventory[i][0] === name) {
-                this.inventory[i][1] -= (amount || 1);
-                idx = i;
-                break;
+    /** @param {string} item @param {number} amount */
+    DecreaseItem(item, amount) {
+        const type = item[0] === "!" ? "!" : (item[0] === "_" ? "_" : "C");
+        
+        if(type === "!") {
+            const idx = this.tools.indexOf(item);
+            if(idx < 0) { return false; }
+            this.tools.splice(idx, 1);
+        } else if(type === "_") {
+            const idx = this.fixtures.indexOf(item);
+            if(idx < 0) { return false; }
+            this.fixtures.splice(idx, 1);
+        } else {
+            let idx = -1;
+            for(let i = 0; i < this.crops.length; i++) {
+                if(this.crops[i][0] === name) {
+                    this.crops[i][1] -= (amount || 1);
+                    idx = i;
+                    break;
+                }
+            }
+            if(idx < 0) { return false; }
+            if(this.crops[idx][1] <= 0) {
+                this.crops.splice(idx, 1);
+                return false;
             }
         }
-        if(idx < 0) { return false; }
-        if(this.inventory[idx][1] <= 0) {
-            this.inventory.splice(idx, 1);
-            return false;
-        }
         return true;
     }
-    ClearItemIfEmpty(name) {
-        for(let i = this.inventory.length - 1; i >= 0; i--) {
-            if(this.inventory[i][0] !== name) { continue; }
-            if(this.inventory[i][1] <= 0) {
-                this.inventory.splice(i, 1);
+    /** @param {string} item  */
+    ClearCropIfEmpty(item) {
+        for(let i = this.crops.length - 1; i >= 0; i--) {
+            if(this.crops[i][0] !== item) { continue; }
+            if(this.crops[i][1] <= 0) {
+                this.crops.splice(i, 1);
                 return true;
             }
             return false;
         }
         return false;
     }
+    /** @param {number} m */
     AddMonies(m) {
         this.monies = Math.min(9999, this.monies + m);
     }
@@ -297,6 +330,7 @@ class Player {
         this.GetLevelUpItemBonuses();
     }
     GetLevelUpItemBonuses() {
+        /** @type {any[]} */
         let items = [];
         if(this.level % 2 === 0) { items.push(["carrot", this.level - 1]); items.push(["beet", this.level - 1]); }
         if(this.level % 3 === 0) { items.push(["ginger", Math.ceil(this.level / 2)]); }
@@ -330,8 +364,8 @@ class Player {
     /* #endregion */
     /* #region Combat Details */
     CanMelee(numEnemyCrops) {
-        if(this.equipment.weapon === null) { return false; }
-        const weapon = GetEquipment(this.equipment.weapon); // TODO: GetEquipment
+        if(this.equipped.weapon === null) { return false; }
+        const weapon = GetEquipment(this.equipped.weapon); // TODO: GetEquipment
         if(numEnemyCrops === 0) {
             return !weapon.noEnemies;
         } else {
@@ -339,43 +373,43 @@ class Player {
         }
     }
     CanAttackAfterPlanting() {
-        if(this.equipment.gloves === null) { return 0; }
-        const equipInfo = GetEquipment(this.equipment.gloves);
+        if(this.equipped.gloves === null) { return 0; }
+        const equipInfo = GetEquipment(this.equipped.gloves);
         return equipInfo.canAttack;
     }
     GetCompostMax() {
-        if(this.equipment.compost === null) { return 0; }
-        const equipInfo = GetEquipment(this.equipment.compost);
+        if(this.equipped.compost === null) { return 0; }
+        const equipInfo = GetEquipment(this.equipped.compost);
         return equipInfo.amount;
     }
     GetCropSpeedMultiplier() {
-        if(this.equipment.soil === null) { return 1; }
-        const equipInfo = GetEquipment(this.equipment.soil);
+        if(this.equipped.soil === null) { return 1; }
+        const equipInfo = GetEquipment(this.equipped.soil);
         return (equipInfo.speed + 1);
     }
     GetPlantingTurns() {
-        if(this.equipment.gloves === null) { return 1; }
-        const equipInfo = GetEquipment(this.equipment.gloves);
+        if(this.equipped.gloves === null) { return 1; }
+        const equipInfo = GetEquipment(this.equipped.gloves);
         return equipInfo.amount;
     }
     CanAttackWithCompost() {
-        if(this.equipment.compost === null) { return false; }
-        const equipInfo = GetEquipment(this.equipment.compost);
+        if(this.equipped.compost === null) { return false; }
+        const equipInfo = GetEquipment(this.equipped.compost);
         return equipInfo.canAttack;
     }
     CanSickleCrops() {
-        if(this.equipment.weapon === null) { return false; }
-        const equipInfo = GetEquipment(this.equipment.weapon);
+        if(this.equipped.weapon === null) { return false; }
+        const equipInfo = GetEquipment(this.equipped.weapon);
         return equipInfo.targetCrops;
     }
     CanAttackPeople() {
-        if(this.equipment.weapon === null) { return true; }
-        const equipInfo = GetEquipment(this.equipment.weapon);
+        if(this.equipped.weapon === null) { return true; }
+        const equipInfo = GetEquipment(this.equipped.weapon);
         return !equipInfo.noEnemies;
     }
     GetSickleAttackBonus(season) {
-        if(this.equipment.weapon === null) { return 0; }
-        const equipInfo = GetEquipment(this.equipment.weapon);
+        if(this.equipped.weapon === null) { return 0; }
+        const equipInfo = GetEquipment(this.equipped.weapon);
         let bonus = equipInfo.power;
         if(season === 0 && equipInfo.sp) { bonus += equipInfo.sp; }
         else if(season === 1 && equipInfo.su) { bonus += equipInfo.su; }
@@ -384,7 +418,7 @@ class Player {
         return bonus;
     }
     HasSeeds() { 
-        const hasAnySeeds = this.inventory.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0);
+        const hasAnySeeds = this.crops.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0);
         if(!hasAnySeeds) { return false; }
         const availableTypes = [];
         if(this.itemGrid === null || this.itemGrid === undefined) {
@@ -411,7 +445,7 @@ class Player {
                 }
             }
         }
-        return this.inventory.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0 && availableTypes.indexOf(GetCrop(e[0]).type) >= 0); // TODO: getcrop
+        return this.crops.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0 && availableTypes.indexOf(GetCrop(e[0]).type) >= 0); // TODO: getcrop
     }
     PlantCrop(crop) {
         if(this. miscData.cropsPlanted[crop] === undefined) {
