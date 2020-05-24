@@ -88,7 +88,7 @@ class Player {
             ["banana", 3]
         ];
         this.tools = ["!weakCompost", "!babySickle"];
-        /** @type {string[]} */
+        /** @type {any[]} */
         this.fixtures = [];
         // TODO: tutorial inventory and equipment
         this.gridWidth = 3;
@@ -180,21 +180,33 @@ class Player {
     }
     /* #endregion */
     /* #region Inventory */
+    /** @param {string} item */
+    GetItemType(item) {
+        return item[0] === "!" ? "equipment" : (item[0] === "_" ? "fixture" : "crop");
+    }
     /** @param {string} item @param {number} amount */
     HasItem(item, amount) {
         amount = amount || 1;
-        for(let i = 0; i < this.crops.length; i++) {
-            if(this.crops[i][0] === item && this.crops[i][1] >= amount) { return true; }
+        const type = this.GetItemType(item);
+        if(type === "equipment") {
+            return this.tools.indexOf(item) >= 0;
         }
-        if(this.tools.indexOf(item) >= 0 || this.fixtures.indexOf(item) >= 0) { return true; }
+        const arr = (type === "fixture") ? this.fixtures : this.crops;
+        for(let i = 0; i < arr.length; i++) {
+            if(arr[i][0] === item && arr[i][1] >= amount) { return true; }
+        }
         return false;
     }
     /** @param {string} item */
     GetItemAmount(item) {
-        for(let i = 0; i < this.crops.length; i++) {
-            if(this.crops[i][0] === item) { return this.crops[i][1]; }
+        const type = this.GetItemType(item);
+        if(type === "equipment") {
+            return this.tools.indexOf(item) >= 0;
         }
-        if(this.tools.indexOf(item) >= 0 || this.fixtures.indexOf(item) >= 0) { return 1; }
+        const arr = (type === "fixture") ? this.fixtures : this.crops;
+        for(let i = 0; i < arr.length; i++) {
+            if(arr[i][0] === item) { return arr[i][1]; }
+        }
         return 0;
     }
     /** @param {string} item */
@@ -212,53 +224,47 @@ class Player {
         }
         if(amount === undefined) { amount = 1; }
         if(amount === 0) { return true; }
-        const type = item[0] === "!" ? "!" : (item[0] === "_" ? "_" : "C");
-        if(type === "!") {
+        const type = this.GetItemType(item);
+        if(type === "equipment") {
             if(this.tools.indexOf(item) >= 0) { return false; }
             this.tools.push(item);
-        } else if(type === "_") {
-            if(this.fixtures.indexOf(item) >= 0) { return false; }
-            this.fixtures.push(item);
-        } else {
-            let numberOfCrops = 0;
-            for(var i = 0; i < this.crops.length; i++) {
-                if(this.crops[i][0] === item) {
-                    this.crops[i][1] += amount;
-                    return true;
-                }
-                numberOfCrops++;
+            return true;
+        } 
+        const arr = (type === "fixture") ? this.fixtures : this.crops;
+        let numberOfItems = 0;
+        for(var i = 0; i < arr.length; i++) {
+            if(arr[i][0] === item) {
+                arr[i][1] += amount;
+                return true;
             }
-            if(numberOfCrops === 36) { return false; }
-            this.crops.push([item, amount]);
+            numberOfItems++;
         }
-        return true;
+        if(numberOfItems === 36) { return false; }
+        arr.push([item, amount]);
     }
     /** @param {string} item @param {number} amount */
     DecreaseItem(item, amount) {
-        const type = item[0] === "!" ? "!" : (item[0] === "_" ? "_" : "C");
+        const type = this.GetItemType(item);
         
-        if(type === "!") {
+        if(type === "equipment") {
             const idx = this.tools.indexOf(item);
             if(idx < 0) { return false; }
             this.tools.splice(idx, 1);
-        } else if(type === "_") {
-            const idx = this.fixtures.indexOf(item);
-            if(idx < 0) { return false; }
-            this.fixtures.splice(idx, 1);
-        } else {
-            let idx = -1;
-            for(let i = 0; i < this.crops.length; i++) {
-                if(this.crops[i][0] === name) {
-                    this.crops[i][1] -= (amount || 1);
-                    idx = i;
-                    break;
-                }
+            return true;
+        }
+        const arr = (type === "fixture") ? this.fixtures : this.crops;
+        let idx = -1;
+        for(let i = 0; i < arr.length; i++) {
+            if(arr[i][0] === name) {
+                arr[i][1] -= (amount || 1);
+                idx = i;
+                break;
             }
-            if(idx < 0) { return false; }
-            if(this.crops[idx][1] <= 0) {
-                this.crops.splice(idx, 1);
-                return false;
-            }
+        }
+        if(idx < 0) { return false; }
+        if(arr[idx][1] <= 0) {
+            arr.splice(idx, 1);
+            return false;
         }
         return true;
     }
