@@ -1,4 +1,8 @@
 class Gfx {
+    /**
+     * @param {string | any[]} toRender
+     * @param {() => void} loadedFunc
+     */
     constructor(toRender, loadedFunc) {
         this.mapSize = 1500;
         this.width = 1024; this.height = 896;
@@ -18,6 +22,9 @@ class Gfx {
         PIXI.Loader.shared.load(() => this.LoadComplete(loadedFunc));
         this.mapFragments = {};
     }
+    /**
+     * @param {() => void} callback
+     */
     LoadComplete(callback) {
         this.img = {
             mapJunk: PIXI.Loader.shared.resources["gamedata/spritesheets/mapJunk.json"].spritesheet.textures,
@@ -79,8 +86,26 @@ class Gfx {
         callback();
     }
 
-    CreateNPCCharSprite(sx, sy, dir, x, y) {
+    /**
+     * @param {number} sx
+     * @param {number} sy
+     * @param {number} dir
+     * @param {number} x
+     * @param {number} y
+     * @param {EntityJSONAdditionalFrames[]} [additionalAnimations]
+     */
+    CreateNPCCharSprite(sx, sy, dir, x, y, additionalAnimations) {
         const sheets = this.CreateMapCharSpriteSheet(PIXI.utils.TextureCache["mapChar"], sx, sy, 72, 88);
+        if(additionalAnimations !== undefined) {
+            for(let i = 0; i < additionalAnimations.length; i++) {
+                const animInfo = additionalAnimations[i];
+                const animName = animInfo.name;
+                const animFrames = animInfo.frames;
+                /** @param {EntityJSONPoint} pos */
+                const frames = animFrames.map(pos => this.GetFrameFromSheet(PIXI.utils.TextureCache["mapChar"], 0, 0, pos.x, pos.y, 72, 88));
+                sheets[animName] = frames;
+            }
+        }
         let s = new PIXI.AnimatedSprite(sheets.standing[dir]);
         s.animationSpeed = 0.1;
         s.loop = false;
@@ -89,8 +114,13 @@ class Gfx {
         s.zIndex = y;
         return { sprite: s, sheets: sheets };
     }
+    /** @param {number} dir @param {number} x @param {number} y */
     CreatePlayerMapCharSprite(dir, x, y) {
         const sheets = this.CreateMapCharSpriteSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 72, 88);
+        sheets["crouchR"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 0, 72, 88) ];
+        sheets["water1"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 1, 72, 88) ];
+        sheets["water2"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 2, 72, 88) ];
+        sheets["think"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 3, 72, 88) ];
         let s = new PIXI.AnimatedSprite(sheets.standing[dir]);
         s.animationSpeed = 0.1;
         s.loop = false;
@@ -99,28 +129,52 @@ class Gfx {
         s.zIndex = y;
         return { sprite: s, sheets: sheets };
     }
+    /**
+     * @param {any} sheet
+     * @param {number} sx @param {number} sy
+     * @param {number} w @param {number} h
+     */
     CreateMapCharSpriteSheet(sheet, sx, sy, w, h) {
         const sheets = {
             "standing": [],
             "moving": []
         };
         for(let i = 0; i < 4; i++) {
-            sheets.standing.push([new PIXI.Texture(sheet, new PIXI.Rectangle(sx * w + i * w, sy * h, w, h))]);
+            sheets.standing.push([this.GetFrameFromSheet(sheet, sx, sy, i, 0, w, h)]);
             sheets.moving.push([
-                new PIXI.Texture(sheet, new PIXI.Rectangle(sx * w + i * w, sy * h + h, w, h)),
-                new PIXI.Texture(sheet, new PIXI.Rectangle(sx * w + i * w, sy * h + 2 * h, w, h)),
-                new PIXI.Texture(sheet, new PIXI.Rectangle(sx * w + i * w, sy * h + 3 * h, w, h)),
-                new PIXI.Texture(sheet, new PIXI.Rectangle(sx * w + i * w, sy * h + 2 * h, w, h))
+                this.GetFrameFromSheet(sheet, sx, sy, i, 1, w, h),
+                this.GetFrameFromSheet(sheet, sx, sy, i, 2, w, h),
+                this.GetFrameFromSheet(sheet, sx, sy, i, 3, w, h),
+                this.GetFrameFromSheet(sheet, sx, sy, i, 2, w, h)
             ]);
         }
         return sheets;
     }
+    /**
+     * @param {any} sheet
+     * @param {number} ix  @param {number} iy
+     * @param {number} x @param {number} y
+     * @param {number} w @param {number} h
+     */
+    GetFrameFromSheet(sheet, ix, iy, x, y, w, h) {
+        return new PIXI.Texture(sheet, new PIXI.Rectangle((ix + x) * w, (iy + y) * h, w, h));
+    }
 
+    /**
+     * @param {string} key
+     * @param {number} x
+     * @param {number} y
+     */
     CreateImg(key, x, y) {
         let s = new PIXI.Sprite(PIXI.utils.TextureCache[key]);
         [s.x, s.y] = [x, y];
         return s;
     }
+    /**
+     * @param {string} key
+     * @param {number} x
+     * @param {number} y
+     */
     CreateMapJunkSprite(key, x, y) {
         let s = new PIXI.Sprite(this.img.mapJunk[key]);
         [s.x, s.y] = [x, y];
@@ -338,6 +392,14 @@ class Gfx {
         }
         return this.CreateContainer(sprites);
     }
+    /**
+     * @param {number} color
+     * @param {number} x
+     * @param {number} y
+     * @param {number} [w]
+     * @param {number} [h]
+     * @param {boolean} [fromGrid]
+     */
     CreateRectangle(color, x, y, w, h, fromGrid) {
         if(fromGrid) {
             x *= 64; y *= 64;
@@ -353,6 +415,9 @@ class Gfx {
         return rect;
     }
 
+    /**
+     * @param {string} mapName
+     */
     FragmentMap(mapName) {
         const mapImg = PIXI.utils.TextureCache["maps/" + mapName];
         const w = mapImg.width, h = mapImg.height;
@@ -367,6 +432,9 @@ class Gfx {
             this.mapFragments[mapName].push(row);
         }
     }
+    /**
+     * @param {string} mapName
+     */
     CreateMap(mapName) {
         if(this.mapFragments[mapName] === undefined) { this.FragmentMap(mapName); }
         const mapSprites = [];
@@ -382,6 +450,10 @@ class Gfx {
         return mapSprites;
     }
     
+    /**
+     * @param {string} text
+     * @param {string} styleName
+     */
     GetTextInfo(text, styleName) {
         const style = new PIXI.TextStyle(this.TextStyles[styleName]);
         return PIXI.TextMetrics.measureText(text, style);
@@ -425,6 +497,15 @@ class Gfx {
         }
         return t;
     }
+    /**
+     * @param {string} text
+     * @param {string} defaultStyle
+     * @param {{ [x: string]: any; st?: { fontStyle: string; }; b?: { fontVariant: string; fontWeight: string; fontSize: number; }; h?: { fontFamily: string; fontSize: number; fontVariant: string; fontWeight: string; }; }} formats
+     * @param {number} x
+     * @param {number} y
+     * @param {number} maxwidth
+     * @param {string} alignment
+     */
     WriteWrappedMultiFormatText(text, defaultStyle, formats, x, y, maxwidth, alignment) {
         const newStyle = Object.assign({ wordWrap: true, wordWrapWidth: maxwidth, align: alignment }, this.TextStyles[defaultStyle]);
         formats["default"] = newStyle;
@@ -433,6 +514,11 @@ class Gfx {
         return t;
     }
 
+    /**
+     * @param {{ (): void; Point?: any; anchor?: any; pivot?: any; position?: any; scale?: any; children?: any[]; interactive?: boolean; texture?: any; text?: string; x?: number; y?: number; width?: number; visible?: boolean; on?: (a: string, b: any) => void; removeChild?: (pixiObj: any) => any; addChild: any; }} container
+     * @param {string} text
+     * @param {boolean} onBottom
+     */
     WriteWorldMapText(container, text, onBottom) {
         // TODO: speaker
         const y = (onBottom ? this.tileH - 4 : 0);

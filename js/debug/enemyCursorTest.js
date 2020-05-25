@@ -175,7 +175,7 @@ const debug = {
     },
     MapTextTest: function(skip) {
         let allText = [];
-        const doSkip = (skip !== undefined);
+        let doSkip = (skip !== undefined);
         let time = 0;
         for(const i in fulltext) { 
             if(fulltext[i].type !== "map") { continue; }

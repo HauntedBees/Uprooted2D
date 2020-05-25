@@ -1,3 +1,38 @@
+class EntityJSONPoint {
+    constructor() {
+        this.x = 0;
+        this.y = 0;
+    }
+}
+class EntityJSONAdditionalFrames {
+    constructor() {
+        this.name = "";
+        this.frames = [ new EntityJSONPoint()];
+    }
+}
+class EntityJSON {
+    constructor() {
+        this.type = "";
+        this.name = "";
+        this.sx = 0;
+        this.sy = 0;
+        this.pos = new EntityJSONPoint();
+        this.dir = 0;
+        this.sprite = "";
+        this.forceX = false;
+        this.forceY = false;
+        this.noCollision = false;
+        this.width = 0;
+        this.height = 0;
+        this.shop = "";
+        this.oneSpeak = "";
+        this.cutscene = "";
+        this.padBottom = false;
+        this.noZ = false;
+        this.importantKey = "";
+        this.additionalAnimations = [new EntityJSONAdditionalFrames()];
+    }
+}
 class EntityLoader {
     /**
      * @param {string} mapName
@@ -27,14 +62,17 @@ class EntityLoader {
     ProcessEntities(entities, callback) {
         const processedEntities = [];
         for(let i = 0; i < entities.length; i++) {
+            /** @type {EntityJSON} */
             const e = entities[i];
             let createdEntity = null;
             // TODO: rabbit shit
             // TODO: save file shit
-            if(e.type === "NPC") {
+            if(e.type === "autoplay") {
+                createdEntity = new WorldAutoplay(this.container, e.name);
+            } else if(e.type === "NPC") {
                 // TODO: big logic
                 // TODO: move to talk
-                createdEntity = new WorldNPC(this.container, e.name, e.sx, e.sy, e.pos, e.dir);
+                createdEntity = new WorldNPC(this.container, e.name, e.sx, e.sy, e.pos, e.dir, e.additionalAnimations);
             } else if(e.type === "mapJunk") {
                 createdEntity = new WorldMapJunk(this.container, e.name, e.pos, e.sprite);
                 createdEntity.forceX = e.forceX || false;
@@ -57,6 +95,9 @@ class EntityLoader {
             if(e.noZ === true) {
                 createdEntity.ignoreZ = true;
                 createdEntity.ResetZIndex();
+            }
+            if(e.importantKey !== undefined) {
+                createdEntity.importantKey = e.importantKey;
             }
             if(createdEntity !== null) {
                 processedEntities.push(createdEntity);

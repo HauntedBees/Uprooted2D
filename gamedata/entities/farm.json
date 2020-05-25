@@ -11,169 +11,56 @@
     },
     { "name": "enterInn", "type": "shop", "pos": { "x": 40, "y": 5.5 }, "shop": "inn0" },
     { "name": "ChickenCoop", "type": "shop", "pos": { "x": 71, "y": 12 }, "shop": "coop" },
+
+    { "name": "farminit", "type": "autoplay" },
     {
-        "name": "border0",
-        "type": "mapJunk",
-        "pos": { "x": 1, "y": 0 },
-        "sprite": "longFenceX",
-        "noZ": true,
-        "forceX": true
+        "name": "NathanIntro",
+        "type": "NPC",
+        "importantKey": "nathan",
+        "pos": { "x": 96, "y": 44 },
+        "dir": 1,
+        "big": false,
+        "sx": 0, "sy": 0,
+        "moveToTalk": true,
+        "additionalAnimations": [
+            { "name": "Nath2", "frames": [ { "x": 4, "y": 2 }, { "x": 4, "y": 3 } ] },
+            { "name": "Nath3", "frames": [ { "x": 5, "y": 2 }, { "x": 5, "y": 3 } ] }
+        ]
     },
-    {
-        "name": "border1",
-        "type": "mapJunk",
-        "pos": { "x": 1, "y": 0 },
-        "sprite": "longerFenceY",
-        "forceY": true
-    },
-    {
-        "name": "border2",
-        "type": "mapJunk",
-        "pos": { "x": 1, "y": 21 },
-        "sprite": "longerFenceY",
-        "forceY": true
-    },
-    {
-        "name": "border3",
-        "type": "mapJunk",
-        "pos": { "x": 15.625, "y": 76 },
-        "sprite": "nubFenceX"
-    },
-    {
-        "name": "border4",
-        "type": "mapJunk",
-        "pos": { "x": 36, "y": 76 },
-        "sprite": "longFenceX"
-    },
-    {
-        "name": "border5",
-        "type": "mapJunk",
-        "pos": { "x": 93, "y": 23 },
-        "sprite": "longFenceY",
-        "forceY": true
-    },
-    {
-        "name": "border6",
-        "type": "mapJunk",
-        "pos": { "x": 88.875, "y": 38.75 },
-        "sprite": "nubFenceX"
-    },
-    {
-        "name": "border7",
-        "type": "mapJunk",
-        "pos": { "x": 93, "y": 58.75 },
-        "sprite": "longFenceY",
-        "forceY": true
-    },
-    {
-        "name": "border8",
-        "type": "mapJunk",
-        "pos": { "x": 88.875, "y": 58.75 },
-        "sprite": "nubFenceX"
-    },
-    {
-        "name": "barn",
-        "type": "mapJunk",
-        "pos": { "x": 0, "y": 40 },
-        "sprite": "barnHouse",
-        "forceY": true,
-        "forceX": true
-    },
-    {
-        "name": "barn2",
-        "type": "mapJunk",
-        "pos": { "x": 80, "y": 0 },
-        "sprite": "barnHouse2",
-        "noZ": true,
-        "forceY": true,
-        "forceX": true,
-        "padBottom": true
-    },
-    {
-        "name": "HenriettaShop",
-        "type": "mapJunk",
-        "pos": { "x": 64, "y": 0 },
-        "sprite": "barnHouse3",
-        "forceY": true,
-        "forceX": true,
-        "padBottom": true
-    },
-    {
-        "name": "Home",
-        "type": "mapJunk",
-        "pos": { "x": 32, "y": 0 },
-        "sprite": "barnHouse4",
-        "forceY": true,
-        "forceX": true,
-        "padBottom": true
-    },
-    {
-        "name": "tree1",
-        "type": "mapJunk",
-        "pos": { "x": 8, "y": 3 },
-        "sprite": "bigTree"
-    },
-    {
-        "name": "tree2",
-        "type": "mapJunk",
-        "pos": { "x": 18, "y": 3 },
-        "sprite": "bigTree"
-    },
-    {
-        "name": "tree3",
-        "type": "mapJunk",
-        "pos": { "x": 8, "y": 13 },
-        "sprite": "bigTree"
-    },
-    {
-        "name": "tree4",
-        "type": "mapJunk",
-        "pos": { "x": 18, "y": 13 },
-        "sprite": "bigTree"
-    },
-    {
-        "name": "tree5",
-        "type": "mapJunk",
-        "pos": { "x": 13, "y": 8 },
-        "sprite": "bigTree"
-    },
-    {
-        "name": "bananaTree",
-        "type": "mapJunk",
-        "pos": { "x": 24, "y": 28 },
-        "sprite": "bananaTree",
-        "oneSpeak": "farmTree"
-    },
-    {
-        "name": "mushroomLog",
-        "type": "mapJunk",
-        "pos": { "x": 15, "y": 22 },
-        "sprite": "mushroomLog",
-        "cutscene": "FarmMush",
-        "padBottom": true
-    },
-    {
-        "name": "hayPile",
-        "type": "mapJunk",
-        "pos": { "x": 81, "y": 20 },
-        "sprite": "hayPile",
-        "noCollision": true,
-        "noZ": true,
-        "oneSpeak": "farmHay"
-    },
-    {
-        "name": "crate",
-        "type": "mapJunk",
-        "pos": { "x": 68, "y": 14 },
-        "sprite": "smallFoodCrate",
-        "padBottom": true
-    },
+
+    { "name": "border0", "type": "mapJunk", "pos": { "x": 1, "y": 0 }, "sprite": "longFenceX", "noZ": true, "forceX": true },
+    { "name": "border1", "type": "mapJunk", "pos": { "x": 1, "y": 0 }, "sprite": "longerFenceY", "forceY": true },
+    { "name": "border2", "type": "mapJunk", "pos": { "x": 1, "y": 21 }, "sprite": "longerFenceY", "forceY": true },
+    { "name": "border3", "type": "mapJunk", "pos": { "x": 15.625, "y": 76 }, "sprite": "nubFenceX" },
+    { "name": "border4", "type": "mapJunk", "pos": { "x": 36, "y": 76 }, "sprite": "longFenceX" },
+    { "name": "border5", "type": "mapJunk", "pos": { "x": 93, "y": 23 }, "sprite": "longFenceY", "forceY": true },
+    { "name": "border6", "type": "mapJunk", "pos": { "x": 88.875, "y": 38.75 }, "sprite": "nubFenceX" },
+    { "name": "border7", "type": "mapJunk", "pos": { "x": 93, "y": 58.75 }, "sprite": "longFenceY", "forceY": true },
+    { "name": "border8", "type": "mapJunk", "pos": { "x": 88.875, "y": 58.75 }, "sprite": "nubFenceX" },
+
+    { "name": "barn", "type": "mapJunk", "pos": { "x": 0, "y": 40 }, "sprite": "barnHouse", "forceY": true, "forceX": true },
+    { "name": "barn2", "type": "mapJunk", "pos": { "x": 80, "y": 0 }, "sprite": "barnHouse2", "noZ": true, "forceY": true, "forceX": true, "padBottom": true },
+    { "name": "HenriettaShop", "type": "mapJunk", "pos": { "x": 64, "y": 0 }, "sprite": "barnHouse3", "forceY": true, "forceX": true, "padBottom": true },
+    { "name": "Home", "type": "mapJunk", "pos": { "x": 32, "y": 0 }, "sprite": "barnHouse4", "forceY": true, "forceX": true, "padBottom": true },
+
+    { "name": "tree1", "type": "mapJunk", "pos": { "x": 8, "y": 3 }, "sprite": "bigTree" },
+    { "name": "tree2", "type": "mapJunk", "pos": { "x": 18, "y": 3 }, "sprite": "bigTree" },
+    { "name": "tree3", "type": "mapJunk", "pos": { "x": 8, "y": 13 }, "sprite": "bigTree" },
+    { "name": "tree4", "type": "mapJunk", "pos": { "x": 18, "y": 13 }, "sprite": "bigTree" },
+    { "name": "tree5", "type": "mapJunk", "pos": { "x": 13, "y": 8 }, "sprite": "bigTree" },
+    { "name": "bananaTree", "type": "mapJunk", "pos": { "x": 24, "y": 28 }, "sprite": "bananaTree", "oneSpeak": "farmTree" },
+
+    { "name": "mushroomLog", "type": "mapJunk", "pos": { "x": 15, "y": 22 }, "sprite": "mushroomLog", "cutscene": "FarmMush", "padBottom": true  },
+    { "name": "hayPile", "type": "mapJunk", "pos": { "x": 81, "y": 20 }, "sprite": "hayPile", "noCollision": true, "noZ": true, "oneSpeak": "farmHay" },
+    { "name": "crate", "type": "mapJunk", "pos": { "x": 68, "y": 14 }, "sprite": "smallFoodCrate", "padBottom": true },
+
     { "name": "lakeUL", "type": "sheetObj", "pos": { "x": 52, "y": 4 }, "sprite": "lakeDS", "padBottom": true },
     { "name": "lakeU", "type": "sheetObj", "pos": { "x": 56, "y": 4 }, "sprite": "lakeASD", "padBottom": true },
     { "name": "lakeUR", "type": "sheetObj", "pos": { "x": 60, "y": 4 }, "sprite": "lakeAS", "padBottom": true },
     { "name": "lakeBL", "type": "sheetObj", "pos": { "x": 52, "y": 8 }, "sprite": "lakeWD", "padBottom": true },
     { "name": "lakeB", "type": "sheetObj", "pos": { "x": 56, "y": 8 }, "sprite": "lakeWAD", "padBottom": true },
     { "name": "lakeBR", "type": "sheetObj", "pos": { "x": 60, "y": 8 }, "sprite": "lakeWA", "padBottom": true },
+
     { "name": "veggie01", "type": "sheetObj", "pos": { "x": 39.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "tomato1" },
     { "name": "veggie02", "type": "sheetObj", "pos": { "x": 44.5, "y": 32 }, "oneSpeak": "farmVeggie", "sprite": "radish1" },
     { "name": "veggie03", "type": "sheetObj", "pos": { "x": 39.5, "y": 36 }, "oneSpeak": "farmVeggie", "sprite": "garlic1" },

@@ -4,6 +4,7 @@ class GameHandler {
         this.numSaveSlots = 10;
         this.w = 1024; this.h = 896;
         this.tilew = this.w / 64; this.tileh = this.h / 64;
+        /** @type {WorldEntityBase} */
         this.target = null;
         this.language = "en-us";
         this.transitionAnim = null;
@@ -80,7 +81,7 @@ class GameHandler {
         this.InitListeners();
         if(debug || fromQuit === "true") {
             localStorage.removeItem("quit");
-            this.currentScreen = new WorldScreen({ init: { x: 72, y: 15 }, map: "farm" });//TitleScreen();
+            this.currentScreen = new WorldScreen({ init: { x: 67.5, y: 34 }, map: "farm" });//TitleScreen();
         } else {
             //game.currentInputHandler = opening;
             //opening.setup();

@@ -203,7 +203,7 @@ const CommandParser = {
                 }
                 return finished;
             };
-            worldmap.animIdx = setInterval(iHandler.state.animHandler, 100);
+            worldmap.animIdx = setInterval(iHandler.state.animHandler, 16);
         }
     },
     Parse_Text: function(args) {

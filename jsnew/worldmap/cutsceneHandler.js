@@ -63,17 +63,19 @@ class SingleInteraction extends Interaction {
         super();
         this.textKey = key;
     }
+    /** @param {WorldScreen} worldmap */
     Start(worldmap) {
         worldmap.WriteText(this.textKey);
         this.finished = true;
         return true;
     }
+    /** @param {WorldScreen} worldmap */
     Advance(worldmap) {
-        // if(this.waitForAnimation) { iHandler.SpeedUpAnimation(); }
         worldmap.FinishInteraction();
     }
 }
 class SequenceInteraction extends Interaction {
+    /** @param {string} key  */
     constructor(key) {
         super();
         this.key = key;
@@ -81,7 +83,11 @@ class SequenceInteraction extends Interaction {
     /** @param {WorldScreen} worldmap */
     Start(worldmap) {
         this.worldmap = worldmap;
+
         this.idx = 0;
+        /** @type {number} */
+        this.animIdx = -1;
+        this.animHandler = null;
         this.finished = false;
         this.texts = [];
         this.postItems = [];
@@ -90,6 +96,7 @@ class SequenceInteraction extends Interaction {
     }
     /** @param {WorldScreen} worldmap @param {boolean} [isFirst] */
     Advance(worldmap, isFirst) {
+        if(this.animIdx >= 0) { this.SpeedUpAnimation(); }
         isFirst = isFirst || false;
         if(this.texts.length > 0) {
             const newText = this.texts.shift();
@@ -118,6 +125,7 @@ class SequenceInteraction extends Interaction {
         return worldmap.finishDialog();*/
     }
 
+    /** @param {WorldScreen} worldmap @param {any[]} [json] */
     ConditionCheck(worldmap, json) {
         for(let i = 0; i < json.length; i++) {
             if(!eval(json[i].q)) { continue; }
@@ -126,35 +134,120 @@ class SequenceInteraction extends Interaction {
             return;
         }
     }
-    Parse(worldmap, actions) {
-        if(actions[0] === "?") {
-            if(actions[1] === "?") {
+    /** @param {WorldScreen} worldmap @param {string} actionsStr */
+    Parse(worldmap, actionsStr) {
+        if(actionsStr[0] === "?") {
+            if(actionsStr[1] === "?") {
                 // TODO
-                return SpecialFunctions[actions.substring(2)](this.idx);
+                return SpecialFunctions[actionsStr.substring(2)](this.idx);
             } else {
-                return this.ConditionCheck(JSON.parse(actions.substring(1)));
+                return this.ConditionCheck(JSON.parse(actionsStr.substring(1)));
             }
         }
-        actions = actions.split("&");
+        const actions = actionsStr.split("&");
         for(let i = 0; i < actions.length; i++) {
             const splitter = actions[i].split("_");
             const name = splitter[0]
             const action = splitter[1];
             const isPlayer = (name === "pl")
             const isTarget = (name === "targ");
-            const target = name === "" ? null : (isPlayer ? worldmap : (isTarget ? game2.target : worldmap.importantEntities[name]));
+            const target = name === "" ? null : (isPlayer ? worldmap.player : (isTarget ? game2.target : worldmap.importantEntities[name]));
             const actDeets = action.split(":");
             const actSuffix = actDeets[1];
             switch(actDeets[0]) {
+                // Animation Handling
+                case "MOVE": this.Parse_Movement(target, isPlayer, actSuffix); break;
+                case "ANIM": this.Parse_ChangeAnim(target, actSuffix); break;
+                case "ANIMRESET": this.Parse_ResetAnim(target); break;
+                case "ANIMPAUSE": this.Parse_PauseAnim(target); break;
+                case "ANIMRESUME": this.Parse_ResumeAnim(target); break;
+                case "SETDIR": this.Parse_SetDir(target, parseInt(actSuffix)); break;
                 // Player State Handlers
                 case "GIVE": this.Parse_TryGive(actSuffix.split(",")); break;
                 // Text Display
                 case "TEXT": this.Parse_Text(actSuffix.split(",")); break;
+                case "CLEARTEXT": this.Parse_ClearText(); break;
+                // Target Manipulation
+                case "CLEARTARGET": this.worldmap.ClearTarget(); break;
+                case "SETTARGET": game2.target = target; break;
+                case "CLEARENTITY": this.worldmap.ClearTarget(target); break;
+                // Cutscene Logic
+                case "QUIT": this.finished = true; this.WrapUp(this.worldmap); break; // QUIT halts immediately
+                // Other
+                case "SOUND": sound.PlaySound(actSuffix); break;
+                case "SLEEP": this.Parse_Sleep(parseInt(actSuffix)); break;
+                case "CUSTOM": this.Parse_Custom(actSuffix); break;
             }
         }
     }
     
+    /* #region Animation */
+    /**
+     * @param {WorldEntityBase} target
+     * @param {boolean} isPlayer
+     * @param {string} moveData
+     */
+    Parse_Movement(target, isPlayer, moveData) {
+        let dx = 0, dy = 0, destination = 0;
+        if(moveData[0] === "y") {
+            destination = parseFloat(moveData.substring(1));
+            dy = (destination > 0) ? 1 : -1;
+        } else {
+            destination = parseFloat(moveData.substring(1));
+            dx = (destination > 0) ? 1 : -1;
+        }
+        if(isPlayer) {
+            this.worldmap.forceMove = true;
+            switch(dx * 10 + dy) {
+                case 1: this.worldmap.player.dir = 2; break;
+                case -1: this.worldmap.player.dir = 0; break;
+                case 10: this.worldmap.player.dir = 3; break;
+                case -10: this.worldmap.player.dir = 1; break;
+            }
+        }
+        this.animInfo = new SequenceAnimationInfo(target, isPlayer, dx, dy, destination);
+        this.animHandler = () => this.HandleAnim();
+        this.animIdx = window.setInterval(() => this.animHandler(), 10);
+    }
+    /** @param {WorldEntityBase} target @param {string} newAnimName */
+    Parse_ChangeAnim(target, newAnimName) { target.ForceAnimation(newAnimName); }
+    /** @param {WorldEntityBase} target */
+    Parse_ResetAnim(target) { target.UnforceAnimation(); }
+    /** @param {WorldEntityBase} target */
+    Parse_PauseAnim(target) { target.PauseAnimation(); }
+    /** @param {WorldEntityBase} target */
+    Parse_ResumeAnim(target) { target.ResumeAnimation(); }
+    /** @param {WorldEntityBase} target @param {number} direction */
+    Parse_SetDir(target, direction) {
+        target.dir = direction;
+    }
+    SpeedUpAnimation() {
+        clearInterval(this.animIdx);
+        while(!this.animHandler()) {}
+    }
+    AnimFinish() {
+        clearInterval(this.animIdx);
+        this.animIdx = -1;
+        this.animInfo = null;
+        this.animHandler = null;
+        this.Advance(this.worldmap);
+    }
+    HandleAnim() {
+        const isFinished = this.animInfo.Advance(1.5);
+        if(isFinished) {
+            clearInterval(this.animIdx);
+            this.AnimFinish();
+            return true;
+        }
+        return false;
+    }
+    SleepSkip() {
+        this.AnimFinish();
+        return true;
+    }
+    /* #endregion */
     /* #region Player State Handlers */
+    /** @param {string[]} itemArr */
     Parse_TryGive(itemArr) {
         const itemName = itemArr[0].replace("~", "_");
         const itemAmt = parseInt(itemArr[1]) || 1;
@@ -163,8 +256,10 @@ class SequenceInteraction extends Interaction {
     }
     /* #endregion */
     /* #region Text Display */
+    /** @param {string[]} args */
     Parse_Text(args) {
         const text = args.splice(0, 1)[0];
+        this.worldmap.inDialogue = true;
         if(text.indexOf("(") >= 0) {
             const rgx = /\((\d*)-(\d*)\)/g;
             const range = text.match(rgx)[0];
@@ -181,5 +276,62 @@ class SequenceInteraction extends Interaction {
             this.worldmap.WriteText(text, args);
         }
     }
+    Parse_ClearText() {
+        gfx2.EmptyContainer(this.worldmap.textContainer.children[0]);
+    }
     /* #endregion */
+    /* #region Other */
+    /** @param {number} time */
+    Parse_Sleep(time) {
+        this.animHandler = this.SleepSkip;
+        this.animIdx = window.setTimeout(() => this.animHandler(), time);
+    }
+    /** @param {string} customName */
+    Parse_Custom(customName) {
+
+    }
+    /* #endregion */
+}
+
+class SequenceAnimationInfo {
+    /**
+     * @param {WorldEntityBase} target
+     * @param {boolean} isPlayer
+     * @param {number} dx
+     * @param {number} dy
+     * @param {number} destination
+     */
+    constructor(target, isPlayer, dx, dy, destination) {
+        this.target = target;
+        this.target.moving = true;
+        this.isPlayer = isPlayer;
+        this.dx = dx;
+        this.dy = dy;
+        this.movedX = 0;
+        this.movedY = 0;
+        this.initX = target.pos.x;
+        this.initY = target.pos.y;
+        this.destination = destination;
+    }
+    /** @param {number} moveSpeed */
+    Advance(moveSpeed) {
+        this.movedX += this.dx * moveSpeed;
+        this.movedY += this.dy * moveSpeed;
+        this.target.SetPos({ x: this.initX + this.movedX, y: this.initY + this.movedY });
+        let finished = false, idx = this.dx * 2 + this.dy;
+        switch(idx) {
+            case 1: finished = (this.movedY >= this.destination); break;
+            case -1: finished = (this.movedY <= this.destination); break;
+            case 2: finished = (this.movedX >= this.destination); break;
+            case -2: finished = (this.movedX <= this.destination); break;
+        }
+        if(finished) {
+            this.target.moving = false;
+            switch(Math.abs(idx)) {
+                case 1: this.target.pos.y = this.initY + this.destination; break;
+                case 2: this.target.pos.x = this.initX + this.destination; break;
+            }
+        }
+        return finished;
+    }
 }
