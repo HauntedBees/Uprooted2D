@@ -41,8 +41,8 @@ class CropFieldInfo {
     /**
      * @param {number} dx
      * @param {number} dy
-     * @param {{ (): boolean; (arg0: any): void; }} [clickHandler]
-     * @param {{ (x: number, y: number): void; (arg0: number, arg1: number, arg2: any): void; }} [hoverHandler]
+     * @param {{ (): boolean; (caller: any): void; }} [clickHandler]
+     * @param {{ (x: number, y: number, caller: any): void; }} [hoverHandler]
      * @param {any} [caller]
      */
     GetFarmDisplayContainer(dx, dy, clickHandler, hoverHandler, caller) {

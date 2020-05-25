@@ -421,11 +421,12 @@ class Player {
         }
         return this.crops.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0 && availableTypes.indexOf(GetCrop(e[0]).type) >= 0); // TODO: getcrop
     }
+    /** @param {string} crop */
     PlantCrop(crop) {
-        if(this. miscData.cropsPlanted[crop] === undefined) {
-            this. miscData.cropsPlanted[crop] = 1;
+        if(this.miscData.cropsPlanted[crop] === undefined) {
+            this.miscData.cropsPlanted[crop] = 1;
         } else {
-            this. miscData.cropsPlanted[crop]++;
+            this.miscData.cropsPlanted[crop]++;
         }
         const hasAll = !debug.AllCrops.some(c => this. miscData.cropsPlanted[c] === undefined); // TODO: debug allcrops
         if(hasAll) { AddAchievementIfMissing("allCrop"); }

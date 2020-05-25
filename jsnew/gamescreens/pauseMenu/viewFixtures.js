@@ -79,6 +79,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
     /** @param {number} x @param {number} y */
     MoveSelectionCursor(x, y) {
         this.placementCursor.Hide();
+        sound.PlaySound("menuMove");
         if(y === -1) {
             this.selectionCursor.Hide();
             this.selectionCursor.Hide();
@@ -95,12 +96,9 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
     }
     /** @param {number} x @param {number} y @param {this} [source] */
     MovePlacementCursor(x, y, source) {
+        sound.PlaySound("menuMove");
         const me = source || this;
-        if(me.selectedItemSize === 1) {
-            if(!me.CanPlant(x, y)) {
-                return;
-            }
-        }
+        if(me.selectedItemSize === 1 && !me.CanPlant(x, y)) { return; }
         me.placementCursor.Show();
         me.selectionCursor.Hide();
         me.backCursor.Hide();
@@ -114,7 +112,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
         if(me.backButton.selected) {
             me.ReturnToMainPauseMenu();
         } else if(me.placementCursor.IsVisible()) { // item placement
-            if(!me.CanPlant()) { return false; }
+            if(!me.CanPlant()) { sound.PlaySound("navNok"); return false; }
             const posX = me.placementCursor.posX, posY = me.placementCursor.posY;
             const player = game2.player;
             const selItem = player.gridInfo.grid[posX][posY];
@@ -165,6 +163,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
                 me.selectedItemSize = (GetFarmInfo(item).size - 1) || 0;
                 me.selectedCursor.MoveTo(me.selectionCursor.posX, me.selectionCursor.posY);
                 me.selectedCursor.Show();
+                me.MovePlacementCursor(0, 0);
             }
             me.placementCursor.Resize(me.selectedItemSize, me.selectedItemSize, true).Redraw();
         }
@@ -244,5 +243,69 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
             }
         }
         return item;
+    }
+    Cancel() {
+        if(this.backButton.selected) { return; }
+        sound.PlaySound("navNok");
+        if(this.placementCursor.IsVisible()) {
+            const position = this.selectedItemIdx >= 0 ? this.selectedItemIdx : game2.player.fixtures.length - 1;
+            const y = Math.floor(position / this.inventoryWidth);
+            const x = position % this.inventoryWidth;
+            this.MoveSelectionCursor(x, y);
+        } else {
+            this.MoveSelectionCursor(0, -1);
+        }
+    }
+    /** @param {string} key */
+    KeyPress(key) {
+        const moves = { x: 0, y: 0 };
+        switch(key) {
+            case this.controls["up"]: moves.y--; break;
+            case this.controls["down"]: moves.y++; break;
+            case this.controls["left"]: moves.x--; break;
+            case this.controls["right"]: moves.x++; break;
+            case this.controls["confirm"]: return this.Select();
+            case this.controls["cancel"]: return this.Cancel();
+        }
+        if(this.backButton.selected) {
+            if(moves.x !== 0 || moves.y < 0) {
+                sound.PlaySound("navNok");
+                return false;
+            } else {
+                return this.MoveSelectionCursor(0, 0);
+            }
+        } else if(this.placementCursor.IsVisible()) {
+            const pos = { x: moves.x + this.placementCursor.posX, y: moves.y + this.placementCursor.posY };
+            const gridInfo = game2.player.gridInfo;
+            if(pos.x < 0 || pos.x >= gridInfo.gridWidth || pos.y >= gridInfo.gridHeight) {
+                sound.PlaySound("navNok");
+                return false;
+            } else if(pos.y < 0) {
+                const len = game2.player.fixtures.length - 1;
+                const y = Math.floor(len / this.inventoryWidth);
+                const x = len % this.inventoryWidth;
+                return this.MoveSelectionCursor(x, y);
+            } else {
+                return this.MovePlacementCursor(pos.x, pos.y);
+            }
+        } else {
+            const pos = { x: moves.x + this.selectionCursor.posX, y: moves.y + this.selectionCursor.posY }
+            if(pos.x < 0 || pos.x >= this.inventoryWidth) {
+                sound.PlaySound("navNok");
+                return false;
+            }
+            if(pos.y < 0) { return this.MoveSelectionCursor(0, -1); }
+            const idx = pos.y * this.inventoryWidth + pos.x;
+            if(idx >= game2.player.fixtures.length) {
+                if(moves.y > 0 && moves.x === 0) {
+                    return this.MovePlacementCursor(0, 0);
+                } else {
+                    sound.PlaySound("navNok");
+                    return false;
+                }
+            } else {
+                return this.MoveSelectionCursor(pos.x, pos.y);
+            }
+        }
     }
 }
