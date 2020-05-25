@@ -20,7 +20,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
         this.gridDX = ((16 - gridInfo.gridWidth) / 2);
         this.gridDY = 7 + Math.floor((6 - gridInfo.gridHeight) / 2);
         this.grid = gridInfo.grid;
-        this.farmContainer = gridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, this.Select, this.MovePlacementCursor, this);
+        this.farmContainer = gridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, 1, this.Select, this.MovePlacementCursor, this);
         
         this.selectionCursor = new SelCursor(0.5, 1.5, 0, 0, 1, 1, true);
         this.selectedCursor = new SelCursorX(0.5, 1.5, 0, 0, 1, 1, true);
@@ -170,7 +170,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
     }
     RedrawEverything() {
         this.fullContainer.removeChild(this.farmContainer);
-        this.farmContainer = game2.player.gridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, this.Select, this.MovePlacementCursor, this);
+        this.farmContainer = game2.player.gridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, 1, this.Select, this.MovePlacementCursor, this);
         this.fullContainer.addChild(this.farmContainer);
         this.RefreshInventoryDisplay();
     }

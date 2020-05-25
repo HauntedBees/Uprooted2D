@@ -39,50 +39,63 @@ class CropFieldInfo {
     }
 
     /**
-     * @param {number} dx
-     * @param {number} dy
+     * @param {number} offsetX
+     * @param {number} offsetY
+     * @param {number} scaleY
      * @param {{ (): boolean; (caller: any): void; }} [clickHandler]
      * @param {{ (x: number, y: number, caller: any): void; }} [hoverHandler]
      * @param {any} [caller]
      */
-    GetFarmDisplayContainer(dx, dy, clickHandler, hoverHandler, caller) {
-        const containers = [];
-        for(let x = (this.gridWidth - 1); x >= 0; x--) {
-            for(let y = (this.gridHeight - 1); y >= 0; y--) {
+    GetFarmDisplayContainer(offsetX, offsetY, scaleY, clickHandler, hoverHandler, caller) {
+        const dirtContainers = [];
+        const itemContainers = [];
+        offsetY += 1;
+        for(let x = 0; x < this.gridWidth; x++) {
+            for(let y = 0; y < this.gridHeight; y++) {
                 const sprites = [];
-                sprites.push(gfx2.CreateSmallSprite("dirt", x + dx, y + dy, true));
+                const dirt = gfx2.CreateSmallSprite("dirt", x + offsetX, offsetY + scaleY * y, true);
+                dirt.anchor.y = 1;
+                dirt.scale.y = scaleY;
                 const item = this.grid[x][y];
                 if(item !== null && !item.coord) {
                     const iteminfo = GetFarmInfo(item);
                     const isBig = (iteminfo.size === 2);
+                    let s = null;
                     if(iteminfo.displaySprite !== undefined) {
                         if(isBig) {
-                            sprites.push(gfx2.CreateBigSprite(iteminfo.displaySprite, x + dx, y + dy, true));
+                            s = gfx2.CreateBigSprite(iteminfo.displaySprite, x + offsetX, offsetY + scaleY * y, true);
                         } else {
-                            sprites.push(gfx2.CreateSmallSprite(iteminfo.displaySprite, x + dx, y + dy, true));
+                            s = gfx2.CreateSmallSprite(iteminfo.displaySprite, x + offsetX, offsetY + scaleY * y, true);
                         }
                     } else if(item === "_lake") {
-                        sprites.push(...this.GetWaterFrames(x, y, x + dx, y + dy));
+                        sprites.push(...this.GetWaterFrames(x, y, x + offsetX, offsetY + scaleY * y, scaleY));
                     } else {
                         if(isBig) {
-                            sprites.push(gfx2.CreateBigSprite(item, x + dx, y + dy, true));
+                            s = gfx2.CreateBigSprite(item, x + offsetX, offsetY + scaleY * y, true);
                         } else {
-                            sprites.push(gfx2.CreateSmallSprite(item, x + dx, y + dy, true));
+                            s = gfx2.CreateSmallSprite(item, x + offsetX, offsetY + scaleY * y, true);
+                            if(item === "_strongsoil" || item === "_paddy") { s.scale.y = scaleY; }
                         }
+                    }
+                    if(s !== null) {
+                        s.anchor.y = 1;
+                        sprites.push(s);
                     }
                 }
                 const container = gfx2.CreateContainer(sprites, false, true);
                 if(clickHandler !== undefined) { 
+                    MakeSpriteInteractive(dirt, () => clickHandler(caller), () => hoverHandler(x, y, caller));
                     MakeSpriteInteractive(container, () => clickHandler(caller), () => hoverHandler(x, y, caller));
                 }
-                containers.push(container);
+                dirtContainers.push(dirt);
+                itemContainers.push(container);
             }
         }
-        return gfx2.CreateContainer(containers, false, true);
+        return gfx2.CreateContainer([...dirtContainers, ...itemContainers], false, true);
     }
-    /** @param {number} gx @param {number} gy @param {number} vx @param {number} vy */
-    GetWaterFrames(gx, gy, vx, vy) {
-        const res = this.GetWaterInfo(gx, gy);
+    /** @param {number} gridX @param {number} gridY @param {number} displayX @param {number} displayY, @param {number} scaleY */
+    GetWaterFrames(gridX, gridY, displayX, displayY, scaleY) {
+        const res = this.GetWaterInfo(gridX, gridY);
         let sprite = "_lake";
         switch(res) {
             case 1: sprite = "lakeW"; break;
@@ -102,11 +115,15 @@ class CropFieldInfo {
             case 15: sprite = "lakeWASD"; break;
             default: sprite = "_lake"; break;
         }
-        const sprites = [ gfx2.CreateSmallSprite(sprite, vx, vy, true) ];
-        if(this.GetWaterInfo(gx - 1, gy - 1) < 0 && this.GetWaterInfo(gx - 1, gy) > 0 && this.GetWaterInfo(gx, gy - 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeWA", vx, vy, true)); }
-        if(this.GetWaterInfo(gx + 1, gy - 1) < 0 && this.GetWaterInfo(gx + 1, gy) > 0 && this.GetWaterInfo(gx, gy - 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeWD", vx, vy, true)); }
-        if(this.GetWaterInfo(gx - 1, gy + 1) < 0 && this.GetWaterInfo(gx - 1, gy) > 0 && this.GetWaterInfo(gx, gy + 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeSA", vx, vy, true)); }
-        if(this.GetWaterInfo(gx + 1, gy + 1) < 0 && this.GetWaterInfo(gx + 1, gy) > 0 && this.GetWaterInfo(gx, gy + 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeSD", vx, vy, true)); }
+        const sprites = [ gfx2.CreateSmallSprite(sprite, displayX, displayY, true) ];
+        if(this.GetWaterInfo(gridX - 1, gridY - 1) < 0 && this.GetWaterInfo(gridX - 1, gridY) > 0 && this.GetWaterInfo(gridX, gridY - 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeWA", displayX, displayY, true)); }
+        if(this.GetWaterInfo(gridX + 1, gridY - 1) < 0 && this.GetWaterInfo(gridX + 1, gridY) > 0 && this.GetWaterInfo(gridX, gridY - 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeWD", displayX, displayY, true)); }
+        if(this.GetWaterInfo(gridX - 1, gridY + 1) < 0 && this.GetWaterInfo(gridX - 1, gridY) > 0 && this.GetWaterInfo(gridX, gridY + 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeSA", displayX, displayY, true)); }
+        if(this.GetWaterInfo(gridX + 1, gridY + 1) < 0 && this.GetWaterInfo(gridX + 1, gridY) > 0 && this.GetWaterInfo(gridX, gridY + 1) > 0) { sprites.push(gfx2.CreateSmallSprite("clakeSD", displayX, displayY, true)); }
+        sprites.forEach(s => {
+            s.scale.y = scaleY;
+            s.anchor.y = 1;
+        });
         return sprites;
     }
     /** @param {number} x @param {number} y */
