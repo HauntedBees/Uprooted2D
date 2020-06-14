@@ -3,11 +3,18 @@ class CropFieldInfo {
      * @param {number} w
      * @param {number} h
      * @param {string} level
+     * @param {string} [imgType]
+     * @param {string} [edgeType]
+     * @param {string} [textureType]
      */
-    constructor(w, h, level) {
-        this.gridWidth = w;
-        this.gridHeight = h;
-        this.gridLevel = level;
+    constructor(w, h, level, imgType, edgeType, textureType) {
+        this.width = w;
+        this.height = h;
+        this.level = level;
+        this.type = imgType || "dirt";
+        this.type = "dirt";
+        this.edge = edgeType || "edge";
+        this.debris = textureType || "dirtTexture";
         /** @type {any[][]} */
         this.grid = [];
         for(let x = 0; x < w; x++) {
@@ -20,8 +27,8 @@ class CropFieldInfo {
     }
     /** @param {number} newWidth @param {number} newHeight @param {string} newLevel */
     ExpandGrid(newWidth, newHeight, newLevel) {
-        let oldwidth = this.gridWidth;
-        let oldheight = this.gridHeight;
+        let oldwidth = this.width;
+        let oldheight = this.height;
         for(let x = 0; x < newWidth; x++) {
             if(x < oldwidth) {
                 for(let y = oldheight; y < newHeight; y++) {
@@ -33,29 +40,74 @@ class CropFieldInfo {
                 this.grid.push(row);
             }
         }
-        this.gridWidth = newWidth;
-        this.gridHeight = newHeight;
-        this.gridLevel = newLevel;
+        this.width = newWidth;
+        this.height = newHeight;
+        this.level = newLevel;
     }
 
     /**
      * @param {number} offsetX
      * @param {number} offsetY
      * @param {number} scaleY
-     * @param {{ (): boolean; (caller: any): void; }} [clickHandler]
+     * @param {{ (x: number, y: number, caller: any): void; }} [clickHandler]
      * @param {{ (x: number, y: number, caller: any): void; }} [hoverHandler]
      * @param {any} [caller]
+     * @param {boolean} [staticDirtParts]
      */
-    GetFarmDisplayContainer(offsetX, offsetY, scaleY, clickHandler, hoverHandler, caller) {
-        const dirtContainers = [];
-        const itemContainers = [];
+    GetFarmDisplayContainer(offsetX, offsetY, scaleY, clickHandler, hoverHandler, caller, staticDirtParts) {
         offsetY += 1;
-        for(let x = 0; x < this.gridWidth; x++) {
-            for(let y = 0; y < this.gridHeight; y++) {
+        /** @param {string} edge @param {number} x @param {number} y @param {number} scaleY */
+        const GetEdge = (edge, x, y, scaleY) => {
+            const s = gfx2.CreateSmallSprite(edge, x, y, true);
+            s.anchor.y = 1;
+            s.scale.y = scaleY;
+            return s;
+        } 
+        const dirtContainers = [];
+        const saEdge = this.grid[0][this.height - 1] === "_paddy" ? "wedge" : this.edge;
+        const sdEdge = this.grid[this.width - 1][this.height - 1] === "_paddy" ? "wedge" : this.edge;
+        const itemContainers = [
+            GetEdge(this.edge + "WA", offsetX - 1, offsetY + scaleY * -1, scaleY),
+            GetEdge(this.edge + "WD", offsetX + this.width, offsetY + scaleY * -1, scaleY),
+            GetEdge(saEdge + "SA", offsetX - 1, offsetY + scaleY * this.height, scaleY),
+            GetEdge(sdEdge + "SD", offsetX + this.width, offsetY + scaleY * this.height, scaleY)
+        ];
+        for(let x = 0; x < this.width; x++) {
+            itemContainers.push(GetEdge(this.edge + "W", x + offsetX, offsetY + scaleY * -1, scaleY));
+            const bottomEdge = this.grid[x][this.height - 1] === "_paddy" ? "wedge" : this.edge;
+            itemContainers.push(GetEdge(bottomEdge + "S", x + offsetX, offsetY + scaleY * this.height, scaleY));
+            for(let y = 0; y < this.height; y++) {
+                const aEdge = this.grid[x][y] === "_paddy" ? "paddy" : this.edge;
+                const dEdge = this.grid[x][y] === "_paddy" ? "paddy" : this.edge;
+                // TODO: transitioning from paddy to not paddy?
+                itemContainers.push(GetEdge(aEdge + "A", offsetX - 1, offsetY + scaleY * y, scaleY));
+                itemContainers.push(GetEdge(dEdge + "D", offsetX + this.width, offsetY + scaleY * y, scaleY));
                 const sprites = [];
-                const dirt = gfx2.CreateSmallSprite("dirt", x + offsetX, offsetY + scaleY * y, true);
+                const dirtParts = [];
+                const dirt = gfx2.CreateSmallSprite(this.type, x + offsetX, offsetY + scaleY * y, true);
                 dirt.anchor.y = 1;
                 dirt.scale.y = scaleY;
+                dirtParts.push(dirt);
+                if(staticDirtParts) {
+                    const idx = (y * this.height + x) % 5;
+                    if(idx === 2 || idx === 0) {
+                        const amt = (x % 7 === 0) ? (x % 3 + y % 4) : (x % 3 + y % 2);
+                        const dirtPart = `${this.debris}${amt}`;
+                        const dx = (((x + y) % 36) / 36) * 0.75, dy = (((x + y) % 23) / 23) * 0.75;
+                        const dirtPiece = gfx2.CreateSmallSprite(dirtPart, x + offsetX + dx, offsetY + scaleY * (y - dy), true);
+                        dirtPiece.anchor.y = 1;
+                        dirtPiece.scale.y = scaleY;
+                        dirtParts.push(dirtPiece);
+                    }
+                } else if(Math.random() <= 0.65) {
+                    const amt = Math.random() < 0.2 ? MathB.Range(0, 6) : MathB.Range(0, 5);
+                    const dirtPart = `${this.debris}${amt}`;
+                    const dx = Math.random() * 0.75, dy = Math.random() * 0.75;
+                    const dirtPiece = gfx2.CreateSmallSprite(dirtPart, x + offsetX + dx, offsetY + scaleY * (y - dy), true);
+                    dirtPiece.anchor.y = 1;
+                    dirtPiece.scale.y = scaleY;
+                    dirtParts.push(dirtPiece);
+                }
                 const item = this.grid[x][y];
                 if(item !== null && !item.coord) {
                     const iteminfo = GetFarmInfo(item);
@@ -82,13 +134,14 @@ class CropFieldInfo {
                         sprites.push(s);
                     }
                 }
-                const container = gfx2.CreateContainer(sprites, false, true);
+                const dirtContainer = gfx2.CreateContainer(dirtParts, false, true);
+                const contentContainer = gfx2.CreateContainer(sprites, false, true);
                 if(clickHandler !== undefined) { 
-                    MakeSpriteInteractive(dirt, () => clickHandler(caller), () => hoverHandler(x, y, caller));
-                    MakeSpriteInteractive(container, () => clickHandler(caller), () => hoverHandler(x, y, caller));
+                    MakeSpriteInteractive(dirtContainer, () => clickHandler(x, y, caller), () => hoverHandler(x, y, caller));
+                    MakeSpriteInteractive(contentContainer, () => clickHandler(x, y, caller), () => hoverHandler(x, y, caller));
                 }
-                dirtContainers.push(dirt);
-                itemContainers.push(container);
+                dirtContainers.push(dirtContainer);
+                itemContainers.push(contentContainer);
             }
         }
         return gfx2.CreateContainer([...dirtContainers, ...itemContainers], false, true);
@@ -129,15 +182,14 @@ class CropFieldInfo {
     /** @param {number} x @param {number} y */
     GetWaterInfo(x, y) {
         let res = 0;
-        if(x < 0 || y < 0 || x >= this.gridWidth || y >= this.gridHeight) { return 0; }
+        if(x < 0 || y < 0 || x >= this.width || y >= this.height) { return 0; }
         if(this.grid[x][y] !== "_lake") { return - 1; }
         if(y > 0 && this.grid[x][y - 1] === "_lake") { res += 1; } // W
         if(x > 0 && this.grid[x - 1][y] === "_lake") { res += 2; } // A
-        if(y < (this.gridHeight - 1) && this.grid[x][y + 1] === "_lake") { res += 4; } // S
-        if(x < (this.gridWidth - 1) && this.grid[x + 1][y] === "_lake") { res += 8; } // D
+        if(y < (this.height - 1) && this.grid[x][y + 1] === "_lake") { res += 4; } // S
+        if(x < (this.width - 1) && this.grid[x + 1][y] === "_lake") { res += 8; } // D
         return res;
     }
-
     /** @param {number} x @param {number} y @param {number} size */
     GetSprinklerMultiplier(x, y, size) {
         let mult = 1;
@@ -163,8 +215,75 @@ class CropFieldInfo {
     }
     /** @param {number} x @param {number} y */
     IsSprinkler(x, y) {
-        if(x < 0 || y < 0 || x >= this.gridWidth || y >= this.gridHeight) { return false; }
+        if(x < 0 || y < 0 || x >= this.width || y >= this.height) { return false; }
         if(this.grid[x] === null || this.grid[x] === undefined) { return false; }
         return this.grid[x][y] === "_sprinkler";
+    }
+}
+class NathanFieldInfo extends CropFieldInfo {
+    constructor() {
+        super(7, 5, "");
+        this.grid[0][0] = "_coop";
+        this.grid[1][0] = "_coop";
+        this.grid[2][0] = "_coop";
+        this.grid[4][0] = "_log";
+        this.grid[5][0] = "_log";
+        this.grid[6][0] = "_log";
+        this.grid[0][1] = "_lake";
+        this.grid[1][1] = "_lake";
+        this.grid[0][2] = "_lake";
+        this.grid[1][2] = "_lake";
+        this.grid[5][1] = "_beehive";
+        this.grid[6][1] = "_beehive";
+        this.grid[5][2] = "_beehive";
+        this.grid[6][2] = "_beehive";
+        this.grid[0][4] = "_paddy";
+        this.grid[1][4] = "_paddy";
+        this.grid[2][4] = "_paddy";
+        this.grid[3][4] = "_paddy";
+        this.grid[4][4] = "_paddy";
+        this.grid[5][4] = "_paddy";
+        this.grid[6][4] = "_paddy";
+    }
+}
+
+
+class NewCropDetail {
+    /**
+     * @param {string} name
+     * @param {number} price
+     * @param {string} type
+     * @param {number} size
+     * @param {number} time
+     * @param {number} frames
+     * @param {number} power
+     * @param {number} re
+     * @param {number} sp
+     * @param {number} su
+     * @param {number} au
+     * @param {number} wi
+     * @param {{ saltClean?:boolean }} addtl
+     */
+    constructor(name, price, type, size, time, frames, power, re, sp, su, au, wi, addtl) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.displayname = GetText("nm." + name);
+        this.size = size;
+        this.time = time;
+        this.frames = frames;
+        this.power = power;
+        this.initpower = power;
+        this.health = power * 5;
+        this.maxhealth = this.health;
+        this.defense = power * power * 0.4;
+        this.respawn = re;
+        this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
+        this.saltClean = false;
+        if (addtl !== undefined) {
+            for (const key in addtl) {
+                this[key] = addtl[key];
+            }
+        }
     }
 }

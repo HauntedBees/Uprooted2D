@@ -16,11 +16,11 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
         this.fixtureContainer = gfx2.CreateContainer([], false, true);
         this.RefreshInventoryDisplay();
         
-        const gridInfo = game2.player.gridInfo;
-        this.gridDX = ((16 - gridInfo.gridWidth) / 2);
-        this.gridDY = 7 + Math.floor((6 - gridInfo.gridHeight) / 2);
+        const gridInfo = game2.player.fixtureGridInfo;
+        this.gridDX = ((16 - gridInfo.width) / 2);
+        this.gridDY = 7 + Math.floor((6 - gridInfo.height) / 2);
         this.grid = gridInfo.grid;
-        this.farmContainer = gridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, 1, this.Select, this.MovePlacementCursor, this);
+        this.farmContainer = gridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, 1, (x, y, caller) => this.Select(caller), this.MovePlacementCursor, this, true);
         
         this.selectionCursor = new SelCursor(0.5, 1.5, 0, 0, 1, 1, true);
         this.selectedCursor = new SelCursorX(0.5, 1.5, 0, 0, 1, 1, true);
@@ -115,18 +115,18 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
             if(!me.CanPlant()) { sound.PlaySound("navNok"); return false; }
             const posX = me.placementCursor.posX, posY = me.placementCursor.posY;
             const player = game2.player;
-            const selItem = player.gridInfo.grid[posX][posY];
+            const selItem = player.fixtureGridInfo.grid[posX][posY];
             const isSameItem = me.selectedItemName === selItem;
             if(!isSameItem && me.selectedItemSize > 0 && me.selectedItemName !== null) { // adding new big thing
                 for(let x = 0; x <= me.selectedItemSize; x++) {
                     for(let y = 0; y <= me.selectedItemSize; y++) {
                         const item = me.RemoveFromField(posX + x, posY + y);
                         if(item !== null) { player.IncreaseItem(item, 1); }
-                        player.gridInfo.grid[posX + x][posY + y] = { coord: true, x: posX, y: posY };
+                        player.fixtureGridInfo.grid[posX + x][posY + y] = { coord: true, x: posX, y: posY };
                     }
                 }
-                player.gridInfo.grid[posX][posY] = me.selectedItemName;
-                player.gridInfo.grid[posX + me.selectedItemSize][posY + me.selectedItemSize].corner = me.selectedItemName;
+                player.fixtureGridInfo.grid[posX][posY] = me.selectedItemName;
+                player.fixtureGridInfo.grid[posX + me.selectedItemSize][posY + me.selectedItemSize].corner = me.selectedItemName;
                 sound.PlaySound("confirm");
             } else {
                 const item = me.RemoveFromField(posX, posY);
@@ -137,7 +137,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
                     return true;
                 }
                 sound.PlaySound("confirm");
-                player.gridInfo.grid[posX][posY] = me.selectedItemName;
+                player.fixtureGridInfo.grid[posX][posY] = me.selectedItemName;
             }
             const stillHasAny = player.DecreaseItem(me.selectedItemName, 1);
             console.log(stillHasAny);
@@ -156,6 +156,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
                 me.selectedItemSize = 0;
                 me.selectedCursor.Hide();
             } else {
+                if(game2.player.fixtures.length === 0) { return; }
                 const item = game2.player.fixtures[idx][0];
                 sound.PlaySound("confirm");
                 me.selectedItemName = item;
@@ -170,7 +171,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
     }
     RedrawEverything() {
         this.fullContainer.removeChild(this.farmContainer);
-        this.farmContainer = game2.player.gridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, 1, this.Select, this.MovePlacementCursor, this);
+        this.farmContainer = game2.player.fixtureGridInfo.GetFarmDisplayContainer(this.gridDX, this.gridDY, 1, (x, y, caller) => this.Select(caller), this.MovePlacementCursor, this, true);
         this.fullContainer.addChild(this.farmContainer);
         this.RefreshInventoryDisplay();
     }
@@ -191,7 +192,7 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
     }
     SetPlacementText() {
         if(this.infoText !== null) { this.fullContainer.removeChild(this.infoText); }
-        const player = game2.player, gridInfo = player.gridInfo;
+        const player = game2.player, gridInfo = player.fixtureGridInfo;
         const posX = this.placementCursor.posX, posY = this.placementCursor.posY;
         let speed = 100;
         let text = "";
@@ -220,9 +221,9 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
         x = x || this.placementCursor.posX;
         y = y || this.placementCursor.posY;
         if(this.selectedItemName === "_paddy") {
-            return y === (game2.player.gridInfo.gridHeight - 1);
+            return y === (game2.player.fixtureGridInfo.height - 1);
         } else if(this.selectedItemSize === 1) {
-            return y <= (game2.player.gridInfo.gridHeight - 2) && x <= (game2.player.gridInfo.gridWidth - 2);
+            return y <= (game2.player.fixtureGridInfo.height - 2) && x <= (game2.player.fixtureGridInfo.width - 2);
         } else {
             return true;
         }
@@ -230,16 +231,16 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
     /** @param {number} x @param {number} y */
     RemoveFromField(x, y) {
         const player = game2.player;
-        let item = player.gridInfo.grid[x][y];
+        let item = player.fixtureGridInfo.grid[x][y];
         if(item === null) { return null; }
         if(item.coord) {
             x = item.x; y = item.y;
-            item = player.gridInfo.grid[item.x][item.y];
+            item = player.fixtureGridInfo.grid[item.x][item.y];
         }
         const size = (GetFarmInfo(item).size) || 1;
         for(let xi = 0; xi < size; xi++) {
             for(let yi = 0; yi < size; yi++) {
-                player.gridInfo.grid[x + xi][y + yi] = null;
+                player.fixtureGridInfo.grid[x + xi][y + yi] = null;
             }
         }
         return item;
@@ -276,8 +277,8 @@ class PauseViewFixturesScreen extends PauseMenuSubscreen {
             }
         } else if(this.placementCursor.IsVisible()) {
             const pos = { x: moves.x + this.placementCursor.posX, y: moves.y + this.placementCursor.posY };
-            const gridInfo = game2.player.gridInfo;
-            if(pos.x < 0 || pos.x >= gridInfo.gridWidth || pos.y >= gridInfo.gridHeight) {
+            const gridInfo = game2.player.fixtureGridInfo;
+            if(pos.x < 0 || pos.x >= gridInfo.width || pos.y >= gridInfo.height) {
                 sound.PlaySound("navNok");
                 return false;
             } else if(pos.y < 0) {
