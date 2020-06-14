@@ -16,11 +16,14 @@ class GameHandler {
             "gamedata/spritesheets/sprites.json",
             "gamedata/spritesheets/bigSprites.json",
             "gamedata/spritesheets/mapJunk.json",
-            "mapPlayer", "mapChar",
+            "mapPlayer", "mapChar", "mapCharBig",
             //* Opening *//
             "title", "titleGround", "titleTop",
+            //* Combat *//
+            "bgs/outside",
+            "combatPlayer", "combatSheet", "combatSheetBig", "combatSheetHuge",
             //* Maps *//
-            "maps/farm",
+            "maps/farm", "maps/producestand", "maps/testbench",
             //* Shops *//
             "shops/home", "shops/cluckfuck",
             "shopblinks/home", "shopblinks/cluckfuck",
@@ -88,6 +91,7 @@ class GameHandler {
         }
 
     }
+    /** @param {string} key */
     KeyPress(key) {
         if(this.transitionAnim !== null && this.transitionAnim.active) { return; }
         this.currentScreen.KeyPress(key);
@@ -104,10 +108,7 @@ class GameHandler {
     }
     //IncrementTime () { player.playTime++ }
 
-    /**
-     * @param {any} toClass
-     * @param {any} [arg]
-     */
+    /** @param {any} toClass @param {any} [arg] */
     Transition(toClass, arg) {
         const me = this;
         // TODO: tutorial transition
@@ -115,6 +116,7 @@ class GameHandler {
         // TODO: early clean? types of transitions
         this.transitionAnim = new CropTransition(this, 10, 5, 60, function() { me.MidTransition(toClass, arg); }, function() { me.FinishTransition(); });
     }
+    /** @param {any} toClass @param {any} [arg] */
     MidTransition(toClass, arg) {
         this.currentScreen.CleanUp();
         this.currentScreen = new toClass(arg);

@@ -99,7 +99,7 @@ class Player {
             [null, null, null],
             [null, null, null]
         ];*/
-        this.gridInfo = new CropFieldInfo(3, 3, "n");
+        this.fixtureGridInfo = new CropFieldInfo(3, 3, "n");
     }
     /* #region Save Data */
     SetMapPosition(worldmap) {
@@ -147,6 +147,10 @@ class Player {
     }
     /* #endregion */
     /* #region Achievements and Quests */
+    /** @param {string} name */
+    HasClearedEntity(name) {
+        return this.clearedEntities.indexOf(name) >= 0;
+    }
     HasUsedFish() {
         return (this.miscData.typesPlanted["rod"] + this.miscData.typesPlanted["water"]) > 0;
     }
@@ -342,6 +346,45 @@ class Player {
     }
     /* #endregion */
     /* #region Combat Details */
+    /** @param {number} hp */
+    GetEnemyHealthMult(hp) {
+        switch(this.options.difficulty) {
+            case 0: return Math.ceil(hp * 0.66);
+            case 2: return Math.ceil(hp * 1.25);
+        }
+        return hp;
+    }
+    /** @param {CombatEnemy} enemy */
+    AdjustEnemyStats(enemy) {
+        let diff = this.noFunDiffMod;
+        if(diff === 0) { return; }
+        if(diff > 0) { // make strongker
+            while(diff-- > 0) {
+                enemy.maxhealth *= 1.75;
+                enemy.baseatk *= 1.5;
+                enemy.basedef *= 1.5;
+            }
+            enemy.maxhealth = Math.round(enemy.maxhealth);
+            enemy.health = enemy.maxhealth;
+            enemy.baseatk = Math.round(enemy.baseatk);
+            enemy.atk = enemy.baseatk;
+            enemy.basedef = Math.round(enemy.basedef);
+            enemy.def = enemy.basedef;
+        } else { // make weakger
+            while(diff++ < 0) {
+                enemy.maxhealth *= 0.5;
+                enemy.baseatk *= 0.75;
+                enemy.basedef *= 0.75;
+            }
+            enemy.maxhealth = Math.max(5, Math.round(enemy.maxhealth));
+            enemy.health = enemy.maxhealth;
+            enemy.baseatk = Math.max(1, Math.round(enemy.baseatk));
+            enemy.atk = enemy.baseatk;
+            enemy.basedef = Math.max(1, Math.round(enemy.basedef));
+            enemy.def = enemy.basedef;
+        }
+    }
+    /** @param {number} numEnemyCrops */
     CanMelee(numEnemyCrops) {
         if(this.equipped.weapon === null) { return false; }
         const weapon = GetEquipment(this.equipped.weapon); // TODO: GetEquipment
@@ -400,9 +443,9 @@ class Player {
         const hasAnySeeds = this.crops.some(e => e[0][0] != "_" && e[0][0] != "!" && e[1] > 0);
         if(!hasAnySeeds) { return false; }
         const availableTypes = [];
-        for(let x = 0; x < this.gridInfo.gridWidth; x++) {
-            for(let y = 0; y < this.gridInfo.gridHeight; y++) {
-                const item = this.gridInfo[x][y];
+        for(let x = 0; x < this.fixtureGridInfo.width; x++) {
+            for(let y = 0; y < this.fixtureGridInfo.height; y++) {
+                const item = this.fixtureGridInfo.grid[x][y];
                 switch(item) {
                     case "_log": availableTypes.push("mush"); break;
                     case "_coop": availableTypes.push("egg"); break;

@@ -8,7 +8,7 @@ MathB.RangeInclusive = (a, b) => MathB.Range(a, b + 1);
 /** @param {any[]} arr */
 MathB.RandomArrayItem = arr => arr[MathB.Range(0, arr.length)];
 
-const DebugHelp = {};
+const DebugHelp = { isDebug: false };
 DebugHelp.GetPlayerPos = function() {
     const playerPos = game2.currentScreen.player.pos;
     return [Math.floor(playerPos.x / 16), Math.floor(playerPos.y / 16)];
@@ -72,4 +72,10 @@ DebugHelp.GrantAllFixtures = function() {
     player.IncreaseItem("_sprinkler", 20);
     player.IncreaseItem("_beehive", 20);
     player.IncreaseItem("_charger", 20);
+}
+DebugHelp.GrantManyCrops = function() {
+    for(let i = 0; i < 60; i++) {
+        const crop = debug.AllCrops[Math.floor(Math.random() * debug.AllCrops.length)];
+        game2.player.IncreaseItem(crop, Math.ceil(Math.random() * 10));
+    }
 }

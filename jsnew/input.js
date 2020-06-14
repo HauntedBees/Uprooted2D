@@ -210,7 +210,7 @@ class GameInput {
             this.SetMainKey(key);
             if(this.freeMovementIntervals[key] !== undefined) { return; }
             const handler = this.gameHandler;
-            this.freeMovementIntervals[key] = setInterval(function() {
+            this.freeMovementIntervals[key] = window.setInterval(function() {
                 handler.KeyPress(key);
             }, 50);
         } else if(this.IsIgnoredByKeyPress(key)) { this.gameHandler.KeyPress(key); }        
@@ -286,7 +286,7 @@ class GameInput {
                         this.SetMainKey(btn);
                         if(this.freeMovementIntervals[btn] !== undefined) { return; }
                         const me = this, handler = this.gameHandler;
-                        this.freeMovementIntervals[btn] = setInterval(function() {
+                        this.freeMovementIntervals[btn] = window.setInterval(function() {
                             handler.KeyPress(me.gamepadIndex.toString() + btn);
                         }, this.buttonDelay);
                     } else {
@@ -342,9 +342,9 @@ class InputHandler {
         const me = this;
         window.addEventListener("gamepadconnected", function(e) { me.GamepadConnected(/** @type {GamepadEvent} */ (e)); });
         window.addEventListener("gamepaddisconnected", function(e) { me.GamepadDisconnected(/** @type {GamepadEvent} */ (e)); });
-        document.addEventListener("keypress", function(e) { me.KeyPress(e); });
-        document.addEventListener("keydown", function(e) { me.KeyDown(e); });
-        document.addEventListener("keyup", function(e) { me.KeyUp(e); });
+        document.addEventListener("keypress", function(e) { me.KeyPress(/** @type {KeyboardEvent} */ (e)); });
+        document.addEventListener("keydown", function(e) { me.KeyDown(/** @type {KeyboardEvent} */ (e)); });
+        document.addEventListener("keyup", function(e) { me.KeyUp(/** @type {KeyboardEvent} */ (e)); });
     }
 
     /**
@@ -382,7 +382,7 @@ class InputHandler {
         }
         if(this.gamepadQueryIdx < 0) {
             const me = this;
-            this.gamepadQueryIdx = setInterval(function() { me.QueryGamepads(); }, 10);
+            this.gamepadQueryIdx = window.setInterval(function() { me.QueryGamepads(); }, 10);
         }
     }
     /**

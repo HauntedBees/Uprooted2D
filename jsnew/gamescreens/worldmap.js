@@ -15,6 +15,7 @@ class PreviousWorldState {
     }
     CleanUp() {
         console.log("CLEANING UP!");
+        gfx2.CleanAllContainers();
     }
 }
 
@@ -41,6 +42,10 @@ class WorldScreen extends GameScreen {
             this.player.Update();
             this.animEntities = state.animEntities;
         } else {
+            if(game2.previousWorldState !== null) {
+                game2.previousWorldState.CleanUp();
+                game2.previousWorldState = null;
+            }
             this.mapName = args.map;
             this.map = gfx2.CreateMap(args.map);
             this.gfxContainers = {
@@ -52,16 +57,17 @@ class WorldScreen extends GameScreen {
             /** @type {WorldEntityBase[]} */
             this.animEntities = [ this.player ];
     
-            new EntityLoader("farm", this.gfxContainers["characters"], e => { this.EntitiesLoaded(e) });
+            new EntityLoader(this.mapName, this.gfxContainers["characters"], e => { this.EntitiesLoaded(e) });
         }
+        this.mapDims = gfx2.GetMapDimensions(this.mapName);
         this.fullContainer = gfx2.CreateContainer([this.gfxContainers["map"], this.gfxContainers["characters"]]);
         this.textContainer = gfx2.CreateContainer([this.gfxContainers["text"]]);
         this.RefreshMap();
 
         this.inDialogue = false;
-        this.dialogState = 0;
-        this.forceEndDialog = false;
-        this.dialogData = null;
+        //this.dialogState = 0;
+        //this.forceEndDialog = false;
+        //this.dialogData = null;
 
         this.inWaterfall = false;
         this.importantEntities = {};
@@ -72,11 +78,8 @@ class WorldScreen extends GameScreen {
         this.updateIdx = setInterval(function() { me.Update(); }, 16);
 
         // TODO: cave shit
-        // TODO: autoplay shit
     }
-    /**
-     * @param {WorldNotPlayer[]} entities
-     */
+    /** @param {WorldNotPlayer[]} entities */
     EntitiesLoaded(entities) {
         this.animEntities.push(...entities);
         const importantEntities = entities.filter(e => e.importantKey !== "");
@@ -84,7 +87,7 @@ class WorldScreen extends GameScreen {
         const autoplays = entities.filter(e => e.immediateInteract);
         if(autoplays.length === 0) { return; }
         game2.target = autoplays[0];
-        game2.target.interact.Start(this);
+        //game2.target.interact.Start(this);
     }
     /** @param {WorldEntityBase} [newTarget] */
     ClearTarget(newTarget) {
@@ -102,6 +105,7 @@ class WorldScreen extends GameScreen {
         if(game2.previousWorldState !== null && game2.previousWorldState.mapName !== this.mapName) {
             game2.previousWorldState.CleanUp();
         }
+        this.active = false;
         game2.previousWorldState = new PreviousWorldState(this.mapName, this.map, this.player, this.animEntities, this.gfxContainers);
         clearInterval(this.updateIdx);
     }
@@ -111,7 +115,7 @@ class WorldScreen extends GameScreen {
     KeyPress(key) {
         /*if(this.inWaterfall || this.fullAnimIdx <= 0 || game.transitioning) { this.ToggleRun(false); return false; }*/
         if(this.inDialogue) {
-            if(key === this.controls["confirm"] && this.controls.IsFreshKeyPress("confirm")) {
+            if(key === this.controls["confirm"]) { //  && this.controls.IsFreshKeyPress("confirm")
                 game2.target.interact.Advance(this);
             }
             /*this.freeMovement = false;
@@ -146,19 +150,24 @@ class WorldScreen extends GameScreen {
     }
     RefreshMap() {
         // Center on Player
-        const hx = gfx2.app.screen.width / 2, hy = gfx2.app.screen.height / 2;
-        const cx = MathB.Clamp(hx - this.player.sprite.x - this.player.sprite.width / 2, 0, -hx);
-        const cy = MathB.Clamp(hy - this.player.sprite.y - this.player.sprite.height / 2, 0, -hy);
-        this.fullContainer.position.set(cx, cy);
+        const mapWidth = this.mapDims.width, mapHeight = this.mapDims.height;
+        const screenWidth = gfx2.app.screen.width, screenHeight = gfx2.app.screen.height;
+        const centerx = this.player.pos.x, centery = this.player.pos.y; // TODO: forced camera position
+        const offset = {
+            x: Math.min(mapWidth - screenWidth, Math.max(centerx - (screenWidth / 2), 0)),
+            y: Math.min(mapHeight - screenHeight, Math.max(centery - (screenHeight / 2), 0)),
+        }
+        this.fullContainer.position.set(-offset.x, -offset.y);
+
         // Hide Off-Screen Sprites and show On-Screen Sprites
-        const mapSize = gfx2.mapSize / 2;
-        const mapPadding = mapSize * 1.5;
-        const mapBounds = { left: -mapSize, right: 2 * hx + mapSize, top: -mapSize, bottom: 2 * hy + mapSize };
-        const playerBounds = { left: this.player.sprite.x - mapPadding, right: this.player.sprite.x + mapPadding, top: this.player.sprite.y - mapPadding, bottom: this.player.sprite.y + mapPadding };
+        const mapWh = mapWidth / 2, mapHh = mapHeight / 2;
+        const mapPadW = mapWh * 1.5, mapPadH = mapHh * 1.5;
+        const mapBounds = { left: -mapWh, right: screenWidth + mapWh, top: -mapHh, bottom: screenHeight + mapHh };
+        const playerBounds = { left: this.player.sprite.x - mapPadW, right: this.player.sprite.x + mapPadW, top: this.player.sprite.y - mapPadH, bottom: this.player.sprite.y + mapPadH };
         const p = new PIXI.Point(0, 0);
         this.map.forEach(map => {
             const pos = map.toGlobal(p);
-            map.visible = (pos.x + mapSize) >= mapBounds.left && (pos.x - mapSize) <= mapBounds.right && (pos.y + mapSize) >= mapBounds.top && (pos.y - mapSize) <= mapBounds.bottom;
+            map.visible = (pos.x + mapWh) >= mapBounds.left && (pos.x - mapWh) <= mapBounds.right && (pos.y + mapHh) >= mapBounds.top && (pos.y - mapHh) <= mapBounds.bottom;
         });
         this.animEntities.forEach(e => {
             if(e.persist) { return; }
@@ -230,9 +239,9 @@ class WorldScreen extends GameScreen {
                 didInteract = true;
                 if(!target.noChange) { target.dir = this.InvertDir(this.player.dir); }
                 this.inDialogue = true;
-                this.forceEndDialog = false;
+                //this.forceEndDialog = false;
                 // worldmap.toggleMovement(false);
-                this.dialogState = 0;
+                //this.dialogState = 0;
                 game2.target = target;
                 target.interact.Start(this);
                 /*if(player.failedEntities.indexOf(game.target.name) >= 0 && e.failedInteract !== undefined) {

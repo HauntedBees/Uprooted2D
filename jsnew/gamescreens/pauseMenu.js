@@ -58,7 +58,7 @@ class PauseMenuScreen extends GameScreen {
             }
         }
         bgJunk.push(gfx2.CreateBigSprite("ayanaSit", 3, 6, true));
-        bgJunk.push(game2.player.gridInfo.GetFarmDisplayContainer(8, 6, 0.75));
+        bgJunk.push(game2.player.fixtureGridInfo.GetFarmDisplayContainer(8, 6, 0.75));
         gfx2.EmptyContainer(this.gfxContainers["bg2"]);
         bgJunk.forEach(s => this.gfxContainers["bg2"].addChild(s));
     }

@@ -176,7 +176,7 @@ class InfoText {
      * @param {boolean} selected
      * @param {{ (): void; }} clickHandler
      * @param {{ (): void; }} hoverHandler
-     * @param {{ leftAlign?: boolean; padText?: boolean; noLeftSide?: boolean; noRightSide?: boolean; minX?: number; forceCenter?: boolean }} [options]
+     * @param {{ leftAlign?: boolean; padText?: boolean; noLeftSide?: boolean; noRightSide?: boolean; minX?: number; forceCenter?: boolean; forceWidth?: number }} [options]
      */
     constructor(text, x, y, selected, clickHandler, hoverHandler, options) {
         options = options || {};
@@ -194,42 +194,51 @@ class InfoText {
         let width = info.width + 8;
         let leftX = Math.floor((x - width / 2) / 64) * 64;
         let rightX = Math.floor((x + width / 2) / 64) * 64;
-        if(options.minX !== undefined) {
-            if(options.forceCenter === true) {
-                const actualWidth = Math.floor(width / 64);
-                if(actualWidth < options.minX) {
-                    width = options.minX * 64;
-                    const diff = (width - actualWidth) / 2;
-                    leftX -= diff;
-                    rightX += diff;
+
+        if(options.forceWidth !== undefined) {
+            width = options.forceWidth * 64;
+            leftX = x - width / 2;
+            rightX = x + width / 2;
+            x = (rightX + 64 + leftX) / 2;
+        } else {
+            if(options.minX !== undefined) {
+                if(options.forceCenter === true) {
+                    const actualWidth = Math.floor(width / 64);
+                    if(actualWidth < options.minX) {
+                        width = options.minX * 64;
+                        const diff = (width - actualWidth) / 2;
+                        leftX -= diff;
+                        rightX += diff;
+                    }
+                } else {
+                    const calcx = options.minX * 32;
+                    width = Math.max(width, options.minX * 64);
+                    leftX = Math.min(leftX, Math.floor((x - calcx) / 64) * 64);
+                    rightX = Math.max(rightX, Math.floor((x + calcx) / 64) * 64);
                 }
-            } else {
-                const calcx = options.minX * 32;
-                width = Math.max(width, options.minX * 64);
-                leftX = Math.min(leftX, Math.floor((x - calcx) / 64) * 64);
-                rightX = Math.max(rightX, Math.floor((x + calcx) / 64) * 64);
+            }
+            while((x - width / 2 - leftX) > 16) {
+                leftX += 16;
+                rightX -= 16;
+            }
+            if(leftX === rightX) {
+                leftX -= 32;
+                rightX += 32;
+            }
+    
+            if(options.noLeftSide === true || options.leftAlign === true) {
+                const dx = rightX - leftX;
+                leftX = x;
+                rightX = x + dx;
+                x += 8;
+            } else if(options.noRightSide === true) {
+                const dx = rightX - leftX;
+                leftX = x - dx;
+                rightX = x;
+                x -= 8;
             }
         }
-        while((x - width / 2 - leftX) > 16) {
-            leftX += 16;
-            rightX -= 16;
-        }
-        if(leftX === rightX) {
-            leftX -= 32;
-            rightX += 32;
-        }
 
-        if(options.noLeftSide === true || options.leftAlign === true) {
-            const dx = rightX - leftX;
-            leftX = x;
-            rightX = x + dx;
-            x += 8;
-        } else if(options.noRightSide === true) {
-            const dx = rightX - leftX;
-            leftX = x - dx;
-            rightX = x;
-            x -= 8;
-        }
         this.width = rightX - leftX;
         this.leftmostX = leftX;
         this.y = y;
@@ -241,7 +250,7 @@ class InfoText {
             gfx2.CreateSmallSprite(prefix + this.leftSuffix, leftX, y),
             gfx2.CreateSmallSprite(prefix + this.rightSuffix, rightX, y)
         ];
-        for(let x = (leftX + 32); x <= (rightX - 32); x += 64) {
+        for(let x = (leftX + 32); x <= (rightX - 32); x += 32) {
             this.elems.push(gfx2.CreateSmallSprite(`${prefix}M`, x, y));
         }
 
