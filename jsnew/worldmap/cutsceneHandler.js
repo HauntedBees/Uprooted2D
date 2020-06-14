@@ -9,14 +9,17 @@ class Interaction {
     Start(worldmap) {
         return true;
     }
+    /**
+     * @param {WorldScreen} worldmap
+     */
     Advance(worldmap) {
 
     }
 }
 class TransitionInteraction extends Interaction {
     /**
-     * @param {typeof GameScreen | typeof ShopScreen} targetClass
-     * @param {string | any[]} args
+     * @param {typeof GameScreen | typeof ShopScreen | typeof WorldScreen} targetClass
+     * @param {any} args
      */
     constructor(targetClass, args) {
         super();
@@ -49,16 +52,26 @@ class TransitionInteraction extends Interaction {
     }
 }
 class ShopInteraction extends TransitionInteraction {
-    /**
-     * @param {string} shopName
-     */
+    /** @param {string} shopName */
     constructor(shopName) {
         super(ShopScreen, shopName);
         this.sound = "entrance";
         this.forceDir = 0;
     }
 }
+class MapChangeInteraction extends TransitionInteraction {
+    /** @param {string} destMap @param {EntityJSONPoint} destPos @param {number} destDir */
+    constructor(destMap, destPos, destDir) {
+        super(WorldScreen, {
+            map: destMap,
+            init: destPos,
+            playerDir: destDir
+        });
+        this.sound = "entrance";
+    }
+}
 class SingleInteraction extends Interaction {
+    /** @param {string} key */
     constructor(key) {
         super();
         this.textKey = key;
@@ -83,20 +96,23 @@ class SequenceInteraction extends Interaction {
     /** @param {WorldScreen} worldmap */
     Start(worldmap) {
         this.worldmap = worldmap;
+        this.worldmap.inDialogue = true;
 
         this.idx = 0;
-        /** @type {number} */
         this.animIdx = -1;
-        this.animHandler = null;
+        /** @type {AnimInfo} */
+        this.animInfo = null;
         this.finished = false;
+        /** @type {string[]} */
         this.texts = [];
+        /** @type {(string | number)[][]} */
         this.postItems = [];
         this.Advance(worldmap, true);
         return true;
     }
     /** @param {WorldScreen} worldmap @param {boolean} [isFirst] */
     Advance(worldmap, isFirst) {
-        if(this.animIdx >= 0) { this.SpeedUpAnimation(); }
+        if(this.animIdx >= 0) { this.AnimFinish(); }
         isFirst = isFirst || false;
         if(this.texts.length > 0) {
             const newText = this.texts.shift();
@@ -151,6 +167,7 @@ class SequenceInteraction extends Interaction {
             const action = splitter[1];
             const isPlayer = (name === "pl")
             const isTarget = (name === "targ");
+            /** @type {WorldEntityBase} */
             const target = name === "" ? null : (isPlayer ? worldmap.player : (isTarget ? game2.target : worldmap.importantEntities[name]));
             const actDeets = action.split(":");
             const actSuffix = actDeets[1];
@@ -161,6 +178,7 @@ class SequenceInteraction extends Interaction {
                 case "ANIMRESET": this.Parse_ResetAnim(target); break;
                 case "ANIMPAUSE": this.Parse_PauseAnim(target); break;
                 case "ANIMRESUME": this.Parse_ResumeAnim(target); break;
+                case "VISIBLE": target.SetVisibility(actSuffix !== "true"); break;
                 case "SETDIR": this.Parse_SetDir(target, parseInt(actSuffix)); break;
                 // Player State Handlers
                 case "GIVE": this.Parse_TryGive(actSuffix.split(",")); break;
@@ -188,12 +206,15 @@ class SequenceInteraction extends Interaction {
      * @param {string} moveData
      */
     Parse_Movement(target, isPlayer, moveData) {
-        let dx = 0, dy = 0, destination = 0;
-        if(moveData[0] === "y") {
-            destination = parseFloat(moveData.substring(1));
+        this.WrapUpAnyActiveAnimations();
+        let dx = 0, dy = 0;
+        const destination = parseFloat(moveData.substring(1));
+        if(moveData[0] === "b") {
+            dy = (destination > 0) ? 1 : -1;
+            dx = (destination > 0) ? 1 : -1;
+        } else if(moveData[0] === "y") {
             dy = (destination > 0) ? 1 : -1;
         } else {
-            destination = parseFloat(moveData.substring(1));
             dx = (destination > 0) ? 1 : -1;
         }
         if(isPlayer) {
@@ -206,8 +227,7 @@ class SequenceInteraction extends Interaction {
             }
         }
         this.animInfo = new SequenceAnimationInfo(target, isPlayer, dx, dy, destination);
-        this.animHandler = () => this.HandleAnim();
-        this.animIdx = window.setInterval(() => this.animHandler(), 10);
+        this.animIdx = window.setInterval(() => this.HandleAnim(), 16);
     }
     /** @param {WorldEntityBase} target @param {string} newAnimName */
     Parse_ChangeAnim(target, newAnimName) { target.ForceAnimation(newAnimName); }
@@ -221,29 +241,25 @@ class SequenceInteraction extends Interaction {
     Parse_SetDir(target, direction) {
         target.dir = direction;
     }
-    SpeedUpAnimation() {
-        clearInterval(this.animIdx);
-        while(!this.animHandler()) {}
-    }
     AnimFinish() {
-        clearInterval(this.animIdx);
-        this.animIdx = -1;
-        this.animInfo = null;
-        this.animHandler = null;
+        this.WrapUpAnyActiveAnimations();
         this.Advance(this.worldmap);
+        return true;
+    }
+    WrapUpAnyActiveAnimations() {
+        if(this.animIdx >= 0) {
+            clearInterval(this.animIdx);
+            this.animIdx = -1;
+        }
+        if(this.animInfo !== null) {
+            this.animInfo.ForceEnd();
+            this.animInfo = null;
+        }
     }
     HandleAnim() {
-        const isFinished = this.animInfo.Advance(1.5);
-        if(isFinished) {
-            clearInterval(this.animIdx);
-            this.AnimFinish();
-            return true;
-        }
+        const isFinished = this.animInfo.Advance(2);
+        if(isFinished) { return this.AnimFinish(); }
         return false;
-    }
-    SleepSkip() {
-        this.AnimFinish();
-        return true;
     }
     /* #endregion */
     /* #region Player State Handlers */
@@ -265,6 +281,7 @@ class SequenceInteraction extends Interaction {
             const range = text.match(rgx)[0];
             const keyStart = text.replace(range, "");
             const nums = range.substring(1, range.length - 1).split("-");
+            /** @type {string[]} */
             this.texts = [];
             const start = parseInt(nums[0]);
             const end = parseInt(nums[1]);
@@ -283,8 +300,10 @@ class SequenceInteraction extends Interaction {
     /* #region Other */
     /** @param {number} time */
     Parse_Sleep(time) {
-        this.animHandler = this.SleepSkip;
-        this.animIdx = window.setTimeout(() => this.animHandler(), time);
+        this.WrapUpAnyActiveAnimations();
+        this.animInfo = new AnimInfo();
+        this.worldmap.inDialogue = true;
+        this.animIdx = window.setInterval(() => this.HandleAnim(), time);
     }
     /** @param {string} customName */
     Parse_Custom(customName) {
@@ -293,7 +312,14 @@ class SequenceInteraction extends Interaction {
     /* #endregion */
 }
 
-class SequenceAnimationInfo {
+class AnimInfo {
+    constructor() { }
+    /** @param {number} moveSpeed */
+    Advance(moveSpeed) { return true; }
+    ForceEnd() { }
+}
+
+class SequenceAnimationInfo extends AnimInfo {
     /**
      * @param {WorldEntityBase} target
      * @param {boolean} isPlayer
@@ -302,6 +328,7 @@ class SequenceAnimationInfo {
      * @param {number} destination
      */
     constructor(target, isPlayer, dx, dy, destination) {
+        super();
         this.target = target;
         this.target.moving = true;
         this.isPlayer = isPlayer;
@@ -324,6 +351,8 @@ class SequenceAnimationInfo {
             case -1: finished = (this.movedY <= this.destination); break;
             case 2: finished = (this.movedX >= this.destination); break;
             case -2: finished = (this.movedX <= this.destination); break;
+            case 3: finished = (this.movedX >= this.destination); break;
+            case -3: finished = (this.movedX <= this.destination); break;
         }
         if(finished) {
             this.target.moving = false;
@@ -333,5 +362,11 @@ class SequenceAnimationInfo {
             }
         }
         return finished;
+    }
+    ForceEnd() {
+        let newX = (this.dx !== 0) ? (this.initX + this.destination) : this.initX;
+        let newY = (this.dy !== 0) ? (this.initY + this.destination) : this.initY;
+        this.target.SetPos({ x: newX, y: newY });
+        this.target.moving = false;
     }
 }

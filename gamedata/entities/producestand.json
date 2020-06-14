@@ -1,0 +1,70 @@
+[
+    {
+        "name": "TruckL",
+        "type": "NPC",
+        "pos": { "x": 63, "y": 13.5 },
+        "noChange": true,
+        "big": true,
+        "sx": 4, "sy": 0
+    },
+    {
+        "name": "TruckR",
+        "type": "NPC",
+        "pos": { "x": 71, "y": 13.5 },
+        "noChange": true,
+        "big": true,
+        "sx": 5, "sy": 0
+    },
+    { "name": "foodCrate0", "type": "mapJunk", "pos": { "x": 37, "y": 22 }, "sprite": "foodCrate" },
+    { "name": "foodCrate1", "type": "mapJunk", "pos": { "x": 49, "y": 22 }, "sprite": "foodCrate" },
+
+    { "name": "pstand", "type": "autoplay" },
+    {
+        "name": "BeckettIntro",
+        "type": "NPC",
+        "importantKey": "hipster",
+        "pos": { "x": 2, "y": 14 },
+        "dir": 0,
+        "big": false,
+        "sx": 7, "sy": 0,
+        "additionalAnimations": [
+            { "name": "Beck1", "frames": [ { "x": 7, "y": 0 }, { "x": 7, "y": 1 } ] },
+            { "name": "Beck2", "frames": [ { "x": 10, "y": 2 }, { "x": 10, "y": 3 } ] },
+            { "name": "Beck3", "frames": [ { "x": 8, "y": 1 }, { "x": 8, "y": 2 }, { "x": 8, "y": 3 }, { "x": 8, "y": 2 } ] },
+            { "name": "Beck4", "frames": [ { "x": 10, "y": 0 }, { "x": 10, "y": 1 } ] },
+            { "name": "Beck5", "frames": [ { "x": 9, "y": 0 } ] },
+            { "name": "Beck6", "frames": [ { "x": 9, "y": 1 }, { "x": 9, "y": 2 }, { "x": 9, "y": 3 }, { "x": 9, "y": 2 } ] },
+            { "name": "Beck7", "frames": [ { "x": 11, "y": 1 }, { "x": 11, "y": 2 }, { "x": 11, "y": 3 }, { "x": 11, "y": 2 } ] }
+        ]
+    },
+    {
+        "name": "Hoverboard",
+        "type": "NPC",
+        "importantKey": "bike",
+        "pos": { "x": 28, "y": 14 },
+        "dir": 0,
+        "hidden": true,
+        "big": false,
+        "sx": 7, "sy": 2
+    },
+    {
+        "name": "Convinceatron",
+        "type": "NPC",
+        "importantKey": "convince",
+        "pos": { "x": 43, "y": 14 },
+        "dir": 0,
+        "hidden": true,
+        "big": false,
+        "sx": 7, "sy": 3
+    },
+
+    { "name": "border0", "type": "mapJunk", "pos": { "x": 37, "y": 46 }, "sprite": "longFenceX", "forceX": true },
+    { "name": "border1", "type": "mapJunk", "pos": { "x": 0, "y": 46 }, "sprite": "shortFenceX", "forceX": true },
+    { "name": "border2", "type": "mapJunk", "pos": { "x": 0, "y": 46 }, "sprite": "longFenceY", "forceY": true },
+    { "name": "border3", "type": "mapJunk", "pos": { "x": -30, "y": 94 }, "sprite": "longFenceX", "forceX": true },
+    { "name": "border4", "type": "mapJunk", "pos": { "x": 67, "y": 94 }, "sprite": "shorterFenceX", "forceX": true },
+    { "name": "border5", "type": "mapJunk", "pos": { "x": 75.25, "y": 94 }, "sprite": "shorterFenceX", "forceX": true },
+    { "name": "lake0", "type": "invisible", "pos": { "x": 88, "y": 50 }, "width": 400, "height": 400, "forceY": true },
+    { "name": "lake1", "type": "invisible", "pos": { "x": 88, "y": 79 }, "width": 400, "height": 400, "forceY": true },
+    { "name": "lake2", "type": "invisible", "pos": { "x": 96, "y": 70 }, "width": 400, "height": 200, "forceY": true }
+]

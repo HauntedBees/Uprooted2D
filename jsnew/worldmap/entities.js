@@ -2,20 +2,21 @@ class WorldEntityBase {
     /**
      * @param {PIXIObj} container
      * @param {string} prefix
+     * @param {string} name
      * @param {{ x: number; y: number; }} pos
      * @param {number} dir
      */
-    constructor(container, prefix, pos, dir) {
+    constructor(container, prefix, name, pos, dir) {
         this.container = container;
-        this.prefix = prefix;
-        this.name = "";
+        this.prefix = prefix; // not sure what this is supposed to be
+        this.name = name;
         this.neverClear = false;
         this.pos = {
             x: pos.x * 16,
             y: pos.y * 16
         };
         this.importantKey = "";
-        this.dir = dir;
+        this.dir = dir || 0;
         this.moving = false;
         this.currentDir = this.dir;
         this.forceY = false;
@@ -23,15 +24,28 @@ class WorldEntityBase {
         this.padBottom = false;
         this.noCollision = false;
         this.sprite = {};
+        this.hidden = false;
         this.sheets = {};
         this.noChange = false;
         this.persist = false;
         this.ignoreZ = false;
+        this.preHiddenY = this.pos.y;
         this.passiveInteract = false;
         this.immediateInteract = false;
         /** @type {Interaction} */
         this.interact = undefined;
         this.forcedAnimation = false;
+    }
+    /** @param {boolean} hidden */
+    SetVisibility(hidden) {
+        this.hidden = hidden;
+        this.sprite.visible = !hidden; // TODO: why doesn't this work?!?
+        if(hidden) {
+            this.preHiddenY = this.sprite.position.y;
+            this.sprite.position.y = -999;
+        } else {
+            this.sprite.position.y = this.preHiddenY;
+        }
     }
     /**
      * @param {{ x: any; y: any }} pos
@@ -81,9 +95,7 @@ class WorldEntityBase {
     ResumeAnimation() {
         this.sprite.play();
     }
-    /**
-     * @param {boolean} [isInteract]
-     */
+    /** @param {boolean} [isInteract] */
     GetBounds(isInteract) {
         const width = this.sprite.width / ((isInteract || this.forceX) ? 2 : 3);
         const height = this.sprite.height / ((isInteract || this.forceY) ? 2 : 3) - (this.padBottom ? 32 : 0);
@@ -97,7 +109,7 @@ class WorldPlayer extends WorldEntityBase {
      * @param {number} dir
      */
     constructor(container, pos, dir) {
-        super(container, "", pos, dir);
+        super(container, "", "player", pos, dir);
         const spriteInfo = gfx2.CreatePlayerMapCharSprite(this.dir, this.pos.x, this.pos.y);
         this.sprite = spriteInfo.sprite;
         this.sheets = spriteInfo.sheets;
@@ -113,16 +125,11 @@ class WorldPlayer extends WorldEntityBase {
     }
 }
 class WorldNotPlayer extends WorldEntityBase {
-    /**
-     * @param {string} textKey
-     * @param {any} [extra]
-     */
+    /** @param {string} textKey @param {any} [extra] */
     CreateOneSpeakInteraction(textKey, extra) {
         this.interact = new SingleInteraction(textKey);
     }
-    /**
-     * @param {string} cutsceneKey
-     */
+    /** @param {string} cutsceneKey */
     CreateSequenceInteraction(cutsceneKey) {
         this.interact = new SequenceInteraction(cutsceneKey);
     }
@@ -135,11 +142,12 @@ class WorldNPC extends WorldNotPlayer {
      * @param {number} sy
      * @param {EntityJSONPoint} pos
      * @param {number} dir
+     * @param {boolean} big
      * @param {EntityJSONAdditionalFrames[]} additionalAnimations
      */
-    constructor(container, name, sx, sy, pos, dir, additionalAnimations) {
-        super(container, "", pos, dir);
-        const spriteInfo = gfx2.CreateNPCCharSprite(sx, sy, this.dir, this.pos.x, this.pos.y, additionalAnimations);
+    constructor(container, name, sx, sy, pos, dir, big, additionalAnimations) {
+        super(container, "", name, pos, dir);
+        const spriteInfo = gfx2.CreateNPCCharSprite(sx, sy, this.dir, this.pos.x, this.pos.y, big, additionalAnimations);
         this.name = name;
         this.SetSprite(spriteInfo.sprite);
         this.sheets = spriteInfo.sheets;
@@ -154,8 +162,7 @@ class WorldMapJunk extends WorldNotPlayer {
      * @param {string} key
      */
     constructor(container, name, pos, key) {
-        super(container, "", pos, 0);
-        this.name = name;
+        super(container, "", name, pos, 0);
         
         this.SetSprite(gfx2.CreateMapJunkSprite(key, this.pos.x, this.pos.y));
         this.persist = this.sprite.width > 100 || this.sprite.height > 100;
@@ -170,8 +177,7 @@ class WorldSheetObj extends WorldNotPlayer {
      * @param {string} key
      */
     constructor(container, name, pos, key) {
-        super(container, "", pos, 0);
-        this.name = name;
+        super(container, "", name, pos, 0);
         this.SetSprite(gfx2.CreateSmallSprite(key, this.pos.x, this.pos.y));
     }
     Update() { }
@@ -185,14 +191,20 @@ class WorldInvisibleObj extends WorldNotPlayer {
      * @param {number} height
      */
     constructor(container, name, pos, width, height) {
-        super(container, "", pos, 0);
+        super(container, "", name, pos, 0);
         this.name = name;
-        this.sprite = {
-            x: this.pos.x,
-            y: this.pos.y,
-            width: width,
-            height: height
-        };
+        if(DebugHelp.isDebug) {
+            this.SetSprite(gfx2.CreateSmallSprite("transWake", this.pos.x, this.pos.y));
+            this.sprite.scale.x = width / 64;
+            this.sprite.scale.y = height / 64;
+        } else {
+            this.sprite = {
+                x: this.pos.x,
+                y: this.pos.y,
+                width: width,
+                height: height
+            };
+        }
     }
     Update() { }
 }
@@ -205,7 +217,6 @@ class WorldShopEnter extends WorldInvisibleObj {
      */
     constructor(container, name, pos, shop) {
         super(container, name, pos, 64, 64);
-        this.SetSprite(gfx2.CreateSmallSprite("transWake", this.pos.x, this.pos.y));
         this.shopName = shop;
         this.interact = new ShopInteraction(shop);
         this.noCollision = true;
@@ -219,9 +230,27 @@ class WorldAutoplay extends WorldInvisibleObj {
      */
     constructor(container, key) {
         super(container, key, { x: -1, y: -1 }, 64, 64);
-        this.SetSprite(gfx2.CreateSmallSprite("transWake", this.pos.x, this.pos.y));
         this.key = key;
         this.immediateInteract = true;
         this.interact = new SequenceInteraction(key);
+    }
+}
+class WorldTransferMap extends WorldInvisibleObj {
+    /**
+     * @param {PIXIObj} container
+     * @param {string} name
+     * @param {EntityJSONPoint} pos
+     * @param {number} width
+     * @param {number} height
+     * @param {string} destMap
+     * @param {EntityJSONPoint} destPos
+     * @param {number} destDir
+     */
+    constructor(container, name, pos, width, height, destMap, destPos, destDir) {
+        super(container, name, pos, width, height);
+        this.interact = new MapChangeInteraction(destMap, destPos, destDir);
+        this.noCollision = true;
+        this.passiveInteract = true;
+        
     }
 }

@@ -7,6 +7,14 @@
 			"frame": { "x": 0, "y": 0, "w": 1332, "h": 64 },
 			"sourceSize": { "w": 1332, "h": 64 }
 		},
+		"shortFenceX": {
+			"frame": { "x": 840, "y": 256, "w": 369, "h": 64 },
+			"sourceSize": { "w": 369, "h": 64 }
+		},
+		"shorterFenceX": {
+			"frame": { "x": 1288, "y": 64, "w": 169, "h": 64 },
+			"sourceSize": { "w": 169, "h": 64 }
+		},
 		"nubFenceX": {
 			"frame": { "x": 328, "y": 64, "w": 69, "h": 64 },
 			"sourceSize": { "w": 69, "h": 64 }
@@ -58,6 +66,10 @@
 		"smallFoodCrate": {
 			"frame": { "x": 689, "y": 321, "w": 64, "h": 68 },
 			"sourceSize": { "w": 64, "h": 68 }
+		},
+		"foodCrate": {
+			"frame": { "x": 753, "y": 321, "w": 64, "h": 128 },
+			"sourceSize": { "w": 64, "h": 128 }
 		}
 	}
 }
