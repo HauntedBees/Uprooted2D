@@ -1,7 +1,11 @@
 <html>
     <head>
+        <title>Uprooted: Meal Replacement Game</title>
+        <link rel="shortcut icon" href="ff.png"/>
         <style>
             @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
+            @font-face { font-family: "Jura"; src: url("styles/JuraBold-rmpL.ttf") }
+            @font-face { font-family: "Nevis"; src: url("styles/nevis.ttf") }
             @font-face { font-family: "OpenDyslexic"; src: url("styles/OpenDyslexic3-Regular.ttf") }
             body {
 				font-family: "PressStart2P";
@@ -20,7 +24,7 @@
                 position: absolute;
                 right: 0; 
                 text-align: center;
-                top: 10%;
+                top: 2%;
             }
             #colorCover, #previews, #prev_cover {
                 width: 1024px;
@@ -97,10 +101,12 @@
             <img id="prev_imggb" src="imggb/colorPreview.png"/>
             <div id="prev_cover"></div>
         </div>
-        <canvas id="dpad" width="1024" height="896"></canvas>
+        <!--<canvas id="dpad" width="1024" height="896"></canvas>-->
         <div id="fontLoader">
             <div style="font-family:PressStart2P">&nbsp;</div>
             <div style="font-family:OpenDyslexic">&nbsp;</div>
+            <div style="font-family:Nevis">&nbsp;</div>
+            <div style="font-family:Jura">&nbsp;</div>
         </div>
         <script src="out.js"></script>
         <script type="text/javascript">document.addEventListener("DOMContentLoaded", game.fullInit);</script>
