@@ -45,7 +45,7 @@ combat.menu = {
         this.drawOption(GetText("combatAttack"), 1, this.cursorY === 1);
         this.drawOption(GetText("combatCompost"), 2, this.cursorY === 2);
         this.drawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), 3, this.cursorY === 3);
-        combat.cursors.RedimCursor("main", 0, this.dy + this.cursorY, this.options[this.cursorY], 0);
+        combat.cursors.RedimCursor("main", 0, this.dy + this.cursorY + 0.125, this.options[this.cursorY], -0.3125);
         let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
         switch(this.cursorY) {
             case 0:
@@ -138,7 +138,7 @@ combat.menu = {
         }
         combat.animHelper.SetPlayerAnimState(charAnim, true);
         combat.animHelper.SetBirdAnimState(birdAnim, true);
-        gfx.drawInfobox(12, 3, this.dy);
+        gfx.drawMinibox(4, this.dy, 11, 1, "menuA", "MetalInfo", gfx.GetMetalInfoColor());
         const topy = 9.25;
         const useLongNames = combat.enemies.length < 3;
         for(let i = 0; i < combat.enemies.length; i++) {
@@ -147,8 +147,8 @@ combat.menu = {
             gfx.drawText(enemyNameInfo.name, (5.75 + 6 * Math.floor(i / 2)) * 16, (topy + 1 + (i % 2)) * 16);
             gfx.drawTileToGrid(GetHPFrame(enemy), 4.5 + 6 * Math.floor(i / 2), topy + (i % 2), "menucursorB");
         }
-        gfx.drawInfobox(12, 2, this.dy + 2);
-        gfx.drawWrappedText(text, 4.5 * 16, 9 + ((2 + this.dy) * 16), 175);
+        gfx.drawMinibox(4, this.dy + 2, 11, 0.75, "menuA", "FarmInfo", gfx.GetFarmInfoColor());
+        gfx.drawWrappedText(text, 4.5 * 16, 11 + ((2 + this.dy) * 16), 170);
         combat.animHelper.DrawBottom();
         combat.menu.fullyLoaded = true;
     },
@@ -200,7 +200,7 @@ combat.menu = {
         return count;
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
-    drawOption: function(text, y, selected) { this.options.push(gfx.drawOption(text, this.dy + y, selected)) },
+    drawOption: function(text, y, selected) { this.options.push(gfx.drawCombatOption(text, this.dy + y, selected)) },
     mouseMove: function(pos) {
         if(pos.x > 3) { return false; }
         const y = Math.floor(pos.y - combat.menu.dy);

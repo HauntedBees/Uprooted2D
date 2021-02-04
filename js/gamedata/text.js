@@ -7840,7 +7840,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"combatSurrenderDesc": {
-		"en-us": "You have no seeds, no crops, and no attacks. I'm sorry.", 
+		"en-us": "No crops, no seeds, no weapons, no options. I guess this is it...", 
 		"type": "combat"
 	},
 	"combatSurrenderDo": {

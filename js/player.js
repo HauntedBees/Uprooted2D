@@ -47,10 +47,10 @@ let player = {
     getSheetPath: function() {
         switch(player.options.gfxfilter) {
             case 0:
-            case 4: return "img"; // glitch
+            case 4: return "img2"; // glitch
             case 1: return "imgs4x";
             case 2: return "imghq4x";
-            case 3: return player.options.coverMode === 0 ? "imggb" : "img";
+            case 3: return player.options.coverMode === 0 ? "imggb" : "img2";
         }
     },
     getPlayTimeString: function(time) {

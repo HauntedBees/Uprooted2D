@@ -22,9 +22,7 @@ class Gfx {
         PIXI.Loader.shared.load(() => this.LoadComplete(loadedFunc));
         this.mapFragments = {};
     }
-    /**
-     * @param {() => void} callback
-     */
+    /** @param {() => void} callback */
     LoadComplete(callback) {
         this.img = {
             mapJunk: PIXI.Loader.shared.resources["gamedata/spritesheets/mapJunk.json"].spritesheet.textures,
@@ -39,6 +37,10 @@ class Gfx {
             "stdSmall": {
                 fontFamily: "Nevis",
                 fontSize: 20
+            },
+            "stdSmaller": {
+                fontFamily: "Nevis",
+                fontSize: 18
             },
             "stdHeader": {
                 fontFamily: "Nevis",
@@ -85,24 +87,26 @@ class Gfx {
         this.app.stage.addChild(this.transitionContainer);
         callback();
     }
-
     /**
      * @param {number} sx
      * @param {number} sy
      * @param {number} dir
      * @param {number} x
      * @param {number} y
+     * @param {boolean} big
      * @param {EntityJSONAdditionalFrames[]} [additionalAnimations]
      */
-    CreateNPCCharSprite(sx, sy, dir, x, y, additionalAnimations) {
-        const sheets = this.CreateMapCharSpriteSheet(PIXI.utils.TextureCache["mapChar"], sx, sy, 72, 88);
+    CreateNPCCharSprite(sx, sy, dir, x, y, big, additionalAnimations) {
+        const sheet = PIXI.utils.TextureCache[(big ? "mapCharBig" : "mapChar")];
+        const sheetw = big ? 136 : 72, sheeth = big ? 168 : 88;
+        const sheets = this.CreateMapCharSpriteSheet(sheet, sx, sy, sheetw, sheeth);
         if(additionalAnimations !== undefined) {
             for(let i = 0; i < additionalAnimations.length; i++) {
                 const animInfo = additionalAnimations[i];
                 const animName = animInfo.name;
                 const animFrames = animInfo.frames;
                 /** @param {EntityJSONPoint} pos */
-                const frames = animFrames.map(pos => this.GetFrameFromSheet(PIXI.utils.TextureCache["mapChar"], 0, 0, pos.x, pos.y, 72, 88));
+                const frames = animFrames.map(pos => this.GetFrameFromSheet(sheet, 0, 0, pos.x, pos.y, sheetw, sheeth));
                 sheets[animName] = frames;
             }
         }
@@ -119,7 +123,7 @@ class Gfx {
         const sheets = this.CreateMapCharSpriteSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 72, 88);
         sheets["crouchR"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 0, 72, 88) ];
         sheets["water1"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 1, 72, 88) ];
-        sheets["water2"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 2, 72, 88) ];
+        sheets["water2"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 2, 72, 88, 82) ];
         sheets["think"] = [ this.GetFrameFromSheet(PIXI.utils.TextureCache["mapPlayer"], 0, 0, 4, 3, 72, 88) ];
         let s = new PIXI.AnimatedSprite(sheets.standing[dir]);
         s.animationSpeed = 0.1;
@@ -155,9 +159,10 @@ class Gfx {
      * @param {number} ix  @param {number} iy
      * @param {number} x @param {number} y
      * @param {number} w @param {number} h
+     * @param {number} [w2]
      */
-    GetFrameFromSheet(sheet, ix, iy, x, y, w, h) {
-        return new PIXI.Texture(sheet, new PIXI.Rectangle((ix + x) * w, (iy + y) * h, w, h));
+    GetFrameFromSheet(sheet, ix, iy, x, y, w, h, w2) {
+        return new PIXI.Texture(sheet, new PIXI.Rectangle((ix + x) * w, (iy + y) * h, w2 || w, h));
     }
 
     /**
@@ -229,7 +234,7 @@ class Gfx {
         if(fromGrid) { x *= 64; y *= 64; }
         [s.x, s.y] = [x, y];
         s.loop = loop;
-        s.animationSpeed = animationSpeed || 1;
+        s.animationSpeed = animationSpeed || 0.1;
         if(startByDefault) { s.play(); }
         return s;
     }
@@ -261,9 +266,13 @@ class Gfx {
      * @param {number} rightSide
      * @param {number} maxTextWidth
      * @param {boolean} drawTop
+     * @param {boolean} [compact]
+     * @param {number} [amount]
+     * @param {number} [season]
      * @returns {PIXIObj}
      */
-    DrawCropInfo(crop, fontStyle, ignoreSun, x, y, rightSide, maxTextWidth, drawTop) {
+    DrawCropInfo(crop, fontStyle, ignoreSun, x, y, rightSide, maxTextWidth, drawTop, compact, amount, season) {
+        compact = compact || false;
         const elements = [];
 
         let cropSprite = "dirt";
@@ -281,20 +290,25 @@ class Gfx {
         }
 
         if(drawTop) {
-            elements.push(gfx2.CreateSmallSprite(crop.name, x, y, false));
-            elements.push(gfx2.WriteText(crop.displayname, fontStyle + "Header", x + 80, y + 12, "left"));
-            elements.push(gfx2.CreateSmallSprite(cropSprite, x + rightSide, y, false));
-            elements.push(gfx2.WriteText(crop.size, "cropNo", x + rightSide + 56, y - 10));
-            y += 80;
+            if(compact) {
+                elements.push(gfx2.WriteWrappedMultiFormatText(`<sm>x${amount}</sm> ${crop.displayname}`, fontStyle, { "sm": { fontSize: 14 } }, x + 6, y + 8, 222, "left"));
+                y += 32;
+            } else {
+                elements.push(gfx2.CreateSmallSprite(crop.name, x, y, false));
+                elements.push(gfx2.WriteText(crop.displayname, fontStyle + "Header", x + 80, y + 12, "left"));
+                elements.push(gfx2.CreateSmallSprite(cropSprite, x + rightSide, y, false));
+                elements.push(gfx2.WriteText(crop.size, "cropNo", x + rightSide + 56, y - 10));
+                y += 80;
+            }
         } else {
             elements.push(gfx2.CreateSmallSprite(cropSprite, x + 840, y));
             elements.push(gfx2.WriteText(crop.size, "cropNo", x + 896, y - 10));
         }
-        const dx = ignoreSun ? 0 : 64;
+        const dx = ignoreSun ? (compact ? -8 : 0) : 64;
         if(!ignoreSun) {
             elements.push(gfx2.CreateSmallSprite("inv_power", x, y, false));
         }
-        const numStars = crop.power / 2, starDx = 64;
+        const numStars = crop.power / 2, starDx = compact ? 41 : 64;
         if(numStars > 5) {
             for(let i = 0; i < 5; i++) {
                 elements.push(gfx2.CreateSmallSprite("starMax", dx + x + 1 + i * starDx, y, false));
@@ -309,27 +323,64 @@ class Gfx {
             }
         }
 
-        const seasons = ["winter", "autumn", "summer", "spring"];
-        for(let i = 3; i >= 0; i--) { elements.push(gfx2.CreateSmallSprite(seasons[i] + crop.seasons[i], x + rightSide - 64 * i, y)); }
+        if(compact) {
+            const seasons = ["spring", "summer", "autumn", "winter"];
+            for(let i = 0; i < 4; i++) {
+                const myX = x + 64 * (i % 2), myY = y + 130 + Math.floor(i / 2) * 62;
+                elements.push(gfx2.CreateSmallSprite(seasons[i] + crop.seasons[i], myX, myY));
+                if(season === i) {
+                    elements.push(gfx2.CreateSmallSprite(`curseason${crop.seasons[i]}`, myX, myY));
+                }
+            }
+        } else {
+            const seasons = ["winter", "autumn", "summer", "spring"];
+            for(let i = 0; i < 4; i++) { elements.push(gfx2.CreateSmallSprite(seasons[i] + crop.seasons[3 - i], x + rightSide - 64 * i, y)); }
+        }
 
-        elements.push(gfx2.CreateSmallSprite("inv_time", x, y + 69));
-        elements.push(gfx2.GetThinNumber(crop.time, fontStyle, x + 72, y + 65));
-        if(crop.respawn > 0) {
-            elements.push(gfx2.CreateSmallSprite("inv_regrow", x + 168, y + 69));
-            elements.push(gfx2.GetThinNumber(crop.respawn, fontStyle, x + 232, y + 65));
+        if(compact) {
+            elements.push(gfx2.CreateSmallSprite("inv_time", x, y + 60));
+            elements.push(gfx2.GetThinNumber(crop.time, "std", x + 54, y + 56, true));
+            if(crop.respawn > 0) {
+                elements.push(gfx2.CreateSmallSprite("inv_regrow", x + 112, y + 60));
+                elements.push(gfx2.GetThinNumber(crop.respawn, "std", x + 160, y + 56, true));
+            }
+        } else {
+            elements.push(gfx2.CreateSmallSprite("inv_time", x, y + 69));
+            elements.push(gfx2.GetThinNumber(crop.time, fontStyle, x + 72, y + 65));
+            if(crop.respawn > 0) {
+                elements.push(gfx2.CreateSmallSprite("inv_regrow", x + 168, y + 69));
+                elements.push(gfx2.GetThinNumber(crop.respawn, fontStyle, x + 232, y + 65));
+            }
         }
         
         const bonusesToPush = [];
+        let firstIsAnimal = false;
         if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); }
         if(crop.fireResist) { bonusesToPush.push("fireIco" + crop.fireResist); }
         if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); }
         if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
         if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
-        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); }
-        for(let i = 0; i < bonusesToPush.length; i++) {
-            elements.push(gfx2.CreateSmallSprite(bonusesToPush[i], x + rightSide - i * 64, y + 69));
+        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); firstIsAnimal = (bonusesToPush.length === 1); }
+        if(compact) {
+            if(bonusesToPush.length <= 2) {
+                elements.push(gfx2.CreateSmallSprite(bonusesToPush[0], x + 140, y + 130));
+                if(bonusesToPush.length === 2) {
+                    elements.push(gfx2.CreateSmallSprite(bonusesToPush[1], x + 140, y + 188));
+                }
+            } else {
+                for(let i = 0; i < bonusesToPush.length; i++) {
+                    const myX = x + 124 + 10 * i, myY = y + 130 + i * 24 - (firstIsAnimal ? 0 : 8);
+                    elements.push(gfx2.CreateSmallSprite(bonusesToPush[i], myX, myY));
+                }
+            }
+        } else {
+            for(let i = 0; i < bonusesToPush.length; i++) {
+                elements.push(gfx2.CreateSmallSprite(bonusesToPush[i], x + rightSide - i * 64, y + 69));
+            }
         }
-        elements.push(gfx2.WriteWrappedText(GetText(crop.name), fontStyle + (drawTop ? "Medium" : ""), x - 12, y + 150, maxTextWidth, "left"));
+        if(!compact) {
+            elements.push(gfx2.WriteWrappedText(GetText(crop.name), fontStyle + (drawTop ? "Medium" : ""), x - 12, y + 150, maxTextWidth, "left"));
+        }
 
         return gfx2.CreateContainer(elements, false, true);
     }
@@ -338,9 +389,10 @@ class Gfx {
      * @param {string} fontStyle
      * @param {number} x
      * @param {number} y
+     * @param {boolean} [superThin]
      * @returns {PIXIObj}
      */
-    GetThinNumber(i, fontStyle, x, y) {
+    GetThinNumber(i, fontStyle, x, y, superThin) {
         let dispNum = "";
         if(i === -1 || i === 999) { // NOTE: -1 vs 999 what is the diff?
             dispNum = "??";
@@ -349,8 +401,9 @@ class Gfx {
         } else {
             dispNum = i.toString();
         }
+        if(superThin && dispNum.length > 1) { x += 8; }
         const thinNo = gfx2.WriteText(dispNum, fontStyle + "Big", x, y);
-        thinNo.width = 64;
+        thinNo.width = (superThin === true) ? 48 : 64;
         return thinNo;
     }
 
@@ -377,7 +430,7 @@ class Gfx {
         const sprites = [];
         // TODO: different colors
         const delta = fromGrid ? 1 : 64;
-        sprites.push(this.CreateRectangle(0xA36F00, x + delta, y + delta, w - delta, h - delta, fromGrid));
+        sprites.push(this.CreateRectangle(0xFFAD63, x + delta, y + delta, w - delta, h - delta, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}UL`, x, y, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}DL`, x, y + h, fromGrid));
         sprites.push(this.CreateSmallSprite(`${infoType}UR`, x + w, y, fromGrid));
@@ -415,9 +468,7 @@ class Gfx {
         return rect;
     }
 
-    /**
-     * @param {string} mapName
-     */
+    /** @param {string} mapName */
     FragmentMap(mapName) {
         const mapImg = PIXI.utils.TextureCache["maps/" + mapName];
         const w = mapImg.width, h = mapImg.height;
@@ -432,9 +483,7 @@ class Gfx {
             this.mapFragments[mapName].push(row);
         }
     }
-    /**
-     * @param {string} mapName
-     */
+    /** @param {string} mapName */
     CreateMap(mapName) {
         if(this.mapFragments[mapName] === undefined) { this.FragmentMap(mapName); }
         const mapSprites = [];
@@ -448,6 +497,11 @@ class Gfx {
             }
         }
         return mapSprites;
+    }
+    /** @param {string} mapName */
+    GetMapDimensions(mapName) {
+        const mapImg = PIXI.utils.TextureCache["maps/" + mapName];
+        return { width: mapImg.width, height: mapImg.height };
     }
     
     /**
@@ -500,7 +554,7 @@ class Gfx {
     /**
      * @param {string} text
      * @param {string} defaultStyle
-     * @param {{ [x: string]: any; st?: { fontStyle: string; }; b?: { fontVariant: string; fontWeight: string; fontSize: number; }; h?: { fontFamily: string; fontSize: number; fontVariant: string; fontWeight: string; }; }} formats
+     * @param {{ [x: string]: any; st?: { fontStyle: string; }; b?: { fontVariant: string; fontWeight: string; fontSize: number; }; h?: any; }} formats
      * @param {number} x
      * @param {number} y
      * @param {number} maxwidth
@@ -520,6 +574,7 @@ class Gfx {
      * @param {boolean} onBottom
      */
     WriteWorldMapText(container, text, onBottom) {
+        onBottom = true; // TODO: this
         // TODO: speaker
         const y = (onBottom ? this.tileH - 4 : 0);
         const rect = this.DrawBox("FarmInfo", 0, y, this.tileW - 1, 3, true);

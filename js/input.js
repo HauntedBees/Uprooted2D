@@ -111,6 +111,7 @@ let consoleCmd = {
     }
 };
 let input = {
+    keysToBlock: ["ArrowUp", "ArrowDown", "ArrowUp", "ArrowRight", " "],
     inConsole: false, flickerIdx: -1, consoleString: "", BUTTONDELAY: 10, 
     ConsoleKeyPress: function(key) {
         if(key === "Backspace") {
@@ -247,7 +248,6 @@ let input = {
     },
     GetKey: e => e.key.length === 1 ? e.key.toLowerCase() : e.key,
     keyDown: function(e) {
-        console.log(e.key);
         const key = input.GetKey(e);
         if(input.inConsole) { 
             if(key === "Backspace" || key === "Delete") {
@@ -287,6 +287,7 @@ let input = {
     keyPress: function(e) {
         console.log(e.key);
         const key = input.GetKey(e);
+        if(input.keysToBlock.indexOf(key) >= 0) { e.preventDefault(); }
         if(key === "`") { return input.HandleConsole(); }
         if(input.inConsole) { return input.ConsoleKeyPress(key); }
         if([player.controls.up, player.controls.left, player.controls.down, player.controls.right].indexOf(key) >= 0 && game.currentInputHandler.freeMovement) {

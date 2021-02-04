@@ -329,16 +329,16 @@ function CombatAnimHelper(enemies) {
     this.DrawBottom = function() {
         const y = game.tileh - 0.75;
         const texty = y + 0.65;
-        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawTileToGrid("infoU", x, y, "menuA"); }
-        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, texty * 16);
-        gfx.drawTileToGrid("seasonbar0", 7.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar1", 8.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar2", 9.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar3", 10.5, y, "menuA");
+        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawTileToGrid("FarmInfoU", x, y, "menuA"); }
+        gfx.drawText("HP: " + player.health + "/" + player.maxhealth, 4, texty * 16);
+        gfx.drawTileToGrid("seasonbar0", 8.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar1", 9.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar2", 10.5, y, "menuA");
+        gfx.drawTileToGrid("seasonbar3", 11.5, y, "menuA");
         const diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
-        gfx.drawTileToGrid("seasonico", 7.25 + combat.season + diff, y, "menuA");
+        gfx.drawTileToGrid("seasonico", 8.25 + combat.season + diff, y, "menuA");
         const season = GetText("season" + combat.season);
-        gfx.drawTile("season" + combat.season, 12 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
-        gfx.drawText(season, 13 * 16 - 1, texty * 16);
+        gfx.drawTile("season" + combat.season, 13 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
+        gfx.drawText(season, 14 * 16 - 1, texty * 16);
     };
 }

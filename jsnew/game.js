@@ -84,7 +84,12 @@ class GameHandler {
         this.InitListeners();
         if(debug || fromQuit === "true") {
             localStorage.removeItem("quit");
-            this.currentScreen = new WorldScreen({ init: { x: 67.5, y: 34 }, map: "farm" });//TitleScreen();
+            DebugHelp.GrantManyCrops();
+            this.player.fixtureGridInfo.ExpandGrid(6, 5, "W");
+            this.previousWorldState = new PreviousWorldState("farm", null, null, [], null);
+            this.currentScreen = new CombatScreen(["nathan"]);
+            //this.currentScreen = new WorldScreen({ init: { x: 43, y: 20 }, playerDir: 1, map: "producestand" });//TitleScreen();
+            //this.currentScreen = new WorldScreen({ init: { x: 67.5, y: 34 }, map: "farm" });//TitleScreen();
         } else {
             //game.currentInputHandler = opening;
             //opening.setup();

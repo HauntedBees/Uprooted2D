@@ -72,6 +72,7 @@ class CropFieldInfo {
             GetEdge(saEdge + "SA", offsetX - 1, offsetY + scaleY * this.height, scaleY),
             GetEdge(sdEdge + "SD", offsetX + this.width, offsetY + scaleY * this.height, scaleY)
         ];
+
         for(let x = 0; x < this.width; x++) {
             itemContainers.push(GetEdge(this.edge + "W", x + offsetX, offsetY + scaleY * -1, scaleY));
             const bottomEdge = this.grid[x][this.height - 1] === "_paddy" ? "wedge" : this.edge;
@@ -136,7 +137,7 @@ class CropFieldInfo {
                 }
                 const dirtContainer = gfx2.CreateContainer(dirtParts, false, true);
                 const contentContainer = gfx2.CreateContainer(sprites, false, true);
-                if(clickHandler !== undefined) { 
+                if(clickHandler !== undefined) {
                     MakeSpriteInteractive(dirtContainer, () => clickHandler(x, y, caller), () => hoverHandler(x, y, caller));
                     MakeSpriteInteractive(contentContainer, () => clickHandler(x, y, caller), () => hoverHandler(x, y, caller));
                 }
@@ -280,6 +281,9 @@ class NewCropDetail {
         this.respawn = re;
         this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
         this.saltClean = false;
+        this.waterResist = 0;
+        this.fireResist = 0;
+        this.saltResist = 0;
         if (addtl !== undefined) {
             for (const key in addtl) {
                 this[key] = addtl[key];
