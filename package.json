@@ -40,5 +40,11 @@
         "visible": true,
         "width": 1024
     },
-    "optionalDependencies": {}
+    "devDependencies": {
+        "imagemin": "^7.0.1",
+        "imagemin-pngquant": "^9.0.1",
+        "node-stream-zip": "^1.13.0",
+        "sharp": "^0.27.1",
+        "xml2js": "^0.4.23"
+    }
 }

@@ -1,0 +1,82 @@
+const StreamZip = require("node-stream-zip");
+const parseString = require("xml2js").parseString;
+const sharp = require("sharp");
+const imagemin = require('imagemin');
+const path = require("path");
+const imageminPngquant = require('imagemin-pngquant');
+
+const imgPath = path.join(__dirname, "../ora");
+const args = process.argv.slice(2);
+const HasArg = s => args.indexOf(s) >= 0;
+
+const GetBackgrounds = async function() {
+    console.log("Extracting backgrounds");
+    const zip = new StreamZip.async({file: `${imgPath}/combatbg.ora`});
+    const xmlStr = await zip.entryData("stack.xml");
+    const rawpath = path.join(__dirname, "./out/combatbg"), finalpath = path.join(__dirname, "../img/bgs");
+    parseString(xmlStr, async function(err, xmlObj) {
+        const layers = xmlObj.image.stack[0].layer;
+        
+        const images = [];
+        const promises = layers.map(e => {
+            const name = e.$.name, src = e.$.src;
+            if(name === "Background") { return true; }
+            console.log(`Extracting ${name}`);
+            const filename = `${name}.png`;
+            images.push(filename);
+            return zip.extract(src, `${rawpath}/${filename}`);
+        });
+        await Promise.all(promises);
+        console.log("All Backgrounds extracted");
+        images.forEach(async filename => {
+            const img = sharp(`${rawpath}/${filename}`);
+            const imgPath = `${finalpath}/${filename}`;
+            return img.metadata().then(metadata => {
+                img.resize({ width: metadata.width * 4, kernel: sharp.kernel.nearest }).toFile(imgPath, () => {
+                    imagemin([imgPath], {
+                        destination: finalpath,
+                        plugins: [imageminPngquant()]
+                    })
+                });
+            });
+        });
+        console.log("All Backgrounds resized");
+        await zip.close();
+    });
+}
+const RipImage = async function(img) {
+    const filename = `${img}.png`;
+    console.log("Extracting Image " + filename);
+    const zip = new StreamZip.async({file: `${imgPath}/${img}.ora`});
+    const xmlStr = await zip.entryData("stack.xml");
+    const rawpath = path.join(__dirname, "./out/"), finalpath = path.join(__dirname, "../img/");
+    parseString(xmlStr, async function(err, xmlObj) {
+        const contentLayer = xmlObj.image.stack[0].layer.findIndex(f => f.$.name === "Content");
+        await zip.extract(`data/layer${contentLayer + 1}.png`, `${rawpath}/${filename}`);
+        console.log(filename + " extracted");
+        const img = sharp(`${rawpath}/${filename}`);
+        const imgPath = `${finalpath}/${filename}`;
+        img.metadata().then(metadata => {
+            img.resize({ width: metadata.width * 4, kernel: sharp.kernel.nearest }).toFile(imgPath, () => {
+                imagemin([imgPath], {
+                    destination: finalpath,
+                    plugins: [imageminPngquant()]
+                })
+            });
+        });
+        console.log(filename + " resized");
+        await zip.close();
+    });
+}
+
+const noArgs = args.length === 0;
+const filters = args.length === 1 && args[0] === "filters";
+if(noArgs || HasArg("bg")) {
+    GetBackgrounds();
+}
+if(noArgs || HasArg("sheet")) {
+    RipImage("sheet");
+}
+if(filters || HasArg("hqx")) {
+    console.log("TODO");
+}

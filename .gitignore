@@ -63,3 +63,5 @@ imghq*
 imgs*
 junk/*
 com.hauntedbees.farmingfantasy/*
+extbuild_node/out*
+*.ora~
