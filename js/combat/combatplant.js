@@ -1,7 +1,7 @@
 combat.plant = {
     activeCrop: null, actualIndexes: [],
     cursor: {x: 0, y: 0}, isValid: true, 
-    inventoryWidth: 9, dy: 8.5,
+    inventoryWidth: 12, dy: 10.5,
     layersToClean: ["menuA", "menuB", "menucursorA", "menucursorB", "menutext"],
     setup: function() {
         this.cursor = { x: combat.lastSelectedSeed.x, y: combat.lastSelectedSeed.y + this.dy };
@@ -528,9 +528,9 @@ combat.plant = {
                 }
             }
         }
-        gfx.drawInfobox(17, 5, this.dy + 0.5);
-        gfx.drawInfobox(7, 5, this.dy + 0.5);
-        const backButtonW = gfx.drawInfoText(GetText("menu.Back"), 0, this.dy - 0.25, cursorY == 7.5, "menuA", "menutext");
+
+        // Cursor/Buttons
+        const backButtonW = gfx.drawInfoText(GetText("menu.Back"), 0, this.dy - 0.25, cursorY === (this.dy - 1), "menuA", "menutext", true);
         if(this.activeCrop === null) {
             if(cursorY === (this.dy - 1)) {
                 combat.cursors.RedimCursor("main", cursorX, cursorY + 0.875, backButtonW, -0.25);
@@ -547,12 +547,17 @@ combat.plant = {
             combat.cursors.RedimCursor("main", cursorX, cursorY, size, size);
             combat.cursors.ReTypeCursor("main", "bcursor");
         }
-        combat.animHelper.DrawBottom();
+        
+        // Inventory
+        gfx.drawInfobox(17, 5, this.dy + 0.5, "", "FarmInfo");
         for(let i = 0; i < this.actualIndexes.length; i++) {
             const actItem = player.inventory[this.actualIndexes[i]];
             gfx.drawInventoryItem(actItem, i % this.inventoryWidth, this.dy + 0.5 + Math.floor(i / this.inventoryWidth), "menuA");
         }
-        
+
+        // Stat Box
+        gfx.drawInfobox(4, 7, this.dy - 2, "", "FarmInfo");
+        combat.animHelper.DrawSeasonsInfo(13, this.dy - 2.25);
     },
     SetFieldText: function() {
         if(this.cursor.y === (this.dy - 1)) { return; }
@@ -560,28 +565,31 @@ combat.plant = {
         let tileInfo = combat.grid[x][y];
         let effectInfo = combat.effectGrid[x][y];
         let itemInfo = player.itemGrid === undefined ? null : player.itemGrid[x][y];
+        const leftMostX = 12.375, maxWidth = 64;
         if(tileInfo === null && effectInfo === null && itemInfo === null) {
             const text = GetText("farmModDirt");
             const speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
-            gfx.drawWrappedText(text.replace(/\{0\}/g, speed), 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 100);
+            gfx.drawWrappedText(text.replace(/\{0\}/g, speed), leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
         } else if(tileInfo !== null) {
             if(tileInfo.x !== undefined) { tileInfo = combat.grid[tileInfo.x][tileInfo.y]; }
-            gfx.drawWrappedText(tileInfo.displayname, 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 100);
-            pausemenu.inventory.DrawCropPower(tileInfo, 9.5, 9.75, "menutext");
-            const row2y = 10.75, leftMostX = 9.5;
+            gfx.drawWrappedText(tileInfo.displayname, leftMostX * 16, 16 * (this.dy - 1) - 2, 64, "", "", 12);
+            pausemenu.inventory.DrawCropPower(tileInfo, leftMostX, 9.5, "menutext", false, true);
+            const row2y = 10.75, numGap = 0.875;
             gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
             if(tileInfo.activeTime > 0 && (tileInfo.time === 999 || tileInfo.time === -1)) {
-                gfx.drawTileToGrid("bigNum?", leftMostX + 1, row2y, "menutext");
+                gfx.drawTileToGrid("bigNum?", leftMostX + numGap, row2y, "menutext");
             }  else {
-                gfx.drawBigNumber(tileInfo.activeTime, leftMostX + 1, row2y, "menutext");
+                gfx.drawBigNumber(tileInfo.activeTime, leftMostX + numGap, row2y, "menutext");
             }
-            gfx.drawTileToGrid("inv_HP", leftMostX + 3, row2y, "menutext");
-            gfx.drawBigNumber(Math.min(99, tileInfo.health), leftMostX + 4, row2y, "menutext");
+            gfx.drawTileToGrid("inv_HP", leftMostX + 1.75, row2y, "menutext");
+            gfx.drawBigNumber(Math.min(99, tileInfo.health), leftMostX + 1.75 + numGap, row2y, "menutext");
             const seasons = ["spring", "summer", "autumn", "winter"];
-            gfx.drawTileToGrid("curseason" + tileInfo.seasons[combat.season], 9.5, 12, "menutext");
             for(let i = 0; i < 4; i++) {
-                gfx.drawTileToGrid(seasons[i] + tileInfo.seasons[i], 10.5 + i, 12, "menutext");
-            }
+                gfx.drawTileToGrid(seasons[i] + tileInfo.seasons[i], leftMostX + i * 0.875, 12, "menutext");
+                if(i === combat.season) {
+                    gfx.drawTileToGrid("curseason" + tileInfo.seasons[combat.season], leftMostX + i * 0.875, 12, "menutext");
+                }
+        }
         } else if(itemInfo !== null) {
             if(itemInfo.x !== undefined) {
                 x = itemInfo.x; y = itemInfo.y;
@@ -621,29 +629,25 @@ combat.plant = {
         const item = player.inventory[this.actualIndexes[idx]];
         if(item === null || item === undefined) { return; }
         const crop = GetCrop(item[0]);
-        let str = "x" + item[1] + " " + crop.displayname;
-        pausemenu.inventory.DrawCropPower(crop, 9.5, 9.75, "menutext");
-        const row2y = 10.75;
-        let leftMostX = 9.5;
+        let leftMostX = 12.375, shiftX = 0;
+        pausemenu.inventory.DrawCropPower(crop, leftMostX, 9.5, "menutext", false, true);
+        const row2y = 10.75, numGap = 0.875;
         if(crop.time > 0) {
             gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
             if(crop.time === 999) { // NOTE: -1 vs 999 what is the diff?
-                gfx.drawTileToGrid("bigNum?", leftMostX + 1, row2y, "menutext");
+                gfx.drawTileToGrid("bigNum?", leftMostX + numGap, row2y, "menutext");
             }  else {
-                gfx.drawBigNumber(crop.time, leftMostX + 1, row2y, "menutext");
+                gfx.drawBigNumber(crop.time, leftMostX + numGap, row2y, "menutext");
             }
-            leftMostX += 2;
+            shiftX += 1.75;
         }
-        let maxBonuses = 4;
         if(crop.respawn > 0) {
-            gfx.drawTileToGrid("inv_regrow", leftMostX, row2y, "menutext");
+            gfx.drawTileToGrid("inv_regrow", leftMostX + shiftX, row2y, "menutext");
             if(crop.respawn === 999 || crop.respawn === -1) {
-                gfx.drawTileToGrid("bigNum?", leftMostX + 1, row2y, "menutext");
+                gfx.drawTileToGrid("bigNum?", leftMostX + shiftX + numGap, row2y, "menutext");
             }  else {
-                gfx.drawBigNumber(crop.respawn, leftMostX + 1, row2y, "menutext");
+                gfx.drawBigNumber(crop.respawn, leftMostX + shiftX + numGap, row2y, "menutext");
             }
-            leftMostX += 2;
-            maxBonuses = 2;
         }
         let bonusesToPush = [];
         if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); }
@@ -652,15 +656,17 @@ combat.plant = {
         if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
         if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
         if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); }
-        leftMostX += 0.5;
-        for(let i = 0; i < Math.min(bonusesToPush.length, maxBonuses); i++) {
-            gfx.drawTileToGrid(bonusesToPush[i], leftMostX + i, row2y, "menutext");
+        for(let i = 0; i < bonusesToPush.length; i++) {
+            gfx.drawTileToGrid(bonusesToPush[i], leftMostX + i * 0.75, 13, "menutext");
         }
+        const stepx = 0.875;
         const seasons = ["spring", "summer", "autumn", "winter"];
-        gfx.drawTileToGrid("curseason" + crop.seasons[combat.season], 9.5, 12, "menutext");
         for(let i = 0; i < 4; i++) {
-            gfx.drawTileToGrid(seasons[i] + crop.seasons[i], 10.5 + i, 12, "menutext");
+            gfx.drawTileToGrid(seasons[i] + crop.seasons[i], leftMostX + i * stepx, 12, "menutext");
+            if(combat.season === i) {
+                gfx.drawTileToGrid("curseason" + crop.seasons[combat.season], leftMostX + i * stepx, 12, "menutext");
+            }
         }
-        gfx.drawWrappedText(str, 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 115);
+        gfx.drawWrappedText(crop.displayname, leftMostX * 16, 16 * (this.dy - 1) - 2, 64, "", "", 12);
     }
 };

@@ -409,20 +409,20 @@ pausemenu.inventory = {
         // Row 3
         gfx.drawWrappedText(GetText(crop.name), leftMostTextX - 16, rowTextYs[3], 170, undefined, undefined, 28);
     },
-    DrawCropPower: function(crop, x, y, layer, ignoreSun) {
+    DrawCropPower: function(crop, x, y, layer, ignoreSun, halfStep) {
         if(!ignoreSun) { gfx.drawTileToGrid("inv_power", x, y, layer); }
-        const numStars = crop.power / 2, starDx = 1;
+        const numStars = crop.power / 2, starDx = halfStep ? 0.5 : 1;
         if(numStars > 5) {
             for(let i = 0; i < 5; i++) {
-                gfx.drawTileToGrid("starMax", x + 1 + i * starDx, y, layer);
+                gfx.drawTileToGrid("starMax", x + starDx + i * starDx, y, layer);
             }
         } else {
             for(let i = 0; i < numStars; i++) {
-                gfx.drawTileToGrid("starFull", x + 1 + i * starDx, y, layer);
+                gfx.drawTileToGrid("starFull", x + starDx + i * starDx, y, layer);
             }
-            if(numStars % 1 !== 0) { gfx.drawTileToGrid("starHalf", x + 1 + (numStars - 0.5) * starDx, y, layer); }
+            if(numStars % 1 !== 0) { gfx.drawTileToGrid("starHalf", x + starDx + (numStars - 0.5) * starDx, y, layer); }
             for(let i = Math.ceil(numStars); i < 5; i++) {
-                gfx.drawTileToGrid("starNone", x + 1 + i * starDx, y, layer);
+                gfx.drawTileToGrid("starNone", x + starDx + i * starDx, y, layer);
             }
         }
     }

@@ -147,13 +147,8 @@ combat.menu = {
         // Player Health and Season
         gfx.drawMinibox(0, gfx.tileHeight - 3, 3, 2, "", "FarmInfo");
         gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 32, 12 * 16 - 2, "", 16, "", true);
-        const seasonx = 1, seasony = 11.875;
         
-        gfx.drawTileToGrid("seasonbar0", seasonx, seasony, "menuA");
-        gfx.drawTileToGrid("seasonbar1", seasonx + 1, seasony, "menuA");
-        const diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
-        gfx.drawTileToGrid("seasonico", seasonx - 0.25 + (combat.season + diff) / 2, seasony, "menuA");
-
+        combat.animHelper.DrawSeasonsInfo(1, 11.875);
         gfx.drawTile("season" + combat.season, 14, 12.75 * 16, "menuA");
         gfx.drawText(GetText("season" + combat.season), 32, 13.4 * 16);
 
@@ -164,14 +159,12 @@ combat.menu = {
         // Ayana and Bird
         combat.animHelper.SetPlayerAnimState(charAnim, true);
         combat.animHelper.SetBirdAnimState(birdAnim, true);
-        const topy = 9.25;
         
         // Enemy Health
         for(let i = 0; i < combat.enemies.length; i++) {
             const enemy = combat.enemies[i];
             const pos = combat.animHelper.GetEnemyTopPos(i);
             gfx.drawTileToGrid(GetHPFrame(enemy), pos.x, pos.y - 0.5, "menucursorB");
-            //gfx.drawTileToGrid(GetHPFrame(enemy), 4.5 + 6 * Math.floor(i / 2), topy + (i % 2), "menucursorB");
         }
         combat.menu.fullyLoaded = true;
     },

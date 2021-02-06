@@ -261,21 +261,22 @@ const gfx = {
     },
 
     // Text
-    drawInfoText: function(text, x, y, selected, imgLayer, textLayer) {
+    drawInfoText: function(text, x, y, selected, imgLayer, textLayer, sideBtn) {
         imgLayer = imgLayer || "menuOverBlack";
         textLayer = textLayer || "menutextOverBlack";
         let xi = 1;
         let width = gfx.getTextWidth(text) + 20;
         let xiimax = x + Math.ceil(width / 64);
-        const prefix = selected ? "recSel" : "sel";
+        const prefix = sideBtn ? (selected ? "CornerBtnSel" : "CornerBtn") : (selected ? "recSel" : "sel");
+        const dx = sideBtn ? 4 : 0, dy = sideBtn ? -4 : 0;
         while(xiimax > 14) { x -= 1; xiimax = x + Math.ceil(width / 64); }
-        gfx.drawTile(prefix + "L", x * 16, 2 + y * 16, imgLayer);
+        gfx.drawTile(prefix + (sideBtn ? "M" : "L"), x * 16, 2 + y * 16 + dy, imgLayer);
         while(width > 128) {
             width -= 64;
-            gfx.drawTile(prefix + "M", x * 16 + 16 * xi++, 2 + y * 16, imgLayer);
+            gfx.drawTile(prefix + "M", x * 16 + 16 * xi++, 2 + y * 16 + dy, imgLayer);
         }
-        gfx.drawTile(prefix + "R", x * 16 + 16 * xi, 2 + y * 16, imgLayer);
-        gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, textLayer);
+        gfx.drawTile(prefix + "R", x * 16 + 16 * xi, 2 + y * 16 + dy, imgLayer);
+        gfx.drawText(text, 7 + x * 16 - dx, 10.5 + y * 16, undefined, undefined, textLayer);
         return xi;
     },
     getTextRightAlignedX: (text, size, x) => x - gfx.getTextWidth(text, size),
@@ -399,10 +400,9 @@ const gfx = {
     },
     drawBigNumber: function(number, x, y, layer, white) {
         if(number > 100 || number < 0) { return; }
-        const digits = ("" + number).split("");
-        const ctx = gfx.ctx[layer];
+        const digits = ("" + number).split(""), xOffset = digits.length === 1 ? 0.125 : 0;
         for(let i = 0; i < digits.length; i++) {
-            gfx.drawTileToGrid((white === true ? "bigNumW" : "bigNum") + digits[i], x + 0.5 * i, y, layer, true);
+            gfx.drawTileToGrid((white === true ? "bigNumW" : "bigNum") + digits[i], x + xOffset + 0.5 * i, y, layer, true);
         }
     },
     drawItemNumber: function(number, x, y, layer, top) {

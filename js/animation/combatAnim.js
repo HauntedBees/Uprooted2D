@@ -331,4 +331,10 @@ function CombatAnimHelper(enemies) {
         gfx.drawTile("season" + combat.season, 12 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
         gfx.drawText(season, 13 * 16 - 1, texty * 16);
     };
+    this.DrawSeasonsInfo = function(x, y) {
+        gfx.drawTileToGrid("seasonbar0", x, y, "menuA");
+        gfx.drawTileToGrid("seasonbar1", x + 1, y, "menuA");
+        const diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
+        gfx.drawTileToGrid("seasonico", x - 0.25 + (combat.season + diff) / 2, y, "menuA");
+    }
 }
