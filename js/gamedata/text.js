@@ -7776,19 +7776,19 @@ const fulltext = {
 	},
 	// Combat - Player Actions
 	"season0": {
-		"en-us": "Spring", 
+		"en-us": "SPR", 
 		"type": "combat"
 	},
 	"season1": {
-		"en-us": "Summer", 
+		"en-us": "SUM", 
 		"type": "combat"
 	},
 	"season2": {
-		"en-us": "Autumn", 
+		"en-us": "AUT", 
 		"type": "combat"
 	},
 	"season3": {
-		"en-us": "Winter", 
+		"en-us": "WIN", 
 		"type": "combat"
 	},
 	"seeds_none": {

@@ -21,6 +21,10 @@ const gfx = {
     GetFont: () => player.options.font === 1 ? "OpenDyslexic" : "PressStart2P",
     GetBlack: () => (player.IsMonochrome() ? "#081820" : "#000000"),
     GetWhite: () => (player.IsMonochrome() ? "#E0F8D0" : "#FFFFFF"),
+    GetInfoColor: type => {
+        if(type === "info") { return gfx.GetLightBlue(); }
+        if(type === "FarmInfo") { return player.IsMonochrome() ? "#E0F8D0" : "#A36F00" } // TODO: confirm monochrome color is good
+    },
     GetLightBlue: () => (player.IsMonochrome() ? "#E0F8D0" : "#B2B5FF"),
     GetSpeakerBGColor: () => (player.IsMonochrome() ? "#E0F8D0" : "#6BADA3"),
 
@@ -104,6 +108,20 @@ const gfx = {
         gfx.drawTile(tile + "R", 16 * xi, 2 + y * 16, "menuA");
         gfx.drawText(text, 2, 10.5 + y * 16);
         return xi;
+    },
+    DrawCombatOption: function(text, x, y, selected) {
+        const startx = x, suffix = selected ? "A" : "", size = 18;
+        gfx.drawTile("BtlSelL" + suffix, 16 * x, 2 + y * 16, "menuA");
+        let width = gfx.getTextWidth(text, size), tileWidth = 32;
+        console.log(width);
+        while(width > 64) {
+            width -= 64;
+            gfx.drawTile("BtlSelM" + suffix, 16 * ++x, 2 + y * 16, "menuA");
+            tileWidth += 16;
+        }
+        gfx.drawTile("BtlSelR" + suffix, 16 * ++x, 2 + y * 16, "menuA");
+        gfx.drawText(text, 16 * startx + tileWidth / 2, 12 + y * 16, "", size, "", true);
+        return x + 1;
     },
     drawRightOption: function(text, y) {
         let xi = 1;
@@ -267,11 +285,12 @@ const gfx = {
         gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
         return gfx.ctx["menutext"].measureText(t).width;
     },
-    drawText: function(t, x, y, color, size, layer) {
+    drawText: function(t, x, y, color, size, layer, centered) {
         layer = layer || "menutext";
         gfx.ctx[layer].font = gfx.GetFontSize(size) + gfx.GetFont();
         gfx.ctx[layer].fillStyle = (color || gfx.GetBlack());
-        gfx.ctx[layer].fillText(t, x * gfx.scale - gfx.scale, y * gfx.scale);
+        const offset = centered ? (-gfx.ctx[layer].measureText(t).width / 2 + 5) : 0;
+        gfx.ctx[layer].fillText(t, x * gfx.scale - gfx.scale + offset, y * gfx.scale);
     },
     getTextLength: function(t, size) {
         gfx.ctx["menutext"].font = gfx.GetFontSize(size) + gfx.GetFont();
@@ -340,40 +359,42 @@ const gfx = {
     },
     drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 4, y || 0, (overBlack ? "menuOverBlack" : undefined)),
     drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)),
-    drawMinibox: function(x, y, w, h, layer) {
+    drawMinibox: function(x, y, w, h, layer, type) {
         layer = layer || "menuA";
-        gfx.drawTile("infoUL", x * 16, y * 16, layer);
-        gfx.drawTile("infoDL", x * 16, (y + h) * 16, layer);
-        gfx.drawTile("infoUR", (x + w) * 16, y * 16, layer);
-        gfx.drawTile("infoDR", (x + w) * 16, (y + h) * 16, layer);
+        type = type || "info";
+        gfx.drawTile(type + "UL", x * 16, y * 16, layer);
+        gfx.drawTile(type + "DL", x * 16, (y + h) * 16, layer);
+        gfx.drawTile(type + "UR", (x + w) * 16, y * 16, layer);
+        gfx.drawTile(type + "DR", (x + w) * 16, (y + h) * 16, layer);
         for(let x2 = x + 1; x2 < x + w; x2++) {
-            gfx.drawTile("infoU", x2 * 16, y * 16, layer);
-            gfx.drawTile("infoD", x2 * 16, (y + h) * 16, layer);
+            gfx.drawTile(type + "U", x2 * 16, y * 16, layer);
+            gfx.drawTile(type + "D", x2 * 16, (y + h) * 16, layer);
         }
         for(let y2 = y + 1; y2 < y + h; y2++) {
-            gfx.drawTile("infoL", x * 16, y2 * 16, layer);
-            gfx.drawTile("infoR", (x + w) * 16, y2 * 16, layer);
+            gfx.drawTile(type + "L", x * 16, y2 * 16, layer);
+            gfx.drawTile(type + "R", (x + w) * 16, y2 * 16, layer);
         }
         const ctx = gfx.ctx[layer];
-        ctx.fillStyle = gfx.GetLightBlue();
+        ctx.fillStyle = gfx.GetInfoColor(type);
         ctx.fillRect((x + 1) * 16 * gfx.scale, (y + 1) * 16 * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
     },
-    drawInfobox: function(w, h, y, layer) {
+    drawInfobox: function(w, h, y, layer, type) {
         y = (y || 0) * 16;
         layer = layer || "menuA";
+        type = type || "info";
         const startx = gfx.tileWidth - w;
         h -= 1;
-        gfx.drawTile("infoUL", startx * 16, y, layer);
-        gfx.drawTile("infoDL", startx * 16, y + h * 16, layer);
+        gfx.drawTile(type + "UL", startx * 16, y, layer);
+        gfx.drawTile(type + "DL", startx * 16, y + h * 16, layer);
         for(let x = startx + 1; x < gfx.tileWidth; x++) {
-            gfx.drawTile("infoU", x * 16, y, layer);
-            gfx.drawTile("infoD", x * 16, y + h * 16, layer);
+            gfx.drawTile(type + "U", x * 16, y, layer);
+            gfx.drawTile(type + "D", x * 16, y + h * 16, layer);
         }
         for(let y2 = 1; y2 < h; y2++) {
-            gfx.drawTile("infoL", startx * 16, y + y2 * 16, layer);
+            gfx.drawTile(type + "L", startx * 16, y + y2 * 16, layer);
         }
         const ctx = gfx.ctx[layer];
-        ctx.fillStyle = gfx.GetLightBlue();
+        ctx.fillStyle = gfx.GetInfoColor(type);
         ctx.fillRect((startx + 1) * 16 * gfx.scale, (y + 16) * gfx.scale, (w - 1) * 16 * gfx.scale, (h - 1) * 16 * gfx.scale);
     },
     drawBigNumber: function(number, x, y, layer, white) {

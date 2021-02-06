@@ -51,6 +51,7 @@ const combat = {
             case 6: this.dy = 0.25; break;
             default: this.dy = 1.5; break;
         }
+        this.dy += 5;
         this.enemywidth = 0;
         this.enemyheight = 0;
         this.isBossBattle = worldmap.mapName === "cave";

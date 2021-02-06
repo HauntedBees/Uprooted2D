@@ -1,5 +1,5 @@
 function CombatAnimHelper(enemies) {
-    let playerPos = { x: 3, y: 9.25 };
+    let playerPos = { x: 3, y: 4.5 };
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
     let enemyAnimInfos = [], anims = [];
@@ -222,16 +222,6 @@ function CombatAnimHelper(enemies) {
     this.DrawBackground = function() {
         gfx.clearLayer("background");
         gfx.drawFullImage(mapBattleXref[worldmap.mapName] || "bgs/outside");
-        const tileType = mapBattleTileXref[worldmap.mapName] || "grass";
-        const top = combat.isTree ? Math.min(1, combat.dy) : Math.min(combat.enemydy, combat.dy);
-        const bottom = combat.isTree ? Math.max(5, combat.dy + player.gridHeight) : Math.max(combat.enemydy + combat.enemyheight, combat.dy + player.gridHeight);
-        for(let x = 0; x < game.tilew; x++) {
-            gfx.drawTileToGrid(tileType + "Top", x, top - 1, "background");
-            gfx.drawTileToGrid(tileType + "Bottom", x, bottom, "background");
-            for(let y = top; y < bottom; y++) {
-                gfx.drawTileToGrid(tileType, x, y, "background");
-            }
-        }
         if(["dirt", "nathan", "_strongsoil"].indexOf(combat.enemyTile) >= 0) { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
         else if(combat.enemyTile === "watertile") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "wedge"); }
         else if(combat.enemyTile === "tree") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "tree"); }

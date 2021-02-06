@@ -1,5 +1,5 @@
 combat.menu = {
-    options: [], cursorY: 0, dy: 9.5, plantedAlreadyAndCantAttack: false, fullyLoaded: false,
+    options: [], cursorSel: 0, dy: 9.5, plantedAlreadyAndCantAttack: false, fullyLoaded: false,
     layersToClean: ["menuA", "menucursorB", "menutext"],
     setup: function(args) {
         combat.menu.fullyLoaded = false;
@@ -7,10 +7,11 @@ combat.menu = {
         args = args || {};
         this.plantedAlreadyAndCantAttack = args.canOnlyPlant || false;
         if(!args.notFirst) {
+            // Pointy Cursor Friend
             if(combat.isFalcon) {
-                combat.animHelper.AddAnim(new SheetAnim(2, 7, 700, "pointer", 6, true));
+                combat.animHelper.AddAnim(new SheetAnim(2, 2, 700, "pointer", 6, true));
             } else {
-                combat.animHelper.AddAnim(new SheetAnim(3.4375, 7, 700, "pointer", 6, true));
+                combat.animHelper.AddAnim(new SheetAnim(3.4375, 2, 700, "pointer", 6, true));
             }
         }
         gfx.clearSome(this.layersToClean);
@@ -29,7 +30,7 @@ combat.menu = {
             player.equipment.weapon = hasCharger ? "!sickle2" : "!sickle2_weak";
         }
         this.options = [];
-        this.cursorY = args.sel || 0;
+        this.cursorSel = args.sel || 0;
         let plantState = "combatPlant";
         if(!combat.isFalcon && !player.hasSeeds() && !player.canMelee(this.getEnemyCropCount())) { // has no seeds
             if(combat.grid.some(r => r.some(e => e !== null && !e.rotten))) { // at least one crop is growing
@@ -41,13 +42,8 @@ combat.menu = {
             plantState = "combatSkip";
         }
         this.plantState = plantState;
-        this.drawOption(GetText(plantState), 0, this.cursorY === 0);
-        this.drawOption(GetText("combatAttack"), 1, this.cursorY === 1);
-        this.drawOption(GetText("combatCompost"), 2, this.cursorY === 2);
-        this.drawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), 3, this.cursorY === 3);
-        combat.cursors.RedimCursor("main", 0, this.dy + this.cursorY, this.options[this.cursorY], 0);
         let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
-        switch(this.cursorY) {
+        switch(this.cursorSel) {
             case 0:
                 if(plantState !== "combatPlant") {
                     if(plantState === "combatSkip") {
@@ -136,30 +132,48 @@ combat.menu = {
                 }
                 break;
         }
+
+        // Options
+        const optiony = gfx.tileHeight - 3;
+        let optionx = 4;
+        optionx = this.DrawOption(GetText(plantState), optionx, optiony, this.cursorSel === 0);
+        optionx = this.DrawOption(GetText("combatAttack"), optionx, optiony, this.cursorSel === 1);
+        optionx = this.DrawOption(GetText("combatCompost"), optionx, optiony, this.cursorSel === 2);
+        optionx = this.DrawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), optionx, optiony, this.cursorSel === 3);
+        const cursorwidth = this.options[this.cursorSel], cursorx = this.cursorSel === 0 ? 4 : (this.options[this.cursorSel - 1]);
+        console.log(`actcx: ${cursorwidth - cursorx}, cx: ${cursorwidth}, lx: ${cursorx}`);
+        combat.cursors.RedimCursor("main", cursorx, optiony, cursorwidth - cursorx - 1, 0);
+
+        // Player Health and Season
+        gfx.drawMinibox(0, gfx.tileHeight - 3, 3, 2, "", "FarmInfo");
+        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 32, 12 * 16 - 2, "", 16, "", true);
+        const seasonx = 1, seasony = 11.875;
+        
+        gfx.drawTileToGrid("seasonbar0", seasonx, seasony, "menuA");
+        gfx.drawTileToGrid("seasonbar1", seasonx + 1, seasony, "menuA");
+        const diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
+        gfx.drawTileToGrid("seasonico", seasonx - 0.25 + (combat.season + diff) / 2, seasony, "menuA");
+
+        gfx.drawTile("season" + combat.season, 14, 12.75 * 16, "menuA");
+        gfx.drawText(GetText("season" + combat.season), 32, 13.4 * 16);
+
+        // Info Text
+        gfx.drawMinibox(4, gfx.tileHeight - 2, gfx.tileWidth - 5, 1, "", "FarmInfo");
+        gfx.drawWrappedText(text, 4.5 * 16, 12.75 * 16 - 1, 175, "", "", 19);
+        
+        // Ayana and Bird
         combat.animHelper.SetPlayerAnimState(charAnim, true);
         combat.animHelper.SetBirdAnimState(birdAnim, true);
-        gfx.drawInfobox(12, 3, this.dy);
         const topy = 9.25;
-        const useLongNames = combat.enemies.length < 3;
+        
+        // Enemy Health
         for(let i = 0; i < combat.enemies.length; i++) {
             const enemy = combat.enemies[i];
-            const enemyNameInfo = this.GetEnemyNameInfo(enemy, useLongNames);
-            gfx.drawText(enemyNameInfo.name, (5.75 + 6 * Math.floor(i / 2)) * 16, (topy + 1 + (i % 2)) * 16);
-            gfx.drawTileToGrid(GetHPFrame(enemy), 4.5 + 6 * Math.floor(i / 2), topy + (i % 2), "menucursorB");
+            const pos = combat.animHelper.GetEnemyTopPos(i);
+            gfx.drawTileToGrid(GetHPFrame(enemy), pos.x, pos.y - 0.5, "menucursorB");
+            //gfx.drawTileToGrid(GetHPFrame(enemy), 4.5 + 6 * Math.floor(i / 2), topy + (i % 2), "menucursorB");
         }
-        gfx.drawInfobox(12, 2, this.dy + 2);
-        gfx.drawWrappedText(text, 4.5 * 16, 9 + ((2 + this.dy) * 16), 175);
-        combat.animHelper.DrawBottom();
         combat.menu.fullyLoaded = true;
-    },
-    GetEnemyNameInfo: function(e, useLong) {
-        let name = e.name, len = Math.ceil(gfx.getTextLength(e.name) / 16 / gfx.scale * 2) / 2;
-        const maxLen = useLong ? 10 : 4;
-        while(len > maxLen) {
-            name = name.substring(0, name.length - 4) + "...";
-            len = Math.ceil(gfx.getTextLength(name) / 16 / gfx.scale * 2) / 2;
-        }
-        return { name: name, len: len };
     },
     getEnemyCropCount: function() {
         let count = 0;
@@ -200,26 +214,31 @@ combat.menu = {
         return count;
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
-    drawOption: function(text, y, selected) { this.options.push(gfx.drawOption(text, this.dy + y, selected)) },
+    DrawOption: function(text, x, y, selected) {
+        const newX = gfx.DrawCombatOption(text, x, y, selected);
+        this.options.push(newX);
+        return newX;
+    },
     mouseMove: function(pos) {
-        if(pos.x > 3) { return false; }
-        const y = Math.floor(pos.y - combat.menu.dy);
-        if(y < 0 || y >= combat.menu.options.length) { return; }
-        return combat.menu.CursorMove({ x: 0, y: combat.menu.dy + y });
+        const optiony = gfx.tileHeight - 3;
+        if(pos.x < 4 || Math.floor(pos.y) !== optiony) { return false; }
+        for(let x = 0; x < this.options.length; x++) {
+            if(pos.x < this.options[x]) {
+                return combat.menu.CursorMove({ x: x, y: 0 });
+            }
+        }
     },
     CursorMove: function(pos) {
-        if(pos.y >= (this.dy + this.options.length) || pos.y < this.dy) { return false; }
-        if(pos.x > 4) { return false; }
-        const newcursory = pos.y - this.dy;
-        if(this.cursorY === newcursory) { return false; }
+        if(pos.x < 0 || pos.x > 3) { return false; }
+        if(this.cursorSel === pos.x) { return false; }
         Sounds.PlaySound("menuMove");
-        this.setup({ sel: newcursory, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
+        this.setup({ sel: pos.x, notFirst: true, canOnlyPlant: combat.menu.plantedAlreadyAndCantAttack });
         return true;
     },
     click: function(pos, isFresh) {
         if(!isFresh || !combat.menu.fullyLoaded) { return false; }
-        if(pos.x > 4) { return false; }
-        switch(Math.floor(pos.y - this.dy)) {
+        if(this.cursorSel > 3 || this.cursorSel < 0) { return false; }
+        switch(this.cursorSel) {
             case 0:
                 if(this.plantState !== "combatPlant") {
                     if(this.plantState === "combatSkip") {
@@ -296,7 +315,7 @@ combat.menu = {
         }
     },
     keyPress: function(key) {
-        let pos = { x: 0, y: this.cursorY + this.dy };
+        let pos = { x: this.cursorSel, y: 0 };
         let isEnter = false;
         if(player.options.rightBumperWin === true && key === "Gamepad5") {
             for(let i = 0; i < combat.enemies.length; i++) {
@@ -306,12 +325,12 @@ combat.menu = {
             return;
         }
         switch(key) {
-            case player.controls.up: pos.y--; break;
-            case player.controls.down: pos.y++; break;
+            case player.controls.left: pos.x--; break;
+            case player.controls.right: pos.x++; break;
             case player.controls.confirm:
             case player.controls.pause: isEnter = true; break;
         }
-        if(pos.y < 0) { return false; }
+        if(pos.x < 0 || pos.x > 3) { return false; }
         if(isEnter) {
             return this.click(pos, input.IsFreshPauseOrConfirmPress());
         } else {
