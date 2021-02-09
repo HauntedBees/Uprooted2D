@@ -75,9 +75,11 @@ combat.selectTarget = {
                 gfx.DrawXCursor(idx.x, idx.y, 0, 0);
             }
         }
-        const backButtonW = gfx.drawInfoText(GetText("menu.Back"), 2, this.dy + 0.25, this.cursorx === -1, "menuA", "menutext");
+        
+        const backButtonW = gfx.DrawCombatOption(GetText("menu.Back"), 4, this.dy + 1, this.cursorx === -1);
+
         combat.cursors.ReTypeCursor("main", "cursor");
-        if(this.sicklePos.x >= 0) {
+        if(this.sicklePos.x >= 0) { // cursor is on field
             let crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop === null) {
                 combat.cursors.ReTypeCursor("main", "bcursor");
@@ -86,31 +88,49 @@ combat.selectTarget = {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 combat.cursors.RedimCursor("main", this.sicklePos.x, this.sicklePos.y, crop.size - 1, crop.size - 1);
             }
-        } else if(this.cursorx < 0) {
-            combat.cursors.RedimCursor("main", 2, this.dy + 0.375, backButtonW, -0.25);
-        } else {
+        } else if(this.cursorx < 0) { // cursor is on back button
+            combat.cursors.RedimCursor("main", 4, this.dy + 1.125, backButtonW - 5, 0);
+        } else { // cursor is on enemy
             const cursorInfo = combat.animHelper.GetCursorInfo(this.cursorx);
             combat.cursors.RedimCursor("main", cursorInfo.x, cursorInfo.y, cursorInfo.w, cursorInfo.h);
         }
         combat.menu.highlightReadyCropsAndReturnCount();
-        gfx.drawInfobox(10, 1.5, this.dy);
+        
+        // Target Text
+        gfx.drawMinibox(4, gfx.tileHeight - 2, gfx.tileWidth - 5, 1, "", "FarmInfo");
+        const iconx = 4.75, icony = gfx.tileHeight - 1.75;
+        const textx = 20 + iconx * 16, texty = 15 + icony * 16;
         if(this.sicklePos.x >= 0) {
             const crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop !== null) {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
-                gfx.drawTileToGrid(GetHPFrame(crop), me.INFOBOXWIDTH, this.dy, "menucursorB");
+                gfx.drawTileToGrid(GetHPFrame(crop), iconx, icony, "menucursorB");
                 if(crop.name.indexOf("Nerf") > 0) {
-                    gfx.drawWrappedText(GetText("disp.nerf").replace(/0/g, crop.displayname), 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
+                    gfx.drawWrappedText(GetText("disp.nerf").replace(/0/g, crop.displayname), textx, texty, 115);
                 } else {
-                    gfx.drawWrappedText(crop.displayname, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
+                    gfx.drawWrappedText(crop.displayname, textx, texty, 115);
                 }
             }
         } else if(this.cursorx >= 0) {
             const enemy = combat.enemies[this.cursorx];
-            gfx.drawTileToGrid(GetHPFrame(enemy), me.INFOBOXWIDTH, this.dy, "menucursorB");
-            gfx.drawWrappedText(enemy.name, 20 + me.INFOBOXWIDTH * 16, 15 + (this.dy * 16), 115);
+            gfx.drawTileToGrid(GetHPFrame(enemy), iconx, icony, "menucursorB");
+            gfx.drawWrappedText(enemy.name, textx, texty, 115);
         }
-        combat.animHelper.DrawBottom();
+        
+        // Player Health and Season
+        gfx.drawMinibox(0, gfx.tileHeight - 3, 3, 2, "", "FarmInfo");
+        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 32, 12 * 16 - 2, "", 16, "", true);
+        
+        combat.animHelper.DrawSeasonsInfo(1, 11.875);
+        gfx.drawTile("season" + combat.season, 14, 12.75 * 16, "menuA");
+        gfx.drawText(GetText("season" + combat.season), 32, 13.4 * 16);
+        
+        // Enemy Health
+        for(let i = 0; i < combat.enemies.length; i++) {
+            const enemy = combat.enemies[i];
+            const pos = combat.animHelper.GetEnemyTopPos(i);
+            gfx.drawTileToGrid(GetHPFrame(enemy), pos.x, pos.y - 0.5, "menucursorB");
+        }
     },
     clean: () => gfx.clearSome(combat.selectTarget.layersToClear),
     cancel: function() {
@@ -124,7 +144,7 @@ combat.selectTarget = {
     keyPress: function(key) {
         let pos = { 
             x: (this.sicklePos.x < 0 ? (this.cursorx + (11 - combat.enemies.length)) : this.sicklePos.x), 
-            y: (this.sicklePos.y < 0 ? 8 : this.sicklePos.y)
+            y: (this.sicklePos.y < 0 ? 4 : this.sicklePos.y)
         };
         let isEnter = false;
         const prevy = pos.y;
@@ -137,36 +157,38 @@ combat.selectTarget = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(pos.y === 7 && prevy === 8) {
+        if(pos.y > 4 && prevy === 4) {
             pos.x = combat.enemydx;
-            pos.y = combat.enemyheight - 1 + combat.enemydy;
+            pos.y = combat.enemydy;
         }
-        if(pos.y == (combat.enemyheight + combat.enemydy)) {
+        if(pos.y == (combat.enemydy - 1)) {
             if(!this.canHumans) { return false; }
             this.sicklePos = { x: -1, y: -1 };
-            pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 8 };
+            pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 4 };
         }
         if(isEnter) { return this.click(); }
         else { return this.CursorMove(pos); }
     },
     mouseMove: function(pos) {
+        console.log(pos);
         const me = combat.selectTarget;
-        if(pos.y < 8) {
+        if(pos.y > 11 && pos.x >= 4 && pos.x <= 8) {
+            if(this.cursorx === -1) { return; }
+            me.CursorMove({ x: (10 - combat.enemies.length), y: 4 });
+        } else if(pos.y > 4) {
             if(!me.canSickle) { return false; }
             me.CursorMove({x: Math.floor(pos.x - combat.enemydx) + combat.enemydx, y: Math.floor(pos.y - combat.enemydy) + combat.enemydy });
         } else {
-            pos.y = 8;
+            pos.y = 4;
             pos.x = combat.animHelper.GetEnemyPosFromMouseX(pos.x);
             me.CursorMove(pos, true);
         }
     },
     CursorMove: function(pos, fromMouse) {
-        if(pos.y === 8) {
+        if(pos.y === 4) { // enemy selection
             if(!this.canHumans) { return false; }
             const newx = fromMouse ? pos.x : (pos.x - (11 - combat.enemies.length));
-            if(newx < -1) { return false; }
-            if(newx >= combat.enemies.length) { return false; }
-            if(pos.y < 2) { return false; }
+            if(newx < -1 || newx >= combat.enemies.length) { return false; }
             if(this.cursorx === newx && (fromMouse && this.sicklePos.x < 0)) { return false; }
             this.sicklePos = { x: -1, y: -1 };
             this.cursorx = newx;

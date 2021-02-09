@@ -1,5 +1,5 @@
 function CombatAnimHelper(enemies) {
-    let playerPos = { x: 3, y: 4.5 };
+    let playerPos = { x: 3, y: 4.625 };
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
     let enemyAnimInfos = [], anims = [];
@@ -27,11 +27,14 @@ function CombatAnimHelper(enemies) {
         let currentx = 11 - combat.enemies.length;
         for(let i = 0; i < combat.enemies.length; i++) {
             const e = combat.enemies[i];
-            if(e.size === "xl") { currentx -= 1; }
+            let dy = 0;
+            if(e.size === "xl") {
+                currentx -= 1;
+                dy = 1;
+            }
             if(x === i) {
                 const info = e.cursorinfo;
-                const size = e.size;
-                const y = playerPos.y;
+                const y = playerPos.y + dy;
                 const rawy = y - GetEnemyCombatDims(e.size).h;
                 let dx = 0.25;
                 if(e.size === "lg") { dx = 0.375; }

@@ -65,3 +65,4 @@ junk/*
 com.hauntedbees.farmingfantasy/*
 extbuild_node/out*
 *.ora~
+*-autosave.kra
