@@ -195,6 +195,7 @@ function AnimProcess(ae, as, babies) {
     let callbacksCalled = [];
     let doShake = animset.doShake;
     this.animBabies = babies || [];
+    let runDx = 0, fullEnd = false;
     let overlays = [];
     this.SetNewFPS = function(fps) { timePerFrame = 1000 / fps; };
     this.SetShake = function(val) { doShake = val; };
@@ -214,12 +215,12 @@ function AnimProcess(ae, as, babies) {
             Sounds.PlaySound(as.startSound);
         //}
     }
-    this.Animate = function(isStuckInGoop) {
+    this.Animate = function(isStuckInGoop, isRun) {
         const now = +new Date();
         let isEnd = false;
         if((now - lastRan) >= timePerFrame) {
             if(frame < animset.lastFrame) { frame++; }
-            else { isEnd = true; if(animset.loop) { frame = 0; } }
+            else { isEnd = true; if(animset.loop) { frame = 0; } else { fullEnd = true; } }
             lastRan = now;
         }
         const animInfo = animset.anims[frame];
@@ -229,7 +230,8 @@ function AnimProcess(ae, as, babies) {
             callbacksCalled.push(frame);
             animCallbacks[animInfo.callback](this, animentity);
         }
-        let dx = 0, dy = 0;
+        if(isRun && !fullEnd) { runDx -= 0.125; }
+        let dx = runDx, dy = 0;
         if(doShake) {
             dx = Math.random() < 0.33 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
             dy = Math.random() < 0.33 ? -0.125 : (Math.random() > 0.5 ? -0.125 : 0);
@@ -291,8 +293,9 @@ function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx, dy) {
     this.layer = "characters";
     this.animQueue = [];
     this.Animate = function(isStuckInGoop) {
-        if(!runningFromQueue) { this.currentAnim.Animate(isStuckInGoop); return; }
-        const animEnded = this.currentAnim.Animate(isStuckInGoop);
+        const isRun = currentName === "FLEE" || currentName === "FLEEFAIL";
+        if(!runningFromQueue) { this.currentAnim.Animate(isStuckInGoop, isRun); return; }
+        const animEnded = this.currentAnim.Animate(isStuckInGoop, isRun);
         if(animEnded) {
             let ongoingAnims = this.currentAnim.animBabies;
             this.animQueue.shift();
