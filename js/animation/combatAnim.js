@@ -319,6 +319,7 @@ function CombatAnimHelper(enemies) {
         }
         return tile;
     };
+    // you shall [ganon voice] DIE
     this.DrawBottom = function() {
         const y = game.tileh - 0.75;
         const texty = y + 0.65;

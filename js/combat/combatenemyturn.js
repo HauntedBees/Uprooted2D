@@ -1,5 +1,5 @@
 combat.enemyTurn = {
-    dy: 9.5, lastIdx: -1,
+    dy: 10.5, lastIdx: -1,
     setup: function(args) {
         combat.cursors.RedimCursor("main", -1, -1, 0, 0);
         const enemy = args.enemy;
@@ -11,7 +11,6 @@ combat.enemyTurn = {
         if(enemy.stickTurns > 0) {
             const text = GetText("stuckTurn").replace(/\{0\}/g, enemy.name);
             gfx.drawFullText(text, this.dy * 16);
-            combat.animHelper.DrawBottom();
             return;
         }
         const attackData = EnemyParser.Parse(enemy);
@@ -38,7 +37,6 @@ combat.enemyTurn = {
         }
         if(enemy.id === "negayana") { attackData.text = attackData.text.replace(/his/g, "her"); } // my bad bruh
         gfx.drawFullText(attackData.text, this.dy * 16);
-        combat.animHelper.DrawBottom();
     },
     clean: () => gfx.clearSome(["menuA", "menutext"]),
     click: function(pos) { combat.endTurn(this); return true; },

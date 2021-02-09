@@ -359,7 +359,7 @@ const gfx = {
         return numRows;
     },
     drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 4, y || 0, (overBlack ? "menuOverBlack" : undefined)),
-    drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined)),
+    drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined), "FarmInfo"),
     drawMinibox: function(x, y, w, h, layer, type) {
         layer = layer || "menuA";
         type = type || "info";
