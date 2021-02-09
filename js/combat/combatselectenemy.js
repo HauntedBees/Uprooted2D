@@ -19,6 +19,13 @@ combat.selectTarget = {
             this.canSickle = player.canSickleCrops();
             this.canHumans = !args.isMelee || player.canAttackPeople();
         }
+
+        // if last move was falcon attacking a crop, don't stick the player with that choice they can't perform
+        if(!this.canSickle && this.sicklePos.x >= 0) {
+            this.sicklePos = { x: -1, y: -1 };
+            this.cursorx = 0;
+        }
+
         if(!this.canHumans) { this.sicklePos = {x: combat.enemydx, y: (combat.enemyheight - 1 + combat.enemydy)}; }
         this.targets = [];
         const numAttacks = args.numAttacks || 1;
@@ -170,7 +177,6 @@ combat.selectTarget = {
         else { return this.CursorMove(pos); }
     },
     mouseMove: function(pos) {
-        console.log(pos);
         const me = combat.selectTarget;
         if(pos.y > 11 && pos.x >= 4 && pos.x <= 8) {
             if(this.cursorx === -1) { return; }
