@@ -9183,7 +9183,7 @@ const fulltext = {
 		"type": "crole"
 	},
 	"cr.copy": {
-		"en-us": "COPYRIGHT 2018-2020 HAUNTED BEES \n PRODUCTIONS", 
+		"en-us": "COPYRIGHT 2018-2021 HAUNTED BEES \n PRODUCTIONS", 
 		"type": "crole"
 	},
 	"cr.font1": {

@@ -17,46 +17,30 @@ const cordovaHelpers = {
         }
     }
 };
-const nwHelpers = {
-    win: null,
-    InitScreenSizeAdjustment: function() {
-        if(typeof require === "undefined") { return; }
-        if(this.win === null) { this.win = require("nw.gui").Window.get(); }
-        if(window.screen.availWidth > this.win.width || window.screen.availHeight > this.win.height) {
-            universalSettings.resolution = 0;
-            console.log(`shrunky from ${window.screen.availWidth}/${window.screen.availHeight}`);
-        } else if(this.win.width < 1024) {
-            universalSettings.resolution = 0;
-        } else if(this.win.width < 2048) {
-            universalSettings.resolution = 1;
-        } else {
-            universalSettings.resolution = 2;
-        }
-        nwHelpers.AdjustScreenSettings();
-    },
+
+const electronHelpers = {
     AdjustScreenSettings: function() {
         if(typeof require === "undefined") { return; }
-        if(this.win === null) { this.win = require("nw.gui").Window.get(); }
+        const { ipcRenderer } = require("electron");
         let multiplier = 1;
         switch(universalSettings.resolution) {
             case 0: multiplier = 0.5; break;
             case 2: multiplier = 2; break;
         }
-        if(universalSettings.fullScreen === 1) {
-            this.win.enterFullscreen();
-        } else if(universalSettings.fullScreen === 0) {
-            this.win.leaveFullscreen();
-        }
-        this.win.zoomLevel = Math.log(multiplier) / Math.log(1.2);
-        this.win.width = game.w * multiplier;
-        this.win.height = game.h * multiplier;
+        ipcRenderer.send("resize-window", {
+            width: game.w * multiplier,
+            height: game.h * multiplier,
+            fullscreen: universalSettings.fullscreen === 1,
+            zoom: multiplier
+        });
     },
     Quit: function() {
         if(typeof require === "undefined") { location.reload(); return; }
-        if(this.win === null) { this.win = require("nw.gui").Window.get(); }
-        this.win.close(true);
+        const { ipcRenderer } = require("electron");
+        ipcRenderer.send("quit-game");
     }
 };
+
 const game = {
     type: 0, // 0 = browser, 1 = nwjs, 2 = cordova
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14,
@@ -132,7 +116,6 @@ const game = {
             player.gamepadcontrols = Object.assign(player.gamepadcontrols, loadedPlayer.gamepadcontrols);
             game.PatchSaveFile();
         }
-        nwHelpers.InitScreenSizeAdjustment();
         let canvasObj = {};
         for(let i = 0; i < game.canvasLayers.length; i++) {
             const name = game.canvasLayers[i];

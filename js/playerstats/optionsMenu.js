@@ -461,7 +461,7 @@ worldmap.optionsMenu = {
     },
     ContinueSaveAndQuit: function() {
         UpdateStatsForCurrentDifficulty();
-        nwHelpers.AdjustScreenSettings();
+        electronHelpers.AdjustScreenSettings();
         Sounds.PlaySound("confirm", true);
         worldmap.optionsMenu.QuitWithoutSaving(true);
     },

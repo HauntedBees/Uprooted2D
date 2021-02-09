@@ -1,50 +1,21 @@
 {
-    "app_name": "Uprooted",
-    "dependencies": {
-        "get-pixels": "^3.3.2",
-        "gulp": "^4.0.2",
-        "gulp-cli": "^2.2.0",
-        "gulp-foreach": "^0.1.0",
-        "uglify-es": "^3.3.9"
-    },
-    "main": "indexapp.html",
-    "name": "uprooted",
-    "nodejs": true,
-    "version": "0.6",
-    "webexe_settings": {
-        "blacklist": ".git*\n.vscode\ncollision\ncom.hauntedbees*\nextbuild\nguide_assets\nnode_modules*\n*.cmd\n*.js\njunk*\npdn*\njs*\n*.csv\n*.md\n*.html",
-        "custom_script": "",
-        "download_dir": "",
-        "export_dir": "E:\\GitHub\\CropRPGout",
-        "force_download": false,
-        "linux-x32": false,
-        "linux-x64": false,
-        "mac-x64": false,
-        "nw_compression_level": 0,
-        "nw_version": "0.38.0",
-        "output_pattern": "",
-        "sdk_build": true,
-        "uncompressed_folder": true,
-        "whitelist": "*.json\nimg*\nout.js\nstyles*\nindexapp.html\nff.png\nsound*\nvgp_img*",
-        "windows-x64": true
-    },
-    "webkit": {},
-    "window": {
-        "exe_icon": "ff.png",
-        "height": 896,
-        "icon": "ff.png",
-        "id": "Uprooted",
-        "position": "center",
-        "show": true,
-        "title": "Uprooted",
-        "visible": true,
-        "width": 1024
-    },
-    "devDependencies": {
-        "imagemin": "^7.0.1",
-        "imagemin-pngquant": "^9.0.1",
-        "node-stream-zip": "^1.13.0",
-        "sharp": "^0.27.1",
-        "xml2js": "^0.4.23"
-    }
+  "name": "uprooted",
+  "version": "0.6.0",
+  "description": "A video game for friends.",
+  "author": "Haunted Bees Productions <fench@hauntedbees.com> (https://www.hauntedbees.com/)",
+  "license": "AGPL-3.0-or-later",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "get-pixels": "^3.3.2",
+    "gulp": "^4.0.2",
+    "gulp-foreach": "^0.1.0",
+    "uglify-es": "^3.3.9"
+  },
+  "dependencies": {
+    "electron": "^11.2.3",
+    "electron-store": "^7.0.1"
+  }
 }
