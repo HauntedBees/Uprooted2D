@@ -113,7 +113,6 @@ const gfx = {
         const startx = x, suffix = selected ? "A" : "", size = 18;
         gfx.drawTile("BtlSelL" + suffix, 16 * x, 2 + y * 16, "menuA");
         let width = gfx.getTextWidth(text, size), tileWidth = 32;
-        console.log(width);
         while(width > 64) {
             width -= 64;
             gfx.drawTile("BtlSelM" + suffix, 16 * ++x, 2 + y * 16, "menuA");

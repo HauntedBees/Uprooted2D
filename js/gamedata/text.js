@@ -7900,11 +7900,11 @@ const fulltext = {
 		"type": "combat"
 	},
 	"cmp_healpow": {
-		"en-us": "Healing Power", 
+		"en-us": "Heal {0} HP", 
 		"type": "combat"
 	},
 	"cmp_atkpow": {
-		"en-us": "Attack Power", 
+		"en-us": "Heal {0} HP or Deal {1} Damage", 
 		"type": "combat"
 	},
 	"cmp_needOne": {
@@ -7912,11 +7912,11 @@ const fulltext = {
 		"type": "combat"
 	},
 	"cmp_doHeal": {
-		"en-us": "Compost {0} Crop{s} and recover {1} health.", 
+		"en-us": "Compost {0} Crop{s} and recover up to {1}HP.", 
 		"type": "combat"
 	},
 	"cmp_doAttack": {
-		"en-us": "Compost {0} Crop{s} and attack all enemies.", 
+		"en-us": "Compost {0} Crop{s} and attack all enemies for {1} damage.", 
 		"type": "combat"
 	},
 	"cmp_cow": {

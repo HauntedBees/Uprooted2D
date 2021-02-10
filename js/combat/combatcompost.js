@@ -1,6 +1,6 @@
 combat.compost = {
-    selectedCrops: [], binSprite: "compost", binx: 3.75, biny: 8.75,
-    cursor: {x: 1, y: 5}, dy: 9, compostMultiplier: 1, 
+    selectedCrops: [], binSprite: "compost", binx: 3.825, biny: 4,
+    cursor: {x: 1, y: 5}, dy: 11, compostMultiplier: 1, 
     backY: 0, healY: 0, attackY: 0, canAttack: false, 
     backButtonWidth: 0, backButtonSelected: false, 
     healButtonWidth: 0, healButtonSelected: false, 
@@ -26,8 +26,8 @@ combat.compost = {
     drawAll: function() {
         gfx.clearSome(this.layersToClean);
         combat.cursors.ReTypeCursor("main", "cursor");
-        gfx.drawInfobox(me.INFOBOXWIDTH + 4.5, 5, this.dy);
-        gfx.drawInfobox(me.INFOBOXWIDTH - 0.5, 5, this.dy);
+        
+        // Selected Crops
         for(let i = 0; i < this.selectedCrops.length; i++) {
             const pos = this.selectedCrops[i];
             if(pos.cow !== undefined) {
@@ -39,21 +39,25 @@ combat.compost = {
             }
         }
 
-        this.backButtonWidth = gfx.drawInfoText(GetText("menu.Back"), 0, this.dy + 0.5, this.backButtonSelected, "menuA", "menutext");
+        // Player Health and Season
+        gfx.drawMinibox(0, gfx.tileHeight - 3, 3, 2, "", "FarmInfo");
+        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 32, 12 * 16 - 2, "", 16, "", true);
         
-        let xi = 1, text = GetText("cmp_healsel");
-        const healTile = this.healButtonSelected ? "Ssel" : "sel";
-        gfx.drawTile(healTile + "M", 0, this.healY, "menuA");
-        let width = gfx.getTextWidth(text);
-        while(width > 128) {
-            width -= 64;
-            gfx.drawTile(healTile + "M", 16 * xi++, this.healY, "menuA");
+        combat.animHelper.DrawSeasonsInfo(1, 11.875);
+        gfx.drawTile("season" + combat.season, 14, 12.75 * 16, "menuA");
+        gfx.drawText(GetText("season" + combat.season), 32, 13.4 * 16);
+
+        // Player Actions
+        let textKey = "cmp_healpow";
+        this.backButtonWidth = gfx.DrawCombatOption(GetText("menu.Back"), 4, this.dy, this.backButtonSelected);
+        this.healButtonWidth = gfx.DrawCombatOption(GetText("cmp_healsel"), this.backButtonWidth, this.dy, this.healButtonSelected);
+        this.canAttack = true; // FOR FUCKING TESTING TODO: REMOVE
+        if(this.canAttack) {
+            textKey = "cmp_atkpow";
+            this.attackButtonWidth = gfx.DrawCombatOption(GetText("cmp_atksel"), this.healButtonWidth, this.dy, this.attackButtonSelected);
         }
-        gfx.drawTile(healTile + "R", 16 * xi, this.healY, "menuA");
-        this.healButtonWidth = xi;
-        gfx.drawText(text, 2, this.healY + 8.5);
-        gfx.drawText(GetText("cmp_healpow"), 88, 155);
         
+        // Get Power of Compost
         let hdmg = 0, admg = 0;
         if(this.selectedCrops.length > 0) {
             let results = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, false, true);
@@ -63,28 +67,17 @@ combat.compost = {
                 admg = Math.ceil(this.compostMultiplier * results.total / 3.5);
             }
         }
-        gfx.drawText(hdmg, 153 - Math.floor(Math.log10(hdmg)) * 5, 165);
-        if(this.canAttack) {
-            gfx.drawText(GetText("cmp_atkpow"), 88, 175);
-            gfx.drawText(admg, 153 - Math.floor(Math.log10(admg)), 185);
+        
+        const textX = 72, textY = (this.dy + 2) * 16 - 2, textW = 180;
 
-            xi = 1; text = GetText("cmp_atksel");
-            const atkTile = this.attackButtonSelected ? "Ssel" : "sel";
-            if(this.attackButtonSelected) { tile = 9; }
-            gfx.drawTile(atkTile + "M", 0, this.atkY, "menuA");
-            width = gfx.getTextWidth(text);
-            while(width > 128) {
-                width -= 64;
-                gfx.drawTile(atkTile + "M", 16 * xi++, this.atkY, "menuA");
-            }
-            gfx.drawTile(atkTile + "R", 16 * xi, this.atkY, "menuA");
-            this.attackButtonWidth = xi;
-            gfx.drawText(text, 2, this.atkY + 8.5);
-        }
+        // Information
+        gfx.drawMinibox(4, gfx.tileHeight - 2, gfx.tileWidth - 5, 1, "", "FarmInfo");
         if(this.backButtonSelected) {
+            gfx.drawWrappedText(GetText(textKey).replace(/\{0\}/g, hdmg).replace(/\{1\}/g, admg), textX, textY, textW);
+            
             combat.animHelper.SetPlayerAnimLayer("characters");
             combat.animHelper.SetBirdAnimLayer("characters");
-            combat.cursors.RedimCursor("main", 0, this.dy + 0.5, this.healButtonWidth, 0);
+            combat.cursors.RedimCursor("main", 4, this.dy, this.backButtonWidth - 5, 0);
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimState("THINK", true);
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
@@ -93,17 +86,18 @@ combat.compost = {
                 combat.animHelper.SetPlayerAnimState("THINK", true);
             }
         } else if(this.healButtonSelected) {
-            combat.animHelper.SetPlayerAnimLayer("characters");
-            combat.animHelper.SetBirdAnimLayer("characters");
-            combat.cursors.RedimCursor("main", 0, this.dy + 1.5, this.healButtonWidth, 0);
             if(this.selectedCrops.length > 0) {
                 let str = GetText("cmp_doHeal");
                 str = HandlePlurals(str, this.selectedCrops.length);
                 str = str.replace(/\{0\}/g, this.selectedCrops.length).replace(/\{1\}/g, hdmg);
-                this.WriteSideText(str);
+                gfx.drawWrappedText(str, textX, textY, textW);
             } else {
-                this.WriteSideText(GetText("cmp_needOne"));
+                gfx.drawWrappedText(GetText("cmp_needOne"), textX, textY, textW);
             }
+
+            combat.animHelper.SetPlayerAnimLayer("characters");
+            combat.animHelper.SetBirdAnimLayer("characters");
+            combat.cursors.RedimCursor("main", this.backButtonWidth, this.dy, this.healButtonWidth - this.backButtonWidth - 1, 0);
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimState("THINK", true);
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
@@ -112,16 +106,17 @@ combat.compost = {
                 combat.animHelper.SetPlayerAnimState("THINK", true);
             }
         } else if(this.attackButtonSelected) {
-            combat.animHelper.SetPlayerAnimLayer("characters");
-            combat.cursors.RedimCursor("main", 0, this.dy + 2.5, this.attackButtonWidth, 0);
             if(this.selectedCrops.length > 0) {
                 let str = GetText("cmp_doAttack");
                 str = HandlePlurals(str, this.selectedCrops.length);
-                str = str.replace(/\{0\}/g, this.selectedCrops.length);
-                this.WriteSideText(str);
+                str = str.replace(/\{0\}/g, this.selectedCrops.length).replace(/\{1\}/g, admg);
+                gfx.drawWrappedText(str, textX, textY, textW);
             } else {
-                this.WriteSideText(GetText("cmp_needOne"));
+                gfx.drawWrappedText(GetText("cmp_needOne"), textX, textY, textW);
             }
+
+            combat.animHelper.SetPlayerAnimLayer("characters");
+            combat.cursors.RedimCursor("main", this.healButtonWidth, this.dy, this.attackButtonWidth - this.healButtonWidth - 1, 0);
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimState("WANTATTACK", true);
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
@@ -130,11 +125,13 @@ combat.compost = {
                 combat.animHelper.SetPlayerAnimState("WANTATTACK", true);
             }
         } else {
+            gfx.drawWrappedText(GetText(textKey).replace("{0}", hdmg).replace("{1}", admg), textX, textY, textW);
+
             if(combat.isFalcon) { combat.animHelper.SetBirdAnimLayer("menucursorC"); }
             else { combat.animHelper.SetPlayerAnimLayer("menucursorC"); }
             const px = this.cursor.x - combat.dx, py = this.cursor.y - combat.dy;
             const tile = combat.grid[px][py];
-            if(tile !== null) {
+            if(tile) {
                 if(tile.x !== undefined) { // part of a tree
                     this.WriteAboutCrop(combat.grid[tile.x][tile.y]);
                     if(this.isCompostable(combat.grid[tile.x][tile.y])) {
@@ -219,7 +216,6 @@ combat.compost = {
             }
         }
         gfx.drawTileToGrid(this.binSprite, this.binx, this.biny, "menucursorB");
-        combat.animHelper.DrawBottom();
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
     cancel: function() {
@@ -247,8 +243,8 @@ combat.compost = {
         return (player.equipment.compost !== null && (!GetEquipment(player.equipment.compost).rotOnly || tile.rotten));
     },
     mouseMove: function(pos) {
-        if(pos.y >= combat.compost.dy) {
-            combat.compost.CursorMove({ x: Math.round(pos.x), y: Math.round(pos.y - 1) });
+        if(Math.floor(pos.y) === combat.compost.dy) {
+            combat.compost.CursorMove({ x: Math.round(pos.x), y: combat.compost.dy });
         } else {
             combat.compost.CursorMove({ 
                 x: Math.floor(pos.x - combat.dx) + combat.dx,
@@ -258,22 +254,34 @@ combat.compost = {
         }
     },
     CursorMove: function(pos) {
-        this.backButtonSelected = false;
-        this.attackButtonSelected = false;
-        this.healButtonSelected = false;
-        if(pos.y === this.dy && pos.x < 3) { // back button
-            this.cursor = pos;
-            if(this.backButtonSelected) { return false; }
-            this.backButtonSelected = true;
-        } else if(pos.y === (this.dy + 1) && pos.x < 3) { // heal button
-            this.cursor = pos;
-            if(this.healButtonSelected) { return false; }
-            this.healButtonSelected = true;
-        } else if(pos.y === (this.dy + 2) && pos.x < 3 && this.canAttack) { // attack button
-            this.cursor = pos;
-            if(this.attackButtonSelected) { return false; }
-            this.attackButtonSelected = true;
+        if(pos.y === this.dy) {
+            if(Between(pos.x, 4, this.backButtonWidth - 1)) { // back button
+                this.cursor = pos;
+                if(this.backButtonSelected) { console.log("UNGO"); return false; }
+                this.attackButtonSelected = false;
+                this.healButtonSelected = false;
+                this.backButtonSelected = true;
+            } else if(Between(pos.x, this.backButtonWidth, this.healButtonWidth - 1)) { // heal button
+                this.cursor = pos;
+                if(this.healButtonSelected) { return false; }
+                this.backButtonSelected = false;
+                this.attackButtonSelected = false;
+                this.healButtonSelected = true;
+            } else if(Between(pos.x, this.healButtonWidth, this.attackButtonWidth - 1)) { // attack button
+                this.cursor = pos;
+                if(this.attackButtonSelected) { return false; }
+                this.backButtonSelected = false;
+                this.healButtonSelected = false;
+                this.attackButtonSelected = true;
+            } else {
+                this.backButtonSelected = false;
+                this.attackButtonSelected = false;
+                this.healButtonSelected = false;
+            }
         } else { // compost selection
+            this.backButtonSelected = false;
+            this.attackButtonSelected = false;
+            this.healButtonSelected = false;
             if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }
             if(pos.y < combat.dy || pos.y >= (combat.dy + player.gridHeight)) { return false; }
             if(pos.fromHeal) {
@@ -418,11 +426,11 @@ combat.compost = {
     },
     click: function() {
         let pos = { x: this.cursor.x, y: this.cursor.y };
-        if(pos.y == this.dy && pos.x < 3) {
+        if(this.backButtonSelected) {
             this.cancel();
-        } else if(pos.y == (this.dy + 1) && pos.x < 3) {
+        } else if(this.healButtonSelected) {
             return this.healAction();
-        } else if(pos.y == (this.dy + 2) && pos.x < 3 && this.canAttack) {
+        } else if(this.attackButtonSelected) {
             return this.attackAction();
         }
         if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth)) { return false; }
@@ -466,25 +474,37 @@ combat.compost = {
         }
         if(pos.y === (combat.dy + player.gridHeight) && pos.y > this.cursor.y) { // going from grid to Back button
             pos.y = this.dy;
-            pos.x = 0;
+            pos.x = 4;
         } else if(pos.y === (this.dy - 1) && this.cursor.y === this.dy) { // going from Back button to grid
             pos.y = combat.dy + player.gridHeight - 1;
             pos.x = combat.dx;
             pos.fromHeal = true;
+        } else if(this.backButtonSelected) {
+            if(pos.x > this.cursor.x) {
+                pos.x = this.backButtonWidth;
+            } else if(pos.x < this.cursor.x) {
+                return false;
+            }
+        } else if(this.healButtonSelected) {
+            if(pos.x < this.cursor.x) {
+                pos.x = 4;
+            } else if(pos.x > this.cursor.x) {
+                pos.x = this.healButtonWidth;
+            }
+        } else if(this.attackButtonSelected) {
+            if(pos.x < this.cursor.x) {
+                pos.x = this.backButtonWidth;                
+            } else if(pos.x > this.cursor.x) {
+                return false;
+            }
         }
         if(pos.y < 0 || pos.x < 0) { return false; }
         if(isEnter) { return this.click(); }
         else { return this.CursorMove(pos); }
     },
-    WriteSideText: function(text) { gfx.drawWrappedText(text, 10.5 * 16, 11 + (16 * this.dy), 90); },
     WriteAboutCrop: function(crop) {
-        let str = crop.displayname;
-        pausemenu.inventory.DrawCropPower(crop, 9.5, 9.75, "menutext", true);
-        const seasons = ["spring", "summer", "autumn", "winter"];
-        gfx.drawTileToGrid("curseason" + crop.seasons[combat.season], 10.5, 11, "menutext");
-        for(let i = 0; i < 4; i++) {
-            gfx.drawTileToGrid(seasons[i] + crop.seasons[i], 11.5 + i, 11, "menutext");
-        }
-        gfx.drawWrappedText(str, 10.5 * 16, 11 + (16 * this.dy), 115);
+        gfx.drawMinibox(1, 0.5, 6, 1.5, "menutext", "FarmInfo");
+        gfx.drawWrappedText(crop.displayname, 23, 22, 100);
+        pausemenu.inventory.DrawCropPower(crop, 1.5, 1.5, "menutext");
     }
 };
