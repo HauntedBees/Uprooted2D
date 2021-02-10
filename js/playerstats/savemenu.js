@@ -13,7 +13,7 @@ pausemenu.savemenu = {
         this.confirmCursorY = 0;
         this.backStartX = 0.125;
         this.clearSavesState = 0;
-        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
+        this.backButtonW = gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.0625, false);
         this.cursors = new CursorAnimSet([
             { key: "main", x: 0, y: this.cursorY, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
         ]);
@@ -34,8 +34,8 @@ pausemenu.savemenu = {
         if(!this.isSave) {
             this.drawOption(GetText("clearSaves"), dy + game.numSaveSlots, this.cursorY === (dy + game.numSaveSlots - 1));
         }
-        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursorY === -1, "menuA", "menutext");
-        gfx.drawInfobox(12, 2.5, 1.125);
+        gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, this.cursorY === -1);
+        gfx.drawInfobox(12, 2.5, 1.125, "", "FarmInfo");
         if(this.confirm) {
             this.drawSaveDataText(GetText("eraseSave"));
             screenReaderHelper.SayThing(GetText("eraseSave"), "option");
@@ -44,7 +44,7 @@ pausemenu.savemenu = {
             this.cursors.RedimCursor("main", this.confirmCursorY === 1 ? 10 : 6, 2.5, this.confirmCursorY === 1 ? nw : yw, 0);
         } else if(this.cursorY === -1) {
             this.drawSaveDataText(GetText("inv.BackInfo"));
-            this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+            this.cursors.RedimCursor("main", this.backStartX - 0.0625, -0.0625, this.backButtonW - 1.0625, 0);
             screenReaderHelper.SayThing(GetText("inv.BackInfo"), "option");
         } else if(this.cursorY === (dy + game.numSaveSlots - 1)) { // clear save data
             let myText = "";

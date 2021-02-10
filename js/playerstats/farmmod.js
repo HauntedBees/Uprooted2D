@@ -19,7 +19,7 @@ pausemenu.farmmod = {
         this.dy = 7 + Math.floor((6 - player.gridHeight) / 2);
         this.grid = combat.getGrid(player.gridWidth, player.gridHeight);
         this.backStartX = 0.125;
-        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
+        this.backButtonW = gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, false);
         this.drawEverything();
         this.cursors.Start();
     },
@@ -30,14 +30,14 @@ pausemenu.farmmod = {
 
         this.drawFarm();
         this.displayItems();
-        gfx.drawInfobox(11, 5, this.cropdy);
-        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+        gfx.drawInfobox(11, 5, this.cropdy, "", "FarmInfo");
+        gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, this.cursor.y === -1 && this.cursor.x === 0);
 
         const size = (this.selectedItem === null || this.cursor.y < 3) ? 0 : this.selectedItemSize;
         const dx = this.cursor.y < 3 ? this.cropdx : 0;
         const dy = this.cursor.y < 3 ? this.cropdy : 0;
         if(this.cursor.y === -1) {
-            this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+            this.cursors.RedimCursor("main", this.backStartX - 0.0625, -0.0625, this.backButtonW - 1.0625, 0);
             gfx.drawWrappedText(GetText("inv.BackInfo"), 5.5 * 16, 30, 155);
         } else {
             this.cursors.RedimCursor("main", dx + this.cursor.x, dy + this.cursor.y, size, size);

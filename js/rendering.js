@@ -23,7 +23,7 @@ const gfx = {
     GetWhite: () => (player.IsMonochrome() ? "#E0F8D0" : "#FFFFFF"),
     GetInfoColor: type => {
         if(type === "info") { return gfx.GetLightBlue(); }
-        if(type === "FarmInfo") { return player.IsMonochrome() ? "#E0F8D0" : "#A36F00" } // TODO: confirm monochrome color is good
+        if(type === "FarmInfo") { return player.IsMonochrome() ? "#E0F8D0" : "#B77C00" } // TODO: confirm monochrome color is good
     },
     GetLightBlue: () => (player.IsMonochrome() ? "#E0F8D0" : "#B2B5FF"),
     GetSpeakerBGColor: () => (player.IsMonochrome() ? "#E0F8D0" : "#6BADA3"),
@@ -106,7 +106,7 @@ const gfx = {
             gfx.drawTile(tile + "M", 16 * xi++, 2 + y * 16, "menuA");
         }
         gfx.drawTile(tile + "R", 16 * xi, 2 + y * 16, "menuA");
-        gfx.drawText(text, 2, 10.5 + y * 16);
+        gfx.drawText(text, 2, 11.5 + y * 16);
         return xi;
     },
     DrawCombatOption: function(text, x, y, selected) {
@@ -275,7 +275,7 @@ const gfx = {
             gfx.drawTile(prefix + "M", x * 16 + 16 * xi++, 2 + y * 16 + dy, imgLayer);
         }
         gfx.drawTile(prefix + "R", x * 16 + 16 * xi, 2 + y * 16 + dy, imgLayer);
-        gfx.drawText(text, 7 + x * 16 - dx, 10.5 + y * 16, undefined, undefined, textLayer);
+        gfx.drawText(text, 6 + x * 16 - dx, 11.5 + y * 16, undefined, undefined, textLayer);
         return xi;
     },
     getTextRightAlignedX: (text, size, x) => x - gfx.getTextWidth(text, size),

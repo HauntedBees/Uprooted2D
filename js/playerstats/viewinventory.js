@@ -17,9 +17,9 @@ pausemenu.inventory = {
         this.trashIdx = setInterval(this.HandleTrashCan, 50);
         gfx.TileBackground("invTile");
         this.backStartX = 0.125;
-        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
-        this.sortStartX = 1.25 + this.backButtonW;
-        this.sortButtonW = gfx.drawInfoText(GetText("inv.Sort"), this.sortStartX, -0.0625, false, "menuA", "menutext");
+        this.backButtonW = gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, false);
+        this.sortStartX = this.backButtonW + 0.25;
+        this.sortButtonW = gfx.DrawCombatOption(GetText("inv.Sort"), this.sortStartX, -0.125, false);
         this.DrawAll();
         this.cursors.Start();
     },
@@ -51,23 +51,23 @@ pausemenu.inventory = {
 
         if(this.actualIndexes.length === 0) { this.cursor = { x: 0, y: -1 }; }
         
-        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
-        gfx.drawInfoText(GetText("inv.Sort"), this.sortStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 1, "menuA", "menutext");
+        gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, this.cursor.y < 0 && this.cursor.x === 0);
+        gfx.DrawCombatOption(GetText("inv.Sort"), this.sortStartX, -0.125, this.cursor.y < 0 && this.cursor.x === 1);
         if(this.inSort) {
             const vals = [];
             vals.push(gfx.drawInfoText(GetText("inv.sCount"), this.sortStartX, 1, this.cursor.y === 0));
             vals.push(gfx.drawInfoText(GetText("inv.sPower"), this.sortStartX, 2, this.cursor.y === 1));
             vals.push(gfx.drawInfoText(GetText("inv.sTime"), this.sortStartX, 3, this.cursor.y === 2));
             vals.push(gfx.drawInfoText(GetText("inv.sType"), this.sortStartX, 4, this.cursor.y === 3));
-            if(this.cursor.y === -1) { this.cursors.RedimCursor("main", this.sortStartX, 0, this.sortButtonW, -0.25); }
+            if(this.cursor.y === -1) { this.cursors.RedimCursor("main", this.sortStartX - 0.0625,  -0.0625, this.sortButtonW - this.backButtonW - 1.125, 0); }
             else { this.cursors.RedimCursor("main", -2, -2, 0, 0); }
         }
 
         if(!this.inSort) {
             if(this.cursor.y === -1) {
                 const thisX = this.cursor.x === 0 ? this.backStartX : this.sortStartX;
-                const thisW = this.cursor.x === 0 ? this.backButtonW : this.sortButtonW;
-                this.cursors.RedimCursor("main", thisX, 0, thisW, -0.25);
+                const thisW = this.cursor.x === 0 ? this.backButtonW : (this.sortButtonW - this.backButtonW);
+                this.cursors.RedimCursor("main", thisX - 0.0625, -0.0625, thisW - 1.125, 0);
             } else if(this.cursor.x < this.inventoryWidth) {
                 this.cursors.RedimCursor("main", this.cursor.x + this.cropDX, this.cursor.y + this.cropDY, 0, 0);
             } else {
@@ -80,7 +80,7 @@ pausemenu.inventory = {
         if(this.cursor.y >= 0 && !this.inSort) {
             this.SetCrop();
         } else {
-            gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 11.5);
+            gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 11.5, "", "FarmInfo");
             const textX = 76, textY = 12 + this.cropDY * 16;
             if(this.cursor.x === 0) {
                 gfx.drawWrappedText(GetText("inv.BackInfo"), textX, textY, 170, undefined, undefined, 28);
@@ -123,6 +123,13 @@ pausemenu.inventory = {
             }
             if(pos.y < -1 || pos.x < 0) { return false; }
             if(pos.y === -1 && (pos.x > 1 || this.selectedCrop >= 0)) { return false; }
+            if(pos.y === -1) {
+                if(pos.x > this.cursor.x && pos.x === 0) {
+                    pos.x = this.sortStartX;
+                } else if(pos.x < this.cursor.x && pos.x > 0) {
+                    pos.x = 0;
+                }
+            }
         }
         if(isEnter) { return this.click(); }
         else { return this.CursorMove(pos); }
@@ -224,7 +231,7 @@ pausemenu.inventory = {
             gfx.drawTile("recSelM", x * 16 + 16 * xi++, y * 16 - 5, "menuOverBlack");
         }
         gfx.drawTile("recSelR", x * 16 + 16 * xi, y * 16 - 5, "menuOverBlack");
-        gfx.drawText(text, 7 + x * 16, 3.5 + y * 16, undefined, undefined, "menutextOverBlack");
+        gfx.drawText(text, 6 + x * 16, 4.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     click: function() {
         if(this.inSort) {
@@ -309,6 +316,7 @@ pausemenu.inventory = {
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             const actIdx = this.actualIndexes[idx];
             if(actIdx === undefined) { // move to end
+                if(this.selectedCrop < 0) { return; }
                 Sounds.PlaySound("confirm");
                 const temp = player.inventory[this.selectedCrop];
                 player.inventory.splice(this.selectedCrop, 1);
@@ -344,7 +352,7 @@ pausemenu.inventory = {
         const leftMostTextX = 92;
         rowYs.forEach((e, i) => rowYs[i] = e + pausemenu.inventory.cropDY - 0.25);
         rowTextYs.forEach((e, i) => rowTextYs[i] = e + pausemenu.inventory.cropDY * 16 - 4);
-        gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 11.5);
+        gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 11.5, "", "FarmInfo");
 
         const idx = (this.cursor.x === this.inventoryWidth ? this.selectedCrop : (this.cursor.y * this.inventoryWidth + this.cursor.x));
         const actIdx = this.actualIndexes[idx];

@@ -14,7 +14,7 @@ pausemenu.equipment = {
         this.animHelper = new CombatAnimHelper([]);
         gfx.TileBackground("invTile");
         this.backStartX = 0.125;
-        this.backButtonW = gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, false, "menuA", "menutext");
+        this.backButtonW = gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, false);
         this.drawAll();
         this.cursors.Start();
     },
@@ -23,9 +23,9 @@ pausemenu.equipment = {
         pausemenu.DrawInnerHeading("eq.Heading");
 
         this.rowData = [[], [], [], []];
-        gfx.drawInfobox(18, 4.5, this.dy + 4.25);
+        gfx.drawInfobox(18, 4.5, this.dy + 4.25, "", "FarmInfo");
         for(let i = 0; i < 4; i++) {
-            gfx.drawMinibox(0.3125 + i * 3.875, this.dy + 8.875, 2.75, 2.5);
+            gfx.drawMinibox(0.3125 + i * 3.875, this.dy + 8.875, 2.75, 2.5, "", "FarmInfo");
         }
         const equipTopY = this.dy + 9.125;
         const equipTextTopY = this.dy * 16 + this.equipTextY;
@@ -82,10 +82,11 @@ pausemenu.equipment = {
         this.animHelper.DrawWrapper(this.dx, this.dy, 11, 4);
 
         if(numItems === 0) { this.cursor = { x: 0, y: -1 }; }
-        gfx.drawInfoText(GetText("menu.Back"), this.backStartX, -0.0625, this.cursor.y === -1 && this.cursor.x === 0, "menuA", "menutext");
+        
+        gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, this.cursor.y === -1 && this.cursor.x === 0);
 
         if(this.cursor.y === -1) {
-            this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
+            this.cursors.RedimCursor("main", this.backStartX - 0.0625, -0.0625, this.backButtonW - 1.0625, 0);
             gfx.drawWrappedText(GetText("inv.BackInfo"), 4, this.dy * 16 + this.textY, 235);
         } else {
             this.cursors.RedimCursor("main", this.dx + this.cursor.x, this.dy + this.cursor.y, 0, 0);

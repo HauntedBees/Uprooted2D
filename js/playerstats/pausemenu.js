@@ -100,7 +100,7 @@ const pausemenu = {
         }
     },
     DrawInnerHeading: function(textKey) {
-        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawTileToGrid("infoD", x, 0, "menuA"); }
+        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawTileToGrid("FarmInfoD", x, 0, "menuA"); }
         const headingText = GetText(textKey);
         const headingX = gfx.getTextRightAlignedX(headingText, 22, gfx.canvasWidth) / gfx.scale - 5;
         gfx.drawText(headingText, headingX, 9);
@@ -138,7 +138,7 @@ const pausemenu = {
         const min_x = mid_x - player.gridWidth / 2, max_x = mid_x + player.gridWidth / 2;
         const adjusted_y = Math.floor(player.gridHeight * 0.75);
         const min_y = mid_y - adjusted_y / 2, max_y = mid_y + adjusted_y / 2;
-        gfx.drawMinibox(-1, 10, gfx.tileWidth + 2, 5, "background");
+        gfx.drawMinibox(-1, 10, gfx.tileWidth + 2, 5, "background", "FarmInfo");
         for(let x = 0; x < gfx.tileWidth; x++) {
             gfx.drawTileToGrid("grassTop", x, 4, "background");
             for(let y = 5; y < 10; y++) {
@@ -281,7 +281,7 @@ const pausemenu = {
         return true;
     },
     ShowInfo: function(key) { 
-        gfx.drawInfobox(17, 2.25, 8, "menuA");
+        gfx.drawInfobox(17, 2.25, 8, "menuA", "FarmInfo");
         gfx.drawWrappedText(GetText(key), 5, 140, 250);
     },
     TryQuit: function() {
@@ -291,7 +291,7 @@ const pausemenu = {
             return;
         }
         this.lastPressWasQuit = true;
-        gfx.drawInfobox(17, 1.75, 8, "menuA");
+        gfx.drawInfobox(17, 1.75, 8, "menuA", "FarmInfo");
         gfx.drawWrappedText(GetText("quitConfirm"), 5, 140, 250);
     },
     BeepHour: function(pos) {

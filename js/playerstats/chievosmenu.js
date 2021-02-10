@@ -19,7 +19,7 @@ pausemenu.chievos = {
     drawAll: function(isFirst) {
         gfx.clearSome(this.layersToClear);
         pausemenu.DrawInnerHeading("a.Heading");
-        gfx.drawInfobox(16, 5, 9);
+        gfx.drawInfobox(17, 5, 9, "", "FarmInfo");
         for(let idx = 0; idx < achievements.length; idx++) {
             const a = achievements[idx];
             const x = this.achStartX + this.achDX * (idx % this.numPerRow);
