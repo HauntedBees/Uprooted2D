@@ -1,9 +1,9 @@
 const StreamZip = require("node-stream-zip");
 const parseString = require("xml2js").parseString;
 const sharp = require("sharp");
-const imagemin = require('imagemin');
+const imagemin = require("imagemin");
+const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
-const imageminPngquant = require('imagemin-pngquant');
 
 const imgPath = path.join(__dirname, "../ora");
 const args = process.argv.slice(2);
@@ -20,7 +20,7 @@ const GetBackgrounds = async function() {
         const images = [];
         const promises = layers.map(e => {
             const name = e.$.name, src = e.$.src;
-            if(name === "Background") { return true; }
+            if(name[0] === "_") { return true; }
             console.log(`Extracting ${name}`);
             const filename = `${name}.png`;
             images.push(filename);

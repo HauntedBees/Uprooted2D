@@ -21,7 +21,12 @@
     "get-pixels": "^3.3.2",
     "gulp": "^4.0.2",
     "gulp-foreach": "^0.1.0",
-    "uglify-es": "^3.3.9"
+    "imagemin": "^7.0.1",
+    "imagemin-pngquant": "^9.0.1",
+    "node-stream-zip": "^1.13.0",
+    "sharp": "^0.27.1",
+    "uglify-es": "^3.3.9",
+    "xml2js": "^0.4.23"
   },
   "dependencies": {
     "electron-store": "^7.0.1"
