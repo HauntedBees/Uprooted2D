@@ -6,7 +6,7 @@ New-Alias "??" Coalesce;
 $rootpath = Resolve-Path ..;
 if($which.Contains("C")) {
 	Write-Host "Converting Details_Crops.ods to veggies.js";
-	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Crops.ods" | Out-Null;
+	& "C:\Program Files\LibreOffice\program\scalc.exe" --headless --convert-to csv --outdir ".\temp" "Details_Crops.ods" | Out-Null;
 	$csv = Import-CSV ".\temp\Details_Crops.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\veggies.js";
 	$out.WriteLine(@'
@@ -79,7 +79,7 @@ function GetCrop(name) {
 }
 if($which.Contains("E")) {
 	Write-Host "Converting Details_Equipment.ods to equipment.js";
-	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Equipment.ods" | Out-Null;
+	& "C:\Program Files\LibreOffice\program\scalc.exe" --headless --convert-to csv --outdir ".\temp" "Details_Equipment.ods" | Out-Null;
 	$csv = Import-CSV ".\temp\Details_Equipment.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\equipment.js";
 	$out.WriteLine(@'
@@ -174,7 +174,7 @@ function GetEquipment(name) {
 }
 if($which.Contains("F")) {
 	Write-Host "Converting Details_Fixtures.ods to fixtures.js";
-	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Fixtures.ods" | Out-Null;
+	& "C:\Program Files\LibreOffice\program\scalc.exe" --headless --convert-to csv --outdir ".\temp" "Details_Fixtures.ods" | Out-Null;
 	$csv = Import-CSV ".\temp\Details_Fixtures.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\fixtures.js";
 	$out.WriteLine(@'
@@ -217,7 +217,7 @@ function GetFarmInfo(name) {
 }
 if($which.Contains("X")) {
 	Write-Host "Converting Details_Enemies.ods to enemies.js";
-	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Enemies.ods" | Out-Null;
+	& "C:\Program Files\LibreOffice\program\scalc.exe" --headless --convert-to csv --outdir ".\temp" "Details_Enemies.ods" | Out-Null;
 	$csv = Import-CSV ".\temp\Details_Enemies.csv";
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\enemies.js";
 	$out.WriteLine(@'

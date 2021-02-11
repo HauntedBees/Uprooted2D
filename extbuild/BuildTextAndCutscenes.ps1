@@ -3,7 +3,7 @@ param ([string]$which="TS")
 $rootpath = Resolve-Path ..;
 if($which.Contains("T")) {
 	Write-Host "Converting Details_Text.ods to text.js";
-	& "C:\Program Files (x86)\LibreOffice 5\program\scalc.exe" --headless --convert-to csv:"Text - txt - csv (StarCalc)":"44,34,0,,,,true" --outdir ".\temp" "Details_Text.ods" | Out-Null;
+	& "C:\Program Files\LibreOffice\program\scalc.exe" --headless --convert-to csv:"Text - txt - csv (StarCalc)":"44,34,0,,,,true" --outdir ".\temp" "Details_Text.ods" | Out-Null;
 	$csv = Import-CSV ".\temp\Details_Text.csv";
 
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\text.js";
@@ -43,7 +43,7 @@ const fulltext = {
 
 if($which.Contains("S")) {
 	Write-Host "Converting Details_Cutscenes.ods to cutscenes.js";
-	& "C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" --headless --convert-to csv --outdir ".\temp" "Details_Cutscenes.ods" | Out-Null;
+	& "C:\Program Files\LibreOffice\program\scalc.exe" --headless --convert-to csv --outdir ".\temp" "Details_Cutscenes.ods" | Out-Null;
 	$csv = Import-CSV ".\temp\Details_Cutscenes.csv";
 
 	$out = [System.IO.StreamWriter] "$rootpath\js\gamedata\cutscenes.js";

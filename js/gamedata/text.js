@@ -41,7 +41,7 @@ const fulltext = {
 		"type": "item"
 	},
 	"beet": {
-		"en-us": "The compound that makes beets so red is not broken down during digestion, so if you eat enough beets, the red might come out the other end!", 
+		"en-us": "A wise man once said \"eat your beets!\" and if you want a good amount of folate and manganese, you'd be wise to listen to him, too!", 
 		"type": "item"
 	},
 	"apple": {
@@ -189,11 +189,11 @@ const fulltext = {
 		"type": "item"
 	},
 	"garlic": {
-		"en-us": "Garlic is as good as ten mothers... because my mum is great and garlic is great yum yum crunch crunch give me that garlic!", 
+		"en-us": "When the gods tire of milk and honey and long for something more savory, you better believe that their first choice is garlic!", 
 		"type": "item"
 	},
 	"banana": {
-		"en-us": "A banana in the hand is worth one in the peel. Sure. TODO: REMEMBER TO CHANGE THIS TO SOMETHING HILARIOUS IN FINAL RELEASE. DON'T NOT DO THAT.", 
+		"en-us": "In many video games, you might throw a banana peel at your foes. There is no place for such a wasteful display in this game: you throw the WHOLE banana here. this time.", 
 		"type": "item"
 	},
 	"goldegg": {
@@ -9183,7 +9183,7 @@ const fulltext = {
 		"type": "crole"
 	},
 	"cr.copy": {
-		"en-us": "COPYRIGHT 2018-2021 HAUNTED BEES \n PRODUCTIONS", 
+		"en-us": "COPYRIGHT 2018-2020 HAUNTED BEES \n PRODUCTIONS", 
 		"type": "crole"
 	},
 	"cr.font1": {
