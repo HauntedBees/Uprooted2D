@@ -36,19 +36,18 @@ const tutorial = {
         if(this.state === 999) {
             gfx.drawInfobox(17, 3, -0.5, "tutorial");
         } else {
-            gfx.drawInfobox(17, Math.ceil(Math.max(2, textInfo.rows * 0.8)), -0.5, "tutorial");
+            gfx.drawInfobox(17, Math.ceil(Math.max(2.5, textInfo.rows * 0.8)), -0.5, "tutorial");
         }
         if(this.state === 8) {
-            this.DrawInformationalGentleman(GetText("tutInfoPower"), 7.75, 10.25);
-            this.DrawInformationalGentleman(GetText("tutInfoGrowth"), 7.75, 11.25);
-            this.DrawInformationalGentleman(GetText("tutInfoSeasons"), 7.75, 12.5);
+            this.DrawInformationalGentleman(GetText("tutInfoPower"), 10.25, 10);
+            this.DrawInformationalGentleman(GetText("tutInfoGrowth"), 10.25, 11.25);
+            this.DrawInformationalGentleman(GetText("tutInfoSeasons"), 10.25, 12.5);
         }
-        gfx.drawWrappedText(tutText, 2, 8, 235, gfx.GetBlack(), "tutorial");
+        gfx.drawWrappedText(tutText, 2, 8, 245, gfx.GetBlack(), "tutorial");
     },
     DrawInformationalGentleman: function(text, rightx, y) {
         let xi = 1;
         let width = gfx.getTextWidth(text) + 20;
-        let xiimax = rightx + Math.ceil(width / 64);
         gfx.drawTile("tutArrow", (rightx + 1) * 16, y * 16 - 5, "tutorial");
         gfx.drawTile("recSelR", rightx * 16, y * 16 - 5, "tutorial");
         while(width > 128) {
@@ -65,7 +64,8 @@ const tutorial = {
         if(key === player.controls.cancel) { return false; }
         const isEnter = (key === player.controls.pause || key === player.controls.confirm);
         if(isEnter) {
-            const runCheck = (this.state === 0 && combat.menu.cursorY === 3);
+            const runCheck = (this.state === 0 && combat.menu.cursorSel === 3);
+            console.log(combat.plant.cursor);
             let success = this.stateDetails[this.state]();
             if(!success && !runCheck) { Sounds.PlaySound("navNok"); return false; }
             if(!runCheck) {
@@ -109,47 +109,47 @@ const tutorial = {
     },
     matchCoords: function(pos, x, y) { return pos.x === x && pos.y === y; },
     stateDetails: [ // 296 TODO: heights should be language-dependent probably
-        () => combat.menu.cursorY === 0,
-        () => tutorial.matchCoords(combat.plant.cursor, 2, 8.5),
+        () => combat.menu.cursorSel === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 2, 10.5),
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 1,
+        () => combat.menu.cursorSel === 1,
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 0,
-        () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5),
+        () => combat.menu.cursorSel === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 0, 10.5),
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 1,
+        () => combat.menu.cursorSel === 1,
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 0,
-        () => tutorial.matchCoords(combat.plant.cursor, 0, 8.5),
+        () => combat.menu.cursorSel === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 0, 10.5),
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 0,
-        () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5),
+        () => combat.menu.cursorSel === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 1, 10.5),
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 1,
+        () => combat.menu.cursorSel === 1,
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 0,
-        () => tutorial.matchCoords(combat.plant.cursor, 1, 8.5),
+        () => combat.menu.cursorSel === 0,
+        () => tutorial.matchCoords(combat.plant.cursor, 1, 10.5),
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 0,
+        () => combat.menu.cursorSel === 0,
         AnyPress,
         AnyPress,
         AnyPress,
-        () => combat.menu.cursorY === 2,
+        () => combat.menu.cursorSel === 2,
         function() {
             const gridpos = { x: combat.compost.cursor.x - combat.dx, y: combat.compost.cursor.y - combat.dy };
             if(gridpos.x >= player.gridWidth || gridpos.y >= player.gridHeight || gridpos.x < 0 || gridpos.y < 0) { return false; }
             const tile = combat.grid[Math.floor(gridpos.x)][Math.floor(gridpos.y)];
             return tile != null && tile.name === "beet" && tile.rotten;
         },
-        () => combat.compost.cursor.y === (combat.compost.dy + 1),
+        () => combat.compost.healButtonSelected,
         AnyPress,
         AnyPress,
         AnyPress
