@@ -13,7 +13,7 @@ worldmap.title = {
         this.animIdx = setInterval(worldmap.title.Animate, 41.7);
         gfx.drawFullImage("title");
         gfx.drawFullImage("titleTop", "characters");
-        this.menuItems = (this.showContinue ? ["title.new", "title.cont", "title.options", "menu.Quit"] : ["title.new", "title.options", "menu.Quit"]);
+        this.menuItems = (this.showContinue ? ["title.cont", "title.new", "title.options", "menu.Quit"] : ["title.new", "title.options", "menu.Quit"]);
         this.DrawMenu();
         gfx.drawText(String.fromCharCode(169) + " 2021 Haunted Bees Productions (v" + player.saveVersion + ")", 2, 222, undefined, 20, "menutextOverBlack");
         screenReaderHelper.SayThing("Uprooted: Meal Replacement Game", "regular", GetText(this.menuItems[this.cursory]));
@@ -83,9 +83,11 @@ worldmap.title = {
         if(!isFresh) { return false; }
         Sounds.PlaySound("confirm", true);
         switch(this.cursory) {
-            case 0: return game.transition(this, worldmap.pottyCheck);
-            case 1:
+            case 0:
                 if(this.showContinue) { return game.innerTransition(this, pausemenu.savemenu, { saving: false }); }
+                else { return game.innerTransition(this, worldmap.pottyCheck); }
+            case 1:
+                if(this.showContinue) { return game.innerTransition(this, worldmap.pottyCheck, { saving: false }); }
                 else { return game.innerTransition(this, worldmap.optionsMenu); }
             case 2: 
                 if(this.showContinue) { return game.innerTransition(this, worldmap.optionsMenu); }
