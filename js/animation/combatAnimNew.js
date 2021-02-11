@@ -1,9 +1,9 @@
 function WalkAnim(animal, info, animProcess) {
     const baseY = RoundNear(FloatRange(info.minY, info.maxY), 8);
-    const layer = (baseY < 8.375) ? "background2" : "menucursorC";
+    const layer = (baseY < (info.offsetY || 3.625)) ? "background2" : "menucursorC";
     this.requiredY = Math.floor(baseY * 8);
     const startX = RoundNear(FloatRange((info.closeStart ? -8 : -20), (info.closeStart ? -1 : -3)), 8), endX = RoundNear(gfx.tileWidth + FloatRange(0.5, 2), 8);
-    let lastAnimRan = +new Date(), animState = InclusiveRange(0, 1), animLength = Range(80, 140);
+    let lastAnimRan = +new Date(), animState = InclusiveRange(0, 1);
     let frame = 0, lastCleanX = startX, speed = RoundNear(FloatRange(info.minSpeed, info.maxSpeed), 8);
     this.Animate = function() {
         const now = +new Date();
@@ -17,15 +17,15 @@ function WalkAnim(animal, info, animProcess) {
         gfx.drawTileToGrid("animal" + animal + animState, x, baseY, layer);
         if(info.trail !== undefined && x >= 0 && Math.floor(x) > lastCleanX) {
             lastCleanX = Math.floor(x);
-            animProcess.AddBaby(new TileAnim(lastCleanX, baseY, [info.trail], false, 12, true), `${lastCleanX}, ${baseY}`);
+            animProcess.AddBaby(new TileAnim(lastCleanX, baseY, [info.trail], false, 12, true, layer), `${lastCleanX}, ${baseY}`);
         }
     }
 }
 function HoppingAnim(animal) {
     const hopMult = FloatRange(0.01, 1.5), hopHeight = FloatRange(3, 6);
-    const baseY = RoundNear(FloatRange(8.125, 8.5), 8);
+    const baseY = RoundNear(FloatRange(3, 4.5), 8);
     this.requiredY = Math.floor(baseY * 8);
-    const layer = (baseY < 8.375) ? "background2" : "menucursorC";
+    const layer = (baseY < 3.625) ? "background2" : "menucursorC";
     const startX = RoundNear(FloatRange(-20, -3), 8), endX = RoundNear(gfx.tileWidth + FloatRange(0.5, 2), 8);
     const radian = Math.PI / 180, period = 2 * Math.PI / hopMult;
     let frame = 0, pauseTime = 0;
@@ -45,9 +45,9 @@ function HoppingAnim(animal) {
     }
 }
 
-function TileAnim(x, y, tileArray, shake, fps, loop) {
+function TileAnim(x, y, tileArray, shake, fps, loop, layer) {
     const pos = { x: x, y: y };
-    const layer = "menucursorC"; //(pos.y < 8.375) ? "background2" : "menucursorC"; why did i do this
+    layer = layer || "menucursorC";
     const tiles = tileArray, doShake = shake, doLoop = loop;
     let isDone = false;
     let frame = 0, timePerFrame = 1000 / fps, numFrames = tileArray.length - 1;

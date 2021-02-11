@@ -51,7 +51,6 @@ combat.compost = {
         let textKey = "cmp_healpow";
         this.backButtonWidth = gfx.DrawCombatOption(GetText("menu.Back"), 4, this.dy, this.backButtonSelected);
         this.healButtonWidth = gfx.DrawCombatOption(GetText("cmp_healsel"), this.backButtonWidth, this.dy, this.healButtonSelected);
-        this.canAttack = true; // FOR FUCKING TESTING TODO: REMOVE
         if(this.canAttack) {
             textKey = "cmp_atkpow";
             this.attackButtonWidth = gfx.DrawCombatOption(GetText("cmp_atksel"), this.healButtonWidth, this.dy, this.attackButtonSelected);
