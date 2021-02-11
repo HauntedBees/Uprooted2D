@@ -48,14 +48,14 @@ worldmap.credits = {
         this.mouthOpen = false;
         this.dy = 0;
         this.stillCounting = true;
-        const secondsUntilCreditsEnd = Math.round(595 / (this.delta * 100));
+        const secondsUntilCreditsEnd = Math.round(777 / (this.delta * 100));
         this.finalTime = player.getPlayTimeString(player.playTime + secondsUntilCreditsEnd);
         gfx.ctx["menutext"].textAlign = "center";
         gfx.drawFullImage("endcredits", "background");
     },
     update: function() {
         gfx.clearSome(worldmap.credits.layersToClear);
-        if(worldmap.credits.dy > 585) {
+        if(worldmap.credits.dy > 777) {
             gfx.drawFullImage("upnext", "menuOverBlack");
             gfx.drawText(GetText("crEnd4"), 5, 10, gfx.GetBlack(), 26, "menutextOverBlack");
             gfx.drawText(worldmap.credits.finalTime + "/" + worldmap.credits.finalTime, 55, 218, player.IsMonochrome() ? "#88C070" : "#A5A5A5", 26, "menutextOverBlack");
@@ -74,8 +74,8 @@ worldmap.credits = {
                 gfx.drawFullImage("endcreditsmouth", "menucursorA");
             }
             let choice = "crEnd1";
-            if(worldmap.credits.dy > 390) { choice = "crEnd3"; }
-            else if(worldmap.credits.dy > 200) { choice = "crEnd2"; }
+            if(worldmap.credits.dy > 590) { choice = "crEnd3"; }
+            else if(worldmap.credits.dy > 300) { choice = "crEnd2"; }
             const str = GetText(choice), width = 210;
             const info = gfx.getWrappedTextInfo(str, width);
             gfx.DrawBlackRect(18, 178, width + 10, info.height + 10, "menuOverBlack");
@@ -85,7 +85,7 @@ worldmap.credits = {
             gfx.drawText((worldmap.credits.stillCounting ? now : worldmap.credits.finalTime) + "/" + worldmap.credits.finalTime, 55, 218, player.IsMonochrome() ? "#88C070" : "#A5A5A5", 26, "menutextOverBlack");
         }
         worldmap.credits.dy += worldmap.credits.delta;
-        if(worldmap.credits.dy > 785) { clearInterval(worldmap.credits.timer); worldmap.credits.finish(); }
+        if(worldmap.credits.dy > 900) { clearInterval(worldmap.credits.timer); worldmap.credits.finish(); }
     },
     clean: function() { gfx.ctx["menutext"].textAlign = "left"; gfx.ctx["menutextOverBlack"].textAlign = "left"; clearInterval(this.timer); gfx.clearAll(); },
     click: function() { this.finish(); return true; },
