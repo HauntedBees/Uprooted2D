@@ -26,7 +26,7 @@ const gfx = {
         if(type === "FarmInfo") { return player.IsMonochrome() ? "#E0F8D0" : "#B77C00" } // TODO: confirm monochrome color is good
     },
     GetLightBlue: () => (player.IsMonochrome() ? "#E0F8D0" : "#B2B5FF"),
-    GetSpeakerBGColor: () => (player.IsMonochrome() ? "#E0F8D0" : "#6BADA3"),
+    GetSpeakerBGColor: () => (player.IsMonochrome() ? "#E0F8D0" : "#FEAC68"),
 
     clearLayer: key => gfx.ctx[key].clearRect(0, 0, gfx.canvasWidth, gfx.canvasHeight),
     clearSome: keys => keys.forEach(e => gfx.clearLayer(e)),
@@ -238,7 +238,7 @@ const gfx = {
     drawChoice: function(y, t, selected) {
         const tile = selected ? "SselM" : "selM";
         for(let x = 0; x < 16; x++) { gfx.drawTile(tile, x * 16, y * 16 - 8, "menuA"); }
-        gfx.drawText(t, 8, y * 16);
+        gfx.drawText(t, 8, y * 16 + 1);
     },
     GetFontSize: function(size, justNum) {
         size = size || 22;
@@ -327,7 +327,7 @@ const gfx = {
         const ctx = gfx.ctx[layer];
         const textWidth = gfx.getTextWidth(name);
         ctx.fillStyle = gfx.GetSpeakerBGColor();
-        ctx.fillRect((x - 2) * gfx.scale, (y + 4.5) * gfx.scale, 1.15 * textWidth, 1.25 * gfx.GetFontSize(undefined, true));
+        ctx.fillRect((x - 2) * gfx.scale, (y + 4.5) * gfx.scale - 2, 1.1 * textWidth, 1.25 * gfx.GetFontSize(undefined, true));
     },
     drawWrappedText: function(t, x, y, maxWidth, color, layer, size) {
         layer = layer || "menutext";
@@ -357,7 +357,7 @@ const gfx = {
         ctx.fillText(row.trim(" "), x * gfx.scale, (y + dy) * gfx.scale);
         return numRows;
     },
-    drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 4, y || 0, (overBlack ? "menuOverBlack" : undefined)),
+    drawTextBox: (y, overBlack) => gfx.drawInfobox(17, 4, y || 0, (overBlack ? "menuOverBlack" : undefined), "FarmInfo"),
     drawFullbox: (y, overBlack) => gfx.drawInfobox(17, 4.5, y || 0, (overBlack ? "menuOverBlack" : undefined), "FarmInfo"),
     drawMinibox: function(x, y, w, h, layer, type) {
         layer = layer || "menuA";

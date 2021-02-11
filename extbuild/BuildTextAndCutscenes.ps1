@@ -28,7 +28,11 @@ const fulltext = {
 		$i += 1;
 		$out.WriteLine("	`"" + $key + "`": {");
 		$out.WriteLine("		`"en-us`": `"$us`", ");
-		if($usSFW -ne "") { $out.WriteLine("		`"en-us-sfw`": `"$usSFW`", "); }	
+		if($usSFW -ne "") { $out.WriteLine("		`"en-us-sfw`": `"$usSFW`", "); }
+		if($row."profile") {
+			$profile = $row."profile";
+			$out.WriteLine("		`"profile`": `"$profile`",");
+		}	
 		$out.WriteLine("		`"type`": `"$typ`"");
 		if($i -eq $maxlen) {
 			$out.WriteLine("	}");

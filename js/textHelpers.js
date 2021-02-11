@@ -17,6 +17,7 @@ function GetText(key) {
 		return "fucko"; //throw e;
 	}
 }
+function GetSpeaker(key) { return fulltext[key]["profile"] || null; }
 function TryGetText(key) {
     try {
 		const lang = (game !== undefined) ? game.language : "en-us";

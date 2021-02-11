@@ -1373,90 +1373,112 @@ const fulltext = {
 	},
 	"intro2": {
 		"en-us": "???: Hello there, are you the owner of this farm? You are? Excellent!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"intro3": {
 		"en-us": "???: My name is Nathan! I'm an apprentice farmer! Do you need an intern?", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"intro4": {
 		"en-us": "Nathan: Now hold on a second! I can be a valuable asset to your farm!", 
+		"profile": "nathconf",
 		"type": "map"
 	},
 	"intro5": {
 		"en-us": "Nathan: You're running your produce stand today, right? I can go advertise for it!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"intro6": {
 		"en-us": "Nathan: Or I can run some errands for you while you're busy with that! Come on, what's something you need to get done today?", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"intro7": {
 		"en-us": "Nathan: You need some seeds, do you? Well, I know a great bulk supplier! I'll go get them and bring them to you at the market!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"intro8": {
 		"en-us": "Nathan: Be back soon! I won't disappoint you!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"intro9": {
 		"en-us": "???: Ah! This must be it! The famous produce stand!", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro10": {
 		"en-us": "???: The guys back at the office were right -- all of this looks amazing!", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro11": {
 		"en-us": "???: This carrot looks so nutritious!", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro12": {
 		"en-us": "???: ...", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro13": {
 		"en-us": "???: And it looks like this analysis confirms that it is!", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro14": {
 		"en-us": "???: Hm?", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro15": {
 		"en-us": "???: Oh. You're probably wondering what that was all about.", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro16": {
 		"en-us": "???: I'm Beckett. The startup I work for is going to use this carrot data to help us create PROPRIETARY FOOD SUBSTITUTES.", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro17": {
 		"en-us": "Beckett: The world will be so much better when people don't have to worry about what to eat!", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro18": {
 		"en-us": "Beckett: But for that to work, we also need to make sure Food2 has no competition...", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro19": {
 		"en-us": "Beckett: So, I'd like to make you an offer. Ten million coins to retire and never farm again.", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro20": {
 		"en-us": "Beckett: ...", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro21": {
 		"en-us": "Beckett: No? Hmm, I thought you'd be convinced by that amazing sales pitch...", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro22": {
 		"en-us": "Beckett: Well, I have things I need to do, so I'll let this Convince-a-tron change your mind! Give me a call when you're ready to accept our offer!", 
+		"profile": "beckett",
 		"type": "map"
 	},
 	"intro23": {
 		"en-us": "Convince-a-tron: Hello! Allow me to play the devil's advocate for a moment... what if that thing you don't want to do is actually a good thing?", 
+		"profile": "conv",
 		"type": "map"
 	},
 	"Pb0.0": {
@@ -1670,6 +1692,7 @@ const fulltext = {
 	},
 	"wantTut": {
 		"en-us": "Convince-a-tron: Greetings, would you like to play through the tutorial?", 
+		"profile": "conv",
 		"type": "map"
 	},
 	"sYes": {
@@ -1694,6 +1717,7 @@ const fulltext = {
 	},
 	"noTut": {
 		"en-us": "Convince-a-tron: Okie-dokie!", 
+		"profile": "conv",
 		"type": "map"
 	},
 	"finTut": {
@@ -1759,26 +1783,32 @@ const fulltext = {
 	},
 	"B1.0": {
 		"en-us": "Robot: hI hEllo yEs i aM a tEchnology rObot sEnt tO rEsearch tHis fArm.", 
+		"profile": "robo",
 		"type": "map"
 	},
 	"B1.1": {
 		"en-us": "Robot: aLso bY \"rEsearch\" i mEan \"lOot aNd pIllage.\"", 
+		"profile": "robo",
 		"type": "map"
 	},
 	"B1.2": {
 		"en-us": "Robot: oH dEar tHis iS yOur fArm? yOink. i mEan... uHhhh... wAnt rObot sCout cOokies?", 
+		"profile": "robo",
 		"type": "map"
 	},
 	"B1.3": {
 		"en-us": "Robot: ...", 
+		"profile": "robo",
 		"type": "map"
 	},
 	"B1.4": {
 		"en-us": "Robot: ...nOt bUying iT? oKay, fIne. lEt's tHrow dOwn.", 
+		"profile": "robo",
 		"type": "map"
 	},
 	"B1.5": {
 		"en-us": "Robot: bAck fOr mOre, aRe yA? hAhaha. i'Ll gLadly dEfeat yOu aGain!", 
+		"profile": "robo",
 		"type": "map"
 	},
 	"Pb1.0": {
@@ -1860,23 +1890,28 @@ const fulltext = {
 	},
 	"lakeegg1": {
 		"en-us": "???: DID SOMEONE JUST DROP AN EGGGGGG???", 
+		"profile": "fairy",
 		"type": "map"
 	},
 	"lakeegg2": {
 		"en-us": "???: You there... you're looking absolutely eggscellent today!", 
+		"profile": "fairy",
 		"type": "map"
 	},
 	"lakeegg3": {
 		"en-us": "???: Did you, perchance, drop this GOLDEN EGG into my beautiful leggke?", 
+		"profile": "fairy",
 		"type": "map"
 	},
 	"lakeeggLie": {
 		"en-us": "???: You lying asshole how dare you, you jackass, you don't get ANY eggs. Give me all your eggs, you don't deserve them anymore!", 
 		"en-us-sfw": "???: You lying hooligan, how dare you. Just for that, you don't get ANY eggs. You don't deserve your eggs anymore!", 
+		"profile": "fairymad",
 		"type": "map"
 	},
 	"lakeeggTruth": {
 		"en-us": "???: Your honesty is admirable! Here is the egg you dropped, as well as a BONUS GOLDEN EGG just for being such an honest little cutie! Stay eggscellent, sweetie!", 
+		"profile": "fairy",
 		"type": "map"
 	},
 	"lakeFinish": {
@@ -1922,55 +1957,68 @@ const fulltext = {
 	},
 	"villager0": {
 		"en-us": "Dean: Be careful in the forest west of town; it's way too easy to get lost in there!", 
+		"profile": "dean",
 		"type": "map"
 	},
 	"villager1": {
 		"en-us": "June: Rumor has it if you throw a chicken egg in the lake north of here, something amazing will happen!", 
+		"profile": "june",
 		"type": "map"
 	},
 	"villager2": {
 		"en-us": "Aiko: There've been a lot of robots wandering through here since that lab got set up south of here. I wonder what that's all about.", 
+		"profile": "aiko",
 		"type": "map"
 	},
 	"villager3": {
 		"en-us": "Tanner: How's your truck doin'? Cool, cool. Take care of that bad boy, I feel like you're gonna need it.", 
+		"profile": "tanner",
 		"type": "map"
 	},
 	// Area 2: Produce Stand Cutscene
 	"theHappening0": {
 		"en-us": "Nathan: Oh hey! I'm back! I got your-- what's going on?", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"theHappening1": {
 		"en-us": "Nathan: You have something important you need to do?", 
+		"profile": "nathconf",
 		"type": "map"
 	},
 	"theHappening2": {
 		"en-us": "Nathan: Well, okay then. I'll watch over your farm while you're gone!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"theHappening3": {
 		"en-us": "Nathan: Oh, who's that there?", 
+		"profile": "nathconf",
 		"type": "map"
 	},
 	"theHappening4": {
 		"en-us": "Nathan: Eee? She's a cute little bird. Hey, I have an idea!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"theHappening5": {
 		"en-us": "Nathan: How about Eee stays here with me, and if I need to send you any messages, I can give them to her?", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"theHappening6": {
 		"en-us": "Nathan: Sounds good? Great! Come here, cutie!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"theHappening7": {
 		"en-us": "Nathan: Ouch! Ha ha, sharp talons!", 
+		"profile": "nathconf",
 		"type": "map"
 	},
 	"theHappening8": {
 		"en-us": "Nathan: Well, anyway, here are the seeds I got for you.", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"theHappening9": {
@@ -1979,10 +2027,12 @@ const fulltext = {
 	},
 	"theHappening10": {
 		"en-us": "Nathan: Good luck on your errands! I'll make sure everything is safe here!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	"theFarmBoy": {
 		"en-us": "Nathan: Don't worry about a thing! I'll keep everything under control here!", 
+		"profile": "nath",
 		"type": "map"
 	},
 	// Area 3: Forest
@@ -5332,28 +5382,34 @@ const fulltext = {
 	},
 	"tutReturn0": {
 		"en-us": "Convince-a-tron: Do you remember me?", 
+		"profile": "conv",
 		"type": "text"
 	},
 	"tutReturn1": {
 		"en-us": "Convince-a-tron: We tried to reason with you. We didn't want things to go this way.", 
+		"profile": "conv",
 		"type": "text"
 	},
 	"tutReturn2": {
 		"en-us": "Convince-a-tron: ...Okay, maybe some of us did a little bit. But *I* wanted to be your friend.", 
+		"profile": "conv",
 		"type": "text"
 	},
 	"tutReturn3": {
 		"en-us": "Convince-a-tron: But I guess potential friends make the best enemies... I'm sure some great philosopher probably said that once.", 
+		"profile": "conv",
 		"type": "text"
 	},
 	"tutReturn4": {
 		"en-us": "Convince-a-tron: To quote another great philosopher... \"I'm gonna kill you, jackass!\" - Plato", 
 		"en-us-sfw": "Convince-a-tron: To quote another great philosopher... \"I'm gonna kill you!\" - Plato", 
+		"profile": "conv",
 		"type": "text"
 	},
 	"tutReturnBack": {
 		"en-us": "Convince-a-tron: Back for more, are you? Do you need another tutorial on getting your ass kicked?", 
 		"en-us-sfw": "Convince-a-tron: Back for more, are you? Do you need another tutorial on getting your butt kicked?", 
+		"profile": "conv",
 		"type": "text"
 	},
 	"confront0": {
@@ -5362,73 +5418,90 @@ const fulltext = {
 	},
 	"confront1": {
 		"en-us": "???: Heh heh heh... remember me?", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront2": {
 		"en-us": "???: ...", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront3": {
 		"en-us": "???: It's BECKETT.", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront4": {
 		"en-us": "BECKETT, I guess: DON'T GIVE ME THAT SHIT!", 
 		"en-us-sfw": "BECKETT, I guess: DON'T GIVE ME THAT JUNK!", 
+		"profile": "beckettmad",
 		"type": "text"
 	},
 	"confront5": {
 		"en-us": "Beckett: I have to admit, I underestimated you...", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront6": {
 		"en-us": "Beckett: Who would have guessed some farmer from hicktown could compete with some of the smartest minds in the world?", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront7": {
 		"en-us": "Beckett: No one, of course, because you can't. I've just been toying with you. Because... I wanted to see how far you could go!", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront8": {
 		"en-us": "Beckett: If that doesn't make sense to you, clearly you just can't comprehend my brilliant intellect. It's completely logical!", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront9": {
 		"en-us": "Beckett: But now, you've come too far. You've caused us too many problems. You... made some of our investors change their minds...", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront10": {
 		"en-us": "Beckett: You are a bug in the hand of a fucking infant, who will grow up to rule the world.", 
 		"en-us-sfw": "Beckett: You are a bug in the hand of an infant, who will grow up to rule the world.", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront11": {
 		"en-us": "Beckett: And when the infant grows tired of the bug... he CRUSHES IT.", 
+		"profile": "beckett",
 		"type": "text"
 	},
 	"confront12": {
 		"en-us": "Beckett: IN THIS METAPHOR I AM THE INFANT AND I WILL CRUSH YOU!!!", 
+		"profile": "beckettmad",
 		"type": "text"
 	},
 	"beckettBack0": {
 		"en-us": "Beckett: Heh heh, back for more, are you? You yokels never know when to quit!", 
+		"profile": "beckettmad",
 		"type": "text"
 	},
 	"postBeckett0": {
 		"en-us": "Beckett: Wh-wha... you... YOU BEAT ME?!", 
+		"profile": "beckettmad",
 		"type": "text"
 	},
 	"postBeckett1": {
 		"en-us": "Beckett: I'M SMART! YOU'RE NOT! I'M RICH! YOU'RE NOT! I'M... THIS IS IMPOSSIBLE!", 
+		"profile": "beckettmad",
 		"type": "text"
 	},
 	"postBeckett2": {
 		"en-us": "Beckett: Wipe that smug look off your face! Once the boss hears about this you'll be sorry! YOU'LL BE SORRY!!", 
+		"profile": "beckettmad",
 		"type": "text"
 	},
 	"final0": {
 		"en-us": "Beckett: There she is, boss! There's the mean old lady who beat the fucking shit out of me!", 
 		"en-us-sfw": "Beckett: There she is, boss! There's the mean old lady who beat me up!", 
+		"profile": "beckettsad",
 		"type": "text"
 	},
 	"final1": {
@@ -5445,96 +5518,119 @@ const fulltext = {
 	},
 	"final4": {
 		"en-us": "Nathan: Oh, hey boss! What brings you here?", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final5": {
 		"en-us": "Beckett: B--WHAAAT?!?!?!!", 
+		"profile": "beckettshock",
 		"type": "text"
 	},
 	"final6": {
 		"en-us": "Nathan: Oh yeah, I guess I forgot to fill the rest of y'all in while I was gone.", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final7": {
 		"en-us": "Nathan: This is that farmer we talked about last week at the board meeting. One of the best farmers in California. Remember?", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final8": {
 		"en-us": "Beckett: Yes... I remember...", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final9": {
 		"en-us": "Nathan: Well anyway, I figured that a good way to figure out her farming secrets was to work as her intern.", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final10": {
 		"en-us": "Beckett: Her... intern...?", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final11": {
 		"en-us": "Nathan: Yeah, she's been busy with some other stuff lately, so I've been working on her farm, helping her out, learning how she works.", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final12": {
 		"en-us": "Nathan: I gotta admit, I never would have thought of some of the things she does.", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final13": {
 		"en-us": "Nathan: But thanks to that research, we can figure out what makes her crops so damn good, so we can do the same thing to Food2!", 
 		"en-us-sfw": "Nathan: But thanks to that research, we can figure out what makes her crops so good, so we can do the same thing to Food2!", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final14": {
 		"en-us": "Beckett: ...", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final15": {
 		"en-us": "Nathan: ...Beckett?", 
+		"profile": "nathconf",
 		"type": "text"
 	},
 	"final16": {
 		"en-us": "Beckett: That's... certainly... one strategy...", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final17": {
 		"en-us": "Nathan: What are you talking about?", 
+		"profile": "nathconf",
 		"type": "text"
 	},
 	"final18": {
 		"en-us": "Beckett: Well... after that meeting last week.... after you left... we came up with a... DIFFERENT way... of working with her.", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final19": {
 		"en-us": "Nathan: Oh? Great! What did you guys do?", 
+		"profile": "nath",
 		"type": "text"
 	},
 	"final20": {
 		"en-us": "Beckett: ...uh... first we uh, decided that she was someone to compete with, not collaborate with... so...", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final21": {
 		"en-us": "Beckett: We tried bribing her... and then that didn't work... so we tried to kill her.", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final22": {
 		"en-us": "Nathan: What the fuck!? Why the fuck did you think any of that would be a good idea?!", 
 		"en-us-sfw": "Nathan: What!? Why the heck did you think any of that would be a good idea?!", 
+		"profile": "nathmad",
 		"type": "text"
 	},
 	"final23": {
 		"en-us": "Beckett: ...the investors liked it more than your idea.", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"final24": {
 		"en-us": "Nathan: Oh, they did? Well why didn't you say so?", 
+		"profile": "nathconf",
 		"type": "text"
 	},
 	"final25": {
 		"en-us": "Nathan: Sorry, boss, but business is business.", 
+		"profile": "nathupset",
 		"type": "text"
 	},
 	"nathReturn": {
 		"en-us": "Nathan: Sorry, boss, but I must defeat you. The business demands it, and business is always right.", 
+		"profile": "nathupset",
 		"type": "text"
 	},
 	// Area 10: Endings
@@ -6502,46 +6598,57 @@ const fulltext = {
 	},
 	"beeGoodbye": {
 		"en-us": "???: Goodbye, friend!", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"FarmHive0": {
 		"en-us": "???: Hello there!", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"FarmHive1": {
 		"en-us": "???: I see you've got some BEES there, am I correct?", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"FarmHive2": {
 		"en-us": "???: You can place a beehive on your farm from the Fixtures menu. Once you have a beehive on your farm, you can use bees in combat!", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"FarmHive3": {
 		"en-us": "???: Bees produce honey at random intervals, which recovers a lot of health when composted, and can stun some enemies when used as a weapon!", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"FarmHive4": {
 		"en-us": "???: Bees are very important, so please take care of them. Don't take more honey than you need, and don't do anything to hurt them!", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"BeeGuard0": {
 		"en-us": "???: I saw what you did...", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"BeeGuard1": {
 		"en-us": "???: You used pesticide...", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"BeeGuard2": {
 		"en-us": "???: And then exposed bees to that pesticide.", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"BeeGuard3": {
 		"en-us": "???: DID YOU THINK I WOULDN'T NOTICE???", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"BeeGuard4": {
 		"en-us": "???: I CANNOT LET YOU GET AWAY WITH THIS!!", 
+		"profile": "colel",
 		"type": "map"
 	},
 	"ForestHive0": {
@@ -9138,6 +9245,10 @@ const fulltext = {
 		"en-us": "Kelly Marine", 
 		"type": "cname"
 	},
+	"cr.cc": {
+		"en-us": "Cecilia Contreras", 
+		"type": "cname"
+	},
 	"cr.wk": {
 		"en-us": "Andrew W.K.", 
 		"type": "cname"
@@ -9183,7 +9294,7 @@ const fulltext = {
 		"type": "crole"
 	},
 	"cr.copy": {
-		"en-us": "COPYRIGHT 2018-2020 HAUNTED BEES \n PRODUCTIONS", 
+		"en-us": "COPYRIGHT 2018-2021 HAUNTED BEES \n PRODUCTIONS", 
 		"type": "crole"
 	},
 	"cr.font1": {
@@ -9211,19 +9322,11 @@ const fulltext = {
 		"type": "cname"
 	},
 	"cr.nwjs": {
-		"en-us": "NW.js Runtime", 
+		"en-us": "Electron Framework", 
 		"type": "cname"
 	},
 	"cr.nwjsb": {
-		"en-us": "2015 NW.js Community", 
-		"type": "cname"
-	},
-	"cr.web2": {
-		"en-us": "Web2Executable", 
-		"type": "cname"
-	},
-	"cr.web2b": {
-		"en-us": "2015 Joey Payne", 
+		"en-us": "2021 OpenJS Foundation", 
 		"type": "cname"
 	},
 	"cr.lz": {

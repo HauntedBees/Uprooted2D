@@ -291,10 +291,12 @@ const worldmap = {
         this.cursors.MoveCursor("main", -1, -1);
         worldmap.currentFormatting = formatting;
         gfx.clearSome(["menuA", "menutext", "menuOverBlack", "menutextOverBlack"]);
-        const drawY = isEndingCutscene === true ? 11 : ((worldmap.pos.y <= 4 || worldmap.mapName === "hq_6") ? 10 : 0);
-        if(!justWhiteText) { gfx.drawTextBox(drawY, overBlack); }
+        const drawY = isEndingCutscene ? 11 : 10;
         let actualText = GetText(t);
         if(actualText === "") { return; }
+        const speaker = GetSpeaker(t);
+        if(speaker !== null) { gfx.drawFullImage(`profiles/${speaker}`, "menuA"); }
+        if(!justWhiteText) { gfx.drawTextBox(drawY, overBlack); }
         let formatArray = false;
         if(formatting) {
             if((typeof formatting) === "string") {

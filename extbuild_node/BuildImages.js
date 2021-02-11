@@ -4,6 +4,7 @@ const sharp = require("sharp");
 const imagemin = require("imagemin");
 const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
+const fs = require("fs");
 
 const imgPath = path.join(__dirname, "../ora");
 const args = process.argv.slice(2);
@@ -68,6 +69,50 @@ const RipImage = async function(img) {
         await zip.close();
     });
 }
+const RipProfiles = async function() {
+    console.log("Extracting profiles");
+    const zip = new StreamZip.async({file: `${imgPath}/portraits.ora`});
+    const xmlStr = await zip.entryData("stack.xml");
+    const rawpath = path.join(__dirname, "./out/profiles"), finalpath = path.join(__dirname, "../img/profiles");
+    parseString(xmlStr, async function(err, xmlObj) {
+        const layers = xmlObj.image.stack[0].layer;
+        
+        const images = [];
+        const promises = layers.map(e => {
+            const name = e.$.name, src = e.$.src;
+            
+            if(name[0] === "_") { return true; }
+            console.log(`Extracting ${name}`);
+            const filename = `${name}.png`;
+            images.push({
+                filename: filename,
+                left: parseInt(e.$.x),
+                top: parseInt(e.$.y)
+            });
+            return zip.extract(src, `${rawpath}/${filename}`);
+        });
+        await Promise.all(promises);
+        console.log("All Portraits extracted");
+        const resStr = [];
+        images.forEach(async obj => {
+            const img = sharp(`${rawpath}/${obj.filename}`);
+            const imgPath = `${finalpath}/${obj.filename}`;
+            resStr.push(`profiles/${obj.filename.split(".")[0]}`);
+            return img.metadata().then(metadata => {
+                img.extend({ top: obj.top * 4, left: obj.left * 4, right: 0, bottom: 0, background:"#00000000" })
+                    .resize({ width: metadata.width * 4, kernel: sharp.kernel.nearest }).toFile(imgPath, () => {
+                    imagemin([imgPath], {
+                        destination: finalpath,
+                        plugins: [imageminPngquant()]
+                    })
+                });
+            });
+        });
+        console.log("All Portraits resized");
+        console.log(`"${resStr.join('", "')}",`);
+        await zip.close();
+    });
+}
 
 const noArgs = args.length === 0;
 const filters = args.length === 1 && args[0] === "filters";
@@ -79,4 +124,7 @@ if(noArgs || HasArg("sheet")) {
 }
 if(filters || HasArg("hqx")) {
     console.log("TODO");
+}
+if(filters || HasArg("profile")) {
+    RipProfiles();
 }
