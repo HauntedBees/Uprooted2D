@@ -60,9 +60,9 @@ const game = {
                     "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG", "maps/northcity_NB", "maps/hq_NB", "maps/hq_NB_side",
                     "maps/northcity_IB", "maps/hq_IB", "maps/forest",
                     //* Profiles *//
-                    "profiles/robo", "profiles/beckettworry", "profiles/beckettshock", "profiles/beckettsad", "profiles/beckettmad", 
-                    "profiles/fairymad", "profiles/fairy", "profiles/colel", "profiles/tanner", "profiles/aiko", "profiles/june", "profiles/dean", 
-                    "profiles/beckett", "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad",
+                    "profiles/robo", "profiles/beckettworry", "profiles/beckettshock", "profiles/beckettsad", "profiles/beckettmad", "profiles/fairymad", "profiles/fairy", 
+                    "profiles/colel", "profiles/drjeff", "profiles/rapb", "profiles/lime", "profiles/fish", "profiles/rabbit", "profiles/tanner", "profiles/aiko", "profiles/june",
+                    "profiles/dean", "profiles/beckett", "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad",
                     //* Map Covers *//
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",

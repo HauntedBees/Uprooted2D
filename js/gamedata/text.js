@@ -2051,20 +2051,24 @@ const fulltext = {
 	"carrotseeds0": {
 		"en-us": "Rabbit: oi you yankee bugger, yeu want some carrot seeds? help yourself!", 
 		"en-us-sfw": "Rabbit: oi you yankee, yeu want some carrot seeds? help yourself!", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"carrotseeds1": {
 		"en-us": "Rabbit: oi lass I think you've had a bit too many focken seeds. save some for the rest of the focken forest!", 
 		"en-us-sfw": "Rabbit: oi lass I think you've had a bit too many seeds. save some for the rest of the forest!", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"rabbit0": {
 		"en-us": "Rabbit: th'hell you want? th'hell you doin' here?", 
 		"en-us-sfw": "Rabbit: th'heck you want? th'heck you doin' here?", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"rabbit1": {
 		"en-us": "Rabbit: oh oh, a farmer are yae? well I have some nice FERTILIZER here if you want sumfink special! what do you say? \n (You have {g}G)", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"buyfertilizer": {
@@ -2074,15 +2078,18 @@ const fulltext = {
 	"rabbit2": {
 		"en-us": "Rabbit: well bugger off then.", 
 		"en-us-sfw": "Rabbit: well go away then.", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"rabbit3": {
 		"en-us": "Rabbit: what the hell are you tryin' to pull here, lass? you don't have enough money! bugger off!", 
 		"en-us-sfw": "Rabbit: what the heck are you tryin' to pull here, lass? you don't have enough money! get out of here!", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"rabbit4": {
 		"en-us": "Rabbit: lourvely. alright, hold out your hands and close your eyes.", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"rabbit5": {
@@ -2091,50 +2098,62 @@ const fulltext = {
 	},
 	"rabbit6": {
 		"en-us": "Rabbit: heh heh. enjoy. you can replace a tile of regular soil on your farm with Strong Soil now in the Fixtures Menu.", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"rabbit7": {
 		"en-us": "Rabbit: pleasure doing business with you, lass.", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"rabbitOut": {
 		"en-us": "Rabbit: I don't have any more fertilizer for you, lady. come back after I've had another meal.", 
+		"profile": "rabbit",
 		"type": "map"
 	},
 	"fishyFriend0": {
 		"en-us": "Fish: oh, hello there. you're that farmer going around taking care of business, right?", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriend1": {
 		"en-us": "Fish: I have one request for you. if you ever find the opportunity to use fish in combat, please don't. I don't want my friends to be hurt.", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriend2": {
 		"en-us": "Fish: there are plenty of ways to defeat your foes without using animals. please keep this in mind.", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriendX": {
 		"en-us": "Fish: please be nice to my friends.", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriendWronged": {
 		"en-us": "Fish: I can't believe you slapped people with my friends. how could you?", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriendGood0": {
 		"en-us": "Fish: I heard you made it all the way to Food2 and beat their CEO without using a single fish... that's great. thank you.", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriendGood1": {
 		"en-us": "The fish gives you 5000 monies. How did they get that much cash???", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriendBest": {
 		"en-us": "Fish: thank you for being nice to my friends.", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"fishyFriendBetrayed": {
 		"en-us": "Fish: how could you? after I thanked you... you went ahead and used fish in combat. you monster.", 
+		"profile": "fish",
 		"type": "map"
 	},
 	"mouse0": {
@@ -2188,22 +2207,27 @@ const fulltext = {
 	},
 	"lime0": {
 		"en-us": "???: hmmmmyessss hello there. My name is Lime.", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime1": {
 		"en-us": "Lime: I'm looking for something... tasty.", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime2": {
 		"en-us": "Lime: Something tasty... and yellow.", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime3": {
 		"en-us": "Lime: Bring me something tasty and yellow, or seeds to grow something tasty and yellow, and I may just reward you!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime4": {
 		"en-us": "Lime: Oh oh, you have something for me, I can sense it.", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.lemon": {
@@ -2225,55 +2249,68 @@ const fulltext = {
 	"lime.lemon1": {
 		"en-us": "Lime: Lemons? What the hell?! Who the hell just EATS LEMONS?!", 
 		"en-us-sfw": "Lime: Lemons? What the heck?! Who just EATS LEMONS?!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.lemon2": {
 		"en-us": "Lime: I want a tasty TREAT, not something to squeeze into my damn aioli!", 
 		"en-us-sfw": "Lime: I want a tasty TREAT, not something to squeeze into my dang aioli!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.lemon3": {
 		"en-us": "Lime: Come back when you learn what TASTY means, buddy!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.banana1": {
 		"en-us": "Lime: Bananas, eh? I mean the peel is yellow, so that counts I guess.", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.banana2": {
 		"en-us": "Lime: Bananas ARE pretty tasty, too... so, thank you, mysterious stranger! I will use these banana seeds wisely!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.banana3": {
 		"en-us": "Lime: In exchange, have some other tasty yellow food seeds: corn!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.corn1": {
 		"en-us": "Lime: Corn, eh? Yellow. Crunchy. Tasty. You nailed it!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.corn2": {
 		"en-us": "Lime: Thank you, mysterious stranger! I will use these corn seeds wisely!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.corn3": {
 		"en-us": "Lime: In exchange, have some other tasty yellow food seeds: bananas!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.egg1": {
 		"en-us": "Lime: A golden egg... wow. You found such a rare and valuable item and you're just giving it to me?", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.egg2": {
 		"en-us": "Lime: But alas... gold isn't REALLY yellow... and I'm a vegan, so this is definitely not a tasty yellow food.", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.egg3": {
 		"en-us": "Lime: But I cannot just dismiss such a generous gift! Here, take these coconut seeds. You won't find these anywhere else around here!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.complete": {
 		"en-us": "Lime: Thank you again for your generosity.", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"lime.nope": {
@@ -2282,6 +2319,7 @@ const fulltext = {
 	},
 	"lime.denied": {
 		"en-us": "Lime: It seems my senses were wrong! Let me know if you do come across anything!", 
+		"profile": "lime",
 		"type": "map"
 	},
 	"hatchedEgg": {
@@ -2311,26 +2349,32 @@ const fulltext = {
 	},
 	"rap0": {
 		"en-us": "???: Greetings, human. I am a Research Automaton for Producing Biological Augmentations through Transformation Technology for Life Enhancement.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap1": {
 		"en-us": "???: But you can call me RAPBATTLE for short.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap2": {
 		"en-us": "RAPBATTLE: I'm currently researching different types of vegetation to find something versatile.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap3": {
 		"en-us": "RAPBATTLE: I've already discovered corn, hemp, and soy, but I'm looking for something else. If you find anything, do let me know.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap4": {
 		"en-us": "RAPBATTLE: If you have any versatile crops, do share them with me.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap5": {
 		"en-us": "RAPBATTLE: Do you have something for me?", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.garlic": {
@@ -2347,74 +2391,92 @@ const fulltext = {
 	},
 	"rap.garlic1": {
 		"en-us": "RAPBATTLE: This is... \"garlic?\"", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.garlic2": {
 		"en-us": "RAPBATTLE: Let me see... it appears to have preservative qualities, as well as various health benefits.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.garlic3": {
 		"en-us": "RAPBATTLE: It seems parts of it have insecticide properties, and some of its juices can be used for adhesive purposes.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.garlic4": {
 		"en-us": "RAPBATTLE: It can be stored warm for longer periods than many crops... it has antiseptic qualities... hm, yes, yes, this is all very good.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.garlic5": {
 		"en-us": "RAPBATTLE: I will accept this \"garlic,\" thank you muchly!", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.normalgift": {
 		"en-us": "RAPBATTLE: In return for this crop, I will give you some delicious delicious batteries. Enjoy!", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.thanks": {
 		"en-us": "RAPBATTLE: Thank you again for your help.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.rice1": {
 		"en-us": "RAPBATTLE: This is... \"rice?\"", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.rice2": {
 		"en-us": "RAPBATTLE: This appears to have many interesting properties... this is a good starchy grain.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.rice3": {
 		"en-us": "RAPBATTLE: I predict this can be used to create flour, a milk-like liquid, alcohol, and other useful materials.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.rice4": {
 		"en-us": "RAPBATTLE: I will accept this \"rice,\" thank you muchly!", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.coconut1": {
 		"en-us": "RAPBATTLE: This is... \"coconut?\"", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.coconut2": {
 		"en-us": "RAPBATTLE: Its fibrous husk looks like it can be used in many ways, as can its hard shell.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.coconut3": {
 		"en-us": "RAPBATTLE: It also appears to produce various useful liquids - coconut water, coconut oil, and coconut milk.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.coconut4": {
 		"en-us": "RAPBATTLE: And its meat, of course, can be used in many different recipes.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.coconut5": {
 		"en-us": "RAPBATTLE: Hmm, yes, yes, this is an excellent crop. This is exactly what I needed, thank you.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.coconut6": {
 		"en-us": "RAPBATTLE: To thank you for this exceptional crop, I will give you these Genetically Modified Corn Seeds.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"rap.coconut7": {
 		"en-us": "RAPBATTLE: They may be a bit... TOO genetically modified for human consumption, but I am sure you can find some use for them.", 
+		"profile": "rapb",
 		"type": "map"
 	},
 	"bookshelf.left": {
@@ -2487,66 +2549,82 @@ const fulltext = {
 	},
 	"B2.1": {
 		"en-us": "???: You! Get out of my laboratory! I am very busy right now!", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.2": {
 		"en-us": "???: Hmmm, wait a minute. Stay. I recognize you. You're the one who destroyed my research robot.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.3": {
 		"en-us": "???: My name is Jeff Husk, Ph.D. One of the smartest minds in the world. Too smart to waste time being humble, mind you.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.4": {
 		"en-us": "Jeff: I am helping--- ahem. That's DOCTOR Jeff, thank you.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.5": {
 		"en-us": "Dr. Jeff: I am helping an old friend by doing some groundbreaking research answering the age old question of \"what is food?\"", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.6": {
 		"en-us": "Dr. Jeff: An apple is good for you. Is a baked apple just as good for you? What about apple sauce?", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.7": {
 		"en-us": "Dr. Jeff: What about a proprietary mulch made from apple and apple byproducts? Are cars food?", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.8": {
 		"en-us": "Dr. Jeff: If the answer to any of those questions is \"no,\" then the followup question is \"why?\" That is what I intend to answer.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.9": {
 		"en-us": "Dr. Jeff: With this knowledge, my friend's startup will be able to create the perfect food substitute, and will change the world forever!", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.10": {
 		"en-us": "\"Dr.\" Jeff: And, of course, people who change the world are often rewarded handsomely for it. I would know, I've read a history book before.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.11": {
 		"en-us": "\"Dr.\" Jeff: But it seems you are intent on thwarting the evolution of food. And for that, I must thwart you.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"B2.12": {
 		"en-us": "\"Dr.\" Jeff: Still not convinced? I will just have to beat some more sense into you! And TAKE THOSE QUOTATION MARKS OFF OF \"Dr.\"!!", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.0": {
 		"en-us": "\"Dr. \"Jeff: Ugh... it seems I underestimated you... do you also have a Ph.D?", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.1": {
 		"en-us": "\"Dr.\" Jeff: Wh-what?! I lost to someone... who never even went to college... ugh...", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.2": {
 		"en-us": "\"Dr.\" Jeff: Going to college, then being too smart for it and dropping out is one thing... but never going at all? Ugh... insulting.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.3": {
 		"en-us": "\"Dr.\" Jeff: I'm sorry, Beckett... I'm sorry, Food2... I've failed you... all my research... for nothing...", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.4": {
@@ -2555,6 +2633,7 @@ const fulltext = {
 	},
 	"Pb2.5": {
 		"en-us": "\"Dr.\" Jeff: You may have beaten me... but you'll never stop Food2... not without grabbing exactly one of those three things over there, at least...", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.6": {
@@ -2603,10 +2682,12 @@ const fulltext = {
 	},
 	"Pb2.11": {
 		"en-us": "\"Dr.\" Jeff: I'm not sure... why I told you... to do that... ughh.....", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.12": {
 		"en-us": "\"Dr.\" Jeff falls to the ground, unconscious.", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.13": {
