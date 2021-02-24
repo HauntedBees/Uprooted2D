@@ -2687,7 +2687,6 @@ const fulltext = {
 	},
 	"Pb2.12": {
 		"en-us": "\"Dr.\" Jeff falls to the ground, unconscious.", 
-		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.13": {
@@ -2706,42 +2705,52 @@ const fulltext = {
 	},
 	"bworker1": {
 		"en-us": "Worker: Sorry lady, but this bridge is under construction... we can't let anyone through.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker2": {
 		"en-us": "Worker: What do you mean \"all we're doing is tossing wood around and walking in circles?\" We're working very hard on... uh... construction.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker3": {
 		"en-us": "Worker: ...Okay, look, lady, we aren't really doing any construction. The bridge is fine. But we've been hired to keep this bridge closed off by a private company.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker4": {
 		"en-us": "Worker: I'd say \"if you got a problem with that, take it up with them\" but I guess you can't, really, because they're on the other side of this bridge.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker5": {
 		"en-us": "Worker: But, uh, I think we might be able to make way for your truck if you're willing to help us out.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker6": {
 		"en-us": "Worker: See, Dr. RealActualDoctor on the TV said that there's a Sea Monster in this river whose heart has healing properties.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker7": {
 		"en-us": "Worker: Some of my boys tried to fight that thing themselves, but we were only able to steal this egg from it.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker8": {
 		"en-us": "Worker: An egg's fine and all, but it's gonna take a while to hatch, and I would prefer a cure for my harmless but mildly annoying butt rash sooner than later.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker9": {
 		"en-us": "Worker: So if you can get me a Sea Monster Heart, we'll give you full access to this bridge, no questions asked. Sound good?", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworker10": {
 		"en-us": "Worker: Let me know when you get that sea monster heart.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"rockwrong": {
@@ -2750,55 +2759,68 @@ const fulltext = {
 	},
 	"bworkerMad1": {
 		"en-us": "Worker: Hey there, lady--- what? You want the Sea Monster egg back?", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerMad2": {
 		"en-us": "Worker: Don't tell me you're gonna side with that creature!! It's just a fish!!!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerMad3": {
 		"en-us": "Worker: Well, if you insist, you can have the egg... but I'm not giving it back without a fight!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerMad4": {
 		"en-us": "Worker: Back for more, are you? You'll never get this egg!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerMad5": {
 		"en-us": "Worker: Yowza chowza! Come on, boys! Let's get out of here! Dis broad packs a punch!!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerMad6": {
 		"en-us": "Worker: Here's your damn egg, but good luck clearing off this bridge all on your own!!", 
 		"en-us-sfw": "Worker: Here's your dang egg, but good luck clearing off this bridge all on your own!!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"smD1": {
 		"en-us": "Sea Monster: I smell something eggscellent!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smD2": {
 		"en-us": "Sea Monster: Ah!! Is that my baby? It is! You got my egg back! Thank you! Thank you!!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smD3": {
 		"en-us": "Sea Monster: Now that you've held up your end of the bargain, I'll hold up mine! What do you need from me?", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smD4": {
 		"en-us": "Sea Monster: Those workers left a bunch of junk on the bridge, huh? Well, I can take care of that!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smD5": {
 		"en-us": "Sea Monster: Here we go! GROAAAAAAAAAR!!!!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smD6": {
 		"en-us": "Sea Monster: There we go! How's that? All clear!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smD7": {
 		"en-us": "Sea Monster: Good luck on your travels!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"bworkerA1": {
@@ -2815,74 +2837,92 @@ const fulltext = {
 	},
 	"bworkerB1": {
 		"en-us": "Worker: Hey lady! I smell something fishy! And I mean that in the \"it smells like you killed a fish\" way, not in the \"something is suspicious\" way!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerB2": {
 		"en-us": "Worker: Oh ho ho! The Sea Monster's heart! You really pulled through!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerB3": {
 		"en-us": "Worker: Well, you held up your end of the bargain, so I guess I'll hold up mine!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerB4": {
 		"en-us": "Worker: LET'S PACK THINGS UP, BOYS! WE'RE MOVIN' OUT!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerB5": {
 		"en-us": "Worker: Pleasure doin' business with ya, lady!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerC1": {
 		"en-us": "Worker: Sorry lady, but this bridge is under constr--oh yeesh what is that SMELL? You ever heard of a shower?!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerC2": {
 		"en-us": "Worker: Th-that's a... that looks like a Sea Monster Heart! Why do you even have that?!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerC3": {
 		"en-us": "Worker: I tell ya what, lady. We got paid to sort of meander around this bridge by some fancy white collar boys up north.", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerC4": {
 		"en-us": "Worker: But if you need to get through here, I think we's can work out some sort of deal. Whattaya say? You give me that heart and we'll let you through!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerCY": {
-		"en-us": "Worker: Beautiful! This heart will definitely cure my butt rash!", 
+		"en-us": "Worker: Beautiful! This heart will definitely cure my harmless butt rash!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerCN": {
 		"en-us": "Worker: Alright, whatever. But if you ever decide you want to get through this bridge, you know what I want!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"bworkerC5": {
 		"en-us": "Worker: Hey lady, have you changed your mind yet? If you give me that Sea Monster Heart we'll let you through!", 
+		"profile": "conboss",
 		"type": "map"
 	},
 	"pirateMonk1": {
 		"en-us": "???: Yarr! Shiver me timb--eh, no one actually talks like that. S'up? I'm Dowel the pirate.", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonk2": {
 		"en-us": "Dowel: It's a bit hard to loot ships when nobody sails down this river, so I'm trying to start a DIY kind of thing.", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonk3": {
 		"en-us": "Dowel: Unfortunately, it's hard to start my own veggie garden down here under the sea. Nothing grows except algae and kelp!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonk4": {
 		"en-us": "Dowel: I'd like something a bit tastier than fish food, so if you can find anything that grows well in water, send it my way and I'll reward you handsomely!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkW": {
 		"en-us": "Dowel: I'm looking for some sort of crop that is durable and can grow in tough conditions - like underwater! If you find anything like that, I'll trade you for it!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkH": {
 		"en-us": "Dowel: Hello again! Do you have any fancy crops I can grow?", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkC1": {
@@ -2907,14 +2947,17 @@ const fulltext = {
 	},
 	"pirateMonkR1": {
 		"en-us": "Dowel: Hmm... paddy crops. I can probably set up some sort of paddy around here!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkR2": {
 		"en-us": "Dowel: I think this will do nicely, thank you!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkR3": {
 		"en-us": "Dowel: To thank you, I will give you all these leftover seeds that definitely CANNOT grow underwater!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkR4": {
@@ -2923,34 +2966,42 @@ const fulltext = {
 	},
 	"pirateMonkR5": {
 		"en-us": "Dowel: Pleasure doing business with you, ma'am! I mean, landlubber!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkG1": {
 		"en-us": "Dowel: What the heckaroonie are these? GMO Corn?? These seeds... don't look natural!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkG2": {
 		"en-us": "Dowel: Hmm... so they were genetically engineered to be incredibly durable, but also mostly inedible to humans.", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkG3": {
 		"en-us": "Dowel: Well, I'm sure my razor sharp Sea Monk teeth will be able to give them some good crunching!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkG4": {
 		"en-us": "Dowel: Thank you for these! In exchange, I will give you my Buried Treasure... if you can find it!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkG5": {
 		"en-us": "Dowel: Honestly I don't know where it is - it's somewhere east of here... the currents kind of blew it around.", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkG6": {
 		"en-us": "Dowel: But with this Sea Monk Key I'm giving you, you'll be able to open it when you find it!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateMonkNo": {
 		"en-us": "Dowel: Darn. If you find any durable crops that can grow underwater or just in tough conditions in general, let me know!", 
+		"profile": "dowel",
 		"type": "map"
 	},
 	"pirateField": {
@@ -2995,30 +3046,37 @@ const fulltext = {
 	},
 	"vaseDo1": {
 		"en-us": "Kelp Boy: My vase! My beautiful vase! Why would you do such a cruel thing?!", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"vaseDo2": {
 		"en-us": "Kelp Boy: I must react to your destruction of property with VIOLENCE! PREPARE YOURSELF!!!", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"kelpBoy0": {
 		"en-us": "Kelp Boy: Hi. I'm Kelp Boy. I like bees and pottery, I guess.", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"kelpBoy1": {
 		"en-us": "Kelp Boy: But what I really like... is milk. Which is hard to come by underwater, unsurprisingly.", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"kelpBoy2": {
 		"en-us": "Kelp Boy: If you could hook me up with some white gold, I'd be DAIRY thankful.", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"kelpCow0": {
 		"en-us": "Cow: i'm a cow.", 
+		"profile": "cow",
 		"type": "map"
 	},
 	"kelpCow1": {
 		"en-us": "Cow: you. farm woman. i know what you seek. say no more.", 
+		"profile": "cow",
 		"type": "map"
 	},
 	"kelpCow2": {
@@ -3033,10 +3091,12 @@ const fulltext = {
 	"kelpCow4": {
 		"en-us": "Cow: the first carton is on me, but we both know you'll be back. drink up, honey.", 
 		"en-us-sfw": "Cow: the first carton is on me! enjoy!", 
+		"profile": "cow",
 		"type": "map"
 	},
 	"kelpBoy3": {
 		"en-us": "Kelp Boy: Oh boy! Is that MILK? For ME? Gee, thanks, mom! I mean, uh, stranger who is not my mom.", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"kelpBoy4": {
@@ -3045,10 +3105,12 @@ const fulltext = {
 	},
 	"kelpBoy5": {
 		"en-us": "Kelp Boy: As a thank-you-for-the-milk and as a please-forget-I-called-you-mom, please accept this gift!", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"kelpBoyEnd": {
 		"en-us": "Kelp Boy: Hey hey, what do you call a vase full of milk? A hearty drink!! Eh? Eh? I guess the joke is lost in translation.", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"vaseWon0": {
@@ -3057,14 +3119,17 @@ const fulltext = {
 	},
 	"vaseDo3": {
 		"en-us": "Kelp Boy: Do you think I forgot what you did to my beautiful vase!? How dare you show your face here again!!", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"vaseDo4": {
 		"en-us": "Kelp Boy: Still after my beehive, are you!? I'll never let you take it!!", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"vaseDo5": {
 		"en-us": "Kelp Boy: Huh--what?! How did you get there?! That's my beehive! You can't take it from me!!", 
+		"profile": "kelp",
 		"type": "map"
 	},
 	"vaseFoundBee": {
@@ -3126,30 +3191,37 @@ const fulltext = {
 	},
 	"constr1.foe1": {
 		"en-us": "Worker: You're going down!", 
+		"profile": "conwrk",
 		"type": "map"
 	},
 	"constr1.fr1": {
 		"en-us": "Worker: Hey there. We're under construction, so you can't drive through here.", 
+		"profile": "conwrk",
 		"type": "map"
 	},
 	"constr1.fr2": {
 		"en-us": "Worker: Talk to the boss-man if you got questions. He's on the bridge.", 
+		"profile": "conwrk",
 		"type": "map"
 	},
 	"sm1": {
-		"en-us": "Sea Monster: ANOTHER HUMAN!! Was my egg not enough for you!? Are you here to kill me again?!", 
+		"en-us": "Sea Monster: ANOTHER HUMAN!! Was my egg not enough for you!? Are you here to try killing me again?!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"sm2": {
 		"en-us": "Sea Monster: Hmm... wait, you are different from the others, aren't you?", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"sm3": {
 		"en-us": "Sea Monster: Some humans stole my egg earlier. If you could recover it for me, I would gladly help you with anything you need.", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"sm4": {
 		"en-us": "Sea Monster: Will you recover my egg for me?", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"sm4c1": {
@@ -3166,26 +3238,32 @@ const fulltext = {
 	},
 	"smA1": {
 		"en-us": "Sea Monster: Thank you! The human with the grey hair on their face is the one who stole it from me. Please bring it back to me!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smA2": {
 		"en-us": "Sea Monster: Please bring my egg back to me once you have taken it back from the gray haired human.", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smB1": {
 		"en-us": "Sea Monster: So you are with them after all... so be it. Prepare yourself, human!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smB2": {
 		"en-us": "Sea Monster: Back for more, are you? Feel my wrath, human!", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"smC1": {
 		"en-us": "Sea Monster: Yeah okay that's fair.", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"sm5": {
 		"en-us": "Sea Monster: Ah, you're back. Have you made your decision?", 
+		"profile": "smon",
 		"type": "map"
 	},
 	"murderer": {
@@ -3194,10 +3272,12 @@ const fulltext = {
 	},
 	"w21": {
 		"en-us": "Worker: Mess with me, will ya?!", 
+		"profile": "conwrk",
 		"type": "map"
 	},
 	"w22": {
 		"en-us": "Worker: Not so fast, lady!", 
+		"profile": "conwrk",
 		"type": "map"
 	},
 	// Area 6: Fake Farm
