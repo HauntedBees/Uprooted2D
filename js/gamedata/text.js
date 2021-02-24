@@ -3668,46 +3668,57 @@ const fulltext = {
 	},
 	"entercity1": {
 		"en-us": "???: Psst! Over here! Come quick!", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2": {
 		"en-us": "???: Quick, hide behind the bar! I'll explain later!", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity3": {
 		"en-us": "???: Ah, ah! Mr. Bruno! Welcome! What can I--", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity4": {
 		"en-us": "Bruno: I just saw someone run in here. Who was it? Was it the farmer?", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity5": {
 		"en-us": "???: What? No! Don't be silly! That was just me! I was chasing a rat out!", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity6": {
 		"en-us": "Bruno: ...You got rats?", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity7": {
 		"en-us": "???: Oh, no, no, no! Just one or two from time to time!", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity8": {
 		"en-us": "Bruno: ...Alright. I'll have a drink. On the house. No rats.", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity9": {
 		"en-us": "???: One drink, coming right up!", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity10": {
 		"en-us": "Bruno: You know, if you've got rats, that might be a health code violation. I think I know a, uh, \"health inspector.\"", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity11": {
 		"en-us": "Bruno: It'd be unfortunate for your little lemonade stand here to go under because of a few rats, if you know what I'm sayin'.", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity12": {
@@ -3724,30 +3735,37 @@ const fulltext = {
 	},
 	"entercity0.0": {
 		"en-us": "Bruno: Hey, what the--?!", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity0.1": {
 		"en-us": "???: I told you to-- I mean, EGADS! THAT'S NOT A RAT! THAT'S A HUMAN WOMAN!", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity0.2": {
 		"en-us": "Bruno: THAT'S THE FARMER!!", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity0.3": {
 		"en-us": "???: RATS CAN'T BE FARMERS!! THEIR TINY HANDS CAN'T HOLD TOOLS!! THIS IS ALL VERY SURPRISING TO ME!!", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity0.4": {
 		"en-us": "Bruno: Shut up! I'll deal with YOU later!", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity0.5": {
 		"en-us": "Bruno: You're goin' down, lady!", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity1.0": {
 		"en-us": "???: ...I think I understand what you're getting at.", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity1.1": {
@@ -3756,79 +3774,98 @@ const fulltext = {
 	},
 	"entercity1.2": {
 		"en-us": "Bruno: Hmm, yeah, I think I can forget about those rats now.", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity1.3": {
 		"en-us": "Bruno: Keep up the good work, and if you see that farmer, TELL ONE OF US IMMEDIATELY.", 
+		"profile": "skump3",
 		"type": "map"
 	},
 	"entercity1.4": {
 		"en-us": "???: Of course I will! Absolutely!", 
+		"profile": "skump2",
 		"type": "map"
 	},
 	"entercity1.5": {
 		"en-us": "???: ... ... ...", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity1.6": {
 		"en-us": "???: ...Okay, I think it's safe for you to come out now.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity1.7": {
 		"en-us": "???: I'm sorry you had to see that.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity0.pb0": {
 		"en-us": "???: Wow... we're lucky he's one of the gullible ones. If I tell him he just drank too much and passed out, he'll probably buy it.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity0.pb1": {
 		"en-us": "???: ...Thank you. Thank you very much. You really helped me out just now.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity0.pb2": {
 		"en-us": "???: If you need to stay here, you can stay the night any time. No charge for you.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.0": {
 		"en-us": "???: Anyway, I'm Skumpy, the owner of this inn. As you might have guessed, we have a bit of a mob problem.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.1": {
 		"en-us": "Skumpy: Rumor is that some farmer will be coming through here to get to the city, and they're trying to cut her off.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.2": {
 		"en-us": "Skumpy: I think it's safe to say that you're the farmer they're looking for.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.3": {
 		"en-us": "Skumpy: I can't say I know what they'll do to you if they catch you, or who hired them.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.4": {
 		"en-us": "Skumpy: But whoever you pissed off, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
 		"en-us-sfw": "Skumpy: But whoever you messed with, they're taking it out pretty badly on us. Those mobsters are crawling the streets 24/7.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.5": {
 		"en-us": "Skumpy: They haven't hurt anybody, but they make it pretty clear that the best way to keep it that way is by paying their \"fees.\"", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.6": {
 		"en-us": "Skumpy: Either way, the town is swarming with them, so if you're still determined to go north, you'd better be careful.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.7": {
 		"en-us": "Skumpy: They've set up a sort of home base just west of here, so if stealth isn't your thing, you can try to deal with them directly.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.8": {
 		"en-us": "Skumpy: Otherwise, stay to the east of town. That's where most of the shops are, anyway.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercity2.9": {
 		"en-us": "Skumpy: Good luck, stranger.", 
+		"profile": "skump1",
 		"type": "map"
 	},
 	"entercityBAD0": {
@@ -3874,34 +3911,42 @@ const fulltext = {
 	},
 	"kindLady0": {
 		"en-us": "Old Lady: Oh, hello, dearie! Looks like you're not too afraid of these bad men either, are you?", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLady1": {
 		"en-us": "Old Lady: Me? They may be criminals, but even they aren't going to bother an old lady like me.", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLady2": {
 		"en-us": "Old Lady: As long as I keep to myself, feeding the birds and not insulting them too much, they leave me alone.", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLady3": {
-		"en-us": "Old Lady: But I have run into a bit of a snag there... I've run out of birdseed!", 
+		"en-us": "Old Lady: But I have run into a bit of a snag there... I'm out of birdseed!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLady4": {
 		"en-us": "Old Lady: Normally I'd just go buy more, but with these mobsters here nobody is delivering any shipments to the stores!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLady5": {
 		"en-us": "Old Lady: So if you could find some food to feed these birds, I'd be ever so grateful!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyX": {
 		"en-us": "Old Lady: If you have any food for birds, I'd be ever so grateful if you could share some with me!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyQ": {
 		"en-us": "Old Lady: Do you have any bird food for me?", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"lady.fodder": {
@@ -3922,14 +3967,17 @@ const fulltext = {
 	},
 	"kindLadyNorm0": {
 		"en-us": "Old Lady: Oh, oh! This is perfect! Thank you very much, dearie!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyNorm1": {
 		"en-us": "Old Lady: I know it's not much, but I can't let this good deed go unrewarded!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyNorm2": {
 		"en-us": "Old Lady: Now, now, don't give me that! I'm rewarding you, whether you like it or not!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyNorm3": {
@@ -3938,18 +3986,22 @@ const fulltext = {
 	},
 	"kindLadyThanks": {
 		"en-us": "Old Lady: Thank you again for the food, dearie. The birds are much happier now!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyGood0": {
 		"en-us": "Old Lady: Oh dearie dearie me! This is some very fancy animal food! Are you sure you're okay with giving it to me?", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyGood1": {
 		"en-us": "Old Lady: Well, thank you VERY much, dear! If the birds could talk, they'd be thanking you, too!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyGood2": {
 		"en-us": "Old Lady: But I can't accept such a wonderful gift without rewarding you, too! Please, take this! No, no, I insist!", 
+		"profile": "oldlady",
 		"type": "map"
 	},
 	"kindLadyGood3": {
@@ -3991,115 +4043,142 @@ const fulltext = {
 	},
 	"mobBoss0": {
 		"en-us": "???: I says many things, but one more thing I will say is this: you got guts, lady.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss1": {
 		"en-us": "???: Guts in the literal sense of course, as I have little reason to believe you's a robot or somethin'...", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss2": {
 		"en-us": "???: But what I really meant was more in the metaphorical sense of having guts. You got balls.", 
 		"en-us-sfw": "???: But what I really meant was more in the metaphorical sense of having guts. You got bravery.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss3": {
 		"en-us": "???: Again, I'm not trying to imply anything about literal testicles that you may or may not have.", 
 		"en-us-sfw": "???: Of course, bravery is an abstract concept and not something one can physically \"have.\"", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss4": {
 		"en-us": "???: I am speaking of metaphorical balls. What I means is, you are brave for coming here.", 
 		"en-us-sfw": "???: I means it in the sense that it is a personality trait you exhibit. You's is brave for coming here.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss5": {
 		"en-us": "???: Not many would come here. Most would not be brave enough to risk doing so...", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss6": {
 		"en-us": "???: And the few who are would've been killed before they got here, anyway.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss7": {
 		"en-us": "???: Guts and or balls and or chutzpah and or bold. That is what you are.", 
 		"en-us-sfw": "???: Guts and or nerve and or chutzpah and or bold. That is what you are.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss8": {
 		"en-us": "???: Again, not literally. Literally, you are a farmer. A farmer I have been hired to find.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss9": {
 		"en-us": "???: I am Don Vagante. A man by the name of Beckett wants you dead.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss10": {
 		"en-us": "Vagante: That is to say that he wants you to become dead through actions carried out by me that would cause your death.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss11": {
 		"en-us": "Vagante: And by making you dead, what he wants becomes what he has, and then what I want becomes what I have.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss12": {
 		"en-us": "Vagante: This is because, in exchange for making you dead, he will give me large amounts of dollar money.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss13": {
 		"en-us": "Vagante: I know not what you want - perhaps to survive this encounter - but I can guarantee you one thing.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss14": {
 		"en-us": "Vagante: There are many people with many wants in this world. Of which, I can speak certainly of three of them.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"mobBoss15": {
 		"en-us": "Vagante: Two people are about to get a thing they want, and one person is about to get dead.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob0": {
 		"en-us": "Vagante: Mannaggia... who the hell are you, lady??", 
 		"en-us-sfw": "Vagante: Mamma mia... who the heck are you, lady??", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob1": {
 		"en-us": "Vagante: Those rich kids up north are NOT paying us enough for this.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob2": {
 		"en-us": "Vagante: If word gets out that I, Don Vagante, head of the Las Abejas County Mafia Reenactment Family, lost to you...", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob3": {
 		"en-us": "Vagante: What? You thought we were a real mob? Please, lady, you really thought you just beat the head of a REAL mafia?", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob4": {
 		"en-us": "Vagante: Now I'm not sure if you're really tough or just really really gullible.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob5": {
 		"en-us": "Vagante: ...What do you mean, \"why would a historical reenactment group try to kill someone?\"", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob6": {
 		"en-us": "Vagante: We may be a fake mob, but the money those nerds were offering us was real!", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob7": {
 		"en-us": "Vagante: Do you know how hard it is to get funding for something like this? After the mayor cut the arts budget last year??", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob8": {
 		"en-us": "Vagante: But I'll tell ya what, lady. We'll clear out of here and leave you and this rinky dink part of the city alone.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob9": {
 		"en-us": "Vagante: In exchange, you don't tell nobody here that we're not a real mob, and don't leak this to the press up north.", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob10": {
 		"en-us": "Vagante: Capisce? Capisce. Alright, boys! Let's scram!", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"beatMob11": {
@@ -4108,6 +4187,7 @@ const fulltext = {
 	},
 	"mobBack1": {
 		"en-us": "Vagante: Back again, are you? Accept your fate!", 
+		"profile": "vagante",
 		"type": "map"
 	},
 	"catmail": {
