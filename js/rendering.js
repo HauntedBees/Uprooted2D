@@ -322,12 +322,17 @@ const gfx = {
         const textInfo = ctx.measureText(t);
         return textInfo.width > maxWidth;
     },
-    DrawBackingBox: function(name, x, y, layer) {
+    DrawSpeakerBG: function(name, x, y, layer) {
         layer = layer || "menuA";
-        const ctx = gfx.ctx[layer];
-        const textWidth = gfx.getTextWidth(name);
-        ctx.fillStyle = gfx.GetSpeakerBGColor();
-        ctx.fillRect((x - 2) * gfx.scale, (y + 4.5) * gfx.scale - 2, 1.1 * textWidth, 1.25 * gfx.GetFontSize(undefined, true));
+        const color = gfx.GetSpeakerBGColor(), delta = 0.75;
+        gfx.drawWrappedText(name, x, y - delta, 200, color, undefined, layer);
+        gfx.drawWrappedText(name, x, y + delta, 200, color, undefined, layer);
+        gfx.drawWrappedText(name, x - delta, y, 200, color, undefined, layer);
+        gfx.drawWrappedText(name, x + delta, y, 200, color, undefined, layer);
+        gfx.drawWrappedText(name, x + delta, y + delta, 200, color, undefined, layer);
+        gfx.drawWrappedText(name, x + delta, y - delta, 200, color, undefined, layer);
+        gfx.drawWrappedText(name, x - delta, y + delta, 200, color, undefined, layer);
+        gfx.drawWrappedText(name, x - delta, y - delta, 200, color, undefined, layer);
     },
     drawWrappedText: function(t, x, y, maxWidth, color, layer, size) {
         layer = layer || "menutext";

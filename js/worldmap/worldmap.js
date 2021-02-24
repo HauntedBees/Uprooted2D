@@ -324,7 +324,7 @@ const worldmap = {
         if(!justWhiteText && actualText.indexOf(":") > 0) {
             const speaker = actualText.split(":")[0];
             if(speaker.split(" ").length < 5) { // probably just a colon in text and not a speaker separator
-                gfx.DrawBackingBox(speaker, 6, 2 + drawY * 16);
+                gfx.DrawSpeakerBG(speaker, 6, 13 + drawY * 16 - (justWhiteText ? 20 : 0));
             }
         }
         gfx.drawFullText(actualText, drawY * 16 - (justWhiteText ? 20 : 0), justWhiteText ? gfx.GetWhite() : undefined, overBlack);
