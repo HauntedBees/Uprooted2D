@@ -4440,18 +4440,22 @@ const fulltext = {
 	},
 	"mushMan0": {
 		"en-us": "Daveothy: Oh hey, what? Hi.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushMan1": {
 		"en-us": "Daveothy: Did you get my Message? Are you here to help me with my pizza?", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushMan2": {
 		"en-us": "Daveothy: I need some good mushrooms for my pizza. Can you help me out?", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushMan3": {
 		"en-us": "Daveothy: I need some good mushrooms for my pizza. If you have any, let me know!", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushChoice0": {
@@ -4477,34 +4481,42 @@ const fulltext = {
 	},
 	"mushManNope": {
 		"en-us": "Daveothy: That is unfortunate.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManGive0": {
 		"en-us": "Daveothy: Woah this looks like a tasty treat for me to eat.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManGive1": {
 		"en-us": "Daveothy homfs down the mushroom without hesitation, seemingly forgetting how pizza works.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManNorm0": {
 		"en-us": "Daveothy: Hm, that was a tasty little fungus. Hunger sated, bro. Hunger sated.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManNorm1": {
 		"en-us": "Daveothy: Here's a gift as thanks for hooking me up.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManNorm2": {
 		"en-us": "Daveothy gives me 20 Water Chestnut seeds.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManThanks": {
 		"en-us": "Daveothy: Thanks again dude.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManPoison0": {
 		"en-us": "Daveothy: Hm, that was a tasty little fung--oh, hey, I don't feel very good.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManPoison1": {
@@ -4521,14 +4533,17 @@ const fulltext = {
 	},
 	"mushManGood0": {
 		"en-us": "Daveothy: Hm woah this is an interesting food I am eating right now. Very interesting indeed.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManGood1": {
 		"en-us": "Daveothy: This is exactly what I was hoping for! Please accept this reward!", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushManGood2": {
 		"en-us": "Daveothy gives me 20 Sacred Lotus seeds.", 
+		"profile": "pizza",
 		"type": "map"
 	},
 	"mushFridge": {
@@ -4549,26 +4564,32 @@ const fulltext = {
 	},
 	"mailman0": {
 		"en-us": "Mailman: *sigh* Another day, another empty apartment.", 
+		"profile": "mailman",
 		"type": "map"
 	},
 	"mailman1": {
 		"en-us": "Mailman: With all these hip new companies opening up here, the rent prices are skyrocketing, and all the old tenants are moving out.", 
+		"profile": "mailman",
 		"type": "map"
 	},
 	"mailman2": {
 		"en-us": "Mailman: This is the third time this week I've had a letter for someone only to find that they had moved out!", 
+		"profile": "mailman",
 		"type": "map"
 	},
 	"mailman3": {
 		"en-us": "Mailman: Did you know who used to live here? Catalina? Yeah, didn't think s--wait, did you say yes?", 
+		"profile": "mailman",
 		"type": "map"
 	},
 	"mailman4": {
 		"en-us": "Mailman: Well, if you could give this letter to her the next time you see her, that'd be A+ swell and dandy! Thank you!", 
+		"profile": "mailman",
 		"type": "map"
 	},
 	"mailman5": {
 		"en-us": "Mailman: I wonder how much longer I'll be able to stay in this city before I have to move somewhere cheaper, too...", 
+		"profile": "mailman",
 		"type": "map"
 	},
 	"foundRadish0": {
@@ -4589,23 +4610,28 @@ const fulltext = {
 	},
 	"someNerd0": {
 		"en-us": "???: Technology is great and all, but what we really need an app for is lowering apartment prices, am I right??", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"someNerd1": {
 		"en-us": "???: They say frozen dinners are bad for you, but how could something so convenient be bad?!", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"someNerd2": {
 		"en-us": "???: The start-up I work for is very generous, I only have to work a half day on Thanksgiving!!", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"bathroomNerd": {
 		"en-us": "???: Can I fucking help you?", 
 		"en-us-sfw": "???: I'm a little busy here.", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"troutMan0": {
 		"en-us": "Jeromy: Hey hey. I'm trying to sell fishing supplies to save money for college. See anything you like? \n (You have {g}G)", 
+		"profile": "fishsell",
 		"type": "map"
 	},
 	"troutChoice0": {
@@ -4630,18 +4656,22 @@ const fulltext = {
 	},
 	"troutManNone": {
 		"en-us": "Jeromy: Your loss, lady.", 
+		"profile": "fishsell",
 		"type": "map"
 	},
 	"troutManNotEnough": {
 		"en-us": "Jeromy: Hey hey, my prices are low, but not THAT low! Come back when you have more money!", 
+		"profile": "fishsell",
 		"type": "map"
 	},
 	"troutManBuy": {
 		"en-us": "Jeromy: Pleasure doing business with ya, ma'am!", 
+		"profile": "fishsell",
 		"type": "map"
 	},
 	"bmw0": {
 		"en-us": "Brandt: Hi yeah please take some of this spinach. I have far too much.", 
+		"profile": "barnt",
 		"type": "map"
 	},
 	"bmw1": {
@@ -4650,50 +4680,62 @@ const fulltext = {
 	},
 	"bmw2": {
 		"en-us": "Brandt: Spinach is so tasty... but you know what they say... \"too much of a good thing\" and all that!", 
+		"profile": "barnt",
 		"type": "map"
 	},
 	"cashMan0": {
 		"en-us": "???: Hello! Are you confused by Cash2? Would you like to know more about it?", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManNo": {
 		"en-us": "???: Okay then... you can convert your regular old cash to and from Cash2 at one of the machines in the back if you want.", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes0": {
 		"en-us": "???: Really? That's a firs--I mean, great! Let's get started, then!", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes1": {
 		"en-us": "???: So, money - regular money, that is - is just a bunch of paper or whatever. It's not actually worth anything.", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes2": {
 		"en-us": "???: But the government offers you a promise that, for example, one dollar is worth one dollar.", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes3": {
 		"en-us": "???: But wouldn't it be great if, instead of the government telling you \"this useless paper is worth something\"...", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes4": {
 		"en-us": "???: ...instead it was a computer telling you \"this useless data is worth something\"???", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes5": {
 		"en-us": "???: If you answered yes, then Cash2 is the currency for you!", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes6": {
 		"en-us": "???: You can convert your regular money to and from Cash2 at one of the machines in the back!", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes7": {
 		"en-us": "???: Just as a heads-up, though, Cash2 is the future... but not necessarily the present.", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"cashManYes8": {
 		"en-us": "???: Currently the value of Cash2 fluctuates pretty rapidly so, uh, just keep that in mind.", 
+		"profile": "nernd",
 		"type": "map"
 	},
 	"atm0": {
@@ -4734,27 +4776,33 @@ const fulltext = {
 	},
 	"officer1": {
 		"en-us": "Officer: This is Officer Ellis, requesting additional backup. There are at least two robbers inside the bank. They are armed.", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"officer2": {
 		"en-us": "Officer: Ma'am, this area is off-limits right now. There is a robbery in process.", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"officer3": {
 		"en-us": "Officer: This looks like a clue!", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"officer4": {
 		"en-us": "Officer: Do we know if there are any hostages?", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"robber0": {
 		"en-us": "Robber: Hey, what the hell are you doing in here?!", 
 		"en-us-sfw": "Robber: Hey, what are you doing in here?!", 
+		"profile": "robber",
 		"type": "map"
 	},
 	"robber1": {
 		"en-us": "Robber: Let's get her!!", 
+		"profile": "robber",
 		"type": "map"
 	},
 	"keycard0": {
@@ -4779,18 +4827,22 @@ const fulltext = {
 	},
 	"keycard2": {
 		"en-us": "???: I hope you like traps, because you just walked into one!", 
+		"profile": "thirdjeff",
 		"type": "map"
 	},
 	"keycard3": {
 		"en-us": "???: My super cool fighting robot and I will defeat you once and for all!", 
+		"profile": "thirdjeff",
 		"type": "map"
 	},
 	"keycard4": {
 		"en-us": "???: Heh heh... looking for something? If you want this keycard you'll have to beat me!", 
+		"profile": "thirdjeff",
 		"type": "map"
 	},
 	"keycard5": {
 		"en-us": "???: Ugh... you win this round...", 
+		"profile": "thirdjeff",
 		"type": "map"
 	},
 	"newPhone0": {
@@ -4815,38 +4867,47 @@ const fulltext = {
 	},
 	"copperStoppers0": {
 		"en-us": "Officer: STOP RIGHT THERE CRIMINAL SC--oh. You already caught them, I guess.", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"copperStoppers1": {
 		"en-us": "Officer: I... what? How? You...", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"copperStoppers2": {
 		"en-us": "Officer: ...", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"copperStoppers3": {
 		"en-us": "Officer: Whatever. Take 'em away, boys.", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"copperStoppers4": {
 		"en-us": "Officer: Let's just keep the fact that some armed robbers were stopped by some random lady between you and me, okay?", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"copperStoppers5": {
 		"en-us": "The officer slides me a crisp 5000G, then walks away.", 
+		"profile": "cop",
 		"type": "map"
 	},
 	"officeLady0": {
 		"en-us": "Susantha: Hello! Are you an exterminator? Or a beekeeper? Or some weirdo who collects beehives?", 
+		"profile": "nerndette",
 		"type": "map"
 	},
 	"officeLady1": {
 		"en-us": "Susantha: It doesn't matter! Just... please! Take that beehive away! I can't microwave my lunch with it in our breakroom!", 
+		"profile": "nerndette",
 		"type": "map"
 	},
 	"officeLady2": {
 		"en-us": "Susantha: Thank you for getting rid of that beehive! Now I can heat up my tasty frozen children's meal in peace!", 
+		"profile": "nerndette",
 		"type": "map"
 	},
 	"corpseBuddy": {
@@ -4855,10 +4916,12 @@ const fulltext = {
 	},
 	"cityMonk0": {
 		"en-us": "Sea Monk: What are you looking at? Don't judge me. I pay rent. I'm ALLOWED here.", 
+		"profile": "citymonk",
 		"type": "map"
 	},
 	"cityMonk1": {
 		"en-us": "Sea Monk: ...Whether or not soaking the carpet with water is allowed... is another question.", 
+		"profile": "citymonk",
 		"type": "map"
 	},
 	"forRentSign": {
@@ -4867,10 +4930,12 @@ const fulltext = {
 	},
 	"undergroundNotYet": {
 		"en-us": "???: This area isn't ready yet...", 
+		"profile": "skyler",
 		"type": "map"
 	},
 	"eggBoy0": {
 		"en-us": "Egg Dealer: Can I offer you a nice egg in this trying time? 250G for two. What kind of eggs? You won't know until you buy 'em! \n (You have {g}G)", 
+		"profile": "eggman",
 		"type": "map"
 	},
 	"eggBoyY": {
@@ -4883,14 +4948,17 @@ const fulltext = {
 	},
 	"eggBoyNoSale": {
 		"en-us": "Egg Dealer: Your loss. You're missing out on an eggscellent deal!", 
+		"profile": "eggman",
 		"type": "map"
 	},
 	"eggBoyNoMoney": {
 		"en-us": "Egg Dealer: Oh ho ho, nice try, little lady, but you don't have enough money for two eggs! Come back later.", 
+		"profile": "eggman",
 		"type": "map"
 	},
 	"eggBoyBuy": {
 		"en-us": "Egg Dealer: Pleasure doin' business with ya, lady. Enjoy your eggs!", 
+		"profile": "eggman",
 		"type": "map"
 	},
 	"eggBoy.egg": {
@@ -9649,79 +9717,98 @@ const fulltext = {
 	},
 	"underground0": {
 		"en-us": "Skyler: Hello! Welcome to Cavely: the premiere cavediving adventure in Las Abejas County!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground1": {
 		"en-us": "Skyler: Here's how it works: you jump down this hole and land in a magical cave full of terrifying foes and valuable treasure that's yours for the taking!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground2": {
 		"en-us": "Skyler: The deeper you go, the stronger the foes and the more valuable the treasure! And best of all, going down the cave is absolutely free!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground3": {
 		"en-us": "Skyler: What's the catch, you ask? Why, there's no catch!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground4": {
 		"en-us": "Skyler: But here's the catch: normally after you win a battle, you recover all your health. That doesn't happen down there.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground5": {
 		"en-us": "Skyler: The only ways to recover health down there are by leveling up, healing in combat with composting techniques, or finding and using special Healing Stations.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground6": {
 		"en-us": "Skyler: You can bail out at any time - just tug on the Exit Rope and we'll pull you back up here again, safe and sound!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground7": {
 		"en-us": "Skyler: But if you die in the cave... you die in real life. You can't run from battles, and if you lose, we have to come down and save you.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground8": {
 		"en-us": "Skyler: And that's how we make our money! Cavediving is free, but we charge a very steep Recovery Fee if you lose a battle.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground9": {
 		"en-us": "Skyler: How much, you ask? 5000G! But even if you don't have that on you, we're not just going to leave you down there to die, that's messed up, even for us!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground10": {
 		"en-us": "Skyler: But just between you and me, I've definitely heard some rumors and accusations about our Recovery Response Team.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground11": {
 		"en-us": "Skyler: Lots of cavedivers have reported that, after they were recovered, they were missing a lot more than just 5000G. Extra money and items were gone!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground12": {
 		"en-us": "Skyler: They insist that the Recovery Response Team is looting their unconscious bodies, but the RRT insists that some of the monsters down there just like looting!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground13": {
 		"en-us": "Skyler: The cavedivers don't have any evidence that the RRT is actually responsible for the looting, so no successful lawsuits have gone through or anything.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground14": {
 		"en-us": "Skyler: Still, if you're low in health or fighting foes that are too strong for you, it's probably best to just go tug on that Exit Rope.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground15": {
 		"en-us": "Skyler: Also, you can't save your game in the cave. If you do, you'll be back up here when you load that save file. It's a nonstop cavediving adventure with no brakes!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground16": {
 		"en-us": "Skyler: And that's Cavely! The Risks: Looting, getting your ass kicked, nightmares. The Rewards: Amazing treasures - some of which can only be found here!", 
 		"en-us-sfw": "Skyler: And that's Cavely! The Risks: Looting, getting your butt kicked, nightmares. The Rewards: Amazing treasures - some of which can only be found here!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"underground17": {
 		"en-us": "Skyler: I hope you'll partake in what Investors Quarterly calls \"an investment so morally bankrupt that we almost feel guilty endorsing it.\"", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"undergroundA0": {
 		"en-us": "Skyler: Hello again! Welcome to Cavely. What can I help you with?", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"under.A": {
@@ -9738,26 +9825,32 @@ const fulltext = {
 	},
 	"undergroundA1": {
 		"en-us": "Skyler: Can do! Cavely is the premiere cavediving adventure in Las Abejas County!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"undergroundB0": {
 		"en-us": "Skyler: You haven't gone into the cave yet, so you don't have any stats.", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"undergroundB1": {
 		"en-us": "Skyler: Times you've been in the cave: {0}. Your deepest depth: {1}F. Pretty good, but I know you can do better!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"undergroundC0": {
 		"en-us": "Skyler: No problemo!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"undergroundEscape": {
 		"en-us": "Skyler: Welcome back to the surface! I hope you had a good time down there!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"undergroundFail": {
 		"en-us": "Skyler: Are you awake? Looks like you had a bit of a situation down there. Try to be more careful next time! There's no shame in pulling the Exit Rope!", 
+		"profile": "skyler",
 		"type": "text"
 	},
 	"enterTheCave": {
