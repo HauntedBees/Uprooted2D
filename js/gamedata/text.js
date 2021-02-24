@@ -3324,35 +3324,43 @@ const fulltext = {
 	},
 	"farmTV0": {
 		"en-us": "Farmer Jeff: Ha ha haha!!! You fool!!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTV1": {
 		"en-us": "Farmer Jeff: You walked right into my trap!! This whole farm is a fake! A ruse!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTV2": {
 		"en-us": "Farmer Jeff: I'm not even a real farmer! My name is actually just Jeff!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTV3": {
 		"en-us": "Actually Just Jeff: You managed to get past our roadblock at the bridge, but you'll NEVER make it out of HERE alive!!!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTV4": {
 		"en-us": "Actually Just Jeff: This fake farm is full of the most elaborate traps and obstacles that technology can offer us!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTV5": {
 		"en-us": "Actually Just Jeff: Good luck, you imbecile!!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTVunplug0": {
 		"en-us": "Actually Just Jeff: hey wait what are you doing don't touch that", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTVunplug1": {
 		"en-us": "Actually Just Jeff: wait NO YOU SON OF A B--", 
 		"en-us-sfw": "Actually Just Jeff: wait NO YOU--", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"farmTVunplug2": {
@@ -3414,73 +3422,90 @@ const fulltext = {
 	},
 	"fakeFarm1": {
 		"en-us": "???: Howdy there, buckaroo! Boy howdy, looks like you got a flat tire!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm2": {
 		"en-us": "???: I'm Farmer Jeff! Pleased ta' make your acquaintance!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm3": {
 		"en-us": "Farmer Jeff: I've got a spare tire in the back of my barn! Because I'm a farmer! Who owns a barn! I'll go get it for ya!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm4": {
 		"en-us": "Farmer Jeff: Make yourself comfortable, I'll be back in a jiffy! Yee-haw! Farmin'!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm5": {
 		"en-us": "Actually Just Jeff: NOT SO FAST, YOU GOBLIN!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm6": {
 		"en-us": "Actually Just Jeff: IF YOU THINK I'M GOING TO LET YOU OUT OF HERE WITH THAT TIRE, YOU ARE MISTAKEN!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm7": {
 		"en-us": "Actually Just Jeff: HOUSEKEEPER! TURN ON!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm8": {
 		"en-us": "???: Now calibrating... ... ...", 
+		"profile": "hkeep",
 		"type": "map"
 	},
 	"fakeFarm9": {
 		"en-us": "???: Hello. HOUSEKEEPER is now active. Welcome back, Sexy Jeff.", 
 		"en-us-sfw": "???: Hello. HOUSEKEEPER is now active. Welcome back, Cool Jeff.", 
+		"profile": "hkeep",
 		"type": "map"
 	},
 	"fakeFarm10": {
 		"en-us": "Actually Just Jeff: Er, I, uh, I didn't tell it to call me that.", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm11": {
 		"en-us": "Actually Just Jeff: ...DON'T LOOK AT ME LIKE THAT! HOUSEKEEPER! Kill this woman!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm12": {
 		"en-us": "HOUSEKEEPER: Understood, Sexy Jeff. Now attacking.", 
 		"en-us-sfw": "HOUSEKEEPER: Understood, Cool Jeff. Now attacking.", 
+		"profile": "hkeep",
 		"type": "map"
 	},
 	"fakeFarm13": {
 		"en-us": "Actually Just Jeff: Ugh... how did you defeat HOUSEKEEPER??!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm14": {
 		"en-us": "Actually Just Jeff: No matter! You may have beaten me, but you're still stuck here!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm15": {
 		"en-us": "Actually Just Jeff: The nearest tire changing station is dozens of miles away! You'll never make it there just by walking!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm16": {
 		"en-us": "Actually Just Jeff: ...What do you mean you can just change the tire yourself?! That's impossible!! People can't just CHANGE TIRES!!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"fakeFarm17": {
 		"en-us": "Actually Just Jeff: You... bastard...", 
 		"en-us-sfw": "Actually Just Jeff: You... monster...", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"HK.s0": {
@@ -3497,6 +3522,7 @@ const fulltext = {
 	},
 	"fakeFarm18": {
 		"en-us": "Actually Just Jeff: I'll never let you out of here!", 
+		"profile": "fjeff",
 		"type": "map"
 	},
 	"s.up2": {
@@ -3545,27 +3571,33 @@ const fulltext = {
 	},
 	"arf0": {
 		"en-us": "Crouton: Hey.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf1": {
 		"en-us": "Crouton: I have a bit of a \"situation\" here, as it were.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf2": {
 		"en-us": "Crouton: I love fish, but, the fish don't love me. Or my bait. They aren't biting, you see.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf3": {
 		"en-us": "Crouton: If you have some other way to get fish, or you have some really good bait, let me know.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf4": {
 		"en-us": "Crouton: You got anything for me?", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.none": {
 		"en-us": "Crouton: Damn. If you have any fishing tools or good bait, holler at me.", 
 		"en-us-sfw": "Crouton: Darn. If you have any fishing tools or good bait, holler at me.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.spear": {
@@ -3590,35 +3622,43 @@ const fulltext = {
 	},
 	"arf.spear0": {
 		"en-us": "Crouton: A spear, eh? I dunno if I'd be able to work that with my tiny doggy paws.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.spear1": {
 		"en-us": "Crouton: I appreciate the sentiment, but I may need something a little more hands-off.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.good0": {
 		"en-us": "Crouton: Bow-WOW! Now THIS could catch me some fishies!", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.good1": {
 		"en-us": "Crouton: Thanks, buddy! Here's some fodder as a reward. You can feed it to a cow to get plenty of health-recovering milk!", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.good2": {
 		"en-us": "Crouton: Don't have a cow? Don't have a cow! There's a shop in one of the stalls inside this fake barn that sells them!", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.ultra0": {
 		"en-us": "Crouton: Oh wow, now THAT is some fish bait! I'll definitely catch some amazing fish with this!", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.ultra1": {
 		"en-us": "Crouton: Thanks a million! Here's some premium food as a reward! You can feed it to a cow to get super powerful health-recovering milk!", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	"arf.thanks": {
 		"en-us": "Crouton: You give a dog a fish, you feed him for a day. You teach a dog to fish, you're gonna win some fucking dog shows.", 
 		"en-us-sfw": "Crouton: You give a dog a fish, you feed him for a day. You teach a dog to fish, you're gonna win some dog shows.", 
+		"profile": "cooldog",
 		"type": "map"
 	},
 	// Area 7: South City
