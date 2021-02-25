@@ -4401,20 +4401,20 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.epicO": {
-		"en-us": "Marty: Oh, h-hi. The STOREKEEPER 9000 is having some technical difficulties right now, so, um, uh... please don't buy anything too confusing? \n \n STOREKEEPER 9000: are you ready for EPIC? epic. epic. epic. epic. ERROR.", 
+		"en-us": "Sheldor: Oh, h-hi. The STOREKEEPER 9000 is having some technical difficulties right now, so, um, uh... please don't buy anything too confusing? \n \n STOREKEEPER 9000: are you ready for EPIC? epic. epic. epic. epic. ERROR.", 
 		"type": "shop"
 	},
 	"s.epicL": {
-		"en-us": "STOREKEEPER 9000: ThANK YOU FOR COMING please THANK YOU FOR YOUR PURCHASE that will be fifty--FIFTY.... SIXTY NI-FIFTY dollars. Please insert WELCOME TO THE TECH SUPPLIES STORE! \n \n Marty: O-oh no...", 
+		"en-us": "STOREKEEPER 9000: ThANK YOU FOR COMING please THANK YOU FOR YOUR PURCHASE that will be fifty--FIFTY.... SIXTY NI-FIFTY dollars. Please insert WELCOME TO THE TECH SUPPLIES STORE! \n \n Sheldor: O-oh no...", 
 		"en-us-sfw": "STOREKEEPER 9000: ThANK YOU FOR COMING please THANK YOU FOR YOUR PURCHASE that will be fifty--FIFTY.... TWENTY NI-FIFTY dollars. Please insert WELCOME TO THE TECH SUPPLIES STORE! \n \n Marty: O-oh no...", 
 		"type": "shop"
 	},
 	"s.epicN": {
-		"en-us": "STOREKEEPER 9000: Thank you for your pur- ERROR. INSUFFICIENT MONEY. PLEASE RECTIFY SITUATION BY BEING LESS POOR. Now shutting down. \n \n Marty: Oh dear. That's not right at all.", 
+		"en-us": "STOREKEEPER 9000: Thank you for your pur- ERROR. INSUFFICIENT MONEY. PLEASE RECTIFY SITUATION BY BEING LESS POOR. Now shutting down. \n \n Sheldor: Oh dear. That's not right at all.", 
 		"type": "shop"
 	},
 	"s.epicP": {
-		"en-us": "Marty: Um, uh... how does this cash register work... um... here we go. Thank you for your purchase. \n \n STOREKEEPER 9000: OOPSY WOOPSIE. WE MADE A FUCKY WUCKY!!", 
+		"en-us": "Sheldor: Um, uh... how does this cash register work... um... here we go. Thank you for your purchase. \n \n STOREKEEPER 9000: OOPSY WOOPSIE. WE MADE A FUCKY WUCKY!!", 
 		"en-us-sfw": "Marty: Um, uh... how does this cash register work... um... here we go. Thank you for your purchase. \n \n STOREKEEPER 9000: OOPSY WOOPSIE. WE MADE A MISTAKEY WAKEY!!", 
 		"type": "shop"
 	},
@@ -5196,29 +5196,30 @@ const fulltext = {
 		"en-us": "JM (to you): What made you finally decide to get a smart phone? Nevermind, don't tell me! I want to hear it in person!", 
 		"type": "text"
 	},
-	"sistext3": {
-		"en-us": "JM (to you): Anyway, I'll ttyl (that means \"talk to you later\"), my shift's starting. Love you!! <3 <3 <3 <3", 
-		"type": "text"
-	},
 	// Area 9: Food2 Headquarters
 	"fuzuruStart": {
 		"en-us": "Marty: Hello this is the IT department how can I help you?", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru0.1": {
 		"en-us": "Phone: Yes my computer is on fire.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru0.2": {
 		"en-us": "Marty: Try installing Service Pack 2.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru0.3": {
 		"en-us": "Phone: Now I'm on fire.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru0.4": {
 		"en-us": "Marty: This wouldn't have happened if you had installed Service Pack 2.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuruEnd": {
@@ -5227,39 +5228,48 @@ const fulltext = {
 	},
 	"fuzuru1.1": {
 		"en-us": "Phone: Hi, my mouse isn't working.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru1.2": {
 		"en-us": "Marty: Feed it CHEEEESE.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru2.1": {
 		"en-us": "Phone: This is Beckett, your SUPERIOR. If you see that farmer anywhere, let me know so--", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru2.2": {
 		"en-us": "Marty: Beckett I am not unblocking farmersdate.com no matter how many times you ask.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru2.3": {
 		"en-us": "Phone: What?! No!! The FARMER!! If you see her, be sure to--", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru3.1": {
 		"en-us": "Phone: Hey Marty it's Craig.", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru3.2": {
 		"en-us": "Marty: Oh hey Craig, what's up? Ready to hear some funny Caves & Cryptids moments?", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru3.3": {
 		"en-us": "Phone: Hell yeah!", 
 		"en-us-sfw": "Phone: Heck yeah!", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru3.4": {
 		"en-us": "Marty: Okay, so, like, these three gobulins burst through the door, and one has TWO BUTTS...", 
+		"profile": "ed",
 		"type": "text"
 	},
 	"fuzuru3.5": {
@@ -5269,19 +5279,23 @@ const fulltext = {
 	"hungryBoy0": {
 		"en-us": "???: God I'm SO SICK of this food2 crap. I was SO HUNGRY FOR REAL FOOD.", 
 		"en-us-sfw": "???: God I'm SO SICK of this food2 junk. I was SO HUNGRY FOR REAL FOOD.", 
+		"profile": "hungy",
 		"type": "text"
 	},
 	"hungryBoy1": {
 		"en-us": "???: Meats, breads, curries, pastas, fruits, hell, even VEGETABLES. I just want some REAL DAMN FOOD.", 
 		"en-us-sfw": "???: Meats, breads, curries, pastas, fruits, heck, even VEGETABLES. I just want some REAL FOOD.", 
+		"profile": "hungy",
 		"type": "text"
 	},
 	"hungryBoy2": {
 		"en-us": "???: If you don't tell anyone about this, you can have some of my food, too. It'll be our little secret.", 
+		"profile": "hungy",
 		"type": "text"
 	},
 	"hungryBoy3": {
 		"en-us": "The man does not look up from the pile of food in front of him as he continues homfing it down.", 
+		"profile": "hungy",
 		"type": "text"
 	},
 	"hungyFoodBin0": {
@@ -5346,22 +5360,27 @@ const fulltext = {
 	},
 	"enterHQ0": {
 		"en-us": "Receptionist: Oh, hello! You must be the farmer all the higher-ups have been bickering about!", 
+		"profile": "recept",
 		"type": "text"
 	},
 	"enterHQ1": {
 		"en-us": "Receptionist: Welcome to Food2: Where the Future of Food... isn't Food!", 
+		"profile": "recept",
 		"type": "text"
 	},
 	"enterHQ2": {
 		"en-us": "Receptionist: I overheard that they're going to fire me because some of our managers are afraid of women, so I don't really care how you got in here!", 
+		"profile": "recept",
 		"type": "text"
 	},
 	"enterHQ3": {
 		"en-us": "Receptionist: Just don't do anything that could hurt my severance package, and have a nice day!", 
+		"profile": "recept",
 		"type": "text"
 	},
 	"enterHQ4": {
 		"en-us": "Receptionist: I wish people weren't so terrible all the time always.", 
+		"profile": "recept",
 		"type": "text"
 	},
 	"intercom0": {
@@ -5528,26 +5547,32 @@ const fulltext = {
 	},
 	"hurtNerd0": {
 		"en-us": "???: Y-you're the farmer, aren't you? The one we're supposed to stop!", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerd1": {
 		"en-us": "???: Just my luck... the one person who can help me is the one my friends have been trying to kill for the past couple days.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerd2": {
 		"en-us": "???: ...fine, fine, the past couple weeks.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerd3": {
 		"en-us": "???: Anyway, I know I work for the company that's trying to kill you, but that... that THING... is out there.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerd4": {
 		"en-us": "???: I barely managed to escape earlier, but I'm pretty sure my right leg is broken. I can't get out of here on my own.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerd5": {
 		"en-us": "???: Can you please help me? If I stay here, it will definitely kill me, and it will take its time.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdY": {
@@ -5560,80 +5585,99 @@ const fulltext = {
 	},
 	"hurtNerdN0": {
 		"en-us": "???: Well... that's karma I guess. I'm not sure what I expected, given all we've put you through.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdN1": {
 		"en-us": "???: But... I'm serious, this thing is bad. If you aren't going to save me, at least save yourself and get the hell out of here!", 
 		"en-us-sfw": "???: But... I'm serious, this thing is bad. If you aren't going to save me, at least save yourself and get out of here!", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdX0": {
 		"en-us": "???: Did you have a change of heart? Are you going to help me?", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdXN0": {
 		"en-us": "???: I know rubbing my inevitable death in your face must be fun to you, but unless you want to die, too, I recommend getting upstairs fast!", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdY0": {
 		"en-us": "???: Oh, thank God. Not that I believe in---nevermind, now's not the time for trying to sound smart.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdY1": {
 		"en-us": "???: Thank you. I'm glad you have more empathy than the people who work here. Myself included, probably.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdY2": {
 		"en-us": "???: By the way, my name is Trent. What's yours?", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdY3": {
 		"en-us": "Trent: ...Yeah, I can't pronounce that... but I'll try to learn, I guess.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"hurtNerdY4": {
 		"en-us": "Trent: Anyway, now is not the time for small talk. We need to get out of here fast!", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd0": {
 		"en-us": "Trent: We made it! We're upstairs! You saved us!", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd1": {
 		"en-us": "Trent: I... thank you. Thank you for saving my life.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd2": {
 		"en-us": "Trent: The world needs more people like you, and hopefully I can start being less like my coworkers and more like you.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd3": {
 		"en-us": "Trent: This floor has some tough robots guarding the path, but with the right materials you should be able to stop them easily.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd4": {
 		"en-us": "Trent: Beckett is probably upstairs waiting for you. And, just as an FYI... he has a few allergies you might want to know about.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd5": {
 		"en-us": "Trent: Fish, citrus, and carrots. There's a vending machine on this floor, too, so I'd recommend stocking up on those if you can.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd6": {
 		"en-us": "Trent: If you could drop me off here, that'd be great... I can rest here for a bit, then make my way to the elevator to get downstairs.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"savedNerd7": {
 		"en-us": "Trent: Thank you again.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"beatMonster0": {
 		"en-us": "Trent: ...Holy crap, you beat it! Who ARE you?!", 
 		"en-us-sfw": "Trent: ...Holy gwakky-mohl, you beat it! Who ARE you?!", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"beatMonster1": {
 		"en-us": "Trent: Either way, there may be other hazards on this floor, so we should still get out of here quickly.", 
+		"profile": "trent",
 		"type": "text"
 	},
 	"sleepingSavedNerd": {
@@ -5657,8 +5701,8 @@ const fulltext = {
 		"type": "text"
 	},
 	"lostToMonstA3": {
-		"en-us": "Like what the fuck.", 
-		"en-us-sfw": "Seriously, what?", 
+		"en-us": "Like, what the fuck.", 
+		"en-us-sfw": "Like, that's a new one.", 
 		"type": "text"
 	},
 	"lostToMonstB0": {
@@ -10033,52 +10077,59 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.coopO": {
-		"en-us": "Beth: Hey Ayana! Welcome back!", 
+		"en-us": "Leslie: Hey Ayana! Welcome back!", 
 		"type": "shop"
 	},
 	"s.coopL": {
-		"en-us": "Beth: See ya later!", 
+		"en-us": "Leslie: See ya later!", 
 		"type": "shop"
 	},
 	"s.coopN": {
-		"en-us": "Beth: Sorry Ayana, even with your member discount that's not enough money! Of course, I won't tell anyone if you just go into the back and grab some stuff.", 
+		"en-us": "Leslie: Sorry Ayana, even with your member discount that's not enough money! Of course, I won't tell anyone if you just go into the back and grab some stuff.", 
 		"type": "shop"
 	},
 	"s.coopP": {
-		"en-us": "Beth: Thank you for your purchase!", 
+		"en-us": "Leslie: Thank you for your purchase!", 
 		"type": "shop"
 	},
 	"s.coopT": {
-		"en-us": "Beth: Don't forget our meeting tonight! We'll be discussing potential suppliers, welcoming some new members, and giving Keith like 70 wedgies.", 
+		"en-us": "Leslie: Don't forget our meeting tonight! We'll be discussing potential suppliers, welcoming some new members, and giving Keith like 70 wedgies.", 
 		"type": "shop"
 	},
 	"newMoveIn0": {
 		"en-us": "Carlos: Rent prices are slowly going back to normal in this city. The news says the Las Abejas Tech Bubble has finally burst. Thank God for that.", 
+		"profile": "carlos",
 		"type": "text"
 	},
 	"newMoveIn1": {
 		"en-us": "Carlos: A few weeks ago, I couldn't dream of living here on a street cleaner's wages. It's amazing what the tech industry can do to a city.", 
+		"profile": "carlos",
 		"type": "text"
 	},
 	"newMoveIn2": {
 		"en-us": "Carlos: Hey, you work at the new co-op, don't you? My brother works on a farm, you should check out his stuff. You definitely want it on your shelves!", 
+		"profile": "carlos",
 		"type": "text"
 	},
 	"coopPainter": {
 		"en-us": "Painter: The people in this co-op argued for a week straight about what color to paint this building. In the end Burnt Sienna beat Burnt Umber by just one vote.", 
+		"profile": "painter",
 		"type": "text"
 	},
 	// Area 8: North City (Industrial Good Ending)
 	"newTechWorkerM": {
 		"en-us": "Jorge: This seems like it'll be a good place to live.", 
+		"profile": "jorge",
 		"type": "text"
 	},
 	"newTechWorkerW": {
 		"en-us": "Farha: There are ten Barstucks coffee shops in this city, and they're only just now opening up their first specialty grocery store...", 
+		"profile": "farha",
 		"type": "text"
 	},
 	"notCorpseLady": {
 		"en-us": "Jing: It smells like somebody died in this apartment... At least the rent is low.", 
+		"profile": "jing",
 		"type": "text"
 	},
 	"stillHungy": {
@@ -10087,6 +10138,7 @@ const fulltext = {
 	},
 	"newRecep": {
 		"en-us": "Receptionist: Hey, boss. No Beckett sightings today.", 
+		"profile": "recept",
 		"type": "text"
 	},
 	"hq_noUpstairs": {
@@ -10095,18 +10147,22 @@ const fulltext = {
 	},
 	"IGworker1": {
 		"en-us": "Belfter: Processing is going smoothly! These veggies will be Guaranteed Fresh upon delivery!", 
+		"profile": "belf",
 		"type": "text"
 	},
 	"IGworker2": {
 		"en-us": "Beth: People who start small talk with strangers in public bathrooms are the worst. Please stop.", 
+		"profile": "beth",
 		"type": "text"
 	},
 	"IGworker3": {
 		"en-us": "Torbo: When are we investing in one of those robot vacuums, eh?", 
+		"profile": "torbo",
 		"type": "text"
 	},
 	"IGworker4": {
 		"en-us": "RAPBATTLE: Status Report: Everything is wonderful. Food is delicious.", 
+		"profile": "rapb",
 		"type": "text"
 	},
 	// Area 8: North City (Natural Bad Ending)
@@ -10140,18 +10196,22 @@ const fulltext = {
 	},
 	"anarchist1": {
 		"en-us": "Amy: Thanks again for setting this space up for us. It's much easier to organize when we have a dedicated meeting area with some privacy.", 
+		"profile": "amy",
 		"type": "text"
 	},
 	"anarchist2": {
 		"en-us": "Tanner: Hey Ayana! I turned myself into an anarchist, Ayana! I'm anarchist Tanner! Ha ha, no, but seriously, how's your truck doing?", 
+		"profile": "tanner",
 		"type": "text"
 	},
 	"anarchist3": {
 		"en-us": "Rabbit: so what, you're all a bunch of technology-is-bad folks here, eh? well, as a woodland creature, i am a fan of this philosophy.", 
+		"profile": "rabbit",
 		"type": "text"
 	},
 	"beckettJail0": {
 		"en-us": "Beckett: You know, some might argue that it's a bit mean to keep me locked up like this.", 
+		"profile": "beckettworry",
 		"type": "text"
 	},
 	"beckettJail1": {
@@ -10164,6 +10224,7 @@ const fulltext = {
 	},
 	"beckettJail3": {
 		"en-us": "Beckett: On second thought, jail is fine.", 
+		"profile": "beckettshock",
 		"type": "text"
 	},
 	// Area 8: North City (Industrial Bad Ending)
@@ -10189,26 +10250,32 @@ const fulltext = {
 	},
 	"allyRobo1": {
 		"en-us": "Robot: EVERYTHING IS IN ORDER, BOSS. ALL FORMER FOOD2 EMPLOYEES HAVE BEEN SCARED OUT OF THE CITY.", 
+		"profile": "robo3",
 		"type": "text"
 	},
 	"allyRobo2": {
 		"en-us": "Robot: IT SURE IS CONVENIENT THAT OUR CREATORS INSTALLED BIG \"JOIN THE ENEMY\" BUTTONS ON ALL OF OUR BACKS.", 
+		"profile": "robo3",
 		"type": "text"
 	},
 	"allyRobo3": {
 		"en-us": "Robot: NOW THAT YOU ARE IN CHARGE, WE CAN FINALLY FULFILL OUR ORIGINAL PURPOSE OF MAKING ANIME REAL... RIGHT?", 
+		"profile": "robo3",
 		"type": "text"
 	},
 	"allyRobo4": {
 		"en-us": "Robot: IT'S NOT SAFE FOR HUMANS UP THERE YET, BOSS. LOTS OF HEAVY MACHINERY... MACHINE-ING AROUND. HEAVILY.", 
+		"profile": "robo3",
 		"type": "text"
 	},
 	"allyRobo5": {
 		"en-us": "Robot: LOOK AT ME. I'M A HUMAN. I EXPEL WASTE THROUGH MY GROIN AND SMELL LIKE CORN STARCH.", 
+		"profile": "robo3",
 		"type": "text"
 	},
 	"allyRobo6": {
 		"en-us": "Robot: THE ROBOT BEHIND THIS WINDOW LOOKS JUST LIKE ME. I SURE WISH I HAD BEEN PROGRAMMED TO COMPREHEND MIRRORS.", 
+		"profile": "robo3",
 		"type": "text"
 	},
 	// The "I'm Not Having Fun" Menu
