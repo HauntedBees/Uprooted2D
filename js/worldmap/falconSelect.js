@@ -22,17 +22,17 @@ worldmap.falconSelect = {
     drawAll: function() {
         gfx.clearSome(this.layersToClean);
         const cursorX = this.cursor.x, cursorY = this.cursor.y + this.dy;
-        worldmap.writeText("falconSelect");
+        gfx.drawChoice(9.25, GetText("falconSelect"), false);
         this.setText();
         // top
-        gfx.drawInfobox(17, 2, 1.5);
+        gfx.drawInfobox(17, 2, 1.5, undefined, "FarmInfo");
         gfx.drawFullText(GetText("falconSeeds"), 32);
         for(let i = 0; i < this.cropsToSend.length; i++) {
             gfx.drawTileToGrid(this.cropsToSend[i] + "seed", 2.5 + i, 2, "menuA");
         }
         // bottom
-        gfx.drawInfobox(17, 5, this.dy);
-        gfx.drawInfobox(7, 5, this.dy);
+        gfx.drawInfobox(17, 5, this.dy, undefined, "FarmInfo");
+        gfx.drawInfobox(7, 5, this.dy, undefined, "FarmInfo");
         for(let i = 0; i < this.actualIndexes.length; i++) {
             const actItem = player.inventory[this.actualIndexes[i]];
             gfx.drawInventoryItem(actItem, i % this.inventoryWidth, this.dy + Math.floor(i / this.inventoryWidth), "menuA");
@@ -49,7 +49,7 @@ worldmap.falconSelect = {
     setText: function() {
         if(this.cursor.y < 0) {
             const sendText = HandlePlurals(GetText("falconConfirmX"), this.cropsToSend.length).replace("{0}", this.cropsToSend.length);
-            gfx.drawWrappedText(sendText, 9.5 * 16, 11 + (16 * (this.dy + 1)), 85);
+            gfx.drawWrappedText(sendText, 9.5 * 16, 14 + (16 * this.dy), 85);
             return;
         }
         const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
