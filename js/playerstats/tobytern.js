@@ -7,6 +7,7 @@ const tobyTern = {
         if(key !== player.controls.confirm && key !== player.controls.pause) { return false; }
         if(this.onTitleScreen) {
             gfx.clearLayer("menuA");
+            gfx.FragmentMap("southcity");
             gfx.drawMap("southcity", 35, 23);
             gfx.DrawMapCharacter(17, 13, { x: 8.5, y: 6 }, { x: 0, y: 0 }, "mapChar", false, "characters");
             setInterval(this.AnimTimer, 50);
