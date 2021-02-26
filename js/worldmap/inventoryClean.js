@@ -30,6 +30,10 @@ worldmap.invClean = {
             j++;
         }
         this.topPrice = 0;
+        for(let x = 0; x < 4; x++) {
+            gfx.drawTileToGrid("toolRack", x, gfx.tileHeight - 1, "menuA");
+            gfx.drawTileToGrid("toolRack", x, gfx.tileHeight - 2, "menuA");
+        }
         for(let i = 0; i < this.topCrops.length; i++) {
             gfx.drawInventoryItem(this.topCrops[i], i % this.inventoryWidth, 12 + Math.floor(i / this.inventoryWidth), "menuA");
             if(i === (this.selectedCrop - 100)) { gfx.DrawXCursor(i % this.inventoryWidth, 12 + Math.floor(i / this.inventoryWidth), 0, 0); }
@@ -66,6 +70,7 @@ worldmap.invClean = {
         this.DrawAll();
         return true;
     },
+    trashX: 10, trashY: 11,
     HandleTrashCan: function(fromDrawAll) {
         gfx.clearLayer("tutorial");
         if(worldmap.invClean.trashInfo.length > 0) {
@@ -92,7 +97,7 @@ worldmap.invClean = {
                 if(allCoinsDone && ti.frame > 6) { worldmap.invClean.trashInfo.splice(i, 1); }
             }
         } else {
-            gfx.drawTileToGrid("animBin0", 4, 13, "tutorial");
+            gfx.drawTileToGrid("animBin0", worldmap.invClean.trashX, worldmap.invClean.trashY, "tutorial");
             if(worldmap.invClean.didConfirm) {
                 clearInterval(worldmap.invClean.trashIdx);
                 game.transition(worldmap.invClean, worldmap, { init: worldmap.pos, map: worldmap.mapName, noEntityUpdate: true });
@@ -127,7 +132,7 @@ worldmap.invClean = {
         gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
     },
     ConfirmSelection: function() {
-        this.trashInfo.push({ frame: 0, coinStates: [], x: 4, y: 13, numCoins: Math.min(10, Math.ceil(this.topPrice / 30)) });
+        this.trashInfo.push({ frame: 0, coinStates: [], x: this.trashX, y: this.trashY, numCoins: Math.min(10, Math.ceil(this.topPrice / 30)) });
         player.AddMonies(this.topPrice);
         Sounds.PlaySound("purchase");
         this.didConfirm = true;
@@ -223,12 +228,12 @@ worldmap.invClean = {
     SetCrops: function() {
         const rowYs = [0.25, 1.5, 2.75, 6.25, 7.5, 8.75];
         const rowTextYs = [16, 0, 0, 113, 0, 0];
-        gfx.drawInfobox(12, 4, 0);
-        gfx.drawInfobox(12, 5, 6);
-        gfx.drawInfobox(11, 2, 12);
+        gfx.drawInfobox(12, 4, 0, undefined, "FarmInfo");
+        gfx.drawInfobox(12, 5, 5, undefined, "FarmInfo");
+        gfx.drawInfobox(11, 2, 12, undefined, "FarmInfo");
         gfx.drawTileToGrid("recycleArrow", 4, 12, "menuA");
 
-        gfx.drawWrappedText(GetText("fullSelect"), 70, 105, 170);
+        gfx.drawWrappedText(GetText("fullSelect"), 75, 95, 170);
         gfx.drawWrappedText(GetText("fullToss").replace(/\{0\}/g, this.topPrice), 90, 204, 140);
         this.DrawConfirmButton();
  
@@ -249,7 +254,7 @@ worldmap.invClean = {
     },
     DrawCropText: function(crop, rowYs, rowTextYs, yOffset) {
         const leftMostX = 4.25;
-        const rightMostX = 14;
+        const rightMostX = 15;
         const leftMostTextX = 88;
         const starStartX = leftMostX + 1, starDx = 1;
 
@@ -270,13 +275,13 @@ worldmap.invClean = {
             case "tech": cropSprite = "_hotspot"; break;
             case "sickle2": cropSprite = "_charger"; break;
         }
-        gfx.drawTileToGrid(cropSprite, leftMostX + 9.25, rowYs[yOffset], "menutext");
-        gfx.drawItemNumber(crop.size, leftMostX + 9.5, rowYs[yOffset], "menutext", true);
+        gfx.drawTileToGrid(cropSprite, rightMostX, rowYs[yOffset], "menutext");
+        gfx.drawItemNumber(crop.size, rightMostX + 0.25, rowYs[yOffset], "menutext", true);
 
         // Row 1
         const seasons = ["spring", "summer", "autumn", "winter"];
         for(let i = 0; i < 4; i++) {
-            gfx.drawTileToGrid(seasons[i] + crop.seasons[i], leftMostX + 6.75 + i, rowYs[1 + yOffset], "menutext");
+            gfx.drawTileToGrid(seasons[i] + crop.seasons[i], rightMostX - 3 + i, rowYs[1 + yOffset], "menutext");
         }
 
         gfx.drawTileToGrid("inv_power", leftMostX, rowYs[1 + yOffset], "menutext");
