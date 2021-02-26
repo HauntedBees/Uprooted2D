@@ -173,38 +173,38 @@ pausemenu.noFun = {
                 gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
                 this.startY = 6.25;
                 gfx.drawWrappedText(GetText("noFunPuzzleForest"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
                 break;
             case 24: // Forest2
                 gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
                 this.startY = 6.25;
                 gfx.drawWrappedText(GetText("noFunPuzzleForest2"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
                 break;
             case 22:
             case 25: // Block Puzzles
                 gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
                 this.startY = 6.25;
                 gfx.drawWrappedText(GetText("noFunPuzzleBlocks"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
                 break;
             case 23: // Water Puzzle
                 gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
                 this.startY = 6.25;
                 gfx.drawWrappedText(GetText("noFunPuzzleWater"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
                 break;
             case 26:
             case 27: // Travel Puzzles
                 gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
                 this.startY = 6.25;
                 gfx.drawWrappedText(GetText("noFunPuzzleHQ"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
+                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
                 break;
             case 3: // Something Else!
                 gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
