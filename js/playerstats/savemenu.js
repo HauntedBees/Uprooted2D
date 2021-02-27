@@ -184,7 +184,7 @@ pausemenu.savemenu = {
         } else if(this.isSave) {
             game.innerTransition(this, pausemenu, 5);
         } else {
-            game.innerTransition(this, worldmap.title, 1);
+            game.innerTransition(this, worldmap.title, 0);
         }
         Sounds.PlaySound("cancel");
     },
