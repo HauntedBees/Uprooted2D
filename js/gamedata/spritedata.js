@@ -1128,6 +1128,8 @@ const sprites = {
     "BtlSelR": [25, 30],
     "CornerBtnM": [26, 30],
     "CornerBtnR": [27, 30],
+    "save1": [28, 30],
+    "save2": [29, 30],
     "FarmInfoL": [17, 31],
     "FarmInfoR": [19, 31],
     "MetalInfoL": [20, 31],

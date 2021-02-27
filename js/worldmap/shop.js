@@ -13,7 +13,7 @@ worldmap.shop = {
     layersToClear: ["characters", "menutext", "menuA"],
     availableIndexes: [], hasTalk: "", isQuestTalk: true, 
     sleepsyData: null, howManyData: null, 
-    blinkIdx: -1, blinkState: 0, 
+    blinkIdx: -1, blinkState: 0, autoSaveIdx: -1, autoSaveToggle: false, 
     setup: function(shopName) {
         this.details = stores[shopName];
         this.sellingState = me.sellStates.BUYING;
@@ -196,6 +196,7 @@ worldmap.shop = {
         if(!widecursor) { this.cursors.RedimCursor("main", 1 + this.cursorX * this.dx, this.yPos, 0, 0); }
     },
     CursorMove: function(pos) {
+        if(worldmap.shop.sleepsyData) { return; }
         switch(this.sellingState) {
             case me.sellStates.SELLING: return this.MoveSelling(pos);
             case me.sellStates.SELLSELECT: return this.MoveSellSelect(pos);
@@ -591,6 +592,8 @@ worldmap.shop = {
             player.lastInn = this.details.innId;
             player.health = player.maxhealth + 5;
             game.save("auto", false);
+            this.autoSaveIdx = setInterval(this.DrawAutoSave, 500);
+            this.DrawAutoSave();
             this.sleepsyData = { state: 0, size: 0.5, waitTimer: 40, animIdx: setInterval(worldmap.shop.Sleepsy, 10) };
         } else if(productInfo.type === "upgrade") {
             let dims = {x: 0, y: 0, new: "n"};
@@ -654,6 +657,7 @@ worldmap.shop = {
             case me.sellStates.BUYING:
                 if(this.howManyData === null) {
                     clearInterval(this.blinkIdx);
+                    clearInterval(this.autoSaveIdx);
                     Sounds.PlaySound("entrance", true);
                     game.transition(this, worldmap, {
                         init: worldmap.pos,
@@ -730,7 +734,11 @@ worldmap.shop = {
             }
             if(sleepInfo.size < 35) { sleepInfo.size += sleepInfo.size / 25; }
             else if(sleepInfo.waitTimer > 0) { sleepInfo.waitTimer--; }
-            else { sleepInfo.state = 1; }
+            else { 
+                gfx.clearLayer("menuOverBlack");
+                clearInterval(worldmap.shop.autoSaveIdx);
+                sleepInfo.state = 1;
+            }
         } else if(sleepInfo.state === 1) {
             const dreamChance = (Math.random() + player.dreamBonus) > 0.75;
             player.dreamBonus = dreamChance ? 0 : (2 * player.dreamBonus + 0.1);
@@ -745,6 +753,12 @@ worldmap.shop = {
             if(sleepInfo.size < 50) { sleepInfo.size += sleepInfo.size / 25; }
             else { worldmap.shop.FinishSleepsy(); }
         }
+    },
+    DrawAutoSave: function() {
+        gfx.clearLayer("menuOverBlack");
+        gfx.drawTileToGrid(worldmap.shop.autoSaveToggle ? "save2" : "save1", 0.25, gfx.tileHeight - 1.125, "menuOverBlack");
+        gfx.drawText(GetText("autosaving"), 26, 218, "#FFFFFF", undefined, "menuOverBlack");
+        worldmap.shop.autoSaveToggle = !worldmap.shop.autoSaveToggle;
     },
     clickSleepsy: function() {
         const sleepInfo = worldmap.shop.sleepsyData;

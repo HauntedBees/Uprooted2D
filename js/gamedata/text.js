@@ -4224,7 +4224,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.skumpA": {
-		"en-us": "Skumpy: Good morning! I hope you had a good sleep! Your game has been autosaved!", 
+		"en-us": "Skumpy: Good morning! I hope you had a good sleep!", 
 		"type": "shop"
 	},
 	"s.skumpT": {
@@ -4377,7 +4377,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.hotelA": {
-		"en-us": "Benedict: I hope you had a lovely rest. Your game has been autosaved, for your convenience.", 
+		"en-us": "Benedict: I hope you had a lovely rest. Now please enjoy a complimentary mint and hotel bill.", 
 		"type": "shop"
 	},
 	"s.gordO": {
@@ -6363,11 +6363,11 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.merminnawake": {
-		"en-us": "Gorty: Good maurning! Did yeu sleep well? Yer game has been otto-saved!", 
+		"en-us": "Gorty: Good maurning! Did yeu sleep well? Bet yer glad our beds are in air bubbles, ha ha!", 
 		"type": "shop"
 	},
 	"s.merminntalk": {
-		"en-us": "Gorty: Wot're yeu staring at? Never seen a mermaid bafore? We're just like yeu humans! We jus' have tails and gills and much higher crime rates.", 
+		"en-us": "Gorty: Wot're yeu staring at? Never seen a mermaid bafore? We're just like yeu humans! We jus' have tails and gills and Vitamin D de-FISH-encies!", 
 		"type": "shop"
 	},
 	"s.innPurchLast": {
@@ -6375,7 +6375,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"s.lastWake": {
-		"en-us": "I feel a bit better now. My game has been autosaved.", 
+		"en-us": "I feel a bit better now.", 
 		"type": "shop"
 	},
 	"s.mermhello": {
@@ -9572,6 +9572,10 @@ const fulltext = {
 		"en-us": "I lower my body into the hot spring. After a long day of farming, this is exactly what I needed. The sound of crickets chirping in the distance is the perfect background noise. Suddenly the water turns black. A voice says sorry. I turn to see an octopus next to me. I farted.", 
 		"type": "sleep"
 	},
+	"autosaving": {
+		"en-us": "Now Autosaving...", 
+		"type": "sleep"
+	},
 	// Ya Boy at the Farm
 	"iiiTalk0": {
 		"en-us": "Eee: EEEEEEE, EEEEE!!! EEEE! EEEEEEE!!! IIIIEIIIIIEIIIEEEEE!!!", 
@@ -10245,7 +10249,7 @@ const fulltext = {
 		"type": "shop"
 	},
 	"shopAbandonRest": {
-		"en-us": "Great sleep, but the room service was subpar. My game was still autosaved though.", 
+		"en-us": "Great sleep, but the room service was subpar.", 
 		"type": "shop"
 	},
 	"allyRobo1": {
