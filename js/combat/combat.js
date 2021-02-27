@@ -6,11 +6,13 @@ const combat = {
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     didHarvest: false, harvestChain: 0, 
-    animHelper: null, isTree: false, 
-    startBattle: function(enemies, skipTransition) {
+    animHelper: null, isTree: false, isChallenge: false, challenger: "", 
+    startBattle: function(enemies, skipTransition, isChallenge) {
         Sounds.PlaySound("enterbattle");
         player.initGridDimensions();
         this.didHarvest = false;
+        this.isChallenge = isChallenge || false;
+        this.challenger = enemies[0];
         this.harvestChain = 0;
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
         this.effectGrid = this.getGrid(player.gridWidth, player.gridHeight);
@@ -38,56 +40,65 @@ const combat = {
             if(!hasCharger) { player.equipment.weapon = "!sickle2_weak"; }
         }
         let startX = 5;
-        switch(player.gridWidth) {  // 3, 4, 6, 8, 10
-            case 4: this.dx = 2; startX = 6; break;
-            case 6: this.dx = 1; startX = 7; break;
-            case 8: this.dx = 0.5; startX = 8.5; break;
-            case 10: this.dx = 0.25; startX = 10.25; break;
-            default: this.dx = 2; break;
+        if(isChallenge) {
+            startX = 6;
+            this.dx = 6.5;
+            this.dy = 6;
+            this.enemydx = 6.5;
+            this.enemydy = 5;
+        } else {
+            switch(player.gridWidth) {  // 3, 4, 6, 8, 10
+                case 4: this.dx = 2; startX = 6; break;
+                case 6: this.dx = 1; startX = 7; break;
+                case 8: this.dx = 0.5; startX = 8.5; break;
+                case 10: this.dx = 0.25; startX = 10.25; break;
+                default: this.dx = 2; break;
+            }
+            switch(player.gridHeight) {  // 3, 4, 5, 6
+                case 4: this.dy = 0.5; break;
+                case 5: this.dy = 0.5; break;
+                case 6: this.dy = 0.25; break;
+                default: this.dy = 1.5; break;
+            }
+            this.dy += 5;
         }
-        switch(player.gridHeight) {  // 3, 4, 5, 6
-            case 4: this.dy = 0.5; break;
-            case 5: this.dy = 0.5; break;
-            case 6: this.dy = 0.25; break;
-            default: this.dy = 1.5; break;
-        }
-        this.dy += 5;
         this.enemywidth = 0;
         this.enemyheight = 0;
         this.isBossBattle = worldmap.mapName === "cave";
         this.enemies = [];
-        for(let i = 0; i < Math.min(4, enemies.length); i++) {
-            const enemy = GetEnemy(enemies[i]);
-            if(worldmap.customMap !== null) {
-                const tier = 1 + 0.15 * Math.floor(worldmap.customMap.floor / 5);
-                enemy.maxhealth = Math.ceil(enemy.maxhealth * tier);
-                enemy.health = enemy.maxhealth;
-                enemy.atk = Math.ceil(enemy.atk * tier);
-                enemy.baseatk = enemy.atk;
-                enemy.def = Math.ceil(enemy.def * tier);
-                enemy.basedef = enemy.def;
-                enemy.exp = Math.ceil(enemy.exp * tier);
+        if(!isChallenge) {
+            for(let i = 0; i < Math.min(4, enemies.length); i++) {
+                const enemy = GetEnemy(enemies[i]);
+                if(worldmap.customMap !== null) {
+                    const tier = 1 + 0.15 * Math.floor(worldmap.customMap.floor / 5);
+                    enemy.maxhealth = Math.ceil(enemy.maxhealth * tier);
+                    enemy.health = enemy.maxhealth;
+                    enemy.atk = Math.ceil(enemy.atk * tier);
+                    enemy.baseatk = enemy.atk;
+                    enemy.def = Math.ceil(enemy.def * tier);
+                    enemy.basedef = enemy.def;
+                    enemy.exp = Math.ceil(enemy.exp * tier);
+                }
+                console.log(enemy);
+                this.isBossBattle = this.isBossBattle || enemy.boss;
+                this.enemywidth += enemy.fieldwidth;
+                this.enemyheight = Math.max(this.enemyheight, enemy.fieldheight);
+                if(enemy.tile) { this.enemyTile = enemy.tile; } else { this.enemyTile = "tech"; }
+                this.enemies.push(enemy);
             }
-            console.log(enemy);
-            this.isBossBattle = this.isBossBattle || enemy.boss;
-            this.enemywidth += enemy.fieldwidth;
-            this.enemyheight = Math.max(this.enemyheight, enemy.fieldheight);
-            if(enemy.tile) { this.enemyTile = enemy.tile; } else { this.enemyTile = "tech"; }
-            this.enemies.push(enemy);
-        }
-        this.enemywidth = Math.min(this.enemywidth, 5);
-
-        if(enemies[0] === "garfwax") { 
-            this.enemydx = 10.625;
-            this.enemydy = 1;
-            this.isTree = true;
-        } else {
-            this.enemydx = startX + 1 + (gfx.tileWidth - startX - this.enemywidth) / 2;
-            if((this.enemydx + this.enemywidth) >= gfx.tileWidth) { this.enemydx = gfx.tileWidth - this.enemywidth - 0.25; }
-            this.enemydy = this.dy + (player.gridHeight - this.enemyheight) / 2;
-            while(this.enemydy <= 0) {
-                this.enemydy += 0.25;
-                this.dy += 0.25;
+            this.enemywidth = Math.min(this.enemywidth, 5);
+            if(enemies[0] === "garfwax") { 
+                this.enemydx = 10.625;
+                this.enemydy = 1;
+                this.isTree = true;
+            } else {
+                this.enemydx = startX + 1 + (gfx.tileWidth - startX - this.enemywidth) / 2;
+                if((this.enemydx + this.enemywidth) >= gfx.tileWidth) { this.enemydx = gfx.tileWidth - this.enemywidth - 0.25; }
+                this.enemydy = this.dy + (player.gridHeight - this.enemyheight) / 2;
+                while(this.enemydy <= 0) {
+                    this.enemydy += 0.25;
+                    this.dy += 0.25;
+                }
             }
         }
 

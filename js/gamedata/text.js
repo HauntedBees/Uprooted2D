@@ -3280,6 +3280,93 @@ const fulltext = {
 		"profile": "conwrk",
 		"type": "map"
 	},
+	"cc1": {
+		"en-us": "Cecilia: I always start my day jogging in place here; the river is beautiful and sometimes the mermaids keep me company!", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"cc2": {
+		"en-us": "Cecilia: But today I forgot to bring my breakfast smoothie! I won't have the energy to keep this up without some noots! Nutrients, I mean.", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccYes": {
+		"en-us": "I can make you a smoothie!", 
+		"type": "choice"
+	},
+	"ccNo": {
+		"en-us": "That sucks.", 
+		"type": "choice"
+	},
+	"ccHelp": {
+		"en-us": "Cecilia: You can? Hooray! You can use my blender! Don't ask why I remembered to bring a blender but not a smoothie.", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccNope": {
+		"en-us": "Cecilia: It does! I got some serious hungs now! That's what I call hunger.", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccHappy": {
+		"en-us": "Cecilia: Mmm... I can feel the vitamins flowing through my veins... Health. Sustenance. Nutrience...", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccFailed": {
+		"en-us": "Cecilia: Oh, hey, it's the girl who sucks at making smoothies! What's up?", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccNoDish": {
+		"en-us": "Cecilia: Aw, don't have anything? Well, thanks for thinking about me anyway!", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccDish": {
+		"en-us": "Cecilia: Oooo, a smoothie just for me?! You're amazing! I can't wait to taste it!", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"cc.perfect": {
+		"en-us": "Cecilia: Woah! This smoothie is THE ULTIMATE smoothie! How did you know?!", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"cc.great": {
+		"en-us": "Cecilia: Oh yeah, this is the good stuff! This is a great smoothie, thank you!!", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"cc.good": {
+		"en-us": "Cecilia: Mmm... thank you so much! This hits the spot!!", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"cc.bad": {
+		"en-us": "Cecilia: Uhh, what did you put in this smoothie? I guess I shouldn't look a gift smoothie in the mouth, so thanks?", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"cc.hate": {
+		"en-us": "Cecilia: PHEW. Nevermind, I'm not tasting this, its smell alone is making my eyes water! What did you put in this, dirt?!", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccWin1": {
+		"en-us": "Cecilia: I don't have much, but please take these Farm Fixtures as thanks! Again, I don't know why I brought farm equipment on my jog but not my smoothie.", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccHate2": {
+		"en-us": "Cecilia: Please never touch a blender again.", 
+		"profile": "cc",
+		"type": "map"
+	},
+	"ccWin2": {
+		"en-us": "I got some farm fixtures. I can see what they are by checking my inventory.", 
+		"type": "map"
+	},
 	// Area 6: Fake Farm
 	"barndoorChick": {
 		"en-us": "I can't see too well through the door, but there appears to be some of ridiculously large chicken behind it.", 
@@ -8349,6 +8436,30 @@ const fulltext = {
 	},
 	"combatSurrender": {
 		"en-us": "Surrender", 
+		"type": "combat"
+	},
+	"combatAdd": {
+		"en-us": "Add Ingredients", 
+		"type": "combat"
+	},
+	"combatFinish": {
+		"en-us": "Finish Prep", 
+		"type": "combat"
+	},
+	"combatFinishText": {
+		"en-us": "This looks like a good recipe to me! Let's see what they think...", 
+		"type": "combat"
+	},
+	"combatFinishGiveUp": {
+		"en-us": "Hmmm... maybe I should rethink this.", 
+		"type": "combat"
+	},
+	"combatAddDesc": {
+		"en-us": "Add some ingredients to your recipe.", 
+		"type": "combat"
+	},
+	"combatFinishDesc": {
+		"en-us": "Finish adding ingredients and share your creation.", 
 		"type": "combat"
 	},
 	"combatSurrenderDesc": {

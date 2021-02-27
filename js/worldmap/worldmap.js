@@ -89,7 +89,12 @@ const worldmap = {
             fixTutEntity.interact[0](0, fixTutEntity);
         }
         
-        if(worldmap.angryBees) {
+        if(args.challenger) {
+            this.dialogState = 0;
+            this.inDialogue = true;
+            player.chingredients = args.chingredients;
+            iHandler.Start(args.challenger + "_done");
+        } else if(worldmap.angryBees) {
             this.dialogState = 0;
             this.inDialogue = true;
             game.target = beeQueen;

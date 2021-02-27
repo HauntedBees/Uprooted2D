@@ -10,6 +10,11 @@ combat.plant = {
         this.isValid = true;
         for(let i = 0; i < player.inventory.length; i++) {
             if(player.inventory[i][0][0] === "_" || player.inventory[i][0][0] === "!") { continue; }
+            if(combat.isChallenge) {
+                const crop = GetCrop(player.inventory[i][0]);
+                if(["bee", "spear", "rod", "water", "tech", "sickle2", "moist", "egg"].indexOf(crop.type) >= 0) { continue; }
+            }
+            
             this.actualIndexes.push(i);
         }
         this.DrawAll();
@@ -37,6 +42,7 @@ combat.plant = {
     },
     isValidPlantingLocation: function(px, py, diff) {
         if(player.gridWidth <= px || player.gridHeight <= py) { return false; }
+        if(combat.isChallenge) { return true; }
         if(this.activeCrop.type === "moist") {
             if(diff === 1) {
                 return this.isValidLocationForCrop(px, py) || this.isValidLocationForCrop(px + 1, py)
@@ -96,6 +102,7 @@ combat.plant = {
         if(type.corner === "_cow") { return ["food", "veg", "rice", "mush", "tree"].indexOf(this.activeCrop.type) >= 0; }
     },
     GetGrowthTime: function(crop, x, y, regrow) {
+        if(combat.isChallenge) { return 0; }
         const baseTime = regrow ? crop.respawn : crop.time;
         if(["spear", "rod", "water", "bee", "egg", "sickle2"].indexOf(crop.type) >= 0) {
             return baseTime;
@@ -181,16 +188,18 @@ combat.plant = {
                 pos.x = 0; pos.y = this.dy - 1;
             } else {
                 const diff = this.activeCrop.size - 1;
-                if(pos.x < combat.dx || pos.x >= (combat.dx + player.gridWidth - diff)) {
+                const gw = combat.isChallenge ? 3 : player.gridWidth;
+                const gh = combat.isChallenge ? 3 : player.gridHeight;
+                if(pos.x < combat.dx || pos.x >= (combat.dx + gw - diff)) {
                     if(this.cursor.y === (this.dy - 1) && pos.y === (this.dy - 2)) { // moving from BACK to FIELD
                         pos.x = combat.dx;
-                        pos.y = combat.dy + player.gridHeight - this.activeCrop.size;
+                        pos.y = combat.dy + gh - this.activeCrop.size;
                     } else {
                         return false;
                     }
                 }
                 if(pos.y < combat.dy) { return false; }
-                if(pos.y >= (combat.dy + player.gridHeight - diff)) {
+                if(pos.y >= (combat.dy + gh - diff)) {
                     pos.x = 0; pos.y = this.dy - 1;
                 } else {
                     const px = pos.x - combat.dx, py = pos.y - combat.dy;
@@ -359,7 +368,10 @@ combat.plant = {
                 Sounds.PlaySound("navNok");
                 return true;
             } else { // crop was planted
-                if(--combat.numPlantTurns == 0) {
+                if(combat.isChallenge) {
+                    Sounds.PlaySound(sound);
+                    this.setup();
+                } else if(--combat.numPlantTurns == 0) {
                     if(player.canAttackAfterPlanting() && !combat.isFalcon) {
                         game.innerTransition(this, combat.menu, { sel: 0, notFirst: true });
                     } else {
@@ -469,6 +481,7 @@ combat.plant = {
         combat.animHelper.DrawCrops();
     },
     DrawXs: function() {
+        if(combat.isChallenge) { return; }
         const idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
         const item = player.inventory[this.actualIndexes[idx]];
         if(item === undefined || item === null) { return; }

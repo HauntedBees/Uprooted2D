@@ -145,6 +145,7 @@ const CommandParser = {
                 case "END": iHandler.state.done = true; break; // END prevents any future steps
                 // Other
                 case "SOUND": Sounds.PlaySound(actSuffix); break;
+                case "CHALLENGE": combat.startBattle(actSuffix.split(","), false, true); break;
                 case "FIGHT": combat.startBattle(actSuffix.split(",")); break;
                 case "GO2": CommandParser.Parse_Transition(JSON.parse(actSuffix)); break;
                 case "CUSTOM": CommandParser.Parse_Special(actSuffix); break;
@@ -323,6 +324,70 @@ const SpecialFunctions = {
         }
         worldmap.refreshMap();
         return true;
+    },
+
+    // Challenges
+    "CHALCC": function() {
+        let score = 0;
+        const relevants = [
+            ["coconut", 10],
+            ["banana", 5],
+            ["spinach", 4],
+            ["carrot", 3],
+            ["ginger", 2],
+            ["pineapple", 1],
+            ["tomato", 1],
+            ["notdrugs", 1],
+            ["rice", -1],
+            ["arborio", -1],
+            ["blackrice", -1],
+            ["shortgrain", -1],
+            ["chestnut", -1],
+            ["garlic", -3],
+            ["asparagus", -5],
+            ["goodfood", -5],
+            ["fodder", -10],
+            ["gmocorn", -10],
+            ["poisnshroom", -20]
+        ];
+        for(let i = 0; i < relevants.length; i++) {
+            const rel = relevants[i];
+            if(player.chingredients.indexOf(rel[0]) >= 0) { score += rel[1]; }
+        }
+        const success = score >= -5;
+        if(success) {
+            iHandler.state.idx = 4;
+            player.questsCleared.push("cc");
+            game.target.anim = mafs["CCDrink"].Get();
+            if(score === 21) { // coconut, spinach, carrot, ginger, and two of the following: pineapple, tomato, funny mushroom
+                worldmap.writeText("cc.perfect");
+                player.increaseItem("_shooter", 3);
+                player.increaseItem("_strongsoil", 3);
+                player.increaseItem("_lake", 6);
+                player.increaseItem("_paddy", 6);
+                player.increaseItem("_beehive", 1);
+                player.increaseItem("beeB", 10);
+            } else if(score >= 4) {
+                worldmap.writeText("cc.great");
+                player.increaseItem("_shooter", 1);
+                player.increaseItem("_strongsoil", 2);
+                player.increaseItem("_lake", 3);
+                player.increaseItem("_beehive", 1);
+                player.increaseItem("beeB", 5);
+            } else if(score >= 0) {
+                worldmap.writeText("cc.good");
+                player.increaseItem("_shooter", 1);
+                player.increaseItem("_strongsoil", 2);
+                player.increaseItem("_lake", 3);
+            } else if(score >= -5) {
+                worldmap.writeText("cc.bad");
+                player.increaseItem("_lake", 2);
+            }
+        } else {
+            iHandler.state.idx = 6;
+            player.questsCleared.push("ccbad");
+            worldmap.writeText("cc.hate");
+        }
     },
 
     // Forest

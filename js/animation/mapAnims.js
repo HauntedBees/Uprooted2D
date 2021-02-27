@@ -289,6 +289,8 @@ const mafs = {
     "Worker": new MapAnimFactory("sw", [9, 8]), "WorkerTalk": new MapAnimFactory("ds", [[[P(9, 8), P(13, 10)], [P(10, 8), P(14, 10)], [P(11, 8), P(15, 10)], [P(12, 8), P(16, 10)]]]),
     "BWorker": new MapAnimFactory("dw", [13, 8, 2]), 
     "Cow1": Ft(10, 4, true), "Cow2": Ft(10, 5, true),
+    "CCJog": new MapAnimFactory("as", [[P(29, 12), P(29, 13), P(29, 14), P(29, 13)]]),
+    "CCDrink": new MapAnimFactory("as", [[P(30, 12), P(30, 13)], false, 1]),
     "HazardVert": Ft(0, 1, true), "LogTop": Ft(4, 1, true), "LogBottom": Ft(4, 2, true),
     "ConstructionShop": Ft(19, 11),
     "SadConstr": new MapAnimFactory("la", [27, 0, 2]),

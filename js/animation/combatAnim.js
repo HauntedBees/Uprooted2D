@@ -1,5 +1,5 @@
 function CombatAnimHelper(enemies) {
-    let playerPos = { x: 3, y: 4.625 };
+    let playerPos = { x: (combat.isChallenge ? 7 : 3), y: 4.625 };
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
     let enemyAnimInfos = [], anims = [];
@@ -158,7 +158,7 @@ function CombatAnimHelper(enemies) {
                 const ydy = y + dy;
                 let newFrame = Math.floor((crop.frames - 1) * ((crop.time - crop.activeTime) / crop.time));
                 if(crop.size == 2) {
-                    let drawItemNum = true;
+                    let drawItemNum = !combat.isChallenge;
                     if(crop.name === "bignet") {
                         if(crop.rotten) {
                             gfx.drawTileToGrid(crop.name + "0", xdx, ydy, drawLayer);
@@ -194,8 +194,11 @@ function CombatAnimHelper(enemies) {
                     gfx.drawTileToGrid(crop.fishNum === undefined ? (crop.name + "0") : ("fish" + crop.fishNum), xdx, ydy, drawLayer);
                     gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, drawLayer, true);
                 } else {
-                    gfx.drawTileToGrid((crop.rotten && drawWeed) ? "weed" : (crop.name + newFrame), xdx, ydy, drawLayer);
-                    gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, drawLayer, true);
+                    const cropKey = (crop.name === "fodder" && combat.isChallenge) ? "fodder" : (crop.name + newFrame);
+                    gfx.drawTileToGrid((crop.rotten && drawWeed) ? "weed" : cropKey, xdx, ydy, drawLayer);
+                    if(!combat.isChallenge) {
+                        gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, drawLayer, true);
+                    }
                 }
                 if(crop.rotResistActive) { gfx.drawTileToGrid("rotSparkle", xdx, ydy, drawLayer); }
             }
@@ -220,64 +223,68 @@ function CombatAnimHelper(enemies) {
             gfx.drawTileToGrid(name + "W", x + xx, y - 1, "background");
             gfx.drawTileToGrid(name + "S", x + xx, y + h, "background");
         }
-    };
+    };  
 
     this.DrawBackground = function() {
         gfx.clearLayer("background");
         gfx.drawFullImage(mapBattleXref[worldmap.mapName] || "bgs/outside");
-        if(["dirt", "nathan", "_strongsoil"].indexOf(combat.enemyTile) >= 0) { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
-        else if(combat.enemyTile === "watertile") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "wedge"); }
-        else if(combat.enemyTile === "tree") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "tree"); }
-        for(let x = 0; x < combat.enemywidth; x++) { // enemy field
-            for(let y = 0; y < combat.enemyheight; y++) {
-                if(combat.enemyTile === "nathan") { gfx.drawTileToGrid("dirt", combat.enemydx + x, y + combat.enemydy, "background"); }
-                gfx.drawTileToGrid(GetActualTile(combat.enemyTile, x, y), combat.enemydx + x, y + combat.enemydy, "background");
+        if(combat.isChallenge) {
+            gfx.DrawChallengeGrid("challengeBG", combat.enemydx, combat.enemydy, "background");
+        } else {
+            if(["dirt", "nathan", "_strongsoil"].indexOf(combat.enemyTile) >= 0) { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
+            else if(combat.enemyTile === "watertile") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "wedge"); }
+            else if(combat.enemyTile === "tree") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "tree"); }
+            for(let x = 0; x < combat.enemywidth; x++) { // enemy field
+                for(let y = 0; y < combat.enemyheight; y++) {
+                    if(combat.enemyTile === "nathan") { gfx.drawTileToGrid("dirt", combat.enemydx + x, y + combat.enemydy, "background"); }
+                    gfx.drawTileToGrid(GetActualTile(combat.enemyTile, x, y), combat.enemydx + x, y + combat.enemydy, "background");
+                }
             }
-        }
-        let toDrawAfterwards = [];
-        this.DrawWrapper(combat.dx, combat.dy, player.gridWidth, player.gridHeight);
-        for(let x = 0; x < player.gridWidth; x++) { // player field
-            for(let y = 0; y < player.gridHeight; y++) {
-                gfx.drawTileToGrid("dirt", x + combat.dx, y + combat.dy, "background");
-                const item = player.itemGrid[x][y];
-                let effect = combat.effectGrid[x][y];
-                if(item !== null && !item.coord) { 
-                    const iteminfo = GetFarmInfo(item);
-                    if(item === "_cow") {
-                        if(combat.getCowIndex(x, y) >= 0) {
-                            toDrawAfterwards.push({ sprite: "cowready", x: (x + combat.dx), y: (y + combat.dy) });
+            let toDrawAfterwards = [];
+            this.DrawWrapper(combat.dx, combat.dy, player.gridWidth, player.gridHeight);
+            for(let x = 0; x < player.gridWidth; x++) { // player field
+                for(let y = 0; y < player.gridHeight; y++) {
+                    gfx.drawTileToGrid("dirt", x + combat.dx, y + combat.dy, "background");
+                    const item = player.itemGrid[x][y];
+                    let effect = combat.effectGrid[x][y];
+                    if(item !== null && !item.coord) { 
+                        const iteminfo = GetFarmInfo(item);
+                        if(item === "_cow") {
+                            if(combat.getCowIndex(x, y) >= 0) {
+                                toDrawAfterwards.push({ sprite: "cowready", x: (x + combat.dx), y: (y + combat.dy) });
+                            } else {
+                                toDrawAfterwards.push({ sprite: "cow", x: (x + combat.dx), y: (y + combat.dy) });
+                            }
+                        } else if(item === "_charger") {
+                            toDrawAfterwards.push({ sprite: "chargerplaced", x: (x + combat.dx), y: (y + combat.dy) });
+                        } else if(item === "_modulator") {
+                            toDrawAfterwards.push({ sprite: "mod" + combat.season, x: (x + combat.dx), y: (y + combat.dy) });
+                        } else if(iteminfo.displaySprite !== undefined) {
+                            toDrawAfterwards.push({ sprite: iteminfo.displaySprite, x: (x + combat.dx), y: (y + combat.dy) });
+                        } else if(item === "_lake") {
+                            pausemenu.farmmod.DrawWaterFrame(x, y, x + combat.dx, y + combat.dy, "background");
+                        } else if(item === "_shooter") {
+                            if(combat.getUsedShooterIndex(x, y) >= 0) {
+                                gfx.drawTileToGrid("_shooterClosed", x + combat.dx, y + combat.dy, "background");
+                            } else {
+                                gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
+                            }
                         } else {
-                            toDrawAfterwards.push({ sprite: "cow", x: (x + combat.dx), y: (y + combat.dy) });
-                        }
-                    } else if(item === "_charger") {
-                        toDrawAfterwards.push({ sprite: "chargerplaced", x: (x + combat.dx), y: (y + combat.dy) });
-                    } else if(item === "_modulator") {
-                        toDrawAfterwards.push({ sprite: "mod" + combat.season, x: (x + combat.dx), y: (y + combat.dy) });
-                    } else if(iteminfo.displaySprite !== undefined) {
-                        toDrawAfterwards.push({ sprite: iteminfo.displaySprite, x: (x + combat.dx), y: (y + combat.dy) });
-                    } else if(item === "_lake") {
-                        pausemenu.farmmod.DrawWaterFrame(x, y, x + combat.dx, y + combat.dy, "background");
-                    } else if(item === "_shooter") {
-                        if(combat.getUsedShooterIndex(x, y) >= 0) {
-                            gfx.drawTileToGrid("_shooterClosed", x + combat.dx, y + combat.dy, "background");
-                        } else {
-                            gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
-                        }
-                    } else {
-                        if(["_log", "_coop", "_beehive"].indexOf(item) >= 0 && (effect !== null && effect.type === "burned")) {
-                            effect = null;
-                            gfx.drawTileToGrid(item + "Burned", x + combat.dx, y + combat.dy, "background");
-                        } else {
-                            gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
+                            if(["_log", "_coop", "_beehive"].indexOf(item) >= 0 && (effect !== null && effect.type === "burned")) {
+                                effect = null;
+                                gfx.drawTileToGrid(item + "Burned", x + combat.dx, y + combat.dy, "background");
+                            } else {
+                                gfx.drawTileToGrid(item, x + combat.dx, y + combat.dy, "background");
+                            }
                         }
                     }
+                    if(effect !== null) { toDrawAfterwards.push({ sprite: effect.type, x: (x + combat.dx), y: (y + combat.dy) }); }
                 }
-                if(effect !== null) { toDrawAfterwards.push({ sprite: effect.type, x: (x + combat.dx), y: (y + combat.dy) }); }
             }
-        }
-        for(let i = 0; i < toDrawAfterwards.length; i++) {
-            const item = toDrawAfterwards[i];
-            gfx.drawTileToGrid(item.sprite, item.x, item.y, "background");
+            for(let i = 0; i < toDrawAfterwards.length; i++) {
+                const item = toDrawAfterwards[i];
+                gfx.drawTileToGrid(item.sprite, item.x, item.y, "background");
+            }
         }
     };
     const GetActualTile = function(tile, x, y) {
@@ -318,22 +325,6 @@ function CombatAnimHelper(enemies) {
                 else { return "conveyorM"; }    
         }
         return tile;
-    };
-    // you shall [ganon voice] DIE
-    this.DrawBottom = function() {
-        const y = game.tileh - 0.75;
-        const texty = y + 0.65;
-        for(let x = 0; x < gfx.tileWidth; x++) { gfx.drawTileToGrid("infoU", x, y, "menuA"); }
-        gfx.drawText("HP:" + player.health + "/" + player.maxhealth, 4, texty * 16);
-        gfx.drawTileToGrid("seasonbar0", 7.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar1", 8.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar2", 9.5, y, "menuA");
-        gfx.drawTileToGrid("seasonbar3", 10.5, y, "menuA");
-        const diff = Math.round(combat.seasonTime / me.TURNSINSEASON * gfx.tileWidth) / gfx.tileWidth;
-        gfx.drawTileToGrid("seasonico", 7.25 + combat.season + diff, y, "menuA");
-        const season = GetText("season" + combat.season);
-        gfx.drawTile("season" + combat.season, 12 * 16 - 3, (y - 0.25) * 16 + 1, "menuA");
-        gfx.drawText(season, 13 * 16 - 1, texty * 16);
     };
     this.DrawSeasonsInfo = function(x, y) {
         gfx.drawTileToGrid("seasonbar0", x, y, "menuA");

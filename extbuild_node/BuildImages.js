@@ -52,7 +52,8 @@ const RipImage = async function(img) {
     const rawpath = path.join(__dirname, "./out/"), finalpath = path.join(__dirname, "../img/");
     parseString(xmlStr, async function(err, xmlObj) {
         const contentLayer = xmlObj.image.stack[0].layer.findIndex(f => f.$.name === "Content");
-        await zip.extract(`data/layer${contentLayer + 1}.png`, `${rawpath}/${filename}`);
+        const layerPath = xmlObj.image.stack[0].layer[contentLayer].$.src;
+        await zip.extract(layerPath, `${rawpath}/${filename}`);
         console.log(filename + " extracted");
         const img = sharp(`${rawpath}/${filename}`);
         const imgPath = `${finalpath}/${filename}`;
@@ -120,6 +121,12 @@ if(noArgs || HasArg("bg")) {
 }
 if(noArgs || HasArg("sheet")) {
     RipImage("sheet");
+}
+if(noArgs || HasArg("mapChar")) {
+    RipImage("mapChar");
+}
+if(noArgs || HasArg("challenge")) {
+    RipImage("challengeBG");
 }
 if(filters || HasArg("hqx")) {
     console.log("TODO");

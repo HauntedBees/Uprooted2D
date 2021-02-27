@@ -101,7 +101,7 @@ const game = {
                     "end/end3ip", "end/end4ip", "end/end5ip", "end/end6ip", "end/end7ip", "end/end3nv", "end/end4nv", "end/end5nv",
                     "end/end6nv", "end/end7nv", "end/end3iv", "end/end4iv", "end/end5iv", "end/end6iv", "end/end7iv",
                     //* Other Random Shit and Credits *///
-                    "tobytern", "endcredits", "endcreditscover", "endcreditsmouth", "upnext"
+                    "challengeBG", "tobytern", "endcredits", "endcreditscover", "endcreditsmouth", "upnext"
                 ],
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 

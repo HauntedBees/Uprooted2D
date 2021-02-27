@@ -244,6 +244,7 @@ const mapentities = {
         { name: "Falcon1", pos: { x: 27, y: 5 }, isColumn: true, visible: false, solid: false, interact: Cutscene("falcon"), autoplay: true },
         GetFellow("ConstructionManShop", 25, 3, 0, "ConstructionShop", undefined, undefined, { solid: false, boring: true }),
         GetFellow("KelpCow", 27, 1, 0, "Cow1", Cutscene("bridgeCow"), undefined, { big: true }),
+        GetFellow("CC", 29, 12, 0, "CCJog", Cutscene("cc"), undefined, { moving: true }),
         // Boss
         GetFellow("HeadWorker", 5, 6, 3, "BWorker", Cutscene("workerX"), undefined, { moveToTalk: true, postBattle: "BeatWorkers" }),
         GetCSFellow("BeatWorker", 5, 6, 1, "SadConstr", "SadConstr", { moving: true, visible: false }),

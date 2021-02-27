@@ -8,10 +8,11 @@ combat.menu = {
         this.plantedAlreadyAndCantAttack = args.canOnlyPlant || false;
         if(!args.notFirst) {
             // Pointy Cursor Friend
+            const coords = combat.animHelper.GetPlayerTopPos();
             if(combat.isFalcon) {
-                combat.animHelper.AddAnim(new SheetAnim(2, 2, 700, "pointer", 6, true));
+                combat.animHelper.AddAnim(new SheetAnim(coords.x - 0.75, 2, 700, "pointer", 6, true));
             } else {
-                combat.animHelper.AddAnim(new SheetAnim(3.4375, 2, 700, "pointer", 6, true));
+                combat.animHelper.AddAnim(new SheetAnim(coords.x + 0.4375, 2, 700, "pointer", 6, true));
             }
         }
         gfx.clearSome(this.layersToClean);
@@ -45,7 +46,10 @@ combat.menu = {
         let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
         switch(this.cursorSel) {
             case 0:
-                if(plantState !== "combatPlant") {
+                if(combat.isChallenge) {
+                    text = GetText("combatAddDesc");
+                    charAnim = "WANTPLANT";
+                } else if(plantState !== "combatPlant") {
                     if(plantState === "combatSkip") {
                         text = GetText("combatSkipNoSeed");
                         charAnim = "CANTDO";
@@ -70,7 +74,10 @@ combat.menu = {
                 break;
             case 1:
                 const count = this.highlightReadyCropsAndReturnCount();
-                if(combat.isFalcon) {
+                if(combat.isChallenge) {
+                    text = GetText("combatFinishDesc");
+                    charAnim = "WON";
+                } else if(combat.isFalcon) {
                     text = GetText("attack_falcon");
                     charAnim = "LOOKBACK";
                     birdAnim = "WANTATTACK";
@@ -136,12 +143,16 @@ combat.menu = {
         // Options
         const optiony = gfx.tileHeight - 3;
         let optionx = 4;
-        optionx = this.DrawOption(GetText(plantState), optionx, optiony, this.cursorSel === 0);
-        optionx = this.DrawOption(GetText("combatAttack"), optionx, optiony, this.cursorSel === 1);
-        optionx = this.DrawOption(GetText("combatCompost"), optionx, optiony, this.cursorSel === 2);
-        optionx = this.DrawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), optionx, optiony, this.cursorSel === 3);
+        if(combat.isChallenge) {
+            optionx = this.DrawOption(GetText("combatAdd"), optionx, optiony, this.cursorSel === 0);
+            optionx = this.DrawOption(GetText("combatFinish"), optionx, optiony, this.cursorSel === 1);
+        } else {
+            optionx = this.DrawOption(GetText(plantState), optionx, optiony, this.cursorSel === 0);
+            optionx = this.DrawOption(GetText("combatAttack"), optionx, optiony, this.cursorSel === 1);
+            optionx = this.DrawOption(GetText("combatCompost"), optionx, optiony, this.cursorSel === 2);
+            optionx = this.DrawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), optionx, optiony, this.cursorSel === 3);
+        }
         const cursorwidth = this.options[this.cursorSel], cursorx = this.cursorSel === 0 ? 4 : (this.options[this.cursorSel - 1]);
-        console.log(`actcx: ${cursorwidth - cursorx}, cx: ${cursorwidth}, lx: ${cursorx}`);
         combat.cursors.RedimCursor("main", cursorx, optiony, cursorwidth - cursorx - 1, 0);
 
         // Player Health and Season
@@ -249,13 +260,17 @@ combat.menu = {
                 }
                 break;
             case 1:
-                if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { Sounds.PlaySound("navNok"); return false; }
-                const count = this.highlightReadyCropsAndReturnCount();
-                const theircount = this.getEnemyCropCount();
-                if(!combat.isFalcon && count === 0 && !player.canMelee(theircount)) { Sounds.PlaySound("navNok"); return false; }
-                let attackCount = 1;
-                if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
-                game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
+                if(combat.isChallenge) {
+                    this.FinishChallenge();
+                } else {
+                    if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { Sounds.PlaySound("navNok"); return false; }
+                    const count = this.highlightReadyCropsAndReturnCount();
+                    const theircount = this.getEnemyCropCount();
+                    if(!combat.isFalcon && count === 0 && !player.canMelee(theircount)) { Sounds.PlaySound("navNok"); return false; }
+                    let attackCount = 1;
+                    if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }
+                    game.innerTransition(this, combat.selectTarget, {numAttacks: attackCount, isMelee: count === 0, theirCrops: theircount});
+                }
                 break;
             case 2:
                 if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { Sounds.PlaySound("navNok"); return false; }
@@ -281,6 +296,24 @@ combat.menu = {
         }
         Sounds.PlaySound("navOk");
         return true;
+    },
+    FinishChallenge: function() {
+        combat.animHelper.SetPlayerAnimState("LEVELUP");
+        const key = combat.grid.some(row => row.some(cell => cell !== null)) ? "combatFinishText" : "combatFinishGiveUp";
+        game.innerTransition(this, combat.inbetween, {
+            text: GetText(key),
+            next: function() {
+                clearInterval(combat.charAnimIdx);
+                combat.wrapUpCombat();
+                game.transition(combat.inbetween, worldmap, {
+                    init: worldmap.pos,
+                    map: worldmap.mapName,
+                    noEntityUpdate: true,
+                    challenger: combat.challenger,
+                    chingredients: combat.grid.reduce((a, c) => [...c, ...a], []).filter(c => c !== null && typeof c !== "number" && c.name !== undefined).map(c => c.name)
+                });
+            }
+        });
     },
     freeFleeEnemies: ["machineA", "machineB", "machineC", "machineD", "botMush", "botRice", "botFruit", "botVeggie"],
     tryFlee: function() {
@@ -323,7 +356,7 @@ combat.menu = {
             case player.controls.confirm:
             case player.controls.pause: isEnter = true; break;
         }
-        if(pos.x < 0 || pos.x > 3) { return false; }
+        if(pos.x < 0 || pos.x > 3 || (combat.isChallenge && pos.x > 1)) { return false; }
         if(isEnter) {
             return this.click(pos, input.IsFreshPauseOrConfirmPress());
         } else {
