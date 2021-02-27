@@ -756,9 +756,9 @@ worldmap.shop = {
     },
     DrawAutoSave: function() {
         gfx.clearLayer("menuOverBlack");
+        worldmap.shop.autoSaveToggle = !worldmap.shop.autoSaveToggle;
         gfx.drawTileToGrid(worldmap.shop.autoSaveToggle ? "save2" : "save1", 0.25, gfx.tileHeight - 1.125, "menuOverBlack");
         gfx.drawText(GetText("autosaving"), 26, 218, "#FFFFFF", undefined, "menuOverBlack");
-        worldmap.shop.autoSaveToggle = !worldmap.shop.autoSaveToggle;
     },
     clickSleepsy: function() {
         const sleepInfo = worldmap.shop.sleepsyData;
