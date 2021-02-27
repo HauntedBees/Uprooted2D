@@ -10423,6 +10423,18 @@ const fulltext = {
 		"en-us": "Fun Assistance", 
 		"type": "opts"
 	},
+	"recap.Heading": {
+		"en-us": "Story Recap", 
+		"type": "opts"
+	},
+	"recap.Info": {
+		"en-us": "It's been a while since you've played, here's a reminder of where you left off:", 
+		"type": "opts"
+	},
+	"recap.Info2": {
+		"en-us": "Make sense? Good! Now let's get you back in the game!", 
+		"type": "opts"
+	},
 	"noFunDone": {
 		"en-us": "Thanks.", 
 		"type": "opts"

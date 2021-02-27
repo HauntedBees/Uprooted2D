@@ -426,6 +426,7 @@ const game = {
     load: function(savenum) {
         let loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
         player = Object.assign(player, loadedPlayer);
+        
         game.GetNonstandardGameOverFlag(savenum);
         mapStates = game.str2obj(localStorage.getItem("mapent" + savenum));
         stores["skumpys"].wares[0].price = (player.achievements.indexOf("skumpy") < 0 ? 20 : 0);
@@ -439,12 +440,19 @@ const game = {
         if(player.mapName === "hq_3") {
             player.mapPos = { x: 25, y: 5 };
         }
-        game.transition(game.currentInputHandler, worldmap, { 
-            init: player.mapPos,
-            map: player.mapName,
-            playerDir: player.mapDir,
-            fromLoad: true
-        });
+
+        const now = +(new Date());
+        const distDays = Math.floor((now - player.saveTime) / 86400000);
+        if(distDays > 30) {
+            game.transition(game.currentInputHandler, pausemenu.recap);
+        } else {
+            game.transition(game.currentInputHandler, worldmap, { 
+                init: player.mapPos,
+                map: player.mapName,
+                playerDir: player.mapDir,
+                fromLoad: true
+            });
+        }
     },
     PatchSaveFile: function() {
         // v0.3- save files are incompatible with v0.4+
