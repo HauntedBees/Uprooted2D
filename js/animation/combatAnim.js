@@ -194,7 +194,7 @@ function CombatAnimHelper(enemies) {
                     gfx.drawTileToGrid(crop.fishNum === undefined ? (crop.name + "0") : ("fish" + crop.fishNum), xdx, ydy, drawLayer);
                     gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, drawLayer, true);
                 } else {
-                    const cropKey = (crop.name === "fodder" && combat.isChallenge) ? "fodder" : (crop.name + newFrame);
+                    const cropKey = combat.isChallenge ? crop.name : (crop.name + newFrame);
                     gfx.drawTileToGrid((crop.rotten && drawWeed) ? "weed" : cropKey, xdx, ydy, drawLayer);
                     if(!combat.isChallenge) {
                         gfx.drawItemNumber(crop.rotten ? "x" : Math.ceil(crop.activeTime), xdx, ydy, drawLayer, true);

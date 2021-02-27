@@ -228,8 +228,12 @@ combat.plant = {
             combat.lastSelectedSeed = { x: this.cursor.x, y: this.cursor.y - this.dy };
             let newx = combat.lastPlantedPos.x, newy = combat.lastPlantedPos.y;
             if(this.activeCrop.size === 2) {
-                if((newx + 1) >= player.gridWidth) { newx -= 1; }
-                if((newy + 1) >= player.gridHeight) { newy -= 1; }
+                if(combat.isChallenge) {
+                    this.activeCrop.size = 1;
+                } else {
+                    if((newx + 1) >= player.gridWidth) { newx -= 1; }
+                    if((newy + 1) >= player.gridHeight) { newy -= 1; }
+                }
             }
             this.cursor = { x: combat.dx + newx, y: combat.dy + newy };
             this.isValid = this.isValidPlantingLocation(newx, newy, this.activeCrop.size - 1);
@@ -242,7 +246,8 @@ combat.plant = {
             combat.lastPlantedPos = { x: px, y: py };
             const ppos = { x: px, y: py };
             if(!this.isValidPlantingLocation(px, py, diff)) { Sounds.PlaySound("navNok"); return false; }
-            let newCrop = GetCrop(this.activeCrop.name);
+            const newCrop = GetCrop(this.activeCrop.name);
+            if(combat.isChallenge) { newCrop.size = 1; }
             if(combat.grid[px][py] !== null && combat.grid[px][py].name === "salt") { newCrop.power = Math.ceil(newCrop.power / 2); }
             let cropIsKill = false, killType = 0;
             if(player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech && !combat.isFalcon) {
