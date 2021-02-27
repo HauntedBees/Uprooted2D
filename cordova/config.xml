@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.hauntedbees.uprootedgame" version="0.6.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Uprooted</name>
+    <description>A videos game.</description>
+    <author email="fench@hauntedbees.com" href="https://hauntedbees.com">
+        Haunted Bees Productions
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+</widget>

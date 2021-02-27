@@ -67,3 +67,6 @@ extbuild_node/out*
 *.ora~
 *-autosave.kra
 dist/*
+
+cordova/www/*
+js/lib/pixi.js

@@ -4,7 +4,6 @@ const sharp = require("sharp");
 const imagemin = require("imagemin");
 const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
-const fs = require("fs");
 
 const imgPath = path.join(__dirname, "../ora");
 const args = process.argv.slice(2);
