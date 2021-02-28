@@ -317,6 +317,7 @@ const mafs = {
     "HOUSEKEEPERTalk": new MapAnimFactory("as", [[P(16, 17), P(16, 18), P(16, 19), P(16, 18)]]),
     "Crouton": Ft(17, 12), "CroutonTalk": new MapAnimFactory("as", [[P(17, 12), P(18, 12), P(19, 12)]]),
     // South City
+    "Capo": new MapAnimFactory("la", [31, 12, 2]),
     "Mobsty1": new MapAnimFactory("sw", [8, 16]), "Mobsty2": new MapAnimFactory("dw", [12, 18, 2]),
     "Skumpy1": new MapAnimFactory("la", [15, 16, 2]), "Skumpy2": new MapAnimFactory("la", [13, 16, 2]),
     "Skumpy3": new MapAnimFactory("la", [14, 16, 2]), "Skumpy4": new MapAnimFactory("la", [12, 16, 2]),

@@ -230,8 +230,8 @@ function CombatAnimHelper(enemies) {
         gfx.drawFullImage(mapBattleXref[worldmap.mapName] || "bgs/outside");
         if(combat.isChallenge) {
             let dx = 0;
-            switch(combat.challenger) {
-                case "mole": dx = 1; break;
+            switch(GetEnemy(combat.challenger).tile) {
+                case "pot": dx = 1; break;
             }
             gfx.DrawChallengeGrid("challengeBG", combat.enemydx, combat.enemydy, "background", dx);
         } else {

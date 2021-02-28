@@ -468,6 +468,7 @@ const mapentities = {
         EnterShop("Church", 38, 14, "church"),
         GetSign(57, 22, "SignPawn"),
         GetFellow("Abuela", 34, 20, 0, "Abuelita", Cutscene("abuela"), undefined, { moveToTalk: true, storageKey: "abuela" }),
+        GetFellow("Capo", 35, 28, 0, "Capo", Cutscene("capo"), undefined, { moveToTalk: true }),
         // Boss
         GetFellow("MobBoss", 20, 27, 2, "Mobsty2", Cutscene("mobBoss"), undefined, { inside: true, visible: false, boss: true, postBattle: "BeatMob", failedInteract: Cutscene("mobLost") }),
         GetCSFellow("MobBoss2", 20, 27, 0, "MobstyHurt", "mobstHurt", { visible: false, moving: true, mafia: true }),

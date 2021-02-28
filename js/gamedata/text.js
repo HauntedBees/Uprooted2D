@@ -4564,6 +4564,63 @@ const fulltext = {
 		"en-us": "Father Iglecias: I've been trying to appeal to the youth recently, to get them more involved in the Church. Do you know what a \"memes\" is?", 
 		"type": "shop"
 	},
+	"capo0": {
+		"en-us": "???: La mia pasta... non ha salsa...", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capo1": {
+		"en-us": "Capo Mangia: Il mio nome e Capo Mangia. Ho bisogno di salsa di pomodoro. Marinara.", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capo2": {
+		"en-us": "Capo Mangia: You can cook me the sauce for pasta?", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capoYes": {
+		"en-us": "I can make you some pasta sauce.", 
+		"type": "choice"
+	},
+	"capoNo": {
+		"en-us": "Uh, no... parlo... italiano.", 
+		"type": "choice"
+	},
+	"capoReject": {
+		"en-us": "Capo Mangia: Why you do hurt me?", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capoAccept": {
+		"en-us": "Capo Mangia: Perfetto! Ricorda: una buona salsa ha pomodori, aglio, funghi e carote!", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capoNoSauce": {
+		"en-us": "Capo Mangia: No sauce? I weep.", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capoWrongSauce": {
+		"en-us": "Capo Mangia: Questa non e salsa di pomodoro, questa e salsa spazzatura! Bad sauce! No good! Try again!", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capoGoodSauce1": {
+		"en-us": "Capo Mangia: This sauce... delizioso! Grazie, signora. Prendi queste Farm Fixtures.", 
+		"profile": "capo",
+		"type": "map"
+	},
+	"capoGoodSauce2": {
+		"en-us": "I got some farm fixtures. I can see what they are by checking my inventory.", 
+		"type": "map"
+	},
+	"capoComplete": {
+		"en-us": "Capo Mangia: Mamma mia... spaghetti!", 
+		"profile": "capo",
+		"type": "map"
+	},
 	// Area 8: North City
 	"s.fnO": {
 		"en-us": "Lynn: Oh, uh, welcome. Let me know if you need anything.", 

@@ -417,6 +417,36 @@ const SpecialFunctions = {
             worldmap.writeText("cc.hate");
         }
     },
+    "CHALCAPO": function() {
+        let score = 0;
+        const relevants = [
+            ["milkcap", 1],
+            ["shiitake", 1],
+            ["portobello", 1],
+            ["greenshroom", 1],
+            ["blackshroom", 1],
+            ["poisnshroom", 1],
+            ["notdrugs", 1],
+            ["tomato", 10],
+            ["garlic", 10],
+            ["carrot", 10]
+        ];
+        for(let i = 0; i < relevants.length; i++) {
+            const rel = relevants[i];
+            if(player.chingredients.indexOf(rel[0]) >= 0) { score += rel[1]; }
+        }
+        if(score > 30) {
+            quests.completeQuest("capo");
+            worldmap.writeText("capoGoodSauce1");
+            player.increaseItem("_cow", 1);
+            player.increaseItem("_strongsoil", 10);
+            player.increaseItem("_sprinkler", 2);
+            player.increaseItem("_paddy", 10);
+        } else {
+            worldmap.writeText("capoWrongSauce");
+            iHandler.state.done = true;
+        }
+    },
 
     // Forest
     "LIMESTART": function() {

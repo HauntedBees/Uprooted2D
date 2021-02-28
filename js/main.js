@@ -69,7 +69,7 @@ const game = {
                     "profiles/dowel", "profiles/cow", "profiles/robo", "profiles/beckettworry", "profiles/beckettshock", "profiles/beckettsad",
                     "profiles/beckettmad", "profiles/fairymad", "profiles/fairy", "profiles/colel", "profiles/drjeff", "profiles/rapb", "profiles/lime",
                     "profiles/fish", "profiles/rabbit", "profiles/tanner", "profiles/aiko", "profiles/june", "profiles/dean", "profiles/beckett",
-                    "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad", "profiles/mole",
+                    "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad", "profiles/mole", "profiles/capo",
                     //* Map Covers *//
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",
