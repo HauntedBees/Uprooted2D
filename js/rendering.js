@@ -456,9 +456,9 @@ const gfx = {
         ctx.fillStyle = gfx.GetBlack();
         ctx.fillRect(x * gfx.scale, y * gfx.scale, w * gfx.scale, h * gfx.scale);
     },
-    DrawChallengeGrid: function(sheetpath, x, y, layer) {
+    DrawChallengeGrid: function(sheetpath, x, y, layer, dx) {
         const sheet = gfx.spritesheets[sheetpath];
-        gfx.drawImage(gfx.ctx[layer], sheet, 1, 1, 48, 80, x * 16, y * 16, 48, 80);
+        gfx.drawImage(gfx.ctx[layer], sheet, dx * 50 + 1, 1, 48, 80, x * 16, y * 16, 48, 80);
     },
     // Full Drawsies
     fragmentCache: [],  

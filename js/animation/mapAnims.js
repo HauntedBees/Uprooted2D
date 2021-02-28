@@ -277,6 +277,9 @@ const mafs = {
     "Mowz": new MapAnimFactory("dw", [0, 4, 2]), "Sqorl": new MapAnimFactory("dw", [0, 6, 2]),
     // Below Village
     "Robo2": new MapAnimFactory("sw", [4, 8]),
+    "Mole": new MapAnimFactory("la", [28, 12, 2]),
+    "MoleSoup": new MapAnimFactory("la", [28, 14, 2]),
+    "TV": new MapAnimFactory("as", [[P(30, 14), P(31, 14)], false, 2]),
     // Research Lab
     "RAPBATTLE": new MapAnimFactory("la", [3, 10, 2]), "RAPSprout": Ft(6, 3),
     "Chair1": Ft(3, 8), "Chair2": Ft(3, 9),

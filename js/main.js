@@ -58,7 +58,7 @@ const game = {
                     "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
                     "maps/hq_6", "maps/gameover", "cavesheet",
                     "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG", "maps/northcity_NB", "maps/hq_NB", "maps/hq_NB_side",
-                    "maps/northcity_IB", "maps/hq_IB", "maps/forest",
+                    "maps/northcity_IB", "maps/hq_IB", "maps/forest", "maps/molehome",
                     //* Profiles *//
                     "profiles/amy", "profiles/torbo", "profiles/beth", "profiles/belf", "profiles/jing", "profiles/farha", "profiles/jorge",
                     "profiles/painter", "profiles/carlos", "profiles/robo3", "profiles/hungy", "profiles/trent", "profiles/recept", "profiles/ed",
@@ -69,7 +69,7 @@ const game = {
                     "profiles/dowel", "profiles/cow", "profiles/robo", "profiles/beckettworry", "profiles/beckettshock", "profiles/beckettsad",
                     "profiles/beckettmad", "profiles/fairymad", "profiles/fairy", "profiles/colel", "profiles/drjeff", "profiles/rapb", "profiles/lime",
                     "profiles/fish", "profiles/rabbit", "profiles/tanner", "profiles/aiko", "profiles/june", "profiles/dean", "profiles/beckett",
-                    "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad",
+                    "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad", "profiles/mole",
                     //* Map Covers *//
                     "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
                     "covers/northcity2_post", "covers/northcity3",
@@ -77,7 +77,7 @@ const game = {
                     "fg/farm", "fg/producestand", "fg/firstvillage", 
                     "fg/belowvillage", "fg/researchfacility", "fg/underwater", "fg/fakefarm", 
                     "fg/southcity", "fg/northcity", "fg/hq_1", "fg/hq_2", "fg/hq_3", "fg/hq_4", "fg/hq_5",
-                    "fg/hq_IG", "fg/hq_NB",
+                    "fg/hq_IG", "fg/hq_NB", "fg/molehome",
                     //* Shops *//
                     "shops/home", "shops/cluckfuck",
                     "shops/seedypete", "shops/daveshoes",  "shops/inn1", "shops/fixt1", "shops/expand1",

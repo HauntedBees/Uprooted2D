@@ -156,6 +156,8 @@ const mapentities = {
         SwitchMap("EnterFacilitySide", 13, 16, false, false, 30, 2, "researchfacility"),
         SwitchMap("EnterFacilityL", 7, 18, false, false, 12, 36, "researchfacility"),
         SwitchMap("EnterFacilityR", 8, 18, false, false, 13, 36, "researchfacility"),
+        SwitchMap("EnterCaveL", 21, 26, false, false, 8, 2, "molehome"),
+        SwitchMap("EnterCaveR", 22, 26, false, false, 8, 2, "molehome"),
         // Foreground
         GetForeground("belowvillage", 0, 2048),
         // Hives & Falcon
@@ -163,6 +165,17 @@ const mapentities = {
         { name: "Falcon0", pos: { x: 21, y: 9 }, isRow: true, visible: false, solid: false, interact: Cutscene("falcon") },
         // Mandatory Enemies
         GetFellow("BVRobo", 22, 36, 3, "Robo2", Cutscene("enemy"), undefined, requiredEnemyMetadata.robo2)
+    ],
+    "molehome": () => [
+        // Map Switching
+        SwitchMap("ExitCave", 8, 1, false, false, 21.5, 25, "belowvillage"),
+        // Foreground
+        GetForeground("molehome", 0, 1088),
+        // The Rest
+        GetFellow("Mole", 12, 4, 0, "Mole", Cutscene("mole"), undefined, { moveToTalk: true }),
+        GetFellow("TV", 10, 4, 0, "TV", OneSpeak("moletv"), undefined, { moving: true }),
+        InvisFellow("Fridge", 10, 8, "moleFridge"),
+        { name: "Book", pos: { x: 3, y: 13 },  visible: false, solid: true, interact: Cutscene("molebook") }
     ],
     "researchfacility": function() {
 		const entities = [

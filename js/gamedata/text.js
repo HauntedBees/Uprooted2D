@@ -2326,6 +2326,140 @@ const fulltext = {
 		"en-us": "Baby: are you my mommy?", 
 		"type": "map"
 	},
+	// Area 3A: Mole Home
+	"moletv": {
+		"en-us": "The mole appears to be watching an 80s music video. I can hear him snickering behind me, saying that I'm being something-rolled by seeing this. Must be mole humor.", 
+		"type": "map"
+	},
+	"mole1": {
+		"en-us": "Gunk: Ah, a human who isn't backed up by a robot army. You must not be related to the others.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"mole2": {
+		"en-us": "Gunk: I'm Gunk the mole. Ever since all those robots moved in up there, I haven't been able to leave my cave!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"mole3": {
+		"en-us": "Gunk: Usually I don't mind staying indoors, but I've got nothing but frozen pizza rolls left to eat, and even those get old after a few days.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"mole4": {
+		"en-us": "Gunk: But you look like someone who carries several bags of seeds for various crops around with her, so maybe you can help me out!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"mole5": {
+		"en-us": "Gunk: Will you make me some mushroom soup?", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleYes": {
+		"en-us": "Sure, I can help you!", 
+		"type": "choice"
+	},
+	"moleNo": {
+		"en-us": "No soup for you!", 
+		"type": "choice"
+	},
+	"moleMad": {
+		"en-us": "Gunk: Is that a \"Funny Nothing Man\" reference? You know, the TV show. About the man who isn't f--oh nevermind. Come back if you change your mind.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleMaybe": {
+		"en-us": "Gunk: Have you changed your mind? Will you make me some mushroom soup?", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleHappy1": {
+		"en-us": "Gunk: Hooray! Cooking is just like fighting - a statement that is true in this video game as well as in real life.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleHappy2": {
+		"en-us": "Gunk: Instead of planting crops in your field, you'll just place them in some cookware! And then instead of throwing them, you prepare them and give them to me!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleHappy3": {
+		"en-us": "Gunk: If you do it right, I'll reward you with all kinds of Farm Fixtures! If you don't know what those are yet, you might want to go back up north and check out the shops!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleHappy4": {
+		"en-us": "Gunk: Anyway, enough talk, make me some soup! I don't care what you put in it, as long as it has at least one mushroom in there, too!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookNope": {
+		"en-us": "Gunk: Don't want to soup me up after all? Oh well. Talk to me again if you change your mind.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookWrong1": {
+		"en-us": "Gunk: I am not a greedy man. I do not ask for much. All I wanted was mushroom soup.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookWrong2": {
+		"en-us": "Gunk: While I will not deny your soup-making prowess, I find the \"mushroom\" aspect sorely lacking.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookWrong3": {
+		"en-us": "Gunk: If you don't have any mushrooms, head up to the town and check the shops there. I'm sure someone is selling them, or willing to sell them if you help them!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookRight1": {
+		"en-us": "Gunk: I smell mushrooms! And I see soup! I think I can connect the dots here! Gimme gimme gimme!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookRight2": {
+		"en-us": "Gunk: Mmmmm... mushroom soup. Just like Momma Mole used to make!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookRight3": {
+		"en-us": "Gunk: Aside from naming me \"Gunk,\" she's a great mother. Maybe I should give her a call later. Tell her about the kind stranger who gave me soup.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookRight4": {
+		"en-us": "Gunk: Anyway, as promised, have some Mushroom Logs, Egg Incubators, and a couple Seed Shooters I stole from those robots up there!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookRight5": {
+		"en-us": "Gunk: Thanks again!", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleCookRight6": {
+		"en-us": "I got some farm fixtures. I can see what they are by checking my inventory.", 
+		"type": "map"
+	},
+	"moleVictory": {
+		"en-us": "Gunk: It ain't easy being a mole. Living underground... digging around... eating worms... sending intelligence back to the base without being caught... tough stuff.", 
+		"profile": "mole",
+		"type": "map"
+	},
+	"moleBook1": {
+		"en-us": "I wonder what kinds of books moles read...", 
+		"type": "map"
+	},
+	"moleBook2": {
+		"en-us": "\"Holy Guaca-MOLE-y and Other Clever Mole-based Wordplays\" by \"Andre MOLE-rales.\" That's a bit of a stretch.", 
+		"type": "map"
+	},
+	"moleFridge": {
+		"en-us": "The freezer contains nothing but frozen pizza rolls. The fridge is empty, save for a single half-empty bottle of clam juice.", 
+		"type": "map"
+	},
 	// Area 4: Research Lab
 	"research0": {
 		"en-us": "Robot: faculty only here. get out.", 
@@ -7849,6 +7983,10 @@ const fulltext = {
 	},
 	"map.researchfacility": {
 		"en-us": "Research Lab", 
+		"type": "opts"
+	},
+	"map.molehome": {
+		"en-us": "Gunk's Cave", 
 		"type": "opts"
 	},
 	"map.bridge": {

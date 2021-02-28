@@ -17,7 +17,7 @@ gulp.task("egg", function() {
     console.log("poop");
 });
 gulp.task("buildcollisions", function() {
-    fs.writeFile("js/worldmap/collisions.js", "const collisions = {\r\n");
+    fs.writeFileSync("js/worldmap/collisions.js", "const collisions = {\r\n");
     return gulp.src("./collision/*.png").pipe(foreach(function(stream, file) {
         var pathArr = file.path.split("\\");
         var len = pathArr.length;
@@ -37,7 +37,7 @@ gulp.task("buildcollisions", function() {
             }
             var str = JSON.stringify(res);
             str = str.replace(/(?:[^\,]*\,){500}/g, "$&\n");
-            fs.appendFile("js/worldmap/collisions.js", "\"" + name + "\": " + str + ", \r\n");
+            fs.appendFileSync("js/worldmap/collisions.js", "\"" + name + "\": " + str + ", \r\n");
         });
         return stream;
     }));

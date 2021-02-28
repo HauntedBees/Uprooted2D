@@ -327,6 +327,34 @@ const SpecialFunctions = {
     },
 
     // Challenges
+    "CHALMOLE": function() {
+        let score = 0;
+        const relevants = [
+            ["milkcap", 1],
+            ["shiitake", 1],
+            ["portobello", 1],
+            ["greenshroom", 1],
+            ["blackshroom", 1],
+            ["poisnshroom", 1],
+            ["notdrugs", 1]
+        ];
+        for(let i = 0; i < relevants.length; i++) {
+            const rel = relevants[i];
+            if(player.chingredients.indexOf(rel[0]) >= 0) { score += rel[1]; }
+        }
+        if(score > 0) {
+            game.target.anim = mafs["MoleSoup"].Get();
+            iHandler.state.idx = 5;
+            quests.completeQuest("mole");
+            worldmap.writeText("moleCookRight1");
+            player.increaseItem("_log", 3);
+            player.increaseItem("_coop", 3);
+            player.increaseItem("_shooter", 3);
+        } else {
+            iHandler.state.idx = 3;
+            worldmap.writeText("moleCookWrong1");
+        }
+    },
     "CHALCC": function() {
         let score = 0;
         const relevants = [

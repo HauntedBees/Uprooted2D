@@ -229,7 +229,11 @@ function CombatAnimHelper(enemies) {
         gfx.clearLayer("background");
         gfx.drawFullImage(mapBattleXref[worldmap.mapName] || "bgs/outside");
         if(combat.isChallenge) {
-            gfx.DrawChallengeGrid("challengeBG", combat.enemydx, combat.enemydy, "background");
+            let dx = 0;
+            switch(combat.challenger) {
+                case "mole": dx = 1; break;
+            }
+            gfx.DrawChallengeGrid("challengeBG", combat.enemydx, combat.enemydy, "background", dx);
         } else {
             if(["dirt", "nathan", "_strongsoil"].indexOf(combat.enemyTile) >= 0) { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight); }
             else if(combat.enemyTile === "watertile") { this.DrawWrapper(combat.enemydx, combat.enemydy, combat.enemywidth, combat.enemyheight, "wedge"); }

@@ -1,7 +1,7 @@
 let mapStates = {
     "producestand": {}, "farm": {}, "firstvillage": {}, "forest": {}, "belowvillage": {},
     "researchfacility": { rf: [false, false, false] }, 
-    "bridge": {}, "underwater": {}, 
+    "bridge": {}, "underwater": {}, "molehome": {}, 
     "fakefarm": { inside: false }, 
     "southcity": { inside: false }, 
     "northcity": { inside: false }, 
@@ -37,7 +37,7 @@ let stateBinders = {
 };
 let mapRefreshes = {
     "resetData": function(mapname, fromSave, justStateLoad) {
-        if(mapname === "cave") { return; }
+        if(mapname === "cave" || mapname === "molehome") { return; }
         const ents = mapStates[mapname].ents || {};
         const addtlFunc = mapRefreshes[mapname];
         if(fromSave) {
