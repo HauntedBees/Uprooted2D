@@ -664,7 +664,7 @@ const mapentities = {
             GetCSFellow("fuzurusenpai", 16.5, 16.25, 0, "Fuzuru", "ed"),
             GetFellow("fuzuruL", 16, 16, 0, "", Cutscene("apuru"), undefined, { visible: false, boring: true }),
             GetFellow("fuzuruR", 17, 16, 0, "", Cutscene("apuru"), undefined, { visible: false, boring: true }),
-            GetFellow("hungryboy", 14, 13, 0, "Hungy", Cutscene("hungy"), undefined, { moving: true }),
+            GetFellow("hungy", 14, 13, 0, "Hungy", Cutscene("hungy"), undefined, { moving: true }),
             GetFellow("hungyBinU", 14, 11, 0, "", Cutscene("hungyBin"), undefined, { visible: false, boring: true }),
             GetFellow("hungyBinB", 14, 12, 0, "", Cutscene("hungyBin"), undefined, { visible: false, boring: true }),
             // Misc. Entities

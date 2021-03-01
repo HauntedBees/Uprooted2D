@@ -447,6 +447,15 @@ const SpecialFunctions = {
             iHandler.state.done = true;
         }
     },
+    "CHALHUNG": function() {
+        quests.completeQuest("hungyboy");
+        worldmap.writeText("hungryBoyFed0");
+        player.increaseItem("_modulator", 1);
+        player.increaseItem("_shooter", 10);
+        player.increaseItem("_hotspot", 4);
+        player.increaseItem("_sprinkler", 10);
+        player.increaseItem("_charger", 1);
+    },
 
     // Forest
     "LIMESTART": function() {

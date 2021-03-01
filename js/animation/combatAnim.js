@@ -232,6 +232,7 @@ function CombatAnimHelper(enemies) {
             let dx = 0;
             switch(GetEnemy(combat.challenger).tile) {
                 case "pot": dx = 1; break;
+                case "pan": dx = 2; break;
             }
             gfx.DrawChallengeGrid("challengeBG", combat.enemydx, combat.enemydy, "background", dx);
         } else {

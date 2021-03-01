@@ -4570,7 +4570,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"capo1": {
-		"en-us": "Capo Mangia: Il mio nome e Capo Mangia. Ho bisogno di salsa di pomodoro. Marinara.", 
+		"en-us": "Capo Mangia: Mi chiamo Capo Mangia. Ho bisogno di salsa di pomodoro. Marinara.", 
 		"profile": "capo",
 		"type": "map"
 	},
@@ -5474,6 +5474,10 @@ const fulltext = {
 		"en-us": "JM (to you): What made you finally decide to get a smart phone? Nevermind, don't tell me! I want to hear it in person!", 
 		"type": "text"
 	},
+	"sistext3": {
+		"en-us": "JM (to you): Anyway, I'll ttyl (that means \"talk to you later\"), my shift's starting. Love you!! <3 <3 <3 <3", 
+		"type": "text"
+	},
 	// Area 9: Food2 Headquarters
 	"fuzuruStart": {
 		"en-us": "Marty: Hello this is the IT department how can I help you?", 
@@ -5567,11 +5571,95 @@ const fulltext = {
 		"type": "text"
 	},
 	"hungryBoy2": {
-		"en-us": "???: If you don't tell anyone about this, you can have some of my food, too. It'll be our little secret.", 
+		"en-us": "???: Can you whip me up something delicious? A stir fry? A scramble? Anything that is made from fresh ingredients and requires chewing!", 
 		"profile": "hungy",
 		"type": "text"
 	},
-	"hungryBoy3": {
+	"hungryBoyYes": {
+		"en-us": "I'll whip something up for you!", 
+		"type": "choice"
+	},
+	"hungryBoyNo": {
+		"en-us": "Your employer wants me dead. I'll pass.", 
+		"type": "choice"
+	},
+	"hungryBoyReject": {
+		"en-us": "It doesn't look like he heard me; I think he immediately went back to eating as soon as I opened my mouth.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyAccept": {
+		"en-us": "He already went back to eating raw vegetables. I should make something fast before he finds any cassava in that bin.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyNothing": {
+		"en-us": "He stops eating for a moment to look inside the frying pan, but then goes back to eating when he notices it's empty.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyOffer2": {
+		"en-us": "Should I cook something for this starving nerd?", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyYes2": {
+		"en-us": "Sure.", 
+		"type": "choice"
+	},
+	"hungryBoyNo2": {
+		"en-us": "No way!", 
+		"type": "choice"
+	},
+	"hungryBoyReject2": {
+		"en-us": "He'll be fine with what he has here.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyAccept2": {
+		"en-us": "I should make something fast before he finds any cassava in that bin.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyFed0": {
+		"en-us": "The smell from my frying pan reaches his nostrils, and he floats toward it like a cartoon character.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyFed1": {
+		"en-us": "???: This smell... this is how food smells? I had forgotten after spending so much time here... Food2 just smells like wet chalk and pennies.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyFed2": {
+		"en-us": "???: You made this for me? Wow... good food for a good boy. Thhaaaankkkk youuuu? I think that's what you're supposed to say in situations like this.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyFed3": {
+		"en-us": "He swallows everything in one impressive gulp.", 
+		"type": "text"
+	},
+	"hungryBoyFed4": {
+		"en-us": "???: What are these... flavors? Savory... saltiness... sweetness... they're all coming back to me now!", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyFed5": {
+		"en-us": "???: I had forgotten such things existed. I want to upvote this food, and you, in real life! But alas, we don't have that technology yet.", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyFed6": {
+		"en-us": "???: Take these Farm Fixtures as a sort of \"real life upvote.\"", 
+		"profile": "hungy",
+		"type": "text"
+	},
+	"hungryBoyFed7": {
+		"en-us": "I got some farm fixtures. I can see what they are by checking my inventory.", 
+		"type": ""
+	},
+	"hungryBoyWon": {
 		"en-us": "The man does not look up from the pile of food in front of him as he continues homfing it down.", 
 		"profile": "hungy",
 		"type": "text"
