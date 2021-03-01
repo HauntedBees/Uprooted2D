@@ -8,10 +8,14 @@ const combat = {
     didHarvest: false, harvestChain: 0, 
     animHelper: null, isTree: false, isChallenge: false, challenger: "", 
     startBattle: function(enemies, skipTransition, isChallenge) {
-        Sounds.PlaySound("enterbattle");
         player.initGridDimensions();
         this.didHarvest = false;
         this.isChallenge = isChallenge || false;
+        if(this.isChallenge) {
+            Sounds.PlaySound("naptime");
+        } else {
+            Sounds.PlaySound("enterbattle");
+        }
         this.challenger = enemies[0];
         this.harvestChain = 0;
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);
