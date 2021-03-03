@@ -104,15 +104,15 @@ const OnionFuncs = {
         if(pungentScore >= 3) { perks.push("pungent"); }
         if(spicyScore >= 3) { perks.push("spicy"); }
 
-        if(springScore >= 6) { perks.push("spring"); }
-        if(summerScore >= 6) { perks.push("summer"); }
-        if(fallScore >= 6) { perks.push("autumn"); }
-        if(winterScore >= 6) { perks.push("winter"); }
-
         if(veggieScore >= 5) { perks.push("veggies"); }
         if(fruitScore >= 5) { perks.push("fruits"); }
         if(mushScore >= 5) { perks.push("mush"); }
         if(riceScore >= 5) { perks.push("rice"); }
+
+        if(springScore >= 6) { perks.push("spring"); }
+        if(summerScore >= 6) { perks.push("summer"); }
+        if(fallScore >= 6) { perks.push("autumn"); }
+        if(winterScore >= 6) { perks.push("winter"); }
 
         return perks.slice(0, 4);
     }

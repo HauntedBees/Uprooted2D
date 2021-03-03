@@ -1,8 +1,9 @@
 pausemenu.onion = {
     cursor: { x: 0, y: 0 }, inventoryWidth: 3, invDY: 1.5, cropDY: 10, cropDX: 0.5, animHelper: null, 
     layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
-    actualIndexes: [], selectedCrop: -1, trashInfo: [], trashIdx: 0,
-    backStartX: 0, backButtonW: 0, lastX: 0, lastY: 0,
+    actualIndexes: [], selectedCrop: -1, backStartX: 0, backButtonW: 0, lastX: 0, lastY: 0, 
+    animIdx: 0, animX: 0, animY: 0, animFrame: false, halfLength: true, lastAnim: false, animReset: 0,
+    onionX: 125, onionY: 84,
     setup: function() {
         this.cursor = { x: 0, y: 0 };
         this.cursors = new CursorAnimSet([
@@ -18,6 +19,10 @@ pausemenu.onion = {
         this.backButtonW = gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, false);
         this.DrawAll();
         this.cursors.Start();
+        this.halfLength = true;
+        this.lastAnim = false;
+        this.animIdx = setInterval(() => this.OnionAnim(), 200);
+        this.OnionAnim(true);
     },
     DrawAll: function(customMessage) {
         gfx.clearSome(this.layersToClear);
@@ -58,7 +63,7 @@ pausemenu.onion = {
         for(let y = 0; y < player.onion.stomach.length; y++) {
             const food = player.onion.stomach[y];
             gfx.drawTileToGrid(food[0], this.cropDX + 14, this.invDY + 7 - y, "menuA");
-            gfx.drawItemNumber(food[1], this.cropDX + 14, this.invDY + 7 - y, "menuA");
+            gfx.drawItemNumber(food[1], this.cropDX + 14, this.invDY + 7 - y, "menuA", true);
         }
         
         pausemenu.DrawInnerHeading("onion.Heading");
@@ -68,7 +73,7 @@ pausemenu.onion = {
             const realx = x === 0 ? 0.5 : x;
             gfx.drawTileToGrid("onbgM", this.cropDX + 4 + realx, this.invDY, "menuA");
         }
-        gfx.drawTileToGrid("onbgR", this.cropDX + 4 + 5, this.invDY, "menuA");
+        gfx.drawTileToGrid("onbgR", this.cropDX + 9, this.invDY, "menuA");
         for(let i = 0; i < player.onion.perks.length; i++) {
             gfx.drawTileToGrid("o." + player.onion.perks[i], this.cropDX + 5 + i, this.invDY, "menuA");
         }
@@ -80,16 +85,12 @@ pausemenu.onion = {
         } else if(player.onion.mood < 3) {
             moodIco = "onsad";
         }
-        gfx.drawTileToGrid(moodIco, this.cropDX + 4, this.invDY, "menuA");
-
-        // TODO: the boy
-        const onionx = 125, oniony = 84;
-        gfx.DrawOnion(0, 0, onionx, oniony);
+        gfx.DrawHueRotated(gfx.ctx["menuA"], player.onion.hueRotate, () => gfx.drawTileToGrid(moodIco, this.cropDX + 4, this.invDY, "menuA"));
 
         if(this.actualIndexes.length === 0) { this.cursor = { x: 0, y: -1 }; }
-        
         gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, this.cursor.y < 0 && this.cursor.x === 0);
         
+        let fontSize = 28;
         if(this.cursor.y === -1) {
             const thisX = this.backStartX;
             const thisW = this.backButtonW;
@@ -98,21 +99,27 @@ pausemenu.onion = {
             this.cursors.RedimCursor("main", this.cursor.x + this.cropDX, this.cursor.y + this.invDY, 0, 0);
             const handSprite = this.selectedCrop < 0 ? "onhandopen" : "onhandgrab";
             gfx.drawTileToGrid(handSprite, this.cursor.x + this.cropDX + 0.5, this.cursor.y + this.invDY + 0.25, "tutorial");
-        } else { // do an else if for the stat (and tummy?) check
-            const oxp = onionx / 16 + 0.375, oyp = oniony / 16 + 1;
+        } else if(this.cursor.y === 0 && player.onion.perks.length > 0) {
+            const newX = this.cursor.x - this.inventoryWidth;
+            this.cursors.RedimCursor("main", this.cropDX + 5 + newX, this.invDY, 0, 0);
+            const perk = player.onion.perks[newX];
+            customMessage = GetText("perk." + perk + ".n") + " \n " + GetText("perk." + perk + ".d");
+            fontSize = 22;
+        } else {
+            if(player.onion.perks.length === 0 && this.cursor.y === 0) { this.cursor.y = 1; }
+            const oxp = this.onionX / 16 + 0.375, oyp = this.onionY / 16 + 1;
             this.cursors.RedimCursor("main", oxp, oyp, 1.5, 0.75);
             const handSprite = this.selectedCrop < 0 ? "onhandpet" : "onhandgrab";
             gfx.drawTileToGrid(handSprite, oxp + 0.75, oyp + 1, "tutorial");
         }
         
-        const textX = 76, textY = 12 + this.cropDY * 16;
+        const textX = 73, textY = 10 + this.cropDY * 16;
         gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 3, "", "FarmInfo");
         if(this.cursor.y >= 0) {
             if(this.cursor.x >= this.inventoryWidth) {
-                // TODO: stat/tummy check
                 let text = "";
                 if(customMessage) {
-                    text = GetText(customMessage);
+                    text = customMessage;
                 } else if(this.selectedCrop < 0) {
                     text = GetText("onion.pet");
                 } else {
@@ -121,8 +128,7 @@ pausemenu.onion = {
                     const crop = GetCrop(item[0]);
                     text = HandleArticles(GetText("onion.feed").replace(/\{0\}/g, crop.displayname), crop.displayname);
                 }
-
-                gfx.drawWrappedText(text, textX, textY, 170, undefined, undefined, 28);
+                gfx.drawWrappedText(text, textX, textY, 170, undefined, undefined, fontSize);
             } else {
                 this.SetCrop();
             }
@@ -130,8 +136,25 @@ pausemenu.onion = {
             gfx.drawWrappedText(GetText("inv.BackInfo"), textX, textY, 170, undefined, undefined, 28);
         }
     },
+    OnionAnim: function(force) {
+        if(this.halfLength && !force) {
+            this.lastAnim = !this.lastAnim;
+            if(this.lastAnim) { return; }
+        }
+        gfx.clearLayer("menuB");
+        
+        this.animFrame = !this.animFrame;
+        if(this.animReset > 0) {
+            if(--this.animReset === 0) {
+                this.animX = 0;
+                this.animY = 0;
+                this.halfLength = true;
+            }
+        }
+        gfx.DrawOnion(this.animX + (this.animFrame ? 1 : 0), this.animY, this.onionX, this.onionY, "menuB");
+    },
     clean: function() {
-        clearInterval(this.trashIdx);
+        clearInterval(this.animIdx);
         this.cursors.Perish();
         gfx.clearAll(true);
     },
@@ -191,9 +214,10 @@ pausemenu.onion = {
         this.CursorMove(dpos);
     },
     CursorMove: function(pos) {
-        if(pos.x < 0 || pos.y < -1 || pos.x > this.inventoryWidth) { return false; }
+        if(pos.x < 0 || pos.y < -1 || pos.x > (this.inventoryWidth + player.onion.perks.length)) { return false; }
+        if(player.onion.perks.length > 0 && pos.x >= (this.inventoryWidth + player.onion.perks.length)) { return false; }
         const idx = pos.y * this.inventoryWidth + pos.x;
-        if(idx >= this.actualIndexes.length) { return false; }
+        if(idx > this.actualIndexes.length) { return false; }
         if(SamePoints(this.cursor, pos)) { return false; }
         this.cursor = { x: pos.x, y: pos.y };
         Sounds.PlaySound("menuMove");
@@ -209,9 +233,9 @@ pausemenu.onion = {
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             const actIdx = this.actualIndexes[idx];
             if(this.cursor.x >= this.inventoryWidth) {
-                // TODO: poop anmd checking stats?
+                // TODO: poop
                 if(this.selectedCrop < 0) {
-                    // pet
+                    return this.Pet();
                 } else {
                     return this.Feed();
                 }
@@ -316,11 +340,22 @@ pausemenu.onion = {
         }
     },
 
+    Pet: function() {
+        player.onion.recentPets++;
+        if(player.onion.mood < 8) { player.onion.mood++; } 
+        this.animX = 0;
+        this.animY = 1;
+        this.animReset = 5;
+        OnionFuncs.Update();
+        Sounds.PlaySound("heal");
+        this.DrawAll(GetText("onion.petted"));
+        this.OnionAnim(true);
+    },
     Feed: function() {
         const cropName = player.inventory[this.selectedCrop][0];
         if(player.onion.stomach.length === 8) {
             Sounds.PlaySound("cancel");
-            this.DrawAll("onion.full");
+            this.DrawAll(GetText("onion.full"));
             return false;
         }
         player.decreaseItem(cropName);
@@ -334,7 +369,12 @@ pausemenu.onion = {
         }
         Sounds.PlaySound("homf");
         OnionFuncs.Update();
-        this.DrawAll("onion.fed");
+        this.DrawAll(GetText("onion.fed"));
+        this.animX = 2;
+        this.animY = 1;
+        this.animReset = 10;
+        this.halfLength = false;
+        this.OnionAnim(true);
         return true;
     }
 };

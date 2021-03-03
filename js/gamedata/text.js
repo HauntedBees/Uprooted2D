@@ -8082,6 +8082,10 @@ const fulltext = {
 		"en-us": "Pet Calsotte.", 
 		"type": "opts"
 	},
+	"onion.petted": {
+		"en-us": "Scritchy scritchy! Calsotte is in paradise!", 
+		"type": "opts"
+	},
 	"onion.full": {
 		"en-us": "Calsotte is too full to eat anything else.", 
 		"type": "opts"
@@ -8089,6 +8093,14 @@ const fulltext = {
 	"onion.fed": {
 		"en-us": "Yummy! Calsotte liked that!", 
 		"type": "opts"
+	},
+	"perk.stinky.n": {
+		"en-us": "Stinky", 
+		"type": "onion"
+	},
+	"perk.stinky.d": {
+		"en-us": "Start battles with 5% less HP.", 
+		"type": "onion"
 	},
 	"perk.loved.n": {
 		"en-us": "Loved", 
