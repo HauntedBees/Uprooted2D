@@ -8065,6 +8065,207 @@ const fulltext = {
 		"en-us": "This must be present on your Field and regularly filled with Sickle2 Batteries in order to use your Sickle2 effectively.", 
 		"type": "fixdesc"
 	},
+	// - Onion Menu
+	"menu.Onion": {
+		"en-us": "Calsotte", 
+		"type": "opts"
+	},
+	"onion.Heading": {
+		"en-us": "Calsotte", 
+		"type": "opts"
+	},
+	"onion.feed": {
+		"en-us": "Feed Calsotte{an} {0}.", 
+		"type": "opts"
+	},
+	"onion.pet": {
+		"en-us": "Pet Calsotte.", 
+		"type": "opts"
+	},
+	"onion.full": {
+		"en-us": "Calsotte is too full to eat anything else.", 
+		"type": "opts"
+	},
+	"onion.fed": {
+		"en-us": "Yummy! Calsotte liked that!", 
+		"type": "opts"
+	},
+	"perk.loved.n": {
+		"en-us": "Loved", 
+		"type": "onion"
+	},
+	"perk.loved.d": {
+		"en-us": "Start battles with an extra 10% HP.", 
+		"type": "onion"
+	},
+	"perk.gourmand.n": {
+		"en-us": "Gourmand", 
+		"type": "onion"
+	},
+	"perk.gourmand.d": {
+		"en-us": "Attack and Defense are increased by 50%.", 
+		"type": "onion"
+	},
+	"perk.spring.n": {
+		"en-us": "Spring into Action", 
+		"type": "onion"
+	},
+	"perk.spring.d": {
+		"en-us": "All crops that grow well in Spring do 25% more damage. All attacks in Spring do 10% more damage.", 
+		"type": "onion"
+	},
+	"perk.summer.n": {
+		"en-us": "Summertime Lovin'", 
+		"type": "onion"
+	},
+	"perk.summer.d": {
+		"en-us": "All crops that grow well in Summer do 25% more damage. All attacks in Summer do 10% more damage.", 
+		"type": "onion"
+	},
+	"perk.autumn.n": {
+		"en-us": "Autumn Breeze", 
+		"type": "onion"
+	},
+	"perk.autumn.d": {
+		"en-us": "All crops that grow well in Autumn do 25% more damage. All attacks in Autumn do 10% more damage.", 
+		"type": "onion"
+	},
+	"perk.winter.n": {
+		"en-us": "Hazy Shade of Winter", 
+		"type": "onion"
+	},
+	"perk.winter.d": {
+		"en-us": "All crops that grow well in Winter do 50% more damage. All attacks in Winter do 10% more damage.", 
+		"type": "onion"
+	},
+	"perk.pungent.n": {
+		"en-us": "Pungency", 
+		"type": "onion"
+	},
+	"perk.pungent.d": {
+		"en-us": "All attacks targeting enemy crops do twice as much damage.", 
+		"type": "onion"
+	},
+	"perk.veggies.n": {
+		"en-us": "Veggie Time", 
+		"type": "onion"
+	},
+	"perk.veggies.d": {
+		"en-us": "All vegetables do 50% more damage.", 
+		"type": "onion"
+	},
+	"perk.fruits.n": {
+		"en-us": "Fruity Tuity", 
+		"type": "onion"
+	},
+	"perk.fruits.d": {
+		"en-us": "All fruits do 30% more damage.", 
+		"type": "onion"
+	},
+	"perk.mush.n": {
+		"en-us": "Fungal Affection", 
+		"type": "onion"
+	},
+	"perk.mush.d": {
+		"en-us": "All mushrooms do 30% more damage.", 
+		"type": "onion"
+	},
+	"perk.rice.n": {
+		"en-us": "Dicey Rice", 
+		"type": "onion"
+	},
+	"perk.rice.d": {
+		"en-us": "All rice does 75% more damage.", 
+		"type": "onion"
+	},
+	"perk.fodder.n": {
+		"en-us": "Cowabunga", 
+		"type": "onion"
+	},
+	"perk.fodder.d": {
+		"en-us": "Milk from cows heals 200% more health.", 
+		"type": "onion"
+	},
+	"perk.wet.n": {
+		"en-us": "Thirst: Quenched", 
+		"type": "onion"
+	},
+	"perk.wet.d": {
+		"en-us": "Sprinklers, Watering Cans, Holy Water, and Holy Pitcher are twice as effective.", 
+		"type": "onion"
+	},
+	"perk.friedrice.n": {
+		"en-us": "Fried Rice", 
+		"type": "onion"
+	},
+	"perk.friedrice.d": {
+		"en-us": "Sickle attacks deal twice as much damage.", 
+		"type": "onion"
+	},
+	"perk.spicy.n": {
+		"en-us": "Spiciness", 
+		"type": "onion"
+	},
+	"perk.spicy.d": {
+		"en-us": "All attacks do 25% more damage.", 
+		"type": "onion"
+	},
+	"perk.sofrito.n": {
+		"en-us": "Sofrito", 
+		"type": "onion"
+	},
+	"perk.sofrito.d": {
+		"en-us": "All crops that grow well in Summer do twice as much damage.", 
+		"type": "onion"
+	},
+	"perk.protein.n": {
+		"en-us": "Protein Packed", 
+		"type": "onion"
+	},
+	"perk.protein.d": {
+		"en-us": "Defense is increased by 50%.", 
+		"type": "onion"
+	},
+	"perk.toxic.n": {
+		"en-us": "Toxic", 
+		"type": "onion"
+	},
+	"perk.toxic.d": {
+		"en-us": "Start battles with 50% less HP.", 
+		"type": "onion"
+	},
+	"perk.core.n": {
+		"en-us": "Hardened Core", 
+		"type": "onion"
+	},
+	"perk.core.d": {
+		"en-us": "Defense is increased by 25%.", 
+		"type": "onion"
+	},
+	"perk.italia.n": {
+		"en-us": "Mamma Mia", 
+		"type": "onion"
+	},
+	"perk.italia.d": {
+		"en-us": "Attacks against Italians are three times as effective.", 
+		"type": "onion"
+	},
+	"perk.stuffed.n": {
+		"en-us": "Stuffed", 
+		"type": "onion"
+	},
+	"perk.stuffed.d": {
+		"en-us": "You can't feed Calsotte anything else until they've made more room in their stomach!", 
+		"type": "onion"
+	},
+	"perk.wellfed.n": {
+		"en-us": "Well Fed", 
+		"type": "onion"
+	},
+	"perk.wellfed.d": {
+		"en-us": "Attack and Defense are increased by 15%.", 
+		"type": "onion"
+	},
 	// - Save Menu
 	"saveHeading": {
 		"en-us": "Save Game", 

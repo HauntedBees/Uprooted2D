@@ -153,6 +153,19 @@ const gfx = {
         const xmult = (isHalfTile === true ? 0.5 : 1);
         gfx.drawImage(gfx.ctx[layer], sheet, startX, startY, size * xmult, size, x, y, size * xmult, size);
     },
+    DrawOnion: function(sx, sy, x, y, layer) {
+        const sheet = gfx.spritesheets["calsotte"];
+        const w = 48, h = 42;
+        const startX = sx * w + sx * 2 + 1;
+        const startY = sy * h + sy * 2 + 1;
+        const ctx = gfx.ctx[layer || "tutorial"];
+        gfx.DrawHueRotated(ctx, player.onion.hueRotate, () => gfx.drawImage(ctx, sheet, startX, startY, w, h, x, y, w, h));
+    },
+    DrawHueRotated: function(ctx, hue, func) {
+        ctx.filter = "hue-rotate(" + hue + "deg)";
+        func();
+        ctx.filter = "none";
+    },
     DrawCombatWhatsit: function(sheet, sx, sy, dims, layer, dx, dy) {
         const pad = sheet === "combatPlayer" || sheet === "sheet" ? 0 : 1;
         const pad2 = pad * 2;
@@ -528,10 +541,10 @@ const gfx = {
         const relativeOffsetX = offset.x - chunkw * x, relativeOffsetY = offset.y - chunkh * y;
         gfx.drawImage(gfx.ctx["background"], mapImg, relativeOffsetX * 16, relativeOffsetY * 16, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
     },
-    drawFullImage: function(store, layer) {
+    drawFullImage: function(img, layer, x, y) {
         layer = layer || "background";
-        const storeImg = gfx.spritesheets[store];
-        gfx.drawImage(gfx.ctx[layer], storeImg, 0, 0, gfx.canvasWidth, gfx.canvasHeight, 0, 0, gfx.canvasWidth, gfx.canvasHeight);
+        const imgSheet = gfx.spritesheets[img];
+        gfx.drawImage(gfx.ctx[layer], imgSheet, 0, 0, gfx.canvasWidth, gfx.canvasHeight, x || 0, y || 0, gfx.canvasWidth, gfx.canvasHeight);
         return true;
     },
     drawImage: function(ctx, image, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH) {

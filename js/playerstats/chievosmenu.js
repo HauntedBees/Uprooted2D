@@ -39,7 +39,7 @@ pausemenu.chievos = {
             this.setText();
         }
     },
-    cancel: function() { game.innerTransition(this, pausemenu, 4); Sounds.PlaySound("cancel"); },
+    cancel: function() { game.innerTransition(this, pausemenu, player.onion ? 5 : 4); Sounds.PlaySound("cancel"); },
     mouseMove: function(pos) {
         const dpos = { x: (pos.x - this.achStartX) / this.achDX, y: (pos.y - this.achStartY) / this.achDX };
         if(dpos.y < -0.8) {

@@ -182,7 +182,7 @@ pausemenu.savemenu = {
             this.confirm = false;
             this.DrawAll();
         } else if(this.isSave) {
-            game.innerTransition(this, pausemenu, 5);
+            game.innerTransition(this, pausemenu, player.onion ? 6 : 5);
         } else {
             game.innerTransition(this, worldmap.title, 0);
         }

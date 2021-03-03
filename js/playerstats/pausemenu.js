@@ -45,14 +45,16 @@ const pausemenu = {
         const rowYs = [10, 10.75];
         pausemenu.options = [];
 
-        pausemenu.drawOption("menu.Items", 0, pausemenu.cursorY === 0 && !pausemenu.inNoFun);
-        pausemenu.drawOption("menu.Equipment", 1, pausemenu.cursorY === 1);
-        pausemenu.drawOption("menu.Farm", 2, pausemenu.cursorY === 2);
-        pausemenu.drawOption("menu.Options", 3, pausemenu.cursorY === 3);
-        pausemenu.drawOption("menu.Achievements", 4, pausemenu.cursorY === 4);
-        pausemenu.drawOption("menu.Save", 5, pausemenu.cursorY === 5);
-        pausemenu.drawOption("menu.Back", 6, pausemenu.cursorY === 6);
-        pausemenu.drawOption("menu.Quit", 7, pausemenu.cursorY === 7);
+        let cursorY = 0;
+        pausemenu.drawOption("menu.Items", cursorY, pausemenu.cursorY === cursorY && !pausemenu.inNoFun);
+        pausemenu.drawOption("menu.Equipment", ++cursorY, pausemenu.cursorY === cursorY);
+        pausemenu.drawOption("menu.Farm", ++cursorY, pausemenu.cursorY === cursorY);
+        if(player.onion) { pausemenu.drawOption("menu.Onion", ++cursorY, pausemenu.cursorY === cursorY); }
+        pausemenu.drawOption("menu.Options", ++cursorY, pausemenu.cursorY === cursorY);
+        pausemenu.drawOption("menu.Achievements", ++cursorY, pausemenu.cursorY === cursorY);
+        pausemenu.drawOption("menu.Save", ++cursorY, pausemenu.cursorY === cursorY);
+        pausemenu.drawOption("menu.Back", ++cursorY, pausemenu.cursorY === cursorY);
+        pausemenu.drawOption("menu.Quit", ++cursorY, pausemenu.cursorY === cursorY);
         if(pausemenu.inNoFun) {
             gfx.drawRightOption(GetText("noFunInner"), 0);
         } else {
@@ -263,15 +265,17 @@ const pausemenu = {
                 return false;
             }
         }
-        switch(cursorPos.y) {
+        const calculatedCursorPos = (!player.onion && cursorPos.y >= 3) ? (cursorPos.y + 1) : cursorPos.y;
+        switch(calculatedCursorPos) {
             case 0: game.innerTransition(this, pausemenu.inventory); break;
             case 1: game.innerTransition(this, pausemenu.equipment); break;
             case 2: game.innerTransition(this, pausemenu.farmmod); break;
-            case 3: game.innerTransition(this, worldmap.optionsMenu, true); break;
-            case 4: game.innerTransition(this, pausemenu.chievos); break;
-            case 5: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
-            case 6: this.cancel(); break;
-            case 7: this.TryQuit(); break;
+            case 3: game.innerTransition(this, pausemenu.onion); break;
+            case 4: game.innerTransition(this, worldmap.optionsMenu, true); break;
+            case 5: game.innerTransition(this, pausemenu.chievos); break;
+            case 6: game.innerTransition(this, pausemenu.savemenu, { saving: true }); break;
+            case 7: this.cancel(); break;
+            case 8: this.TryQuit(); break;
             default:
                 Sounds.PlaySound("confirm");
                 this.ShowInfo("info" + (player.ethicsAxis >= 0 ? "Good" : "Bad") + (player.techAxis <= 0 ? "Nature" : "Tech"));
@@ -281,7 +285,7 @@ const pausemenu = {
         return true;
     },
     ShowInfo: function(key) { 
-        gfx.drawInfobox(17, 2.25, 8, "menuA", "FarmInfo");
+        gfx.drawInfobox(17, 2.25, 8, "menutext", "FarmInfo");
         gfx.drawWrappedText(GetText(key), 5, 140, 250);
     },
     TryQuit: function() {

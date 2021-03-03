@@ -469,7 +469,7 @@ worldmap.optionsMenu = {
         if(!dontFont) { player.options.font = worldmap.optionsMenu.origFont; Sounds.PlaySound("cancel", true); }
         worldmap.optionsMenu.DrawColorPreview(true);
         if(worldmap.optionsMenu.fromPause) {
-            game.innerTransition(worldmap.optionsMenu, pausemenu, 3);
+            game.innerTransition(worldmap.optionsMenu, pausemenu, player.onion ? 4 : 3);
         } else {
             game.innerTransition(worldmap.optionsMenu, worldmap.title, 2);
         }

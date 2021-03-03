@@ -13,6 +13,7 @@ uglifyjs ^
     js/gamedata/quests.js ^
     js/gamedata/spritedata.js ^
     js/gamedata/misc.js ^
+    js/gamedata/onion.js ^
     js/textHelpers.js ^
     js/gamedata/text.js ^
     js/gamedata/cutscenes.js ^
@@ -63,6 +64,7 @@ uglifyjs ^
     js/playerstats/pausemenu.js ^
     js/playerstats/noFun.js ^
     js/playerstats/recap.js ^
+    js/playerstats/onionmenu.js ^
     js/playerstats/chievosmenu.js ^
     js/playerstats/viewinventory.js ^
     js/playerstats/equipment.js ^

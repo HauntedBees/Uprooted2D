@@ -128,6 +128,9 @@ if(noArgs || HasArg("mapChar")) {
 if(noArgs || HasArg("challenge")) {
     RipImage("challengeBG");
 }
+if(noArgs || HasArg("onion")) {
+    RipImage("calsotte");
+}
 if(filters || HasArg("hqx")) {
     console.log("TODO");
 }
