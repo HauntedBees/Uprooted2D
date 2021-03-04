@@ -84,10 +84,12 @@ const OnionFuncs = {
                 case "moist": hasWet = true; break;
             }
 
-            springScore += food.seasons[0];
-            summerScore += food.seasons[1];
-            fallScore += food.seasons[2];
-            winterScore += food.seasons[3];
+            if(food.type !== "moist") {
+                springScore += food.seasons[0];
+                summerScore += food.seasons[1];
+                fallScore += food.seasons[2];
+                winterScore += food.seasons[3];
+            }
         }
         if(isExistential) { perks.push("crisis"); }
         if(hasToxic) { perks.push("toxic"); return perks; }

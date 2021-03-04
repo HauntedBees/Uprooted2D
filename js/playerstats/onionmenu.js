@@ -103,6 +103,7 @@ pausemenu.onion = {
             const newX = this.cursor.x - this.inventoryWidth;
             this.cursors.RedimCursor("main", this.cropDX + 5 + newX, this.invDY, 0, 0);
             const perk = player.onion.perks[newX];
+            this.HighlightRelevantStomachItems(perk);
             customMessage = GetText("perk." + perk + ".n") + " \n " + GetText("perk." + perk + ".d");
             fontSize = 22;
         } else {
@@ -134,6 +135,40 @@ pausemenu.onion = {
             }
         } else {
             gfx.drawWrappedText(GetText("inv.BackInfo"), textX, textY, 170, undefined, undefined, 28);
+        }
+    },
+    HighlightRelevantStomachItems(perk) {
+        const relevantItems = [];
+        switch(perk) {
+            case "gourmand": relevantItems.push("coconut", "gmocorn", "goodfood", "notdrugs", "lotus", "saffron"); break;
+            case "spring": relevantItems.push("asparagus", "carrot", "garlic", "radish", "apricot", "avocado", "shortgrain", "lotus", "saffron"); break;
+            case "summer": relevantItems.push("corn", "pineapple", "tomato", "avocado", "blackberry", "kiwi", "lemon", "mango", "coconut", "lotus", "saffron"); break;
+            case "autumn": relevantItems.push("beet", "bellpepper", "carrot", "ginger", "spinach", "apple", "grapes", "notdrugs", "saffron"); break;
+            case "winter": relevantItems.push("beet", "leek", "chestnut", "gmocorn", "saffron"); break;
+            case "pungent": relevantItems.push("garlic", "ginger", "asparagus"); break;
+            case "veggies": relevantItems.push("asparagus", "beet", "bellpepper", "carrot", "corn", "garlic", "ginger", "leek", "pineapple", "radish", "rhubarb", "spinach", "tomato", "gmocorn", "saffron"); break;
+            case "fruits": relevantItems.push("coconut", "apple", "apricot", "avocado", "banana", "blackberry", "grapes", "kiwi", "lemon", "mango"); break;
+            case "mush": relevantItems.push("shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "notdrugs"); break;
+            case "rice": relevantItems.push("rice", "arborio", "blackrice", "shortgrain", "chestnut", "lotus"); break;
+            case "fodder": relevantItems.push("fodder", "goodfood"); break;
+            case "wet": relevantItems.push("holywater", "holyjug"); break;
+            case "friedrice": relevantItems.push("garlic", "ginger", "rice", "arborio", "blackrice", "shortgrain", "chestnut", "lotus"); break;
+            case "spicy": relevantItems.push("bellpepper", "garlic", "rhubarb"); break;
+            case "sofrito": relevantItems.push("garlic", "leek", "bellpepper", "tomato"); break;
+            case "protein": relevantItems.push("asparagus", "avocado", "spinach"); break;
+            case "toxic": relevantItems.push("poisnshroom"); break;
+            case "core": relevantItems.push("apricot", "avocado"); break;
+            case "italia": relevantItems.push("garlic", "carrot", "tomato", "shiitake", "milkcap", "portobello", "greenshroom", "blackshroom", "poisnshroom", "notdrugs"); break;
+            case "allberries": relevantItems.push("tomato", "grapes", "banana", "blackberry", "avocado"); break;
+            case "crisis": relevantItems.push("leek"); break;
+        }
+        if(relevantItems.length === 0) { return; }
+        
+        for(let y = 0; y < player.onion.stomach.length; y++) {
+            const food = player.onion.stomach[y];
+            if(relevantItems.indexOf(food[0]) >= 0) {
+                gfx.DrawXCursor(this.cropDX + 14, this.invDY + 7 - y, 0, 0, "menuA");
+            }
         }
     },
     OnionAnim: function(force) {

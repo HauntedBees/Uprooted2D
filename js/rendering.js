@@ -223,8 +223,8 @@ const gfx = {
         gfx.drawTileToGrid(cursorName + frame + "." + "2", x, y + h, layer);
         gfx.drawTileToGrid(cursorName + frame + "." + "3", x + w, y + h, layer);
     },
-    DrawXCursor: function(x, y, w, h) {
-        const layer = "menucursorB";
+    DrawXCursor: function(x, y, w, h, layer) {
+        layer = layer || "menucursorB";
         gfx.drawTileToGrid("xcursor0.0", x, y, layer);
         gfx.drawTileToGrid("xcursor0.1", x + w, y, layer);
         gfx.drawTileToGrid("xcursor0.2", x, y + h, layer);
