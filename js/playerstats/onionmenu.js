@@ -396,8 +396,8 @@ pausemenu.onion = {
         player.decreaseItem(cropName);
         if(!player.hasItem(cropName)) { this.selectedCrop = -1; }
         const crop = GetCrop(cropName);
-        const mult = Math.ceil(10 / crop.power);
-        const duration = Math.ceil(crop.time * mult * 0.85);
+        const mult = Math.ceil(8 / crop.power);
+        const duration = Math.min(10, Math.ceil(Math.min(15, crop.time) * mult * 0.25));
         player.onion.stomach.push([cropName, duration]);
         if(player.onion.stomach.length < 8) {
             player.onion.mood = Math.min(10, player.onion.mood + 1);
