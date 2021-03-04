@@ -388,7 +388,6 @@ const animCallbacks = {
 };
 const animCallbackHelpers = {
     "StickSomeFriends": function(animProcess, targets, stickTargets) {
-        console.log("sup");
         if(stickTargets === undefined || stickTargets === null || stickTargets.length === 0) { return; }
         for(let i = 0; i < stickTargets.length; i++) {
             const targ = targets[stickTargets[i]];

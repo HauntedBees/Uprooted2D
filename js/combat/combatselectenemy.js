@@ -309,6 +309,10 @@ combat.selectTarget = {
 
                 let finalDamage = attackData.damage;
                 if(target.addtlHitCheck !== undefined) { finalDamage = addtlHitChecks[target.addtlHitCheck](attackData.crops, finalDamage); }
+                console.log(target);
+                if(player.onion && player.onion.perks.indexOf("italia") >= 0 && ["mrbruno", "mobsty1", "mobsty2", "mobBoss", "kelpBoy", "coffeeNerd", "botMush"].indexOf(target.id) >= 0) {
+                    finalDamage *= 3;
+                }
                 avgDamage += finalDamage;
                 combat.damageEnemy(targetidx, finalDamage);
                 if(target.health <= 0) { kills.push(targetidx); }
@@ -387,10 +391,10 @@ combat.selectTarget = {
                 targetParams.push(combat.enemyGrid[x][y]);
             }
         }
-        if(myCrops.length === 0) { return dmgCalcs.MeleeAttack(true, combat.season, player.atk, targetParams, -1); }
+        if(myCrops.length === 0) { return dmgCalcs.MeleeAttack(true, combat.season, player.GetAttack(true), targetParams, -1); }
         else {
             if(myCrops.length >= 20) { AddAchievementIfMissing("biglaunch"); }
-            return dmgCalcs.CropAttack(true, combat.season, player.atk, myCrops, targetParams, -1);
+            return dmgCalcs.CropAttack(true, combat.season, player.GetAttack(false), myCrops, targetParams, -1);
         }
     },
     GetDamageText: function(criticalHit, hasAnimals, hasRecoil, kills, hasDestroys, stunningEnemies, isFalcon, damage, target, multipleTargets, selfHarm) {

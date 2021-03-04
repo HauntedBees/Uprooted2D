@@ -59,10 +59,10 @@ combat.compost = {
         // Get Power of Compost
         let hdmg = 0, admg = 0;
         if(this.selectedCrops.length > 0) {
-            let results = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, false, true);
+            let results = dmgCalcs.CompostFunc(true, combat.season, player.GetAttack(false), this.selectedCrops, false, true);
             hdmg = Math.ceil(results.total * this.compostMultiplier);
             if(this.canAttack) {
-                results = dmgCalcs.CompostFunc(true, combat.season, player.atk, this.selectedCrops, true, true);
+                results = dmgCalcs.CompostFunc(true, combat.season, player.GetAttack(false), this.selectedCrops, true, true);
                 admg = Math.ceil(this.compostMultiplier * results.total / 3.5);
             }
         }

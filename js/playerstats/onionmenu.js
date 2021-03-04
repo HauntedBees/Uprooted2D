@@ -69,11 +69,11 @@ pausemenu.onion = {
         pausemenu.DrawInnerHeading("onion.Heading");
 
         // perks
-        for(let x = 0; x < 5; x++) {
+        for(let x = 0; x < 6; x++) {
             const realx = x === 0 ? 0.5 : x;
             gfx.drawTileToGrid("onbgM", this.cropDX + 4 + realx, this.invDY, "menuA");
         }
-        gfx.drawTileToGrid("onbgR", this.cropDX + 9, this.invDY, "menuA");
+        gfx.drawTileToGrid("onbgR", this.cropDX + 10, this.invDY, "menuA");
         for(let i = 0; i < player.onion.perks.length; i++) {
             gfx.drawTileToGrid("o." + player.onion.perks[i], this.cropDX + 5 + i, this.invDY, "menuA");
         }

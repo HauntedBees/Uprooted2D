@@ -197,17 +197,36 @@ let player = {
     getCropSpeedMultiplier: function() {
         if(this.equipment.soil === null) { return 1; }
         const equipInfo = GetEquipment(this.equipment.soil);
-        return (equipInfo.speed + 1);
+        return (equipInfo.speed + 1) * (player.HasWetPerk() ? 2 : 1);
     },
+    HasWetPerk: function() { return player.onion && player.onion.perks.indexOf("wet") >= 0; },
     getPlantingTurns: function() {
-        if(this.equipment.gloves === null) { return 1; }
+        const bonusAmount = player.onion ? (player.onion.perks.indexOf("allberries") >= 0 ? 2 : 0) : 0;
+        if(this.equipment.gloves === null) { return 1 + bonusAmount; }
         const equipInfo = GetEquipment(this.equipment.gloves);
-        return equipInfo.amount;
+        return equipInfo.amount + bonusAmount;
     },
     canAttackWithCompost: function() {
         if(this.equipment.compost === null) { return false; }
         const equipInfo = GetEquipment(this.equipment.compost);
         return equipInfo.canAttack;
+    },
+    GetAttack: function(isMelee) {
+        let baseAtk = player.atk;
+        if(!player.onion) { return baseAtk; }
+        const perks = player.onion.perks;
+        if(perks.indexOf("spicy") >= 0) { baseAtk *= 1.25; }
+        if(perks.indexOf("gourmand") >= 0) { baseAtk *= 1.5; }
+        if(isMelee && perks.indexOf("friedrice") >= 0) { baseAtk *= 2; }
+        return baseAtk;
+    },
+    GetDefense: function() {
+        let baseDef = player.def;
+        if(!player.onion) { return baseDef; }
+        const perks = player.onion.perks;
+        if(perks.indexOf("protein") >= 0) { baseDef *= 1.5; }
+        if(perks.indexOf("gourmand") >= 0) { baseDef *= 1.5; }
+        return baseDef;
     },
     canSickleCrops: function() {
         if(this.equipment.weapon === null) { return false; }

@@ -16,6 +16,13 @@ const combat = {
         } else {
             Sounds.PlaySound("enterbattle");
         }
+        if(player.onion) {
+            const perks = player.onion.perks;
+            if(perks.indexOf("stinky") >= 0) { player.health *= 0.95; }
+            if(perks.indexOf("loved") >= 0) { player.health *= 1.1; }
+            if(perks.indexOf("toxic") >= 0) { player.health *= 0.5; }
+            player.health = Math.round(player.health);
+        }
         this.challenger = enemies[0];
         this.harvestChain = 0;
         this.grid = this.getGrid(player.gridWidth, player.gridHeight);

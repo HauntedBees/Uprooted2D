@@ -125,7 +125,7 @@ combat.plant = {
         if(this.isSprinkler(x + 1, y)) { mult -= 0.2; }
         if(this.isSprinkler(x + 1, y + 1)) { mult -= 0.1; }
         mult = Math.max(mult, 0.33);
-        if(mult < 1) { return mult; }
+        if(mult < 1) { return mult * (player.HasWetPerk() ? 0.5 : 1); }
         if(size === 1) {
             let cornerMult = this.getSprinklerMultiplier(x + 1, y);
             if(cornerMult < 1) { return cornerMult; }
@@ -406,7 +406,7 @@ combat.plant = {
                 if(!wet.ignore && wet.x === x & wet.y === y) { return { ignore: true }; }
             }
         }
-        crop.activeTime -= power;
+        crop.activeTime -= power * (player.HasWetPerk() ? 2 : 1);
         if(crop.activeTime <= 0) {
             crop.activeTime = 0;
             crop.health = crop.maxhealth;
@@ -625,7 +625,7 @@ combat.plant = {
                 for(let i = 0; i < combat.happyCows.length; i++) {
                     const cow = combat.happyCows[i];
                     if(cow.x === x && cow.y === y) {
-                        amt = Math.ceil(dmgCalcs.CompostFunc(true, combat.season, player.atk, [{ cow: i }], false, true).total * mult);
+                        amt = Math.ceil(dmgCalcs.CompostFunc(true, combat.season, player.GetAttack(false), [{ cow: i }], false, true).total * mult);
                         break;
                     }
                 }

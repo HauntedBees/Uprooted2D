@@ -8115,7 +8115,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.gourmand.d": {
-		"en-us": "Attack and Defense are increased by 50%.", 
+		"en-us": "Base Attack and Defense are increased by 50%.", 
 		"type": "onion"
 	},
 	"perk.spring.n": {
@@ -8123,7 +8123,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.spring.d": {
-		"en-us": "All crops that grow well in Spring do 25% more damage. All attacks in Spring do 10% more damage.", 
+		"en-us": "All crops that grow well in Spring do 25% more base damage. All attacks in Spring do 10% more base damage.", 
 		"type": "onion"
 	},
 	"perk.summer.n": {
@@ -8131,7 +8131,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.summer.d": {
-		"en-us": "All crops that grow well in Summer do 25% more damage. All attacks in Summer do 10% more damage.", 
+		"en-us": "All crops that grow well in Summer do 25% more base damage. All attacks in Summer do 10% more base damage.", 
 		"type": "onion"
 	},
 	"perk.autumn.n": {
@@ -8139,7 +8139,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.autumn.d": {
-		"en-us": "All crops that grow well in Autumn do 25% more damage. All attacks in Autumn do 10% more damage.", 
+		"en-us": "All crops that grow well in Autumn do 25% more base damage. All attacks in Autumn do 10% more base damage.", 
 		"type": "onion"
 	},
 	"perk.winter.n": {
@@ -8147,7 +8147,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.winter.d": {
-		"en-us": "All crops that grow well in Winter do 50% more damage. All attacks in Winter do 10% more damage.", 
+		"en-us": "All crops that grow well in Winter do 50% more base damage. All attacks in Winter do 10% more base damage.", 
 		"type": "onion"
 	},
 	"perk.pungent.n": {
@@ -8155,7 +8155,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.pungent.d": {
-		"en-us": "All attacks targeting enemy crops do twice as much damage.", 
+		"en-us": "All attacks targeting enemy crops do twice as much base damage.", 
 		"type": "onion"
 	},
 	"perk.veggies.n": {
@@ -8211,7 +8211,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.friedrice.d": {
-		"en-us": "Sickle attacks deal twice as much damage.", 
+		"en-us": "Melee Attacks deal twice as much base damage.", 
 		"type": "onion"
 	},
 	"perk.spicy.n": {
@@ -8219,7 +8219,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.spicy.d": {
-		"en-us": "All attacks do 25% more damage.", 
+		"en-us": "All attacks do 25% more base damage.", 
 		"type": "onion"
 	},
 	"perk.sofrito.n": {
@@ -8251,7 +8251,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.core.d": {
-		"en-us": "Defense is increased by 25%.", 
+		"en-us": "Crop Defense is increased by 100%.", 
 		"type": "onion"
 	},
 	"perk.italia.n": {
@@ -8267,7 +8267,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.stuffed.d": {
-		"en-us": "You can't feed Calsotte anything else until they've made more room in their stomach!", 
+		"en-us": "I can't feed Calsotte anything else until they've made more room in their stomach!", 
 		"type": "onion"
 	},
 	"perk.wellfed.n": {
@@ -8275,7 +8275,23 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.wellfed.d": {
-		"en-us": "Attack and Defense are increased by 15%.", 
+		"en-us": "Composting recovers 50% more health.", 
+		"type": "onion"
+	},
+	"perk.allberries.n": {
+		"en-us": "Oops! All Berries!", 
+		"type": "onion"
+	},
+	"perk.allberries.d": {
+		"en-us": "I can plant up to two more crops per turn.", 
+		"type": "onion"
+	},
+	"perk.crisis.n": {
+		"en-us": "Existential Crisis", 
+		"type": "onion"
+	},
+	"perk.crisis.d": {
+		"en-us": "I probably shouldn't have fed a leek to a genetically engineered leek/amphibian hybrid.", 
 		"type": "onion"
 	},
 	// - Save Menu
@@ -8927,7 +8943,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"combatSkip": {
-		"en-us": "Pass", 
+		"en-us": "End", 
 		"type": "combat"
 	},
 	"combatSurrender": {

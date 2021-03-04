@@ -10,7 +10,7 @@ function AttackData(approximateDamage, isCritical, stunLength, crops, knockback)
 }
 const dmgCalcs = {
     GetPlayerCombatDefense: function() {
-        let d = player.def;
+        let d = player.GetDefense();
         for(let x = 0; x < player.gridWidth; x++) {
             for(let y = 0; y < player.gridHeight; y++) {
                 const tile = combat.grid[x][y]
@@ -18,7 +18,7 @@ const dmgCalcs = {
                 d += tile.power / 5;
             }
         }
-        return Math.min(Math.round(d), player.def * 3);
+        return Math.min(Math.round(d), player.GetDefense() * 3);
     },
     GetNerfs: function() {
         if(combat.enemies[0].id !== "beckett") { return []; }
@@ -52,11 +52,14 @@ const dmgCalcs = {
         }
         return nerfMult;
     },
-    CropToDef: function(crop, season, attackElements) {
+    CropToDef: function(crop, season, attackElements, isPlayer) {
         let cropDef = crop.defense;
         switch(crop.seasons[season]) {
             case 2: cropDef *= 2; break;
             case 0: cropDef /= 3; break;
+        }
+        if(isPlayer && player.onion && player.onion.perks.indexOf("core") >= 0) {
+            cropDef *= 2;
         }
         for(let i = 0; i < attackElements.length; i++) {
             const attackElement = attackElements[i];
@@ -71,17 +74,18 @@ const dmgCalcs = {
 
     MeleeAttack: function(isPlayer, season, myAtk, targets, attackElements) {
         if(attackElements === undefined) { attackElements = [-1]; }
-        var formattedDefs = [];
-        for(var i = 0; i < targets.length; i++) {
+        const formattedDefs = [], cropIdxes = [], isPungent = (player.onion && player.onion.perks.indexOf("pungent") >= 0 && isPlayer);
+        for(let i = 0; i < targets.length; i++) {
             if(targets[i].name === undefined) { // enemy; value is just an integer for their defense
                 formattedDefs.push(targets[i]);
             } else { // crop; value is a crop object
-                formattedDefs.push(dmgCalcs.CropToDef(targets[i], season, attackElements));
+                formattedDefs.push(dmgCalcs.CropToDef(targets[i], season, attackElements, isPlayer));
+                if(isPungent) { cropIdxes.push(i); }
             }
         }
-        return dmgCalcs.MeleeInner(isPlayer, season, myAtk, formattedDefs);
+        return dmgCalcs.MeleeInner(isPlayer, season, myAtk, formattedDefs, cropIdxes);
     },
-    MeleeInner: function(isPlayer, season, myAtk, theirDef) {
+    MeleeInner: function(isPlayer, season, myAtk, theirDef, cropIdxes) {
         const isCritical = (Math.random() < (player.luck - 0.69));
         let atkVal = myAtk;
         const hasWeapon = isPlayer && player.equipment.weapon !== null;
@@ -98,7 +102,7 @@ const dmgCalcs = {
         for(let i = 0; i < theirDef.length; i++) {
             let finalDamage = atkVal - (isCritical ? 0 : (theirDef[i] / 2.2));
             if(hasWeapon) { finalDamage -= (isCritical ? 0 : (theirDef[i] / 4)); }
-            finalDamage /= 2;
+            if(cropIdxes.indexOf(i) < 0) { finalDamage /= 2; }
             attacksArr.push(new AttackData(finalDamage, isCritical));
         }
         console.log(attacksArr);
@@ -109,22 +113,40 @@ const dmgCalcs = {
 
     CropAttack: function(isPlayer, season, myAtk, myCrops, targets, attackElements) {
         if(attackElements === undefined || attackElements === -1) { attackElements = [-1]; }
-        let formattedDefs = [];
+        let formattedDefs = [], cropIdxes = [], isPungent = (player.onion && player.onion.perks.indexOf("pungent") >= 0 && isPlayer);
         for(let i = 0; i < targets.length; i++) {
             if(targets[i].name === undefined) { // enemy; value is just an integer for their defense
                 formattedDefs.push(targets[i]);
             } else { // crop; value is a crop object
-                formattedDefs.push(dmgCalcs.CropToDef(targets[i], season, attackElements));
+                formattedDefs.push(dmgCalcs.CropToDef(targets[i], season, attackElements, isPlayer));
+                if(isPungent) { cropIdxes.push(i); }
             }
         }
-        return dmgCalcs.CropInner(isPlayer, season, myAtk, myCrops, formattedDefs);
+        return dmgCalcs.CropInner(isPlayer, season, myAtk, myCrops, formattedDefs, cropIdxes);
     },
-    CropInner: function(isPlayer, season, myAtk, myCrops, theirDef) {
+    CropInner: function(isPlayer, season, myAtk, myCrops, theirDef, cropIdxes) {
+        console.log([isPlayer, season, myAtk, myCrops, theirDef, cropIdxes]);
         const isCritical = isPlayer && (Math.random() < (player.luck - 0.69));
         const hasShockGloves = isPlayer && player.equipment.gloves !== null && GetEquipment(player.equipment.gloves).tech;
         const nerfs = dmgCalcs.GetNerfs(), modAtk = Math.log10(5 + myAtk * myAtk);
         let totalDamage = 0, stunLength = 0, damageToAttacker = 0, hasAnimals = false;
         let recoilInfos = [], animInfos = [];
+
+        const finalMults = [1, 1, 1, 1], cropMults = [1, 1, 1, 1];
+        const typeMults = { veg: 1, tree: 1, bee: 1, rice: 1, spear: 1, rod: 1, water: 1, food: 1, mush: 1, egg: 1, tech: 1, sickle2: 1, moist: 1 };
+        if(isPlayer && player.onion) {
+            const perks = player.onion.perks;
+            if(perks.indexOf("spring") >= 0) { finalMults[0] *= 1.1; cropMults[0] *= 1.25; }
+            if(perks.indexOf("summer") >= 0) { finalMults[1] *= 1.1; cropMults[1] *= 1.25; }
+            if(perks.indexOf("sofrito") >= 0) { cropMults[1] *= 2; }
+            if(perks.indexOf("autumn") >= 0) { finalMults[2] *= 1.1; cropMults[2] *= 1.25; }
+            if(perks.indexOf("winter") >= 0) { finalMults[3] *= 1.1; cropMults[3] *= 1.5; }
+            if(perks.indexOf("veggies") >= 0) { typeMults["veg"] *= 1.5; }
+            if(perks.indexOf("fruits") >= 0) { typeMults["tree"] *= 1.3; }
+            if(perks.indexOf("mush") >= 0) { typeMults["mush"] *= 1.3; }
+            if(perks.indexOf("rice") >= 0) { typeMults["rice"] *= 1.75; }
+            if(perks.indexOf("fodder") >= 0) { typeMults["food"] *= 2; }
+        }
 
         for(let i = 0; i < myCrops.length; i++) {
             const crop = myCrops[i].crop;
@@ -160,6 +182,7 @@ const dmgCalcs = {
             } else if(crop.type === "tech") { pow -= 1; }
 
             let dmg = (modAtk * pow * pow * seasonVal * dmgCalcs.GetNerfMultiplier(crop, nerfs)) / 5;
+            
             if(crop.type === "rice") { dmg *= 1.5; }
             else if(crop.type === "tech") { dmg *= 2; }
             if(crop.name === "app") { dmg *= 2 / (crop.activeTime + 1); }
@@ -185,6 +208,10 @@ const dmgCalcs = {
                     if(power > 0) { recoilInfo = power * Math.max(3, dmg / 6 / combat.enemies.length); }
                 }
             }
+            for(let sn = 0; sn < 4; sn++) {
+                if(crop.seasons[sn] > 1) { dmg *= cropMults[sn]; }
+            }
+            dmg *= typeMults[crop.type];
             totalDamage += dmg;
             animInfos.push({ x: myCrops[i].x, y: myCrops[i].y, recoil: recoilInfo, animal: animal });
             recoilInfos.push(recoilInfo);
@@ -195,6 +222,8 @@ const dmgCalcs = {
             totalDamage *= 1 + Math.floor(myCrops.length / 6) / 10; // boost by number of crops (launch 10 crops to get 1.1x boost, 20 for 1.3x, 30 for 1.5x)
         }
         totalDamage += myAtk + (isPlayer ? 3 : 0);
+        totalDamage *= finalMults[season];
+
         if(isPlayer && combat.harvestChain > 0) {
             totalDamage *= Math.min(5, 1 + (combat.harvestChain / 4));
         }
@@ -203,6 +232,9 @@ const dmgCalcs = {
             let finalDamage = totalDamage;
             if(isPlayer) {
                 finalDamage = this.GetDefendedPlayerDamage(finalDamage, isCritical, theirDef[i]);
+                if(cropIdxes.indexOf(i) >= 0) {
+                    finalDamage *= 2;
+                }
             } else {
                 finalDamage -= theirDef[i] / 1.5;
             }
@@ -221,12 +253,19 @@ const dmgCalcs = {
         const baseMult = isAttack ? 0.5 : 1.25, modAtk = Math.log2(myAtk * myAtk * 0.15); // min atk is 3; log2(n) <= 0 where n <= 1; 3 * 3 * 0.15 = 1.35
         noAction = noAction || false;
 
+        let milkMult = 1, compostMult = 1;
+        if(isPlayer && player.onion) {
+            const perks = player.onion.perks;
+            if(perks.indexOf("fodder") >= 0) { milkMult *= 2; }
+            if(perks.indexOf("wellfed") >= 0) { compostMult *= 1.5; }
+        }
+
         let outputAmount = 0, thereAreCows = false, thereAreBees = false, thereIsCoffee = false, negativeAmount = 0;
         const nerfs = dmgCalcs.GetNerfs();
         for(let i = 0; i < myCrops.length; i++) {
             let croppos = myCrops[i];
             if(croppos.cow !== undefined) {
-                outputAmount += cowMult * combat.happyCows[croppos.cow].feed;
+                outputAmount += cowMult * combat.happyCows[croppos.cow].feed * (isAttack ? 1 : milkMult);
                 combat.happyCows[croppos.cow].removeMe = true;
                 thereAreCows = true;
                 croppos = combat.happyCows[croppos.cow];
@@ -264,6 +303,7 @@ const dmgCalcs = {
             }
         }
         outputAmount *= 1 + (myCrops.length / 4);
+        if(!isAttack) { outputAmount *= compostMult; }
         return { total: Math.max(1, outputAmount) - negativeAmount, cows: thereAreCows, bees: thereAreBees, coffee: thereIsCoffee };
     }
 };

@@ -201,7 +201,7 @@ const enemyHelpers = {
             }
         }
         if(dmg === 0) { dmg = (e.atk / 1.5); }
-        dmg = Math.max(1, Math.round(dmg - player.def));
+        dmg = Math.max(1, Math.round(dmg - player.GetDefense()));
         return { crops: crops, damage: dmg };
     },
     GetWeakestPlayerCrop: function() {

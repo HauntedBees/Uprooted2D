@@ -34,28 +34,31 @@ const OnionFuncs = {
         
         const gourmand = ["coconut", "gmocorn", "goodfood", "notdrugs", "lotus", "saffron"];
         const pungent = ["garlic", "ginger", "asparagus"];
-        const friedrice = ["garlic", "ginger", "leek"]; // plus rice
+        const friedrice = ["garlic", "ginger"]; // plus rice
         const spicy = ["bellpepper", "garlic", "rhubarb"];
         const sofrito = ["garlic", "leek", "bellpepper", "tomato"];
         const protein = ["asparagus", "avocado", "spinach"];
         const hardenedcore = ["apricot", "avocado"];
         const mammamia = ["garlic", "carrot"]; // plus 3 tomatoes and a mushroom
+        const allBerries = ["tomato", "grapes", "banana", "blackberry", "avocado"];
 
         const Has = (arr, val) => arr.indexOf(val) >= 0;
 
         const sofritoScore = [false, false, false, false], proteinScore = [false, false, false], coreScore = [false, false], italianScore = [false, false, false, 0];
-        let hasGourmand = false, pungentScore = 0, hasFodder = false, friedRiceScore = 0, friedRiceRice = false, spicyScore = 0;
+        let hasGourmand = false, pungentScore = 0, hasFodder = false, friedRiceScore = 0, friedRiceRice = false, spicyScore = 0, isAllBerries = true, isExistential = false;
         let springScore = 0, summerScore = 0, fallScore = 0, winterScore = 0, veggieScore = 0, fruitScore = 0, mushScore = 0, riceScore = 0, hasWet = false, hasToxic = false;
 
         for(let i = 0; i < player.onion.stomach.length; i++) {
             const foodName = player.onion.stomach[i][0];
 
+            if(foodName === "leek") { isExistential = true; }
             if(foodName === "poisnshroom") { hasToxic = true; break; }
 
             if(Has(gourmand, foodName)) { hasGourmand = true; }
             if(Has(pungent, foodName)) { pungentScore++; }
             if(Has(friedrice, foodName)) { friedRiceScore++; }
             if(Has(spicy, foodName)) { spicyScore++; }
+            if(!Has(allBerries, foodName)) { isAllBerries = false; }
 
             const sidx = sofrito.indexOf(foodName);
             if(sidx >= 0) { sofritoScore[sidx] = true; }
@@ -86,10 +89,13 @@ const OnionFuncs = {
             fallScore += food.seasons[2];
             winterScore += food.seasons[3];
         }
-        if(hasToxic) { return ["toxic"]; }
+        if(isExistential) { perks.push("crisis"); }
+        if(hasToxic) { perks.push("toxic"); return perks; }
         
         if(player.onion.stomach.length === 8) { perks.push("stuffed"); }
         else if(player.onion.stomach.length >= 6) { perks.push("wellfed"); }
+
+        if(isAllBerries && player.onion.stomach.length > 3) { perks.push("allberries"); }
 
         if(player.onion.recentPets > 10) { perks.push("loved"); }
         if(hasGourmand) { perks.push("gourmand"); }
@@ -99,7 +105,7 @@ const OnionFuncs = {
         if(italianScore[0] && italianScore[1] && italianScore[2] && italianScore[3] >= 3) { perks.push("italia"); }
 
         if(hasFodder) { perks.push("fodder"); }
-        if(friedRiceScore >= 3 && friedRiceRice) { perks.push("friedrice"); }
+        if(friedRiceScore >= 2 && friedRiceRice) { perks.push("friedrice"); }
         if(hasWet) { perks.push("wet"); }
         if(pungentScore >= 3) { perks.push("pungent"); }
         if(spicyScore >= 3) { perks.push("spicy"); }
@@ -114,6 +120,6 @@ const OnionFuncs = {
         if(fallScore >= 6) { perks.push("autumn"); }
         if(winterScore >= 6) { perks.push("winter"); }
 
-        return perks.slice(0, 4);
+        return perks.slice(0, 5);
     }
 };
