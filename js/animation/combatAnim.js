@@ -2,6 +2,7 @@ function CombatAnimHelper(enemies) {
     let playerPos = { x: (combat.isChallenge ? 7 : 3), y: 4.625 };
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
+    let onionAnimInfo = (player.onion ? new CombatAnimOnion(playerPos.x - 0.125, playerPos.y + 0.125) : null);
     let enemyAnimInfos = [], anims = [];
     const GetDeltaCurrentX = function(e) {
         switch(e.size) {
@@ -57,6 +58,7 @@ function CombatAnimHelper(enemies) {
     this.ResetPlayerAnimState = function() {
         if(player.health < (player.maxhealth / 4)) { playerAnimInfo.SetAnim("STAND_WEAK"); }
         else { playerAnimInfo.SetAnim("STAND"); }
+        if(onionAnimInfo) { this.SetOnionAnimState("STAND"); }
         playerAnimInfo.layer = "characters";
         playerAnimInfo.ClearAnimQueue();
         this.ResetPlayerAnimPos();
@@ -72,8 +74,11 @@ function CombatAnimHelper(enemies) {
         } else {
             Sounds.PlaySound("hit_light");
             this.SetPlayerAnimState("HURT");
+            this.SetOnionAnimState("HURT");
         }
     };
+
+    this.SetOnionAnimState = function(name) { onionAnimInfo.SetAnim(name); };
 
     this.SetBirdAnimArg = (key, val) => { if(birdAnimInfo !== null) { birdAnimInfo.PushArg(key, val); }};
     this.SetBirdAnimPos = (x, y) => { if(birdAnimInfo !== null) { birdAnimInfo.dims.x = x; birdAnimInfo.dims.y = y; }};
@@ -120,6 +125,7 @@ function CombatAnimHelper(enemies) {
     const AnimateEntities = function() {
         if(birdAnimInfo !== null) { birdAnimInfo.Animate(); }
         playerAnimInfo.Animate();
+        if(onionAnimInfo !== null) { onionAnimInfo.Animate(); }
         for(let i = 0; i < enemyAnimInfos.length; i++) {
             const isEnemyStuck = (combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck);
             if(enemyAnimInfos[i].dead) { enemyAnimInfos[i].CorpseItUp(enemyAnimInfos[i].deadFrame++, combat.enemies[i].size); }

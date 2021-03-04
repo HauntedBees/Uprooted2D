@@ -80,9 +80,11 @@ combat.compost = {
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimState("THINK", true);
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
+                combat.animHelper.SetOnionAnimState("LOOKBACK");
             } else {
                 combat.animHelper.SetBirdAnimState("STAND", true);
                 combat.animHelper.SetPlayerAnimState("THINK", true);
+                combat.animHelper.SetOnionAnimState("LOOK");
             }
         } else if(this.healButtonSelected) {
             if(this.selectedCrops.length > 0) {
@@ -100,9 +102,11 @@ combat.compost = {
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimState("THINK", true);
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
+                combat.animHelper.SetOnionAnimState("LOOKBACK");
             } else {
                 combat.animHelper.SetBirdAnimState("STAND", true);
                 combat.animHelper.SetPlayerAnimState("THINK", true);
+                combat.animHelper.SetOnionAnimState("LOOK");
             }
         } else if(this.attackButtonSelected) {
             if(this.selectedCrops.length > 0) {
@@ -119,9 +123,11 @@ combat.compost = {
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimState("WANTATTACK", true);
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
+                combat.animHelper.SetOnionAnimState("LOOKBACK");
             } else {
                 combat.animHelper.SetBirdAnimState("STAND", true);
                 combat.animHelper.SetPlayerAnimState("WANTATTACK", true);
+                combat.animHelper.SetOnionAnimState("LOOK");
             }
         } else {
             gfx.drawWrappedText(GetText(textKey).replace("{0}", hdmg).replace("{1}", admg), textX, textY, textW);
@@ -346,6 +352,7 @@ combat.compost = {
             text: "You attempt to compost your crops, but your compost bin backfires!"
         });
         combat.animHelper.SetPlayerAnimState("WON", true);
+        combat.animHelper.SetOnionAnimState("STAND");
         combat.animHelper.DrawCrops();
         return true;
     },
@@ -360,6 +367,7 @@ combat.compost = {
             const shake = new ShakeAnim(combat.compost.binx, combat.compost.biny, 500, combat.compost.binSprite, 0.25, 20);
             shake.finish = function() {
                 combat.animHelper.SetPlayerAnimState((res.cows || res.bees || res.coffee) ? "DRINK" : "EAT");
+                combat.animHelper.SetOnionAnimState("STAND");
                 if(res.coffee) { combat.animHelper.PushPlayerOverlay("COFFEE"); }
                 else if(res.cows) { combat.animHelper.PushPlayerOverlay("MILK"); }
                 else if(res.bees) { combat.animHelper.PushPlayerOverlay("HONEY"); }

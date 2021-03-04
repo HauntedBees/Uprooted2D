@@ -215,7 +215,7 @@ function AnimProcess(ae, as, babies) {
             Sounds.PlaySound(as.startSound);
         //}
     }
-    this.Animate = function(isStuckInGoop, isRun) {
+    this.Animate = function(isStuckInGoop, isRun, isOnion) {
         const now = +new Date();
         let isEnd = false;
         if((now - lastRan) >= timePerFrame) {
@@ -236,7 +236,12 @@ function AnimProcess(ae, as, babies) {
             dx = Math.random() < 0.33 ? 0.125 : (Math.random() > 0.5 ? -0.125 : 0);
             dy = Math.random() < 0.33 ? -0.125 : (Math.random() > 0.5 ? -0.125 : 0);
         }
-        gfx.DrawCombatWhatsit(animentity.sheet, animInfo.x + animentity.dx, animInfo.y + animentity.dy, animentity.dims, animentity.layer, dx, dy);
+        const animFunc = () => gfx.DrawCombatWhatsit(animentity.sheet, animInfo.x + animentity.dx, animInfo.y + animentity.dy, animentity.dims, animentity.layer, dx, dy);
+        if(isOnion) {
+            gfx.DrawHueRotated(gfx.ctx[animentity.layer], player.onion.hueRotate, animFunc);
+        } else {
+            animFunc();
+        }
         overlays.forEach(function(e) {
             if(frame <= e.length) {
                 const f = e.frames[frame];
@@ -294,8 +299,8 @@ function CombatAnimEntity(sheet, w, h, x, y, anims, initAnim, dx, dy) {
     this.animQueue = [];
     this.Animate = function(isStuckInGoop) {
         const isRun = currentName === "FLEE" || currentName === "FLEEFAIL";
-        if(!runningFromQueue) { this.currentAnim.Animate(isStuckInGoop, isRun); return; }
-        const animEnded = this.currentAnim.Animate(isStuckInGoop, isRun);
+        if(!runningFromQueue) { this.currentAnim.Animate(isStuckInGoop, isRun, this.isOnion); return; }
+        const animEnded = this.currentAnim.Animate(isStuckInGoop, isRun, this.isOnion);
         if(animEnded) {
             let ongoingAnims = this.currentAnim.animBabies;
             this.animQueue.shift();
@@ -328,6 +333,9 @@ CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 
 function CombatAnimFalcon(x, y) { CombatAnimEntity.call(this, "combatPlayer", 32, 30, x, y, falconAnims, "STAND"); }
 CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
+
+function CombatAnimOnion(x, y) { CombatAnimEntity.call(this, "sheet", 18, 18, x, y, onionAnims, "STAND"); this.isOnion = true; }
+CombatAnimOnion.prototype = Object.create(CombatAnimEntity.prototype);
 
 function CombatAnimEnemy(sheet, w, h, x, y, dx, dy) { CombatAnimEntity.call(this, sheet, w, h, x, y, enemyCombatAnims, "STAND", dx, dy); }
 CombatAnimEnemy.prototype = Object.create(CombatAnimEntity.prototype);

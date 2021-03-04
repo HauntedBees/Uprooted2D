@@ -518,9 +518,11 @@ combat.plant = {
             if(combat.isFalcon) {
                 combat.animHelper.SetBirdAnimState("THINK", true);            
                 combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
+                combat.animHelper.SetOnionAnimState("LOOKBACK");
             } else {
                 combat.animHelper.SetBirdAnimState("STAND", true);  
                 combat.animHelper.SetPlayerAnimState("THINK", true);
+                combat.animHelper.SetOnionAnimState("LOOK");
             }
             this.DrawXs();
         } else {

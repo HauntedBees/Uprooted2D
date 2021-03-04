@@ -69,9 +69,11 @@ combat.selectTarget = {
         if(combat.isFalcon) {
             combat.animHelper.SetBirdAnimState("WANTATTACK", true);
             combat.animHelper.SetPlayerAnimState("LOOKBACK", true);
+            combat.animHelper.SetOnionAnimState("LOOKBACK");
         } else {
             combat.animHelper.SetBirdAnimState("STAND", true);
             combat.animHelper.SetPlayerAnimState("WANTATTACK", true);
+            combat.animHelper.SetOnionAnimState("LOOK");
         }
         for(let i = 0; i < this.targets.length; i++) {
             const idx = this.targets[i];

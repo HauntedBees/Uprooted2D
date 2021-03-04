@@ -95,6 +95,16 @@ const enemyCombatAnims = {
     "HOUSEKEEPER": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 3), new AnimFrame(0, 4), new AnimFrame(0, 5)], true, 4),
     "HOUSEKEEPER2": new AnimSet([new AnimFrame(0, 2), new AnimFrame(0, 6), new AnimFrame(0, 4), new AnimFrame(0, 6)], true, 4),
 }
+const onionAnims = {
+    "STAND": JustOne(sprites["ob.std"][0], sprites["ob.std"][1]),
+    "LOOK": JustOne(sprites["ob.look"][0], sprites["ob.look"][1]),
+    "LOOKBACK": JustOne(sprites["ob.run"][0], sprites["ob.run"][1]),
+    "HURT": JustOne(sprites["ob.sad"][0], sprites["ob.sad"][1]),
+    "MOURN": JustOne(sprites["ob.down"][0], sprites["ob.down"][1]),
+    "WON": new AnimSet([
+        new AnimFrame(sprites["ob.std"][0], sprites["ob.std"][1]), 
+        new AnimFrame(sprites["ob.up"][0], sprites["ob.up"][1])], true, 4)
+};
 const falconAnims = {
     "STAND": JustOne(1, 5),
     "WANTPLANT": JustOne(2, 5),

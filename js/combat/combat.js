@@ -260,12 +260,14 @@ const combat = {
         if(player.health <= 0 && !game.currentInputHandler.isTutorial) {
             combat.animHelper.SetBirdAnimState("MOURN", true);
             combat.animHelper.SetPlayerAnimState("CORPSE", true);
+            combat.animHelper.SetOnionAnimState("MOURN");
             game.innerTransition(game.currentInputHandler, combat.inbetween, { next: combat.fuckingDead, text: GetText("diedInCombat") });
             return;
         } else if(this.enemies.length == 0) {
             player.addExp(this.expEarned);
             combat.animHelper.SetBirdAnimState("WON", true);
             combat.animHelper.SetPlayerAnimState("WON", true);
+            combat.animHelper.SetOnionAnimState("WON");
             let text = GetText("youDidATheWin");
             let resulties = [this.expEarned + "EXP"];
 

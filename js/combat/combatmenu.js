@@ -43,7 +43,7 @@ combat.menu = {
             plantState = "combatSkip";
         }
         this.plantState = plantState;
-        let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND";
+        let text = "abba is a band", charAnim = "STAND", birdAnim = "STAND", onionAnim = "LOOK";
         switch(this.cursorSel) {
             case 0:
                 if(combat.isChallenge) {
@@ -61,6 +61,7 @@ combat.menu = {
                     text = GetText("seeds_one");
                     charAnim = "LOOKBACK";
                     birdAnim = "WANTPLANT";
+                    onionAnim = "LOOKBACK";
                 } else if(combat.numPlantTurns == 0) {
                     text = GetText("seeds_none");
                     charAnim = "CANTDO";
@@ -80,6 +81,7 @@ combat.menu = {
                 } else if(combat.isFalcon) {
                     text = GetText("attack_falcon");
                     charAnim = "LOOKBACK";
+                    onionAnim = "LOOKBACK";
                     birdAnim = "WANTATTACK";
                 } else if(this.plantedAlreadyAndCantAttack) {
                     text = GetText("attack_planted");
@@ -110,6 +112,7 @@ combat.menu = {
                     text = GetText("compost_can");
                     if(combat.isFalcon) {
                         charAnim = "LOOKBACK";
+                        onionAnim = "LOOKBACK";
                         birdAnim = "WANTCOMPOST";
                     } else {
                         if(this.plantedAlreadyAndCantAttack) {
@@ -125,6 +128,7 @@ combat.menu = {
             case 3:
                 if(combat.isFalcon) {
                     text = GetText("run_falcon");
+                    onionAnim = "LOOKBACK";
                     charAnim = "LOOKBACK";
                     birdAnim = "CANTDO";
                 } else if(this.plantedAlreadyAndCantAttack) {
@@ -135,6 +139,7 @@ combat.menu = {
                     charAnim = "CANTDO";
                 } else {
                     text = GetText("run_can");
+                    onionAnim = "LOOKBACK";
                     charAnim = "LOOKBACK";
                 }
                 break;
@@ -170,6 +175,7 @@ combat.menu = {
         // Ayana and Bird
         combat.animHelper.SetPlayerAnimState(charAnim, true);
         combat.animHelper.SetBirdAnimState(birdAnim, true);
+        combat.animHelper.SetOnionAnimState(onionAnim);
         
         // Enemy Health
         for(let i = 0; i < combat.enemies.length; i++) {
@@ -249,6 +255,7 @@ combat.menu = {
                         combat.endTurn(this);
                     } else {
                         combat.animHelper.SetPlayerAnimState("FATALBLOW");
+                        combat.animHelper.SetOnionAnimState("HURT");
                         player.health = 0;
                         game.innerTransition(this, combat.inbetween, {
                             next: function() { combat.endTurn(combat.inbetween) },
@@ -299,6 +306,7 @@ combat.menu = {
     },
     FinishChallenge: function() {
         combat.animHelper.SetPlayerAnimState("LEVELUP");
+        combat.animHelper.SetOnionAnimState("WON");
         const key = combat.grid.some(row => row.some(cell => cell !== null)) ? "combatFinishText" : "combatFinishGiveUp";
         game.innerTransition(this, combat.inbetween, {
             text: GetText(key),
@@ -319,6 +327,7 @@ combat.menu = {
     tryFlee: function() {
         if(combat.enemies.some(e => this.freeFleeEnemies.indexOf(e.id) >= 0) || Math.random() < (0.65 * player.luck)) {
             combat.animHelper.SetPlayerAnimState("FLEE", true);
+            combat.animHelper.SetOnionAnimState("LOOKBACK");
             if(game.target !== null && !game.target.noRunKill) { worldmap.clearTarget(); }
             game.innerTransition(this, combat.inbetween, {
                 next: function() {
@@ -334,6 +343,7 @@ combat.menu = {
             });
         } else {
             combat.animHelper.SetPlayerAnimState("FLEEFAIL", true);
+            combat.animHelper.SetOnionAnimState("LOOKBACK");
             game.innerTransition(this, combat.inbetween, {
                 next: function() { combat.endTurn(combat.inbetween) },
                 text: GetText("flee_fail")
