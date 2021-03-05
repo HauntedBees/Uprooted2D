@@ -2,8 +2,8 @@ pausemenu.onion = {
     cursor: { x: 0, y: 0 }, inventoryWidth: 3, invDY: 1.5, cropDY: 10, cropDX: 0.5, animHelper: null, 
     layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
     actualIndexes: [], selectedCrop: -1, backStartX: 0, backButtonW: 0, lastX: 0, lastY: 0, 
-    animIdx: 0, animX: 0, animY: 0, animFrame: false, halfLength: true, lastAnim: false, animReset: 0,
-    onionX: 125, onionY: 84,
+    animIdx: 0, animX: 0, animY: 0, animFrame: false, frameLen: true, currentFrameLen: false, animReset: 0,
+    onionX: 125, onionY: 84, hasPoop: false,
     setup: function() {
         this.cursor = { x: 0, y: 0 };
         this.cursors = new CursorAnimSet([
@@ -19,9 +19,11 @@ pausemenu.onion = {
         this.backButtonW = gfx.DrawCombatOption(GetText("menu.Back"), this.backStartX, -0.125, false);
         this.DrawAll();
         this.cursors.Start();
-        this.halfLength = true;
-        this.lastAnim = false;
+        this.currentFrameLen = 0;
         this.animIdx = setInterval(() => this.OnionAnim(), 200);
+        this.hasPoop = player.onion.perks.indexOf("stinky") >= 0;
+        this.animX = this.hasPoop ? 2 : 0;
+        this.frameLen = this.hasPoop ? 4 : 3;
         this.OnionAnim(true);
     },
     DrawAll: function(customMessage) {
@@ -122,7 +124,13 @@ pausemenu.onion = {
                 if(customMessage) {
                     text = customMessage;
                 } else if(this.selectedCrop < 0) {
-                    text = GetText("onion.pet");
+                    if(this.hasPoop) {
+                        text = GetText("onion.clean");
+                    } else {
+                        text = GetText("onion.pet");
+                    }
+                } else if(this.hasPoop) {
+                    text = GetText("onion.feedpoop");
                 } else {
                     const item = player.inventory[this.selectedCrop];
                     if(item === undefined) { return; }
@@ -172,18 +180,18 @@ pausemenu.onion = {
         }
     },
     OnionAnim: function(force) {
-        if(this.halfLength && !force) {
-            this.lastAnim = !this.lastAnim;
-            if(this.lastAnim) { return; }
+        if(!force) {
+            if(++this.currentFrameLen < this.frameLen) { return; }
+            this.currentFrameLen = 0;
         }
         gfx.clearLayer("menuB");
         
         this.animFrame = !this.animFrame;
         if(this.animReset > 0) {
             if(--this.animReset === 0) {
-                this.animX = 0;
+                this.animX = this.hasPoop ? 2 : 0;
+                this.frameLen = this.hasPoop ? 4 : 3;
                 this.animY = 0;
-                this.halfLength = true;
             }
         }
         gfx.DrawOnion(this.animX + (this.animFrame ? 1 : 0), this.animY, this.onionX, this.onionY, "menuB");
@@ -268,7 +276,6 @@ pausemenu.onion = {
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             const actIdx = this.actualIndexes[idx];
             if(this.cursor.x >= this.inventoryWidth) {
-                // TODO: poop
                 if(this.selectedCrop < 0) {
                     return this.Pet();
                 } else {
@@ -376,17 +383,35 @@ pausemenu.onion = {
     },
 
     Pet: function() {
+        if(this.hasPoop) {
+            this.hasPoop = false;
+            player.onion.digestCount = 0;
+            OnionFuncs.Update();
+            Sounds.PlaySound("heal");
+            this.animX = 0;
+            this.animY = 1;
+            this.animReset = 5;
+            this.frameLen = 2;
+            this.DrawAll(GetText("onion.cleaned"));
+            return;
+        }
         player.onion.recentPets++;
         if(player.onion.mood < 8) { player.onion.mood++; } 
         this.animX = 0;
         this.animY = 1;
         this.animReset = 5;
+        this.frameLen = 2;
         OnionFuncs.Update();
         Sounds.PlaySound("heal");
         this.DrawAll(GetText("onion.petted"));
         this.OnionAnim(true);
     },
     Feed: function() {
+        if(this.hasPoop) {
+            Sounds.PlaySound("cancel");
+            this.DrawAll(GetText("onion.feedpoop"));
+            return false;
+        }
         const cropName = player.inventory[this.selectedCrop][0];
         if(player.onion.stomach.length === 8) {
             Sounds.PlaySound("cancel");
@@ -408,7 +433,7 @@ pausemenu.onion = {
         this.animX = 2;
         this.animY = 1;
         this.animReset = 10;
-        this.halfLength = false;
+        this.frameLen = 1;
         this.OnionAnim(true);
         return true;
     }

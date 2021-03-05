@@ -8094,6 +8094,18 @@ const fulltext = {
 		"en-us": "Yummy! Calsotte liked that!", 
 		"type": "opts"
 	},
+	"onion.clean": {
+		"en-us": "Clean Up", 
+		"type": "opts"
+	},
+	"onion.cleaned": {
+		"en-us": "Much better!", 
+		"type": "opts"
+	},
+	"onion.feedpoop": {
+		"en-us": "Maybe I should clean up this mess first...", 
+		"type": "opts"
+	},
 	"perk.stinky.n": {
 		"en-us": "Stinky", 
 		"type": "onion"
