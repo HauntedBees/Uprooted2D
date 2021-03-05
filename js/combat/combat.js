@@ -364,6 +364,7 @@ const combat = {
         this.cursors.Perish();
         gfx.clearSome(["menucursorC", "crops"]);
         CombatChievoCheck();
+        OnionFuncs.Digest();
     },
     fuckingDead: function() {
         const inn = inns[player.lastInn];

@@ -3,7 +3,8 @@ const freshOnion = {
     perks: [],
     mood: 5,
     recentPets: 0,
-    hueRotate: 0
+    hueRotate: 0,
+    digestCount: 0
 };
 const OnionPerks = {
     "loved": [],
@@ -14,6 +15,21 @@ const OnionFuncs = {
         if(!player.onion) { return; }
         player.onion.perks = OnionFuncs.GetCurrentPerks();
         player.onion.hueRotate = OnionFuncs.GetHueRotate();
+    },
+    Digest: function() {
+        if(!player.onion) { return; }
+        if(player.onion.stomach.length === 0) {
+            player.onion.mood = Math.max(0, player.onion.mood - 1);
+        } else {
+            for(let i = (player.onion.stomach.length - 1); i >= 0; i--) {
+                player.onion.stomach[i][1] -= 1;
+                if(player.onion.stomach[i][1] <= 0) {
+                    player.onion.stomach.splice(i, 1);
+                    player.onion.digestCount++;
+                }
+            }
+        }
+        OnionFuncs.Update();
     },
     GetHueRotate: function() {
         if(!player.onion) { return 0; }
@@ -94,6 +110,8 @@ const OnionFuncs = {
         if(isExistential) { perks.push("crisis"); }
         if(hasToxic) { perks.push("toxic"); return OnionFuncs.ProcessPerks(perks); }
         
+        if(player.onion.digestCount >= 15) { perks.push("stinky"); }
+
         if(player.onion.stomach.length === 8) { perks.push("stuffed"); }
         else if(player.onion.stomach.length >= 6) { perks.push("wellfed"); }
 
@@ -132,7 +150,7 @@ const OnionFuncs = {
         let perkCount = player.usedOnionPerks.length;
         if(player.usedOnionPerks.indexOf("toxic") >= 0) { perkCount -= 1; } // toxic will not contribute to the chievo
         if(player.usedOnionPerks.indexOf("crisis") >= 0) { perkCount -= 1; } // crisis will not contribute to the chievo
-        if(player.usedOnionPerks.length >= 22) {
+        if(perkCount>= 22) {
             AddAchievementIfMissing("calsotte");
         }
         return perks;
