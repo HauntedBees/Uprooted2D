@@ -8910,7 +8910,7 @@ const fulltext = {
 		"type": "aname"
 	},
 	"ad.italia": {
-		"en-us": "Defeated Don Vagante with Calsotte's \"Mamma Mia\" perk active.", 
+		"en-us": "Defeated Don Vagante with Calsotte's \"Mamma Mia\" buff active.", 
 		"type": "adesc"
 	},
 	// Combat - Player Actions
