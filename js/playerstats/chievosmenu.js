@@ -1,8 +1,8 @@
 pausemenu.chievos = {
     cursor: { x: 0, y: 0 },
-    achStartX: 1.875, achStartY: 2, achDX: 1.25, 
+    achStartX: 1, achStartY: 2, achDX: 1.25, 
     backStartX: 0, backButtonW: 0, 
-    numPerRow: 10, textStartY: 155, vals: [], yMax: 0, 
+    numPerRow: 11, textStartY: 157, vals: [], yMax: 0, 
     layersToClear: ["menuA", "menutext"],
     setup: function() {
         this.cursor = { x: 0, y: 0 };
@@ -27,6 +27,7 @@ pausemenu.chievos = {
             gfx.drawTileToGrid("a." + a, x, y, "menuA");
             const playerHasAchievement = player.achievements.indexOf(a) >= 0;
             if(!playerHasAchievement) { gfx.drawTileToGrid("a.donthave", x, y, "menuA"); }
+            else if(player.newAchievements.indexOf(a) >= 0) { gfx.drawTileToGrid("a.frame", x, y, "menuA"); }
             if(isFirst) { this.vals.push([a, playerHasAchievement]); }
         }
         this.yMax = Math.floor(achievements.length / this.numPerRow);
@@ -39,7 +40,11 @@ pausemenu.chievos = {
             this.setText();
         }
     },
-    cancel: function() { game.innerTransition(this, pausemenu, player.onion ? 5 : 4); Sounds.PlaySound("cancel"); },
+    cancel: function() {
+        player.newAchievements = [];
+        game.innerTransition(this, pausemenu, player.onion ? 5 : 4);
+        Sounds.PlaySound("cancel");
+    },
     mouseMove: function(pos) {
         const dpos = { x: (pos.x - this.achStartX) / this.achDX, y: (pos.y - this.achStartY) / this.achDX };
         if(dpos.y < -0.8) {

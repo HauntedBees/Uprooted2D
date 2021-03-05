@@ -92,7 +92,7 @@ const OnionFuncs = {
             }
         }
         if(isExistential) { perks.push("crisis"); }
-        if(hasToxic) { perks.push("toxic"); return perks; }
+        if(hasToxic) { perks.push("toxic"); return OnionFuncs.ProcessPerks(perks); }
         
         if(player.onion.stomach.length === 8) { perks.push("stuffed"); }
         else if(player.onion.stomach.length >= 6) { perks.push("wellfed"); }
@@ -122,6 +122,19 @@ const OnionFuncs = {
         if(fallScore >= 6) { perks.push("autumn"); }
         if(winterScore >= 6) { perks.push("winter"); }
 
-        return perks.slice(0, 5);
+        return OnionFuncs.ProcessPerks(perks.slice(0, 5));
+    },
+    ProcessPerks: function(perks) {
+        for(let i = 0; i < perks.length; i++) {
+            const p = perks[i];
+            if(player.usedOnionPerks.indexOf(p) < 0) { player.usedOnionPerks.push(p); }
+        }
+        let perkCount = player.usedOnionPerks.length;
+        if(player.usedOnionPerks.indexOf("toxic") >= 0) { perkCount -= 1; } // toxic will not contribute to the chievo
+        if(player.usedOnionPerks.indexOf("crisis") >= 0) { perkCount -= 1; } // crisis will not contribute to the chievo
+        if(player.usedOnionPerks.length >= 22) {
+            AddAchievementIfMissing("calsotte");
+        }
+        return perks;
     }
 };

@@ -8155,7 +8155,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.pungent.d": {
-		"en-us": "All attacks targeting enemy crops do twice as much base damage.", 
+		"en-us": "All attacks targeting enemy crops do twice as much damage.", 
 		"type": "onion"
 	},
 	"perk.veggies.n": {
@@ -8195,7 +8195,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.fodder.d": {
-		"en-us": "Milk from cows heals 200% more health.", 
+		"en-us": "Milk from cows heals twice as much health.", 
 		"type": "onion"
 	},
 	"perk.wet.n": {
@@ -8227,7 +8227,7 @@ const fulltext = {
 		"type": "onion"
 	},
 	"perk.sofrito.d": {
-		"en-us": "All crops that grow well in Summer do twice as much damage.", 
+		"en-us": "All crops that grow well in Summer do twice as much base damage.", 
 		"type": "onion"
 	},
 	"perk.protein.n": {
@@ -8867,10 +8867,50 @@ const fulltext = {
 	},
 	"ad.locked": {
 		"en-us": "The description for this achievement is hidden until you complete it.", 
-		"type": "adesc"
+		"type": "aname"
 	},
 	"ad.none": {
 		"en-us": "You have not yet unlocked this achievement.", 
+		"type": "adesc"
+	},
+	"a.onecook": {
+		"en-us": "Food Not Food", 
+		"type": "aname"
+	},
+	"ad.onecook": {
+		"en-us": "Sometimes it's nice to give someone food to eat instead of just throwing it at them.", 
+		"type": "adesc"
+	},
+	"a.allcook": {
+		"en-us": "Just Enough Cooks", 
+		"type": "aname"
+	},
+	"ad.allcook": {
+		"en-us": "You helped out everyone who needed delicious foods made for them.", 
+		"type": "adesc"
+	},
+	"a.calsotte": {
+		"en-us": "Onion Paradise", 
+		"type": "aname"
+	},
+	"ad.calsotte": {
+		"en-us": "You acquired every Calsotte buff by feeding them different combinations of foods.", 
+		"type": "adesc"
+	},
+	"a.seasons": {
+		"en-us": "Seasonal Savior", 
+		"type": "aname"
+	},
+	"ad.seasons": {
+		"en-us": "Attacked with a in-season crop while a seasonal boosting Calsotte perk was active.", 
+		"type": "adesc"
+	},
+	"a.italia": {
+		"en-us": "It's Anti-Italian Discrimination", 
+		"type": "aname"
+	},
+	"ad.italia": {
+		"en-us": "Defeated Don Vagante with Calsotte's \"Mamma Mia\" perk active.", 
 		"type": "adesc"
 	},
 	// Combat - Player Actions

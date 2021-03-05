@@ -489,6 +489,10 @@ const game = {
         if(player.options.analogDPad === undefined) { player.options.analogDPad = 1; }
         if(player.lastSaveSlot === undefined) { player.lastSaveSlot = 0; }
         if(player.dreamBonus === undefined) { player.dreamBonus = 0; }
+        // prior to v0.7
+        if(player.usedOnionPerks == undefined) { player.usedOnionPerks = []; }
+        if(player.newAchievements == undefined) { player.newAchievements = []; }
+        if(player.fedPeople === undefined) { player.fedPeople = 0; }
         return true;
     },
     ApplyBlendFilter: function() {

@@ -51,7 +51,7 @@ const pausemenu = {
         pausemenu.drawOption("menu.Farm", ++cursorY, pausemenu.cursorY === cursorY);
         if(player.onion) { pausemenu.drawOption("menu.Onion", ++cursorY, pausemenu.cursorY === cursorY); }
         pausemenu.drawOption("menu.Options", ++cursorY, pausemenu.cursorY === cursorY);
-        pausemenu.drawOption("menu.Achievements", ++cursorY, pausemenu.cursorY === cursorY);
+        pausemenu.drawOption("menu.Achievements", ++cursorY, pausemenu.cursorY === cursorY, true);
         pausemenu.drawOption("menu.Save", ++cursorY, pausemenu.cursorY === cursorY);
         pausemenu.drawOption("menu.Back", ++cursorY, pausemenu.cursorY === cursorY);
         pausemenu.drawOption("menu.Quit", ++cursorY, pausemenu.cursorY === cursorY);
@@ -326,8 +326,8 @@ const pausemenu = {
             return this.CursorMove(pos);
         }
     },
-    drawOption: function (text, y, selected) {
-        const realText = GetText(text);
+    drawOption: function (text, y, selected, isChievo) {
+        const realText = GetText(text) + ((isChievo && player.newAchievements.length) ? "*" : "");
         if(selected) { screenReaderHelper.SayThing(realText, "option"); }
         this.options.push(gfx.drawOption(realText, this.dy + y, selected));
     }

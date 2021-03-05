@@ -312,6 +312,9 @@ combat.selectTarget = {
                 console.log(target);
                 if(player.onion && player.onion.perks.indexOf("italia") >= 0 && ["mrbruno", "mobsty1", "mobsty2", "mobBoss", "kelpBoy", "coffeeNerd", "botMush"].indexOf(target.id) >= 0) {
                     finalDamage *= 3;
+                    if(target.id === "mobBoss") {
+                        AddAchievementIfMissing("italia");
+                    }
                 }
                 avgDamage += finalDamage;
                 combat.damageEnemy(targetidx, finalDamage);

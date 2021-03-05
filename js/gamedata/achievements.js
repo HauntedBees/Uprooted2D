@@ -1,11 +1,11 @@
 const achievements = [ 
-    "boss1", "lakeFairy", "goldshroom", "badrabbit", "limeTime", "RAPBATTLE", "boss2", "dowel", "kelpBuddy", "boss3help", "boss3hurt",
-    "crouton", "unplugged", "boss4", "skumpy", "abuelita", "bossMob", "stonehenge", "laila", "bankStop", "boss5", "helpNerd", "abee",
-    "techGood", "techBad", "natureGood", "natureBad", "vegan", "beeKing", "luddite", "springKing", "summerHummer", "autumnBottom", "winterHinter", 
-    "vegbuddy", "treebuddy", "mushbuddy", "eggbuddy", "ricebuddy", "beebuddy", "seabuddy", "cowbuddy", "techbuddy", "biglaunch", "soybeat", "fullUpgrade",
-    "allCrop", "overkill", "madeForMe", "murderedToDeath"
+    "boss1", "lakeFairy", "goldshroom", "badrabbit", "limeTime", "RAPBATTLE", "boss2", "dowel", "kelpBuddy", "boss3help", "onecook",
+    "boss3hurt", "crouton", "unplugged", "boss4", "skumpy", "abuelita", "bossMob", "stonehenge", "laila", "bankStop", "allcook",
+    "boss5", "helpNerd", "abee", "techGood", "techBad", "natureGood", "natureBad", "vegan", "beeKing", "luddite", "calsotte",
+    "springKing", "summerHummer", "autumnBottom", "winterHinter", "seasons", "vegbuddy", "treebuddy", "mushbuddy", "eggbuddy", "ricebuddy", "beebuddy",
+    "seabuddy", "cowbuddy", "techbuddy", "biglaunch", "soybeat", "fullUpgrade", "allCrop", "overkill", "madeForMe", "italia", "murderedToDeath"
 ];
-const hiddenChievos = ["badrabbit", "kelpBuddy", "boss3help", "boss3hurt", "unplugged", "boss4", "skumpy", "bankStop", "boss5", "helpNerd", "soybeat", "overkill"];
+const hiddenChievos = ["badrabbit", "kelpBuddy", "boss3help", "boss3hurt", "unplugged", "boss4", "bossMob", "skumpy", "bankStop", "boss5", "helpNerd", "soybeat", "italia"];
 function JustBeatGameChievoCheck() {
     const md = player.miscdata;
     if(player.ethicsAxis >= 0) {
@@ -36,4 +36,9 @@ function CombatChievoCheck() {
     if(md.typesPlanted["cow"] >= 500) { AddAchievementIfMissing("cowbuddy"); }
     if(md.typesPlanted["tech"] >= 500) { AddAchievementIfMissing("techbuddy"); }
 };
-function AddAchievementIfMissing(chievo) { if(player.achievements.indexOf(chievo) < 0) { player.achievements.push(chievo); } };
+function AddAchievementIfMissing(chievo) {
+    if(player.achievements.indexOf(chievo) < 0) {
+        player.achievements.push(chievo);
+        player.newAchievements.push(chievo);
+    }
+};

@@ -132,6 +132,7 @@ const dmgCalcs = {
         let totalDamage = 0, stunLength = 0, damageToAttacker = 0, hasAnimals = false;
         let recoilInfos = [], animInfos = [];
 
+        let hasCropFromSeason = false;
         const finalMults = [1, 1, 1, 1], cropMults = [1, 1, 1, 1];
         const typeMults = { veg: 1, tree: 1, bee: 1, rice: 1, spear: 1, rod: 1, water: 1, food: 1, mush: 1, egg: 1, tech: 1, sickle2: 1, moist: 1 };
         if(isPlayer && player.onion) {
@@ -211,6 +212,7 @@ const dmgCalcs = {
             for(let sn = 0; sn < 4; sn++) {
                 if(crop.seasons[sn] > 1) { dmg *= cropMults[sn]; }
             }
+            if(crop.seasons[season] > 1 && cropMults[season] > 1) { hasCropFromSeason = true; }
             dmg *= typeMults[crop.type];
             totalDamage += dmg;
             animInfos.push({ x: myCrops[i].x, y: myCrops[i].y, recoil: recoilInfo, animal: animal });
@@ -223,6 +225,10 @@ const dmgCalcs = {
         }
         totalDamage += myAtk + (isPlayer ? 3 : 0);
         totalDamage *= finalMults[season];
+
+        if(finalMults[season] > 1 && hasCropFromSeason) {
+            AddAchievementIfMissing("seasons");
+        }
 
         if(isPlayer && combat.harvestChain > 0) {
             totalDamage *= Math.min(5, 1 + (combat.harvestChain / 4));
