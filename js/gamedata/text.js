@@ -7393,7 +7393,7 @@ const fulltext = {
 		"type": "choice"
 	},
 	"kida5": {
-		"en-us": "Skunk: LA LA LA LA I CAN'T HEAR YOU, TOMATON, GO!!", 
+		"en-us": "Skunk: LA LA LA LA I CAN'T HEAR YOU, TURNOPPE, GO!!", 
 		"profile": "rival",
 		"type": "text"
 	},
@@ -7436,6 +7436,74 @@ const fulltext = {
 	},
 	"kidaside": {
 		"en-us": "I try to greet the kid, but he's too intently focused to notice me.", 
+		"type": "text"
+	},
+	"kidb0": {
+		"en-us": "Skunk: I FOUND YOU!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidb1": {
+		"en-us": "Skunk: You may have won the last battle, but I will emerge VICTORIOUS this time!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidb1yes": {
+		"en-us": "Now really isn't a good time.", 
+		"type": "choice"
+	},
+	"kidb1no": {
+		"en-us": "Isn't anyone looking for you?", 
+		"type": "choice"
+	},
+	"kidb2": {
+		"en-us": "Skunk: I'VE LEARNED A LOT SINCE LAST TIME! My TURNOPPE is UNSTOPPABLE now!!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidbWon1": {
+		"en-us": "Skunk: WHAT?! You won again!? How are you so good with vegetables?", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidbWon1yes": {
+		"en-us": "I'm literally a farmer.", 
+		"type": "choice"
+	},
+	"kidbWon1no": {
+		"en-us": "Because I, uh, stayed in school?", 
+		"type": "choice"
+	},
+	"kidbWon2": {
+		"en-us": "Skunk: Yeah right! Everyone knows the secret is FRIENDSHIP!! Anyway, here's half of my money, as is the law of the battle.", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidbWon3": {
+		"en-us": "He offers like five quarters and a half-eaten candy bar. Once again, I politely decline.", 
+		"type": "text"
+	},
+	"kidbWon4": {
+		"en-us": "Skunk: Anyway, I'll get you next time! I'm gonna keep learning and practicing!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidbWon5": {
+		"en-us": "Skunk: I heard somewhere that the \"Fried Rice\" buff is made with garlic, ginger, and rice...", 
+		"type": "text"
+	},
+	"kidbLost1": {
+		"en-us": "Skunk: Ha HA!! I'm the best veggie trainer in the world!! Now you owe me half of your money!!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidbLost2": {
+		"en-us": "Skunk: Maybe next time you'll stand a chance against me! Smell ya later!!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidbLost3": {
+		"en-us": "I should probably stop humoring this kid. Is he having family problems at home or something?", 
 		"type": "text"
 	},
 	// Bees

@@ -386,7 +386,7 @@ const scripts = {
 	"exitBarn12": "_TEXT:fakeFarm18&_SETSTATE:8",
 	// Fake Farm: Beat HOUSEKEEPER
 	"beatBarn0": "FarmerJeff_ANIM:JefTalkS&_CHIEVO:boss4&_TEXT:fakeFarm(13-16)",
-	"beatBarn1": "_TEXT:fakeFarm17&FarmerJeff_SETTARGET&_CLEARTARGET&HK_SETTARGET&_CLEARTARGET&_COMPLETEQUEST:gotTire&_CUSTOM:EXITBARN",
+	"beatBarn1": "_TEXT:fakeFarm17&FarmerJeff_SETTARGET&_CLEARTARGET&HK_SETTARGET&_CLEARTARGET&_COMPLETEQUEST:gotTire&_CUSTOM:EXITBARN&_CUSTOM:SECONDSKUNK",
 	// Fake Farm: Look at HOUSEKEEPER
 	"housekeeper0": "?[{\"q\":\"player.hasQuestState('gotTire', 1)\",\"v\":2},{\"q\":\"true\",\"v\":1}]",
 	"housekeeper1": "_TEXT:HK.s0&_END",
@@ -910,4 +910,17 @@ const scripts = {
 	"kidalost0": "_CUSTOM:SKUNKLOSS&_TEXT:kidaLost(1-2)",
 	"kidalost1": "_CUSTOM:SKUNKSCAMPER",
 	"kidalost2": "_TEXT:kidaLost3",
+	// Skunk (Second Encounter)
+	"kidb0": "_TEXT:kidb0&_COMPLETEQUEST:skunk2",
+	"kidb1": "_CUSTOM:WALKTOPLAYER",
+	"kidb2": "skunk_SETDIR:2&_TEXT:kidb1,kidb1yes,kidb1no",
+	"kidb3": "_TEXT:kidb2",
+	"kidb4": "_FIGHT:kidb",
+	"kidbwon0": "_TEXT:kidbWon1,kidbWon1yes,kidbWon1no",
+	"kidbwon1": "_TEXT:kidbWon(2-4)",
+	"kidbwon2": "_CUSTOM:SKUNKSCAMPER",
+	"kidbwon3": "_TEXT:kidbWon5",
+	"kidblost0": "_CUSTOM:SKUNKLOSS&_TEXT:kidbLost(1-2)",
+	"kidblost1": "_CUSTOM:SKUNKSCAMPER",
+	"kidblost2": "_TEXT:kidbLost3",
 };

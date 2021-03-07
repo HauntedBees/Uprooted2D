@@ -62,7 +62,7 @@ const worldmap = {
             if(e.autoplay && targetToAutoplay === null) { targetToAutoplay = e; } // always autoplay first one
             if(e.anim === null || e.anim === undefined || typeof e.anim === "string") { InitFellow(e); }
         }
-        if(worldmap.ignoreAutoplay === true) { targetToAutoplay = false; }
+        if(worldmap.ignoreAutoplay) { targetToAutoplay = false; }
         if(args.fromLoad || justStateLoad) { mapRefreshes.resetData(this.mapName, args.fromLoad, justStateLoad); }
         this.refreshMap();
         if(args.postCombat !== undefined) { targetToAutoplay = this.importantEntities[args.postCombat]; }

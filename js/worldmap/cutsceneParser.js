@@ -325,20 +325,6 @@ const SpecialFunctions = {
         worldmap.refreshMap();
         return true;
     },
-    "FIRSTSKUNK": function() {
-        console.log("SKUNKCHECK");
-        if(player.completedQuest("researchLab") && !player.completedQuest("skunk1")) {
-            worldmap.importantEntities["skunk"].pos = { x: 26, y: 2 };
-            if(worldmap.importantEntities["skunktrap"]) {
-                worldmap.importantEntities["skunktrap"].pos.y = 2;
-            }
-        } else {
-            worldmap.importantEntities["skunk"].pos = { x: -1, y: -1 };
-            if(worldmap.importantEntities["skunktrap"]) {
-                worldmap.importantEntities["skunktrap"].pos.y = -1;
-            }
-        }
-    },
 
     // Challenges
     "CHALMOLE": function() {
@@ -1390,6 +1376,33 @@ const SpecialFunctions = {
     },
 
     // Skunk
+    "FIRSTSKUNK": function() {
+        if(player.completedQuest("researchLab") && !player.completedQuest("skunk1")) {
+            worldmap.importantEntities["skunk"].pos = { x: 26, y: 2 };
+            if(worldmap.importantEntities["skunktrap"]) {
+                worldmap.importantEntities["skunktrap"].pos.y = 2;
+            }
+        } else {
+            worldmap.importantEntities["skunk"].pos = { x: -1, y: -1 };
+            if(worldmap.importantEntities["skunktrap"]) {
+                worldmap.importantEntities["skunktrap"].pos.y = -1;
+            }
+        }
+    },
+    "SECONDSKUNK": function() {
+        if(player.completedQuest("gotTire") && !player.completedQuest("skunk2")) {
+            worldmap.importantEntities["skunk"].pos = { x: 30, y: 33 };
+            if(worldmap.importantEntities["skunktrap2"]) {
+                worldmap.importantEntities["skunktrap2"].pos.y = 33;
+            }
+        } else {
+            worldmap.importantEntities["skunk"].pos = { x: -1, y: -1 };
+            if(worldmap.importantEntities["skunktrap2"]) {
+                worldmap.importantEntities["skunktrap2"].pos.y = -1;
+            }
+        }
+    },
+
     "WALKTOPLAYER": function() {
         worldmap.waitForAnimation = true;
         worldmap.importantEntities["skunk"].dir = 1;

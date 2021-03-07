@@ -46,65 +46,65 @@ const game = {
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14,
     currentInputHandler: null, target: null, language: "en-us",
     sheetsToLoad: [
-                    "mapChar", "mapCharBig", "mapPlayer", "mapPlayerHelp", // Map Stuff
-                    "fov", "horRorTop", "horRorBottom", "ayudame", // Specific Map Stuff
-                    "sheet", "sheetBig", "combatSheet", "combatSheetBig", "combatSheetHuge", "combatPlayer", "combatEquipment", // Combat Stuff
-                    //* Opening *//
-                    "title/logo", "title/lcover0", "title/lcover1", "title/lcover2", "title/lcover3",
-                    "title", "titleGround", "titleTop",
-                    //* Maps *//
-                    "maps/farm", "maps/producestand", "maps/firstvillage",
-                    "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm", 
-                    "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
-                    "maps/hq_6", "maps/gameover", "cavesheet",
-                    "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG", "maps/northcity_NB", "maps/hq_NB", "maps/hq_NB_side",
-                    "maps/northcity_IB", "maps/hq_IB", "maps/forest", "maps/molehome",
-                    //* Profiles *//
-                    "profiles/amy", "profiles/torbo", "profiles/beth", "profiles/belf", "profiles/jing", "profiles/farha", "profiles/jorge",
-                    "profiles/painter", "profiles/carlos", "profiles/robo3", "profiles/hungy", "profiles/trent", "profiles/recept", "profiles/ed",
-                    "profiles/thirdjeff", "profiles/skyler", "profiles/cop", "profiles/mailman", "profiles/fishsell", "profiles/citymonk",
-                    "profiles/robber", "profiles/barnt", "profiles/eggman", "profiles/nerndette", "profiles/pizza", "profiles/nernd", "profiles/rival",
-                    "profiles/skump3", "profiles/skump2", "profiles/skump1", "profiles/vagante", "profiles/oldlady", "profiles/cooldog",
-                    "profiles/hkeep", "profiles/fjeff", "profiles/kelp", "profiles/cc", "profiles/smon", "profiles/conboss", "profiles/conwrk",
-                    "profiles/dowel", "profiles/cow", "profiles/robo", "profiles/beckettworry", "profiles/beckettshock", "profiles/beckettsad",
-                    "profiles/beckettmad", "profiles/fairymad", "profiles/fairy", "profiles/colel", "profiles/drjeff", "profiles/rapb", "profiles/lime",
-                    "profiles/fish", "profiles/rabbit", "profiles/tanner", "profiles/aiko", "profiles/june", "profiles/dean", "profiles/beckett",
-                    "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad", "profiles/mole", "profiles/capo",
-                    //* Map Covers *//
-                    "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
-                    "covers/northcity2_post", "covers/northcity3",
-                    //* Map Foregrounds *//
-                    "fg/farm", "fg/producestand", "fg/firstvillage", 
-                    "fg/belowvillage", "fg/researchfacility", "fg/underwater", "fg/fakefarm", 
-                    "fg/southcity", "fg/northcity", "fg/hq_1", "fg/hq_2", "fg/hq_3", "fg/hq_4", "fg/hq_5",
-                    "fg/hq_IG", "fg/hq_NB", "fg/molehome",
-                    //* Shops *//
-                    "shops/home", "shops/cluckfuck",
-                    "shops/seedypete", "shops/daveshoes",  "shops/inn1", "shops/fixt1", "shops/expand1",
-                    "shops/constr", "shops/merm1", "shops/merm2",
-                    "shops/realactualhuman", "shops/piggy", "shops/cheebo",
-                    "shops/pawn", "shops/tinker", "shops/church", "shops/catalina", "shops/skumpy", "shops/seedshack",
-                    "shops/tech", "shops/hotel", "shops/cityfixture", "shops/epickyle", "shops/gordon", 
-                    "shops/vendo", "shops/finalInn", "shops/gordon2", "shops/coop", "shops/epickyle_empty",
-                    "shops/tech_empty", "shops/hotel_empty", "shops/cityfixture_empty",
-                    //* Shop Blinks *//
-                    "shopblinks/home", "shopblinks/cluckfuck",
-                    "shopblinks/seedypete", "shopblinks/daveshoes", "shopblinks/inn1", "shopblinks/fixt1", "shopblinks/expand1",
-                    "shopblinks/constr", "shopblinks/merm1", "shopblinks/merm2",
-                    "shopblinks/realactualhuman", "shopblinks/piggy", "shopblinks/cheebo",
-                    "shopblinks/pawn", "shopblinks/tinker", "shopblinks/none", "shopblinks/catalina", "shopblinks/skumpy", "shopblinks/seedshack",
-                    "shopblinks/tech", "shopblinks/hotel", "shopblinks/epickyle", "shopblinks/gordon", "shopblinks/gordon2", "shopblinks/coop",
-                    //* Combat Backgrounds *//
-                    "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "bgs/cave",
-                    //* Onion *//
-                    "onionbg", "calsotte",
-                    //* Endings *//
-                    "end/end1", "end/end2p", "end/end2v", "end/end3np", "end/end4np", "end/end5np", "end/end6np", "end/end7np",
-                    "end/end3ip", "end/end4ip", "end/end5ip", "end/end6ip", "end/end7ip", "end/end3nv", "end/end4nv", "end/end5nv",
-                    "end/end6nv", "end/end7nv", "end/end3iv", "end/end4iv", "end/end5iv", "end/end6iv", "end/end7iv",
-                    //* Other Random Shit and Credits *///
-                    "challengeBG", "tobytern", "endcredits", "endcreditscover", "endcreditsmouth", "upnext"
-                ],
+        "mapChar", "mapCharBig", "mapPlayer", "mapPlayerHelp", // Map Stuff
+        "fov", "horRorTop", "horRorBottom", "ayudame", // Specific Map Stuff
+        "sheet", "sheetBig", "combatSheet", "combatSheetBig", "combatSheetHuge", "combatPlayer", "combatEquipment", // Combat Stuff
+        //* Opening *//
+        "title/logo", "title/lcover0", "title/lcover1", "title/lcover2", "title/lcover3",
+        "title", "titleGround", "titleTop",
+        //* Maps *//
+        "maps/farm", "maps/producestand", "maps/firstvillage",
+        "maps/belowvillage", "maps/researchfacility", "maps/bridge", "maps/underwater", "maps/fakefarm",
+        "maps/southcity", "maps/northcity", "maps/hq_1", "maps/hq_2", "maps/hq_3", "maps/hq_4", "maps/hq_5",
+        "maps/hq_6", "maps/gameover", "cavesheet",
+        "maps/northcity_NG", "maps/northcity_IG", "maps/hq_IG", "maps/northcity_NB", "maps/hq_NB", "maps/hq_NB_side",
+        "maps/northcity_IB", "maps/hq_IB", "maps/forest", "maps/molehome",
+        //* Profiles *//
+        "profiles/amy", "profiles/torbo", "profiles/beth", "profiles/belf", "profiles/jing", "profiles/farha", "profiles/jorge",
+        "profiles/painter", "profiles/carlos", "profiles/robo3", "profiles/hungy", "profiles/trent", "profiles/recept", "profiles/ed",
+        "profiles/thirdjeff", "profiles/skyler", "profiles/cop", "profiles/mailman", "profiles/fishsell", "profiles/citymonk",
+        "profiles/robber", "profiles/barnt", "profiles/eggman", "profiles/nerndette", "profiles/pizza", "profiles/nernd", "profiles/rival",
+        "profiles/skump3", "profiles/skump2", "profiles/skump1", "profiles/vagante", "profiles/oldlady", "profiles/cooldog",
+        "profiles/hkeep", "profiles/fjeff", "profiles/kelp", "profiles/cc", "profiles/smon", "profiles/conboss", "profiles/conwrk",
+        "profiles/dowel", "profiles/cow", "profiles/robo", "profiles/beckettworry", "profiles/beckettshock", "profiles/beckettsad",
+        "profiles/beckettmad", "profiles/fairymad", "profiles/fairy", "profiles/colel", "profiles/drjeff", "profiles/rapb", "profiles/lime",
+        "profiles/fish", "profiles/rabbit", "profiles/tanner", "profiles/aiko", "profiles/june", "profiles/dean", "profiles/beckett",
+        "profiles/conv", "profiles/nathupset", "profiles/nath", "profiles/nathconf", "profiles/nathmad", "profiles/mole", "profiles/capo",
+        //* Map Covers *//
+        "covers/barn", "covers/mob", "covers/skumpy", "covers/northcity1", "covers/northcity2",
+        "covers/northcity2_post", "covers/northcity3",
+        //* Map Foregrounds *//
+        "fg/farm", "fg/producestand", "fg/firstvillage",
+        "fg/belowvillage", "fg/researchfacility", "fg/underwater", "fg/fakefarm",
+        "fg/southcity", "fg/northcity", "fg/hq_1", "fg/hq_2", "fg/hq_3", "fg/hq_4", "fg/hq_5",
+        "fg/hq_IG", "fg/hq_NB", "fg/molehome",
+        //* Shops *//
+        "shops/home", "shops/cluckfuck",
+        "shops/seedypete", "shops/daveshoes",  "shops/inn1", "shops/fixt1", "shops/expand1",
+        "shops/constr", "shops/merm1", "shops/merm2",
+        "shops/realactualhuman", "shops/piggy", "shops/cheebo",
+        "shops/pawn", "shops/tinker", "shops/church", "shops/catalina", "shops/skumpy", "shops/seedshack",
+        "shops/tech", "shops/hotel", "shops/cityfixture", "shops/epickyle", "shops/gordon",
+        "shops/vendo", "shops/finalInn", "shops/gordon2", "shops/coop", "shops/epickyle_empty",
+        "shops/tech_empty", "shops/hotel_empty", "shops/cityfixture_empty",
+        //* Shop Blinks *//
+        "shopblinks/home", "shopblinks/cluckfuck",
+        "shopblinks/seedypete", "shopblinks/daveshoes", "shopblinks/inn1", "shopblinks/fixt1", "shopblinks/expand1",
+        "shopblinks/constr", "shopblinks/merm1", "shopblinks/merm2",
+        "shopblinks/realactualhuman", "shopblinks/piggy", "shopblinks/cheebo",
+        "shopblinks/pawn", "shopblinks/tinker", "shopblinks/none", "shopblinks/catalina", "shopblinks/skumpy", "shopblinks/seedshack",
+        "shopblinks/tech", "shopblinks/hotel", "shopblinks/epickyle", "shopblinks/gordon", "shopblinks/gordon2", "shopblinks/coop",
+        //* Combat Backgrounds *//
+        "bgs/outside", "bgs/underwater", "bgs/researchlab", "bgs/fakefarm", "bgs/scity", "bgs/ncity", "bgs/hq", "bgs/cave",
+        //* Onion *//
+        "onionbg", "calsotte",
+        //* Endings *//
+        "end/end1", "end/end2p", "end/end2v", "end/end3np", "end/end4np", "end/end5np", "end/end6np", "end/end7np",
+        "end/end3ip", "end/end4ip", "end/end5ip", "end/end6ip", "end/end7ip", "end/end3nv", "end/end4nv", "end/end5nv",
+        "end/end6nv", "end/end7nv", "end/end3iv", "end/end4iv", "end/end5iv", "end/end6iv", "end/end7iv",
+        //* Other Random Shit and Credits *///
+        "challengeBG", "tobytern", "endcredits", "endcreditscover", "endcreditsmouth", "upnext"
+    ],
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {

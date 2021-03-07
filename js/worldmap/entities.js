@@ -445,7 +445,15 @@ const mapentities = {
         GetFellow("CoveredDoorR1", 18, 15, 0, "FFDoor2", OneSpeak("barndoorEmpty"), undefined, { changeType: 0 }),
         GetFellow("CoveredDoorR2", 18, 18, 0, "FFDoor2", OneSpeak("barndoorChick"), undefined, { changeType: 0 }),
         GetFellow("CoveredDoorR3", 18, 21, 0, "FFDoor2", OneSpeak("barndoorShop"), undefined, { changeType: 0 }),
-        GetFellow("CoveredDoorR4", 18, 24, 0, "FFDoor2", OneSpeak("barndoorPig"), undefined, { visible: false, inside: true, changeType: 0 })
+        GetFellow("CoveredDoorR4", 18, 24, 0, "FFDoor2", OneSpeak("barndoorPig"), undefined, { visible: false, inside: true, changeType: 0 }),
+        // Skunk
+        AutoPlayFellow("CS_skunk2", [ SpecialFunctions["SECONDSKUNK"] ]),
+        GetFellow("Skunk", 30, -1, 1, "Skunk", OneSpeak("kidaside"), undefined, { noChange: true, storageKey: "skunk" }),
+        GetCSFellow("SkunkTrap2", 30, -1, 0, "", "skunktrap2", { 
+            interact: Cutscene("kidb"), isRow: true, solid: false, visible: false, postBattle: "kidbwon", postBattleLoss: "kidblost"
+        }),
+        new CutsceneTrigger("kidbwon", "kidbwon"),
+        new CutsceneTrigger("kidblost", "kidblost")
     ],
     "southcity": () => [
         // Map Switches

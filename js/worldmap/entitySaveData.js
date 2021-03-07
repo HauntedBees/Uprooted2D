@@ -117,7 +117,7 @@ let mapRefreshes = {
             SetUpFellow(worldmap.importantEntities["outlet"], "Outlet2");
         }
         if(worldmap.importantEntities["FarmerJeff"] !== undefined) {
-            worldmap.importantEntities["FarmerJeff"].interact = undefined;
+            worldmap.importantEntities["FarmerJeff"].interact = worldmap.entities.filter(e=>e.name==="CS_skunk2")[0].interact;
             worldmap.importantEntities["FarmerJeff"].visible = false;
         }
         if(player.hasOrHasHadQuest("gotTire")) {
