@@ -334,7 +334,11 @@ CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 function CombatAnimFalcon(x, y) { CombatAnimEntity.call(this, "combatPlayer", 32, 30, x, y, falconAnims, "STAND"); }
 CombatAnimPlayer.prototype = Object.create(CombatAnimEntity.prototype);
 
-function CombatAnimOnion(x, y) { CombatAnimEntity.call(this, "sheet", 18, 18, x, y, onionAnims, "STAND"); this.isOnion = true; }
+function CombatAnimOnion(x, y, isSkunk, isSkunk2) {
+    if(isSkunk) { x += 3; }
+    CombatAnimEntity.call(this, "sheet", 18, 18, x, y, onionAnims, (isSkunk ? (isSkunk2 ? "SLEEPT" : "SLEEP") : "STAND"));
+    this.isOnion = true;
+}
 CombatAnimOnion.prototype = Object.create(CombatAnimEntity.prototype);
 
 function CombatAnimEnemy(sheet, w, h, x, y, dx, dy) { CombatAnimEntity.call(this, sheet, w, h, x, y, enemyCombatAnims, "STAND", dx, dy); }

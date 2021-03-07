@@ -7350,6 +7350,94 @@ const fulltext = {
 		"en-us": "...Taped to the last page of this book is a demo tape titled \"Hip Bible Raps by Father Iggy.\" The track listing includes \"My Homeboy Jesus\", \"It's Cool to Take the Eucharist\", \"Mary is my Bae\", and \"The Deuteronomy Rap.\"", 
 		"type": "book"
 	},
+	// That Fucking Kid
+	"kida0": {
+		"en-us": "???: Aha! A rival!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kida1": {
+		"en-us": "???: Don't think I didn't see that little onion of yours! You're a veggie trainer, too! That means we need to battle!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kida1yes": {
+		"en-us": "What are you talking about?", 
+		"type": "choice"
+	},
+	"kida1no": {
+		"en-us": "I'm a little busy right now.", 
+		"type": "choice"
+	},
+	"kida2": {
+		"en-us": "???: Don't pretend you don't know! I'm Skunk Kowalski from North Las Abejas, and I'm a veggie trainer, just like you!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kida3": {
+		"en-us": "Skunk: What's your onion's name? Calsotte? Well they're gonna be Cal..uh...CAL-DEFEATED after I'm done with you!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kida4": {
+		"en-us": "Skunk: Now LET'S BATTLE!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kida4yes": {
+		"en-us": "Please leave me alone.", 
+		"type": "choice"
+	},
+	"kida4no": {
+		"en-us": "I'm morally opposed to your proposition.", 
+		"type": "choice"
+	},
+	"kida5": {
+		"en-us": "Skunk: LA LA LA LA I CAN'T HEAR YOU, TOMATON, GO!!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidaLost1": {
+		"en-us": "Skunk: HA HA! I BEAT YOU! THAT MEANS YOU OWE ME HALF OF YOUR MONEY!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidaLost2": {
+		"en-us": "Skunk: You gotta try harder next time! Later, nerd!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidaLost3": {
+		"en-us": "How did that kid even get that thing? I thought that scientist said Calsotte was one of a kind...", 
+		"type": "text"
+	},
+	"kidaWon1": {
+		"en-us": "Skunk: What?! How could you beat me!? Oh well, I guess that means I owe you half of my money!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidaWon2": {
+		"en-us": "The kid offers me a handful of coins and candy wrappers, which I politely decline.", 
+		"type": "text"
+	},
+	"kidaWon3": {
+		"en-us": "Skunk: I'll beat you next time! I just need to remember all of the buffs that veggies can get!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidaWon4": {
+		"en-us": "Skunk: I think if I feed them enough garlic, ginger, and asparagus they should get the \"Pungent\" buff...", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidfightattack": {
+		"en-us": "I'm not going to physically assault a child, no matter how annoying they are...", 
+		"type": "combat"
+	},
+	"kidaside": {
+		"en-us": "I try to greet the kid, but he's too intently focused to notice me.", 
+		"type": "text"
+	},
 	// Bees
 	"hiveGet": {
 		"en-us": "I found a beehive! Now I can place one more beehive on my farm. I caught some bees, too!", 
@@ -10006,6 +10094,22 @@ const fulltext = {
 	},
 	"e.yourWorstFuckingNightmare0": {
 		"en-us": "Chuds McDaniels", 
+		"type": "enemy"
+	},
+	"e.kida0": {
+		"en-us": "Skunk", 
+		"type": "enemy"
+	},
+	"e.kidb0": {
+		"en-us": "Skunk", 
+		"type": "enemy"
+	},
+	"e.kidc0": {
+		"en-us": "Skunk", 
+		"type": "enemy"
+	},
+	"e.kidd0": {
+		"en-us": "Skunk", 
 		"type": "enemy"
 	},
 	// Full Inventory Bullshit

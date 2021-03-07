@@ -6,11 +6,12 @@ const combat = {
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     didHarvest: false, harvestChain: 0, 
-    animHelper: null, isTree: false, isChallenge: false, challenger: "", 
+    animHelper: null, isTree: false, isChallenge: false, challenger: "", isSkunk: false,
     startBattle: function(enemies, skipTransition, isChallenge) {
         player.initGridDimensions();
         this.didHarvest = false;
         this.isChallenge = isChallenge || false;
+        this.isSkunk = ["kida", "kidb", "kidc", "kidd"].indexOf(enemies[0]) >= 0;
         if(this.isChallenge) {
             Sounds.PlaySound("naptime");
         } else {
@@ -114,7 +115,7 @@ const combat = {
         }
 
         this.adjustEnemyStatsWeather();
-        this.animHelper = new CombatAnimHelper(this.enemies);
+        this.animHelper = new CombatAnimHelper(this.enemies, this.isSkunk);
         this.enemyGrid = this.getGrid(this.enemywidth, this.enemyheight);
         for(let i = 0; i < this.enemies.length; i++) {
             if(this.enemies[i].initFunc === undefined) { continue; }
@@ -368,7 +369,9 @@ const combat = {
     },
     fuckingDead: function() {
         const inn = inns[player.lastInn];
+        let loss;
         if(game.target !== null) {
+            loss = game.target.postBattleLoss;
             if(game.target.nonStandardGameOver !== undefined) {
                 combat.wrapUpCombat();
                 const postCombat = game.target.nonStandardGameOver;
@@ -383,13 +386,26 @@ const combat = {
                 });
                 return;
             }
-            player.failedEntities.push(game.target.name);
-            game.target = null;
+            if(!loss) {
+                player.failedEntities.push(game.target.name);
+                game.target = null;
+            }
         }
         player.health = player.maxhealth;
         clearInterval(combat.charAnimIdx);
         combat.wrapUpCombat();
-        game.transition(game.currentInputHandler, worldmap, { init: { x: inn.x,  y: inn.y }, map: GetPostGameMapName(inn.map), isInn: true, playerDir: 2 });
+        if(loss) {
+            worldmap.clearTarget();
+            game.target = null;
+            game.transition(game.currentInputHandler, worldmap, {
+                init: worldmap.pos,
+                map: worldmap.mapName,
+                noEntityUpdate: true,
+                postCombat: loss
+            });
+        } else {
+            game.transition(game.currentInputHandler, worldmap, { init: { x: inn.x,  y: inn.y }, map: GetPostGameMapName(inn.map), isInn: true, playerDir: 2 });
+        }
     },
     checkForLevelUp: function() {
         if(player.exp >= player.nextExp && player.level < 20) {

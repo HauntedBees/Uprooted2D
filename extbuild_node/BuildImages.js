@@ -131,9 +131,13 @@ if(noArgs || HasArg("challenge")) {
 if(noArgs || HasArg("onion")) {
     RipImage("calsotte");
 }
+if(noArgs || HasArg("cs")) {
+    RipImage("combatSheet");
+}
+if(noArgs || HasArg("profile")) {
+    RipProfiles();
+}
+
 if(filters || HasArg("hqx")) {
     console.log("TODO");
-}
-if(filters || HasArg("profile")) {
-    RipProfiles();
 }

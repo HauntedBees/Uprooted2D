@@ -78,6 +78,9 @@ combat.menu = {
                 if(combat.isChallenge) {
                     text = GetText("combatFinishDesc");
                     charAnim = "WON";
+                } else if(combat.isSkunk && count === 0) {
+                    text = GetText("kidfightattack");
+                    charAnim = "CANTDO";
                 } else if(combat.isFalcon) {
                     text = GetText("attack_falcon");
                     charAnim = "LOOKBACK";
@@ -273,6 +276,7 @@ combat.menu = {
                     if(!combat.isFalcon && this.plantedAlreadyAndCantAttack) { Sounds.PlaySound("navNok"); return false; }
                     const count = this.highlightReadyCropsAndReturnCount();
                     const theircount = this.getEnemyCropCount();
+                    if(combat.isSkunk && count === 0) { Sounds.PlaySound("navNok"); return false; }
                     if(!combat.isFalcon && count === 0 && !player.canMelee(theircount)) { Sounds.PlaySound("navNok"); return false; }
                     let attackCount = 1;
                     if(player.equipment.weapon !== null) { attackCount = GetEquipment(player.equipment.weapon).attacks || 1; }

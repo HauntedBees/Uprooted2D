@@ -1193,5 +1193,11 @@ const sprites = {
     "MetalInfoDR": [22, 32],
     "a.italia": [23, 32],
     "a.frame": [24, 32],
+    "o.sleep0": [25, 32],
+    "o.sleep1": [26, 32],
+    "o.sleep2": [27, 32],
+    "t.sleep0": [28, 32],
+    "t.sleep1": [29, 32],
+    "t.sleep2": [30, 32],
     "tooLazyToWriteCodeToTrimTheLastCommaRightNow": []
 };

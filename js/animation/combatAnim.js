@@ -1,8 +1,9 @@
-function CombatAnimHelper(enemies) {
+function CombatAnimHelper(enemies, isSkunk) {
     let playerPos = { x: (combat.isChallenge ? 7 : 3), y: 4.625 };
     let playerAnimInfo = new CombatAnimPlayer(playerPos.x, playerPos.y);
     let birdAnimInfo = (player.hasFalcon ? new CombatAnimFalcon(playerPos.x - 1.5, playerPos.y) : null);
-    let onionAnimInfo = (player.onion ? new CombatAnimOnion(playerPos.x - 0.125, playerPos.y + 0.125) : null);
+    let onionAnimInfo = (player.onion ? new CombatAnimOnion(playerPos.x - 0.125, playerPos.y + 0.125, isSkunk) : null);
+    let onion2AnimInfo = (isSkunk ? new CombatAnimOnion(playerPos.x + 2.125, playerPos.y + 0.125, isSkunk, true) : null);
     let enemyAnimInfos = [], anims = [];
     const GetDeltaCurrentX = function(e) {
         switch(e.size) {
@@ -78,7 +79,11 @@ function CombatAnimHelper(enemies) {
         }
     };
 
-    this.SetOnionAnimState = function(name) { onionAnimInfo.SetAnim(name); };
+    this.SetOnionAnimState = function(name) {
+        if(!onionAnimInfo) { return; }
+        if(combat.isSkunk && name !== "SLEEP") { return; }
+        onionAnimInfo.SetAnim(name);
+    };
 
     this.SetBirdAnimArg = (key, val) => { if(birdAnimInfo !== null) { birdAnimInfo.PushArg(key, val); }};
     this.SetBirdAnimPos = (x, y) => { if(birdAnimInfo !== null) { birdAnimInfo.dims.x = x; birdAnimInfo.dims.y = y; }};
@@ -126,6 +131,7 @@ function CombatAnimHelper(enemies) {
         if(birdAnimInfo !== null) { birdAnimInfo.Animate(); }
         playerAnimInfo.Animate();
         if(onionAnimInfo !== null) { onionAnimInfo.Animate(); }
+        if(onion2AnimInfo !== null) { onion2AnimInfo.Animate(); }
         for(let i = 0; i < enemyAnimInfos.length; i++) {
             const isEnemyStuck = (combat.enemies[i].stickTurns > 0 && !combat.enemies[i].justStuck);
             if(enemyAnimInfos[i].dead) { enemyAnimInfos[i].CorpseItUp(enemyAnimInfos[i].deadFrame++, combat.enemies[i].size); }

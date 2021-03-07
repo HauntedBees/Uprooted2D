@@ -103,7 +103,15 @@ const onionAnims = {
     "MOURN": JustOne(sprites["ob.down"][0], sprites["ob.down"][1]),
     "WON": new AnimSet([
         new AnimFrame(sprites["ob.std"][0], sprites["ob.std"][1]), 
-        new AnimFrame(sprites["ob.up"][0], sprites["ob.up"][1])], true, 4)
+        new AnimFrame(sprites["ob.up"][0], sprites["ob.up"][1])], true, 4),
+    "SLEEP": new AnimSet([
+        new AnimFrame(sprites["o.sleep0"][0], sprites["o.sleep0"][1]), 
+        new AnimFrame(sprites["o.sleep1"][0], sprites["o.sleep1"][1]), 
+        new AnimFrame(sprites["o.sleep2"][0], sprites["o.sleep2"][1])], true, 4),
+    "SLEEPT": new AnimSet([
+        new AnimFrame(sprites["t.sleep0"][0], sprites["t.sleep0"][1]), 
+        new AnimFrame(sprites["t.sleep1"][0], sprites["t.sleep1"][1]), 
+        new AnimFrame(sprites["t.sleep2"][0], sprites["t.sleep2"][1])], true, 4)
 };
 const falconAnims = {
     "STAND": JustOne(1, 5),

@@ -63,7 +63,7 @@ const game = {
                     "profiles/amy", "profiles/torbo", "profiles/beth", "profiles/belf", "profiles/jing", "profiles/farha", "profiles/jorge",
                     "profiles/painter", "profiles/carlos", "profiles/robo3", "profiles/hungy", "profiles/trent", "profiles/recept", "profiles/ed",
                     "profiles/thirdjeff", "profiles/skyler", "profiles/cop", "profiles/mailman", "profiles/fishsell", "profiles/citymonk",
-                    "profiles/robber", "profiles/barnt", "profiles/eggman", "profiles/nerndette", "profiles/pizza", "profiles/nernd",
+                    "profiles/robber", "profiles/barnt", "profiles/eggman", "profiles/nerndette", "profiles/pizza", "profiles/nernd", "profiles/rival",
                     "profiles/skump3", "profiles/skump2", "profiles/skump1", "profiles/vagante", "profiles/oldlady", "profiles/cooldog",
                     "profiles/hkeep", "profiles/fjeff", "profiles/kelp", "profiles/cc", "profiles/smon", "profiles/conboss", "profiles/conwrk",
                     "profiles/dowel", "profiles/cow", "profiles/robo", "profiles/beckettworry", "profiles/beckettshock", "profiles/beckettsad",

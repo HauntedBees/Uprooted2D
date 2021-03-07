@@ -896,4 +896,18 @@ const scripts = {
 	"beckettJail1": "beckJail_ISMOVING:false&_TEXT:beckettJail(1-2)",
 	"beckettJail2": "beckJail_ISMOVING:true&_TEXT:beckettJail3",
 	"beckettJail3": "beckJail_ISMOVING:false&_QUIT",
+	// Skunk (First Encounter)
+	"kida0": "_TEXT:kida0&_COMPLETEQUEST:skunk1",
+	"kida1": "_CUSTOM:WALKTOPLAYER",
+	"kida2": "skunk_SETDIR:2&_TEXT:kida1,kida1yes,kida1no",
+	"kida3": "_TEXT:kida(2-3)",
+	"kida4": "_TEXT:kida4,kida4yes,kida4no",
+	"kida5": "_TEXT:kida5",
+	"kida6": "_FIGHT:kida",
+	"kidawon0": "_TEXT:kidaWon(1-3)",
+	"kidawon1": "_CUSTOM:SKUNKSCAMPER",
+	"kidawon2": "_TEXT:kidaWon4",
+	"kidalost0": "_CUSTOM:SKUNKLOSS&_TEXT:kidaLost(1-2)",
+	"kidalost1": "_CUSTOM:SKUNKSCAMPER",
+	"kidalost2": "_TEXT:kidaLost3",
 };

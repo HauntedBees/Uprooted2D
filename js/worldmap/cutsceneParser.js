@@ -75,7 +75,7 @@ const iHandler = {
 };
 const CommandParser = {
     ConditionCheck: function(json) {
-        let d = worldmap.dialogData === null ? -1 : worldmap.dialogData.idx;
+        let d = worldmap.dialogData === null ? -1 : worldmap.dialogData.idx; // used in eval statement
         for(let i = 0; i < json.length; i++) {
             if(!eval(json[i].q)) { continue; }
             iHandler.state.idx = json[i].v;
@@ -324,6 +324,20 @@ const SpecialFunctions = {
         }
         worldmap.refreshMap();
         return true;
+    },
+    "FIRSTSKUNK": function() {
+        console.log("SKUNKCHECK");
+        if(player.completedQuest("researchLab") && !player.completedQuest("skunk1")) {
+            worldmap.importantEntities["skunk"].pos = { x: 26, y: 2 };
+            if(worldmap.importantEntities["skunktrap"]) {
+                worldmap.importantEntities["skunktrap"].pos.y = 2;
+            }
+        } else {
+            worldmap.importantEntities["skunk"].pos = { x: -1, y: -1 };
+            if(worldmap.importantEntities["skunktrap"]) {
+                worldmap.importantEntities["skunktrap"].pos.y = -1;
+            }
+        }
     },
 
     // Challenges
@@ -1373,6 +1387,43 @@ const SpecialFunctions = {
         worldmap.importantEntities["caveboy"].moving = true;
         CommandParser.Parse_Text(["undergroundFail"]);
         worldmap.inDialogue = true;
+    },
+
+    // Skunk
+    "WALKTOPLAYER": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["skunk"].dir = 1;
+        worldmap.importantEntities["skunk"].moving = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["skunk"].pos.x -= 0.05;
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["skunk"].pos.x <= (worldmap.pos.x + 1);
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "SKUNKLOSS": function() { player.monies = Math.ceil(player.monies / 2); },
+    "SKUNKSCAMPER": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.importantEntities["skunk"].dir = 0;
+        worldmap.importantEntities["skunk"].moving = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.importantEntities["skunk"].pos.y -= 0.1;
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.importantEntities["skunk"].pos.y < (worldmap.pos.y - 10) || worldmap.importantEntities["skunk"].pos.y <= -1;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                worldmap.importantEntities["skunk"].pos.y = -1;
+                player.clearedEntities.push("skunktrap", "kidawon", "kidalost");
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
     },
 
     // Misc.

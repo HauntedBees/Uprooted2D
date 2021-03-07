@@ -95,7 +95,15 @@ const mapentities = {
         GetFellow("June", 20, 5, 2, "June", OneSpeak("villager1"), undefined, { moveToTalk: true }),
         GetFellow("Aiko", 27, 10, 3, "Aiko", OneSpeak("villager2"), undefined, { moveToTalk: true }),
         GetFellow("Tanner", 3, 18, 0, "Tanner", OneSpeak("villager3"), undefined, { moveToTalk: true }),
-        GetSign(1, 24, "SignForest")
+        GetSign(1, 24, "SignForest"),
+        // Skunk
+        AutoPlayFellow("CS_skunk1", [ SpecialFunctions["FIRSTSKUNK"] ]),
+        GetFellow("Skunk", 26, 2, 1, "Skunk", OneSpeak("kidaside"), undefined, { noChange: true, storageKey: "skunk" }),
+        GetCSFellow("SkunkTrap", 26, 2, 0, "", "skunktrap", { 
+            interact: Cutscene("kida"), isRow: true, solid: false, visible: false, leftx: 19, rightx: 25, postBattle: "kidawon", postBattleLoss: "kidalost"
+        }),
+        new CutsceneTrigger("kidawon", "kidawon"),
+        new CutsceneTrigger("kidalost", "kidalost")
     ],
     "forest": () => [
         // Map Switching

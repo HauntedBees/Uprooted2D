@@ -268,6 +268,7 @@ const mafs = {
     "June": new MapAnimFactory("dw", [16, 2, 2]),
     "Aiko": new MapAnimFactory("dw", [16, 4, 2]),
     "Tanner": new MapAnimFactory("dw", [16, 6, 2]),
+    "Skunk": new MapAnimFactory("sw", [28, 16]),
     // The Forest
     "GoldMush": Ft(15, 4), "CarrotBag": Ft(15, 7), "Fishfriend": new MapAnimFactory("dw", [4, 6, 2]), "HatchedGold": Ft(19, 10),
     "Lime": new MapAnimFactory("dw", [8, 4, 2, false, 2]), "LimeTalk": new MapAnimFactory("dw", [8, 6, 2, false, 6]),
