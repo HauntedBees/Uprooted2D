@@ -471,7 +471,9 @@ const stores = {
             { product: "arborio", type: "seed" },
             { product: "blackrice", type: "seed" },
             { product: "shortgrain", type: "seed" },
-            { product: "chestnut", type: "seed" }
+            { product: "chestnut", type: "seed" },
+            { product: "holywater", type: "seed" },
+            { product: "holyjug", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
@@ -498,7 +500,9 @@ const stores = {
             { product: "goodrod", type: "seed" },
             { product: "metalrod", type: "seed" },
             { product: "net", type: "seed" },
-            { product: "bignet", type: "seed" }
+            { product: "bignet", type: "seed" },
+            { product: "holywater", type: "seed" },
+            { product: "holyjug", type: "seed" }
         ],
         buyMult: 1, sellMult: 0.5, doesSell: false,
         opening: "s.vendoEnter", leaving: "s.vendoLeave", notEnough: "s.vendoNotEnough", purchased: "s.vendoBought"
