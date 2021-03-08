@@ -261,6 +261,17 @@ pausemenu.onion = {
         if(player.onion.perks.length > 0 && pos.x >= (this.inventoryWidth + player.onion.perks.length)) { return false; }
         const idx = pos.y * this.inventoryWidth + pos.x;
         if(idx > this.actualIndexes.length) { return false; }
+        if(this.cursor.x >= this.inventoryWidth && pos.x >= this.inventoryWidth) { // on calsotte side
+            if(pos.y < this.cursor.y) { // moving to perks
+                pos.y = 0;
+            } else if(pos.y > this.cursor.y) { // moving from buffs
+                pos.y = 1;
+                pos.x = this.inventoryWidth;
+            }
+            if(pos.x > this.cursor.x && this.cursor.y > 0) { // moving past calsotte
+                return false;
+            }
+        }
         if(SamePoints(this.cursor, pos)) { return false; }
         this.cursor = { x: pos.x, y: pos.y };
         Sounds.PlaySound("menuMove");
@@ -276,7 +287,9 @@ pausemenu.onion = {
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
             const actIdx = this.actualIndexes[idx];
             if(this.cursor.x >= this.inventoryWidth) {
-                if(this.selectedCrop < 0) {
+                if(this.cursor.y === 0) {
+                    return false;
+                } else if(this.selectedCrop < 0) {
                     return this.Pet();
                 } else {
                     return this.Feed();
