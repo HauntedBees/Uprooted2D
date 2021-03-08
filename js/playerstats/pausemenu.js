@@ -214,12 +214,18 @@ const pausemenu = {
         pausemenu.addText(str, x, y);
     },
     cancel: function() {
-        Sounds.PlaySound("pauseO", true);
-        game.transition(this, worldmap, {
-            init: worldmap.pos,
-            map: worldmap.mapName,
-            noEntityUpdate: true
-        });
+        if(this.lastPressWasQuit) {
+            this.lastPressWasQuit = false;
+            Sounds.PlaySound("cancel");
+            this.DrawAll();
+        } else {
+            Sounds.PlaySound("pauseO", true);
+            game.transition(this, worldmap, {
+                init: worldmap.pos,
+                map: worldmap.mapName,
+                noEntityUpdate: true
+            });
+        }
     },
     CursorMove: function(pos) {
         if(pos.x === this.cursorX && pos.y === this.cursorY) { return false; }
@@ -295,7 +301,7 @@ const pausemenu = {
             return;
         }
         this.lastPressWasQuit = true;
-        gfx.drawInfobox(17, 1.75, 8, "menuA", "FarmInfo");
+        gfx.drawInfobox(17, 1.75, 8, "menutext", "FarmInfo");
         gfx.drawWrappedText(GetText("quitConfirm"), 5, 140, 250);
     },
     BeepHour: function(pos) {
