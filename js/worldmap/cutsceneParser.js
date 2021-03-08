@@ -1402,6 +1402,19 @@ const SpecialFunctions = {
             }
         }
     },
+    "THIRDSKUNK": function() {
+        if(player.completedQuest("keycard") && !player.completedQuest("skunk3")) {
+            worldmap.importantEntities["skunk"].pos = { x: 40, y: 10 };
+            if(worldmap.importantEntities["skunktrap3"]) {
+                worldmap.importantEntities["skunktrap3"].pos.y = 10;
+            }
+        } else {
+            worldmap.importantEntities["skunk"].pos = { x: -1, y: -1 };
+            if(worldmap.importantEntities["skunktrap3"]) {
+                worldmap.importantEntities["skunktrap3"].pos.y = -1;
+            }
+        }
+    },
 
     "WALKTOPLAYER": function() {
         worldmap.waitForAnimation = true;

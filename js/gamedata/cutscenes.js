@@ -579,7 +579,7 @@ const scripts = {
 	"keytrap6": "_FIGHT:dweebLord",
 	"keyfail0": "_TEXT:keycard4",
 	"keyfail1": "_FIGHT:dweebLord",
-	"keywin0": "_CHIEVO:boss5&_COMPLETEQUEST:keycard&_TEXT:keycard5",
+	"keywin0": "_CHIEVO:boss5&_COMPLETEQUEST:keycard&_TEXT:keycard5&_CUSTOM:THIRDSKUNK",
 	"keywin1": "_SOUND:nerdfall2&_HISPEED&_CUSTOM:FORCEYZERO&dweeb_ANIM:Dweeb3&dweeb_MOVE:y15",
 	"keywin2": "_LOSPEED&_CUSTOM:UNFORCEYZERO&dweeb_SETTARGET&_CLEARTARGET&_CUSTOM:NERDBOOM",
 	"keywin3": "scrungus_SETTARGET&_CLEARTARGET&keytrap_SETTARGET&_CLEARTARGET&_CUSTOM:CLEANBOOM&_QUIT",
@@ -923,4 +923,14 @@ const scripts = {
 	"kidblost0": "_CUSTOM:SKUNKLOSS&_TEXT:kidbLost(1-2)",
 	"kidblost1": "_CUSTOM:SKUNKSCAMPER",
 	"kidblost2": "_TEXT:kidbLost3",
+	// Skunk (Third Encounter)
+	"kidc0": "_COMPLETEQUEST:skunk2&_TEXT:kidc0,kidc0a,kidc0b,kidc0c",
+	"kidc1": "_TEXT:kidc1",
+	"kidc2": "_FIGHT:kidc",
+	"kidcwon0": "_TEXT:kidcWon(1-2)",
+	"kidcwon1": "_CUSTOM:SKUNKSCAMPER",
+	"kidcwon2": "_TEXT:kidcEnd",
+	"kidclost0": "_CUSTOM:SKUNKLOSS&_TEXT:kidcLost(1-2)",
+	"kidclost1": "_CUSTOM:SKUNKSCAMPER",
+	"kidclost2": "_TEXT:kidcEnd",
 };

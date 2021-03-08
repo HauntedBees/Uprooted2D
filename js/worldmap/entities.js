@@ -655,7 +655,15 @@ const mapentities = {
         GetNoIMFellow("12thSt", 4, 43, "St12", { boring: true, big: true }),
         GetNoIMFellow("13thSt", 4, 26, "St13", { boring: true, big: true }),
         GetNoIMFellow("14thSt", 2, 9, "St14", { boring: true, big: true }),
-        GetSign(24, 19, "forRentSign")
+        GetSign(24, 19, "forRentSign"),
+        // Skunk
+        AutoPlayFellow("CS_skunk3", [ SpecialFunctions["THIRDSKUNK"] ]),
+        GetFellow("Skunk", 40, -1, 1, "Skunk", OneSpeak("kidaside"), undefined, { noChange: true, storageKey: "skunk" }),
+        GetCSFellow("SkunkTrap3", 40, -1, 0, "", "skunktrap3", { 
+            interact: Cutscene("kidc"), isRow: true, solid: false, visible: false, postBattle: "kidcwon", postBattleLoss: "kidclost", leftx: 38, rightx: 40,
+        }),
+        new CutsceneTrigger("kidcwon", "kidcwon"),
+        new CutsceneTrigger("kidclost", "kidclost")
     ],
     "hq_1": function() {
         const entities = [

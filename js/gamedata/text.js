@@ -7435,7 +7435,7 @@ const fulltext = {
 		"type": "combat"
 	},
 	"kidaside": {
-		"en-us": "I try to greet the kid, but he's too intently focused to notice me.", 
+		"en-us": "I try to greet him, but he's too focused on staring forward to notice me.", 
 		"type": "text"
 	},
 	"kidb0": {
@@ -7504,6 +7504,52 @@ const fulltext = {
 	},
 	"kidbLost3": {
 		"en-us": "I should probably stop humoring this kid. Is he having family problems at home or something?", 
+		"type": "text"
+	},
+	"kidc0": {
+		"en-us": "Skunk: I like shorts! But I'm allergic to tall grass and it makes my shins break out in hives.", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidc0a": {
+		"en-us": "How did you even know I'd be here?", 
+		"type": "choice"
+	},
+	"kidc0b": {
+		"en-us": "Why are you like this?", 
+		"type": "choice"
+	},
+	"kidc0c": {
+		"en-us": "Please stop.", 
+		"type": "choice"
+	},
+	"kidc1": {
+		"en-us": "Skunk: Enough talk! It's time to b-b-b-b-b-battle!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidcWon1": {
+		"en-us": "Skunk: You beat me?! How could this be... I even used the \"Oops! All Berries!\" buff by feeding Turnoppe nothing but berries...", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidcWon2": {
+		"en-us": "Skunk: Next time I'll win for sure! I'll train even harder!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidcEnd": {
+		"en-us": "How does this keep happening?", 
+		"type": ""
+	},
+	"kidcLost1": {
+		"en-us": "Skunk: Ha ha! I'm victorious! Half of your monies are belong to me!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidcLost2": {
+		"en-us": "Skunk: You better try harder next time! It's no fun if I always win!", 
+		"profile": "rival",
 		"type": "text"
 	},
 	// Bees
