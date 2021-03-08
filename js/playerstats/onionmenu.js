@@ -246,10 +246,17 @@ pausemenu.onion = {
     },
     mouseMove: function(pos) {
         const dpos = { x: pos.x - this.cropDX, y: pos.y - this.invDY };
-        if(dpos.y < 0) {
+        if(dpos.y < 0) { // back button
             // TODO: do I matter yet
-            return false;
-        } else {
+            dpos.x = 0;
+            dpos.y = -1;
+            //return false;
+        } else if(dpos.x >= this.inventoryWidth) { // calsotte side
+            dpos.x = Math.floor(dpos.x) - 2;
+            if(dpos.y > 2) { dpos.y = 1; } else { dpos.y = 0; }
+            console.log(dpos);
+            console.log("asstown");
+        } else { // main movement
             input.FloorPoint(dpos);
             if(dpos.y < 0) { return false; }
             if(dpos.x > this.inventoryWidth) { return false; }
