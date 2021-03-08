@@ -42,7 +42,7 @@ const pausemenu = {
     },
     DrawAll: function() {
         gfx.clearSome(pausemenu.layersToClear);
-        const rowYs = [10, 10.75];
+        const rowYs = [10.125, 10.75];
         pausemenu.options = [];
 
         let cursorY = 0;
