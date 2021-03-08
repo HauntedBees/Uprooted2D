@@ -924,7 +924,7 @@ const scripts = {
 	"kidblost1": "_CUSTOM:SKUNKSCAMPER",
 	"kidblost2": "_TEXT:kidbLost3",
 	// Skunk (Third Encounter)
-	"kidc0": "_COMPLETEQUEST:skunk2&_TEXT:kidc0,kidc0a,kidc0b,kidc0c",
+	"kidc0": "_COMPLETEQUEST:skunk3&_TEXT:kidc0,kidc0a,kidc0b,kidc0c",
 	"kidc1": "_TEXT:kidc1",
 	"kidc2": "_FIGHT:kidc",
 	"kidcwon0": "_TEXT:kidcWon(1-2)",
@@ -933,4 +933,10 @@ const scripts = {
 	"kidclost0": "_CUSTOM:SKUNKLOSS&_TEXT:kidcLost(1-2)",
 	"kidclost1": "_CUSTOM:SKUNKSCAMPER",
 	"kidclost2": "_TEXT:kidcEnd",
+	// Skunk (Final Encounter)
+	"kidd0": "_COMPLETEQUEST:skunk4&skunk_SETDIR:2&skunk_ISMOVING:true&_TEXT:kidd(0-8)",
+	"kidd1": "_FIGHT:kidd",
+	"kidend0": "_TEXT:kiddEnd(0-3)",
+	"kidend1": "_CUSTOM:SKUNKSCAMPER",
+	"kidend2": "_TEXT:kiddEnd4",
 };

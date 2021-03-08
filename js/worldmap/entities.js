@@ -660,7 +660,7 @@ const mapentities = {
         AutoPlayFellow("CS_skunk3", [ SpecialFunctions["THIRDSKUNK"] ]),
         GetFellow("Skunk", 40, -1, 1, "Skunk", OneSpeak("kidaside"), undefined, { noChange: true, storageKey: "skunk" }),
         GetCSFellow("SkunkTrap3", 40, -1, 0, "", "skunktrap3", { 
-            interact: Cutscene("kidc"), isRow: true, solid: false, visible: false, postBattle: "kidcwon", postBattleLoss: "kidclost", leftx: 38, rightx: 40,
+            interact: Cutscene("kidc"), isRow: true, solid: false, visible: false, postBattle: "kidcwon", postBattleLoss: "kidclost", leftx: 38, rightx: 40
         }),
         new CutsceneTrigger("kidcwon", "kidcwon"),
         new CutsceneTrigger("kidclost", "kidclost")
@@ -934,7 +934,15 @@ const mapentities = {
         // Boss
         { name: "CS_BeckettStandoff", pos: { x: 8, y: 16 }, boring: true, isRow: true, interact: Cutscene("food2Fifth"), solid: false, visible: false, failedInteract: Cutscene("food2Lost"), postBattle: "iWahn" },
         GetCSFellow("BeckettsReturn", 8, 15, 0, "BeckBack1", "beckettBack"),
-        new CutsceneTrigger("food2Beat", "iWahn")
+        new CutsceneTrigger("food2Beat", "iWahn"),
+        GetSign(24, 19, "forRentSign"),
+        // Skunk
+        AutoPlayFellow("CS_skunk4", [ SpecialFunctions["FINALSKUNK"] ]),
+        GetFellow("Skunk", 8.5, 4, 1, "Skunk", OneSpeak("kidaside"), undefined, { noChange: true, storageKey: "skunk" }),
+        GetCSFellow("SkunkTrap4", 8, 4, 0, "", "skunktrap4", { 
+            interact: Cutscene("kidd"), isRow: true, solid: false, visible: false, postBattle: "kiddend", postBattleLoss: "kidend"
+        }),
+        new CutsceneTrigger("kidend", "kidend")
     ],
     "hq_6": () => function() {
         const entities = [

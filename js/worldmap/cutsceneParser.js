@@ -1415,6 +1415,19 @@ const SpecialFunctions = {
             }
         }
     },
+    "FINALSKUNK": function() {
+        if(!player.completedQuest("skunk4")) {
+            worldmap.importantEntities["skunk"].pos = { x: 8.5, y: 4 };
+            if(worldmap.importantEntities["skunktrap4"]) {
+                worldmap.importantEntities["skunktrap4"].pos.y = 4;
+            }
+        } else {
+            worldmap.importantEntities["skunk"].pos = { x: -1, y: -1 };
+            if(worldmap.importantEntities["skunktrap4"]) {
+                worldmap.importantEntities["skunktrap4"].pos.y = -1;
+            }
+        }
+    },
 
     "WALKTOPLAYER": function() {
         worldmap.waitForAnimation = true;

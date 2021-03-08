@@ -7552,6 +7552,75 @@ const fulltext = {
 		"profile": "rival",
 		"type": "text"
 	},
+	"kidd0": {
+		"en-us": "Skunk: We meet again, my rival! It's time to battle!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd1": {
+		"en-us": "Skunk: ...What's wrong?", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd2": {
+		"en-us": "Skunk: What do you mean \"it makes no sense for me to be here\"?! We're rivals! I'll always be ready to fight you!!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd3": {
+		"en-us": "Skunk: Geez, calm down, lady! I'm not the iloomattis! I've just been following you around a bit, and then sneaking ahead of you when you're distracted!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd4": {
+		"en-us": "Skunk: Why? I dunno... I used to play a lot of video games so I figured that this is just what you're supposed to do in situations like these...", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd5": {
+		"en-us": "Skunk: I found Turnoppe in a trash can outside of this building a few weeks ago and everybody thinks I'm weird for having them...", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd6": {
+		"en-us": "Skunk: But then I saw you had a weird little vegetable thing, too, and I finally felt like I wasn't just some weird kid anymore!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd7": {
+		"en-us": "Skunk: What do you mean \"I'm definitely a weird kid\"?! That's a rude thing to say!!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kidd8": {
+		"en-us": "Skunk: Anyway, if I'm getting in your way, I'll leave you alone, but please grant me ONE LAST BATTLE before I go!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kiddEnd0": {
+		"en-us": "Skunk: Phew! What a battle! What fun! What did you say your job was, again?", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kiddEnd1": {
+		"en-us": "Skunk: You're a farmer? Is being a farmer always this cool? Then I wanna be a farmer when I grow up, too!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kiddEnd2": {
+		"en-us": "Skunk: One last tip before I go - feed your onion an apricot and an avocado to get the \"Hardened Core\" buff! And give them water to get the \"Thirst: Quenched\" buff!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kiddEnd3": {
+		"en-us": "Skunk: Once I'm a great farmer, I'll be back to challenge you again, so be prepared!", 
+		"profile": "rival",
+		"type": "text"
+	},
+	"kiddEnd4": {
+		"en-us": "I still have a lot of questions, but facing Beckett's boss is more important right now.", 
+		"type": "text"
+	},
 	// Bees
 	"hiveGet": {
 		"en-us": "I found a beehive! Now I can place one more beehive on my farm. I caught some bees, too!", 
