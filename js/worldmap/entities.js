@@ -198,6 +198,7 @@ const mapentities = {
             // Boss
             GetFellow("Jeff", 7, 1, 0, "DrJeff1", Cutscene("jeff"), undefined, { boss: true, postBattle: "PostBoss2", failedInteract: Cutscene("jeffL"), visible: true, moving: true }),
             GetCSFellow("Jeff2", 7, 0.75, 0, "DrJeff3", "bonkedJeff", { interact: OneSpeak("UnconsciousJeff"), visible: false, moving: true }),
+            GetFellow("CalsotteCage", 4, 2, 0, "CalcotteCage0", OneSpeak("calcageclose"), undefined, { storageKey: "calcage" }),
             new CutsceneTrigger("jeffW", "PostBoss2"),
             // Mandatory Enemies
             GetFellow("RFRobo1", 1, 15, 2, "Robo2", Cutscene("enemy"), GetStdMovement([ [1, 15, 3], [5, 15, 3], [5, 20, 2], [1, 20, 1], [1, 15, 0] ]), requiredEnemyMetadata.robo2),

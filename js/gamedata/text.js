@@ -2677,6 +2677,14 @@ const fulltext = {
 		"en-us": "This monitor is displaying the contents of an online encyclopedia article on water.", 
 		"type": "map"
 	},
+	"calcageclose": {
+		"en-us": "There appears to be some creature in this cage, but I can't make out what it is.", 
+		"type": "map"
+	},
+	"calcageopen": {
+		"en-us": "This is the cage Calsotte was in. A tiny cage like this is no place for an onion.", 
+		"type": "map"
+	},
 	"B2.0": {
 		"en-us": "???: Yes, yes. Interesting, this is very good data.", 
 		"type": "map"
@@ -2742,7 +2750,7 @@ const fulltext = {
 		"type": "map"
 	},
 	"Pb2.0": {
-		"en-us": "\"Dr. \"Jeff: Ugh... it seems I underestimated you... do you also have a Ph.D?", 
+		"en-us": "\"Dr.\" Jeff: Ugh... it seems I underestimated you... do you also have a Ph.D?", 
 		"profile": "drjeff",
 		"type": "map"
 	},
@@ -2766,64 +2774,76 @@ const fulltext = {
 		"type": "map"
 	},
 	"Pb2.5": {
-		"en-us": "\"Dr.\" Jeff: You may have beaten me... but you'll never stop Food2... not without grabbing exactly one of those three things over there, at least...", 
+		"en-us": "\"Dr.\" Jeff: You may have beaten me... but you'll never stop Food2... not while we have things like THAT on our side!", 
 		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.6": {
-		"en-us": "In the corner of the room are three items: a Seed Shooter, a large bag of seeds, and a healthy drink.", 
+		"en-us": "He smugly gestures towards a cage.", 
 		"type": "map"
 	},
 	"Pb2.7": {
-		"en-us": "The Seed Shooter is a Fixture that can be placed on my Field to instantly damage all enemies.", 
+		"en-us": "\"Dr.\" Jeff: You have brawn, but Food2 has BRAINS. And that little creature is proof of it!", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.8": {
-		"en-us": "The large bag of seeds contains lots of fruit tree seeds, some of which I haven't been able to find or grow on my own so far.", 
+		"en-us": "Looking closely, it appears to be some sort of amphibian, but also... an onion?", 
 		"type": "map"
 	},
 	"Pb2.9": {
-		"en-us": "The healthy drink will level me up, giving me more health, attack power, and defense.", 
+		"en-us": "\"Dr.\" Jeff: Food2 will be both nutritious and affordable, which means its protein must come from cheaper ingredients!", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.10": {
-		"en-us": "Which should I grab?", 
-		"type": "map"
-	},
-	"Pb2.10a": {
-		"en-us": "Grab the Seed Shooter.", 
-		"type": "choice"
-	},
-	"Pb2.10b": {
-		"en-us": "Grab the bag of seeds.", 
-		"type": "choice"
-	},
-	"Pb2.10c": {
-		"en-us": "Grab the healthy drink.", 
-		"type": "choice"
-	},
-	"Pb2.10a0": {
-		"en-us": "I got the Seed Shooter. I can add it to my Field from the Fixtures Menu.", 
-		"type": "map"
-	},
-	"Pb2.10b0": {
-		"en-us": "I got the bag of seeds. I can check seeds in the Seeds menu in my Inventory.", 
-		"type": "map"
-	},
-	"Pb2.10c0": {
-		"en-us": "I guzzle down the healthy drink. I gained three levels! Noice!", 
+		"en-us": "\"Dr.\" Jeff: But if you tell these Americans that something is \"vegetarian\" and \"made with soy,\" they lose their minds!", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.11": {
-		"en-us": "\"Dr.\" Jeff: I'm not sure... why I told you... to do that... ughh.....", 
+		"en-us": "\"Dr.\" Jeff: So what is it that people like about meat? It can't be flavor, texture, versatility, or cultural upbringing, right?", 
 		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.12": {
-		"en-us": "\"Dr.\" Jeff falls to the ground, unconscious.", 
+		"en-us": "\"Dr.\" Jeff: Right! So the only logical conclusion is that people just like knowing that the thing they're eating used to be alive!", 
+		"profile": "drjeff",
 		"type": "map"
 	},
 	"Pb2.13": {
+		"en-us": "\"Dr.\" Jeff: And thus, what you see there is Calsotte, a successful attempt at giving sentience to vegetables using the power of science!", 
+		"profile": "drjeff",
+		"type": "map"
+	},
+	"Pb2.14": {
+		"en-us": "\"Dr.\" Jeff: Once we can cheaply produce soybeans that feel pain, Food2 will be the most popular food on the planet!", 
+		"profile": "drjeff",
+		"type": "map"
+	},
+	"Pb2.15": {
+		"en-us": "\"Dr.\" Jeff: And as long as we have inventions like Calsotte on our side, you can't stop us!", 
+		"profile": "drjeff",
+		"type": "map"
+	},
+	"Pb2.16": {
+		"en-us": "I pop the top off the cage and gesture towards the onion thing. They eagerly hop into my arms.", 
+		"type": "map"
+	},
+	"Pb2.17": {
+		"en-us": "\"Dr.\" Jeff: Nooo! Why... did I tell you all of that?!", 
+		"profile": "drjeff",
+		"type": "map"
+	},
+	"Pb2.18": {
+		"en-us": "\"Dr.\" Jeff falls to the ground, unconscious.", 
+		"type": "map"
+	},
+	"Pb2.19": {
+		"en-us": "I've adopted Calsotte, the sentient onion! I can feed and care for them from the Pause Menu; treating and feeding them well will unlock combat buffs!", 
+		"type": "map"
+	},
+	"Pb2.20": {
 		"en-us": "Looks like it's time to get in my truck and head to the city. These Food2 goons need to be taught a lesson.", 
 		"type": "map"
 	},

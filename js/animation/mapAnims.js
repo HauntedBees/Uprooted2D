@@ -289,6 +289,9 @@ const mafs = {
     "Switch0": Ft(0, 8), "Switch0d": Ft(0, 9), "Door0": Ft(0, 10), "Door0d": Ft(0, 11),
     "Switch1": Ft(1, 8), "Switch1d": Ft(1, 9), "Door1": Ft(1, 10), "Door1d": Ft(1, 11),
     "Switch2": Ft(2, 8), "Switch2d": Ft(2, 9), "Door2": Ft(2, 10), "Door2d": Ft(2, 11),
+    "CalcotteCage0": Ft(29, 15),
+    "CalcotteCage1": Ft(30, 15),
+    "CalcotteCage2": Ft(31, 15),
     // Bridge
     "Worker": new MapAnimFactory("sw", [9, 8]), "WorkerTalk": new MapAnimFactory("ds", [[[P(9, 8), P(13, 10)], [P(10, 8), P(14, 10)], [P(11, 8), P(15, 10)], [P(12, 8), P(16, 10)]]]),
     "BWorker": new MapAnimFactory("dw", [13, 8, 2]), 

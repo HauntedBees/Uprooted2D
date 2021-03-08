@@ -513,8 +513,32 @@ const SpecialFunctions = {
         }
         game.transition(game.currentInputHandler, worldmap, { init: { x: 7.5,  y: 19 }, map: "belowvillage" });
     },
+    "APPROACHCALSOTTE": function() {
+        worldmap.waitForAnimation = true;
+        worldmap.playerDir = 1;
+        worldmap.forceMove = true;
+        iHandler.state.animHandler = function(spedUp) {
+            worldmap.pos.x -= 0.05;
+            if(!spedUp) { worldmap.refreshMap(); }
+            const finished = worldmap.pos.x <= 5;
+            if(finished) {
+                if(spedUp) { worldmap.refreshMap(); }
+                worldmap.forceMove = false;
+                iHandler.Finish();
+            }
+            return finished;
+        };
+        worldmap.animIdx = setInterval(iHandler.state.animHandler, 10);
+    },
+    "GETCALSOTTE": function() {
+        worldmap.writeText("Pb2.16");
+        worldmap.importantEntities["calcage"].anim = mafs["CalcotteCage2"].Get();
+    },
     "DRJEFFDROP": function() {
-        worldmap.writeText("Pb2.12");
+        worldmap.writeText("Pb2.18");
+        player.onion = freshOnion;
+        OneSpeak("calcageopen");
+        worldmap.playerDir = 3;
         SetUpFellow(worldmap.importantEntities["bonkedJeff"], "DrJeff4");
         worldmap.waitForAnimation = true;
         Sounds.PlaySound("biff");
@@ -529,7 +553,6 @@ const SpecialFunctions = {
                 worldmap.importantEntities["bonkedJeff"].done = true;
             } else {
                 worldmap.importantEntities["bonkedJeff"].pos.y += 0.25;
-                worldmap.pos.y += 0.25;
                 if(!spedUp) { worldmap.refreshMap(); }
             }
             return finished;

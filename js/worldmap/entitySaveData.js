@@ -103,7 +103,13 @@ let mapRefreshes = {
         }
     },
     "producestand": function(e) { if(e.name === "ConvinceATron") { e.visible = true; } },
-    "researchfacility": (e, fromSave) => mapRefreshes.switchCheck(e, "researchfacility", fromSave),
+    "researchfacility": function(e, fromSave) {
+        mapRefreshes.switchCheck(e, "researchfacility", fromSave);
+        if(player.completedQuest("researchLab")) {
+            worldmap.importantEntities["calcage"].anim = mafs["CalcotteCage2"].Get();
+            worldmap.importantEntities["calcage"].interact = OneSpeak("calcageopen");
+        }
+    },
     "fakefarm": function(e) {
         const paq = (player.activeQuests["fakeFarm"] === undefined ? -1 : player.activeQuests["fakeFarm"]);
         if(paq >= 0) {
