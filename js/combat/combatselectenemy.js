@@ -166,11 +166,11 @@ combat.selectTarget = {
             case player.controls.pause: isEnter = true; break;
             case player.controls.cancel: return this.cancel();
         }
-        if(pos.y > 4 && prevy === 4) {
+        if(pos.y > 4 && prevy === 4) { // moving to select crops
             pos.x = combat.enemydx;
             pos.y = combat.enemydy;
         }
-        if(pos.y == (combat.enemydy - 1)) {
+        if(pos.y === 4 && prevy > 4) { // moving to select people
             if(!this.canHumans) { return false; }
             this.sicklePos = { x: -1, y: -1 };
             pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 4 };
