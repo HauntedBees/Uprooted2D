@@ -213,7 +213,7 @@ const dmgCalcs = {
                 if(crop.seasons[sn] > 1) { dmg *= cropMults[sn]; }
             }
             if(crop.seasons[season] > 1 && cropMults[season] > 1) { hasCropFromSeason = true; }
-            dmg *= typeMults[crop.type];
+            dmg *= (typeMults[crop.type] || 1);
             totalDamage += dmg;
             animInfos.push({ x: myCrops[i].x, y: myCrops[i].y, recoil: recoilInfo, animal: animal });
             recoilInfos.push(recoilInfo);

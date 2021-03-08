@@ -317,8 +317,8 @@ worldmap.shop = {
             case "farmupgradeI": size = "4x3"; break;
             case "farmupgradeO": size = "4x4"; break;
             case "farmupgrade_": size = "6x3"; break;
-            case "farmupgradeOO": size = "8x6"; break;
-            case "farmupgrade__": size = "10x5"; break;
+            case "farmupgradeOO": size = "8x4"; break;
+            case "farmupgrade__": size = "7x5"; break;
         }
         let str = GetText("s.upgrade").replace(/\{0\}/g, Math.floor(productInfo.price * GetPriceMultiplier())).replace(/\{1\}/g, size) + " \n ";
         if(productInfo.product.slice(-1) === "I") {
@@ -598,11 +598,11 @@ worldmap.shop = {
         } else if(productInfo.type === "upgrade") {
             let dims = {x: 0, y: 0, new: "n"};
             switch(productInfo.product) {
-                case "farmupgradeI": dims = { x: 4, y: 3, new: "I" }; break;
-                case "farmupgradeO": dims = { x: 4, y: 4, new: "O" }; break;
-                case "farmupgrade_": dims = { x: 6, y: 3, new: "_" }; break;
-                case "farmupgradeOO": dims = { x: 8, y: 6, new: "OO" }; AddAchievementIfMissing("fullUpgrade"); break;
-                case "farmupgrade__": dims = { x: 10, y: 5, new: "__" }; AddAchievementIfMissing("fullUpgrade"); break;
+                case "farmupgradeI": dims = { x: 4, y: 3, new: "I" }; break; // std
+                case "farmupgradeO": dims = { x: 4, y: 4, new: "O" }; break; // 16/4 more trees, less space
+                case "farmupgrade_": dims = { x: 6, y: 3, new: "_" }; break; // 18/3 more space, less trees
+                case "farmupgradeOO": dims = { x: 8, y: 4, new: "OO" }; AddAchievementIfMissing("fullUpgrade"); break; // 32/8 more trees, less space
+                case "farmupgrade__": dims = { x: 7, y: 5, new: "__" }; AddAchievementIfMissing("fullUpgrade"); break; // 35/6 more space, less trees
             }
             player.expandGrid(dims.x, dims.y, dims.new);
             this.cursorX = 1;

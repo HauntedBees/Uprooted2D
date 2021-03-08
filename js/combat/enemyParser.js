@@ -812,7 +812,7 @@ const actions = {
     "RETRACT_CROPS": function(e) {
         let dmg = 0, crops = [];
         for(let x = 0; x < 4; x++) {
-            for(let y = 2; y < 6; y++) {
+            for(let y = 2; y < 5; y++) {
                 const tile = combat.enemyGrid[x][y];
                 if(tile === null || tile.x !== undefined || tile.type === "card") { continue; }
                 if(crops.length === 0 || Math.random() > 0.25) {
@@ -1259,25 +1259,23 @@ const actions = {
         for(let x = 0; x < 3; x++) {
             if(combat.enemyGrid[x][0] === null) { availableSpots.push({ x: x, y: 0, type: "eggie" }); }
             if(combat.enemyGrid[x][1] === null) { availableSpots.push({ x: x, y: 1, type: "fishs" }); }
-            for(let y = 2; y < 6; y++) {
+            for(let y = 2; y < 4; y++) {
                 if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "crops" }); }
                 if(y < 5 && combat.enemyGrid[x + 1][y] === null && combat.enemyGrid[x][y + 1] === null && combat.enemyGrid[x + 1][y + 1] === null) {
                     availableSpots.push({ x: x, y: y, type: "trees" });
                 }
             }
-            if(combat.enemyGrid[x][6] === null) { availableSpots.push({ x: x, y: 6, type: "paddy" }); }
+            if(combat.enemyGrid[x][4] === null) { availableSpots.push({ x: x, y: 4, type: "paddy" }); }
         }
         for(let x = 3; x < 5; x++) {
             if(combat.enemyGrid[x][0] === null) { availableSpots.push({ x: x, y: 0, type: "mushs" }); }
             if(combat.enemyGrid[x][1] === null) { availableSpots.push({ x: x, y: 1, type: "mushs" }); }
-            for(let y = 2; y < 6; y++) {
-                if(y < 5 && x === 4) {
-                    if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "abeee" }); }
-                } else {
-                    if(combat.enemyGrid[x][y] === null) { availableSpots.push({ x: x, y: y, type: "crops" }); }
+            for(let y = 2; y < 4; y++) {
+                if(combat.enemyGrid[x][y] === null) {
+                    availableSpots.push({ x: x, y: y, type: (x === 4 ? "abeee" : "crops") }); 
                 }
             }
-            if(combat.enemyGrid[x][6] === null) { availableSpots.push({ x: x, y: 6, type: "paddy" }); }
+            if(combat.enemyGrid[x][4] === null) { availableSpots.push({ x: x, y: 4, type: "paddy" }); }
         }
         if(availableSpots.length === 0) { return false; }
 

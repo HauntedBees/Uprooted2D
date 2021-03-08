@@ -19,8 +19,10 @@ function CombatAnimHelper(enemies, isSkunk) {
         let currentx = 11 - enemies.length;
         for(let i = 0; i < enemies.length; i++) {
             const e = enemies[i];
+            let y = playerPos.y;
             if(e.size === "xl") { currentx -= 1; }
-            enemyAnimInfos.push(GetEnemyCombatAnim(currentx, playerPos.y, e.spriteidx, e.size, e.cursorinfo));
+            if(e.id === "garfwax") { y -= 1; }
+            enemyAnimInfos.push(GetEnemyCombatAnim(currentx, y, e.spriteidx, e.size, e.cursorinfo));
             currentx += GetDeltaCurrentX(e);
         }
     }
@@ -318,9 +320,9 @@ function CombatAnimHelper(enemies, isSkunk) {
                         case 2: return "lakeA";
                         default: return "_log";
                     }
-                } else if(y >= 2 && y <= 4 && x === 4) {
+                } else if(y >= 2 && y < 4 && x === 4) {
                     return "_beehive";
-                } else if(y === 6) { return "_paddy"; }
+                } else if(y === 4) { return "_paddy"; }
                 return "dirt";
             case "beckett":
                 if(y < 3) {

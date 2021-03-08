@@ -6,7 +6,7 @@ const combat = {
     grid: [], effectGrid: [], enemyGrid: [], enemywidth: 0, enemyheight: 0, enemyTile: "tech", 
     isBossBattle: false, dx: 0, dy: 0, enemydx: 0, enemydy: 0,
     didHarvest: false, harvestChain: 0, 
-    animHelper: null, isTree: false, isChallenge: false, challenger: "", isSkunk: false,
+    animHelper: null, isChallenge: false, challenger: "", isSkunk: false,
     startBattle: function(enemies, skipTransition, isChallenge) {
         player.initGridDimensions();
         this.didHarvest = false;
@@ -45,7 +45,6 @@ const combat = {
         this.happyCows = [];
         this.usedShooters = [];
         this.doingFinalKill = false;
-        this.isTree = false;
         combat.enemyTurn.lastIdx = -1;
         if(player.equipment.weapon !== null && GetEquipment(player.equipment.weapon).tech) {
             const hasCharger = GetFirstWithMatch(0, player.gridWidth, 0, player.gridHeight, (x, y) => combat.grid[x][y] !== null && combat.grid[x][y].type === "sickle2");
@@ -62,6 +61,7 @@ const combat = {
             switch(player.gridWidth) {  // 3, 4, 6, 8, 10
                 case 4: this.dx = 2; startX = 6; break;
                 case 6: this.dx = 1; startX = 7; break;
+                case 7: this.dx = 0.5; startX = 8.5; break;
                 case 8: this.dx = 0.5; startX = 8.5; break;
                 case 10: this.dx = 0.25; startX = 10.25; break;
                 default: this.dx = 2; break;
@@ -69,10 +69,9 @@ const combat = {
             switch(player.gridHeight) {  // 3, 4, 5, 6
                 case 4: this.dy = 0.5; break;
                 case 5: this.dy = 0.5; break;
-                case 6: this.dy = 0.25; break;
                 default: this.dy = 1.5; break;
             }
-            this.dy += 5;
+            this.dy += 4.5;
         }
         this.enemywidth = 0;
         this.enemyheight = 0;
@@ -99,18 +98,12 @@ const combat = {
                 this.enemies.push(enemy);
             }
             this.enemywidth = Math.min(this.enemywidth, 5);
-            if(enemies[0] === "garfwax") { 
-                this.enemydx = 10.625;
-                this.enemydy = 1;
-                this.isTree = true;
-            } else {
-                this.enemydx = startX + 1 + (gfx.tileWidth - startX - this.enemywidth) / 2;
-                if((this.enemydx + this.enemywidth) >= gfx.tileWidth) { this.enemydx = gfx.tileWidth - this.enemywidth - 0.25; }
-                this.enemydy = this.dy + (player.gridHeight - this.enemyheight) / 2;
-                while(this.enemydy <= 0) {
-                    this.enemydy += 0.25;
-                    this.dy += 0.25;
-                }
+            this.enemydx = startX + 1 + (gfx.tileWidth - startX - this.enemywidth) / 2;
+            if((this.enemydx + this.enemywidth) >= gfx.tileWidth) { this.enemydx = gfx.tileWidth - this.enemywidth - 0.25; }
+            this.enemydy = this.dy + (player.gridHeight - this.enemyheight) / 2;
+            while(this.enemydy <= 0) {
+                this.enemydy += 0.25;
+                this.dy += 0.25;
             }
         }
 

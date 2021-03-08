@@ -184,7 +184,8 @@ combat.menu = {
         for(let i = 0; i < combat.enemies.length; i++) {
             const enemy = combat.enemies[i];
             const pos = combat.animHelper.GetEnemyTopPos(i);
-            gfx.drawTileToGrid(GetHPFrame(enemy), pos.x, pos.y - 0.5, "menucursorB");
+            const healthy = pos.y + (enemy.id === "garfwax" ? 0.5 : -0.5);
+            gfx.drawTileToGrid(GetHPFrame(enemy), pos.x, healthy, "menucursorB");
         }
         combat.menu.fullyLoaded = true;
     },
