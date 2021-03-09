@@ -163,62 +163,6 @@ let input = {
         game.currentInputHandler.MouseWheel(e.deltaY > 0);
     },
 
-    VirtDirections: [0, 0, 0, 0], // UP LEFT DOWN RIGHT
-    GetKeyEvent: key => ({ key: key }),
-    ButtonPress: function(b) {
-        console.log(b);
-    },
-    ButtonRelease: function(b) {
-        if(b.btn === "dpad") {
-            const arr = [player.controls.up, player.controls.left, player.controls.down, player.controls.right];
-            for(let i = 0; i < 4; i++) {
-                if(input.VirtDirections[i] > 0) {
-                    const dS = (+new Date()) - input.VirtDirections[i];
-                    if(dS < 100) { input.keyPress(input.GetKeyEvent(arr[i])); }
-                    input.keyUp(input.GetKeyEvent(arr[i]));
-                    input.VirtDirections[i] = 0;
-                }
-            }
-        } else if(b.btn === "confirm") {
-            input.justPressed[player.controls.confirm] = 0;
-            input.keyPress(input.GetKeyEvent(player.controls.confirm));
-        } else if(b.btn === "cancel") {
-            input.justPressed[player.controls.cancel] = 0;
-            input.keyPress(input.GetKeyEvent(player.controls.cancel));
-        } else if(b.btn === "pause") {
-            input.justPressed[player.controls.pause] = 0;
-            input.keyPress(input.GetKeyEvent(player.controls.pause));
-        }
-    },
-    ButtonMove: function(b) {
-        if(b.btn === "dpad") {
-            if(b.y === 1) {
-                if(input.VirtDirections[2] === 0) { input.keyDown(input.GetKeyEvent(player.controls.down)); }
-                if(input.VirtDirections[0] > 0) { input.VirtDirections[0] = 0; input.keyUp(input.GetKeyEvent(player.controls.up)); }
-                input.VirtDirections[2] = +new Date();
-            } else if(b.y === -1) {
-                if(input.VirtDirections[0] === 0) { input.keyDown(input.GetKeyEvent(player.controls.up)); }
-                if(input.VirtDirections[2] > 0) { input.VirtDirections[2] = 0; input.keyUp(input.GetKeyEvent(player.controls.down)); }
-                input.VirtDirections[0] = +new Date();
-            } else {
-                if(input.VirtDirections[2] > 0) { input.VirtDirections[2] = 0; input.keyUp(input.GetKeyEvent(player.controls.down)); }
-                if(input.VirtDirections[0] > 0) { input.VirtDirections[0] = 0; input.keyUp(input.GetKeyEvent(player.controls.up)); }
-            }
-            if(b.x === 1) {
-                if(input.VirtDirections[3] === 0) { input.keyDown(input.GetKeyEvent(player.controls.right)); }
-                if(input.VirtDirections[1] > 0) { input.VirtDirections[1] = 0; input.keyUp(input.GetKeyEvent(player.controls.left)); }
-                input.VirtDirections[3] = +new Date();
-            } else if(b.x === -1) {
-                if(input.VirtDirections[1] === 0) { input.keyDown(input.GetKeyEvent(player.controls.left)); }
-                if(input.VirtDirections[3] > 0) { input.VirtDirections[3] = 0; input.keyUp(input.GetKeyEvent(player.controls.right)); }
-                input.VirtDirections[1] = +new Date();
-            } else {
-                if(input.VirtDirections[3] > 0) { input.VirtDirections[3] = 0; input.keyUp(input.GetKeyEvent(player.controls.right)); }
-                if(input.VirtDirections[1] > 0) { input.VirtDirections[1] = 0; input.keyUp(input.GetKeyEvent(player.controls.left)); }
-            }
-        }
-    },
-
     justPressed: {}, keys: {}, mainKey: undefined,
     IsFreshPauseOrConfirmPress: () => (input.justPressed[player.controls.pause] === 0) || (input.justPressed[player.controls.confirm] === 0),
     setMainKey: function(key) {
@@ -238,6 +182,7 @@ let input = {
             clearInterval(input.keys[key]);
             input.keys[key] = undefined;
         }
+        input.justPressed = {};
     },
     IsIgnoredByKeyPress(key) {
         if(key.indexOf("Arrow") === 0) { return true; }
@@ -286,7 +231,6 @@ let input = {
         }
     },
     keyPress: function(e) {
-        console.log(e.key);
         const key = input.GetKey(e);
         if(key === "`") { return input.HandleConsole(); }
         if(input.inConsole) { return input.ConsoleKeyPress(key); }
@@ -306,21 +250,15 @@ let input = {
             input.setMainKey();
         } else { // turn on
             input.mainKey = undefined;
-            if(input.keys[player.controls.down] !== undefined && key === player.controls.up) {
-                clearInterval(input.keys[player.controls.down]);
-                input.keys[player.controls.down] = undefined;
-            } else if(input.keys[player.controls.up] !== undefined && key === player.controls.down) {
-                clearInterval(input.keys[player.controls.up]);
-                input.keys[player.controls.up] = undefined;
-            } else if(input.keys[player.controls.left] !== undefined && key === player.controls.right) {
-                clearInterval(input.keys[player.controls.left]);
-                input.keys[player.controls.left] = undefined;
-            } else if(input.keys[player.controls.right] !== undefined && key === player.controls.left) {
-                clearInterval(input.keys[player.controls.right]);
-                input.keys[player.controls.right] = undefined;
-            }
+            const dirs = [player.controls.up, player.controls.left, player.controls.down, player.controls.right];
+            dirs.forEach(d => {
+                clearInterval(input.keys[d]);
+                input.keys[d] = undefined;
+                input.justPressed[d] = -1;
+            });
             input.setMainKey(key);
             input.keys[key] = setInterval(function() {
+                input.justPressed[key]++;
                 game.currentInputHandler.keyPress(key);
             }, input.BUTTONDELAY);
         }
