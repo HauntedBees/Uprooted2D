@@ -35,6 +35,22 @@ Run ``BuildItemDetails.ps1`` to build ``gamedata\veggies.js``, ``gamedata\equipm
 Run ``BuildEnemyAttackJSON.ps1`` to merge all **.json** files in ``extbuild\enemyjson\`` into ``gamedata\enemy_patterns.js``. The **.json** files are created with a modified version of [Kelly](https://github.com/HauntedBees/Kevin) which will be checked in eventually.
 ### main game
 Run ``uglify.cmd`` or just call the **uglifyjs** command in the file.
+
+### Android Build
+Navigate to the root directory, then run:
+```
+cd cordova
+cordova build android --release
+cd platforms/android/app/build/outputs/apk/release
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore [yourKeyStore] app-release-unsigned.apk [yourKey]
+zipalign -v 4 app-release-unsigned.apk Uprooted.apk
+```
+
+### Electron Build
+**Dev Build:** `npm start`
+**Package Only:** `npm pack`
+**Package for Distribution:** `npm run dist`
+
 ## want to make changes?
 The game isn't even done yet hold your horses yo.
 ## additional assets
