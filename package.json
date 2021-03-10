@@ -26,6 +26,7 @@
     "node-stream-zip": "^1.13.0",
     "sharp": "^0.27.1",
     "uglify-es": "^3.3.9",
+    "uglify-js": "^3.13.0",
     "xml2js": "^0.4.23"
   },
   "dependencies": {
