@@ -91,8 +91,8 @@ worldmap.title = {
                 else { return game.innerTransition(this, worldmap.optionsMenu); }
             case 2: 
                 if(this.showContinue) { return game.innerTransition(this, worldmap.optionsMenu); }
-                else { return electronHelpers.Quit(); }
-            case 3: return electronHelpers.Quit();
+                else { return Desktop.Quit(); }
+            case 3: return Desktop.Quit();
         }
     },
     clean: function() { clearInterval(this.animIdx); gfx.clearAll(); },

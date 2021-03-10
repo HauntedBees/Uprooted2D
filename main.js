@@ -26,8 +26,8 @@ function createWindow () {
     //mainWindow.webContents.openDevTools();
 
     ipcMain.on("resize-window", (e, args) => {
-        mainWindow.setContentSize(args.width, args.height);
         mainWindow.setFullScreen(args.fullscreen);
+        mainWindow.setContentSize(args.width, args.height);
         mainWindow.webContents.zoomFactor = args.zoom;
         store.set("screenSettings", args);
     });

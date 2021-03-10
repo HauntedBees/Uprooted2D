@@ -3,7 +3,7 @@ function InventoryCopy(arr) {
     for (let i = 0; i < arr.length; i++) { copy[i] = (typeof arr[i] === "object") ? InventoryCopy(arr[i]) : arr[i]; }
     return copy;
 }
-const cordovaHelpers = {
+const Mobile = {
     OrientationChange: function() {
         if(screen.orientation.type.indexOf("landscape") >= 0) {
             document.body.className = "landscape";
@@ -18,20 +18,40 @@ const cordovaHelpers = {
     }
 };
 
-const electronHelpers = {
+const Desktop = {
+    ResMultipliers: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+    MaxSize: function() {
+        const maxW = screen.availWidth, maxH = screen.availHeight;
+        for(let i = 0; i < Desktop.ResMultipliers.length; i++) {
+            const m = Desktop.ResMultipliers[i];
+            const w = m * game.w, h = m * game.h;
+            if(w > maxW || h > maxH) { return i; }
+        }
+        return Desktop.ResMultipliers.length - 1;
+    },
     AdjustScreenSettings: function() {
         if(typeof require === "undefined") { return; }
         const { ipcRenderer } = require("electron");
-        let multiplier = 1;
-        switch(universalSettings.resolution) {
-            case 0: multiplier = 0.5; break;
-            case 2: multiplier = 2; break;
+        const maxIdx = Desktop.MaxSize();
+        const fitToScreen = universalSettings.resolution >= maxIdx;
+        let m = Desktop.ResMultipliers[universalSettings.resolution];
+        let w = game.w * m, h = game.h * m;
+        if(fitToScreen) {
+            const maxW = screen.availWidth, maxH = screen.availHeight;
+            if(maxW > maxH) {
+                m = maxH / game.h;
+            } else {
+                m = maxW / game.w;
+            }
+            w = game.w * m;
+            h = game.h * m;
+            universalSettings.fullscreen = 1;
         }
         ipcRenderer.send("resize-window", {
-            width: game.w * multiplier,
-            height: game.h * multiplier,
+            width: w,
+            height: h,
             fullscreen: universalSettings.fullscreen === 1,
-            zoom: multiplier
+            zoom: m
         });
     },
     Quit: function() {
@@ -42,7 +62,7 @@ const electronHelpers = {
 };
 
 const game = {
-    type: 0, // 0 = browser, 1 = nwjs, 2 = cordova
+    type: 0, // 0 = browser, 1 = electron, 2 = cordova
     numSaveSlots: 10, w: 1024, h: 896, tilew: 16, tileh: 14,
     currentInputHandler: null, target: null, language: "en-us",
     sheetsToLoad: [
@@ -112,8 +132,8 @@ const game = {
         if(univSettings !== null) { universalSettings = game.str2obj(univSettings); }
         if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0) {
             game.type = 2; // mobile
-            window.addEventListener("orientationchange", cordovaHelpers.OrientationChange);
-            cordovaHelpers.OrientationChange();
+            window.addEventListener("orientationchange", Mobile.OrientationChange);
+            Mobile.OrientationChange();
         } else if(typeof require === "function") {
             game.type = 1; // desktop
         } else {
@@ -139,28 +159,6 @@ const game = {
             contextObj[key] = canvasObj[key].getContext("2d");
         }
         
-        if(game.type === 2) {
-            virtualControls = new VirtGamepad(input, ["dpad", "landscapeLeft", "landscapeRight"], [
-                new VirtButton("dpad", "dpad", "vgp_img/dpad.png", { eightDirection: true }),
-                new VirtButton("confirm", "button", "vgp_img/confirm.png"),
-                new VirtButton("cancel", "button", "vgp_img/cancel.png"),
-                new VirtButton("pause", "button", "vgp_img/pause.png"),
-                new VirtButton("dpadL", "dpad", "vgp_img/dpad.png", { eightDirection: true }),
-                new VirtButton("confirmL", "button", "vgp_img/confirm.png"),
-                new VirtButton("cancelL", "button", "vgp_img/cancel.png"),
-                new VirtButton("pauseL", "button", "vgp_img/pause.png")
-            ], [
-                new VirtButtonPosition("dpad", "dpad", 45, 45, 1.25, 1.25),
-                new VirtButtonPosition("confirm", "dpad", 580, 240, 1.5, 1.5),
-                new VirtButtonPosition("cancel", "dpad", 780, 20, 1.5, 1.5),
-                new VirtButtonPosition("pause", "dpad", 420, 600),
-                new VirtButtonPosition("dpadL", "landscapeLeft", 50, 150, 1.25, 1.25),
-                new VirtButtonPosition("pauseL", "landscapeLeft", 225, 750),
-                new VirtButtonPosition("cancelL", "landscapeRight", 220, 100, 1.5, 1.5),
-                new VirtButtonPosition("confirmL", "landscapeRight", 80, 400, 1.5, 1.5)
-            ]);
-            virtualControls.Show();
-        }
         game.init(canvasObj, contextObj, game.w, game.h, 16, 14);
     },
     init: function(canvasObj, ctxObj, width, height, tilewidth, tileheight) {

@@ -1106,11 +1106,31 @@ const fulltext = {
 		"type": "opts"
 	},
 	"opRes1": {
-		"en-us": "1024x896", 
+		"en-us": "768x672", 
 		"type": "opts"
 	},
 	"opRes2": {
+		"en-us": "1024x896", 
+		"type": "opts"
+	},
+	"opRes3": {
+		"en-us": "1280x1120", 
+		"type": "opts"
+	},
+	"opRes4": {
+		"en-us": "1536x1344", 
+		"type": "opts"
+	},
+	"opRes5": {
+		"en-us": "1792x1568", 
+		"type": "opts"
+	},
+	"opRes6": {
 		"en-us": "2048x1792", 
+		"type": "opts"
+	},
+	"opRes7": {
+		"en-us": "Fit to Screen", 
 		"type": "opts"
 	},
 	"opFullScreen": {
