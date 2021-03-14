@@ -5,7 +5,7 @@ const imagemin = require("imagemin");
 const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
 
-const imgPath = path.join(__dirname, "../ora");
+const imgPath = path.join(__dirname, "ora");
 const args = process.argv.slice(2);
 const HasArg = s => args.indexOf(s) >= 0;
 
@@ -13,7 +13,7 @@ const GetBackgrounds = async function() {
     console.log("Extracting backgrounds");
     const zip = new StreamZip.async({file: `${imgPath}/combatbg.ora`});
     const xmlStr = await zip.entryData("stack.xml");
-    const rawpath = path.join(__dirname, "./out/combatbg"), finalpath = path.join(__dirname, "../img/bgs");
+    const rawpath = path.join(__dirname, "temp/combatbg"), finalpath = path.join(__dirname, "../img/bgs");
     parseString(xmlStr, async function(err, xmlObj) {
         const layers = xmlObj.image.stack[0].layer;
         
@@ -49,7 +49,7 @@ const RipImage = async function(img) {
     console.log("Extracting Image " + filename);
     const zip = new StreamZip.async({file: `${imgPath}/${img}.ora`});
     const xmlStr = await zip.entryData("stack.xml");
-    const rawpath = path.join(__dirname, "./out/"), finalpath = path.join(__dirname, "../img/");
+    const rawpath = path.join(__dirname, "temp"), finalpath = path.join(__dirname, "../img/");
     parseString(xmlStr, async function(err, xmlObj) {
         const contentLayer = xmlObj.image.stack[0].layer.findIndex(f => f.$.name === "Content");
         const layerPath = xmlObj.image.stack[0].layer[contentLayer].$.src;
@@ -73,7 +73,7 @@ const RipProfiles = async function() {
     console.log("Extracting profiles");
     const zip = new StreamZip.async({file: `${imgPath}/portraits.ora`});
     const xmlStr = await zip.entryData("stack.xml");
-    const rawpath = path.join(__dirname, "./out/profiles"), finalpath = path.join(__dirname, "../img/profiles");
+    const rawpath = path.join(__dirname, "temp/profiles"), finalpath = path.join(__dirname, "../img/profiles");
     parseString(xmlStr, async function(err, xmlObj) {
         const layers = xmlObj.image.stack[0].layer;
         

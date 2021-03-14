@@ -70,3 +70,5 @@ dist/*
 
 cordova/www/*
 js/lib/pixi.js
+
+tools/temp/*
