@@ -4,6 +4,7 @@ const sharp = require("sharp");
 const imagemin = require("imagemin");
 const imageminPngquant = require("imagemin-pngquant");
 const path = require("path");
+const fs = require("fs");
 
 const imgPath = path.join(__dirname, "ora");
 const args = process.argv.slice(2);
@@ -14,6 +15,7 @@ const GetBackgrounds = async function() {
     const zip = new StreamZip.async({file: `${imgPath}/combatbg.ora`});
     const xmlStr = await zip.entryData("stack.xml");
     const rawpath = path.join(__dirname, "temp/combatbg"), finalpath = path.join(__dirname, "../img/bgs");
+    if(!fs.existsSync(rawpath)) { fs.mkdirSync(rawpath); }
     parseString(xmlStr, async function(err, xmlObj) {
         const layers = xmlObj.image.stack[0].layer;
         
@@ -74,6 +76,7 @@ const RipProfiles = async function() {
     const zip = new StreamZip.async({file: `${imgPath}/portraits.ora`});
     const xmlStr = await zip.entryData("stack.xml");
     const rawpath = path.join(__dirname, "temp/profiles"), finalpath = path.join(__dirname, "../img/profiles");
+    if(!fs.existsSync(rawpath)) { fs.mkdirSync(rawpath); }
     parseString(xmlStr, async function(err, xmlObj) {
         const layers = xmlObj.image.stack[0].layer;
         
