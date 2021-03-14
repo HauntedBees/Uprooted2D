@@ -1,5 +1,4 @@
-const cavecollisions = 
-[
+const cavecollisions = [
 [[0,0,1,1,0]
 ,[0,0,1,1,0]
 ,[0,2,1,2,0]
@@ -393,8 +392,8 @@ const cavecollisions =
 ]
 ]
 ;
-const cavecollisionsMed = 
-[
+
+const cavecollisionsMed = [
 [[0,0,0,0,0,0,0,0,0,0,0]
 ,[0,1,1,1,0,0,0,1,1,1,0]
 ,[0,3,2,1,0,1,0,1,2,3,0]
@@ -552,8 +551,8 @@ const cavecollisionsMed =
 ]
 ]
 ;
-const cavecollisionsBoss = 
-[
+
+const cavecollisionsBoss = [
 [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ,[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
 ,[1,0,1,1,1,0,1,1,1,0,0,2,0,0,1,1,1,0,1,1,1,0,1]
