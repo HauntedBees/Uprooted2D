@@ -45,7 +45,8 @@ if(!types) {
 - C: Crops
 - Q: Equipment
 - F: Fixtures
-- E: Enemies`);
+- E: Enemies
+- P: Sprites`);
     return;
 }
 
@@ -361,4 +362,72 @@ function GetEnemy(name) {
     }
     return `debug.AllEnemies = [${myEnemies.join(", ")}];`;
 });
+}
+if(HasArg("P")) {
+    const RipSpriteFile = (size, arr) => {
+        return new Promise((resolve, reject) => {
+            console.log(`Extracting ${size} Sprites`);
+            const isSmall = size === "Small";
+            const filepath = path.join(__dirname, `ods/Details_${size}Sprites.ods`);
+            const soffice = spawn("soffice", [
+                "--headless", 
+                "--convert-to", "csv",
+                "--outdir", tempPath,
+                filepath
+            ]);
+            soffice.stderr.on("data", data => { console.log("ERROR: " + data); reject(); });
+            soffice.on("close", res => { 
+                console.log(`Processed ${size} Sprites`);
+                if(res !== 0) { return; }
+                const data = [];
+                fs.createReadStream(path.join(tempPath, `Details_${size}Sprites.csv`))
+                .pipe(csv({ headers: false }))
+                .on("data", row => data.push(row))
+                .on("end", () => {
+                    const aliases = {}, addFives = {};
+                    let row = isSmall ? 33 : 10;
+                    while(true) {
+                        if(!data[row]) { break; }
+                        const key = data[row][1];
+                        if(aliases[key]) {
+                            aliases[key].push(data[row][0]);
+                        } else {
+                            aliases[key] = [data[row][0]];
+                        }
+                        if(data[row][2]) {
+                            addFives[data[row][3]] = data[row][2];
+                        }
+                        row++;
+                    }
+                    const maxY = isSmall ? 34 : 8;
+                    const maxX = isSmall ? 31 : 9;
+                    const suffix = isSmall ? "" : ", true";
+                    for(let y = 0; y < maxY; y++) {
+                        for(let x = 0; x < maxX; x++) {
+                            const val = data[y][x];
+                            if(!val) { continue; }
+                            arr.push(`"${val}": [${x}, ${y}${suffix}]`);
+                            if(aliases[val]) {
+                                arr.push(...aliases[val].map(a => `"${a}": [${x}, ${y}${suffix}]`));
+                            }
+                            if(addFives[val]) {
+                                arr.push(`"${addFives[val]}": [${x + 0.5}, ${y}${suffix}]`);
+                            }
+                        }
+                    }
+                    resolve(true);
+                });
+            });
+        });
+    };
+    const Finish = async function() {
+        const bgsp = [], smsp = [];
+        await RipSpriteFile("Small", smsp);
+        await RipSpriteFile("Big", bgsp);
+        fs.writeFileSync(path.join(__dirname, "../js/gamedata/spritedata.js"), `const sprites = {
+    ${bgsp.join(",\n\t")},          
+    ${smsp.join(",\n\t")}          
+};`);
+    }
+    Finish();
 }
