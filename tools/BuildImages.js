@@ -140,7 +140,3 @@ if(noArgs || HasArg("cs")) {
 if(noArgs || HasArg("profile")) {
     RipProfiles();
 }
-
-if(filters || HasArg("hqx")) {
-    console.log("TODO");
-}
