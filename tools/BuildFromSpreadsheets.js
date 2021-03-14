@@ -8,7 +8,7 @@ function RipFile(filename, outfile, prefix, lineFunc, suffix, joinChar, afterFun
     console.log(`Extracting ${filename}`);
     suffix = suffix || "};";
     joinChar = joinChar === undefined  ? "," : joinChar;
-    const filepath = path.join(__dirname, "../ods/", filename + ".ods");
+    const filepath = path.join(__dirname, "ods/", filename + ".ods");
     const soffice = spawn("soffice", [
         "--headless", 
         "--convert-to", "csv",
