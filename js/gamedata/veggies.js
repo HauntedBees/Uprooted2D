@@ -8,16 +8,16 @@ function CropDetail(name, price, type, size, time, frames, power, re, sp, su, au
     this.frames = frames;
     this.power = power;
     this.initpower = power;
-	this.health = power * 5;
-	this.maxhealth = this.health;
-	this.defense = power * power * 0.4;
+    this.health = power * 5;
+    this.maxhealth = this.health;
+    this.defense = power * power * 0.4;
     this.respawn = re;
     this.seasons = [sp || 0, su || 0, au || 0, wi || 0];
     if(addtl !== undefined) { for(const key in addtl) { this[key] = addtl[key]; } }
 }
 function GetCrop(name) {
     switch(name) {
-		/* Veggies */
+    	/* Veggies */
 		case "asparagus": return new CropDetail(name, 30, "veg", 1, 10, 4, 3, 3, 2, 1, 1, 0, { saltResist: 1, sound: "light" });
 		case "beet": return new CropDetail(name, 15, "veg", 1, 1, 2, 1, 0, 0, 1, 2, 2, { waterResist: 1, saltResist: 2, saltClean: true, saltChance: 0.5, sound: "hard" });
 		case "bellpepper": return new CropDetail(name, 120, "veg", 1, 2, 3, 6, 0, 0, 1, 2, 0, { fireResist: 2, burnChance: 0.25, sound: "hollow" });

@@ -1,0 +1,48 @@
+Id,Type,Price,Pow,Tech,Foes,Crops,Num,SP,SU,AU,WI,Amt,Rot,Atk,Bns,Def,Spd,Bst,Amp,Sold
+*,Weapons,,,,,,,,,,,,,,,,,,,
+!babySickle,weapon,50,0,,Yes,,,,,,,,,,,,,,,default
+!baseSickle,weapon,100,2,,Yes,,,,,,,,,,,,,,,First Town
+!goodSickle,weapon,200,5,,Yes,Yes,,,,,,,,,,,,,,First Town
+nope,weapon,50,10,,Yes,Yes,,5,,,,,,,,,,,,-
+nope,weapon,50,10,,Yes,Yes,,,5,,,,,,,,,,,-
+nope,weapon,50,10,,Yes,Yes,,,,5,,,,,,,,,,-
+nope,weapon,50,10,,Yes,Yes,,,,,5,,,,,,,,,-
+!dblSickle,weapon,250,8,,Yes,Yes,2,,,,,,,,,,,,,Bridge
+!hvySickle,weapon,250,20,,Yes,Yes,,,,,,,,,,,,,,Bridge
+!hoe,weapon,200,35,,,Yes,3,,,,,,,,,,,,,Bridge
+!salthoe,weapon,200,32,,,Yes,2,,,,15,,,,,,,,,Bridge
+!sicklerang,weapon,1221,20,,Yes,,999,,,,,,,,,,,,,S. City
+!sunSickle,weapon,1500,25,,Yes,Yes,,10,10,,,,,,,,,,,S. City
+!pltSickle,weapon,3500,30,,Yes,,,,,,,,,,,,,,,N. City
+!sickle2,weapon,3333,60,Yes,Yes,Yes,2,,,,,,,,,,,,,N. City
+!sickle2_weak,weapon,3333,0,Yes,,,,,,,,,,,,,,,,
+*,Compost,,,,,,,,,,,,,,,,,,,
+!weakCompost,compost,50,,,,,,,,,,1,Yes,,,,,,,default
+!baseCompost,compost,150,,,,,,,,,,3,Yes,,,,,,,First Town
+!strongCompost,compost,200,,,,,,,,,,4,Yes,Yes,,,,,,Bridge
+!sturdyCompost,compost,200,,,,,,,,,,4,,,,,,,,Bridge
+nope,compost,50,,,,,,,,,,6,Yes,Yes,,,,,,-
+nope,compost,50,,,,,,,,,,8,,,0.1,,,,,-
+nope,compost,50,,,,,,,,,,8,Yes,Yes,0.25,,,,,-
+!jumboCompost,compost,1300,,,,,,,,,,50,,Yes,,,,,,S. City
+!vitaminCompost,compost,1212,,,,,,,,,,8,,,0.3,,,,,S. City
+!compost2,compost,3333,,Yes,,,,,,,,50,,Yes,0.2,,,,,S. City
+*,Gloves,,,,,,,,,,,,,,,,,,,
+!weakGloves,gloves,400,,,,,,,,,,3,,,,0.25,,,,First Town
+!pairGloves,gloves,1200,,,,,,,,,,2,,Yes,,0.25,,,,S. City
+!gardenGloves,gloves,1600,,,,,,,,,,6,,,,0.5,,,,S. City
+!sbGloves,gloves,3500,,,,,,,,,,4,,Yes,,0.5,,,,N. City
+!gloves2,gloves,3333,,Yes,,,,,,,,6,,Yes,,0.5,,,,N. City
+*,Watering Cans,,,,,,,,,,,,,,,,,,,
+!weakSoil,soil,200,,,,,,,,,,,,,,,0.15,,,First Town
+nope,soil,50,,,,,,,,,,,,,,,,0.2,,-
+nope,soil,50,,,,,,,,,,,,,,,,,0.4,-
+!speedSoil,soil,300,,,,,,,,,,,,,,,0.3,,,Bridge
+!sturdSoil,soil,300,,,,,,,,,,,,,,,,0.4,,Bridge
+!minSoil,soil,300,,,,,,,,,,,,,,,,,1,Bridge
+nope,soil,50,,,,,,,,,,,,,,,0.25,0.35,,-
+nope,soil,50,,,,,,,,,,,,,,,0.25,,0.5,-
+!waterfall,soil,2000,,,,,,,,,,,,,,,0.5,,,N. City
+!immunity,soil,2000,,,,,,,,,,,,,,,,0.65,,N. City
+!seasonal,soil,2000,,,,,,,,,,,,,,,,,2,N. City
+!pesticide2,soil,3333,,Yes,,,,,,,,,,,,,0.45,0.5,,N. City

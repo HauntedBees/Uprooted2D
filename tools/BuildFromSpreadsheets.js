@@ -4,8 +4,8 @@ const csv = require("csv-parser");
 const { spawn } = require("child_process");
 
 const tempPath = path.join(__dirname, "/temp");
-
 function RipFile(filename, outfile, prefix, lineFunc, suffix, joinChar, afterFunc) {
+    console.log(`Extracting ${filename}`);
     suffix = suffix || "};";
     joinChar = joinChar === undefined  ? "," : joinChar;
     const filepath = path.join(__dirname, "../ods/", filename + ".ods");
@@ -18,7 +18,7 @@ function RipFile(filename, outfile, prefix, lineFunc, suffix, joinChar, afterFun
     soffice.stderr.on("data", data => { console.log("ERROR: " + data); });
     soffice.on("close", res => { 
         if(res !== 0) { return; }
-        const outpath = path.join(__dirname, `../js/gamedata/${outfile}_x.js`);
+        const outpath = path.join(__dirname, `../js/gamedata/${outfile}.js`);
         const data = [];
         fs.createReadStream(path.join(tempPath, filename + ".csv"))
         .pipe(csv())
@@ -35,10 +35,11 @@ ${suffix}${afterData}`);
 }
 
 const args = process.argv.slice(2), types = args[0];
-const HasArg = s => types.indexOf(s) >= 0;
+const HasArg = s => types === "_" || types.indexOf(s) >= 0;
 
 if(!types) {
     console.log(`Options:
+- _: Everything
 - T: Text
 - S: Cutscenes
 - C: Crops
@@ -49,13 +50,13 @@ if(!types) {
 }
 
 if(HasArg("T")) {
-    RipFile("Details_Text", "text", "const fullText = {", row => {
+    RipFile("Details_Text", "text", "const fulltext = {", row => {
         if(row.Key === "") { return ""; }
-        if(row.Key === "*") { return "\n//" + row["en-us"]; }
+        if(row.Key === "*") { return "\n\t// " + row["en-us"]; }
         let us = row["en-us"].replace(/"/g, `\\"`), sfw = row["en-us-sfw"].replace(/"/g, `\\"`);
         if(!row.noTrim) {
-            us = us.trim();
-            sfw = sfw.trim();
+            us = us.trimEnd();
+            sfw = sfw.trimEnd();
         }
         let str = `
     "${row.Key}": {
@@ -77,14 +78,13 @@ if(HasArg("T")) {
 if(HasArg("S")) {
     RipFile("Details_Cutscenes", "cutscenes", "const scripts = {", row => {
         if(row.Key === "") { return ""; }
-        if(row.Key === "*") { return "\n//" + row.Action; }
+        if(row.Key === "*") { return "\n\t// " + row.Action; }
         return `
         "${row.Key}": "${row.Action.trim().replace(/"/g, `\\"`)}"`;
     });
 }
 if(HasArg("C")) {
-    RipFile("Details_Crops", "veggies", `
-function CropDetail(name, price, type, size, time, frames, power, re, sp, su, au, wi, addtl) {
+    RipFile("Details_Crops", "veggies", `function CropDetail(name, price, type, size, time, frames, power, re, sp, su, au, wi, addtl) {
     this.name = name;
     this.type = type;
     this.price = price;
@@ -104,7 +104,7 @@ function CropDetail(name, price, type, size, time, frames, power, re, sp, su, au
 function GetCrop(name) {
     switch(name) {`, (row, idx) => {
         if(!row.Id) { return ""; }
-        if(row.Id === "*") { return (idx === 0 ? "" : "\n   ") + "             // " + row.Name; }
+        if(row.Id === "*") { return (idx === 0 ? "\t" : "\n\t\t") + "/* " + row.Name + " */"; }
         let resStr = `
 		case "${row.Id}": return new CropDetail(name, ${row.Price}, "${row.Type}", `;
         resStr += `${row.Size}, ${row.Time}, ${row.AnimFrames}, ${row.Power}, ${row.Re || 0}, `;
@@ -132,9 +132,7 @@ function GetCrop(name) {
         }
         resStr += ");";
         return resStr;
-    }, `
-    }
-}`, "", rows => {
+    }, "\t}\n}", "", rows => {
     const myVeggies = [];
     for(let i = 0; i < rows.length; i++) {
         if(rows[i].Name === "Enemy-Only") { break; }
@@ -145,8 +143,7 @@ function GetCrop(name) {
 });
 }
 if(HasArg("Q")) {
-    RipFile("Details_Equipment", "equipment", `
-function EquipmentDetail(name, price, type, addtl) {
+    RipFile("Details_Equipment", "equipment", `function EquipmentDetail(name, price, type, addtl) {
     this.name = name;
     this.type = type;
     this.price = price;
@@ -190,7 +187,7 @@ function GetEquipmentDesc(equipInfo, minified) {
 function GetEquipment(name) {
     switch(name) {`, (row, idx) => {
         if(!row.Id || row.Id === "nope") { return ""; }
-        if(row.Id === "*") { return (idx === 0 ? "" : "\n   ") + "             // " + row.Type; }
+        if(row.Id === "*") { return (idx === 0 ? "\t" : "\n\t\t") + "/* " + row.Type + " */"; }
         let resStr = `
 		case "${row.Id}": return new EquipmentDetail(name, ${row.Price}, "${row.Type}"`;
         const addtl = [];
@@ -225,13 +222,10 @@ function GetEquipment(name) {
         }
         resStr += ");";
         return resStr;
-    }, `
-    }
-}`, "");
+    }, "\t}\n}", "");
 }
 if(HasArg("F")) {
-    RipFile("Details_Fixtures", "fixtures", `
-function FixtureDetail(name, price, displaySprite) {
+    RipFile("Details_Fixtures", "fixtures", `function FixtureDetail(name, price, displaySprite) {
     this.name = name;
 	const textname = name.substring(1);
     this.displayname = GetText(textname);
@@ -246,7 +240,7 @@ function FixtureDetail(name, price, displaySprite) {
 function GetFarmInfo(name) {
     switch(name) {`, (row, idx) => {
         if(!row.Id) { return ""; }
-        if(row.Id === "*") { return (idx === 0 ? "" : "\n   ") + "             // " + row.Name; }
+        if(row.Id === "*") { return (idx === 0 ? "\t" : "\n\t\t") + "/* " + row.Name + " */"; }
         let resStr = `
 		case "${row.Id}": return new FixtureDetail(name, ${row.Price}`;
         if(row.DisplaySprite) {
@@ -254,13 +248,10 @@ function GetFarmInfo(name) {
         }
         resStr += ");";
         return resStr;
-    }, `
-    }
-}`, "")
+    }, "\t}\n}", "")
 }
 if(HasArg("E")) {
-    RipFile("Details_Enemies", "enemies", `
-function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fieldheight, fieldwidth, boss, seasonDistribution, atkType, args, drops, addtl) {
+    RipFile("Details_Enemies", "enemies", `function EnemyDetail(id, name, size, spriteidx, cursorinfo, health, atk, def, fieldheight, fieldwidth, boss, seasonDistribution, atkType, args, drops, addtl) {
     this.id = id;
 	this.name = name;
     this.health = GetEnemyHealthMult(health);
@@ -319,7 +310,7 @@ function GetDisplayName(enemyname, max) { return GetText("e." + enemyname + Math
 function GetEnemy(name) {
     switch(name) {`, (row, idx) => {
         if(!row.Id) { return ""; }
-        if(row.Id === "*") { return (idx === 0 ? "" : "\n   ") + "             // " + row.Names; }
+        if(row.Id === "*") { return (idx === 0 ? "\t" : "\n\t\t") + "/* " + row.Names + " */"; }
         let resStr = `
 		case "${row.Id}": return new EnemyDetail(name, GetDisplayName(name, ${row.Names}), `;
         resStr += `"${row.Size}", [${row.sI}], { dx: ${row.cdx}, dy: ${row.cdy}, w: ${row.cw}, h: ${row.ch} }, `;
@@ -336,7 +327,7 @@ function GetEnemy(name) {
                 drops.push(`{ seed: "${m[0]}", min: ${m[1]}, max: ${m[2]} }`);
             }
         }
-        resStr += `, [${drops.join(", ")}]`;
+        resStr += `, [ ${drops.join(", ")} ]`;
 
         const AppendAddtl = (csvKey, jsKey) => { if(row[csvKey]) { addtl.push(`${jsKey}: ${row[csvKey]}`); } };
         const AppendAddtlStr = (csvKey, jsKey) => { if(row[csvKey]) { addtl.push(`${jsKey}: "${row[csvKey]}"`); } };

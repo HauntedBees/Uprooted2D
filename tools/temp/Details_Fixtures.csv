@@ -1,0 +1,20 @@
+Id,Name,Price,DisplaySprite
+*,1. Town,,
+_log,Mshrm Log,50,
+_coop,Incubator,60,
+*,1. Big Robot,,
+_modulator,S. Modulator,500,mod0
+*,2. Scientist,,
+_shooter,Seed Shooter,250,
+*,3. Bridge,,
+_lake,Lake,150,
+_paddy,Rice Paddy,150,
+*,4. Fake Farm,,
+_cow,Cow,1000,cow
+_strongsoil,Strong Soil,800,
+_hotspot,Hotspot,420,hotspot
+*,5. South City,,
+_sprinkler,Sprinkler,1200,
+*,6. Other,,
+_beehive,Beehive,100,
+_charger,Sickle2 Charger,2222,chargerplaced

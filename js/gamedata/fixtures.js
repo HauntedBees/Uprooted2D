@@ -12,7 +12,7 @@ function FixtureDetail(name, price, displaySprite) {
 }
 function GetFarmInfo(name) {
     switch(name) {
-		/* 1. Town */
+    	/* 1. Town */
 		case "_log": return new FixtureDetail(name, 50);
 		case "_coop": return new FixtureDetail(name, 60);
 		/* 1. Big Robot */

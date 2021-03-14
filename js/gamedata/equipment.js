@@ -41,7 +41,7 @@ function GetEquipmentDesc(equipInfo, minified) {
 }
 function GetEquipment(name) {
     switch(name) {
-		/* Weapons */
+    	/* Weapons */
 		case "!babySickle": return new EquipmentDetail(name, 50, "weapon", { noEnemies: false, power: 0, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!baseSickle": return new EquipmentDetail(name, 100, "weapon", { noEnemies: false, power: 2, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
 		case "!goodSickle": return new EquipmentDetail(name, 200, "weapon", { noEnemies: false, targetCrops: true, power: 5, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0 });
