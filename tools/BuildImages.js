@@ -3,16 +3,32 @@ const parseString = require("xml2js").parseString;
 const sharp = require("sharp");
 const imagemin = require("imagemin");
 const imageminPngquant = require("imagemin-pngquant");
+const OpenRasterExport = require("openraster-export").default; 
 const path = require("path");
 const fs = require("fs");
 
-const imgPath = path.join(__dirname, "ora");
+const oraPath = path.join(__dirname, "ora");
+const imgPath = path.join(__dirname, "../img");
 const args = process.argv.slice(2);
 const HasArg = s => args.indexOf(s) >= 0;
 
+const B64Buffer = b64 => Buffer.from(b64.replace(/^data:image\/png;base64,/, ""), "base64");
+const Resize = async function(source, destination, mult, offsetx, offsety, msg) {
+    const img = sharp(source);
+    return img.metadata().then(metadata => {
+        img.extend({ top: offsetx || 0, left: offsety || 0, right: 0, bottom: 0, background:"#00000000" })
+            .resize({ width: metadata.width * mult, kernel: sharp.kernel.nearest }).toFile(destination, () => {
+            imagemin([destination], {
+                destination: destination,
+                plugins: [imageminPngquant()]
+            }).then(() => console.log(msg));
+        });
+    });
+}
+
 const GetBackgrounds = async function() {
     console.log("Extracting backgrounds");
-    const zip = new StreamZip.async({file: `${imgPath}/combatbg.ora`});
+    const zip = new StreamZip.async({file: `${oraPath}/combatbg.ora`});
     const xmlStr = await zip.entryData("stack.xml");
     const rawpath = path.join(__dirname, "temp/combatbg"), finalpath = path.join(__dirname, "../img/bgs");
     if(!fs.existsSync(rawpath)) { fs.mkdirSync(rawpath); }
@@ -49,7 +65,7 @@ const GetBackgrounds = async function() {
 const RipImage = async function(img) {
     const filename = `${img}.png`;
     console.log("Extracting Image " + filename);
-    const zip = new StreamZip.async({file: `${imgPath}/${img}.ora`});
+    const zip = new StreamZip.async({file: `${oraPath}/${img}.ora`});
     const xmlStr = await zip.entryData("stack.xml");
     const rawpath = path.join(__dirname, "temp"), finalpath = path.join(__dirname, "../img/");
     parseString(xmlStr, async function(err, xmlObj) {
@@ -73,9 +89,9 @@ const RipImage = async function(img) {
 }
 const RipProfiles = async function() {
     console.log("Extracting profiles");
-    const zip = new StreamZip.async({file: `${imgPath}/portraits.ora`});
+    const zip = new StreamZip.async({file: `${oraPath}/portraits.ora`});
     const xmlStr = await zip.entryData("stack.xml");
-    const rawpath = path.join(__dirname, "temp/profiles"), finalpath = path.join(__dirname, "../img/profiles");
+    const rawpath = path.join(__dirname, "temp/profiles"), finalpath = path.join(imgPath, "profiles");
     if(!fs.existsSync(rawpath)) { fs.mkdirSync(rawpath); }
     parseString(xmlStr, async function(err, xmlObj) {
         const layers = xmlObj.image.stack[0].layer;
@@ -116,9 +132,46 @@ const RipProfiles = async function() {
         await zip.close();
     });
 }
+const RipMaps = async function() {
+    const coverAliases = {
+        "fakefarm.ora": "barn.png"
+    };
+    const mapOraPath = path.join(oraPath, "maps");
+    const mapImgPath = path.join(imgPath, "maps");
+    const fgImgPath = path.join(imgPath, "fg");
+    const coverImgPath = path.join(imgPath, "covers");
+    const collPath = path.join(__dirname, "collisionimg");
+    const maps = fs.readdirSync(mapOraPath).filter(s => s.endsWith(".ora"));
+    for(let i = 0; i < maps.length; i++) {
+        const map = maps[i];
+        const myPath = path.join(mapOraPath, map);
+        // TODO: the foregrounds are being resized; ensure that doesn't cause problems
+        OpenRasterExport(myPath, {
+            excludeRegex: /^\_.*$/g,
+            excludeLayers: ["Foreground", "Collision", "Cover"], // TODO: this is causing problems somehow (see firstvillage.ora)
+            shrink: true
+        }).then(b64 => {
+            if(!b64) { return; }
+            Resize(B64Buffer(b64), path.join(mapImgPath, map.replace(".ora", ".png")), 4, 0, 0, `Exported ${map}`);
+        });
+        OpenRasterExport(myPath, { includeLayers: ["Foreground"] }).then(b64 => {
+            if(!b64) { return; }
+            Resize(B64Buffer(b64), path.join(fgImgPath, map.replace(".ora", ".png")), 4, 0, 0, `Exported Foreground ${map}`);
+        });
+        OpenRasterExport(myPath, { includeLayers: ["Collision"] }).then(b64 => {
+            if(!b64) { return; }
+            Resize(B64Buffer(b64), path.join(collPath, map.replace(".ora", ".png")), 0.0625, 0, 0, `Exported Collision ${map}`);
+        });
+        /* // TODO: fix cover generation ("shrink" arg is no good)
+        OpenRasterExport(myPath, { includeLayers: ["Cover"], shrink: true }).then(b64 => {
+            if(!b64) { return; }
+            Resize(B64Buffer(b64), path.join(coverImgPath, coverAliases[map]), 4, 0, 0, `Exported Cover ${map}`);
+        });*/
+    }
+}
+
 
 const noArgs = args.length === 0;
-const filters = args.length === 1 && args[0] === "filters";
 if(noArgs || HasArg("bg")) {
     GetBackgrounds();
 }
@@ -139,4 +192,7 @@ if(noArgs || HasArg("cs")) {
 }
 if(noArgs || HasArg("profile")) {
     RipProfiles();
+}
+if(noArgs || HasArg("maps")) {
+    RipMaps();
 }
