@@ -145,7 +145,7 @@ const RipMaps = async function() {
     for(let i = 0; i < maps.length; i++) {
         const map = maps[i];
         const myPath = path.join(mapOraPath, map);
-        // TODO: the foregrounds are being resized; ensure that doesn't cause problems
+        // TODO: the foregrounds are being resized; ensure that doesn't cause problems, or add a thing to pad top and left but not bottom and right
         OpenRasterExport(myPath, {
             excludeRegex: /^\_.*$/g,
             excludeLayers: ["Foreground", "Collision", "Cover"], // TODO: this is causing problems somehow (see firstvillage.ora)
