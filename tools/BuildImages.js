@@ -99,7 +99,6 @@ const RipProfiles = async function() {
         const images = [];
         const promises = layers.map(e => {
             const name = e.$.name, src = e.$.src;
-            
             if(name[0] === "_") { return true; }
             console.log(`Extracting ${name}`);
             const filename = `${name}.png`;
@@ -133,8 +132,13 @@ const RipProfiles = async function() {
     });
 }
 const RipMaps = async function() {
-    const coverAliases = {
-        "fakefarm.ora": "barn.png"
+    const covers = {
+        "fakefarm.ora": ["barn"],
+        "southcity.ora": ["mob", "skumpy"],
+        "northcity.ora": ["northcity1", "northcity2", "northcity2_post", "northcity3"],
+    };
+    const copies = {
+        "hq_IG.ora": "hq_IB.png"
     };
     const mapOraPath = path.join(oraPath, "maps");
     const mapImgPath = path.join(imgPath, "maps");
@@ -144,32 +148,45 @@ const RipMaps = async function() {
     const maps = fs.readdirSync(mapOraPath).filter(s => s.endsWith(".ora"));
     for(let i = 0; i < maps.length; i++) {
         const map = maps[i];
+        if(map !== "northcity.ora") { continue; }
         const myPath = path.join(mapOraPath, map);
-        if(map !== "forest.ora") { continue; }
-        // TODO: different post-game North Cities
-        // TODO: copy hq_IB.png from hq_IG.png
+        // TODO: inspect south city back door - did I abandon that?
         // TODO: the foregrounds are being resized; ensure that doesn't cause problems, or add a thing to pad top and left but not bottom and right
         OpenRasterExport(myPath, {
             excludeRegex: /^_.*$/, // DO NOT USE GLOBAL REGEXES
-            excludeLayers: ["Foreground", "Collision", "Cover"],
+            excludeLayers: ["Foreground", "Collision"],
             shrink: true
         }).then(b64 => {
             if(!b64) { return; }
-            Resize(B64Buffer(b64), path.join(mapImgPath, map.replace(".ora", "1.png")), 4, 0, 0, `Exported ${map}`);
+            Resize(B64Buffer(b64), path.join(mapImgPath, map.replace(".ora", ".png")), 4, 0, 0, `Exported ${map}`);
+            if(copies[map]) {
+                Resize(B64Buffer(b64), path.join(mapImgPath, copies[map]), 4, 0, 0, `Exported Copy ${copies[map]}`);
+            }
         });
+        if(map === "northcity.ora") {
+            ["NB", "IB", "NG", "IB"].forEach(f => {
+                OpenRasterExport(myPath, { includeLayers: ["Road", "Trees", "Floor", "Buildings", "Decorations", "_" + f], shrink: true }).then(b64 => {
+                    b64 && Resize(B64Buffer(b64), path.join(mapImgPath, `northcity_${f}.png`), 4, 0, 0, `Exported North City ${f}`);
+                });
+            });
+        }
         OpenRasterExport(myPath, { includeLayers: ["Foreground"] }).then(b64 => {
             if(!b64) { return; }
-            Resize(B64Buffer(b64), path.join(fgImgPath, map.replace(".ora", "1.png")), 4, 0, 0, `Exported Foreground ${map}`);
+            Resize(B64Buffer(b64), path.join(fgImgPath, map.replace(".ora", ".png")), 4, 0, 0, `Exported Foreground ${map}`);
         });
         OpenRasterExport(myPath, { includeLayers: ["Collision"] }).then(b64 => {
             if(!b64) { return; }
-            Resize(B64Buffer(b64), path.join(collPath, map.replace(".ora", "1.png")), 0.0625, 0, 0, `Exported Collision ${map}`);
+            Resize(B64Buffer(b64), path.join(collPath, map.replace(".ora", ".png")), 0.0625, 0, 0, `Exported Collision ${map}`);
         });
-        /* // TODO: fix cover generation ("shrink" arg is no good)
-        OpenRasterExport(myPath, { includeLayers: ["Cover"], shrink: true }).then(b64 => {
-            if(!b64) { return; }
-            Resize(B64Buffer(b64), path.join(coverImgPath, coverAliases[map]), 4, 0, 0, `Exported Cover ${map}`);
-        });*/
+        const cs = covers[map];
+        if(cs) {
+            cs.forEach(c => {
+                OpenRasterExport(myPath, { includeLayers: ["_Cover:" + c], shrink: true }).then(b64 => {
+                    if(!b64) { return; }
+                    Resize(B64Buffer(b64), path.join(coverImgPath, c + "1.png"), 4, 0, 0, `Exported Cover ${c}`);
+                });
+            });
+        }
     }
 }
 
@@ -184,13 +201,13 @@ if(noArgs || HasArg("sheet")) {
 if(noArgs || HasArg("mapChar")) {
     RipImage("mapChar");
 }
-if(noArgs || HasArg("challenge")) {
+if(noArgs || HasArg("challengeBG")) {
     RipImage("challengeBG");
 }
-if(noArgs || HasArg("onion")) {
+if(noArgs || HasArg("calsotte")) {
     RipImage("calsotte");
 }
-if(noArgs || HasArg("cs")) {
+if(noArgs || HasArg("combatSheet")) {
     RipImage("combatSheet");
 }
 if(noArgs || HasArg("profile")) {
