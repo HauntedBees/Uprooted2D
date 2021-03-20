@@ -338,7 +338,7 @@ const worldmap = {
         console.log(actualText);
         if(choices === undefined || choices.length === 0) {
             screenReaderHelper.SayThing(actualText, "dialog");
-            worldmap.dialogData = {};
+            worldmap.dialogData = null;
             return;
         }
         const choiceTopY = (drawY === 10) ? (10.5 - choices.length) : 4.5;
@@ -409,13 +409,13 @@ const worldmap = {
             fixTutEntity.interact[0](0, fixTutEntity);
         }
     },
-    handleMenuChoices: function(key) {
+    handleMenuChoices: function(key, isFresh) {
         let dy = 0;
         switch(key) {
             case player.controls.up: dy--; break;
             case player.controls.down: dy++; break;
             case player.controls.confirm:
-            case player.controls.pause: return this.click(null, input.IsFreshPauseOrConfirmPress());
+            case player.controls.pause: return this.click(null, isFresh);
         }
         if(worldmap.dialogData.choices === undefined || worldmap.dialogData.choices.length === 0) { return; }
         let newchoice = worldmap.dialogData.idx + dy;
@@ -426,15 +426,16 @@ const worldmap = {
         worldmap.writeText(worldmap.dialogData.text, worldmap.dialogData.choices, true, worldmap.currentFormatting);
     },
     keyPress: function(key) {
+        const isFresh = input.IsFreshPauseOrConfirmPress();
         if(this.inWaterfall || this.fullAnimIdx <= 0 || game.transitioning)  { this.ToggleRun(false); return false; }
         if(this.inDialogue) {
             this.freeMovement = false;
             this.ToggleRun(false);
             input.clearAllKeys();
             if(this.dialogData === null) { 
-                return (key === player.controls.confirm || key === player.controls.pause) ? this.click(null) : false;
+                return (key === player.controls.confirm || key === player.controls.pause) ? this.click(null, isFresh) : false;
             }
-            return this.handleMenuChoices(key);
+            return this.handleMenuChoices(key, isFresh);
         }
         this.freeMovement = true;
         switch(key) {
