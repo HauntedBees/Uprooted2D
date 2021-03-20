@@ -26,11 +26,14 @@ const Resize = async function(source, destination, mult, offsetx, offsety, msg) 
     });
 }
 
+const tempPath = path.join(__dirname, "temp");
+if(!fs.existsSync(tempPath)) { fs.mkdirSync(tempPath); }
+
 const GetBackgrounds = async function() {
     console.log("Extracting backgrounds");
     const zip = new StreamZip.async({file: `${oraPath}/combatbg.ora`});
     const xmlStr = await zip.entryData("stack.xml");
-    const rawpath = path.join(__dirname, "temp/combatbg"), finalpath = path.join(__dirname, "../img/bgs");
+    const rawpath = path.join(tempPath, "combatbg"), finalpath = path.join(__dirname, "../img/bgs");
     if(!fs.existsSync(rawpath)) { fs.mkdirSync(rawpath); }
     parseString(xmlStr, async function(err, xmlObj) {
         const layers = xmlObj.image.stack[0].layer;
@@ -65,16 +68,20 @@ const GetBackgrounds = async function() {
 const RipImage = async function(img) {
     const filename = `${img}.png`;
     console.log("Extracting Image " + filename);
-    const zip = new StreamZip.async({file: `${oraPath}/${img}.ora`});
-    const xmlStr = await zip.entryData("stack.xml");
-    const rawpath = path.join(__dirname, "temp"), finalpath = path.join(__dirname, "../img/");
-    parseString(xmlStr, async function(err, xmlObj) {
+    //const zip = new StreamZip.async({file: `${oraPath}/${img}.ora`});
+    //const xmlStr = await zip.entryData("stack.xml");
+    //const rawpath = tempPath, finalpath = path.join(__dirname, "../img/");
+    OpenRasterExport(`${oraPath}/${img}.ora`, { includeRegex: /^Content/ }).then(b64 => {
+        if(!b64) { return; }
+        Resize(B64Buffer(b64), path.join(path.join(__dirname, "../img/"), img + ".png"), 4, 0, 0, `Exported ${img}`);
+    });
+    /*parseString(xmlStr, async function(err, xmlObj) {
         const contentLayer = xmlObj.image.stack[0].layer.findIndex(f => f.$.name === "Content");
         const layerPath = xmlObj.image.stack[0].layer[contentLayer].$.src;
         await zip.extract(layerPath, `${rawpath}/${filename}`);
         console.log(filename + " extracted");
         const img = sharp(`${rawpath}/${filename}`);
-        const imgPath = `${finalpath}/${filename}`;
+        const imgPath = `${finalpath}/_${filename}`;
         img.metadata().then(metadata => {
             img.resize({ width: metadata.width * 4, kernel: sharp.kernel.nearest }).toFile(imgPath, () => {
                 imagemin([imgPath], {
@@ -85,13 +92,13 @@ const RipImage = async function(img) {
         });
         console.log(filename + " resized");
         await zip.close();
-    });
+    });*/
 }
 const RipProfiles = async function() {
     console.log("Extracting profiles");
     const zip = new StreamZip.async({file: `${oraPath}/portraits.ora`});
     const xmlStr = await zip.entryData("stack.xml");
-    const rawpath = path.join(__dirname, "temp/profiles"), finalpath = path.join(imgPath, "profiles");
+    const rawpath = path.join(tempPath, "profiles"), finalpath = path.join(imgPath, "profiles");
     if(!fs.existsSync(rawpath)) { fs.mkdirSync(rawpath); }
     parseString(xmlStr, async function(err, xmlObj) {
         const layers = xmlObj.image.stack[0].layer;
@@ -183,7 +190,7 @@ const RipMaps = async function() {
             cs.forEach(c => {
                 OpenRasterExport(myPath, { includeLayers: ["_Cover:" + c], shrink: true }).then(b64 => {
                     if(!b64) { return; }
-                    Resize(B64Buffer(b64), path.join(coverImgPath, c + "1.png"), 4, 0, 0, `Exported Cover ${c}`);
+                    Resize(B64Buffer(b64), path.join(coverImgPath, c + ".png"), 4, 0, 0, `Exported Cover ${c}`);
                 });
             });
         }
@@ -200,6 +207,9 @@ if(noArgs || HasArg("sheet")) {
 }
 if(noArgs || HasArg("mapChar")) {
     RipImage("mapChar");
+}
+if(noArgs || HasArg("mapCharBig")) {
+    RipImage("mapCharBig");
 }
 if(noArgs || HasArg("challengeBG")) {
     RipImage("challengeBG");

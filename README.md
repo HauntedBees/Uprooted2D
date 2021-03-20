@@ -30,8 +30,9 @@ The following arguments can be supplied (all `.ora` files referenced are in `too
  - `bg`: Copies all layers from `combatbg.ora` into separate PNGs in `img/bgs`.
  - `profile`: Copies all layers from `portraits.ora` (except ones with names starting with "_") into separate PNGs in `img/profiles`.
  - `maps`: Goes through all files in `tools/ora/maps` and populates `img/maps`, `img/fg`, and `tools/collisionimg` based on their layers. Maps are generated from all layers not prefixed with `_` except `Foreground` and `Collision`. Foregrounds are generated from the `Foreground` layer, and collision images are generated from the `Collision` layer. If a map has cover layers, they should be named with the `_Cover:xxx` convention and specified in the `covers` variable in the `RipMaps` function in the format of `"mapName": ["xxx"]`. A few custom rules exist for handling the `northcity` and `hq_IB` maps.
- - `sheet`, `mapChar`, `challengeBG`, `calsotte`, `combatSheet`: Copies the `Content` layer of each file (ex. `sheet` maps to `sheet.ora`) into `img/`.
+ - `sheet`, `mapChar`, `mapCharBig`, `challengeBG`, `calsotte`, `combatSheet`: Copies the `Content` layer of each file (ex. `sheet` maps to `sheet.ora`) into `img/`.
 
+**TODO: *shop_XXX.ora* files still require manual export.**
 **TODO: finish converting PDNs to ORAs and making accompanying scripts.**
 
 #### BuildSpreadsheets.js
