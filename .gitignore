@@ -72,3 +72,4 @@ cordova/www/*
 js/lib/pixi.js
 
 tools/temp/*
+tools/creds.js

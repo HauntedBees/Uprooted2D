@@ -1,5 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
+const creds = require("./creds.js");
+const { spawn, exec } = require("child_process");
 
 const args = process.argv.slice(2);
 if(!args.length) {
@@ -25,4 +27,18 @@ if(all || action === "copy") {
         fs.writeFileSync(path.join(croot, "index.html"), newval, "utf-8");
     });
     console.log("Files copied to Cordova");
+}
+if(all || action === "build") {
+    exec("cordova build android --release", { cwd: path.join(__dirname, "../cordova") }, () => {
+        exec(`${creds.jarsigner} -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore "${creds.store}" -storepass "${creds.pass}" app-release-unsigned.apk "${creds.name}"`, {
+            cwd: path.join(__dirname, "../cordova/platforms/android/app/build/outputs/apk/release")
+        }, () => {
+            exec(`${creds.zipalign} -v 4 app-release-unsigned.apk Uprooted.apk`, {
+                cwd: path.join(__dirname, "../cordova/platforms/android/app/build/outputs/apk/release")
+            }, () => {
+                console.log("Built and Signed APK to:");
+                console.log(path.join(__dirname, "../cordova/platforms/android/app/build/outputs/apk/release/Uprooted.apk"));
+            });
+        });
+    });
 }

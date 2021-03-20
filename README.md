@@ -53,7 +53,21 @@ The following arguments can be supplied (all `.ods` files referenced are in `too
  - `P`: Converts cells from `Details_BigSprites.ods` and `Details_SmallSprites.ods` into the `sprites` map in `spritedata.js`. For each cell with coordinates `(x, y)` and a value `v`, they will be converted to the a key-value pair of the format `"v": [x, y]`, or `"v": [x, y, true]` for cells ripped from `Details_BigSprites.ods`. 
 
 #### Cordova.js
-Copies all production files to the **cordova/www** folder for building with Cordova. **TODO: automate other Cordova-related functionalities.**
+Run with `node tools/Cordova.js ARG` where `ARG` can be:
+ - `copy`: Copies all production files to the **cordova/www** folder for building with Cordova.
+ - `build`: Build, sign, and zipalign the APK.
+ - `all`: Copy and build.
+
+For the `build` step, you will need to create a `tools/creds.js` file that looks like this to package your Cordova app:
+```js
+module.exports = {
+    store: "full path to your .keystore file",
+    name: "your key name",
+    pass: "your store password",
+    jarsigner: "full path to your jarsigner executable, or just 'jarsigner' if it's in your PATH",
+    zipalign: "full path to your zipalign executable, or just 'zipalign' if it's in your PATH",
+};
+``` 
 
 #### FormatImages.js
 Generates upscaled spritesheets for optional in-game graphical filters. Requires [ffmpeg](https://ffmpeg.org/). **TODO: try adding scale4x back.**
@@ -68,15 +82,18 @@ Calling `gulp watch` will ensure `Package.js` is executed every time a source fi
 Run `node tools/Package.js` to build everything. All standard spritesheets and game datas are pre-built in the the git repository, but if you have made changes, you will need to run the appropriate script described above. Likewise, if you wish to include the filtered sprites, you will need to run `node tools/FormatImages.js`. After building, run `index.html` in your browser to play.
 
 ### Android Build
-Complete all the Standard Build steps above, then run:
+Run `node tools/Cordova.js all` or if you want to do the building manually:
+
 ```
-node tools/Cordova.js
+node tools/Cordova.js copy
 cd cordova
 cordova build android --release
 cd platforms/android/app/build/outputs/apk/release
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore [yourKeyStore] app-release-unsigned.apk [yourKey]
 zipalign -v 4 app-release-unsigned.apk Uprooted.apk
 ```
+
+If you want to make a version for other Cordova platforms like iOS or something, check out Cordova's documentation for how to add new platforms to a project. There is little custom Cordova code, so it is unlikely that anything in the existing codebase is Android specific.
 
 ### Electron Build
 Complete all the Standard Build steps above.
