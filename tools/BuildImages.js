@@ -145,7 +145,9 @@ const RipMaps = async function() {
     for(let i = 0; i < maps.length; i++) {
         const map = maps[i];
         const myPath = path.join(mapOraPath, map);
+        if(map !== "forest.ora") { continue; }
         // TODO: different post-game North Cities
+        // TODO: copy hq_IB.png from hq_IG.png
         // TODO: the foregrounds are being resized; ensure that doesn't cause problems, or add a thing to pad top and left but not bottom and right
         OpenRasterExport(myPath, {
             excludeRegex: /^_.*$/, // DO NOT USE GLOBAL REGEXES
