@@ -68,31 +68,10 @@ const GetBackgrounds = async function() {
 const RipImage = async function(img) {
     const filename = `${img}.png`;
     console.log("Extracting Image " + filename);
-    //const zip = new StreamZip.async({file: `${oraPath}/${img}.ora`});
-    //const xmlStr = await zip.entryData("stack.xml");
-    //const rawpath = tempPath, finalpath = path.join(__dirname, "../img/");
     OpenRasterExport(`${oraPath}/${img}.ora`, { includeRegex: /^Content/ }).then(b64 => {
         if(!b64) { return; }
         Resize(B64Buffer(b64), path.join(path.join(__dirname, "../img/"), img + ".png"), 4, 0, 0, `Exported ${img}`);
     });
-    /*parseString(xmlStr, async function(err, xmlObj) {
-        const contentLayer = xmlObj.image.stack[0].layer.findIndex(f => f.$.name === "Content");
-        const layerPath = xmlObj.image.stack[0].layer[contentLayer].$.src;
-        await zip.extract(layerPath, `${rawpath}/${filename}`);
-        console.log(filename + " extracted");
-        const img = sharp(`${rawpath}/${filename}`);
-        const imgPath = `${finalpath}/_${filename}`;
-        img.metadata().then(metadata => {
-            img.resize({ width: metadata.width * 4, kernel: sharp.kernel.nearest }).toFile(imgPath, () => {
-                imagemin([imgPath], {
-                    destination: finalpath,
-                    plugins: [imageminPngquant()]
-                })
-            });
-        });
-        console.log(filename + " resized");
-        await zip.close();
-    });*/
 }
 const RipProfiles = async function() {
     console.log("Extracting profiles");
@@ -202,27 +181,23 @@ const noArgs = args.length === 0;
 if(noArgs || HasArg("bg")) {
     GetBackgrounds();
 }
-if(noArgs || HasArg("sheet")) {
-    RipImage("sheet");
-}
-if(noArgs || HasArg("mapChar")) {
-    RipImage("mapChar");
-}
-if(noArgs || HasArg("mapCharBig")) {
-    RipImage("mapCharBig");
-}
-if(noArgs || HasArg("challengeBG")) {
-    RipImage("challengeBG");
-}
-if(noArgs || HasArg("calsotte")) {
-    RipImage("calsotte");
-}
-if(noArgs || HasArg("combatSheet")) {
-    RipImage("combatSheet");
-}
 if(noArgs || HasArg("profile")) {
     RipProfiles();
 }
 if(noArgs || HasArg("maps")) {
     RipMaps();
 }
+if(noArgs || HasArg("cavecollisions")) {
+    console.log("Extracting Cave Collisions");
+    OpenRasterExport(`${oraPath}/cavecollisions.ora`, { includeLayers: ["Content"] }).then(b64 => {
+        if(!b64) { return; }
+        Resize(B64Buffer(b64), path.join(__dirname, "cave.png"), 1, 0, 0, "Exported Cave Collisions");
+    });
+}
+const basicSheets = ["sheet", "sheetBig", "mapPlayer", "mapPlayerHelp", "mapChar", "mapCharBig", "challengeBG", "calsotte", "fov", "cavesheet",
+                     "combatPlayer", "combatEquipment", "combatSheet", "combatSheetBig", "combatSheetHuge"];
+basicSheets.forEach(s => {
+    if(noArgs || HasArg("basics") || HasArg(s)) {
+        RipImage(s);
+    }
+});
