@@ -145,22 +145,23 @@ const RipMaps = async function() {
     for(let i = 0; i < maps.length; i++) {
         const map = maps[i];
         const myPath = path.join(mapOraPath, map);
+        // TODO: different post-game North Cities
         // TODO: the foregrounds are being resized; ensure that doesn't cause problems, or add a thing to pad top and left but not bottom and right
         OpenRasterExport(myPath, {
-            excludeRegex: /^\_.*$/g,
-            excludeLayers: ["Foreground", "Collision", "Cover"], // TODO: this is causing problems somehow (see firstvillage.ora)
+            excludeRegex: /^_.*$/, // DO NOT USE GLOBAL REGEXES
+            excludeLayers: ["Foreground", "Collision", "Cover"],
             shrink: true
         }).then(b64 => {
             if(!b64) { return; }
-            Resize(B64Buffer(b64), path.join(mapImgPath, map.replace(".ora", ".png")), 4, 0, 0, `Exported ${map}`);
+            Resize(B64Buffer(b64), path.join(mapImgPath, map.replace(".ora", "1.png")), 4, 0, 0, `Exported ${map}`);
         });
         OpenRasterExport(myPath, { includeLayers: ["Foreground"] }).then(b64 => {
             if(!b64) { return; }
-            Resize(B64Buffer(b64), path.join(fgImgPath, map.replace(".ora", ".png")), 4, 0, 0, `Exported Foreground ${map}`);
+            Resize(B64Buffer(b64), path.join(fgImgPath, map.replace(".ora", "1.png")), 4, 0, 0, `Exported Foreground ${map}`);
         });
         OpenRasterExport(myPath, { includeLayers: ["Collision"] }).then(b64 => {
             if(!b64) { return; }
-            Resize(B64Buffer(b64), path.join(collPath, map.replace(".ora", ".png")), 0.0625, 0, 0, `Exported Collision ${map}`);
+            Resize(B64Buffer(b64), path.join(collPath, map.replace(".ora", "1.png")), 0.0625, 0, 0, `Exported Collision ${map}`);
         });
         /* // TODO: fix cover generation ("shrink" arg is no good)
         OpenRasterExport(myPath, { includeLayers: ["Cover"], shrink: true }).then(b64 => {
