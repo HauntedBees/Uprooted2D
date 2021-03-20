@@ -941,7 +941,7 @@ const mapentities = {
         AutoPlayFellow("CS_skunk4", [ SpecialFunctions["FINALSKUNK"] ]),
         GetFellow("Skunk", 8.5, 4, 1, "Skunk", OneSpeak("kidaside"), undefined, { noChange: true, storageKey: "skunk" }),
         GetCSFellow("SkunkTrap4", 8, 4, 0, "", "skunktrap4", { 
-            interact: Cutscene("kidd"), isRow: true, solid: false, visible: false, postBattle: "kiddend", postBattleLoss: "kidend"
+            interact: Cutscene("kidd"), isRow: true, solid: false, visible: false, postBattle: "kidend", postBattleLoss: "kidend"
         }),
         new CutsceneTrigger("kidend", "kidend")
     ],
