@@ -79,7 +79,7 @@ const args = process.argv.slice(2), minify = args[0] === "min";
 console.log(minify ? "Minifying Code" : "Combining Files");
 
 const version = Math.floor(Math.random() * 100);
-const params = { "vNum": `console.log(${version});` };
+const params = { "vNum": `console.log("Current Version: ${version}");` };
 console.log(" - Reading Files");
 Promise.all(files.map(f => fs.promises.readFile(path.join(__dirname, "../", f), "utf8"))).then(arr => {
     if(minify) {
