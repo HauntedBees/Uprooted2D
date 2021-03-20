@@ -388,7 +388,7 @@ const worldmap = {
         else {
             if(!isFresh) {
                 if(iHandler.isFirst) { return false; }
-                if(worldmap.dialogData.choices !== undefined && worldmap.dialogData.choices.length > 0) { return false; }
+                if(worldmap.dialogData && worldmap.dialogData.choices !== undefined && worldmap.dialogData.choices.length > 0) { return false; }
             }
             iHandler.Advance();
         }
