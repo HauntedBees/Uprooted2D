@@ -1411,6 +1411,7 @@ const SpecialFunctions = {
                 worldmap.importantEntities["skunktrap"].pos.y = -1;
             }
         }
+        return true;
     },
     "SECONDSKUNK": function() {
         if(player.completedQuest("gotTire") && !player.completedQuest("skunk2")) {
@@ -1424,6 +1425,7 @@ const SpecialFunctions = {
                 worldmap.importantEntities["skunktrap2"].pos.y = -1;
             }
         }
+        return true;
     },
     "THIRDSKUNK": function() {
         if(player.completedQuest("keycard") && !player.completedQuest("skunk3")) {
@@ -1437,6 +1439,7 @@ const SpecialFunctions = {
                 worldmap.importantEntities["skunktrap3"].pos.y = -1;
             }
         }
+        return true;
     },
     "FINALSKUNK": function() {
         if(!player.completedQuest("skunk4")) {
@@ -1450,6 +1453,7 @@ const SpecialFunctions = {
                 worldmap.importantEntities["skunktrap4"].pos.y = -1;
             }
         }
+        return true;
     },
 
     "WALKTOPLAYER": function() {

@@ -111,7 +111,7 @@ const worldmap = {
     },
     toggleMovement: function(moving) {
         clearInterval(worldmap.fullAnimIdx);
-        this.fullAnimIdx = setInterval((moving ? worldmap.moveEntities : function() { worldmap.refreshMap(); }), timers.FULLANIM);
+        worldmap.fullAnimIdx = setInterval((moving ? worldmap.moveEntities : function() { worldmap.refreshMap(); }), timers.FULLANIM);
     },
     moveEntities: function() {
         if(worldmap.horRor !== null) { worldmap.horRor.Pursue(); }
