@@ -84,13 +84,13 @@ worldmap.shop = {
         if(text === undefined) {
             if(this.sellingState === me.sellStates.BUYING) { this.DrawText(); }
         } else {
-            screenReaderHelper.SayFresh(text, "dialog");
             this.WriteWrappedText(text);
         }
     },
     WriteWrappedText: function(text, y, size) {
         y = y || 159; // 16 * 10 - 1
         gfx.drawWrappedText(text, 4, y, 250, gfx.GetWhite(), undefined, size);
+        screenReaderHelper.SayFresh(text, "dialog");
     },
     isValidSellIdx: function(i) {
         if(this.sellingType === me.sellTypes.CROPS) {
@@ -425,6 +425,11 @@ worldmap.shop = {
         gfx.drawInfoText(GetText("ctrlConfirm"), 4.25, 11.75, this.cursorY === 1, "menuA", "menutext");
         gfx.drawInfoText(GetText("ctrlCancel"), 4.25, 12.75, this.cursorY === 2, "menuA", "menutext");
         this.WriteWrappedText(topText);
+        switch(this.cursorY) {
+            case 0: screenReaderHelper.SayFresh(`Buy ${amount} for ${price * amount} monies.`, "info"); break;
+            case 1: screenReaderHelper.SayFresh(GetText("ctrlConfirm"), "option"); break;
+            case 2: screenReaderHelper.SayFresh(GetText("ctrlCancel"), "option"); break;
+        }
     },
     CombineRightAligned: function(left, right) {
         let numSpaces = 0;
@@ -744,13 +749,14 @@ worldmap.shop = {
             const textKey = dreamChance ? `innDream${Range(0, 10)}` : "innSleep";
             worldmap.shop.DrawDetails(GetText(worldmap.shop.details.awake));
             gfx.drawFullText(GetText(textKey), 0, gfx.GetWhite(), true);
+            screenReaderHelper.SayFresh(GetText(textKey), "info");
             sleepInfo.state = 2;
         } else if(sleepInfo.state === 3) {
             if(sleepInfo.size === 0.25) { Sounds.PlaySound("wakeup"); }
             gfx.clearLayer("tutorial");
             gfx.DrawTransitionImage("transWake", game.tilew / 2, game.tileh / 2, sleepInfo.size, true);
             if(sleepInfo.size < 50) { sleepInfo.size += sleepInfo.size / 25; }
-            else { worldmap.shop.FinishSleepsy(); }
+            else { screenReaderHelper.SayFresh(GetText(worldmap.shop.details.awake), "info"); worldmap.shop.FinishSleepsy(); }
         }
     },
     DrawAutoSave: function() {

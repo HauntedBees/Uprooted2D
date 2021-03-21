@@ -67,6 +67,7 @@ function Smartphone() {
             if(texts[i].id === "misctext1") { player.activeQuests["stonehenge"] = 1; }
             Sounds.PlaySound("readtext");
             notifications -= 1;
+            screenReaderHelper.SayFresh("Text Message - " + texts[i].message, "text");
             return true;
         }
         return false;

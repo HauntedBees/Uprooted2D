@@ -29,6 +29,7 @@ let screenReaderHelper = {
         }
         t = t.replace(/Food2/g, "Food Two").replace(/ emo /g, " eemo ").replace(/\?\?\?/g, "unknown").replace(/\!\!\!/g, "unknown").replace(/Eee/g, "E").replace(/(\d)G/g, "$1 monies");
         document.getElementById("screenRead").innerText = t;
+        console.log(`SCREEN READING: ${t}`);
     }
 };
 let consoleCmd = {
