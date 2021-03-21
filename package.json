@@ -20,6 +20,7 @@
     "csv-parser": "^3.0.0",
     "electron": "^11.2.3",
     "electron-builder": "^22.9.1",
+    "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^8.1.0",
     "get-pixels": "^3.3.2",
     "gulp": "^4.0.2",
