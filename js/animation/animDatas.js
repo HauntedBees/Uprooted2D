@@ -451,6 +451,7 @@ const animCallbackHelpers = {
                     const sound = "die_" + combat.enemies[targ].sound;
                     switch(sound) {
                         case "die_furry": Sounds.PlaySound("voip"); break;
+                        case "die_squishy": Sounds.PlaySound("naptime"); break;
                         default: Sounds.PlaySound(sound); break;
                     }
                     combat.animHelper.MakeEnemyACorpse(targ);

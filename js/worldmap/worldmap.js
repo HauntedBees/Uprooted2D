@@ -2,7 +2,7 @@ const worldmap = {
     freeMovement: true, savedImage: "", angryBees: false,
     smartphone: null, horRor: null, caveInfo: null, 
     pos: { x: 0, y: 0 }, playerDir: 2, playerMoveDir: 2, forceMove: false, 
-    animData: plAnims.walk, runState: 0, runPressStart: -1,
+    animData: plAnims.walk, runState: 0, runPressStart: -1, freshWall: false,
     mapName: "", fullAnimIdx: 0, forcedY: -1, 
     entities: [], importantEntities: {},
     inDialogue: false, dialogState: 0, dialogData: null, forceEndDialog: false,
@@ -474,7 +474,14 @@ const worldmap = {
             x: Math.round(pos.x), //checkBoth ? pos.x : (this.playerDir === directions.LEFT ? Math.floor(pos.x) : Math.ceil(pos.x)),
             y: Math.round(pos.y)
         }
-        if(this.IsValidPlayerPos(newPos, pos, checkBoth)) { this.pos = pos; }
+        console.log(this.runState);
+        if(this.IsValidPlayerPos(newPos, pos, checkBoth)) {
+            this.pos = pos;
+            this.freshWall = false;
+        } else if(this.runState === 2 && !this.freshWall) {
+            this.freshWall = true;
+            Sounds.PlaySound("biff");
+        }
         newPos.x = Math.round(newPos.x);
         
         if(isEnter && input.IsFreshPauseOrConfirmPress()) {

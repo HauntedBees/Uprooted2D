@@ -20,6 +20,8 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         // COMBAT DEATH SOUNDS
                         "die_metal",        // sfx_deathscream_android8
                         "die_human",        // sfx_deathscream_human14
+                        // die_furry is an alias of voip
+                        // die_squishy is an alias of naptime
                         // MENU SOUNDS
                         "confirm",          // made fresh
                         "cancel",           // made fresh
