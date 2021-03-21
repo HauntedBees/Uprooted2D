@@ -2,6 +2,7 @@ const tobyTern = {
     onTitleScreen: true, peckTimer: 0, tricks: [], lastAdd: 0, score: 0,  
     setup: function() {
         gfx.drawFullImage("tobytern", "menuA");
+        screenReaderHelper.SayFresh("Toby Tern's Pro Pigeon - Epic Edition. Press the Start!", "info");
     },
     keyPress: function(key) {
         if(key !== player.controls.confirm && key !== player.controls.pause) { return false; }
@@ -23,6 +24,7 @@ const tobyTern = {
                 this.lastAdd = 4;
                 this.tricks.push({ y: gfx.tileHeight - 0.5, trick: trickText });
                 this.score += parseInt(trickText.split("+")[1]) || 0;
+                screenReaderHelper.SayFresh(trickText, "info");
             } else { this.score++; }
         }
     },

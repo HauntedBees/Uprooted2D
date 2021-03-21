@@ -1,10 +1,10 @@
 pausemenu.noFun = {
-    cursor: { x: 0, y: 0 }, state: 0, maxY: 0, startY: 6.25, 
+    cursor: { x: 0, y: 0 }, state: 0, lastState: 0, maxY: 0, startY: 6.25, 
     backStartX: 0, backButtonW: 0, puzzle: 2, 
     layersToClear: ["menuA", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack"],
     setup: function() {
         this.cursor = { x: 0, y: 0 };
-        this.state = 0; this.maxY = 3; this.startY = 6.25;
+        this.state = 0; this.lastState = -1; this.maxY = 3; this.startY = 6.25;
         this.SetPuzzle();
         this.cursors = new CursorAnimSet([
             { key: "main", x: this.cursor.x, y: this.cursor.y, w: 0, h: 0, type: "cursor", layer: "menucursorA" }
@@ -106,226 +106,85 @@ pausemenu.noFun = {
         gfx.DrawMapCharacter(3, 10, { x: 7.75, y: 3 }, { x: 0, y: 0 }, "mapChar", false, "menuA");
         this.DrawTextAndOptions(this.state);
     },
+
+    NoFunOptions: {
+        0: { text: "noFunStart", options: ["noFunBattle", "noFunPuzzle", "noFunSomething", "noFunNevermind"] }, // Main
+        1: { text: "noFunBattleSel", startY: 5.5, options: ["noFunBattle0", "noFunBattle1", "noFunBattle2", "noFunBattle3", "noFunBattle4", "noFunNevermind"] }, // No Battles!
+        11: { text: "noFunHardBattle", options: ["sYes", "sNo"] }, // Weaken Foes!
+        12: { text: "noFunEasyBattle", options: ["sYes", "sNo"] }, // Strengthen Foes!
+        13: { text: "noFunItemsSuck", options: ["sYes", "sNo"] }, // Item Me Up!
+        14: { text: "noFunStatsSuck", options: ["sYes", "sNo"] }, // Stat Me Up!
+        15: { text: "noFunDontGetBattles", options: ["sYes", "sNo"] }, // Tutorial Me Up!
+        2: { text: "noFunPuzzleNone", options: ["noFunDone"] }, // No Puzzles!
+        21: { text: "noFunPuzzleForest", startY: 8.5, options: ["sYes", "sNo"] }, // Forest
+        24: { text: "noFunPuzzleForest2", startY: 8.5, options: ["sYes", "sNo"] }, // Forest2
+        22: { text: "noFunPuzzleBlocks", startY: 8.5, options: ["sYes", "sNo"] }, // Block Puzzles
+        25: { text: "noFunPuzzleBlocks", startY: 8.5, options: ["sYes", "sNo"] }, // Block Puzzles
+        23: { text: "noFunPuzzleWater", startY: 8.5, options: ["sYes", "sNo"] }, // Water Puzzle
+        26: { text: "noFunPuzzleHQ", startY: 8.5, options: ["sYes", "sNo"] }, // Travel Puzzles
+        276: { text: "noFunPuzzleHQ", startY: 8.5, options: ["sYes", "sNo"] }, // Travel Puzzles
+        3: { text: "noFunSomethingSel", startY: 5.5, options: ["noFunSomething0", "noFunSomething1", "noFunSomething2", "noFunSomething3", "noFunNevermind"] }, // Something Else!
+        31: { text: "noFunDontGetIt", startY: 5.5, options: ["noFunTut0", "noFunTut1", "noFunNevermind"] }, // I Don't Get It!
+        32: { text: "noFunBees", options: ["sYes", "sNo"] },  // I Want Some Le Fucking Bees!
+        33: { text: "noFunNoFun", startY: 7.5, options: ["sYes"] }, // It's No Fun!
+        // 34 is handled separately
+        50: { text: "noFunComplete", options: ["noFunDone"] } // It has been done!
+    },
+
     DrawTextAndOptions: function(state) {
-        switch(state) {
-            case 0: // Main
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunStart"), 20, 85, 220);
-                this.startY = 6.25;
-                gfx.drawInfoText(GetText("noFunBattle"), 4.5, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunPuzzle"), 4.5, 7.25, this.cursor.y === 1, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunSomething"), 4, 8.25, this.cursor.y === 2, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunNevermind"), 6, 9.25, this.cursor.y === 3, "menuA", "menutext");
-                break;
-            case 1: // No Battles!
-                gfx.drawMinibox(0.5, 4.5, 14, 6, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunBattleSel"), 20, 85, 220);
-                this.startY = 5.5;
-                gfx.drawInfoText(GetText("noFunBattle0"), 4.5, 5.5, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunBattle1"), 4.5, 6.5, this.cursor.y === 1, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunBattle2"), 4.75, 7.5, this.cursor.y === 2, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunBattle3"), 4, 8.5, this.cursor.y === 3, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunBattle4"), 3, 9.5, this.cursor.y === 4, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunNevermind"), 6, 10.5, this.cursor.y === 5, "menuA", "menutext");
-                break;
-            case 11: // Weaken Foes!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunHardBattle"), 20, 85, 220);
-                this.startY = 6.25;
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 12: // Strengthen Foes!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunEasyBattle"), 20, 85, 220);
-                this.startY = 6.25;
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 13: // Item Me Up!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunItemsSuck"), 20, 85, 220);
-                this.startY = 6.25;
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 14: // Stat Me Up!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunStatsSuck"), 20, 85, 220);
-                this.startY = 6.25;
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 15: // Tutorial Me Up!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 6.25;
-                gfx.drawWrappedText(GetText("noFunDontGetBattles"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 2: // No Puzzles!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 6.25;
-                gfx.drawWrappedText(GetText("noFunPuzzleNone"), 20, 85, 220);
-                gfx.drawInfoText(GetText("noFunDone"), 7, 6.5, true, "menuA", "menutext");
-                break;
-            case 21: // Forest
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 6.25;
-                gfx.drawWrappedText(GetText("noFunPuzzleForest"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 24: // Forest2
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 6.25;
-                gfx.drawWrappedText(GetText("noFunPuzzleForest2"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 22:
-            case 25: // Block Puzzles
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 6.25;
-                gfx.drawWrappedText(GetText("noFunPuzzleBlocks"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 23: // Water Puzzle
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 6.25;
-                gfx.drawWrappedText(GetText("noFunPuzzleWater"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 26:
-            case 27: // Travel Puzzles
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 6.25;
-                gfx.drawWrappedText(GetText("noFunPuzzleHQ"), 20, 85, 220);
-                gfx.drawInfoText(GetText("sYes"), 7, 8.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 9.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 3: // Something Else!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                this.startY = 5.5;
-                gfx.drawWrappedText(GetText("noFunSomethingSel"), 20, 85, 220);
-                gfx.drawInfoText(GetText("noFunSomething0"), 3.75, 5.5, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunSomething1"), 4.5, 6.5, this.cursor.y === 1, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunSomething2"), 4.5, 7.5, this.cursor.y === 2, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunSomething3"), 4, 8.5, this.cursor.y === 3, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunNevermind"), 6, 9.5, this.cursor.y === 4, "menuA", "menutext");
-                break;
-            case 31: // I Don't Get It!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunDontGetIt"), 20, 85, 220);
-                this.startY = 5.5;
-                gfx.drawInfoText(GetText("noFunTut0"), 5, 5.5, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunTut1"), 4.5, 6.5, this.cursor.y === 1, "menuA", "menutext");
-                gfx.drawInfoText(GetText("noFunNevermind"), 6, 7.5, this.cursor.y === 2, "menuA", "menutext");
-                break;
-            case 32: // I Want Some Le Fucking Bees!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunBees"), 20, 85, 220);
-                this.startY = 6.25;
-                gfx.drawInfoText(GetText("sYes"), 7, 6.25, this.cursor.y === 0, "menuA", "menutext");
-                gfx.drawInfoText(GetText("sNo"), 7, 7.25, this.cursor.y === 1, "menuA", "menutext");
-                break;
-            case 33: // It's No Fun!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunNoFun"), 20, 85, 220);
-                this.startY = 6.25;
-                gfx.drawInfoText(GetText("sYes"), 7, 6.5, true, "menuA", "menutext");
-                break;
-            case 34: // The Story Thus Far
-                if(!player.completedQuest("openingCutscene")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 7.25;
-                    gfx.drawWrappedText(GetText("plotSummary0"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("bigBot")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 7.25;
-                    gfx.drawWrappedText(GetText("plotSummary1"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("nathanned")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 7.25;
-                    gfx.drawWrappedText(GetText("plotSummary2"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("researchLab")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 8.25;
-                    gfx.drawWrappedText(GetText("plotSummary3"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("findFakeFarm")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 9.5;
-                    gfx.drawWrappedText(GetText("plotSummary4"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("truckRepair")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 8.5;
-                    gfx.drawWrappedText(GetText("plotSummary5"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(player.clearedEntities.indexOf("IntroSkumpyCutscene") < 0) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 9.5;
-                    gfx.drawWrappedText(GetText("plotSummary6"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("gotPhone")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 9.5;
-                    gfx.drawWrappedText(GetText("plotSummary7"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("keycard")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 9.5;
-                    gfx.drawWrappedText(GetText("plotSummary8"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(player.clearedEntities.indexOf("BeckettsReturn") < 0) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    gfx.drawWrappedText(GetText("plotSummary9"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else if(!player.completedQuest("theGame")) {
-                    gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                    this.startY = 9.5;
-                    gfx.drawWrappedText(GetText("plotSummary10"), 20, 85, 220);
-                    gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                } else {
-                    if(player.completedQuest("NG")) {
-                        gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                        this.startY = 9.5;
-                        gfx.drawWrappedText(GetText("plotSummaryNG"), 20, 85, 220);
-                        gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                    } else if(player.completedQuest("NV")) {
-                        gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                        this.startY = 9.5;
-                        gfx.drawWrappedText(GetText("plotSummaryNV"), 20, 85, 220);
-                        gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                    } else if(player.completedQuest("IG")) {
-                        gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                        this.startY = 9.5;
-                        gfx.drawWrappedText(GetText("plotSummaryIG"), 20, 85, 220);
-                        gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                    } else if(player.completedQuest("IV")) {
-                        gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                        gfx.drawWrappedText(GetText("plotSummaryIV"), 20, 85, 220);
-                        gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                    } else {
-                        gfx.drawMinibox(0.5, 4.5, 14, 4, "menuA", "FarmInfo");
-                        this.startY = 9.5;
-                        gfx.drawWrappedText(GetText("plotSummaryUhh"), 20, 85, 220);
-                        gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                    }
+        const readTitle = state !== this.lastState;
+        this.lastState = state;
+
+        if(state === 34) {
+            gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
+            let summaryKey = "plotSummaryUhh";
+            if(!player.completedQuest("openingCutscene")) {
+                summaryKey = "plotSummary0";
+            } else if(!player.completedQuest("bigBot")) {
+                summaryKey = "plotSummary1";
+            } else if(!player.completedQuest("nathanned")) {
+                summaryKey = "plotSummary2";
+            } else if(!player.completedQuest("researchLab")) {
+                summaryKey = "plotSummary3";
+            } else if(!player.completedQuest("findFakeFarm")) {
+                summaryKey = "plotSummary4";
+            } else if(!player.completedQuest("truckRepair")) {
+                summaryKey = "plotSummary5";
+            } else if(player.clearedEntities.indexOf("IntroSkumpyCutscene") < 0) {
+                summaryKey = "plotSummary6";
+            } else if(!player.completedQuest("gotPhone")) {
+                summaryKey = "plotSummary7";
+            } else if(!player.completedQuest("keycard")) {
+                summaryKey = "plotSummary8";
+            } else if(player.clearedEntities.indexOf("BeckettsReturn") < 0) {
+                summaryKey = "plotSummary9";
+            } else if(!player.completedQuest("theGame")) {
+                summaryKey = "plotSummary10";
+            } else {
+                if(player.completedQuest("NG")) {
+                    summaryKey = "plotSummaryNG";
+                } else if(player.completedQuest("NV")) {
+                    summaryKey = "plotSummaryNV";
+                } else if(player.completedQuest("IG")) {
+                    summaryKey = "plotSummaryIG";
+                } else if(player.completedQuest("IV")) {
+                    summaryKey = "plotSummaryIV";
                 }
-                break;
-            case 50: // It has been done!
-                gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
-                gfx.drawWrappedText(GetText("noFunComplete"), 20, 85, 220);
-                this.startY = 6.5;
-                gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
-                break;
+            }
+            gfx.drawWrappedText(GetText(summaryKey), 20, 85, 220);
+            gfx.drawInfoText(GetText("noFunDone"), 6.5, 12, true, "menuA", "menutext");
+            screenReaderHelper.SayFresh(GetText(summaryKey) + " Current Selection: " + GetText("noFunDone"), "info");
+        } else {
+            const info = this.NoFunOptions[state];
+            gfx.drawMinibox(0.5, 4.5, 14, 8, "menuA", "FarmInfo");
+            gfx.drawWrappedText(GetText(info.text), 20, 85, 220);
+            let text = readTitle ? (GetText(info.text) + ", Current Selection: ") : "";
+            const startY = info.startY || 6.25;
+            for(let i = 0; i < info.options.length; i++) {
+                gfx.drawInfoText(GetText(info.options[i]), 4.5, startY + i, this.cursor.y === i, "menuA", "menutext");
+                if(this.cursor.y === i) { text += GetText(info.options[i]); }
+            }
+            screenReaderHelper.SayFresh(text, "info");
         }
     },
     clean: function() {
