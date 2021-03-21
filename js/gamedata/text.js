@@ -1095,7 +1095,7 @@ const fulltext = {
         "type": "opts"
     },
     "diffHard.i": {
-        "en-us": "Seeds are much harder to come by. Enemies are JERKS. The RNG is meaner.",
+        "en-us": "Seeds are much harder to come by. Enemies are JERKS. The enemies are luckier and you're not.",
         "type": "opts"
     },
     "opResolution": {

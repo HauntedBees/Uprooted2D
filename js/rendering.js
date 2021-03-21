@@ -132,7 +132,7 @@ const gfx = {
             gfx.drawTile(tile + "M", 16 * (gfx.tileWidth - 1 - xi++), 2 + y * 16, "menuA");
         }
         gfx.drawTile(tile + "L", 16 * (gfx.tileWidth - 1 - xi), 2 + y * 16, "menuA");
-        gfx.drawText(text, 16 * (gfx.tileWidth - 1 - xi) + 6, 10.5 + y * 16);
+        gfx.drawText(text, 16 * (gfx.tileWidth - 1 - xi) + 6, 11.5 + y * 16);
         return xi;
     },
     drawTileToGrid: (spritename, x, y, layer, isHalfTile) => gfx.drawTile(spritename, x * 16, y * 16, layer, isHalfTile),
