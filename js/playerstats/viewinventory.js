@@ -59,6 +59,14 @@ pausemenu.inventory = {
             vals.push(gfx.drawInfoText(GetText("inv.sPower"), this.sortStartX, 2, this.cursor.y === 1));
             vals.push(gfx.drawInfoText(GetText("inv.sTime"), this.sortStartX, 3, this.cursor.y === 2));
             vals.push(gfx.drawInfoText(GetText("inv.sType"), this.sortStartX, 4, this.cursor.y === 3));
+            let srSortText;
+            switch(this.cursor.y) {
+                case 0: srSortText = GetText("inv.sCount"); break;
+                case 1: srSortText = GetText("inv.sPower"); break;
+                case 2: srSortText = GetText("inv.sTime"); break;
+                case 3: srSortText = GetText("inv.sType"); break;
+            }
+            if(srSortText) { screenReaderHelper.SayFresh(srSortText, "option"); }
             if(this.cursor.y === -1) { this.cursors.RedimCursor("main", this.sortStartX - 0.0625,  -0.0625, this.sortButtonW - this.backButtonW - 1.125, 0); }
             else { this.cursors.RedimCursor("main", -2, -2, 0, 0); }
         }
@@ -78,14 +86,16 @@ pausemenu.inventory = {
         this.HandleTrashCan(true);
 
         if(this.cursor.y >= 0 && !this.inSort) {
-            this.SetCrop();
+            this.SetCrop(this.selectedCrop < 0);
         } else {
             gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 11.5, "", "FarmInfo");
             const textX = 76, textY = 12 + this.cropDY * 16;
             if(this.cursor.x === 0) {
                 gfx.drawWrappedText(GetText("inv.BackInfo"), textX, textY, 170, undefined, undefined, 28);
+                if(!this.inSort) { screenReaderHelper.SayFresh(GetText("menu.Back") + ", " + GetText("inv.BackInfo"), "option"); }
             } else if(this.cursor.x === 1) {
                 gfx.drawWrappedText(GetText("inv.SortInfo"), textX, textY, 170, undefined, undefined, 28);
+                if(!this.inSort) { screenReaderHelper.SayFresh(GetText("inv.Sort") + ", " + GetText("inv.SortInfo"), "option"); }
             }
         }
     },
@@ -219,6 +229,8 @@ pausemenu.inventory = {
         } else {
             text = GetText("inv.swap");
         }
+        console.log(text);
+        screenReaderHelper.SayFresh(text, "option");
 
         const y = this.cropDY + this.cursor.y + 0.5, x = 4.5;
         let xi = 1;
@@ -344,7 +356,7 @@ pausemenu.inventory = {
         this.DrawAll();
         return true;
     },
-    SetCrop: function() {
+    SetCrop: function(speak) {
         const rowYs = [0.25, 1.5, 2.75];
         const rowTextYs = [16, 32, 57, 72];
         const leftMostX = 4.75;
@@ -359,6 +371,7 @@ pausemenu.inventory = {
         const item = player.inventory[actIdx];
         if(item === undefined) { return; }
         const crop = GetCrop(item[0]);
+        let srText = "Selected Crop: " + crop.displayname + ", ";
 
         // Row 0
         gfx.drawText(crop.displayname, leftMostTextX + 4, rowTextYs[0], undefined, 32);
@@ -379,13 +392,16 @@ pausemenu.inventory = {
         }
         gfx.drawTileToGrid(cropSprite, leftMostX + 9.25, rowYs[0], "menutext");
         gfx.drawItemNumber(crop.size, leftMostX + 9.5, rowYs[0], "menutext", true);
+        srText += "Type: " + crop.type + ", Size: " + crop.size + " by " + crop.size + ", ";
 
         // Row 1
         const seasons = ["spring", "summer", "autumn", "winter"];
         for(let i = 0; i < 4; i++) {
             gfx.drawTileToGrid(seasons[i] + crop.seasons[i], leftMostX + 6.75 + i, rowYs[1], "menutext");
+            if(crop.seasons[i] === 2) { srText += "Grows great in " + seasons[i] + ", "; }
+            else if(crop.seasons[i] === 0) { srText += "Grows poorly in " + seasons[i] + ", "; }
         }
-        this.DrawCropPower(crop, leftMostX, rowYs[1], "menutext");
+        srText += this.DrawCropPower(crop, leftMostX, rowYs[1], "menutext") + ", ";
 
         // Row 2
         gfx.drawTileToGrid("inv_time", leftMostX, rowYs[2], "menutext");
@@ -394,6 +410,8 @@ pausemenu.inventory = {
         } else {
             gfx.drawBigNumber(crop.time, leftMostX + 1, rowYs[2], "menutext");
         }
+        srText += "Growth Time: " + (crop.time === 999 ? "Random, " : `${crop.time} Turn${crop.time === 1 ? "" : "s"}, `);
+
         if(crop.respawn > 0) {
             gfx.drawTileToGrid("inv_regrow", leftMostX + 2, rowYs[2], "menutext");
             if(crop.respawn === 999 || crop.respawn === -1) {
@@ -401,21 +419,25 @@ pausemenu.inventory = {
             }  else {
                 gfx.drawBigNumber(crop.respawn, leftMostX + 3, rowYs[2], "menutext");
             }
+            srText += "Regrowth Time: " + ((crop.respawn === 999 || crop.respawn < 0) ? "Random, " : `${crop.respawn} Turn${crop.respawn === 1 ? "" : "s"}, `);
         }
 
         let bonusesToPush = [];
-        if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); }
-        if(crop.fireResist) { bonusesToPush.push("fireIco" + crop.fireResist); }
-        if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); }
-        if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); }
-        if(crop.saltClean) { bonusesToPush.push("saltIcoX"); }
-        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); }
+        if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); srText += "Water Resistant, "; }
+        if(crop.fireResist) { bonusesToPush.push("fireIco" + crop.fireResist); srText += "Fire Resistant, "; }
+        if(crop.stickChance) { bonusesToPush.push("stunIco" + crop.stickChance); srText += "Can cause Stickiness, "; }
+        if(crop.saltResist) { bonusesToPush.push("saltIco" + crop.saltResist); srText += "Salt Resistant, "; }
+        if(crop.saltClean) { bonusesToPush.push("saltIcoX"); srText += "Cleans Salt, " }
+        if(crop.animal) { bonusesToPush.push(animalInfo[crop.animal].invSprite); srText += "Can summon " + crop.animal + "s, "; }
         for(let i = 0; i < bonusesToPush.length; i++) {
             gfx.drawTileToGrid(bonusesToPush[i], rightMostX - 0.25 - i, rowYs[2], "menutext");
         }
         
         // Row 3
         gfx.drawWrappedText(GetText(crop.name), leftMostTextX - 16, rowTextYs[3], 170, undefined, undefined, 28);
+        srText += GetText(crop.name);
+
+        if(speak) { screenReaderHelper.SayFresh(srText, "info"); }
     },
     DrawCropPower: function(crop, x, y, layer, ignoreSun, halfStep) {
         if(!ignoreSun) { gfx.drawTileToGrid("inv_power", x, y, layer); }

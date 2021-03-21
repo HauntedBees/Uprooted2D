@@ -35,6 +35,7 @@ pausemenu.chievos = {
         if(this.cursor.y === -1) {
             this.cursors.RedimCursor("main", this.backStartX, 0, this.backButtonW, -0.25);
             gfx.drawWrappedText(GetText("inv.BackInfo"), 4, this.textStartY, 235);
+            screenReaderHelper.SayFresh(GetText("menu.Back") + ", " + GetText("inv.BackInfo"), "option");
         } else {
             this.cursors.RedimCursor("main", this.achStartX + this.cursor.x * this.achDX, this.achStartY + this.cursor.y * this.achDX, 0, 0);
             this.setText();
@@ -90,15 +91,19 @@ pausemenu.chievos = {
     },
     setText: function() {
         const chievoInfo = this.vals[this.cursor.y * this.numPerRow + this.cursor.x];
-        console.log(chievoInfo);
         const chievoKey = chievoInfo[0];
+        let srText = GetText("a." + chievoKey) + " ";
         gfx.drawWrappedText(GetText("a." + chievoKey), 4, this.textStartY, 235);
         if(chievoInfo[1]) { // achieved chievo
             gfx.drawWrappedText(GetText("ad." + chievoKey), 4, this.textStartY + 10, 235);
+            srText += GetText("ad." + chievoKey);
         } else if(hiddenChievos.indexOf(chievoKey) < 0) { // regular unachieved chievo
             gfx.drawWrappedText(GetText("ad.none") + " \n \n " + GetText("ad." + chievoKey), 4, this.textStartY + 10, 235);
+            srText += GetText("ad.none") + " " + GetText("ad." + chievoKey);
         } else { // locked unachieved chievo
             gfx.drawWrappedText(GetText("ad.none") + " \n \n " + GetText("ad.locked"), 4, this.textStartY + 10, 235);
+            srText += GetText("ad.none") + " " + GetText("ad.locked");
         }
+        screenReaderHelper.SayFresh(srText, "info");
     }
 };

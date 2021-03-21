@@ -88,6 +88,7 @@ pausemenu.equipment = {
         if(this.cursor.y === -1) {
             this.cursors.RedimCursor("main", this.backStartX - 0.0625, -0.0625, this.backButtonW - 1.0625, 0);
             gfx.drawWrappedText(GetText("inv.BackInfo"), 4, this.dy * 16 + this.textY, 235);
+            screenReaderHelper.SayFresh(GetText("menu.Back") + ", " + GetText("inv.BackInfo"), "option");
         } else {
             this.cursors.RedimCursor("main", this.dx + this.cursor.x, this.dy + this.cursor.y, 0, 0);
             this.setText();
@@ -173,48 +174,49 @@ pausemenu.equipment = {
         const equipInfo = GetEquipment(item[0]);
         const str = this.GetEquipDescComparedToCurrent(equipInfo);
         gfx.drawWrappedText(str, 4, this.dy * 16 + this.textY, 235);
+        screenReaderHelper.SayFresh(this.GetEquipDescComparedToCurrent(equipInfo, true).replace(/\+/g, ""), "info");
     },
-    GetEquipDescComparedToCurrent: function(equipInfo) {
-        let current = player.equipment[equipInfo.type];
+    GetEquipDescComparedToCurrent: function(equipInfo, forceFresh) {
+        let current = forceFresh ? null : player.equipment[equipInfo.type];
         if(current === null) {
             current = { power: 0, amount: equipInfo.type === "gloves" ? 1 : 0, bonus: 0, def: 0, speed: 0, boost: 0, amplify: 0, noEnemies: true };
         } else {
             current = GetEquipment(current);
         }
-        let str = equipInfo.displayname;
+        let str = equipInfo.displayname + (forceFresh ? ", " : "");
         this.curY = 0;
         if(equipInfo.type === "weapon") {
-            str += this.GetComparison(GetText("eq.power") + " ", equipInfo, current, "power", "number");
-            str += this.GetComparison(GetText("eq.hitCrops") + " ", equipInfo, current, "targetCrops", "bool");
-            str += this.GetComparison(GetText("eq.hitEnemies") + " ", equipInfo, current, "noEnemies", "!bool");
-            str += this.GetComparison(GetText("eq.sp") + " ", equipInfo, current, "sp", "boolnum");
-            str += this.GetComparison(GetText("eq.su") + " ", equipInfo, current, "su", "boolnum");
-            str += this.GetComparison(GetText("eq.au") + " ", equipInfo, current, "au", "boolnum");
-            str += this.GetComparison(GetText("eq.wi") + " ", equipInfo, current, "wi", "boolnum");
-            str += this.GetComparison(GetText("eq.sickle2") + " ", equipInfo, current, "tech", "bool");
+            str += this.GetComparison(GetText("eq.power") + " ", equipInfo, current, "power", "number", forceFresh);
+            str += this.GetComparison(GetText("eq.hitCrops") + " ", equipInfo, current, "targetCrops", "bool", forceFresh);
+            str += this.GetComparison(GetText("eq.hitEnemies") + " ", equipInfo, current, "noEnemies", "!bool", forceFresh);
+            str += this.GetComparison(GetText("eq.sp") + " ", equipInfo, current, "sp", "boolnum", forceFresh);
+            str += this.GetComparison(GetText("eq.su") + " ", equipInfo, current, "su", "boolnum", forceFresh);
+            str += this.GetComparison(GetText("eq.au") + " ", equipInfo, current, "au", "boolnum", forceFresh);
+            str += this.GetComparison(GetText("eq.wi") + " ", equipInfo, current, "wi", "boolnum", forceFresh);
+            str += this.GetComparison(GetText("eq.sickle2") + " ", equipInfo, current, "tech", "bool", forceFresh);
             str += this.GetComparison("", equipInfo, current, "attacks", "attacks");
         } else if(equipInfo.type === "compost") {
-            str += this.GetComparison(GetText("eq.holds") + " ", equipInfo, current, "amount", "number");
-            str += this.GetComparison(GetText("eq.compattack") + " ", equipInfo, current, "canAttack", "bool");
-            str += this.GetComparison(GetText("eq.rotten") + " ", equipInfo, current, "rotOnly", "bool");
-            str += this.GetComparison(GetText("eq.bonus") + " ", equipInfo, current, "bonus", "number", true);
-            str += this.GetComparison(GetText("eq.backfire") + " ", equipInfo, current, "tech", "bool");
+            str += this.GetComparison(GetText("eq.holds") + " ", equipInfo, current, "amount", "number", forceFresh);
+            str += this.GetComparison(GetText("eq.compattack") + " ", equipInfo, current, "canAttack", "bool", forceFresh);
+            str += this.GetComparison(GetText("eq.rotten") + " ", equipInfo, current, "rotOnly", "bool", forceFresh);
+            str += this.GetComparison(GetText("eq.bonus") + " ", equipInfo, current, "bonus", "number", forceFresh, true);
+            str += this.GetComparison(GetText("eq.backfire") + " ", equipInfo, current, "tech", "bool", forceFresh);
         } else if(equipInfo.type === "gloves") {
-            str += this.GetComparison(GetText("eq.spturn") + " ", equipInfo, current, "amount", "number");
-            str += this.GetComparison(GetText("eq.actafter") + " ", equipInfo, current, "canAttack", "bool");
-            str += this.GetComparison(GetText("eq.dmgresist") + " ", equipInfo, current, "def", "number", true);
-            str += this.GetComparison(GetText("eq.mayshock1") + " ", equipInfo, current, "tech", "bool");
-            str += this.GetComparison(GetText("eq.mayshock2") + " ", equipInfo, current, "tech", "bool");
+            str += this.GetComparison(GetText("eq.spturn") + " ", equipInfo, current, "amount", "number", forceFresh);
+            str += this.GetComparison(GetText("eq.actafter") + " ", equipInfo, current, "canAttack", "bool", forceFresh);
+            str += this.GetComparison(GetText("eq.dmgresist") + " ", equipInfo, current, "def", "number", forceFresh, true);
+            str += this.GetComparison(GetText("eq.mayshock1") + " ", equipInfo, current, "tech", "bool", forceFresh);
+            str += this.GetComparison(GetText("eq.mayshock2") + " ", equipInfo, current, "tech", "bool", forceFresh);
         } else if(equipInfo.type === "soil") {
-            str += this.GetComparison(GetText("eq.growth") + " ", equipInfo, current, "speed", "number", true);
-            str += this.GetComparison(GetText("eq.sres") + " ", equipInfo, current, "boost", "number", true);
-            str += this.GetComparison(GetText("eq.sstr") + " ", equipInfo, current, "amplify", "number", true);
-            str += this.GetComparison(GetText("eq.willkill1") + " ", equipInfo, current, "tech", "bool");
-            str += this.GetComparison(GetText("eq.willkill2") + " ", equipInfo, current, "tech", "bool");
+            str += this.GetComparison(GetText("eq.growth") + " ", equipInfo, current, "speed", "number", forceFresh, true);
+            str += this.GetComparison(GetText("eq.sres") + " ", equipInfo, current, "boost", "number", forceFresh, true);
+            str += this.GetComparison(GetText("eq.sstr") + " ", equipInfo, current, "amplify", "number", forceFresh, true);
+            str += this.GetComparison(GetText("eq.willkill1") + " ", equipInfo, current, "tech", "bool", forceFresh);
+            str += this.GetComparison(GetText("eq.willkill2") + " ", equipInfo, current, "tech", "bool", forceFresh);
         }
         return str;
     },
-    GetComparison: function(str, newequip, oldequip, column, compareType, isPercent) {
+    GetComparison: function(str, newequip, oldequip, column, compareType, skipComparison, isPercent) {
         const y = 436 + (this.curY * (gfx.GetFont() === "OpenDyslexic" ? 35 : 32));
         const newVal = newequip[column];
         const oldVal = oldequip[column];
@@ -227,8 +229,12 @@ pausemenu.equipment = {
             this.curY++;
             const initW = gfx.getTextWidth(str);
             const nextW = gfx.getTextWidth(str + (isPercent ? (oldVal * 100) + "%" : oldVal));
-            gfx.drawStrikeThru(12 + initW, y, nextW - initW + 4);
-            return "\n " + str + (isPercent ? (oldVal * 100) + "%" : oldVal) + " " + (isPercent ? (newVal * 100) + "%" : newVal);
+            if(skipComparison) {
+                return "\n " + str + (isPercent ? (newVal * 100) + "%" : newVal);
+            } else {
+                gfx.drawStrikeThru(12 + initW, y, nextW - initW + 4);
+                return "\n " + str + (isPercent ? (oldVal * 100) + "%" : oldVal) + " " + (isPercent ? (newVal * 100) + "%" : newVal);
+            }
         } else if(compareType === "bool") {
             if(newVal === oldVal) {
                 if(newVal === true) { this.curY++; return "\n " + str; } else { return ""; }

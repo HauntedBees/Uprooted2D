@@ -225,7 +225,7 @@ combat.compost = {
                 }
             }
         }
-        screenReaderHelper.Fresh().SayThing(infoText, "info");
+        screenReaderHelper.SayFresh(infoText, "info");
         gfx.drawTileToGrid(this.binSprite, this.binx, this.biny, "menucursorB");
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
@@ -519,6 +519,6 @@ combat.compost = {
         gfx.drawMinibox(1, 0.5, 6, 1.5, "menutext", "FarmInfo");
         gfx.drawWrappedText(crop.displayname, 23, 22, 100);
         const power = pausemenu.inventory.DrawCropPower(crop, 1.5, 1.5, "menutext");
-        screenReaderHelper.Fresh().SayThing(crop.displayname + ", " + power, "option");
+        screenReaderHelper.SayFresh(crop.displayname + ", " + power, "option");
     }
 };

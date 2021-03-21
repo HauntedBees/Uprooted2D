@@ -589,13 +589,13 @@ combat.plant = {
         if(tileInfo === null && effectInfo === null && itemInfo === null) {
             const speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
             const text = GetText("farmModDirt").replace(/\{0\}/g, speed);
-            screenReaderHelper.Fresh().SayThing(text, "option");
+            screenReaderHelper.SayFresh(text, "option");
             gfx.drawWrappedText(text, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
         } else if(tileInfo !== null) {
             if(tileInfo.x !== undefined) { tileInfo = combat.grid[tileInfo.x][tileInfo.y]; }
             gfx.drawWrappedText(tileInfo.displayname, leftMostX * 16, 16 * (this.dy - 1) - 2, 64, "", "", 12);
             const text = pausemenu.inventory.DrawCropPower(tileInfo, leftMostX, 9.5, "menutext", false, true);
-            screenReaderHelper.Fresh().SayThing(tileInfo.displayname + " " + text + ", " + tileInfo.health + " Health", "option");
+            screenReaderHelper.SayFresh(tileInfo.displayname + " " + text + ", " + tileInfo.health + " Health", "option");
             const row2y = 10.75, numGap = 0.875;
             gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
             if(tileInfo.activeTime > 0 && (tileInfo.time === 999 || tileInfo.time === -1)) {
@@ -632,22 +632,22 @@ combat.plant = {
                 }
                 const text = (dispName + "\n " + GetText("cmp_healpow") + ": {0}").replace(/\{0\}/g, amt);
                 gfx.drawWrappedText(text, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
-                screenReaderHelper.Fresh().SayThing(text, "info");
+                screenReaderHelper.SayFresh(text, "info");
             } else if(["_log", "_coop", "_paddy", "_strongsoil", "_hotspot"].indexOf(itemInfo) >= 0) {
                 const affectedByBurn = isBurned && ["_log", "_coop"].indexOf(itemInfo) >= 0;
                 const speed = affectedByBurn ? "0" : Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
                 const text = (dispName + "\n " + GetText("growthSpeed")).replace(/\{0\}/g, speed);
                 gfx.drawWrappedText(text, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
-                screenReaderHelper.Fresh().SayThing(text, "info");
+                screenReaderHelper.SayFresh(text, "info");
             } else {
                 gfx.drawWrappedText(dispName, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
-                screenReaderHelper.Fresh().SayThing(dispName, "info");
+                screenReaderHelper.SayFresh(dispName, "info");
             }
         } else {
             const speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
             const text = (GetText("ef." + effectInfo.type) + " " + GetText("farmModDirt")).replace(/\{0\}/g, speed);
             gfx.drawWrappedText(text, 9.5 * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
-            screenReaderHelper.Fresh().SayThing(text, "info");
+            screenReaderHelper.SayFresh(text, "info");
         }
     },
     SetText: function() {
@@ -701,6 +701,6 @@ combat.plant = {
             }
         }
         gfx.drawWrappedText(crop.displayname, leftMostX * 16, 16 * (this.dy - 1) - 2, 64, "", "", 12);
-        screenReaderHelper.Fresh().SayThing(crop.displayname + " " + infoText, "option");
+        screenReaderHelper.SayFresh(crop.displayname + " " + infoText, "option");
     }
 };

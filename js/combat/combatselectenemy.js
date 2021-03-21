@@ -116,17 +116,17 @@ combat.selectTarget = {
                 gfx.drawTileToGrid(GetHPFrame(crop), iconx, icony, "menucursorB");
                 if(crop.name.indexOf("Nerf") > 0) {
                     gfx.drawWrappedText(GetText("disp.nerf").replace(/0/g, crop.displayname), textx, texty, 115);
-                    screenReaderHelper.Fresh().SayThing(GetText("disp.nerf").replace(/0/g, crop.displayname), "target");
+                    screenReaderHelper.SayFresh(GetText("disp.nerf").replace(/0/g, crop.displayname), "target");
                 } else {
                     gfx.drawWrappedText(crop.displayname, textx, texty, 115);
-                    screenReaderHelper.Fresh().SayThing(crop.displayname, "target");
+                    screenReaderHelper.SayFresh(crop.displayname, "target");
                 }
             }
         } else if(this.cursorx >= 0) {
             const enemy = combat.enemies[this.cursorx];
             gfx.drawTileToGrid(GetHPFrame(enemy), iconx, icony, "menucursorB");
             gfx.drawWrappedText(enemy.name, textx, texty, 115);
-            screenReaderHelper.Fresh().SayThing(enemy.name, "target");
+            screenReaderHelper.SayFresh(enemy.name, "target");
         }
         
         // Player Health and Season

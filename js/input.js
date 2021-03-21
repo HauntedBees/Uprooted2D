@@ -4,7 +4,10 @@ let gpVals = {
 };
 let screenReaderHelper = {
     lastSpeaker: null, 
-    Fresh: function() { screenReaderHelper.lastSpeaker = null; return screenReaderHelper; },
+    SayFresh: function(t, messageType, currentSelection, anyKey) {
+        screenReaderHelper.lastSpeaker = null;
+        screenReaderHelper.SayThing(t, messageType, currentSelection, anyKey);
+    },
     SayThing: function(t, messageType, currentSelection, anyKey) {
         if(messageType === "dialog") {
             if(screenReaderHelper.lastSpeaker !== null && t.indexOf(screenReaderHelper.lastSpeaker) === 0) {

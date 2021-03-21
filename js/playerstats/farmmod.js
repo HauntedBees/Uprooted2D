@@ -39,6 +39,7 @@ pausemenu.farmmod = {
         if(this.cursor.y === -1) {
             this.cursors.RedimCursor("main", this.backStartX - 0.0625, -0.0625, this.backButtonW - 1.0625, 0);
             gfx.drawWrappedText(GetText("inv.BackInfo"), 5.5 * 16, 30, 155);
+            screenReaderHelper.SayFresh(GetText("menu.Back") + ", " + GetText("inv.BackInfo"), "option");
         } else {
             this.cursors.RedimCursor("main", dx + this.cursor.x, dy + this.cursor.y, size, size);
             this.cursors.ReTypeCursor("main", this.canPlant() ? "cursor" : "bcursor");
@@ -79,6 +80,7 @@ pausemenu.farmmod = {
             }
         }
         gfx.drawWrappedText(text, 5.5 * 16, 30, 155);
+        screenReaderHelper.SayFresh(text, "info");
     },
     displayItems: function() {
         let j = 0;

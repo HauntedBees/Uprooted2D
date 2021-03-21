@@ -185,7 +185,7 @@ combat.menu = {
         gfx.drawMinibox(4, gfx.tileHeight - 2, gfx.tileWidth - 5, 1, "", "FarmInfo");
         gfx.drawWrappedText(text, 4.5 * 16, 12.75 * 16 - 1, 175, "", "", 19);
         
-        screenReaderHelper.Fresh().SayThing(selText + ". " + text, "option");
+        screenReaderHelper.SayFresh(selText + ". " + text, "option");
 
         // Ayana and Bird
         combat.animHelper.SetPlayerAnimState(charAnim, true);
