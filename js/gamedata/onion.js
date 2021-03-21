@@ -101,10 +101,10 @@ const OnionFuncs = {
             }
 
             if(food.type !== "moist") {
-                springScore += food.seasons[0];
-                summerScore += food.seasons[1];
-                fallScore += food.seasons[2];
-                winterScore += food.seasons[3];
+                springScore += food.seasons[0] == 2 ? 1 : 0;
+                summerScore += food.seasons[1] == 2 ? 1 : 0;
+                fallScore += food.seasons[2] == 2 ? 1 : 0;
+                winterScore += food.seasons[3] == 2 ? 1 : 0;
             }
         }
         if(isExistential) { perks.push("crisis"); }
@@ -135,10 +135,10 @@ const OnionFuncs = {
         if(mushScore >= 5) { perks.push("mush"); }
         if(riceScore >= 5) { perks.push("rice"); }
 
-        if(springScore >= 6) { perks.push("spring"); }
-        if(summerScore >= 6) { perks.push("summer"); }
-        if(fallScore >= 6) { perks.push("autumn"); }
-        if(winterScore >= 6) { perks.push("winter"); }
+        if(springScore >= 4) { perks.push("spring"); }
+        if(summerScore >= 4) { perks.push("summer"); }
+        if(fallScore >= 4) { perks.push("autumn"); }
+        if(winterScore >= 4) { perks.push("winter"); }
 
         return OnionFuncs.ProcessPerks(perks.slice(0, 5));
     },

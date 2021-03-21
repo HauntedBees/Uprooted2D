@@ -117,12 +117,14 @@ pausemenu.onion = {
         }
         
         const textX = 73, textY = 10 + this.cropDY * 16;
+        let isSelection = true;
         gfx.drawMinibox(4, this.cropDY - 0.25, 10.75, 3, "", "FarmInfo");
         if(this.cursor.y >= 0) {
             if(this.cursor.x >= this.inventoryWidth) {
                 let text = "";
                 if(customMessage) {
                     text = customMessage;
+                    isSelection = false;
                 } else if(this.selectedCrop < 0) {
                     if(this.hasPoop) {
                         text = GetText("onion.clean");
@@ -138,11 +140,13 @@ pausemenu.onion = {
                     text = HandleArticles(GetText("onion.feed").replace(/\{0\}/g, crop.displayname), crop.displayname);
                 }
                 gfx.drawWrappedText(text, textX, textY, 170, undefined, undefined, fontSize);
+                screenReaderHelper.SayFresh(text, isSelection ? "option" : "info");
             } else {
                 this.SetCrop();
             }
         } else {
             gfx.drawWrappedText(GetText("inv.BackInfo"), textX, textY, 170, undefined, undefined, 28);
+            screenReaderHelper.SayFresh(GetText("menu.Back") + ", " + GetText("inv.BackInfo"), "option");
         }
     },
     HighlightRelevantStomachItems(perk) {
@@ -355,7 +359,7 @@ pausemenu.onion = {
         for(let i = 0; i < 4; i++) {
             gfx.drawTileToGrid(seasons[i] + crop.seasons[i], leftMostX + 6.75 + i, rowYs[1], "menutext");
         }
-        this.DrawCropPower(crop, leftMostX, rowYs[1], "menutext");
+        const pow = this.DrawCropPower(crop, leftMostX, rowYs[1], "menutext");
 
         // Row 2
         gfx.drawTileToGrid("inv_time", leftMostX, rowYs[2], "menutext");
@@ -383,6 +387,8 @@ pausemenu.onion = {
         for(let i = 0; i < bonusesToPush.length; i++) {
             gfx.drawTileToGrid(bonusesToPush[i], rightMostX - 0.25 - i, rowYs[2], "menutext");
         }
+
+        screenReaderHelper.SayFresh(crop.displayname + ", " + pow, "option");
     },
     DrawCropPower: function(crop, x, y, layer, ignoreSun, halfStep) {
         if(!ignoreSun) { gfx.drawTileToGrid("inv_power", x, y, layer); }
@@ -400,6 +406,7 @@ pausemenu.onion = {
                 gfx.drawTileToGrid("starNone", x + starDx + i * starDx, y, layer);
             }
         }
+        return `${numStars} Star${numStars === 1 ? "" : "s"}`;
     },
 
     Pet: function() {

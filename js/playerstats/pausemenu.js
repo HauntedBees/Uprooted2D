@@ -292,7 +292,9 @@ const pausemenu = {
     },
     ShowInfo: function(key) { 
         gfx.drawInfobox(17, 2.25, 8, "menutext", "FarmInfo");
-        gfx.drawWrappedText(GetText(key), 5, 140, 250);
+        const txt = GetText(key);
+        gfx.drawWrappedText(txt, 5, 140, 250);
+        screenReaderHelper.SayFresh(txt, "info");
     },
     TryQuit: function() {
         if(player.justSaved || this.lastPressWasQuit) {
@@ -302,7 +304,9 @@ const pausemenu = {
         }
         this.lastPressWasQuit = true;
         gfx.drawInfobox(17, 1.75, 8, "menutext", "FarmInfo");
-        gfx.drawWrappedText(GetText("quitConfirm"), 5, 140, 250);
+        const txt = GetText("quitConfirm");
+        gfx.drawWrappedText(txt, 5, 140, 250);
+        screenReaderHelper.SayFresh(txt, "info");
     },
     BeepHour: function(pos) {
         if(pos === undefined) { return false; }

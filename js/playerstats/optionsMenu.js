@@ -137,23 +137,59 @@ worldmap.optionsMenu = {
                     const opval = op.choices[op.val];
                     const optext =  opval.match(/^(0\.)?\d+%?$/) === null ? GetText(opval) : opval;
                     gfx.drawText(optext, op.optx, op.y - yoffset, gfx.GetBlack(), this.optionSize);
+                    let srText;
                     if(this.cursory === i) {
                         gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext");
                         gfx.drawTileToGrid((op.val === 0 ? "nopL" : "opL"), (op.optx / 16) - 1, acty - tileyoffset, "menutext");
                         const len = gfx.getTextWidth(optext, this.optionSize);
                         gfx.drawTileToGrid((op.val === (op.choices.length - 1) ? "nopR" : "opR"), (op.optx + len / 4) / 16, acty - tileyoffset, "menutext");
+                        srText = op.text + ", " + optext;
                     }
                     if(op.hasInfo) {
                         const infotext = "+ " + (op.textId === "opControlScheme" ? GetText("opControlNote") : GetText(op.choices[op.val] + ".i"));
                         gfx.drawWrappedText(infotext, 10, op.y2 - yoffset, 236, gfx.GetBlack(), "menutext", this.optionInfoSize);
+                        if(srText) { srText += ". " + infotext; }
                     }
+                    if(srText) { screenReaderHelper.SayFresh(srText, "info"); }
                     break;
                 case "button":
                     gfx.drawText(op.text, op.x, op.y - yoffset, gfx.GetBlack(), this.optionSize);
                     let val = this.formatKeyName(op.val);
                     if(this.cursory === i) { 
                         gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext");
-                        if(this.inChange) { val = "?"; }
+                        if(this.inChange) {
+                            val = "?";
+                            screenReaderHelper.SayFresh("Press any key to assign it to " + op.text, "info");
+                        } else {
+                            let srVal = val;
+                            switch(val) {
+                                case "Gamepad0": srVal = "A Button"; break;
+                                case "Gamepad1": srVal = "B Button"; break;
+                                case "Gamepad2": srVal = "X Button"; break;
+                                case "Gamepad3": srVal = "Y Button"; break;
+                                case "Gamepad4": srVal = "L Button"; break;
+                                case "Gamepad5": srVal = "R Button"; break;
+                                case "Gamepad6": srVal = "L Trigger"; break;
+                                case "Gamepad7": srVal = "R Trigger"; break;
+                                case "Gamepad8": srVal = "Back Button"; break;
+                                case "Gamepad9": srVal = "Start Button"; break;
+                                case "Gamepad10": srVal = "L Joystick"; break;
+                                case "Gamepad11": srVal = "R Joystick"; break;
+                                case "Gamepad12": srVal = "Directional Pad Up"; break;
+                                case "Gamepad13": srVal = "Directional Pad Down"; break;
+                                case "Gamepad14": srVal = "Directional Pad Left"; break;
+                                case "Gamepad15": srVal = "Directional Pad Right"; break;
+                                case "GamepadA0": srVal = "L Joystick Left"; break;
+                                case "GamepadA1": srVal = "L Joystick Up"; break;
+                                case "GamepadA4": srVal = "L Joystick Right"; break;
+                                case "GamepadA5": srVal = "L Joystick Down"; break;
+                                case "GamepadA2": srVal = "R Joystick Left"; break;
+                                case "GamepadA3": srVal = "R Joystick Up"; break;
+                                case "GamepadA6": srVal = "R Joystick Right"; break;
+                                case "GamepadA7": srVal = "R Joystick Down"; break;
+                            }
+                            screenReaderHelper.SayFresh(op.text + ", " + srVal, "info");
+                        }
                     }
                     if(val.indexOf("Gamepad") === 0) {
                         if(val.indexOf("GamepadA") === 0) {
@@ -172,7 +208,10 @@ worldmap.optionsMenu = {
                     break;
                 case "final":
                     gfx.drawText(op.text, op.x, op.y - yoffset, gfx.GetBlack(), this.optionSize);
-                    if(this.cursory === i) { gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext"); }
+                    if(this.cursory === i) {
+                        gfx.drawTileToGrid("carrotSel", op.x / 24, acty - tileyoffset, "menutext");
+                        screenReaderHelper.SayFresh(op.text, "option");
+                    }
                     break;
             }
         }
