@@ -168,6 +168,7 @@ const game = {
         gfx.canvasHeight = height;
         gfx.tileWidth = tilewidth;
         gfx.tileHeight = tileheight;
+        game.ApplyBlendFilter();
         gfx.loadSpriteSheets(player.getSheetPath(), this.sheetsToLoad, this.sheetsLoaded);
         collisions["northcity_NG"] = collisions["northcity"];
         collisions["northcity_NB"] = collisions["northcity"];
@@ -425,9 +426,24 @@ const game = {
         player.justSaved = true;
     },
     load: function(savenum) {
+        const oldFilter = player.options.gfxfilter;
+        const oldFilterMode = player.options.coverMode;
+
         let loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
         player = Object.assign(player, loadedPlayer);
         
+        const newFilter = player.options.gfxfilter;
+        const newFilterMode = player.options.coverMode;
+        
+        game.ApplyBlendFilter();
+
+        if(oldFilter != newFilter || oldFilterMode != newFilterMode) {
+            gfx.loadSpriteSheets(player.getSheetPath(), game.sheetsToLoad, () => { game.load2(savenum); });
+        } else {
+            game.load2(savenum);
+        }
+    },
+    load2: function(savenum) {
         game.GetNonstandardGameOverFlag(savenum);
         mapStates = game.str2obj(localStorage.getItem("mapent" + savenum));
         stores["skumpys"].wares[0].price = (player.achievements.indexOf("skumpy") < 0 ? 20 : 0);
