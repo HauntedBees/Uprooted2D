@@ -3,7 +3,7 @@ const parseString = require("xml2js").parseString;
 const sharp = require("sharp");
 const imagemin = require("imagemin");
 const imageminPngquant = require("imagemin-pngquant");
-const OpenRasterExport = require("openraster-export").default; 
+const OpenRasterExport = require("openraster-export").default;
 const path = require("path");
 const fs = require("fs");
 
