@@ -44,6 +44,7 @@ const tutorial = {
             this.DrawInformationalGentleman(GetText("tutInfoSeasons"), 10.25, 12.5);
         }
         gfx.drawWrappedText(tutText, 2, 8, 245, gfx.GetBlack(), "tutorial");
+        screenReaderHelper.SayFresh(tutText, "info");
     },
     DrawInformationalGentleman: function(text, rightx, y) {
         let xi = 1;

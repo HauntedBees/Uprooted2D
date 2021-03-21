@@ -24,11 +24,14 @@ const fixTut = {
         gfx.clearSome(["menutextOverBlack", "menuOverBlack"]);
         if(this.state > 0) {
             gfx.drawTextBox(10, true);
+            let text;
             if(this.fromNoFunMenu && this.state === 1) {
-                gfx.drawFullText(GetText("fixTutNoFun"), 160, undefined, true);
+                text = GetText("fixTutNoFun");
             } else {
-                gfx.drawFullText(GetText("fixTut" + (this.state + 1)), 160, undefined, true);
+                text = GetText("fixTut" + (this.state + 1));
             }
+            gfx.drawFullText(text, 160, undefined, true);
+            screenReaderHelper.SayFresh(text, "info");
         }
     },
     mouseMove: function(pos) {

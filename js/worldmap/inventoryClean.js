@@ -17,6 +17,7 @@ worldmap.invClean = {
         gfx.TileBackground("invTile");
         this.DrawAll();
         this.cursors.Start();
+        screenReaderHelper.SayFresh(GetText("fullSelect"), "info");
     },
     DrawAll: function() {
         gfx.clearSome(this.layersToClear);
@@ -130,6 +131,7 @@ worldmap.invClean = {
         }
         gfx.drawTile("recSelR", x * 16 + 16 * xi, 2 + y * 16, "menuOverBlack");
         gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutextOverBlack");
+        screenReaderHelper.SayFresh(text, "info");
     },
     ConfirmSelection: function() {
         this.trashInfo.push({ frame: 0, coinStates: [], x: this.trashX, y: this.trashY, numCoins: Math.min(10, Math.ceil(this.topPrice / 30)) });
@@ -221,7 +223,10 @@ worldmap.invClean = {
             width -= 64;
             gfx.drawTile(tilePrefix + "M", x * 16 + 16 * xi++, 2 + y * 16, "menuA");
         }
-        if(isSelected) { this.cursors.RedimCursor("main", x, y, xi, 0); }
+        if(isSelected) {
+            this.cursors.RedimCursor("main", x, y, xi, 0);
+            screenReaderHelper.SayFresh(GetText("fullToss").replace(/\{0\}/g, this.topPrice), "option");
+        }
         gfx.drawTile(tilePrefix + "R", x * 16 + 16 * xi, 2 + y * 16, "menuA");
         gfx.drawText(text, 7 + x * 16, 10.5 + y * 16, undefined, undefined, "menutext");
     },
@@ -229,7 +234,7 @@ worldmap.invClean = {
         const rowYs = [0.25, 1.5, 2.75, 6.25, 7.5, 8.75];
         const rowTextYs = [16, 0, 0, 113, 0, 0];
         gfx.drawInfobox(12, 4, 0, undefined, "FarmInfo");
-        gfx.drawInfobox(12, 5, 5, undefined, "FarmInfo");
+        gfx.drawInfobox(12, 6, 5, undefined, "FarmInfo");
         gfx.drawInfobox(11, 2, 12, undefined, "FarmInfo");
         gfx.drawTileToGrid("recycleArrow", 4, 12, "menuA");
 
@@ -326,5 +331,7 @@ worldmap.invClean = {
         for(let i = 0; i < bonusesToPush.length; i++) {
             gfx.drawTileToGrid(bonusesToPush[i], rightMostX - 0.25 - i, rowYs[2 + yOffset], "menutext");
         }
+
+        screenReaderHelper.SayFresh(crop.displayname);
     }
 };

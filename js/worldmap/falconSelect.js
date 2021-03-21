@@ -41,6 +41,7 @@ worldmap.falconSelect = {
         const xi = this.drawOption(GetText("falconConfirm"), 3.25);
         if(this.cursor.y < 0) {
             this.cursors.RedimCursor("main", 0, 3.25, xi, 0);
+            screenReaderHelper.SayFresh(GetText("falconConfirm"), "option");
         } else {
             this.cursors.RedimCursor("main", cursorX, cursorY, 0, 0);
         }
@@ -57,8 +58,8 @@ worldmap.falconSelect = {
         if(item === null || item === undefined) { return; }
 
         const crop = GetCrop(item[0]);
-        let str = "x" + item[1] + " " + crop.displayname;
-        pausemenu.inventory.DrawCropPower(crop, 9.5, 10.5, "menutext");
+        const str = "x" + item[1] + " " + crop.displayname;
+        const pow = pausemenu.inventory.DrawCropPower(crop, 9.5, 10.5, "menutext");
         const row2y = 11.5;
         let leftMostX = 9.5;
         if(crop.time > 0) {
@@ -97,6 +98,7 @@ worldmap.falconSelect = {
             gfx.drawTileToGrid(seasons[i] + crop.seasons[i], 9.5 + i, 12.75, "menutext");
         }
         gfx.drawWrappedText(str, 9.5 * 16, 11 + (16 * this.dy), 115);
+        screenReaderHelper.SayFresh(str + ", " + pow, "option");
     },
 
     mouseMove: function(pos) {
@@ -159,8 +161,8 @@ worldmap.falconSelect = {
             return true;
         }
         if(this.cursor.y < 0) {
-            return this.confirmSeeds();
             Sounds.PlaySound("navOk");
+            return this.confirmSeeds();
         } else {
             if(this.cropsToSend.length === 5) { Sounds.PlaySound("navNok"); return false; }
             const idx = this.cursor.y * this.inventoryWidth + this.cursor.x;
