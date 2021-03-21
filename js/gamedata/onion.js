@@ -32,7 +32,7 @@ const OnionFuncs = {
         OnionFuncs.Update();
     },
     GetHueRotate: function() {
-        if(!player.onion) { return 0; }
+        if(!player.onion || player.IsMonochrome()) { return 0; }
         let total = 0, count = 0;
         
         for(let i = 0; i < player.onion.stomach.length; i++) {
