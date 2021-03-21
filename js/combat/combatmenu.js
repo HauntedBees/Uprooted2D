@@ -150,15 +150,25 @@ combat.menu = {
 
         // Options
         const optiony = gfx.tileHeight - 3;
-        let optionx = 4;
+        let optionx = 4, selText = "";
         if(combat.isChallenge) {
             optionx = this.DrawOption(GetText("combatAdd"), optionx, optiony, this.cursorSel === 0);
             optionx = this.DrawOption(GetText("combatFinish"), optionx, optiony, this.cursorSel === 1);
+            switch(this.cursorSel) {
+                case 0: selText = GetText("combatAdd"); break;
+                case 1: selText = GetText("combatFinish"); break;
+            }
         } else {
             optionx = this.DrawOption(GetText(plantState), optionx, optiony, this.cursorSel === 0);
             optionx = this.DrawOption(GetText("combatAttack"), optionx, optiony, this.cursorSel === 1);
             optionx = this.DrawOption(GetText("combatCompost"), optionx, optiony, this.cursorSel === 2);
             optionx = this.DrawOption(GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"), optionx, optiony, this.cursorSel === 3);
+            switch(this.cursorSel) {
+                case 0: selText = GetText(plantState); break;
+                case 1: selText = GetText("combatAttack"); break;
+                case 2: selText = GetText("combatCompost"); break;
+                case 3: selText = GetText(this.plantedAlreadyAndCantAttack ? "combatSkip" : "combatRun"); break;
+            }
         }
         const cursorwidth = this.options[this.cursorSel], cursorx = this.cursorSel === 0 ? 4 : (this.options[this.cursorSel - 1]);
         combat.cursors.RedimCursor("main", cursorx, optiony, cursorwidth - cursorx - 1, 0);
@@ -175,6 +185,8 @@ combat.menu = {
         gfx.drawMinibox(4, gfx.tileHeight - 2, gfx.tileWidth - 5, 1, "", "FarmInfo");
         gfx.drawWrappedText(text, 4.5 * 16, 12.75 * 16 - 1, 175, "", "", 19);
         
+        screenReaderHelper.Fresh().SayThing(selText + ". " + text, "option");
+
         // Ayana and Bird
         combat.animHelper.SetPlayerAnimState(charAnim, true);
         combat.animHelper.SetBirdAnimState(birdAnim, true);

@@ -587,13 +587,15 @@ combat.plant = {
         let itemInfo = player.itemGrid === undefined ? null : player.itemGrid[x][y];
         const leftMostX = 12.375, maxWidth = 64;
         if(tileInfo === null && effectInfo === null && itemInfo === null) {
-            const text = GetText("farmModDirt");
             const speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
-            gfx.drawWrappedText(text.replace(/\{0\}/g, speed), leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
+            const text = GetText("farmModDirt").replace(/\{0\}/g, speed);
+            screenReaderHelper.Fresh().SayThing(text, "option");
+            gfx.drawWrappedText(text, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
         } else if(tileInfo !== null) {
             if(tileInfo.x !== undefined) { tileInfo = combat.grid[tileInfo.x][tileInfo.y]; }
             gfx.drawWrappedText(tileInfo.displayname, leftMostX * 16, 16 * (this.dy - 1) - 2, 64, "", "", 12);
-            pausemenu.inventory.DrawCropPower(tileInfo, leftMostX, 9.5, "menutext", false, true);
+            const text = pausemenu.inventory.DrawCropPower(tileInfo, leftMostX, 9.5, "menutext", false, true);
+            screenReaderHelper.Fresh().SayThing(tileInfo.displayname + " " + text + ", " + tileInfo.health + " Health", "option");
             const row2y = 10.75, numGap = 0.875;
             gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
             if(tileInfo.activeTime > 0 && (tileInfo.time === 999 || tileInfo.time === -1)) {
@@ -609,7 +611,7 @@ combat.plant = {
                 if(i === combat.season) {
                     gfx.drawTileToGrid("curseason" + tileInfo.seasons[combat.season], leftMostX + i * 0.875, 12, "menutext");
                 }
-        }
+            }
         } else if(itemInfo !== null) {
             if(itemInfo.x !== undefined) {
                 x = itemInfo.x; y = itemInfo.y;
@@ -619,7 +621,6 @@ combat.plant = {
             const dispName = (effectInfo !== null ? (GetText("ef." + effectInfo.type) + " ") : "") + fixture.displayname;
             const isBurned = (effectInfo !== null && effectInfo.type === "burned");
             if(itemInfo === "_cow") {
-                const text = dispName + "\n " + GetText("cmp_healpow") + ": {0}";
                 const mult = 1 + (player.equipment.compost === null ? 0 : (GetEquipment(player.equipment.compost).bonus || 0));
                 let amt = 0;
                 for(let i = 0; i < combat.happyCows.length; i++) {
@@ -629,19 +630,24 @@ combat.plant = {
                         break;
                     }
                 }
-                gfx.drawWrappedText(text.replace(/\{0\}/g, amt), 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 100);
+                const text = (dispName + "\n " + GetText("cmp_healpow") + ": {0}").replace(/\{0\}/g, amt);
+                gfx.drawWrappedText(text, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
+                screenReaderHelper.Fresh().SayThing(text, "info");
             } else if(["_log", "_coop", "_paddy", "_strongsoil", "_hotspot"].indexOf(itemInfo) >= 0) {
-                const text = dispName + "\n " + GetText("growthSpeed");
                 const affectedByBurn = isBurned && ["_log", "_coop"].indexOf(itemInfo) >= 0;
                 const speed = affectedByBurn ? "0" : Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
-                gfx.drawWrappedText(text.replace(/\{0\}/g, speed), 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 100);
+                const text = (dispName + "\n " + GetText("growthSpeed")).replace(/\{0\}/g, speed);
+                gfx.drawWrappedText(text, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
+                screenReaderHelper.Fresh().SayThing(text, "info");
             } else {
-                gfx.drawWrappedText(dispName, 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 100);
+                gfx.drawWrappedText(dispName, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
+                screenReaderHelper.Fresh().SayThing(dispName, "info");
             }
         } else {
-            const text = GetText("ef." + effectInfo.type) + " " + GetText("farmModDirt");
             const speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
-            gfx.drawWrappedText(text.replace(/\{0\}/g, speed), 9.5 * 16, 11 + (16 * (this.dy + 0.5)), 100);
+            const text = (GetText("ef." + effectInfo.type) + " " + GetText("farmModDirt")).replace(/\{0\}/g, speed);
+            gfx.drawWrappedText(text, 9.5 * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
+            screenReaderHelper.Fresh().SayThing(text, "info");
         }
     },
     SetText: function() {
@@ -650,7 +656,7 @@ combat.plant = {
         if(item === null || item === undefined) { return; }
         const crop = GetCrop(item[0]);
         let leftMostX = 12.375, shiftX = 0;
-        pausemenu.inventory.DrawCropPower(crop, leftMostX, 9.5, "menutext", false, true);
+        let infoText = pausemenu.inventory.DrawCropPower(crop, leftMostX, 9.5, "menutext", false, true);
         const row2y = 10.75, numGap = 0.875;
         if(crop.time > 0) {
             gfx.drawTileToGrid("inv_time", leftMostX, row2y, "menutext");
@@ -659,6 +665,7 @@ combat.plant = {
             }  else {
                 gfx.drawBigNumber(crop.time, leftMostX + numGap, row2y, "menutext");
             }
+            infoText += ", Growth Time: " + (crop.time === 999 ? "Random" : `${crop.time} Turn${crop.time === 1 ? "" : "s"}`);
             shiftX += 1.75;
         }
         if(crop.respawn > 0) {
@@ -668,6 +675,7 @@ combat.plant = {
             }  else {
                 gfx.drawBigNumber(crop.respawn, leftMostX + shiftX + numGap, row2y, "menutext");
             }
+            infoText += ", Regrowth Time: " + ((crop.respawn === 999 || crop.respawn < 0) ? "Random" : `${crop.respawn} Turn${crop.respawn === 1 ? "" : "s"}`);
         }
         let bonusesToPush = [];
         if(crop.waterResist) { bonusesToPush.push("waterIco" + crop.waterResist); }
@@ -685,8 +693,14 @@ combat.plant = {
             gfx.drawTileToGrid(seasons[i] + crop.seasons[i], leftMostX + i * stepx, 12, "menutext");
             if(combat.season === i) {
                 gfx.drawTileToGrid("curseason" + crop.seasons[combat.season], leftMostX + i * stepx, 12, "menutext");
+                switch(crop.seasons[combat.season]) {
+                    case 2: infoText += ", Grows Great in this Season"; break;
+                    case 1: infoText += ", Grows Well in this Season"; break;
+                    case 0: infoText += ", Grows Poorly in this Season"; break;
+                }
             }
         }
         gfx.drawWrappedText(crop.displayname, leftMostX * 16, 16 * (this.dy - 1) - 2, 64, "", "", 12);
+        screenReaderHelper.Fresh().SayThing(crop.displayname + " " + infoText, "option");
     }
 };

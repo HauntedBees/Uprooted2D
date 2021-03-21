@@ -71,8 +71,10 @@ combat.compost = {
 
         // Information
         gfx.drawMinibox(4, gfx.tileHeight - 2, gfx.tileWidth - 5, 1, "", "FarmInfo");
+        let infoText;
         if(this.backButtonSelected) {
-            gfx.drawWrappedText(GetText(textKey).replace(/\{0\}/g, hdmg).replace(/\{1\}/g, admg), textX, textY, textW);
+            infoText = GetText(textKey).replace(/\{0\}/g, hdmg).replace(/\{1\}/g, admg);
+            gfx.drawWrappedText(infoText, textX, textY, textW);
             
             combat.animHelper.SetPlayerAnimLayer("characters");
             combat.animHelper.SetBirdAnimLayer("characters");
@@ -88,12 +90,13 @@ combat.compost = {
             }
         } else if(this.healButtonSelected) {
             if(this.selectedCrops.length > 0) {
-                let str = GetText("cmp_doHeal");
-                str = HandlePlurals(str, this.selectedCrops.length);
-                str = str.replace(/\{0\}/g, this.selectedCrops.length).replace(/\{1\}/g, hdmg);
-                gfx.drawWrappedText(str, textX, textY, textW);
+                infoText = GetText("cmp_doHeal");
+                infoText = HandlePlurals(infoText, this.selectedCrops.length);
+                infoText = infoText.replace(/\{0\}/g, this.selectedCrops.length).replace(/\{1\}/g, hdmg);
+                gfx.drawWrappedText(infoText, textX, textY, textW);
             } else {
-                gfx.drawWrappedText(GetText("cmp_needOne"), textX, textY, textW);
+                infoText = GetText("cmp_needOne");
+                gfx.drawWrappedText(infoText, textX, textY, textW);
             }
 
             combat.animHelper.SetPlayerAnimLayer("characters");
@@ -110,12 +113,13 @@ combat.compost = {
             }
         } else if(this.attackButtonSelected) {
             if(this.selectedCrops.length > 0) {
-                let str = GetText("cmp_doAttack");
-                str = HandlePlurals(str, this.selectedCrops.length);
-                str = str.replace(/\{0\}/g, this.selectedCrops.length).replace(/\{1\}/g, admg);
-                gfx.drawWrappedText(str, textX, textY, textW);
+                infoText = GetText("cmp_doAttack");
+                infoText = HandlePlurals(infoText, this.selectedCrops.length);
+                infoText = infoText.replace(/\{0\}/g, this.selectedCrops.length).replace(/\{1\}/g, admg);
+                gfx.drawWrappedText(infoText, textX, textY, textW);
             } else {
-                gfx.drawWrappedText(GetText("cmp_needOne"), textX, textY, textW);
+                infoText = GetText("cmp_needOne");
+                gfx.drawWrappedText(infoText, textX, textY, textW);
             }
 
             combat.animHelper.SetPlayerAnimLayer("characters");
@@ -130,7 +134,8 @@ combat.compost = {
                 combat.animHelper.SetOnionAnimState("LOOK");
             }
         } else {
-            gfx.drawWrappedText(GetText(textKey).replace("{0}", hdmg).replace("{1}", admg), textX, textY, textW);
+            infoText = GetText(textKey).replace("{0}", hdmg).replace("{1}", admg);
+            gfx.drawWrappedText(infoText, textX, textY, textW);
 
             if(combat.isFalcon) { combat.animHelper.SetBirdAnimLayer("menucursorC"); }
             else { combat.animHelper.SetPlayerAnimLayer("menucursorC"); }
@@ -220,6 +225,7 @@ combat.compost = {
                 }
             }
         }
+        screenReaderHelper.Fresh().SayThing(infoText, "info");
         gfx.drawTileToGrid(this.binSprite, this.binx, this.biny, "menucursorB");
     },
     clean: function() { gfx.clearSome(this.layersToClean); },
@@ -512,6 +518,7 @@ combat.compost = {
     WriteAboutCrop: function(crop) {
         gfx.drawMinibox(1, 0.5, 6, 1.5, "menutext", "FarmInfo");
         gfx.drawWrappedText(crop.displayname, 23, 22, 100);
-        pausemenu.inventory.DrawCropPower(crop, 1.5, 1.5, "menutext");
+        const power = pausemenu.inventory.DrawCropPower(crop, 1.5, 1.5, "menutext");
+        screenReaderHelper.Fresh().SayThing(crop.displayname + ", " + power, "option");
     }
 };

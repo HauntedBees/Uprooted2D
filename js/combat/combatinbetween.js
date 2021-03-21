@@ -5,6 +5,7 @@ combat.inbetween = {
         this.next = args.next;
         gfx.drawFullbox(this.dy);
         gfx.drawFullText(args.text, this.dy * 16);
+        screenReaderHelper.Fresh().SayThing(args.text, "info");
     },
     clean: function() { gfx.clearSome(["menuA", "menuB", "menucursorA", "menucursorB", "menutext"]); },
     mouseMove: function(pos) { return true; },

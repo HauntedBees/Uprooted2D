@@ -84,8 +84,7 @@ worldmap.shop = {
         if(text === undefined) {
             if(this.sellingState === me.sellStates.BUYING) { this.DrawText(); }
         } else {
-            screenReaderHelper.Fresh();
-            screenReaderHelper.SayThing(text, "dialog");
+            screenReaderHelper.Fresh().SayThing(text, "dialog");
             this.WriteWrappedText(text);
         }
     },

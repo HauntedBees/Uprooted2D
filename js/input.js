@@ -4,7 +4,7 @@ let gpVals = {
 };
 let screenReaderHelper = {
     lastSpeaker: null, 
-    Fresh: function() { screenReaderHelper.lastSpeaker = null; },
+    Fresh: function() { screenReaderHelper.lastSpeaker = null; return screenReaderHelper; },
     SayThing: function(t, messageType, currentSelection, anyKey) {
         if(messageType === "dialog") {
             if(screenReaderHelper.lastSpeaker !== null && t.indexOf(screenReaderHelper.lastSpeaker) === 0) {
@@ -16,13 +16,15 @@ let screenReaderHelper = {
             }
         } else if(messageType === "option") {
             t = "Current Selection: " + t;
+        } else if(messageType === "target") {
+            t = "Current Target: " + t;
         }
         if(anyKey === true) {
             t += " Press any button to continue.";
         } else if(currentSelection !== undefined) {
             t += " Current Selection: " + currentSelection;
         }
-        t = t.replace(/Food2/g, "Food Two").replace(/ emo /g, " eemo ").replace(/\?\?\?/g, "unknown").replace(/Eee/g, "E").replace(/(\d)G/g, "$1 monies");
+        t = t.replace(/Food2/g, "Food Two").replace(/ emo /g, " eemo ").replace(/\?\?\?/g, "unknown").replace(/\!\!\!/g, "unknown").replace(/Eee/g, "E").replace(/(\d)G/g, "$1 monies");
         document.getElementById("screenRead").innerText = t;
     }
 };

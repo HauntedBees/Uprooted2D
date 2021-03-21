@@ -433,5 +433,6 @@ pausemenu.inventory = {
                 gfx.drawTileToGrid("starNone", x + starDx + i * starDx, y, layer);
             }
         }
+        return `${numStars} Star${numStars === 1 ? "" : "s"}`;
     }
 };

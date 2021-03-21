@@ -37,6 +37,7 @@ combat.enemyTurn = {
         }
         if(enemy.id === "negayana") { attackData.text = attackData.text.replace(/his/g, "her"); } // my bad bruh
         gfx.drawFullText(attackData.text, this.dy * 16);
+        screenReaderHelper.Fresh().SayThing(attackData.text, "info");
     },
     clean: () => gfx.clearSome(["menuA", "menutext"]),
     click: function(pos) { combat.endTurn(this); return true; },
