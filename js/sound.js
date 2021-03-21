@@ -6,6 +6,9 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
                         "enterbattle",      // sfx_deathscream_alien1
                         "dangeresque",      // sfx_lowhealth_alarmloop4
                         "pluck",            // sfx_movement_jump17
+                        "hit_bee",          // sfx_wpn_punch4
+                        "hit_beep",         // sfx_sounds_impact1
+                        "hit_bird",         // sfx_sounds_interaction24
                         "hit_gun",          // sfx_wpn_machinegun_loop8
                         "hit_hard",         // sfx_damage_hit5
                         "hit_hollow_metal", // sfx_menu_move4
@@ -82,7 +85,7 @@ let Sounds = { // 284 TODO: this probably doesn't support playing the same sound
         });
     },
     PlayPlayerAttackSound: function(targIdx, crop) {
-        const enemyType = combat.enemies[targIdx].sound;
+        const enemyType = targIdx < 0 ? "" : combat.enemies[targIdx].sound;
         const hitType = crop === undefined ? "hollow" : crop.sound;
         const hitStr = `hit_${hitType}`, fullHitStr = `${hitStr}_${enemyType}`;
         if(Sounds.SoundTable[fullHitStr] !== undefined) {

@@ -463,6 +463,7 @@ const animCallbackHelpers = {
                 const cropPos = { x: targ.x - combat.enemydx, y: targ.y - combat.enemydy };
                 let crop = combat.enemyGrid[cropPos.x][cropPos.y];
                 if(crop === null) { continue; }
+                Sounds.PlayPlayerAttackSound(-1, crop);
                 if(crop.health <= 0) {
                     AddCropDeathAnim(animProcess, targ.x, targ.y, crop);
                 } else {
