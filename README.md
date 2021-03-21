@@ -36,6 +36,12 @@ The following arguments can be supplied (all `.ora` files referenced are in `too
 
 **TODO: *shop_XXX.ora*, *logo.ora*, *colorPreview.ora*, and *endcredits.ora* files still require manual export.**
 
+#### BuildMonochrome.js
+Copies all images from **img** into **imggb** after converting them to a 4-color monochrome color scheme.
+
+**TODO: Sprites *FarmInfo%*, *MetalInfo%*, *BtlSel%*, *CornerBtn%*, and *%Sel%* must be manually set to the maximum brightness.**
+**TODO: Sprites *%cursor%.%* and *optTile* must be manually corrected.**
+
 #### BuildSpreadsheets.js
 Generates game data from the spreadsheets in the **tools/ods** folder. With no parameters passed it should generate all data needed for the game.
 
