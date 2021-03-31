@@ -552,11 +552,74 @@ function AchievementCard(a) {
 	return  `
 <div class="col-4 col-md-3 d-flex align-items-stretch mb-2 px-1">
 	<div class="card text-white bg-secondary full-width${hiddenChievos.indexOf(a) >= 0 ? " spoiler" : ""}">
+		<div class="card-img-top text-center mt-2">
+			${VSprite("a." + a)}
+		</div>
 		<div class="card-body">
 			<h5 class="card-title text-center">${GetText("a." + a)}</h5>
 			<div class="row mt-1">
 				<div class="col">${GetText("ad." + a)}</div>
 			</div>
+		</div>
+	</div>
+</div>`
+}
+//#endregion
+//#region Calsotte
+const nosotte = ["bee", "spear", "rod", "water", "tech", "sickle2", "egg"];
+const calsottes = [
+	{ id: "crisis", causes: ["leek"], type: "one" },
+	{ id: "toxic", causes: ["poisnshroom"], type: "one", desc: "No other buffs except \"Existential Crisis\" can be active while \"Toxic\" is active." },
+	{ id: "stinky", desc: "Caused by not cleaning up after Calsotte." },
+	{ id: "stuffed", desc: "Have 8 items in Calsotte's tummy" },
+	{ id: "wellfed", desc: "Have 6-7 items in Calsotte's tummy" },
+	{ id: "allberries", causes: ["tomato", "grapes", "banana", "blackberry", "avocado"], type: "allberries" },
+	{ id: "loved", desc: "Pet Calsotte 10 times" },
+	{ id: "gourmand", causes: ["coconut", "gmocorn", "goodfood", "notdrugs", "lotus", "saffron"], type: "any" },
+	{ id: "protein", causes: ["asparagus", "avocado", "spinach"], type: "all" },
+	{ id: "sofrito", causes: ["garlic", "leek", "bellpepper", "tomato"], type: "all" },
+	{ id: "core", causes: ["apricot", "avocado"], type: "all" },
+	{ id: "italia", causes: ["garlic", "carrot"], type: "all", desc: "Requires any mushroom and 3+ tomatoes plus:" },
+	{ id: "fodder", causes: veggies.filter(v => v.Type === "food").map(v => v.Id), type: "any" },
+	{ id: "friedrice", causes: ["garlic", "ginger"], type: "all", desc: "Requires any paddy crop plus:" },
+	{ id: "wet", causes: veggies.filter(v => v.Type === "moist").map(v => v.Id), type: "any" },
+	{ id: "pungent", causes: ["garlic", "ginger", "asparagus"], type: "atl3" },
+	{ id: "spicy", causes: ["bellpepper", "garlic", "rhubarb"], type: "atl3" },
+	{ id: "veggies", causes: veggies.filter(v => v.Type === "veg").map(v => v.Id), type: "atl5" },
+	{ id: "fruits", causes: veggies.filter(v => v.Type === "tree").map(v => v.Id), type: "atl5" },
+	{ id: "mush", causes: veggies.filter(v => v.Type === "mush").map(v => v.Id), type: "atl5" },
+	{ id: "rice", causes: veggies.filter(v => v.Type === "rice").map(v => v.Id), type: "atl5" },
+	{ id: "spring", causes: veggies.filter(v => nosotte.indexOf(v.Type) < 0 && v.Sp === "2").map(v => v.Id), type: "atl4" },
+	{ id: "summer", causes: veggies.filter(v => nosotte.indexOf(v.Type) < 0 && v.Su === "2").map(v => v.Id), type: "atl4" },
+	{ id: "autumn", causes: veggies.filter(v => nosotte.indexOf(v.Type) < 0 && v.Au === "2").map(v => v.Id), type: "atl4" },
+	{ id: "winter", causes: veggies.filter(v => nosotte.indexOf(v.Type) < 0 && v.Wi === "2").map(v => v.Id), type: "atl4" }
+];
+function CalsotteCard(c) {
+	let text;
+	switch(c.type) {
+		case "one": text = "Feed one or more"; break;
+		case "any": text = "Feed at least one of"; break;
+		case "all": text = "Feed one or more of each"; break;
+		case "allberries": text = "Only Feed"; break;
+		case "atl3": text = "Feed at least 3 of"; break;
+		case "atl4": text = "Feed at least 4 of"; break;
+		case "atl5": text = "Feed at least 5 of"; break;
+	}
+	const causeHTML = c.causes ? `
+		<div class="text-center">
+			<strong>${text}: ${c.causes.map(v => VSprite(v, "sprite--tiny", GetText("nm." + v), v)).join("")}</strong>
+		</div>`: "";
+	return  `
+<div class="col-4 col-md-3 d-flex align-items-stretch mb-2 px-1">
+	<div class="card text-white bg-secondary full-width">
+		<div class="card-img-top text-center mt-2">
+			${VSprite("o." + c.id)}
+		</div>
+		<div class="card-body">
+			<h5 class="card-title text-center">${GetText("perk." + c.id + ".n")}</h5>
+			<p>${GetText("perk." + c.id + ".d")}</p>
+			${c.desc ? `<div class="text-center">${c.desc}</div>` : ""}
+			${causeHTML}
 		</div>
 	</div>
 </div>`
@@ -570,6 +633,7 @@ const output = template
 					.replace("{@crops}", veggies.map(v => VeggieCard(v)).join("\n"))
 					.replace("{@equipment}", equipment.map(e => EquipmentCard(e)).join("\n"))
 					.replace("{@fixtures}", fixtures.map(f => FixtureCard(f)).join("\n"))
+					.replace("{@calsottes}", calsottes.map(c => CalsotteCard(c)).join("\n"))
 					.replace("{@achievements}", achievements.map(a => AchievementCard(a)).join("\n"))
 					.replace("{@enemies}", enemies.map(e => EnemyCard(e)).join("\n"));
 fs.writeFileSync(path.join(outpath, "manual.html"), output);
