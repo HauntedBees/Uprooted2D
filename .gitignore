@@ -73,3 +73,6 @@ js/lib/pixi.js
 
 tools/temp/*
 tools/creds.js
+tools/manual/temp/*
+tools/manual/parts/*.js
+tools/manual/out/*

@@ -1,0 +1,221 @@
+<html>
+    <head>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <style>
+			.full-width { width: 100% }
+            .sprite {
+                background: url("assets/sheet.png");
+                display: inline-block;
+                height: 64px;
+                width: 64px;
+            }
+            .spriteb {
+                background: url("assets/sheetBig.png");
+                display: inline-block;
+                height: 128px;
+                width: 128px;
+            }
+			.sprite--small {
+				transform: scale(0.5);
+				margin-right: -32px;
+				margin-bottom: -32px;
+			}
+			.spriteb.sprite--small {
+				margin-right: -64px;
+				margin-bottom: -64px;
+
+			}
+			.sidebar {
+                position: fixed;
+                top: 51px;
+                bottom: 0;
+                left: 0;
+                z-index: 1000;
+                padding: 20px 0;
+                overflow-x: hidden;
+                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+                border-right: 1px solid #eee;
+            }
+			.main { margin-top: 65px }
+			a.h3, a.h4 {
+				display: block;
+				text-decoration: none;
+				color: #000000;
+				margin-bottom: 5px;
+			}
+			a.h3:before, a.h4:before {
+				display: block;
+				content: " ";
+				height: 65px;
+				margin-top: -65px;
+				visibility: hidden;
+			}
+        </style>
+        <title>Uprooted: Meal Replacement Game - Manual and Guide</title>
+    </head>
+    <body>
+        <header>
+			<nav class="navbar navbar-dark fixed-top bg-dark">
+				<a class="navbar-brand mx-5" href="#">
+					Uprooted: Meal Replacement Game - Manual and Guide
+				</a>
+			</nav>
+		</header>
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-sm-3 col-md-1 bg-dark sidebar">
+                    <ul class="nav nav-pills flex-column">
+						<li class="nav-item text-muted text-center">Manual</li>
+                        <li class="nav-item"><a class="nav-link" href="#top">Introduction</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#controls">Controls</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#how">How to Play</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#gameworld"> - Basic Gameplay</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#combat"> - Combat</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#pause"> - Pause Menu</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#options">- Options</a></li>
+						<li class="nav-item text-muted text-center">Guide </li>
+                        <li class="nav-item"><a class="nav-link" href="#crops">Crops</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#maps">Locations</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#enemies">Enemies</a></li>
+                    </ul>
+                </nav>
+                <main role="main" class="main col-sm-9 col-md-11 offset-sm-3 offset-md-1">
+					<a name="top" class="h3">Introduction</a>
+					<p>
+						You are <strong>Ayana</strong>, a farmer living in <strong>San Ambrosio, CA</strong>, and you're having a very busy day. 
+						First, a city boy named <strong>Nathan</strong> came to your farm offering to work as an intern, and after that, some nerd 
+						who called himself <strong>Beckett</strong> told you he didn't want you farming anymore, since your food would compete with 
+						his fancy new meal replacement drink - <strong>Food2</strong>. And now there are robots everywhere! Looks like you're in 
+						for quite a busy day.
+					</p>
+
+					<a name="controls" class="h3">Controls</a>
+					<ul>
+						<li><strong>Player/Menu Movement: </strong> Arrow Keys (Keyboard), Left Analog Stick or Directional Pad (Gamepad)</li>
+						<li><strong>Interact, Confirm: </strong> Z (Keyboard), A Button (Gamepad)</li>
+						<li><strong>Cancel, Go Back: </strong> X (Keyboard), B Button (Gamepad)</li>
+						<li><strong>Run (World Map): </strong> Hold Cancel Key/Button, then Release</li>
+						<li><strong>Pause Menu: </strong> Enter (Keyboard), Start Button (Gamepad)</li>
+					</ul>
+					<p>All controls can be changed at any time in the <a href="#options">Options Menu</a>.</p>
+
+					<a name="how" class="h3">How to Play</a>
+					<div class="h4">Getting Started</div>
+					<p>
+						On the <strong>Title Screen</strong>, select <strong>New Game</strong> to start a new game - if you already have a save
+						file you can select the <strong>Continue</strong> option to load an existing save. When starting a new game, you will 
+						first be asked if you're okay with seeing strong language. Make your selection with the <strong>Menu Movement</strong>
+						controls, then press <strong>Confirm</strong> to confirm your selection. Once the game has started, you can use the 
+						controls described above to navigate the game world and menus.
+					</p>
+					<a name="gameworld" class="h4">Basic Gameplay</a>
+					<p>
+						There are many places to go and people - both friends and foes - to talk to in the world of Uprooted. To interact with
+						something, walk up to it and press <strong>Interact</strong>. If you would like to enter a building or shop, just walk 
+						into it. When talking to people, they may ask you for help, give you items, or - if they suck - fight you.
+					</p>
+					<a name="combat" class="h4">Combat</a>
+					<p>
+						Once a battle starts, you'll generally have four options - <strong>Plant</strong>, <strong>Attack</strong>, 
+						<strong>Compost</strong>, and <strong>Run</strong>. In some cases you won't be able to plant or run, so you'll have a
+						<strong>Pass</strong> option in their place to skip your turn.
+					</p>
+					<p>
+						<strong>Plant</strong> allows you to plant some seeds in your <strong>field</strong>. Depending on your equipment, you 
+						can plant one or more seeds on a given turn. In addition to <strong>fruit</strong> and <strong>vegetable</strong> seeds,
+						if you have the right <strong>fixtures</strong> on your <strong>field</strong>, you can place other items like 
+						<strong>eggs</strong> and <strong>mushrooms</strong>. Everything you place on your field will require a different amount
+						of time to grow and become <strong>ready</strong>.
+					</p>
+					<p>
+						<strong>Attack</strong> allows you to attack your enemies with a melee weapon, or - if you have one or more <strong>ready</strong>
+						crops on your <strong>field</strong>, throw all of them at your enemies. The more crops you throw at once, the more damage 
+						you'll do (throwing 2 crops in one turn does more damage than throwing those same two crops in separate turns), and with 
+						every consecutive turn you throw crops, you'll do more damage, too! With certain <strong>equipment</strong>, you can even
+						<strong>plant</strong> and <strong>attack</strong> in the same turn! 
+					</p>
+					<p>
+						If you have a <strong>compost bin</strong> equipped, you can <strong>Compost</strong> one or more of your crops to recover 
+						health. The type of <strong>compost bin</strong> you have determines what kinds of crops you can compost and how many you can
+						select per turn. 
+					</p>
+					<p>
+						If you don't want to engage in a fight, you can try to <strong>Run</strong>. Running is not always successful, and if you
+						fail you'll fall on your face and have to wait until your next turn to fight back or try running again. You cannot run away 
+						from boss battles.
+					</p>
+					<a name="pause" class="h4">Pause Menu</a>
+					<p>
+						The <strong>Inventory</strong> section will let you view all of the seeds and crops you have.
+						There are X different types of crops:
+						<ul>
+							<li><strong>Vegetables: </strong>Standard crops that grow and get thrown when ripe. If you don't throw them when they're <strong>ready</strong>, they'll rot.</li>
+							<li><strong>Trees: </strong>Trees usually take longer to grow, but after you throw their <strong>ready</strong> fruit, the fruits will grow back. If you don't throw the <strong>ready</strong> fruit, they'll restart their growing cycle.</li>
+							<li><strong>Mushrooms: </strong>Mushroom seeds can only be planted on <strong>mushroom logs</strong>, and they grow back just like fruits do.</li>
+							<li><strong>Eggs: </strong>Eggs can only be placed on <strong>coops</strong>. Once they hatch, they will not rot, and the longer you keep them on your <strong>field</strong>, the more damage they'll do when you finally attack with them. You cannot <strong>compost</strong> eggs.</li>
+							<li><strong>Bees: </strong>Bees can only be placed in <strong>beehives</strong>. They take a random amount of time to become <strong>ready</strong>, and when they do they can be composted for extra health, or used in an attack that might temporarily stun your enemies.</li>
+							<li><strong>Rice: </strong>Rice can only be planted in <strong>paddies</strong>. They behave like <strong>vegetables</strong>, but are more likely to cause recoil and damage more enemies at once.</li>
+							<li><strong>Animal Feed: </strong>Animal feed can be fed to <strong>cows</strong>. A well-fed cow can be milked with the <strong>compost</strong> action to recover large amounts of health.</li>
+							<li><strong>Fishing Supplies: </strong>Fishing supplies can be used in <strong>bodies of water</strong>. Fishing supplies have a random chance of catching fish each turn. Once caught, the supply becomes <strong>ready</strong> and can be attacked with. You cannot <strong>compost</strong> fish.</li>
+							<li><strong>Technology: </strong>Technology can only be placed on <strong>HotSpots</strong>. Technology items have various unique behaviors in combat.</li>
+							<li><strong>Water: </strong>Water can be used to manually speed up the growth of specific crops.</li>
+						</ul>
+					</p>
+					<p>
+						The <strong>Equipment</strong> section will let you manage what items you have equipped. <strong>Sickles</strong> determine your 
+						attack power, who you can attack, and how you attack. <strong>Gloves</strong> boost your defense and can allow you to plant more 
+						seeds per turn. <strong>Compost Bins</strong> determine what you can compost and how much of it, as well as how much health you'll
+						recover through composting. <strong>Watering Cans</strong> control the growth speed and health of your crops.
+					</p>
+					<p>
+						The <strong>Fixtures</strong> section allows you to place various fixtures on your <strong>field</strong>. You can find 
+						more fixtures in stores and by helping people, and you can expand your <strong>field</strong> at <strong>Expansion Shops</strong>
+						across the world, giving you more space to plant fixtures and seeds.
+					</p>
+					<p>
+						The <a href="#options"><strong>Options Menu</strong></a> will allow you to change various settings, described below in a separate section. You can
+						view your progress on the <strong>Achievements</strong> screen.
+					<p>
+						You can save your game at any time with the <strong>Save Menu</strong>. There are 10 save slots to choose from, plus
+						one <strong>Auto-Save</strong> option that is created every time you sleep at an <strong>Inn</strong>.
+					</p>
+					<a name="options" class="h4">Options</a>
+					<p>The following options are available for you to customize at any time before or during your game:</p>
+					<ul>
+						<li><strong>Difficulty: </strong>The game's difficulty. As difficulty increases, items cost more, drop less frequently in combat, and enemies do more damage.</li>
+						<li><strong>Font: </strong>Choose from the standard pixelated font, or <strong>OpenDyslexic</strong>, an accessible font that may help with reading.</li>
+						<li><strong>Font Size: </strong>Set the size of in-game fonts.</li>
+						<li><strong>Gameplay: </strong>This game doesn't have any.</li>
+						<li><strong>Strong Language: </strong>Determines whether characters say "darn" or "damn," and so on.</li>
+						<li><strong>Sticky Movement: </strong>When turned on, you only need to press a movement button once to start move in that direction, then press it again to stop.</li>
+						<li><strong>Ignore Mouse: </strong>If set, mouse controls will be disabled and the cursor will be hidden while playing.</li>
+						<li><strong>Control Type: </strong>You can use either a keyboard or gamepad to play. If you press a button on the gamepad or key on the keyboard, the control type will switch automatically.</li>
+						<li><strong>Analog Deadzone: </strong>(Gamepad Only) Control the deadzone - or how much you have to tilt it in one direction for it to register as being pressed - of your analog sticks.</li>
+						<li><strong>Movement Controls: </strong>(Gamepad Only) Choose whether you wish to use the standard analog stick/directional pad controls for movement, or if you want to specify your own controls.</li>
+						<li><strong>Controls: </strong>Configure your controls. Press <strong>Confirm</strong> to choose an action, then press any key or button to assign it. Press <strong>Esc</strong> to cancel this assignment.</li>
+						<li><strong>Audio: </strong>Set the relative volume of music and sound effects.</li>
+						<li><strong>Graphics: </strong>Set the screen resolution and whether or not to use the full screen.</li>
+						<li><strong>Filter: </strong>Choose an optional graphic filter to change how the game looks.</li>
+					</ul>
+
+					<a name="crops" class="h3">Crops</a>
+					<div class="row">
+						{@crops}
+					</div>
+					
+					<a name="maps" class="h3">Locations</a>
+					<p><strong>Warning: Below this point you will find spoilers for the game's story. Proceed at your own risk.</strong></p>
+					<div class="row">
+						{@locations}
+					</div>
+
+					<a name="enemies" class="h3">Enemies</a>
+					<p><strong>Warning: Below this point you will find spoilers for the game's story. Proceed at your own risk.</strong></p>
+					<div class="row">
+						{@enemies}
+					</div>
+		        </main>
+            </div>
+        </div>
+    </body>
+</html>
