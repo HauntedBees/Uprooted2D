@@ -84,6 +84,11 @@ Concatenates all source files into one **out.js** file. Calling it with the `min
 #### gulpfile.js
 Calling `gulp watch` will ensure `Package.js` is executed every time a source file is updated.
 
+#### manual/BuildManualParts.js and manual/BuildManual.js
+These will create the instruction manual/strategy guide, with most data pulled straight from the game's code. Run `BuildManualParts.js` to populate the `manual/parts` folder with relevant metadata needed to generate the guide, and run `BuildManual.js` to populate the `manual/out` folder with the `manual.html` file and relevant images in the `manual/out/assets` folder.
+
+All enemies, crops, fixtures and equipment are pulled from the game code. The instruction manual is hard-coded in `manual/parts/template.html`. Much of Calsotte's buffs and the Locations are hard-coded in the `BuildManual.js` file, as are the names of specific achievements and enemies for the purposes of skipping some and marking them as spoilers.
+
 ### Standard Build
 Run `node tools/Package.js` to build everything. All standard spritesheets and game datas are pre-built in the the git repository, but if you have made changes, you will need to run the appropriate script described above. Likewise, if you wish to include the filtered sprites, you will need to run `node tools/FormatImages.js`. After building, run `index.html` in your browser to play.
 
