@@ -1,10 +1,12 @@
 const path = require("path");
 const fs = require("fs");
 const text = require("./parts/text");
-const veggies = require("./parts/veggies");
-const shops = require("./parts/shops");
 const spritedata = require("./parts/spritedata");
+const shops = require("./parts/shops");
+const veggies = require("./parts/veggies");
 const enemies = require("./parts/enemies");
+const equipment = require("./parts/equipment");
+const fixtures = require("./parts/fixtures");
 
 const range = i => [...Array(i).keys()];
 const GetText = key => text[key] ? text[key]["en-us"].replace(/(\\n\s?)+/g, "<br><br>") : false;
@@ -54,8 +56,8 @@ const ShopNames = {
 	"workerscoop": LocBadges["northcity"] + "Worker's Co-op"
 };
 const CachedVSprites = {};
-const VSprite = (key, addtlClass, tooltip) => {
-	const cacheKey = key + "/" + addtlClass + "/" + tooltip;
+const VSprite = (key, addtlClass, tooltip, link) => {
+	const cacheKey = key + "/" + addtlClass + "/" + tooltip + "/" + link;
 	if(CachedVSprites[cacheKey]) { return CachedVSprites[cacheKey]; }
 	const spriteData = spritedata[key];
 	if(!spriteData) { return ""; }
@@ -66,7 +68,9 @@ const VSprite = (key, addtlClass, tooltip) => {
 	const startX = sx * size + sx * 2 + 1;
 	const startY = sy * size + sy * 2 + 1;
 	const attrs = tooltip ? ` data-bs-toggle="tooltip" data-bs-placement="bottom" title="${tooltip}"` : "";
-	const html = `<div class="${cssclass}"${attrs}><div class="inner" style="background-position: -${4 * startX}px -${4 * startY}px"></div></div>`;
+	const innerType = link ? "a" : "div";
+	const addtlAttr = link ? ` href="#ref_${link}"` : "";
+	const html = `<div class="${cssclass}"${attrs}><${innerType} class="inner"${addtlAttr} style="background-position: -${4 * startX}px -${4 * startY}px"></${innerType}></div>`;
 	CachedVSprites[cacheKey] = html;
 	return html;
 };
@@ -86,6 +90,17 @@ for(let i = 0; i < 3; i++) {
 	Seasons["1" + i] = VSprite("summer" + i, "sprite--tiny pt-1", `Grows ${quality} in Summer`);
 	Seasons["2" + i] = VSprite("autumn" + i, "sprite--tiny pt-1", `Grows ${quality} in Autumn`);
 	Seasons["3" + i] = VSprite("winter" + i, "sprite--tiny pt-1", `Grows ${quality} in Winter`);
+	if(i === 2) {
+		Seasons["x0" + i] = VSprite("spring" + i, "sprite--tiny pt-1");
+		Seasons["x1" + i] = VSprite("summer" + i, "sprite--tiny pt-1");
+		Seasons["x2" + i] = VSprite("autumn" + i, "sprite--tiny pt-1");
+		Seasons["x3" + i] = VSprite("winter" + i, "sprite--tiny pt-1");
+	} else if(i === 0) {
+		Seasons["x0" + i] = "";
+		Seasons["x1" + i] = "";
+		Seasons["x2" + i] = "";
+		Seasons["x3" + i] = "";
+	}
 }
 
 const PairSprite = (array, back, big) => array.map(s => `<div class="${(big ? "spriteb-pair" : "sprite-pair")}">${back}${s}</div>`)
@@ -145,20 +160,30 @@ function VeggieCard(v) {
 
 	const enemiesSet = new Set();
 	enemies.forEach(e => {
-		for(let i = 0; i < 2; i++) {
-			const drop = e["drop" + i].split(",")[0];
-			if(drop === v.Id) {
-				let name;
-				switch(e.Id) {
-					case "nathan": name = "Final Boss"; break;
-					case "Worker": name = "Construction Worker"; break;
-					case "BossWorker": name = "Construction Manager"; break;
-					case "mobsty1": name = "Mobster"; break;
-					case "mobsty2": name = "Buff Mobster"; break;
-					case "negayana": name = "Mysterious Enemy"; break;
-					default: name = GetText("e." + e.Id + "0"); break;
+		let skip = false, name;
+		switch(e.Id) {
+			case "nathan": name = "Final Boss"; break;
+			case "Worker": name = "Construction Worker"; break;
+			case "BossWorker": name = "Construction Manager"; break;
+			case "mobsty1": name = "Mobster"; break;
+			case "mobsty2": name = "Buff Mobster"; break;
+			case "negayana": name = "Mysterious Enemy"; break;
+			case "seaMan": name = "Sea Monster"; break;
+			case "kida": name = "Skunk"; break;
+			case "beeQueenA":
+			case "beeQueenB":
+			case "beeQueenC": 
+			case "kidb": 
+			case "kidc": 
+			case "kidd": skip = true; break;
+			default: name = GetText("e." + e.Id + "0"); break;
+		}
+		if(name && !skip) {
+			for(let i = 0; i < 2; i++) {
+				const drop = e["drop" + i].split(",")[0];
+				if(drop === v.Id) {
+					enemiesSet.add(`<div><a class="reflink" href="#ref_${e.Id}">${name}</a></div>`);
 				}
-				if(name) { enemiesSet.add(`<div>${name}</div>`); }
 			}
 		}
 	});
@@ -168,6 +193,7 @@ function VeggieCard(v) {
 	return `
 <div class="col-6 col-md-4 d-flex align-items-stretch mb-2 px-1">
 	<div class="card text-white bg-secondary full-width">
+		<a name="ref_${v.Id}" class="ref"></a>
 		<div class="card-img-top row text-center mt-2">
 			<div class="col">${VSprite(v.Id + "seed")} ${VSprite(v.Id)}</div>
 			${growthSprites.length ? `<div class="col align-self-center">${growthSprites.join("")}</div>` : ""}
@@ -211,16 +237,318 @@ function VeggieCard(v) {
 			</div>
 		</div>
 	</div>
-</div>`
+</div>`;
 };
 //#endregion
+//#region Equipment
+function EquipmentCard(e) {
+	if(e.Id === "nope" || e.Id === "!sickle2_weak") { return ""; }
 
+	const shopsFoundAt = [];
+	for(const key in shops) {
+		if(!ShopNames[key]) { continue; }
+		const wares = shops[key].wares;
+		if(wares.some(w => w.product === e.Id)) {
+			shopsFoundAt.push(`<div>${ShopNames[key]}</div>`);
+		}
+	}
+	if(shopsFoundAt.length === 0) { shopsFoundAt.push(`<div class="text-center">No shops sell this</div>`); }
+
+	const cardbase = `
+<div class="col-6 col-md-4 d-flex align-items-stretch mb-2 px-1">
+	<div class="card text-white bg-secondary full-width">
+		<div class="card-img-top text-center mt-2">
+			${VSprite(e.Id)}
+		</div>
+		<div class="card-body">
+			<h5 class="card-title text-center">${GetText(e.Id)}</h5>
+			{@rest}
+			<div class="row text-center mt-1">
+				<div class="col">
+					<h6>Sold at</h6>
+					<div class="shop-block" style="display:inline-block">
+						${shopsFoundAt.join("")}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>`
+	let content;
+	if(e.Type === "weapon") {
+		let target, other;
+		if(e.Num === "999") {
+			target = "All Enemies";
+		} else {
+			if(!e.Num) {
+				target = "One " + (e.Foes && e.Crop ? "Enemy or Crop" : (e.Foes ? "Enemy" : "Crop"));
+			} else {
+				target = e.Num + " " + (e.Foes && e.Crop ? "Enemies and Crops" : (e.Foes ? "Enemies" : "Crops"));
+			}
+		}
+		if(e.SP) { other = "Stronger in Spring and Summer"; }
+		if(e.WI) { other = "Stronger in Winter"; }
+		if(e.Id === "!sickle2") { other = "Requires a Sickle2 Charger"; }
+		const otherHTML = other ? `<div class="col">${other}</div>` : "";
+		content = `
+		<div class="row text-center">
+			<div class="col">
+				<strong>Power: </strong> ${e.Pow}
+			</div>
+			<div class="col">
+				<strong>Can Target: </strong> ${target}
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col">
+				<strong>Cost: </strong> ${parseInt(e.Price).toLocaleString()}G
+			</div>
+			${otherHTML}
+		</div>`;
+	} else if(e.Type === "compost") {
+		let other = [];
+		if(e.Atk) { other.push("Can Attack with Compost"); }
+		if(e.Bns) { other.push(`${e.Bns * 100}% Bonus`); }
+		if(e.Tech) { other.push("May Backfire"); }
+		const otherHTML = other.length ? `<div class="col">${other.join(", ")}</div>` : "";
+		content = `
+		<div class="row text-center">
+			<div class="col">
+				<strong>Storage Amount: </strong> ${e.Amt}
+			</div>
+			<div class="col">
+				<strong>Can Compost: </strong> ${e.Rot ? "Dead Crops Only" : "All Crops"}
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col">
+				<strong>Cost: </strong> ${parseInt(e.Price).toLocaleString()}G
+			</div>
+			${otherHTML}
+		</div>`;
+	} else if(e.Type === "gloves") {
+		let other = [];
+		if(e.Atk) { other.push("Can Attack/Compost after Planting"); }
+		if(e.Tech) { other.push("May shock plants and tech when planted. Will shock you when touching water."); }
+		const otherHTML = other.length ? `<div class="col">${other.join(", ")}</div>` : "";
+		content = `
+		<div class="row text-center">
+			<div class="col">
+				<strong>Seeds Per Turn: </strong> ${e.Amt}
+			</div>
+			<div class="col">
+				<strong>Damage Resist: </strong> ${e.Def * 100}%
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col">
+				<strong>Cost: </strong> ${parseInt(e.Price).toLocaleString()}G
+			</div>
+			${otherHTML}
+		</div>`;
+	} else if(e.Type === "soil") {
+		let other = "";
+		if(e.Tech) { other = "Will kill crops that are too weak or grow too quickly. Bees with fly away."; }
+		const otherHTML = other ? `<div class="row mb-1"><div class="col">${other}</div></div>` : "";
+		content = `
+		<div class="row text-center">
+			<div class="col">
+				<strong>Growth Speed Boost: </strong> ${(e.Spd || 0) * 100}%
+			</div>
+			<div class="col">
+				<strong>Seasonal Resistance: </strong> ${(e.Bst || 0) * 100}%
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="col">
+				<strong>Seasonal Multiplier: </strong> ${(e.Amp || 0) * 100}%
+			</div>
+			<div class="col">
+				<strong>Cost: </strong> ${parseInt(e.Price).toLocaleString()}G
+			</div>
+		</div>
+		${otherHTML}`;
+	}
+	return cardbase.replace("{@rest}", content);
+}
+//#endregion
+//#region Fixtures
+function FixtureCard(f) {
+	const shopsFoundAt = [];
+	for(const key in shops) {
+		if(!ShopNames[key]) { continue; }
+		const wares = shops[key].wares;
+		if(wares.some(w => w.product === f.Id)) {
+			shopsFoundAt.push(`<div>${ShopNames[key]}</div>`);
+		}
+	}
+	if(shopsFoundAt.length === 0) { shopsFoundAt.push(`<div class="text-center">No shops sell this</div>`); }
+
+	let size = 1, useWiths = [];
+	switch(f.Id) {
+		case "_sprinkler": 
+		case "_strongsoil":
+			useWiths = veggies.filter(v => (v.Type === "tree" || v.Type === "veg")).map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_shooter": useWiths = veggies.filter(v => ["veg", "mush", "rice"].indexOf(v.Type) >= 0).map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_log": useWiths = veggies.filter(v => v.Type === "mush").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_coop": useWiths = veggies.filter(v => v.Type === "egg").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_lake": useWiths = veggies.filter(v => ["water", "rod", "spear"].indexOf(v.Type) >= 0).map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_paddy": useWiths = veggies.filter(v => v.Type === "rice").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_beehive": useWiths = veggies.filter(v => v.Type === "bee").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_hotspot": size = 2; useWiths = veggies.filter(v => v.Type === "tech").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_cow": size = 2; useWiths = veggies.filter(v => v.Type === "food").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_charger": size = 2; useWiths = veggies.filter(v => v.Type === "sickle2").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+		case "_modulator": size = 2; useWiths = veggies.filter(v => v.Type === "veg").map(v => VSprite(v.Id, "sprite--tiny", GetText("nm." + v.Id), v.Id)); break;
+	}
+	const useWithHTML = useWiths.length ? `
+	<div class="col">
+		<h6>Use With</h6>
+		<div class="shop-block" style="display:inline-block">
+			${useWiths.join("")}
+		</div>
+	</div>` : "";
+
+	return `
+<div class="col-6 col-md-4 d-flex align-items-stretch mb-2 px-1">
+	<div class="card text-white bg-secondary full-width">
+		<div class="card-img-top text-center mt-2">
+			${VSprite(f.Id)}
+		</div>
+		<div class="card-body">
+			<h5 class="card-title text-center">${GetText(f.Id.substring(1))}</h5>
+			<div class="row text-center">
+				<div class="col">
+					<strong>Size: </strong>${size}x${size}
+				</div>
+				<div class="col">
+					<strong>Price: </strong>${parseInt(f.Price).toLocaleString()}G
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					${GetText(f.Id.substring(1) + ".ldesc")}
+				</div>
+			</div>
+			<div class="row text-center mt-1">
+				${useWithHTML}
+				<div class="col">
+					<h6>Sold at</h6>
+					<div class="shop-block" style="display:inline-block">
+						${shopsFoundAt.join("")}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>`;
+}
+//#endregion
+//#region Enemies
+const skipEnemies = ["machineA", "machineB", "machineC", "machineD", "yourWorstFuckingNightmare"];
+const spoilerEnemies = ["housekeeper", "mrbruno", "mobsty1", "mobsty2", "mobBoss", "dweebLord", "discuss2", "discuss2big", "theMonster", "soyChild", "soyStack", 
+						"beckett", "nathan", "beeQueenA", "beeQueenB", "beeQueenC", "seaMobster", "soyChildCave", "shinyBear", "mrWallFriend", "caveNerd", "graveRobber", 
+						"negayana", "garfwax", "trustworthyfriend", "doodoobirdhaha", "golf", "conqueredscarecrow", "fishingsnake"];
+function EnemyCard(e) {
+	let name, size, dx, dy;
+	if(skipEnemies.indexOf(e.Id) >= 0) { return ""; }
+	switch(e.Id) {
+		case "Worker": name = "Construction Worker"; break;
+		case "BossWorker": name = "Construction Manager"; break;
+		case "mobsty1": name = "Mobster"; break;
+		case "mobsty2": name = "Buff Mobster"; break;
+		case "seaHandR": name = "Sea Monster Hand"; break;
+		case "seaMan": name = "Sea Monster Head"; break;
+		case "seaHandL": name = "Sea Monster Hand"; break;
+		case "beeQueenA": name = "??? (First Encounter)"; break;
+		case "beeQueenB": name = "??? (Second Encounter)"; break;
+		case "beeQueenC": name = "??? (Third Encounter)"; break;
+		case "kida": name = "Skunk (First Encounter)"; break;
+		case "kidb": name = "Skunk (Second Encounter)"; break;
+		case "kidc": name = "Skunk (Third Encounter)"; break;
+		case "kidd": name = "Skunk (Final Encounter)"; break;
+		default: name = GetText("e." + e.Id + "0"); break;
+	}
+	if(!name) { return ""; }
+	const spacing = e.sI.split(","), sx = parseInt(spacing[0]), sy = parseInt(spacing[1]);
+	switch(e.Size) {
+		case "sm":
+		case "md": 
+			size = "enemysprite";
+			dx = sx * 128;
+			dy = sy * 148;
+			break;
+		case "lg":
+			size = "enemyspriteb";
+			dx = sx * 176;
+			dy = sy * 200;
+			break;
+		case "xl":
+			size = "enemyspritex sprite--small";
+			dx = sx * 408;
+			dy = sy * 344;
+			break;
+	}
+	const exp = Math.ceil(parseInt(e.HP)/10 + parseInt(e.Atk) + parseInt(e.Def)/2);
+	const drops = [];
+	if(e.money !== "" && e.money !== "0,0") {
+		const monies = e.money.split(",");
+		monies[0] = parseInt(monies[0]).toLocaleString();
+		monies[1] = parseInt(monies[1]).toLocaleString();
+		drops.push(VSprite("animCoin0", "sprite--tiny", (monies[0] === monies[1] ? monies[0] : `${monies[0]}-${monies[1]}` ) + "G"));
+	}
+	for(let i = 0; i < 2; i++) {
+		const drop = e["drop" + i].split(",")[0];
+		if(drop) {
+			drops.push(VSprite(drop, "sprite--tiny", GetText("nm." + drop), drop));
+		}
+	}
+	if(!drops.length) { drops.push("None"); }
+
+	return `
+<div class="col-6 col-md-4 d-flex align-items-stretch mb-2 px-1">
+	<div class="card text-white bg-secondary full-width${spoilerEnemies.indexOf(e.Id) >= 0 ? " spoiler" : ""}">
+		<a name="ref_${e.Id}" class="ref"></a>
+		<div class="card-img-top text-center mt-2">
+			<div class="${size}"><div class="inner" style="background-position: -${dx}px -${dy}px"></div></div>
+		</div>
+		<div class="card-body">
+			<h5 class="card-title text-center">${name}</h5>
+			<div class="row text-center">
+				<div class="col"><strong>HP: </strong> ${parseInt(e.HP).toLocaleString()}</div>
+				<div class="col"><strong>Atk: </strong> ${e.Atk}</div>
+				<div class="col"><strong>Def: </strong> ${e.Def}</div>
+			</div>
+			<div class="row text-center">
+				<div class="col"><strong>Field Size: </strong> ${e.FW}x${e.FH}</div>
+				<div class="col"><strong>Seasons:</strong>
+					${Seasons["x0"+(e.Sp==="1"?2:0)]}
+					${Seasons["x1"+(e.Su==="1"?2:0)]}
+					${Seasons["x2"+(e.Au==="1"?2:0)]}
+					${Seasons["x3"+(e.Wi==="1"?2:0)]}
+				</div>
+				<div class="col"><strong>EXP: </strong> ${exp}</div>
+			</div>
+			<div class="row text-center mt-1">
+				<div class="col">
+					<strong>Drops: </strong> ${drops.join("")}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>`;
+}
+
+//#endregion
 
 const outpath = path.join(__dirname, "out");
 if(!fs.existsSync(outpath)) { fs.mkdirSync(outpath); }
 
 const template = fs.readFileSync(path.join(__dirname, "parts/template.html"), "utf8");
-const output = template.replace("{@crops}", veggies.map(v => VeggieCard(v)).join("\n"));
+const output = template
+					.replace("{@crops}", veggies.map(v => VeggieCard(v)).join("\n"))
+					.replace("{@equipment}", equipment.map(e => EquipmentCard(e)).join("\n"))
+					.replace("{@fixtures}", fixtures.map(f => FixtureCard(f)).join("\n"))
+					.replace("{@enemies}", enemies.map(e => EnemyCard(e)).join("\n"));
 fs.writeFileSync(path.join(outpath, "manual.html"), output);
 
 const assetpath = path.join(outpath, "assets");
@@ -228,3 +556,6 @@ if(!fs.existsSync(assetpath)) { fs.mkdirSync(assetpath); }
 const CopyFile = filename => fs.copyFileSync(path.join(__dirname, "../../img/", filename), path.join(assetpath, filename));
 CopyFile("sheet.png");
 CopyFile("sheetBig.png");
+CopyFile("combatSheet.png");
+CopyFile("combatSheetBig.png");
+CopyFile("combatSheetHuge.png");

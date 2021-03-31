@@ -33,6 +33,10 @@ function RipFile(filename, outfile, requireKeys) {
     ${lines.join(",\n\t")}
 };`);
             } else {
+                if(filename === "Details_Crops") {
+                    const idx = data.findIndex(l => l.Name === "Enemy-Only");
+                    data.splice(idx, data.length - idx);
+                }
                 const lines = data.map(l => (!l.Id || l.Id === "*" ? "" : JSON.stringify(l))).filter(l => l);
                 console.log(`Processed ${lines.length} records.`);
                 fs.writeFileSync(outpath, `module.exports = [
