@@ -54,7 +54,8 @@ if(!types) {
 - Q: Equipment
 - F: Fixtures
 - E: Enemies
-- P: Spritesheets`);
+- P: Spritesheets
+- S: Shops`);
     return;
 }
 
@@ -130,4 +131,9 @@ if(HasArg("P")) {
 };`);
     }
     Finish();
+}
+if(HasArg("S")) {
+    const shops = fs.readFileSync(path.join(__dirname, "../../js/gamedata/shops.js"), "utf8");
+    fs.writeFileSync(path.join(partPath, "shops.js"), shops.replace("const stores", "module.exports"));
+    console.log("Generated Shops");
 }
