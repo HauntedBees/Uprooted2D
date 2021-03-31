@@ -273,7 +273,7 @@ function EquipmentCard(e) {
 			</div>
 		</div>
 	</div>
-</div>`
+</div>`;
 	let content;
 	if(e.Type === "weapon") {
 		let target, other;
@@ -539,7 +539,29 @@ function EnemyCard(e) {
 }
 
 //#endregion
-
+//#region Achievements
+const hiddenChievos = ["badrabbit", "kelpBuddy", "boss3help", "boss3hurt", "unplugged", "boss4", "bossMob", "skumpy", "bankStop", "boss5", "helpNerd", "soybeat", "italia"];
+const achievements = [ 
+    "boss1", "lakeFairy", "goldshroom", "badrabbit", "limeTime", "RAPBATTLE", "boss2", "dowel", "kelpBuddy", "boss3help", "onecook",
+    "boss3hurt", "crouton", "unplugged", "boss4", "skumpy", "abuelita", "bossMob", "stonehenge", "laila", "bankStop", "allcook",
+    "boss5", "helpNerd", "abee", "techGood", "techBad", "natureGood", "natureBad", "vegan", "beeKing", "luddite", "calsotte",
+    "springKing", "summerHummer", "autumnBottom", "winterHinter", "seasons", "vegbuddy", "treebuddy", "mushbuddy", "eggbuddy", "ricebuddy", "beebuddy",
+    "seabuddy", "cowbuddy", "techbuddy", "biglaunch", "soybeat", "fullUpgrade", "allCrop", "overkill", "madeForMe", "italia", "murderedToDeath"
+];
+function AchievementCard(a) {
+	return  `
+<div class="col-4 col-md-3 d-flex align-items-stretch mb-2 px-1">
+	<div class="card text-white bg-secondary full-width${hiddenChievos.indexOf(a) >= 0 ? " spoiler" : ""}">
+		<div class="card-body">
+			<h5 class="card-title text-center">${GetText("a." + a)}</h5>
+			<div class="row mt-1">
+				<div class="col">${GetText("ad." + a)}</div>
+			</div>
+		</div>
+	</div>
+</div>`
+}
+//#endregion
 const outpath = path.join(__dirname, "out");
 if(!fs.existsSync(outpath)) { fs.mkdirSync(outpath); }
 
@@ -548,6 +570,7 @@ const output = template
 					.replace("{@crops}", veggies.map(v => VeggieCard(v)).join("\n"))
 					.replace("{@equipment}", equipment.map(e => EquipmentCard(e)).join("\n"))
 					.replace("{@fixtures}", fixtures.map(f => FixtureCard(f)).join("\n"))
+					.replace("{@achievements}", achievements.map(a => AchievementCard(a)).join("\n"))
 					.replace("{@enemies}", enemies.map(e => EnemyCard(e)).join("\n"));
 fs.writeFileSync(path.join(outpath, "manual.html"), output);
 
