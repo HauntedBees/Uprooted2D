@@ -839,7 +839,7 @@ const mapItems = {
 		<a class="reflink" href="#ref_garlic">Garlic</a>,
 		<a class="reflink" href="#ref_carrot">Carrot</a>,
 		and <a class="reflink" href="#ref__log">any mushroom</a>.` },
-		{ type: "enemy", id: "mrbruno", x: 55.5, y: 67, desc: "If you choose to lay low during the cutscene, you will not have to fight him. However, you will gain 1.5 points on the Pacifist Axis by standing up for Skumpy, and lose 1.5 points by staying silent." },
+		{ type: "enemy", id: "mrbruno", x: 55.5, y: 67, desc: `If you choose to lay low during the cutscene, you will not have to fight him. However, you will gain 1.5 points on the <a class="reflink" href="#axis">Pacifist Axis</a> by standing up for Skumpy, and lose 1.5 points by staying silent.` },
 		{ type: "enemy", id: "mobBoss", x: 23, y: 51 },
 		{ type: "shop", id: "skumpys", x: 51, y: 76 },
 		{ type: "shop", id: "mantools", x: 65, y: 58 },
@@ -853,7 +853,7 @@ const mapItems = {
 	"northcity": [
 		{ type: "move", id: "southcity", x: 13, y: 96 },
 		{ type: "move", id: "hq_1", x: 61.6, y: 16 },
-		{ type: "quest", name: "Daveothy", x: 24, y: 42, desc: `Trade him some <a class="reflink" href="#ref__log">mushrooms</a> for a reward. Give him a <a class="reflink" href="#ref_notdrugs">Funny Mushroom</a> to get some <a class="reflink" href="#ref_lotus">Sacred Lotus seeds</a>. Give him a <a class="reflink" href="#ref_poisnshroom">Toxic Mushroom</a> to lose a lot of points on the Pacifist Axis due to the attempted murder.` },
+		{ type: "quest", name: "Daveothy", x: 24, y: 42, desc: `Trade him some <a class="reflink" href="#ref__log">mushrooms</a> for a reward. Give him a <a class="reflink" href="#ref_notdrugs">Funny Mushroom</a> to get some <a class="reflink" href="#ref_lotus">Sacred Lotus seeds</a>. Give him a <a class="reflink" href="#ref_poisnshroom">Toxic Mushroom</a> to gain a lot of points on the <a class="reflink" href="#axis">Combative Axis</a> due to the attempted murder.` },
 		{ type: "quest", name: "Mailman", x: 37, y: 38, desc: `He'll give you some mail, which can be delivered to Catalina in <a class="reflink" href="#ref_southcity">South Las Abejas</a> and she'll start selling bees.` },
 		{ type: "misc", name: "Jeromy", x: 55, y: 31, desc: `He sells various fishing supplies.` },
 		{ type: "misc", name: "Brandt", x: 85, y: 41, desc: `Talk to him to receive many <a class="reflink" href="#ref_spinach">Spinach seeds</a>.` },
@@ -959,7 +959,7 @@ maps.forEach(m => {
 					case "equipment": return `<div>${VSprite(w.product, "vert sprite--tiny", undefined, w.product)} <a class="reflink" href="#ref_${w.product}">${GetText(w.product)}</a> (${equipObj[w.product].Price}G)</div>`;
 					case "farm": return `<div>${VSprite(w.product, "vert sprite--tiny", undefined, w.product)} <a class="reflink" href="#ref_${w.product}">${GetText(w.product.replace("_", ""))}</a> (${fixObj[w.product].Price}G)</div>`;
 					case "upgrade": 
-						return `<div>${expandos[w.product]} Farm Expansion (${w.price}G)</div>`;
+						return `<div><a class="reflink" href="#fieldguide">${expandos[w.product]} Field Expansion (${w.price}G)</a></div>`;
 				}
 				return "";
 			}).join("\n") + "</div>";
