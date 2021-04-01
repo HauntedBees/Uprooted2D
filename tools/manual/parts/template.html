@@ -90,7 +90,7 @@
 				margin-bottom: 5px;
 			}
 			a.ref { text-decoration: none; color: #FFFFFF }
-			a.reflink { text-decoration: none; color: #FFFFFF; cursor: pointer }
+			a.reflink { text-decoration-style: dotted; color: #FFFFFF; cursor: pointer }
 			.shop-block { text-align: left; font-size: 0.8rem }
 			.enemy-block { font-size: 0.8rem }
 
@@ -112,6 +112,26 @@
 			.card.spoiler .enemysprite, .card.spoiler .enemyspriteb, .card.spoiler .enemyspritex, .card.spoiler .sprite {
 				opacity: 0;
 			}
+			.map-label { position: absolute; display: inline-block; cursor: pointer }
+			.map-label:hover { opacity: 0.25; border: 1px solid #FFFFFF }
+			.map-img {
+				position: relative;
+				display: inline-block;
+				text-align: left;
+			}
+			.vert { vertical-align: middle }
+			.map-addtlinfo { padding-left: 10px; font-size: 0.9rem }
+			.map-info { min-width: 300px }
+			.img-cover {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-attachment: fixed;
+			}
         </style>
         <title>Uprooted: Meal Replacement Game - Manual and Guide</title>
     </head>
@@ -128,6 +148,7 @@
                         <li class="nav-item"><a class="nav-link" href="#combat"> - Combat</a></li>
                         <li class="nav-item"><a class="nav-link" href="#pause"> - Pause Menu</a></li>
                         <li class="nav-item"><a class="nav-link" href="#options">- Options</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#nofun">- No Fun Menu</a></li>
 						<li class="nav-item text-muted text-center">Guide </li>
                         <li class="nav-item"><a class="nav-link" href="#crops">Crops</a></li>
                         <li class="nav-item"><a class="nav-link" href="#equipment">Equipment</a></li>
@@ -162,7 +183,7 @@
 						<li><strong>Run (World Map): </strong> Hold Cancel Key/Button, then Release</li>
 						<li><strong>Pause Menu: </strong> Enter (Keyboard), Start Button (Gamepad)</li>
 					</ul>
-					<p>All controls can be changed at any time in the <a href="#options">Options Menu</a>.</p>
+					<p>All controls can be changed at any time in the <a class="reflink" href="#options">Options Menu</a>.</p>
 
 					<a name="how" class="h3">How to Play</a>
 					<div class="h4">Getting Started</div>
@@ -212,7 +233,7 @@
 					<a name="pause" class="h4">Pause Menu</a>
 					<p>
 						The <strong>Inventory</strong> section will let you view all of the seeds and crops you have.
-						There are X different types of crops:
+						There are 10 different types of crops:
 						<ul>
 							<li><strong>Vegetables: </strong>Standard crops that grow and get thrown when ripe. If you don't throw them when they're <strong>ready</strong>, they'll rot.</li>
 							<li><strong>Trees: </strong>Trees usually take longer to grow, but after you throw their <strong>ready</strong> fruit, the fruits will grow back. If you don't throw the <strong>ready</strong> fruit, they'll restart their growing cycle.</li>
@@ -238,8 +259,8 @@
 						across the world, giving you more space to plant fixtures and seeds.
 					</p>
 					<p>
-						The <a href="#options"><strong>Options Menu</strong></a> will allow you to change various settings, described below in a separate section. You can
-						view your progress on the <strong>Achievements</strong> screen.
+						The <a class="reflink" href="#options">Options Menu</a> will allow you to change various settings, described below in a separate section. You can
+						view your progress on the <strong>Achievements</strong> screen. In the upper-right corner is the <a class="reflink" href="#nofun">I'm Not Having Fun Menu</a>.
 					<p>
 						You can save your game at any time with the <strong>Save Menu</strong>. There are 10 save slots to choose from, plus
 						one <strong>Auto-Save</strong> option that is created every time you sleep at an <strong>Inn</strong>.
@@ -262,7 +283,10 @@
 						<li><strong>Graphics: </strong>Set the screen resolution and whether or not to use the full screen.</li>
 						<li><strong>Filter: </strong>Choose an optional graphic filter to change how the game looks.</li>
 					</ul>
-
+					<a name="nofun" class="h4">The "I'm Not Having Fun" Menu</a>
+					<p>If at any point you're frustrated with the game, check out the "I'm Not Having Fun" menu at any time for various options that might be able to help with no penalties.
+						You can raise or lower the game's difficulty, have puzzles solved for you, receive a recap of the game's story, view tutorials, get items and stat boosts, and more!</p>
+	
 					<a name="crops" class="h3">Crops</a>
 					<div class="row">
 						{@crops}
