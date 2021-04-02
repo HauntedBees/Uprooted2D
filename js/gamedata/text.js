@@ -7012,7 +7012,7 @@ const fulltext = {
         "type": "book"
     },
     "bookExpand2": {
-        "en-us": "There are three tiers of upgrade after the initial 3x3 size. The first tier brings your field size to 4x4, and the following two tiers offer two different upgrade sizes each - but once you pick one, you can't switch to the other, so choose wisely!",
+        "en-us": "There are three tiers of upgrade after the initial 3x3 size. The first tier brings your field size to 4x3, and the following two tiers offer two different upgrade sizes each - but once you pick one, you can't switch to the other, so choose wisely!",
         "type": "book"
     },
     "bookExpand3": {
