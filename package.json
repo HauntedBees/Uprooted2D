@@ -13,7 +13,18 @@
   "build": {
     "appId": "com.hauntedbees.uprooted",
     "productName": "Uprooted: Meal Replacement Game",
-    "copyright": "Copyright © 2021 Haunted Bees Productions"
+    "copyright": "Copyright © 2021 Haunted Bees Productions",
+    "files": [
+      "indexapp.html",
+      "img/**",
+      "imggb/**",
+      "imghq4x/**",
+      "imgs4x/**",
+      "main.js",
+      "out.js",
+      "styles/**",
+      "sound/**"
+    ]
   },
   "devDependencies": {
     "clamp-palette": "^0.1.0",

@@ -72,6 +72,7 @@ const files = [
     "js/playerstats/onionmenu.js",
     "js/playerstats/savemenu.js",
     "js/playerstats/tobytern.js",
+    "js/playerstats/recap.js",
     "js/player.js",
     "js/rendering.js",
     "js/lib/lz-string.js"
