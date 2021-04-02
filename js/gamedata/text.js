@@ -194,7 +194,7 @@ const fulltext = {
         "type": "item"
     },
     "banana": {
-        "en-us": "In many video games, you might throw a banana peel at your foes. There is no place for such a wasteful display in this game: you throw the WHOLE banana here. this time.",
+        "en-us": "In many video games, you might throw a banana peel at your foes. There is no place for such a wasteful display in this game: you throw the WHOLE banana this time.",
         "type": "item"
     },
     "goldegg": {
@@ -6996,7 +6996,7 @@ const fulltext = {
         "type": "book"
     },
     "bookEgg3": {
-        "en-us": "Like Mushroom Logs, Incubators are resistant to most elemental attacks, but are can be burned by fire attacks, making them unusable for several turns.",
+        "en-us": "Like Mushroom Logs, Incubators are resistant to most elemental attacks, but can be burned by fire attacks, making them unusable for several turns.",
         "type": "book"
     },
     "bookExpand": {
