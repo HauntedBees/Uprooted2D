@@ -48,8 +48,8 @@ const Desktop = {
             universalSettings.fullscreen = 1;
         }
         ipcRenderer.send("resize-window", {
-            width: w,
-            height: h,
+            width: Math.floor(w),
+            height: Math.floor(h),
             fullscreen: universalSettings.fullscreen === 1,
             zoom: m
         });
@@ -128,6 +128,7 @@ const game = {
     canvasLayers: ["background", "background2", "crops", "characters", "foreground", "smartphone", "smartphoneText", "menuA", "menuB", "menucursorA", 
                     "menucursorB", "menucursorC", "menutext", "tutorial", "menuOverBlack", "menutextOverBlack", "savegen"], 
     fullInit: function() {
+        Desktop.AdjustScreenSettings();
         const univSettings = localStorage.getItem("universalSettings");
         if(univSettings !== null) { universalSettings = game.str2obj(univSettings); }
         if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0) {
