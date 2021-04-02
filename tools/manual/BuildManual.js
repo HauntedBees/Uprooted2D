@@ -25,14 +25,14 @@ const assetpath = path.join(outpath, "assets");
 
 const range = i => [...Array(i).keys()];
 const GetText = key => text[key] ? text[key]["en-us"].replace(/(\\n\s?)+/g, "<br><br>") : false;
-const Badge = (text, type) => `<span class="badge bg-${type || "primary"}">${text}</span> `;
+const Badge = (text, type, id) => `<a class="badge bg-${type || "primary"} ref" href="#ref_${id}">${text}</a> `;
 
 //#region Veggies
 const locations = ["farm", "producestand", "forest", "firstvillage", "belowvillage", "researchfacility", "molehome", "bridge", 
 	"underwater", "fakefarm", "southcity", "northcity", "northcity_NG", "northcity_IG", "northcity_NB", "northcity_IB", "hq_1",
 	"hq_IG", "hq_NB", "hq_NB_side", "hq_IB", "hq_2", "hq_3", "hq_4", "hq_5"];
 const LocBadges = {};
-locations.forEach(l => LocBadges[l] = Badge(GetText("map." + l)));
+locations.forEach(l => LocBadges[l] = Badge(GetText("map." + l), "primary", l));
 const ShopNames = {
 	"coop": "Henrietta's Chicken Coop",
 	"inn0": "Your Home",
