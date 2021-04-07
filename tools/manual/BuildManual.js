@@ -259,10 +259,7 @@ function VeggieCard(v) {
 			</div>
 			<div class="row text-center">
 				<div class="col"><strong>Seasons:</strong>
-					${Seasons["0"+(v.Sp||"0")]}
-					${Seasons["1"+(v.Su||"0")]}
-					${Seasons["2"+(v.Au||"0")]}
-					${Seasons["3"+(v.Wi||"0")]}
+					${Seasons["0"+(v.Sp||"0")]} ${Seasons["1"+(v.Su||"0")]} ${Seasons["2"+(v.Au||"0")]} ${Seasons["3"+(v.Wi||"0")]}
 				</div>
 				<div class="col"><strong>Price:</strong> ${v.Price}G</div>
 			</div>
@@ -500,6 +497,20 @@ const skipEnemies = ["machineA", "machineB", "machineC", "machineD", "yourWorstF
 const spoilerEnemies = ["housekeeper", "mrbruno", "mobsty1", "mobsty2", "mobBoss", "dweebLord", "discuss2", "discuss2big", "theMonster", "soyChild", "soyStack", 
 						"beckett", "nathan", "beeQueenA", "beeQueenB", "beeQueenC", "seaMobster", "soyChildCave", "shinyBear", "mrWallFriend", "caveNerd", "graveRobber", 
 						"negayana", "garfwax", "trustworthyfriend", "doodoobirdhaha", "golf", "conqueredscarecrow", "fishingsnake"];
+const bossLevels = {
+	"bigBot": 3,
+	"ScienceMan": 5,
+	"BossWorker": 9,
+	"seaMan": 9,
+	"housekeeper": 11,
+	"mrbruno": 11,
+	"mobBoss": 12,
+	"dweebLord": 14,
+	"theMonster": 18,
+	"discuss2big": 18,
+	"beckett": 20,
+	"nathan": 21
+};
 function EnemyCard(e) {
 	let name, size, dx, dy;
 	if(skipEnemies.indexOf(e.Id) >= 0) { return ""; }
@@ -556,6 +567,7 @@ function EnemyCard(e) {
 	}
 	if(!drops.length) { drops.push("None"); }
 
+	const recLevelText = bossLevels[e.Id] ? `<h6 class="card-subtitle text-center">Recommended Level: ${bossLevels[e.Id]}</h6>` : "";
 	return `
 <div class="col-6 col-md-4 d-flex align-items-stretch mb-2 px-1">
 	<div class="card text-white bg-secondary full-width${spoilerEnemies.indexOf(e.Id) >= 0 ? " spoiler" : ""}">
@@ -564,7 +576,7 @@ function EnemyCard(e) {
 			<div class="${size}"><div class="inner" style="background-position: -${dx}px -${dy}px"></div></div>
 		</div>
 		<div class="card-body">
-			<h5 class="card-title text-center">${name}</h5>
+			<h5 class="card-title text-center">${name}</h5>${recLevelText}
 			<div class="row text-center">
 				<div class="col"><strong>HP: </strong> ${parseInt(e.HP).toLocaleString()}</div>
 				<div class="col"><strong>Atk: </strong> ${e.Atk}</div>

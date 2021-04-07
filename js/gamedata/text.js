@@ -4470,7 +4470,7 @@ const fulltext = {
         "type": "map"
     },
     "s.skumpO": {
-        "en-us": "Skumpy: Hello again, farmer!",
+        "en-us": "Skumpy: Hullo there!",
         "type": "shop"
     },
     "s.skumpL": {
@@ -7332,7 +7332,7 @@ const fulltext = {
         "type": "book"
     },
     "bookElem4": {
-        "en-us": "Salt attacks can also damage crops, but when salt lands on an empty tile, nothing will be able to be planted on that tile until it the salt goes away! Like water and fire, some crops have salt resistance, while other crops can absorb salt and be planted on salted tiles.",
+        "en-us": "Salt attacks can also damage crops, but when salt lands on an empty tile, nothing will be able to be planted on that tile until the salt goes away! Like water and fire, some crops have salt resistance, while other crops can absorb salt and be planted on salted tiles.",
         "type": "book"
     },
     "bookElem5": {
