@@ -77,6 +77,7 @@ const enemyCombatAnims = {
     "FISH_FAIL": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2, { startSound: "navNok" }),
     "REV_ENGINE": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7)], true, 2),
     "GROW_BABY": new AnimSet([new AnimFrame(0, 2, "enemy_pullCrop"), new AnimFrame(0, 3)], false, 4),
+    "CONV2_CROPS": new AnimSet([new AnimFrame(0, 4), new AnimFrame(0, 5, "enemy_damageCrop")], true, 2),
     "SHOOT_CROPS": new AnimSet([new AnimFrame(0, 6), new AnimFrame(0, 7, "enemy_damageCrop")], true, 60, { doShake: true }),
     "MAIM": new AnimSet([new AnimFrame(0, 6, "enemy_damagePlayer"), new AnimFrame(0, 7, "enemy_letItFuckingBurn"), new AnimFrame(0, 8), 
                             new AnimFrame(0, 9), new AnimFrame(0, 10), new AnimFrame(0, 11)], true, 20),

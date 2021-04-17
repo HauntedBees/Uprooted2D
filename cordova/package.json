@@ -1,7 +1,7 @@
 {
   "name": "com.hauntedbees.uprootedgame",
   "displayName": "Uprooted",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "A video game for friends.",
   "main": "index.js",
   "scripts": {
