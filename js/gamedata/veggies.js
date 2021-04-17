@@ -84,8 +84,8 @@ function GetCrop(name) {
 		case "coffee": return new CropDetail(name, 165, "tech", 2, 10, 5, 10, 0, 2, 2, 2, 2, { showSeed: true, sound: "wet" });
 		case "sicklebattery": return new CropDetail(name, 100, "sickle2", 1, 5, 4, 0, 0, 2, 2, 2, 2, { sound: "none" });
 		/* Water */
-		case "holywater": return new CropDetail(name, 1000, "moist", 1, 0, 1, 2, 0, 2, 2, 2, 2, { sound: "none" });
-		case "holyjug": return new CropDetail(name, 6000, "moist", 2, 0, 1, 3, 0, 2, 2, 2, 2, { sound: "none" });
+		case "holywater": return new CropDetail(name, 350, "moist", 1, 0, 1, 2, 0, 2, 2, 2, 2, { sound: "none" });
+		case "holyjug": return new CropDetail(name, 900, "moist", 2, 0, 1, 3, 0, 2, 2, 2, 2, { sound: "none" });
 		/* Rare */
 		case "goldegg": return new CropDetail(name, 500, "egg", 1, 4, 4, 11, 0, 1, 1, 1, 1, { sound: "bird" });
 		case "coconut": return new CropDetail(name, 500, "tree", 2, 10, 5, 11, 3, 1, 2, 0, 0, { waterResist: 2, fireResist: 2, treeSprite: "tropictree", sound: "hard" });
