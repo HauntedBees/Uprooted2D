@@ -252,7 +252,9 @@ const worldmap = {
             for(let i = 0; i < funcs.length; i++) {
                 const e = funcs[i];
                 if(e.foreground) {
-                    gfx.drawFGCover(e.img, y, e.dy, e.w, offset);
+                    if(worldmap.mapName.indexOf("northcity") < 0 || mapStates[worldmap.mapName].inside) {
+                        gfx.drawFGCover(e.img, y, e.dy, e.w, offset);
+                    }
                 } else {
                     gfx.DrawMapCharacter(e.sx, e.sy, e.pos, offset, e.sheet, e.big, e.layer, e.other);
                 }

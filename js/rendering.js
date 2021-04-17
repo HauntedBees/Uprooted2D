@@ -51,7 +51,6 @@ const gfx = {
         const w = (gfx.tileWidth - 5) * 16 * gfx.scale;
         const h = (gfx.tileHeight - 6) * 16 * gfx.scale;
         img.onload = function() { gfx.ctx["menutext"].drawImage(this, 48, 48, w, h, 256, 288, w, h); };
-        //img.onload = function() { gfx.ctx["menutext"].drawImage(this, 256, 288, 1024, 896); };
     },
     drawFOV: function(x, y, dir) {
         let topx, topy, width, height, startx, starty;
