@@ -76,7 +76,7 @@ module.exports = {
 ``` 
 
 #### FormatImages.js
-Generates upscaled spritesheets for optional in-game graphical filters. Requires [ffmpeg](https://ffmpeg.org/). **TODO: try adding scale4x back.**
+Generates upscaled spritesheets for optional in-game graphical filters. Requires [ffmpeg](https://ffmpeg.org/) for `hq4x` and [scale2x](https://www.scale2x.it/) for `s4xe`. You may need to update the `s2xpath` variable for `s4xe`.
 
 #### Package.js
 Concatenates all source files into one **out.js** file. Calling it with the `min` argument will also minify it.
