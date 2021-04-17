@@ -374,13 +374,15 @@ combat.compost = {
             shake.finish = function() {
                 combat.animHelper.SetPlayerAnimState((res.cows || res.bees || res.coffee) ? "DRINK" : "EAT");
                 combat.animHelper.SetOnionAnimState("STAND");
-                if(res.coffee) { combat.animHelper.PushPlayerOverlay("COFFEE"); }
+                let waterSound = true;
+                if(res.coffee) {combat.animHelper.PushPlayerOverlay("COFFEE"); }
                 else if(res.cows) { combat.animHelper.PushPlayerOverlay("MILK"); }
                 else if(res.bees) { combat.animHelper.PushPlayerOverlay("HONEY"); }
                 else {
-                    Sounds.PlaySound("homf");
+                    waterSound = false;
                     combat.animHelper.PushPlayerOverlay("COMPOST"); 
                 }
+                Sounds.PlaySound(waterSound ? "water" : "homf");
             };
             combat.animHelper.AddAnim(shake);
             Sounds.PlaySound("compost");
