@@ -37,7 +37,7 @@ const Filter = async function(type, subpath, specifics) {
 			cmd.on("error", () => reject());
 			cmd.run();
 		}),
-		"s4xe": f => new Promise((resolve, reject) => {
+		"s4x": f => new Promise((resolve, reject) => {
 			Resize(path.join(inpath, f), path.join(temppath, f), path.join(outpath, f), (infile, outfile) => {
 				const s4x = spawn(s2xpath, ["-k", "4", infile, outfile]);
 				s4x.on("close", () => { console.log(`Processed ${subpath}/${f}`); resolve(true) });
