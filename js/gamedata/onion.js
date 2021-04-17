@@ -18,6 +18,7 @@ const OnionFuncs = {
     },
     Digest: function() {
         if(!player.onion) { return; }
+        player.onion.recentPets = Math.max(0, player.onion.recentPets - 1);
         if(player.onion.stomach.length === 0) {
             player.onion.mood = Math.max(0, player.onion.mood - 1);
         } else {

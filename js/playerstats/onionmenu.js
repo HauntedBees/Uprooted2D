@@ -422,7 +422,7 @@ pausemenu.onion = {
             this.DrawAll(GetText("onion.cleaned"));
             return;
         }
-        player.onion.recentPets++;
+        player.onion.recentPets = Math.min(player.onion.recentPets + 1, 16);
         if(player.onion.mood < 8) { player.onion.mood++; } 
         this.animX = 0;
         this.animY = 1;
