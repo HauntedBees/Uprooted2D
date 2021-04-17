@@ -10568,7 +10568,7 @@ const fulltext = {
         "type": "sleep"
     },
     "innDream8": {
-        "en-us": "It is Sunday, and my mom wakes me up to go to church. \"I don't wanna,\" I grumble as I roll over in my bed. \"Now now, if we don't go to church, the neighbors will kill us!\" my mom says. I turn around to face her. \"Wait, what?\" The neighbors have a gun to her head. \"Please honey, let's go to church.\"",
+        "en-us": "It is Sunday, and my mom wakes me up to go to church. \"I don't wanna,\" I grumble as I roll over in my bed. \"Now now, if we don't go to church, the neighbors will kill us!\" my mom says. I turn around to face her. \"Wait, what?\" She is being held over a pot of molten lava. \"Please honey, let's go to church.\"",
         "type": "sleep"
     },
     "innDream9": {
