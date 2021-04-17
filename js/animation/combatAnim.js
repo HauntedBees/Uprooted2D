@@ -150,7 +150,7 @@ function CombatAnimHelper(enemies, isSkunk) {
             const t = anims[i];
             if(t.current >= t.time) {
                 if(t.loop) {
-                    t.current = 0;
+                    t.reset();
                     t.getFrame(timers.CHARANIM);
                 } else {
                     t.finish();

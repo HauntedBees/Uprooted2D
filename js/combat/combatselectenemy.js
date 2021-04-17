@@ -108,24 +108,24 @@ combat.selectTarget = {
         // Target Text
         gfx.drawMinibox(4, gfx.tileHeight - 2, gfx.tileWidth - 5, 1, "", "FarmInfo");
         const iconx = 4.75, icony = gfx.tileHeight - 1.75;
-        const textx = 20 + iconx * 16, texty = 15 + icony * 16;
+        const textx = 20 + iconx * 16, texty = 15 + icony * 16, textw = 150;
         if(this.sicklePos.x >= 0) {
             const crop = combat.enemyGrid[this.sicklePos.x - combat.enemydx][this.sicklePos.y - combat.enemydy];
             if(crop !== null) {
                 if(crop.x !== undefined) { crop = combat.enemyGrid[crop.x][crop.y]; }
                 gfx.drawTileToGrid(GetHPFrame(crop), iconx, icony, "menucursorB");
                 if(crop.name.indexOf("Nerf") > 0) {
-                    gfx.drawWrappedText(GetText("disp.nerf").replace(/0/g, crop.displayname), textx, texty, 115);
+                    gfx.drawWrappedText(GetText("disp.nerf").replace(/0/g, crop.displayname), textx, texty, textw);
                     screenReaderHelper.SayFresh(GetText("disp.nerf").replace(/0/g, crop.displayname), "target");
                 } else {
-                    gfx.drawWrappedText(crop.displayname, textx, texty, 115);
+                    gfx.drawWrappedText(crop.displayname, textx, texty, textw);
                     screenReaderHelper.SayFresh(crop.displayname, "target");
                 }
             }
         } else if(this.cursorx >= 0) {
             const enemy = combat.enemies[this.cursorx];
             gfx.drawTileToGrid(GetHPFrame(enemy), iconx, icony, "menucursorB");
-            gfx.drawWrappedText(enemy.name, textx, texty, 115);
+            gfx.drawWrappedText(enemy.name, textx, texty, textw);
             screenReaderHelper.SayFresh(enemy.name, "target");
         }
         

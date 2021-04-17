@@ -7,6 +7,7 @@ function CombatAnim(x, y, time, sprite) {
 }
 CombatAnim.prototype.getFrame = function(dt) { this.current += dt; };
 CombatAnim.prototype.finish = function() {};
+CombatAnim.prototype.reset = function() { this.current = 0; };
 
 function NotAnAnim(x, y, time, sprite) {
     CombatAnim.call(this, x, y, time, sprite);
@@ -39,6 +40,7 @@ ShakeAnim.prototype.getFrame = function(dt) {
     gfx.drawTileToGrid(this.sprite, this.x + this.dx, this.y + this.dy, "characters");
     this.current += dt;
 };
+ShakeAnim.prototype.reset = function() { this.current = 0; this.lastShake = -1; };
 
 function MoveAnim(x1, y1, x2, y2, time, sprite) {
     CombatAnim.call(this, x1, y1, time, sprite);

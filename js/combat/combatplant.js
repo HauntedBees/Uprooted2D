@@ -439,10 +439,18 @@ combat.plant = {
     LaunchSeeds: function() {
         const newCrop = GetCrop(this.activeCrop.name);
         player.shiftTech(0.03);
-        const damage = Math.ceil(newCrop.power / 2);
         player.decreaseItem(this.activeCrop.name);
         const numEnemies = combat.enemies.length;
-        combat.enemies.forEach((e, i) => combat.damageEnemy(i, damage));
+        const anim = new ShakeAnim(5, 3.625, 50, "_shooter2", 0.25, 10);
+        anim.loop = true;
+        combat.animHelper.AddAnim(anim);
+        const dmgs = dmgCalcs.CropAttack(true, combat.season, player.atk, [{ crop: newCrop }], combat.enemies.map(e => e.def));
+        console.log(dmgs);
+        const damage = Math.round(dmgs.attackDatas.reduce((a, c) => c.damage + a, 0) / dmgs.attackDatas.length); // average the damages together
+        combat.enemies.forEach((e, i) => {
+            combat.animHelper.SetEnemyAnimState(i, "HURT");
+            combat.damageEnemy(i, damage);
+        });
         this.finishTurn(GetText("seedShooterAttack").replace(/\{dmg\}/g, damage).replace(/\{amt\}/g, GetText(numEnemies > 1 ? "cmpatk_pl" : "cmpatk_sing")));
     },
     Modulate: function() {
