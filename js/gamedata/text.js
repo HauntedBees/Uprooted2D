@@ -8366,7 +8366,7 @@ const fulltext = {
         "type": "fixdesc"
     },
     "sprinkler.ldesc": {
-        "en-us": "Vegetables and trees planted in the 8 tiles around a sprinkler will grow 25% faster.",
+        "en-us": "Vegetables and trees planted in the 8 tiles around a sprinkler will grow 25% faster (15% on diagonals). Multiple sprinklers will stack up to 66%.",
         "type": "fixdesc"
     },
     "beehive.ldesc": {

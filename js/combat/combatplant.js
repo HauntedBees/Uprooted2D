@@ -116,14 +116,14 @@ combat.plant = {
     },
     getSprinklerMultiplier: function(x, y, size) {
         let mult = 1;
-        if(this.isSprinkler(x - 1, y - 1)) { mult -= 0.1; }
-        if(this.isSprinkler(x - 1, y)) { mult -= 0.2; }
-        if(this.isSprinkler(x - 1, y + 1)) { mult -= 0.1; }
-        if(this.isSprinkler(x, y - 1)) { mult -= 0.2; }
-        if(this.isSprinkler(x, y + 1)) { mult -= 0.2; }
-        if(this.isSprinkler(x + 1, y - 1)) { mult -= 0.1; }
-        if(this.isSprinkler(x + 1, y)) { mult -= 0.2; }
-        if(this.isSprinkler(x + 1, y + 1)) { mult -= 0.1; }
+        if(this.isSprinkler(x - 1, y - 1)) { mult -= 0.15; }
+        if(this.isSprinkler(x - 1, y)) { mult -= 0.25; }
+        if(this.isSprinkler(x - 1, y + 1)) { mult -= 0.15; }
+        if(this.isSprinkler(x, y - 1)) { mult -= 0.25; }
+        if(this.isSprinkler(x, y + 1)) { mult -= 0.25; }
+        if(this.isSprinkler(x + 1, y - 1)) { mult -= 0.15; }
+        if(this.isSprinkler(x + 1, y)) { mult -= 0.25; }
+        if(this.isSprinkler(x + 1, y + 1)) { mult -= 0.15; }
         mult = Math.max(mult, 0.33);
         if(mult < 1) { return mult * (player.HasWetPerk() ? 0.5 : 1); }
         if(size === 1) {
