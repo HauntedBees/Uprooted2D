@@ -393,7 +393,8 @@ combat.compost = {
             combat.animHelper.DrawBackground();
         }
         healAmount = Math.ceil(healAmount * this.compostMultiplier);
-        player.health = Math.min(player.maxhealth, player.health + healAmount);
+        const currentmaxhealth = Math.max(player.maxhealth, player.health); // if player HP > max HP, don't lower new HP to maxHP
+        player.health = Math.min(currentmaxhealth, player.health + healAmount);
         game.innerTransition(this, combat.inbetween, {
             next: function() { combat.endTurn(combat.inbetween) },
             text: GetText("compost_heal").replace(/\{0\}/g, healAmount)
