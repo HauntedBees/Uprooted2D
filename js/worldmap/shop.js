@@ -435,7 +435,7 @@ worldmap.shop = {
         let numSpaces = 0;
         while(true) {
             const f = `${left}${" ".repeat(++numSpaces)}${right}`;
-            if(gfx.DoesOverflow(f, 250)) { break; }
+            if(gfx.DoesOverflow(f, 245)) { break; }
         }
         return `${left}${" ".repeat(numSpaces - 1)}${right}`;
     },
