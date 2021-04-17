@@ -646,7 +646,7 @@ combat.plant = {
         } else {
             const speed = Math.round(player.getCropSpeedMultiplier() * (1 / combat.plant.getSprinklerMultiplier(x, y, 1)) * 100);
             const text = (GetText("ef." + effectInfo.type) + " " + GetText("farmModDirt")).replace(/\{0\}/g, speed);
-            gfx.drawWrappedText(text, 9.5 * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
+            gfx.drawWrappedText(text, leftMostX * 16, 16 * (this.dy - 1) - 2, maxWidth, "", "", 16);
             screenReaderHelper.SayFresh(text, "info");
         }
     },
