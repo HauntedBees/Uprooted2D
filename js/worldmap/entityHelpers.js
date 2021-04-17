@@ -477,6 +477,7 @@ const Cutscene = s => [ () => iHandler.Start(s) ];
 function OneSpeak(t, extra) {
     return [ (i, e) => {
         iHandler.isFirst = true;
+        iHandler.state = { key: "ONE", idx: 0, activeAnim: null, done: true, texts: [], animHandler: null, postItems: [] };
         if(e.moveToTalk) { e.moving = true; }
         worldmap.writeText(t);
         if(extra !== undefined) { extra(); }
