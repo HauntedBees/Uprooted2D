@@ -39,7 +39,7 @@ combat.menu = {
             } else { // no crops are growing
                 plantState = "combatSurrender";
             }
-        } else if(!this.PlayerHasThingsToPlant()) {
+        } else if(!this.PlayerHasThingsToPlant() || combat.numPlantTurns === 0) {
             plantState = "combatSkip";
         }
         this.plantState = plantState;
@@ -49,6 +49,9 @@ combat.menu = {
                 if(combat.isChallenge) {
                     text = GetText("combatAddDesc");
                     charAnim = "WANTPLANT";
+                } else if(combat.numPlantTurns === 0) {
+                    text = GetText("seeds_none");
+                    charAnim = "CANTDO";
                 } else if(plantState !== "combatPlant") {
                     if(plantState === "combatSkip") {
                         text = GetText("combatSkipNoSeed");
@@ -62,10 +65,7 @@ combat.menu = {
                     charAnim = "LOOKBACK";
                     birdAnim = "WANTPLANT";
                     onionAnim = "LOOKBACK";
-                } else if(combat.numPlantTurns == 0) {
-                    text = GetText("seeds_none");
-                    charAnim = "CANTDO";
-                } else if(combat.numPlantTurns == 1) {
+                } else if(combat.numPlantTurns === 1) {
                     text = GetText("seeds_one");
                     charAnim = "WANTPLANT";
                 } else {
