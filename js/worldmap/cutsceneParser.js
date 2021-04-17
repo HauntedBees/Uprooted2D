@@ -350,8 +350,8 @@ const SpecialFunctions = {
             player.increaseItem("_log", 3);
             player.increaseItem("_coop", 3);
             player.increaseItem("_shooter", 3);
-            player.fedPeople += 1;
             AddAchievementIfMissing("onecook");
+            player.fedPeople += 1;
             if(player.fedPeople >= 4) { AddAchievementIfMissing("allcook"); }
         } else {
             iHandler.state.idx = 3;
@@ -386,6 +386,7 @@ const SpecialFunctions = {
             if(player.chingredients.indexOf(rel[0]) >= 0) { score += rel[1]; }
         }
         AddAchievementIfMissing("onecook");
+        player.fedPeople += 1;
         if(player.fedPeople >= 4) { AddAchievementIfMissing("allcook"); }
         const success = score >= -5;
         if(success) {
@@ -448,6 +449,7 @@ const SpecialFunctions = {
             player.increaseItem("_sprinkler", 2);
             player.increaseItem("_paddy", 10);
             AddAchievementIfMissing("onecook");
+            player.fedPeople += 1;
             if(player.fedPeople >= 4) { AddAchievementIfMissing("allcook"); }
         } else {
             worldmap.writeText("capoWrongSauce");
@@ -463,6 +465,7 @@ const SpecialFunctions = {
         player.increaseItem("_sprinkler", 10);
         player.increaseItem("_charger", 1);
         AddAchievementIfMissing("onecook");
+        player.fedPeople += 1;
         if(player.fedPeople >= 4) { AddAchievementIfMissing("allcook"); }
     },
 
