@@ -250,9 +250,9 @@ function AnimProcess(ae, as, babies) {
         });
         if(isStuckInGoop) {
             if(animentity.dims.w <= 32) {
-                gfx.drawTileToGrid("hgoop", animentity.dims.x + animentity.cursorinfo.dx + 0.25, 8.25, "characters");
+                gfx.drawTileToGrid("hgoop", animentity.dims.x + animentity.cursorinfo.dx + 0.25, 3.625, "characters");
             } else {
-                gfx.drawTileToGrid("goopBig", animentity.dims.x + animentity.cursorinfo.dx + 0.25, 7.25, "characters");
+                gfx.drawTileToGrid("goopBig", animentity.dims.x + animentity.cursorinfo.dx + 1, 3.625, "characters");
             }
         }
         const layerMatters = [];
