@@ -109,10 +109,10 @@ worldmap.optionsMenu = {
             yoffset = 16 * tileyoffset;
         }
         if(yMax > 12.7 && y < this.views[this.maxView]) {
-            gfx.drawTileToGrid("opArrDown", 0.5, gfx.tileHeight - 1.25, "menutext");
+            gfx.drawTileToGrid(this.specialPos === 1 ? "opArrDown2" : "opArrDown", 0.5, gfx.tileHeight - 1.25, "menutext");
         }
         if(yoffset > 0) {
-            gfx.drawTileToGrid("opArrUp", 0.5, 0.25, "menutext");
+            gfx.drawTileToGrid(this.specialPos === 2 ? "opArrUp2" : "opArrUp", 0.5, 0.25, "menutext");
         }
         for(let i = 0; i < this.options.length; i++) {
             const op = this.options[i];
@@ -355,7 +355,6 @@ worldmap.optionsMenu = {
         return y + (initVal.indexOf("Gamepad") === 0 ? this.tileSize : (this.optionSize / 3.3333));
     },
     mouseMove: function(pos) {
-        this.UpdateMouse(true);
         const y = this.usingMouse ? this.views[this.view] : (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
         const yMax = (this.options[this.options.length - 1].y + this.optionSize - 4) / 16 - 1.8;
         let yoffset = 0, tileyoffset = 0;
@@ -367,11 +366,14 @@ worldmap.optionsMenu = {
         const hasUpArrow = (yoffset > 0);
         if(hasDownArrow && Between(pos.x, 0.5, 1.5) && Between(pos.y, 12.5, 13.5)) {
             this.specialPos = 1;
+            this.DrawEverything();
             return true;
         } else if(hasUpArrow && Between(pos.x, 0.5, 1.5) && Between(pos.y, 0.25, 1.25)) {
             this.specialPos = 2;
+            this.DrawEverything();
             return true;
         }
+        const doRedraw = this.specialPos > 0;
         this.specialPos = -1;
         const actY = pos.rawY + 8 + this.mouseoffsets[this.view];
         if(pos.x > 2.25 && pos.x < 12.5) {
@@ -381,6 +383,7 @@ worldmap.optionsMenu = {
                 if(actY > opt.y) { return this.CursorMove({ x: 0, y: i }); }
             }
         }
+        if(doRedraw) { this.DrawEverything(); }
         return false;
     },
     CursorMove: function(pos) {
@@ -425,8 +428,7 @@ worldmap.optionsMenu = {
     },
     click: function(pos) {
         if(this.specialPos > 0) {
-            this.MouseWheel(this.specialPos === 1);
-            this.specialPos = -1;
+            this.MouseJump(this.specialPos === 1);
             this.mouseMove(pos);
             return true;
         }
@@ -531,7 +533,6 @@ worldmap.optionsMenu = {
             this.SaveNewButton(key);
             return true;
         }
-        this.UpdateMouse(false);
         let isEnter = false;
         switch(key) {
             case player.controls.up: pos.y--; break;
@@ -547,26 +548,29 @@ worldmap.optionsMenu = {
         else { return this.CursorMove(pos); }
     },
     MouseWheel: function(isDown) {
-        this.UpdateMouse(true);
         if(isDown) {
-            this.view = Math.min(this.view + 1, this.maxView);
+           this.keyPress(player.controls.down);
         } else {
-            this.view = Math.max(this.view - 1, 0);
+           this.keyPress(player.controls.up);
         }
         this.DrawEverything();
     },
-    UpdateMouse: function(newMouseCondition) {
-        if(!newMouseCondition) {
-            this.usingMouse = false;
-            return;
+    MouseJump: function(isDown) {
+        if(isDown) {
+            this.keyPress(player.controls.down);
+            this.keyPress(player.controls.down);
+            this.keyPress(player.controls.down);
+            this.keyPress(player.controls.down);
+            this.keyPress(player.controls.down);
+            this.keyPress(player.controls.down);
+        } else {
+            this.keyPress(player.controls.up);
+            this.keyPress(player.controls.up);
+            this.keyPress(player.controls.up);
+            this.keyPress(player.controls.up);
+            this.keyPress(player.controls.up);
+            this.keyPress(player.controls.up);
         }
-        if(this.usingMouse) { return; }
-        this.usingMouse = true;
-        const y = (this.options[this.cursory].y + this.optionSize - 4) / 16 - 1.8;
-        for(let i = 0; i < this.views.length; i++) {
-            if(this.views[i] >= y) { continue; }
-            this.view = Math.max(0, i - 1);
-            return;
-        } 
+        this.DrawEverything();
     }
 };

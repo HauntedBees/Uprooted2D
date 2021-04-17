@@ -1169,6 +1169,8 @@ const sprites = {
 	"CornerBtnSelM": [26, 31],
 	"CornerBtnSelR": [27, 31],
 	"_shooter2": [28, 31],
+	"opArrDown2": [29, 31],
+	"opArrUp2": [30, 31],
 	"gut2": [0, 32],
 	"gut3": [1, 32],
 	"onbgM": [2, 32],
