@@ -495,23 +495,30 @@ combat.plant = {
     },
     DrawXs: function() {
         if(combat.isChallenge) { return; }
-        const idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
-        const item = player.inventory[this.actualIndexes[idx]];
-        if(item === undefined || item === null) { return; }
-        const tempCrop = GetCrop(item[0]);
+        let tempCrop;
+        let isUsingActiveCrop = false;
+        if(this.activeCrop) {
+            tempCrop = this.activeCrop;
+            isUsingActiveCrop = true;
+        } else {
+            const idx = (this.cursor.y - this.dy) * this.inventoryWidth + this.cursor.x;
+            const item = player.inventory[this.actualIndexes[idx]];
+            if(item === undefined || item === null) { return; }
+            tempCrop = GetCrop(item[0]);
+        }
         for(let x = 0; x < player.gridWidth; x++) {
             for(let y = 0; y < player.gridHeight; y++) {
                 if(combat.grid[x][y] !== null) { 
                     if(combat.grid[x][y].name === "salt" && !tempCrop.saltClean) {
-                        gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");
+                        gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menuB");
                     }
                     continue;
                 }
-                this.activeCrop = tempCrop;
+                if(!isUsingActiveCrop) { this.activeCrop = tempCrop; }
                 if(!this.isValidLocationForCrop(x, y)) {
-                    gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menucursorB");
+                    gfx.drawTileToGrid("x", combat.dx + x, combat.dy + y, "menuB");
                 }
-                this.activeCrop = null;
+                if(!isUsingActiveCrop) { this.activeCrop = null; }
             }
         }
     },
@@ -532,7 +539,6 @@ combat.plant = {
                 combat.animHelper.SetPlayerAnimState("THINK", true);
                 combat.animHelper.SetOnionAnimState("LOOK");
             }
-            this.DrawXs();
         } else {
             this.SetFieldText();
             size = this.activeCrop.size - 1;
@@ -556,6 +562,7 @@ combat.plant = {
                 }
             }
         }
+        this.DrawXs();
 
         // Cursor/Buttons
         const backButtonW = gfx.drawInfoText(GetText("menu.Back"), 0, this.dy - 0.25, cursorY === (this.dy - 1), "menuA", "menutext", true);
