@@ -19,6 +19,7 @@ function createWindow () {
         useContentSize: true,
         webPreferences: {
             nodeIntegration: true,
+            contextIsolation: false,
             allowRunningInsecureContent: false
         }
     });

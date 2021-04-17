@@ -76,3 +76,4 @@ tools/creds.js
 tools/manual/temp/*
 tools/manual/parts/*.js
 tools/manual/out/*
+sync.ffs_db
