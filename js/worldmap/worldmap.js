@@ -471,13 +471,13 @@ const worldmap = {
         if(dx !== 0 && dy !== 0) { dx *= 0.85; dy *= 0.85; } 
         pos.x += dx; pos.y += dy;
 
-        const checkBoth = false;//[directions.LEFT, directions.RIGHT].indexOf(this.playerDir) < 0;
+
+        const stickSides = [directions.LEFT, directions.RIGHT].indexOf(this.playerDir) >= 0;
         const newPos = {
             x: Math.round(pos.x), //checkBoth ? pos.x : (this.playerDir === directions.LEFT ? Math.floor(pos.x) : Math.ceil(pos.x)),
             y: Math.round(pos.y)
         }
-        console.log(this.runState);
-        if(this.IsValidPlayerPos(newPos, pos, checkBoth)) {
+        if(this.IsValidPlayerPos(newPos, pos, stickSides)) {
             this.pos = pos;
             this.freshWall = false;
         } else if(this.runState === 2 && !this.freshWall) {
@@ -541,34 +541,22 @@ const worldmap = {
             }
         }
     },
-    IsValidPlayerPos: function(newPos, pos, checkBoth) {
+    IsValidPlayerPos: function(newPos, pos, stickSides) {
         if(newPos.x < 0 || newPos.y < 0 || newPos.x >= collisions[this.mapName][0].length || newPos.y >= collisions[this.mapName].length) { return false; }
         if(pos.x <= 0.25 || pos.x >= (collisions[this.mapName][0].length - 0.75)) { return false; }
         if(worldmap.noClip) {
             return true;
         } else {
             let hasCollisions = false;
-            if(checkBoth) {
-                hasCollisions = collisions[this.mapName][newPos.y][Math.floor(newPos.x)] || collisions[this.mapName][newPos.y][Math.ceil(newPos.x)];
-                //newPos.x = Math.round(newPos.x);
+            if(stickSides) {
+                const specialX = this.playerDir === directions.LEFT ? Math.floor(pos.x + 0.125) : Math.ceil(pos.x - 0.125);
+                hasCollisions = collisions[this.mapName][newPos.y][specialX] || collisions[this.mapName][newPos.y][newPos.x];
             } else {
                 newPos.x = Math.round(newPos.x);
                 hasCollisions = collisions[this.mapName][newPos.y][newPos.x];
             }
-            //newPos.x = Math.round(newPos.x);//(this.playerDir === directions.LEFT ? Math.ceil(newPos.x) : Math.floor(newPos.x));
             if(!hasCollisions) {
-                if(checkBoth) {
-                    hasCollisions = this.entities.some(e => worldmap.isCollision(e, { x: Math.floor(newPos.x), y: newPos.y }) || worldmap.isCollision(e, { x: Math.ceil(newPos.x), y: newPos.y }));
-                } else {
-                    hasCollisions = this.entities.some(e => worldmap.isCollision(e, newPos));
-                }
-                /*for(let i = 0; i < this.entities.length; i++) {
-                    const e = this.entities[i];
-                    if(worldmap.isCollision(e, newPos)) {
-                        hasCollisions = true;
-                        break;
-                    }
-                }*/
+                hasCollisions = this.entities.some(e => worldmap.isCollision(e, newPos));
             }
             return !hasCollisions;
         }
