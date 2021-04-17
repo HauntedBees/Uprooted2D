@@ -206,7 +206,13 @@ combat.selectTarget = {
         } else {
             if(!this.canSickle) { return false; }
             const dpos = { x: pos.x - combat.enemydx, y: pos.y - combat.enemydy };
-            if(dpos.x < 0 || dpos.y < 0 || dpos.x >= combat.enemywidth || dpos.y >= combat.enemyheight) { return false; }
+            if(dpos.x < 0 || dpos.x >= combat.enemywidth || dpos.y >= combat.enemyheight) { return false; }
+            if(dpos.y < 0) {
+                if(!this.canHumans) { return false; }
+                this.sicklePos = { x: -1, y: -1 };
+                pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 4 };
+                return this.CursorMove(pos, false);
+            }
             const cropObj = combat.enemyGrid[dpos.x][dpos.y];
             if(cropObj !== null && cropObj.x !== undefined) {
                 const newpos = { x: cropObj.x + combat.enemydx, y: cropObj.y + combat.enemydy };
@@ -216,8 +222,8 @@ combat.selectTarget = {
                     if(pos.y == (combat.enemyheight + combat.enemydy)) {
                         if(!this.canHumans) { return false; }
                         this.sicklePos = { x: -1, y: -1 };
-                        pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 8 };
-                        return this.mouseMove(pos);
+                        pos = { x: (this.cursorx + 11 - combat.enemies.length), y: 4 };
+                        return this.CursorMove(pos, false);
                     }
                     if((pos.x - combat.enemydx) >= combat.enemywidth) { return false; }
                 } else { pos.x = newpos.x; pos.y = newpos.y; }
