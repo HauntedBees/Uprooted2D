@@ -39,7 +39,7 @@ const gfx = {
     getSaveFileImage: function() {
         const ctx = gfx.ctx["savegen"], w = ctx.canvas.width, h = ctx.canvas.height;
         ctx.clearRect(0, 0, w, h);
-        const layersToDraw = ["background", "characters", "foreground"];
+        const layersToDraw = ["background", "background2", "characters", "foreground"];
         for(let i = 0; i < layersToDraw.length; i++) {
             ctx.drawImage(gfx.canvas[layersToDraw[i]], 0, 0, w * gfx.scale, h * gfx.scale, 0, 0, w * gfx.scale, h * gfx.scale);
         }
