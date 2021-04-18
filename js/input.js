@@ -198,7 +198,6 @@ let input = {
     },
     GetKey: e => e.key.length === 1 ? e.key.toLowerCase() : e.key,
     keyDown: function(e) {
-        console.log(e.key);
         if(player.options.ignoreMouse === 1) { document.body.requestPointerLock(); } else { document.exitPointerLock(); }
         const key = input.GetKey(e);
         if(input.inConsole) { 

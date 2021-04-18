@@ -140,7 +140,9 @@ const game = {
         } else {
             game.type = 0; // browser
         }
-        document.getElementById("screenRead").innerText = GetText("nowLoading");
+        const loadingText = GetText("nowLoading");
+        document.getElementById("screenRead").innerText = loadingText;
+        document.getElementById("loading").innerText = loadingText;
         document.getElementById("canvasContainer").focus();
         const lastSave = localStorage.getItem("lastSaved");
         if(lastSave !== null) {

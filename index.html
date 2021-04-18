@@ -4,8 +4,6 @@
         <link rel="shortcut icon" href="ff.png"/>
         <style>
             @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
-            @font-face { font-family: "Jura"; src: url("styles/JuraBold-rmpL.ttf") }
-            @font-face { font-family: "Nevis"; src: url("styles/nevis.ttf") }
             @font-face { font-family: "OpenDyslexic"; src: url("styles/OpenDyslexic3-Regular.ttf") }
             body {
 				font-family: "PressStart2P";
@@ -16,7 +14,7 @@
                 background-image: url("img/fullscreen.png");
                 background-size: cover;
 			}
-            canvas, #loader, #colorCover, #previews, #prev_cover {
+            canvas, #colorCover, #previews, #prev_cover {
                 border: 1px solid black;
                 image-rendering: pixelated; /*;crisp-edges*/
                 left: 0;
@@ -39,14 +37,6 @@
                 top: 0;
             }
             #previews > img { display: none }
-            #dpad {
-                border: none;
-                left: 0;
-                margin: 0 auto;
-                position: absolute;
-                right: 0;
-                top: 1030px;
-            }
             #savegen { display: none }
             #garfield {
                 left: 0;
@@ -61,19 +51,29 @@
                 padding: 10px 0;
                 display: none;
             }
-            #loader {
-                width: 1024px;
-                height: 896px;
-                background-color: #000000;
-                color: #FFFFFF;
-                font-size: xx-large;
+            #screenRead {
+                padding-top: 40%;
+                display: inline-block;
+                color: #FFFFFF00;
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+                text-align: center;
             }
-            #screenRead { padding-top: 40%; color: #8C8DDC }
+            #loading {
+                color: #FFFFFF;
+                position: absolute;
+                top: 40%;
+                width: 100%;
+            }
         </style>
     </head>
     <body role="application">
         <div id="canvasContainer" tabindex="0"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
-            <div id="loader"><div id="screenRead" aria-live="rude"></div></div>
+            <div id="loader">
+                <div id="screenRead" role="alert" aria-live="assertive"></div>
+                <div id="loading"></div>
+            </div>
             <canvas id="background" width="1024" height="896"></canvas>
             <canvas id="background2" width="1024" height="896"></canvas>
             <canvas id="crops" width="1024" height="896"></canvas>
@@ -105,8 +105,6 @@
         <div id="fontLoader">
             <div style="font-family:PressStart2P">&nbsp;</div>
             <div style="font-family:OpenDyslexic">&nbsp;</div>
-            <div style="font-family:Nevis">&nbsp;</div>
-            <div style="font-family:Jura">&nbsp;</div>
         </div>
         <script src="out.js"></script>
         <script type="text/javascript">document.addEventListener("DOMContentLoaded", game.fullInit);</script>

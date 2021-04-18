@@ -18,6 +18,7 @@
                 overflow: hidden;
                 background-image: url("img/fullscreen.png");
                 background-size: cover;
+                background-position: center center;
 			}
             canvas, #colorCover, #previews, #prev_cover {
                 border: 1px solid black;
@@ -30,10 +31,9 @@
                 top: 3%;
                 width: 100%;
             }
-            #colorCover, #previews, #prev_cover {
-                width: 1024px;
-                height: 896px;
-                pointer-events: none;
+            #loader {
+                position: absolute;
+                top: 0;
             }
             #previews, #prev_cover { margin: 0; width: 15%; border: none }
             #prev_cover {
@@ -42,7 +42,12 @@
                 width: 288px;
                 height: 192px;
             }
-            #previews > img { pointer-events: none; display: none }
+            #previews > img {
+                pointer-events: none;
+                display: none;
+                top: 0;
+                position: absolute;
+            }
             #savegen { display: none }
             #garfield {
                 left: 0;
@@ -75,7 +80,21 @@
                 border: none;
                 color: rgba(255, 255, 255, 0);
             }
-            #screenRead { padding-top: 40%; color: #8C8DDC }
+            #screenRead {
+                padding-top: 40%;
+                display: inline-block;
+                color: #FFFFFF00;
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+                text-align: center;
+            }
+            #loading {
+                color: #FFFFFF;
+                position: absolute;
+                top: 40%;
+                width: 100%;
+            }
 
             #gamepad {
                 margin-top: 0px;
@@ -86,7 +105,10 @@
     <body role="application">
         <div id="infobuddy" style="display:none">hi</div>
         <div id="canvasContainer" tabindex="0"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
-            <div id="loader"><div id="screenRead" role="alert" aria-live="assertive"></div></div>
+            <div id="loader">
+                <div id="screenRead" role="alert" aria-live="assertive"></div>
+                <div id="loading"></div>
+            </div>
             <canvas id="background" width="1024" height="896"></canvas>
             <canvas id="background2" width="1024" height="896"></canvas>
             <canvas id="crops" width="1024" height="896"></canvas>
@@ -104,7 +126,7 @@
             <canvas id="menuOverBlack" width="1024" height="896"></canvas>
             <canvas id="menutextOverBlack" width="1024" height="896"></canvas>
             <canvas id="savegen" width="1024" height="896"></canvas>
-            <div id="colorCover"></div>
+            <canvas id="colorCover" width="1024" height="896"></canvas>
             <div id="garfield">&gt;<span id="consoleText"></span><span id="chorp">_</span></div>
         </div>
         <div id="previews">
