@@ -1,21 +1,25 @@
 <html>
     <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <title>Uprooted: Meal Replacement Game</title>
         <style>
             @font-face { font-family: "PressStart2P"; src: url("styles/PressStart2P.ttf") }
-            @font-face { font-family: "Jura"; src: url("styles/JuraBold-rmpL.ttf") }
-            @font-face { font-family: "Nevis"; src: url("styles/nevis.ttf") }
             @font-face { font-family: "OpenDyslexic"; src: url("styles/OpenDyslexic3-Regular.ttf") }
             body {
 				font-family: "PressStart2P";
 				text-align: center;
+				width: 100%;
 				border: 0 !important;
 				margin: 0 !important;
 				padding: 0 !important;
+                overflow: hidden;
                 background-image: url("img/fullscreen.png");
                 background-size: cover;
 			}
-            canvas, #loader, #colorCover, #previews, #prev_cover {
+            canvas, #colorCover, #previews, #prev_cover {
                 border: 1px solid black;
                 image-rendering: pixelated; /*;crisp-edges*/
                 left: 0;
@@ -23,21 +27,22 @@
                 position: absolute;
                 right: 0; 
                 text-align: center;
-                top: 2%;
+                top: 3%;
+                width: 100%;
             }
             #colorCover, #previews, #prev_cover {
                 width: 1024px;
                 height: 896px;
                 pointer-events: none;
             }
-            #previews, #prev_cover { border: none }
+            #previews, #prev_cover { margin: 0; width: 15%; border: none }
             #prev_cover {
-                width: 288px;
-                height: 192px;
                 margin: 0;
                 top: 0;
+                width: 288px;
+                height: 192px;
             }
-            #previews > img { display: none }
+            #previews > img { pointer-events: none; display: none }
             #savegen { display: none }
             #garfield {
                 left: 0;
@@ -52,12 +57,15 @@
                 padding: 10px 0;
                 display: none;
             }
-            #loader {
-                width: 1024px;
-                height: 896px;
-                background-color: #000000;
-                color: #FFFFFF;
-                font-size: xx-large;
+            * {
+                touch-action: none;
+                -webkit-touch-callout:none;
+                -webkit-user-select:none;
+                -khtml-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+                -webkit-tap-highlight-color:rgba(0,0,0,0);
             }
             #screenRead { padding-top: 40%; color: #8C8DDC }
 
@@ -68,6 +76,7 @@
         </style>
     </head>
     <body role="application">
+        <div id="infobuddy" style="display:none">hi</div>
         <div id="canvasContainer" tabindex="0"> <!-- 16 x 14 (256x224) formerly 15 x 10 (240x160) -->
             <div id="loader"><div id="screenRead" role="alert" aria-live="assertive"></div></div>
             <canvas id="background" width="1024" height="896"></canvas>
@@ -97,17 +106,14 @@
             <img id="prev_imggb" src="imggb/colorPreview.png"/>
             <div id="prev_cover"></div>
         </div>
-        <!--<canvas id="dpad" width="1024" height="896"></canvas>-->
         <div id="fontLoader">
             <div style="font-family:PressStart2P">&nbsp;</div>
             <div style="font-family:OpenDyslexic">&nbsp;</div>
-            <div style="font-family:Nevis">&nbsp;</div>
-            <div style="font-family:Jura">&nbsp;</div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
-        <script src="js/out.js"></script>
-        <script src="js/pixi.js"></script>
-        <script src="js/virtpad.js"></script>
+        <script type="text/javascript" src="js/out.js"></script>
+        <script type="text/javascript" src="js/pixi.js"></script>
+        <script type="text/javascript" src="js/virtpad.js"></script>
         <script type="text/javascript">document.addEventListener("DOMContentLoaded", game.fullInit);</script>
     </body>
 </html>
