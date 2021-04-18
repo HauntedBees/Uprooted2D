@@ -343,7 +343,7 @@ const vi = {
 document.addEventListener("DOMContentLoaded", function() {
     const app = new PIXI.Application({
         width: 1024,
-        height: 1710,
+        height: 2000,
         backgroundAlpha: 0
     });
     app.view.id = "gamepad";
