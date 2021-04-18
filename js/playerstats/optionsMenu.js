@@ -48,7 +48,9 @@ worldmap.optionsMenu = {
         y = this.addOption(y, "opGameplay", 0, false, ["opOff"]);
         y = this.addOption(y, "opPottywords", this.localOptions.canSayFuck, "canSayFuck", ["opNo", "opYes"], false);
         y = this.addOption(y, "opStickyControls", this.localOptions.stickyMovement, "stickyMovement", ["opNo", "opYes"], true);
-        if(game.type !== 2) {
+        if(game.type === 2) {
+            y = this.addFinal(y, "opVirtualCustom", vi.SetUpResizeButtons);
+        } else {
             y = this.addOption(y, "opIgnoreMouse", this.localOptions.ignoreMouse, "ignoreMouse", ["opNo", "opYes"], false);
             y = this.addOption(y, "opControlScheme", this.localOptions.controltype, "controltype", ["opKeyboard", "opGamepad"], true);
             if(this.localOptions.controltype === 1) {

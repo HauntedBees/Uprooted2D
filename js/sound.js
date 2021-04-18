@@ -1,7 +1,7 @@
 let Sounds = { // 284 TODO: this probably doesn't support playing the same sound twice at the same time
     SoundTable: {}, PlayingSounds: [], PersistingSounds: [], 
     Init: function() {
-        const sounds = ["aBee", "superman", // that one is a joke
+        const sounds = ["aBee", //"superman", // that one is a joke
                         // COMBAT SOUNDS
                         "enterbattle",      // sfx_deathscream_alien1
                         "dangeresque",      // sfx_lowhealth_alarmloop4
