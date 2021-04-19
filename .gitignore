@@ -50,20 +50,11 @@ Temporary Items
 # =========================
 .vscode
 node_modules
-styles
-todo.txt
 out.js
 out.min.js
 template.js
-*_old.png
 .~lock*
-nwjs*
-extbuild/rawimg*
-imghq*
-imgs*
 junk/*
-com.hauntedbees.farmingfantasy/*
-extbuild_node/out*
 *.ora~
 *-autosave.kra
 dist/*
