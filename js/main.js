@@ -4,16 +4,28 @@ function InventoryCopy(arr) {
     return copy;
 }
 const Mobile = {
+    IsLandscape: function() { return screen.orientation.type.indexOf("landscape") >= 0; },
     OrientationChange: function() {
-        if(screen.orientation.type.indexOf("landscape") >= 0) {
+        if(Mobile.IsLandscape()) {
             document.body.className = "landscape";
-            const width = window.screen.width;
-            const screenw = document.getElementById("background").offsetWidth;
-            const btnWidth = Math.floor((width - screenw) / 2);
-            document.getElementById("landscapeLeft").style.width = btnWidth + "px";
-            document.getElementById("landscapeRight").style.width = btnWidth + "px";
+            const height = screen.availHeight;
+            const width = Math.floor((1024/896) * height);
+            const toResize = [...game.canvasLayers, "previews", "colorCover"];
+            toResize.forEach(l => {
+                document.getElementById(l).style["height"] = height + "px";
+                document.getElementById(l).style["width"] = width + "px";
+            });
+            vi.SwitchMode(true);
         } else {
             document.body.className = "";
+            const width = screen.availWidth;
+            const height = Math.floor((896/1024) * width);
+            const toResize = [...game.canvasLayers, "previews", "colorCover"];
+            toResize.forEach(l => {
+                document.getElementById(l).style["height"] = height + "px";
+                document.getElementById(l).style["width"] = width + "px";
+            });
+            vi.SwitchMode(false);
         }
     }
 };
@@ -131,7 +143,7 @@ const game = {
         Desktop.AdjustScreenSettings();
         const univSettings = localStorage.getItem("universalSettings");
         if(univSettings !== null) { universalSettings = game.str2obj(univSettings); }
-        if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0) {
+        if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0 || true) {
             game.type = 2; // mobile
             window.addEventListener("orientationchange", Mobile.OrientationChange);
             Mobile.OrientationChange();

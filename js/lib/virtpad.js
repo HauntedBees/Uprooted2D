@@ -13,31 +13,24 @@ const vi = {
             pause: { x: 420, y: 1510, scalex: 2, scaley: 2 },
         },
         landscape: {
-            dpad: { x: 40, y: 100, scalex: 3.5, scaley: 3.5 },
-            action: { x: 550, y: 160, scalex: 3.25, scaley: 3.25 },
-            cancel: { x: 780, y: 50, scalex: 2.5, scaley: 2.5 },
-            pause: { x: 420, y: 600, scalex: 2, scaley: 2 },
+            dpad: { x: 0, y: 115, scalex: 1.6, scaley: 1.6 },
+            action: { x: 530, y: 80, scalex: 1.4, scaley: 1.4 },
+            cancel: { x: 540, y: 230, scalex: 1, scaley: 1 },
+            pause: { x: 10, y: 3, scalex: 1, scaley: 1 },
         }
     },
-    settings: {
-        portrait: {
-            dpad: { x: 40, y: 1010, scalex: 3.5, scaley: 3.5 },
-            action: { x: 550, y: 1070, scalex: 3.25, scaley: 3.25 },
-            cancel: { x: 780, y: 960, scalex: 2.5, scaley: 2.5 },
-            pause: { x: 420, y: 1510, scalex: 2, scaley: 2 },
-        },
-        landscape: {
-            dpad: { x: 40, y: 100, scalex: 3.5, scaley: 3.5 },
-            action: { x: 550, y: 160, scalex: 3.25, scaley: 3.25 },
-            cancel: { x: 780, y: 50, scalex: 2.5, scaley: 2.5 },
-            pause: { x: 420, y: 600, scalex: 2, scaley: 2 },
-        }
-    },
+    settings: {},
+    loaded: false,
     setup: function() {
-        const savedSettings = localStorage.getItem("gamepad");
-        if(savedSettings) { vi.settings = JSON.parse(savedSettings); }
+        const savedSettings = localStorage.getItem("gamepad2");
+        if(savedSettings) {
+            vi.settings = JSON.parse(savedSettings);
+        } else {
+            vi.settings = JSON.parse(JSON.stringify(vi.defaultSettings));
+        }
 
-        let curSettings = vi.settings.portrait; // TODO: get right ones
+        vi.loaded = true;
+        const curSettings = Mobile.IsLandscape() ? vi.settings.landscape : vi.settings.portrait;
 
         const plr = vi.app.loader.resources;
         vi.dpad = new PIXI.Sprite(plr["js/gamepad/dpad.png"].texture);
@@ -54,7 +47,7 @@ const vi = {
                 curSettings[b].scalex = vi[b].scale.x;
                 curSettings[b].scaley = vi[b].scale.y;
             });
-            localStorage.setItem("gamepad", JSON.stringify(vi.settings));
+            localStorage.setItem("gamepad2", JSON.stringify(vi.settings));
             vi.ExitOptions();
         });
 
@@ -74,11 +67,8 @@ const vi = {
         vi.optDefault = new PIXI.Sprite(plr["js/gamepad/resetdefault.png"].texture);
         vi.optDefault.x = 550;
         vi.optDefault.on("pointertap", function() {
-            const defaultSettings = vi.defaultSettings.portrait; // TODO: get right ones
-            vi.redim(vi.dpad, defaultSettings.dpad);
-            vi.redim(vi.action, defaultSettings.action);
-            vi.redim(vi.cancel, defaultSettings.cancel);
-            vi.redim(vi.pause, defaultSettings.pause);
+            const defaultSettings = Mobile.IsLandscape() ? vi.settings.landscape : vi.settings.portrait;
+            i.RepositionButtons(defaultSettings);
             vi.RedimOptionButtons("dpad");
             vi.RedimOptionButtons("action");
             vi.RedimOptionButtons("cancel");
@@ -88,10 +78,7 @@ const vi = {
         vi.optCancel = new PIXI.Sprite(plr["js/gamepad/cancelopt.png"].texture);
         vi.optCancel.x = 800;
         vi.optCancel.on("pointertap", function() {
-            vi.redim(vi.dpad, curSettings.dpad);
-            vi.redim(vi.action, curSettings.action);
-            vi.redim(vi.cancel, curSettings.cancel);
-            vi.redim(vi.pause, curSettings.pause);
+            vi.RepositionButtons(curSettings);
             vi.ExitOptions();
         });
         
@@ -108,10 +95,7 @@ const vi = {
         vi.scaleD = plr["js/gamepad/dragD.png"].texture;
         vi.move = plr["js/gamepad/move.png"].texture;
         
-        vi.redim(vi.dpad, curSettings.dpad);
-        vi.redim(vi.action, curSettings.action);
-        vi.redim(vi.cancel, curSettings.cancel);
-        vi.redim(vi.pause, curSettings.pause);
+        vi.RepositionButtons(curSettings);
         
         vi.down = function(key) {
             vi.btn[key] = +new Date();
@@ -135,6 +119,17 @@ const vi = {
         vi.app.stage.addChild(vi.pause);
 
         vi.SetUpGameplayButtons();
+    },
+    SwitchMode(landscape) {
+        vi.RepositionButtons(landscape ? vi.settings.landscape : vi.settings.portrait);
+        vi.ExitOptions();
+    },
+    RepositionButtons(curSettings) {
+        if(!vi.loaded) { return; }
+        vi.redim(vi.dpad, curSettings.dpad);
+        vi.redim(vi.action, curSettings.action);
+        vi.redim(vi.cancel, curSettings.cancel);
+        vi.redim(vi.pause, curSettings.pause);
     },
     ResetGameplayButtons() {
         [vi.action, vi.cancel, vi.pause, vi.dpad].forEach(e => {
@@ -242,8 +237,32 @@ const vi = {
         vi.app.stage.addChild(vi.optReset);
         vi.app.stage.addChild(vi.optCancel);
         vi.app.stage.addChild(vi.optDefault);
+
+        if(Mobile.IsLandscape()) {
+            const scale = screen.availHeight / vi.optInfo.texture.height;
+            vi.optInfo.scale.y = scale;
+            vi.optInfo.scale.x = scale;
+            vi.optInfo.x = screen.availWidth / 2 - vi.optInfo.width / 2;
+            [vi.optSave, vi.optReset, vi.optCancel, vi.optDefault].forEach((e, i) => { 
+                e.scale.x = 0.5;
+                e.scale.y = 0.5;
+                e.x = 50 + 150 * i;
+                e.y = screen.availHeight - e.height - 10;
+            });
+        } else if(vi.optInfo.scale.y < 1) {
+            vi.optInfo.scale.y = 1;
+            vi.optInfo.scale.x = 1;
+            vi.optInfo.x = 0;
+            [vi.optSave, vi.optReset, vi.optCancel, vi.optDefault].forEach((e, i) => {
+                e.scale.x = 1;
+                e.scale.y = 1;
+                e.x = 50 + 250 * i;
+                e.y = 685;
+            });
+        }
     },
     ExitOptions() {
+        if(!vi.loaded) { return; }
         [vi.optInfo, vi.optReset, vi.optCancel, vi.optSave, vi.optDefault].forEach(e => vi.app.stage.removeChild(e));
         const events = ["pointerup", "pointerupoutside", "pointerdown", "pointermove"];
         for(const key in vi.resizeOptions) {
@@ -257,6 +276,8 @@ const vi = {
         vi.SetUpGameplayButtons();
     },
     SetUpGameplayButtons() {
+        vi.ResetGameplayButtons();
+        
         const plr = vi.app.loader.resources;
         vi.action.on("pointerdown", function() { vi.down(player.controls.confirm); });
         vi.action.on("pointerup", function() { vi.up(player.controls.confirm); });

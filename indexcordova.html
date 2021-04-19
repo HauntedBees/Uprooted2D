@@ -20,7 +20,7 @@
                 background-size: cover;
                 background-position: center center;
 			}
-            canvas, #colorCover, #previews, #prev_cover {
+            canvas, #previews, #prev_cover {
                 border: 1px solid black;
                 image-rendering: pixelated; /*;crisp-edges*/
                 left: 0;
@@ -30,6 +30,10 @@
                 text-align: center;
                 top: 3%;
                 width: 100%;
+            }
+            .landscape canvas, #previews, #prev_cover {
+                top: 0px;
+                margin: 0 auto !important;
             }
             #loader {
                 position: absolute;
@@ -100,6 +104,7 @@
                 margin-top: 0px;
                 border: none;
             }
+            .landscape #gamepad { width: 1024px !important }
         </style>
     </head>
     <body role="application">
