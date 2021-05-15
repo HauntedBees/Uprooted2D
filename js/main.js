@@ -143,7 +143,7 @@ const game = {
         Desktop.AdjustScreenSettings();
         const univSettings = localStorage.getItem("universalSettings");
         if(univSettings !== null) { universalSettings = game.str2obj(univSettings); }
-        if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0 || true) {
+        if(typeof cordova !== "undefined" || location.href.indexOf("indexmobile") >= 0) {
             game.type = 2; // mobile
             window.addEventListener("orientationchange", Mobile.OrientationChange);
             Mobile.OrientationChange();
