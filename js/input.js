@@ -37,6 +37,7 @@ let consoleCmd = {
         const args = str.split(" ");
         const cmd = args.shift();
         switch(cmd) {
+            case "save": game.DebugSave(); return;
             case "kelly": player.options.rightBumperWin = true; return;
             case "iii": player.hasFalcon = true; return;
             case "ni": player.hasFalcon = false; return;

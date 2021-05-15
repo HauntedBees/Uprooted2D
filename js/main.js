@@ -414,6 +414,36 @@ const game = {
             }
         }
     },
+    DebugSave: function() {
+        if(worldmap.mapName === "cave") {
+            player.mapName = GetPostGameMapName("northcity");
+            player.mapPos = { x: 17, y: 7.5 };
+            player.mapDir = 2;
+        } else {
+            player.setMapPosition();
+            stateBinders.storePositions(worldmap.mapName);
+        }
+        const savePlayer = JSON.stringify(player);
+
+        for(let i = 0; i < player.visitedMaps.length; i++) {
+            const map = player.visitedMaps[i];
+            if(stateBinders[map] !== undefined) { stateBinders[map](); }
+        }
+        if(worldmap.smartphone !== null) { mapStates["northcity"].phoneData = worldmap.smartphone.GetPhoneData(); }
+        const saveMap = JSON.stringify(mapStates);
+
+        const ele = document.createElement("a");
+        const file = new Blob([`${savePlayer}\n${saveMap}`], { type: "text/plain; charset=utf-8" });
+        ele.href = URL.createObjectURL(file);
+        ele.download = `savefile_${(new Date()).toISOString()}.txt`;
+        ele.click();
+    },
+    DebugLoad: function(text) {
+        const data = text.split("\n");
+        localStorage.setItem("playerX", game.obj2str(JSON.parse(data[0])));
+        localStorage.setItem("mapentX", game.obj2str(JSON.parse(data[1])));
+        game.load("X");
+    },
     save: function(savenum, justPlayer) {
         if(justPlayer) { 
             localStorage.setItem("player" + savenum, game.obj2str(player));
@@ -444,12 +474,11 @@ const game = {
         const oldFilter = player.options.gfxfilter;
         const oldFilterMode = player.options.coverMode;
 
-        let loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
+        const loadedPlayer = game.str2obj(localStorage.getItem("player" + savenum));
         player = Object.assign(player, loadedPlayer);
         
         const newFilter = player.options.gfxfilter;
         const newFilterMode = player.options.coverMode;
-        
         game.ApplyBlendFilter();
 
         if(oldFilter != newFilter || oldFilterMode != newFilterMode) {
