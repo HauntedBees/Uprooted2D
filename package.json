@@ -29,7 +29,7 @@
   "devDependencies": {
     "clamp-palette": "^0.1.0",
     "csv-parser": "^3.0.0",
-    "electron": "^11.2.3",
+    "electron": "^15.5.5",
     "electron-builder": "^22.9.1",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^8.1.0",
